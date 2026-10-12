@@ -1,0 +1,56 @@
+{
+  "repo": "infiniflow/ragflow",
+  "commit": "deb1235be41dbfd379efa9842fb38116d4a121f7",
+  "branch": "main",
+  "fetchedAt": "2026-10-12T14:03:59.927Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "go-naming",
+      "name": "go-naming",
+      "dir": ".agents/skills/go-naming",
+      "path": ".agents/skills/go-naming/SKILL.md",
+      "desc": "Go naming conventions and best practices. Use this skill when working with Go code and need to name packages, files, directories, structs, interfaces, functions, variables, or constants. Provides comprehensive naming guidelines following Go community standards.",
+      "descZh": "",
+      "triggers": [
+        "files",
+        "directories",
+        "structs",
+        "interfaces"
+      ],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "go"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/infiniflow/ragflow.git",
+        "copy": "cp -r .agents/skills/go-naming ~/.claude/skills/go-naming",
+        "raw": "https://raw.githubusercontent.com/infiniflow/ragflow/deb1235be41dbfd379efa9842fb38116d4a121f7/.agents/skills/go-naming/SKILL.md",
+        "saveAs": "~/.claude/skills/go-naming/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:fe57f81c46214d6c2bda6c8999d0eb47d8a6e7e1b2a156c19ff5bf63fe95181e",
+      "bytes": 381,
+      "wordCount": 7,
+      "repoLicense": "Apache-2.0",
+      "commit": "deb1235be41dbfd379efa9842fb38116d4a121f7",
+      "branch": "main",
+      "body": "---\nname: go-naming\ndescription: Go naming conventions and best practices. Use this skill when working with Go code and need to name packages, files, directories, structs, interfaces, functions, variables, or constants. Provides comprehensive naming guidelines following Go community standards.\n---\n\nStrictly follow the naming conventions in [rules/named.md](../../rules/named.md)\n",
+      "bodyMd": "Strictly follow the naming conventions in [rules/named.md](../../rules/named.md)\n"
+    }
+  ]
+}

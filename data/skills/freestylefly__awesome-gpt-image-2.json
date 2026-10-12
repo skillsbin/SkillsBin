@@ -1,0 +1,54 @@
+{
+  "repo": "freestylefly/awesome-gpt-image-2",
+  "commit": "5cb9109ca2d29476f8e34dbc0cdb43607bdd3f77",
+  "branch": "main",
+  "fetchedAt": "2026-10-12T14:08:47.770Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "gpt-image-2-style-library",
+      "name": "gpt-image-2-style-library",
+      "dir": "agents/skills/gpt-image-2-style-library",
+      "path": "agents/skills/gpt-image-2-style-library/SKILL.md",
+      "desc": "Choose GPT-Image2 / gpt-image-2 visual styles and industrial prompt templates from the awesome-gpt-image-2 style library. Use when an agent needs to create, rewrite, classify, or improve image-generation prompts with repository-backed templates, categories, style tags, scene tags, pitfalls, and example cases.",
+      "descZh": "",
+      "triggers": [
+        "an agent needs to create",
+        "rewrite",
+        "classify"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "npm"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/freestylefly/awesome-gpt-image-2.git",
+        "copy": "cp -r agents/skills/gpt-image-2-style-library ~/.claude/skills/gpt-image-2-style-library",
+        "raw": "https://raw.githubusercontent.com/freestylefly/awesome-gpt-image-2/5cb9109ca2d29476f8e34dbc0cdb43607bdd3f77/agents/skills/gpt-image-2-style-library/SKILL.md",
+        "saveAs": "~/.claude/skills/gpt-image-2-style-library/SKILL.md",
+        "marketplace": "/plugin marketplace add freestylefly/awesome-gpt-image-2"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:98519a3bfd28c5ab5630771a536f18fbe3627123cd7dd7a8801fa5da166a60f9",
+      "bytes": 2433,
+      "wordCount": 300,
+      "repoLicense": "MIT",
+      "commit": "5cb9109ca2d29476f8e34dbc0cdb43607bdd3f77",
+      "branch": "main",
+      "body": "---\nname: gpt-image-2-style-library\ndescription: Choose GPT-Image2 / gpt-image-2 visual styles and industrial prompt templates from the awesome-gpt-image-2 style library. Use when an agent needs to create, rewrite, classify, or improve image-generation prompts with repository-backed templates, categories, style tags, scene tags, pitfalls, and example cases.\n---\n\n# GPT-Image2 Style Library\n\nUse this skill to turn a user's image-generation intent into a production-ready GPT-Image2 prompt using the awesome-gpt-image-2 style library.\n\n## Example Output\n\n![City life system map example](assets/city-life-system-map.png)\n\nExample request: `用 gpt-image-2-style-library 技能生成城市生命系统图谱`\n\n## Reference\n\n- Read `references/style-library.md` before choosing a template or style.\n- The reference is generated from `data/style-library.json` in the repository.\n- Prefer the reference over memory when template names, categories, covers, or style tags matter.\n\n## Workflow\n\n1. Detect the user's language and answer in that language.\n2. Identify the user's target output: product, poster, UI, infographic, brand, photo, illustration, character, scene, history, document, or special task.\n3. Match the request in this order: template category, visual style tag, scene tag, then nearest example cases.\n4. If one template is clearly strongest, use it directly. If several are plausible, present 2-3 options with short reasons and ask the user to choose.\n5. Build the final prompt with these blocks:\n   - subject and task\n   - composition and layout\n   - visual style and materials\n   - text and label requirements\n   - aspect ratio and output format\n   - constraints and negative details\n6. Include the selected template name and any useful example case IDs.\n\n## Output Defaults\n\n- Provide a copyable prompt first.\n- Keep constraints concrete: exact text, aspect ratio, readable labels, layout hierarchy, and avoided artifacts.\n- For Chinese requests, write the final prompt in Chinese unless the user asks for English.\n- For English requests, write the final prompt in English unless the user asks for Chinese.\n- When the user asks for multiple concepts, reuse one template and vary subject, composition, palette, and scene.\n\n## Maintenance\n\nWhen the source repository changes, run:\n\n```bash\nnpm run generate:style-skill\n```\n\nTo install the skill into the local Codex skill folder, run:\n\n```bash\nnpm run install:skill\n```\n",
+      "bodyMd": "# GPT-Image2 Style Library\n\nUse this skill to turn a user's image-generation intent into a production-ready GPT-Image2 prompt using the awesome-gpt-image-2 style library.\n\n## Example Output\n\n![City life system map example](assets/city-life-system-map.png)\n\nExample request: `用 gpt-image-2-style-library 技能生成城市生命系统图谱`\n\n## Reference\n\n- Read `references/style-library.md` before choosing a template or style.\n- The reference is generated from `data/style-library.json` in the repository.\n- Prefer the reference over memory when template names, categories, covers, or style tags matter.\n\n## Workflow\n\n1. Detect the user's language and answer in that language.\n2. Identify the user's target output: product, poster, UI, infographic, brand, photo, illustration, character, scene, history, document, or special task.\n3. Match the request in this order: template category, visual style tag, scene tag, then nearest example cases.\n4. If one template is clearly strongest, use it directly. If several are plausible, present 2-3 options with short reasons and ask the user to choose.\n5. Build the final prompt with these blocks:\n   - subject and task\n   - composition and layout\n   - visual style and materials\n   - text and label requirements\n   - aspect ratio and output format\n   - constraints and negative details\n6. Include the selected template name and any useful example case IDs.\n\n## Output Defaults\n\n- Provide a copyable prompt first.\n- Keep constraints concrete: exact text, aspect ratio, readable labels, layout hierarchy, and avoided artifacts.\n- For Chinese requests, write the final prompt in Chinese unless the user asks for English.\n- For English requests, write the final prompt in English unless the user asks for Chinese.\n- When the user asks for multiple concepts, reuse one template and vary subject, composition, palette, and scene.\n\n## Maintenance\n\nWhen the source repository changes, run:\n\n```bash\nnpm run generate:style-skill\n```\n\nTo install the skill into the local Codex skill folder, run:\n\n```bash\nnpm run install:skill\n```\n"
+    }
+  ]
+}

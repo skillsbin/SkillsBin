@@ -1,0 +1,115 @@
+# ============================================================
+# SkillsBin — 定时采集 + 发布（12 小时一轮）
+# ------------------------------------------------------------
+# 与 GetHub 的差异：
+#   · 本站没有「发现层自动开候选 PR」——那部分（open-review-pr.mjs）属于阶段 3，
+#     上线前本文件只做「采集 → 提交数据 → 构建预渲染 → 发布 Pages」。
+#   · 发布在同一个 run 内完成：本工作流的 push 用 GITHUB_TOKEN，
+#     GitHub 不会因它再触发 deploy.yml，所以不能指望那条链路。
+#
+# 依赖的仓库 Secrets：
+#   GH_PAT                  fine-grained PAT（5000 次/小时；不配则回退 GITHUB_TOKEN 的 1000 次/小时）
+#   CLOUDFLARE_API_TOKEN    Pages: Edit
+#   CLOUDFLARE_ACCOUNT_ID
+#
+# 前置：仓库 Settings → Actions → General =
+#   Workflow permissions: Read and write
+#   勾选 Allow GitHub Actions to create and approve pull requests
+# ============================================================
+
+name: sync-data
+
+on:
+  schedule:
+    - cron: '0 */12 * * *'   # 每 12 小时（UTC）；config.limits.refreshHours=20 必须 > 12
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-data
+  cancel-in-progress: false
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # 1) 已合并的收录申请并入采集队列（幂等；只有它能写 config.watchlist）
+      - name: Consume approved submissions
+        id: consume
+        run: node crawler/consume-approved.mjs
+
+      # 2) 采集。断点续采由 data/sync-state.json 的 cursor 承载；
+      #    raw.githubusercontent.com 在 Actions 上可达 → 正文 0 配额。
+      - name: Crawl skills
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+          ADDED: ${{ steps.consume.outputs.added }}
+        run: |
+          if [ -n "$ADDED" ]; then
+            echo "精准同步新批准收录的仓库：$ADDED"
+            node crawler/crawl.mjs --only "$ADDED" --no-discover
+          else
+            node crawler/crawl.mjs --no-discover
+          fi
+
+      # 3) 采集产物提交回主分支（含 data/skills/<id>.json 明细层）
+      - name: Commit data
+        id: commit
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/ crawler/config.json crawler/candidates/
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "数据无变化，跳过提交"
+          else
+            git commit -m "chore(sync): auto crawl $(date -u +'%Y-%m-%d %H:%M UTC')"
+            # 一轮采集可能跑几十分钟，期间若有人推送，直接 push 会被拒绝。
+            # 先变基；冲突时退回合并并保留本轮采集结果。
+            BR="${GITHUB_REF_NAME:-main}"
+            git fetch origin "$BR"
+            git rebase "origin/$BR" || { git rebase --abort; git merge -X ours --no-edit "origin/$BR"; }
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  deploy-cloudflare:
+    runs-on: ubuntu-latest
+    needs: crawl
+    if: needs.crawl.outputs.changed == 'true'
+    concurrency:
+      group: pages-publish
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Build site bundle
+        run: bash scripts/build-dist.sh
+
+      - name: Publish to Cloudflare Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          npm i -g wrangler@4
+          wrangler --version
+          wrangler pages deploy dist \
+            --project-name=skillsbin \
+            --branch=main \
+            --commit-dirty=true

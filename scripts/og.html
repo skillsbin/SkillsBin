@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: #0b1f19;
+    color: #ffffff;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* 背景：青绿渐变 + 六边形网格 */
+  .bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(900px 520px at 82% -12%, rgba(31,190,146,.42), transparent 62%),
+      radial-gradient(700px 460px at -8% 108%, rgba(15,110,86,.55), transparent 60%),
+      linear-gradient(150deg, #0d2a21 0%, #0a1a15 58%, #071310 100%);
+  }
+  .hex {
+    position: absolute; inset: 0; opacity: .16;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='96' viewBox='0 0 56 96'%3E%3Cpath d='M28 2 52 16v28L28 58 4 44V16Z' fill='none' stroke='%2300e0a8' stroke-width='1.4'/%3E%3Cpath d='M28 50 52 64v28L28 106 4 92V64Z' fill='none' stroke='%2300e0a8' stroke-width='1.4'/%3E%3C/svg%3E");
+    background-size: 56px 96px;
+  }
+  .vignette { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(7,19,16,.72) 0%, rgba(7,19,16,.15) 62%, transparent 100%); }
+
+  .frame { position: absolute; inset: 0; padding: 62px 72px; display: flex; flex-direction: column; }
+  .top { display: flex; align-items: center; gap: 16px; }
+  .mark { width: 62px; height: 62px; }
+  .top .name { font-size: 27px; font-weight: 700; letter-spacing: .3px; }
+  .top .name small { display: block; font-size: 14px; font-weight: 500; color: #7fd8bd; letter-spacing: 3px; margin-top: 3px; }
+
+  h1 { margin-top: 44px; font-size: 64px; line-height: 1.14; font-weight: 800; letter-spacing: -1.2px; }
+  h1 em { font-style: normal; color: #35e0ae; }
+  .sub { margin-top: 20px; font-size: 25px; line-height: 1.55; color: #b7ccc5; max-width: 880px; font-weight: 400; }
+
+  .chips { margin-top: auto; display: flex; gap: 11px; flex-wrap: wrap; }
+  .chip {
+    font-size: 17px; padding: 9px 17px; border-radius: 999px;
+    background: rgba(255,255,255,.08); border: 1px solid rgba(53,224,174,.32); color: #d6efe8;
+  }
+  .chip.solid { background: #35e0ae; border-color: #35e0ae; color: #06231a; font-weight: 600; }
+  .foot { margin-top: 26px; display: flex; align-items: center; justify-content: space-between; font-size: 19px; color: #6f8d84; }
+  .foot .url { color: #9fe1cb; font-weight: 600; letter-spacing: .4px; }
+</style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="hex"></div>
+  <div class="vignette"></div>
+  <div class="frame">
+    <div class="top">
+      <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M32 8.6 52.4 20.4v23.2L32 55.4 11.6 43.6V20.4Z" fill="none" stroke="#ffffff" stroke-opacity=".92" stroke-width="3.4" stroke-linejoin="round"/>
+        <rect x="21.4" y="21.4" width="9" height="9" rx="2" fill="#fff"/>
+        <rect x="33.6" y="21.4" width="9" height="9" rx="2" fill="#fff" fill-opacity=".5"/>
+        <rect x="21.4" y="33.6" width="9" height="9" rx="2" fill="#fff" fill-opacity=".5"/>
+        <path d="M35.6 40.4h10.2M45.8 40.4l-4-4M45.8 40.4l-4 4" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="name">SkillsBin<small>技能仓</small></div>
+    </div>
+
+    <h1>把散落在 GitHub 的<br><em>Agent Skill</em> 归进一个仓库</h1>
+    <p class="sub">自动采集 SKILL.md 规范的能力包，按用途分类与宿主兼容筛选，一键复制安装。</p>
+
+    <div class="chips">
+      <span class="chip solid">SKILL.md 规范</span>
+      <span class="chip">8 大用途分类</span>
+      <span class="chip">Claude Code · Cursor · Codex 兼容</span>
+      <span class="chip">每 12 小时更新</span>
+    </div>
+    <div class="foot">
+      <span>仅做数据聚合 · 版权归原仓库作者所有</span>
+      <span class="url">skillsbin.cn</span>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,134 @@
+{
+  "repo": "crewAIInc/crewAI",
+  "commit": "753d1923660207989b6974ef414b8d91cd85e57c",
+  "branch": "main",
+  "fetchedAt": "2026-10-12T14:06:14.788Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "invalid-name",
+      "name": "Invalid--Name",
+      "dir": "lib/crewai/tests/skills/fixtures/invalid-name",
+      "path": "lib/crewai/tests/skills/fixtures/invalid-name/SKILL.md",
+      "desc": "This skill has an invalid name.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/crewAIInc/crewAI.git",
+        "copy": "cp -r lib/crewai/tests/skills/fixtures/invalid-name ~/.claude/skills/invalid-name",
+        "raw": "https://raw.githubusercontent.com/crewAIInc/crewAI/753d1923660207989b6974ef414b8d91cd85e57c/lib/crewai/tests/skills/fixtures/invalid-name/SKILL.md",
+        "saveAs": "~/.claude/skills/invalid-name/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:99513b80e74b7a7f42a00af18b262db695a56b7b8af448f98b20f45b821ef715",
+      "bytes": 73,
+      "wordCount": 0,
+      "repoLicense": "MIT",
+      "commit": "753d1923660207989b6974ef414b8d91cd85e57c",
+      "branch": "main",
+      "body": "---\nname: Invalid--Name\ndescription: This skill has an invalid name.\n---\n",
+      "bodyMd": ""
+    },
+    {
+      "slug": "minimal-skill",
+      "name": "minimal-skill",
+      "dir": "lib/crewai/tests/skills/fixtures/minimal-skill",
+      "path": "lib/crewai/tests/skills/fixtures/minimal-skill/SKILL.md",
+      "desc": "A minimal skill with only required fields.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/crewAIInc/crewAI.git",
+        "copy": "cp -r lib/crewai/tests/skills/fixtures/minimal-skill ~/.claude/skills/minimal-skill",
+        "raw": "https://raw.githubusercontent.com/crewAIInc/crewAI/753d1923660207989b6974ef414b8d91cd85e57c/lib/crewai/tests/skills/fixtures/minimal-skill/SKILL.md",
+        "saveAs": "~/.claude/skills/minimal-skill/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:572fbd1e3e52f777947e13a97bf38a52ff3c35f5219879bd9de2d884739fccb7",
+      "bytes": 84,
+      "wordCount": 0,
+      "repoLicense": "MIT",
+      "commit": "753d1923660207989b6974ef414b8d91cd85e57c",
+      "branch": "main",
+      "body": "---\nname: minimal-skill\ndescription: A minimal skill with only required fields.\n---\n",
+      "bodyMd": ""
+    },
+    {
+      "slug": "valid-skill",
+      "name": "valid-skill",
+      "dir": "lib/crewai/tests/skills/fixtures/valid-skill",
+      "path": "lib/crewai/tests/skills/fixtures/valid-skill/SKILL.md",
+      "desc": "A complete test skill with all optional directories.",
+      "descZh": "",
+      "triggers": [],
+      "version": "1.0",
+      "license": "MIT",
+      "allowedTools": [
+        "web-search file-read"
+      ],
+      "author": "test",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/crewAIInc/crewAI.git",
+        "copy": "cp -r lib/crewai/tests/skills/fixtures/valid-skill ~/.claude/skills/valid-skill",
+        "raw": "https://raw.githubusercontent.com/crewAIInc/crewAI/753d1923660207989b6974ef414b8d91cd85e57c/lib/crewai/tests/skills/fixtures/valid-skill/SKILL.md",
+        "saveAs": "~/.claude/skills/valid-skill/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:0d33c7ca645a874c4782bf5ac03e4837097cc20808e16ddbdaac7c1438e2e59b",
+      "bytes": 406,
+      "wordCount": 27,
+      "repoLicense": "MIT",
+      "commit": "753d1923660207989b6974ef414b8d91cd85e57c",
+      "branch": "main",
+      "body": "---\nname: valid-skill\ndescription: A complete test skill with all optional directories.\nlicense: Apache-2.0\ncompatibility: crewai>=0.1.0\nmetadata:\n  author: test\n  version: \"1.0\"\nallowed-tools: web-search file-read\n---\n\n## Instructions\n\nThis skill provides comprehensive instructions for the agent.\n\n### Usage\n\nFollow these steps to use the skill effectively.\n\n### Notes\n\nAdditional context for the agent.\n",
+      "bodyMd": "## Instructions\n\nThis skill provides comprehensive instructions for the agent.\n\n### Usage\n\nFollow these steps to use the skill effectively.\n\n### Notes\n\nAdditional context for the agent.\n"
+    }
+  ]
+}

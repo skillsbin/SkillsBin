@@ -1,0 +1,50 @@
+# ============================================================
+# SkillsBin — 推送到主分支时构建并发布（代码/模板改动走这条）
+# ------------------------------------------------------------
+# 数据更新由 sync.yml 负责（并发组 pages-publish 与本工作流互斥，
+# 两次 Pages 部署不会交叉）。
+# ============================================================
+
+name: deploy-site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'assets/**'
+      - 'scripts/**'
+      - 'crawler/config.json'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-publish
+  cancel-in-progress: false
+
+jobs:
+  deploy-cloudflare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Build site bundle
+        run: bash scripts/build-dist.sh
+
+      - name: Publish to Cloudflare Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          npm i -g wrangler@4
+          wrangler --version
+          wrangler pages deploy dist \
+            --project-name=skillsbin \
+            --branch=main \
+            --commit-dirty=true

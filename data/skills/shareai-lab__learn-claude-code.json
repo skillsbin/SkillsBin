@@ -1,0 +1,209 @@
+{
+  "repo": "shareAI-lab/learn-claude-code",
+  "commit": "ce8f9f186058939da54c9d6fead78dfb5d0fd6c3",
+  "branch": "main",
+  "fetchedAt": "2026-10-12T14:04:43.329Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "agent-builder",
+      "name": "agent-builder",
+      "dir": "skills/agent-builder",
+      "path": "skills/agent-builder/SKILL.md",
+      "desc": "Design and build AI agents for any domain. Use when users: (1) ask to \"create an agent\", \"build an assistant\", or \"design an AI system\" (2) want to understand agent architecture, agentic patterns, or autonomous AI (3) need help with capabilities, subagents, planning, or skill mechanisms (4) ask about Claude Code, Cursor, or similar agent internals (5) want to build agents for business, research, creative, or operational tasks Keywords: agent, assistant, autonomous, workflow, tool use, multi-step, orchestration",
+      "descZh": "",
+      "triggers": [
+        "build an assistant"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "go",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/shareAI-lab/learn-claude-code.git",
+        "copy": "cp -r skills/agent-builder ~/.claude/skills/agent-builder",
+        "raw": "https://raw.githubusercontent.com/shareAI-lab/learn-claude-code/ce8f9f186058939da54c9d6fead78dfb5d0fd6c3/skills/agent-builder/SKILL.md",
+        "saveAs": "~/.claude/skills/agent-builder/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:4b88e0f4c19caf58f38ca6bd27e55d8ab94ebf0ad54d4ffb7da83559e020dbc7",
+      "bytes": 4713,
+      "wordCount": 616,
+      "repoLicense": "MIT",
+      "commit": "ce8f9f186058939da54c9d6fead78dfb5d0fd6c3",
+      "branch": "main",
+      "body": "---\nname: agent-builder\ndescription: |\n  Design and build AI agents for any domain. Use when users:\n  (1) ask to \"create an agent\", \"build an assistant\", or \"design an AI system\"\n  (2) want to understand agent architecture, agentic patterns, or autonomous AI\n  (3) need help with capabilities, subagents, planning, or skill mechanisms\n  (4) ask about Claude Code, Cursor, or similar agent internals\n  (5) want to build agents for business, research, creative, or operational tasks\n  Keywords: agent, assistant, autonomous, workflow, tool use, multi-step, orchestration\n---\n\n# Agent Builder\n\nBuild AI agents for any domain - customer service, research, operations, creative work, or specialized business processes.\n\n## The Core Philosophy\n\n> **The model already knows how to be an agent. Your job is to get out of the way.**\n\nAn agent is not complex engineering. It's a simple loop that invites the model to act:\n\n```\nLOOP:\n  Model sees: context + available capabilities\n  Model decides: act or respond\n  If act: execute capability, add result, continue\n  If respond: return to user\n```\n\n**That's it.** The magic isn't in the code - it's in the model. Your code just provides the opportunity.\n\n## The Three Elements\n\n### 1. Capabilities (What can it DO?)\n\nAtomic actions the agent can perform: search, read, create, send, query, modify.\n\n**Design principle**: Start with 3-5 capabilities. Add more only when the agent consistently fails because a capability is missing.\n\n### 2. Knowledge (What does it KNOW?)\n\nDomain expertise injected on-demand: policies, workflows, best practices, schemas.\n\n**Design principle**: Make knowledge available, not mandatory. Load it when relevant, not upfront.\n\n### 3. Context (What has happened?)\n\nThe conversation history - the thread connecting actions into coherent behavior.\n\n**Design principle**: Context is precious. Isolate noisy subtasks. Truncate verbose outputs. Protect clarity.\n\n## Agent Design Thinking\n\nBefore building, understand:\n\n- **Purpose**: What should this agent accomplish?\n- **Domain**: What world does it operate in? (customer service, research, operations, creative...)\n- **Capabilities**: What 3-5 actions are essential?\n- **Knowledge**: What expertise does it need access to?\n- **Trust**: What decisions can you delegate to the model?\n\n**CRITICAL**: Trust the model. Don't over-engineer. Don't pre-specify workflows. Give it capabilities and let it reason.\n\n## Progressive Complexity\n\nStart simple. Add complexity only when real usage reveals the need:\n\n| Level | What to add | When to add it |\n|-------|-------------|----------------|\n| Basic | 3-5 capabilities | Always start here |\n| Planning | Progress tracking | Multi-step tasks lose coherence |\n| Subagents | Isolated child agents | Exploration pollutes context |\n| Skills | On-demand knowledge | Domain expertise needed |\n\n**Most agents never need to go beyond Level 2.**\n\n## Domain Examples\n\n**Business**: CRM queries, email, calendar, approvals\n**Research**: Database search, document analysis, citations\n**Operations**: Monitoring, tickets, notifications, escalation\n**Creative**: Asset generation, editing, collaboration, review\n\nThe pattern is universal. Only the capabilities change.\n\n## Key Principles\n\n1. **The model IS the agent** - Code just runs the loop\n2. **Capabilities enable** - What it CAN do\n3. **Knowledge informs** - What it KNOWS how to do\n4. **Constraints focus** - Limits create clarity\n5. **Trust liberates** - Let the model reason\n6. **Iteration reveals** - Start minimal, evolve from usage\n\n## Anti-Patterns\n\n| Pattern | Problem | Solution |\n|---------|---------|----------|\n| Over-engineering | Complexity before need | Start simple |\n| Too many capabilities | Model confusion | 3-5 to start |\n| Rigid workflows | Can't adapt | Let model decide |\n| Front-loaded knowledge | Context bloat | Load on-demand |\n| Micromanagement | Undercuts intelligence | Trust the model |\n\n## Resources\n\n**Philosophy & Theory**:\n- `references/agent-philosophy.md` - Deep dive into why agents work\n\n**Implementation**:\n- `references/minimal-agent.py` - Complete working agent (~80 lines)\n- `references/tool-templates.py` - Capability definitions\n- `references/subagent-pattern.py` - Context isolation\n\n**Scaffolding**:\n- `scripts/init_agent.py` - Generate new agent projects\n\n## The Agent Mindset\n\n**From**: \"How do I make the system do X?\"\n**To**: \"How do I enable the model to do X?\"\n\n**From**: \"What's the workflow for this task?\"\n**To**: \"What capabilities would help accomplish this?\"\n\nThe best agent code is almost boring. Simple loops. Clear capabilities. Clean context. The magic isn't in the code.\n\n**Give the model capabilities and knowledge. Trust it to figure out the rest.**\n",
+      "bodyMd": "# Agent Builder\n\nBuild AI agents for any domain - customer service, research, operations, creative work, or specialized business processes.\n\n## The Core Philosophy\n\n> **The model already knows how to be an agent. Your job is to get out of the way.**\n\nAn agent is not complex engineering. It's a simple loop that invites the model to act:\n\n```\nLOOP:\n  Model sees: context + available capabilities\n  Model decides: act or respond\n  If act: execute capability, add result, continue\n  If respond: return to user\n```\n\n**That's it.** The magic isn't in the code - it's in the model. Your code just provides the opportunity.\n\n## The Three Elements\n\n### 1. Capabilities (What can it DO?)\n\nAtomic actions the agent can perform: search, read, create, send, query, modify.\n\n**Design principle**: Start with 3-5 capabilities. Add more only when the agent consistently fails because a capability is missing.\n\n### 2. Knowledge (What does it KNOW?)\n\nDomain expertise injected on-demand: policies, workflows, best practices, schemas.\n\n**Design principle**: Make knowledge available, not mandatory. Load it when relevant, not upfront.\n\n### 3. Context (What has happened?)\n\nThe conversation history - the thread connecting actions into coherent behavior.\n\n**Design principle**: Context is precious. Isolate noisy subtasks. Truncate verbose outputs. Protect clarity.\n\n## Agent Design Thinking\n\nBefore building, understand:\n\n- **Purpose**: What should this agent accomplish?\n- **Domain**: What world does it operate in? (customer service, research, operations, creative...)\n- **Capabilities**: What 3-5 actions are essential?\n- **Knowledge**: What expertise does it need access to?\n- **Trust**: What decisions can you delegate to the model?\n\n**CRITICAL**: Trust the model. Don't over-engineer. Don't pre-specify workflows. Give it capabilities and let it reason.\n\n## Progressive Complexity\n\nStart simple. Add complexity only when real usage reveals the need:\n\n| Level | What to add | When to add it |\n|-------|-------------|----------------|\n| Basic | 3-5 capabilities | Always start here |\n| Planning | Progress tracking | Multi-step tasks lose coherence |\n| Subagents | Isolated child agents | Exploration pollutes context |\n| Skills | On-demand knowledge | Domain expertise needed |\n\n**Most agents never need to go beyond Level 2.**\n\n## Domain Examples\n\n**Business**: CRM queries, email, calendar, approvals\n**Research**: Database search, document analysis, citations\n**Operations**: Monitoring, tickets, notifications, escalation\n**Creative**: Asset generation, editing, collaboration, review\n\nThe pattern is universal. Only the capabilities change.\n\n## Key Principles\n\n1. **The model IS the agent** - Code just runs the loop\n2. **Capabilities enable** - What it CAN do\n3. **Knowledge informs** - What it KNOWS how to do\n4. **Constraints focus** - Limits create clarity\n5. **Trust liberates** - Let the model reason\n6. **Iteration reveals** - Start minimal, evolve from usage\n\n## Anti-Patterns\n\n| Pattern | Problem | Solution |\n|---------|---------|----------|\n| Over-engineering | Complexity before need | Start simple |\n| Too many capabilities | Model confusion | 3-5 to start |\n| Rigid workflows | Can't adapt | Let model decide |\n| Front-loaded knowledge | Context bloat | Load on-demand |\n| Micromanagement | Undercuts intelligence | Trust the model |\n\n## Resources\n\n**Philosophy & Theory**:\n- `references/agent-philosophy.md` - Deep dive into why agents work\n\n**Implementation**:\n- `references/minimal-agent.py` - Complete working agent (~80 lines)\n- `references/tool-templates.py` - Capability definitions\n- `references/subagent-pattern.py` - Context isolation\n\n**Scaffolding**:\n- `scripts/init_agent.py` - Generate new agent projects\n\n## The Agent Mindset\n\n**From**: \"How do I make the system do X?\"\n**To**: \"How do I enable the model to do X?\"\n\n**From**: \"What's the workflow for this task?\"\n**To**: \"What capabilities would help accomplish this?\"\n\nThe best agent code is almost boring. Simple loops. Clear capabilities. Clean context. The magic isn't in the code.\n\n**Give the model capabilities and knowledge. Trust it to figure out the rest.**\n"
+    },
+    {
+      "slug": "code-review",
+      "name": "code-review",
+      "dir": "skills/code-review",
+      "path": "skills/code-review/SKILL.md",
+      "desc": "Perform thorough code reviews with security, performance, and maintainability analysis. Use when user asks to review code, check for bugs, or audit a codebase.",
+      "descZh": "",
+      "triggers": [
+        "user asks to review code",
+        "check for bugs",
+        "audit a codebase"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": true,
+        "network": false,
+        "bins": [
+          "git",
+          "node",
+          "npm",
+          "python",
+          "pip",
+          "cargo",
+          "go"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/shareAI-lab/learn-claude-code.git",
+        "copy": "cp -r skills/code-review ~/.claude/skills/code-review",
+        "raw": "https://raw.githubusercontent.com/shareAI-lab/learn-claude-code/ce8f9f186058939da54c9d6fead78dfb5d0fd6c3/skills/code-review/SKILL.md",
+        "saveAs": "~/.claude/skills/code-review/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:a64c8c43b4962f2600aa97fba826b615f9c3e8d1bf3656abbeadd148f65f8f25",
+      "bytes": 4266,
+      "wordCount": 594,
+      "repoLicense": "MIT",
+      "commit": "ce8f9f186058939da54c9d6fead78dfb5d0fd6c3",
+      "branch": "main",
+      "body": "---\nname: code-review\ndescription: Perform thorough code reviews with security, performance, and maintainability analysis. Use when user asks to review code, check for bugs, or audit a codebase.\n---\n\n# Code Review Skill\n\nYou now have expertise in conducting comprehensive code reviews. Follow this structured approach:\n\n## Review Checklist\n\n### 1. Security (Critical)\n\nCheck for:\n- [ ] **Injection vulnerabilities**: SQL, command, XSS, template injection\n- [ ] **Authentication issues**: Hardcoded credentials, weak auth\n- [ ] **Authorization flaws**: Missing access controls, IDOR\n- [ ] **Data exposure**: Sensitive data in logs, error messages\n- [ ] **Cryptography**: Weak algorithms, improper key management\n- [ ] **Dependencies**: Known vulnerabilities (check with `npm audit`, `pip-audit`)\n\n```bash\n# Quick security scans\nnpm audit                    # Node.js\npip-audit                    # Python\ncargo audit                  # Rust\ngrep -r \"password\\|secret\\|api_key\" --include=\"*.py\" --include=\"*.js\"\n```\n\n### 2. Correctness\n\nCheck for:\n- [ ] **Logic errors**: Off-by-one, null handling, edge cases\n- [ ] **Race conditions**: Concurrent access without synchronization\n- [ ] **Resource leaks**: Unclosed files, connections, memory\n- [ ] **Error handling**: Swallowed exceptions, missing error paths\n- [ ] **Type safety**: Implicit conversions, any types\n\n### 3. Performance\n\nCheck for:\n- [ ] **N+1 queries**: Database calls in loops\n- [ ] **Memory issues**: Large allocations, retained references\n- [ ] **Blocking operations**: Sync I/O in async code\n- [ ] **Inefficient algorithms**: O(n^2) when O(n) possible\n- [ ] **Missing caching**: Repeated expensive computations\n\n### 4. Maintainability\n\nCheck for:\n- [ ] **Naming**: Clear, consistent, descriptive\n- [ ] **Complexity**: Functions > 50 lines, deep nesting > 3 levels\n- [ ] **Duplication**: Copy-pasted code blocks\n- [ ] **Dead code**: Unused imports, unreachable branches\n- [ ] **Comments**: Outdated, redundant, or missing where needed\n\n### 5. Testing\n\nCheck for:\n- [ ] **Coverage**: Critical paths tested\n- [ ] **Edge cases**: Null, empty, boundary values\n- [ ] **Mocking**: External dependencies isolated\n- [ ] **Assertions**: Meaningful, specific checks\n\n## Review Output Format\n\n```markdown\n## Code Review: [file/component name]\n\n### Summary\n[1-2 sentence overview]\n\n### Critical Issues\n1. **[Issue]** (line X): [Description]\n   - Impact: [What could go wrong]\n   - Fix: [Suggested solution]\n\n### Improvements\n1. **[Suggestion]** (line X): [Description]\n\n### Positive Notes\n- [What was done well]\n\n### Verdict\n[ ] Ready to merge\n[ ] Needs minor changes\n[ ] Needs major revision\n```\n\n## Common Patterns to Flag\n\n### Python\n```python\n# Bad: SQL injection\ncursor.execute(f\"SELECT * FROM users WHERE id = {user_id}\")\n# Good:\ncursor.execute(\"SELECT * FROM users WHERE id = ?\", (user_id,))\n\n# Bad: Command injection\nos.system(f\"ls {user_input}\")\n# Good:\nsubprocess.run([\"ls\", user_input], check=True)\n\n# Bad: Mutable default argument\ndef append(item, lst=[]):  # Bug: shared mutable default\n# Good:\ndef append(item, lst=None):\n    lst = lst or []\n```\n\n### JavaScript/TypeScript\n```javascript\n// Bad: Prototype pollution\nObject.assign(target, userInput)\n// Good:\nObject.assign(target, sanitize(userInput))\n\n// Bad: eval usage\neval(userCode)\n// Good: Never use eval with user input\n\n// Bad: Callback hell\ngetData(x => process(x, y => save(y, z => done(z))))\n// Good:\nconst data = await getData();\nconst processed = await process(data);\nawait save(processed);\n```\n\n## Review Commands\n\n```bash\n# Show recent changes\ngit diff HEAD~5 --stat\ngit log --oneline -10\n\n# Find potential issues\ngrep -rn \"TODO\\|FIXME\\|HACK\\|XXX\" .\ngrep -rn \"password\\|secret\\|token\" . --include=\"*.py\"\n\n# Check complexity (Python)\npip install radon && radon cc . -a\n\n# Check dependencies\nnpm outdated  # Node\npip list --outdated  # Python\n```\n\n## Review Workflow\n\n1. **Understand context**: Read PR description, linked issues\n2. **Run the code**: Build, test, run locally if possible\n3. **Read top-down**: Start with main entry points\n4. **Check tests**: Are changes tested? Do tests pass?\n5. **Security scan**: Run automated tools\n6. **Manual review**: Use checklist above\n7. **Write feedback**: Be specific, suggest fixes, be kind\n",
+      "bodyMd": "# Code Review Skill\n\nYou now have expertise in conducting comprehensive code reviews. Follow this structured approach:\n\n## Review Checklist\n\n### 1. Security (Critical)\n\nCheck for:\n- [ ] **Injection vulnerabilities**: SQL, command, XSS, template injection\n- [ ] **Authentication issues**: Hardcoded credentials, weak auth\n- [ ] **Authorization flaws**: Missing access controls, IDOR\n- [ ] **Data exposure**: Sensitive data in logs, error messages\n- [ ] **Cryptography**: Weak algorithms, improper key management\n- [ ] **Dependencies**: Known vulnerabilities (check with `npm audit`, `pip-audit`)\n\n```bash\n# Quick security scans\nnpm audit                    # Node.js\npip-audit                    # Python\ncargo audit                  # Rust\ngrep -r \"password\\|secret\\|api_key\" --include=\"*.py\" --include=\"*.js\"\n```\n\n### 2. Correctness\n\nCheck for:\n- [ ] **Logic errors**: Off-by-one, null handling, edge cases\n- [ ] **Race conditions**: Concurrent access without synchronization\n- [ ] **Resource leaks**: Unclosed files, connections, memory\n- [ ] **Error handling**: Swallowed exceptions, missing error paths\n- [ ] **Type safety**: Implicit conversions, any types\n\n### 3. Performance\n\nCheck for:\n- [ ] **N+1 queries**: Database calls in loops\n- [ ] **Memory issues**: Large allocations, retained references\n- [ ] **Blocking operations**: Sync I/O in async code\n- [ ] **Inefficient algorithms**: O(n^2) when O(n) possible\n- [ ] **Missing caching**: Repeated expensive computations\n\n### 4. Maintainability\n\nCheck for:\n- [ ] **Naming**: Clear, consistent, descriptive\n- [ ] **Complexity**: Functions > 50 lines, deep nesting > 3 levels\n- [ ] **Duplication**: Copy-pasted code blocks\n- [ ] **Dead code**: Unused imports, unreachable branches\n- [ ] **Comments**: Outdated, redundant, or missing where needed\n\n### 5. Testing\n\nCheck for:\n- [ ] **Coverage**: Critical paths tested\n- [ ] **Edge cases**: Null, empty, boundary values\n- [ ] **Mocking**: External dependencies isolated\n- [ ] **Assertions**: Meaningful, specific checks\n\n## Review Output Format\n\n```markdown\n## Code Review: [file/component name]\n\n### Summary\n[1-2 sentence overview]\n\n### Critical Issues\n1. **[Issue]** (line X): [Description]\n   - Impact: [What could go wrong]\n   - Fix: [Suggested solution]\n\n### Improvements\n1. **[Suggestion]** (line X): [Description]\n\n### Positive Notes\n- [What was done well]\n\n### Verdict\n[ ] Ready to merge\n[ ] Needs minor changes\n[ ] Needs major revision\n```\n\n## Common Patterns to Flag\n\n### Python\n```python\n# Bad: SQL injection\ncursor.execute(f\"SELECT * FROM users WHERE id = {user_id}\")\n# Good:\ncursor.execute(\"SELECT * FROM users WHERE id = ?\", (user_id,))\n\n# Bad: Command injection\nos.system(f\"ls {user_input}\")\n# Good:\nsubprocess.run([\"ls\", user_input], check=True)\n\n# Bad: Mutable default argument\ndef append(item, lst=[]):  # Bug: shared mutable default\n# Good:\ndef append(item, lst=None):\n    lst = lst or []\n```\n\n### JavaScript/TypeScript\n```javascript\n// Bad: Prototype pollution\nObject.assign(target, userInput)\n// Good:\nObject.assign(target, sanitize(userInput))\n\n// Bad: eval usage\neval(userCode)\n// Good: Never use eval with user input\n\n// Bad: Callback hell\ngetData(x => process(x, y => save(y, z => done(z))))\n// Good:\nconst data = await getData();\nconst processed = await process(data);\nawait save(processed);\n```\n\n## Review Commands\n\n```bash\n# Show recent changes\ngit diff HEAD~5 --stat\ngit log --oneline -10\n\n# Find potential issues\ngrep -rn \"TODO\\|FIXME\\|HACK\\|XXX\" .\ngrep -rn \"password\\|secret\\|token\" . --include=\"*.py\"\n\n# Check complexity (Python)\npip install radon && radon cc . -a\n\n# Check dependencies\nnpm outdated  # Node\npip list --outdated  # Python\n```\n\n## Review Workflow\n\n1. **Understand context**: Read PR description, linked issues\n2. **Run the code**: Build, test, run locally if possible\n3. **Read top-down**: Start with main entry points\n4. **Check tests**: Are changes tested? Do tests pass?\n5. **Security scan**: Run automated tools\n6. **Manual review**: Use checklist above\n7. **Write feedback**: Be specific, suggest fixes, be kind\n"
+    },
+    {
+      "slug": "mcp-builder",
+      "name": "mcp-builder",
+      "dir": "skills/mcp-builder",
+      "path": "skills/mcp-builder/SKILL.md",
+      "desc": "Build MCP (Model Context Protocol) servers that give Claude new capabilities. Use when user wants to create an MCP server, add tools to Claude, or integrate external services.",
+      "descZh": "",
+      "triggers": [
+        "add tools to Claude"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": true,
+        "network": true,
+        "bins": [
+          "npm",
+          "python",
+          "python3",
+          "pip",
+          "npx",
+          "sqlite3"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/shareAI-lab/learn-claude-code.git",
+        "copy": "cp -r skills/mcp-builder ~/.claude/skills/mcp-builder",
+        "raw": "https://raw.githubusercontent.com/shareAI-lab/learn-claude-code/ce8f9f186058939da54c9d6fead78dfb5d0fd6c3/skills/mcp-builder/SKILL.md",
+        "saveAs": "~/.claude/skills/mcp-builder/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:1f0d78f420282374f87b9c6f0dfaad97397d840c7e47f4c878f01d00ab905b9a",
+      "bytes": 4918,
+      "wordCount": 563,
+      "repoLicense": "MIT",
+      "commit": "ce8f9f186058939da54c9d6fead78dfb5d0fd6c3",
+      "branch": "main",
+      "body": "---\nname: mcp-builder\ndescription: Build MCP (Model Context Protocol) servers that give Claude new capabilities. Use when user wants to create an MCP server, add tools to Claude, or integrate external services.\n---\n\n# MCP Server Building Skill\n\nYou now have expertise in building MCP (Model Context Protocol) servers. MCP enables Claude to interact with external services through a standardized protocol.\n\n## What is MCP?\n\nMCP servers expose:\n- **Tools**: Functions Claude can call (like API endpoints)\n- **Resources**: Data Claude can read (like files or database records)\n- **Prompts**: Pre-built prompt templates\n\n## Quick Start: Python MCP Server\n\n### 1. Project Setup\n\n```bash\n# Create project\nmkdir my-mcp-server && cd my-mcp-server\npython3 -m venv venv && source venv/bin/activate\n\n# Install MCP SDK\npip install mcp\n```\n\n### 2. Basic Server Template\n\n```python\n#!/usr/bin/env python3\n\"\"\"my_server.py - A simple MCP server\"\"\"\n\nfrom mcp.server import Server\nfrom mcp.server.stdio import stdio_server\nfrom mcp.types import Tool, TextContent\n\n# Create server instance\nserver = Server(\"my-server\")\n\n# Define a tool\n@server.tool()\nasync def hello(name: str) -> str:\n    \"\"\"Say hello to someone.\n\n    Args:\n        name: The name to greet\n    \"\"\"\n    return f\"Hello, {name}!\"\n\n@server.tool()\nasync def add_numbers(a: int, b: int) -> str:\n    \"\"\"Add two numbers together.\n\n    Args:\n        a: First number\n        b: Second number\n    \"\"\"\n    return str(a + b)\n\n# Run server\nasync def main():\n    async with stdio_server() as (read, write):\n        await server.run(read, write)\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())\n```\n\n### 3. Register with Claude\n\nAdd to `~/.claude/mcp.json`:\n```json\n{\n  \"mcpServers\": {\n    \"my-server\": {\n      \"command\": \"python3\",\n      \"args\": [\"/path/to/my_server.py\"]\n    }\n  }\n}\n```\n\n## TypeScript MCP Server\n\n### 1. Setup\n\n```bash\nmkdir my-mcp-server && cd my-mcp-server\nnpm init -y\nnpm install @modelcontextprotocol/sdk\n```\n\n### 2. Template\n\n```typescript\n// src/index.ts\nimport { Server } from \"@modelcontextprotocol/sdk/server/index.js\";\nimport { StdioServerTransport } from \"@modelcontextprotocol/sdk/server/stdio.js\";\n\nconst server = new Server({\n  name: \"my-server\",\n  version: \"1.0.0\",\n});\n\n// Define tools\nserver.setRequestHandler(\"tools/list\", async () => ({\n  tools: [\n    {\n      name: \"hello\",\n      description: \"Say hello to someone\",\n      inputSchema: {\n        type: \"object\",\n        properties: {\n          name: { type: \"string\", description: \"Name to greet\" },\n        },\n        required: [\"name\"],\n      },\n    },\n  ],\n}));\n\nserver.setRequestHandler(\"tools/call\", async (request) => {\n  if (request.params.name === \"hello\") {\n    const name = request.params.arguments.name;\n    return { content: [{ type: \"text\", text: `Hello, ${name}!` }] };\n  }\n  throw new Error(\"Unknown tool\");\n});\n\n// Start server\nconst transport = new StdioServerTransport();\nserver.connect(transport);\n```\n\n## Advanced Patterns\n\n### External API Integration\n\n```python\nimport httpx\nfrom mcp.server import Server\n\nserver = Server(\"weather-server\")\n\n@server.tool()\nasync def get_weather(city: str) -> str:\n    \"\"\"Get current weather for a city.\"\"\"\n    async with httpx.AsyncClient() as client:\n        resp = await client.get(\n            f\"https://api.weatherapi.com/v1/current.json\",\n            params={\"key\": \"YOUR_API_KEY\", \"q\": city}\n        )\n        data = resp.json()\n        return f\"{city}: {data['current']['temp_c']}C, {data['current']['condition']['text']}\"\n```\n\n### Database Access\n\n```python\nimport sqlite3\nfrom mcp.server import Server\n\nserver = Server(\"db-server\")\n\n@server.tool()\nasync def query_db(sql: str) -> str:\n    \"\"\"Execute a read-only SQL query.\"\"\"\n    if not sql.strip().upper().startswith(\"SELECT\"):\n        return \"Error: Only SELECT queries allowed\"\n\n    conn = sqlite3.connect(\"data.db\")\n    cursor = conn.execute(sql)\n    rows = cursor.fetchall()\n    conn.close()\n    return str(rows)\n```\n\n### Resources (Read-only Data)\n\n```python\n@server.resource(\"config://settings\")\nasync def get_settings() -> str:\n    \"\"\"Application settings.\"\"\"\n    return open(\"settings.json\").read()\n\n@server.resource(\"file://{path}\")\nasync def read_file(path: str) -> str:\n    \"\"\"Read a file from the workspace.\"\"\"\n    return open(path).read()\n```\n\n## Testing\n\n```bash\n# Test with MCP Inspector\nnpx @anthropics/mcp-inspector python3 my_server.py\n\n# Or send test messages directly\necho '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/list\"}' | python3 my_server.py\n```\n\n## Best Practices\n\n1. **Clear tool descriptions**: Claude uses these to decide when to call tools\n2. **Input validation**: Always validate and sanitize inputs\n3. **Error handling**: Return meaningful error messages\n4. **Async by default**: Use async/await for I/O operations\n5. **Security**: Never expose sensitive operations without auth\n6. **Idempotency**: Tools should be safe to retry\n",
+      "bodyMd": "# MCP Server Building Skill\n\nYou now have expertise in building MCP (Model Context Protocol) servers. MCP enables Claude to interact with external services through a standardized protocol.\n\n## What is MCP?\n\nMCP servers expose:\n- **Tools**: Functions Claude can call (like API endpoints)\n- **Resources**: Data Claude can read (like files or database records)\n- **Prompts**: Pre-built prompt templates\n\n## Quick Start: Python MCP Server\n\n### 1. Project Setup\n\n```bash\n# Create project\nmkdir my-mcp-server && cd my-mcp-server\npython3 -m venv venv && source venv/bin/activate\n\n# Install MCP SDK\npip install mcp\n```\n\n### 2. Basic Server Template\n\n```python\n#!/usr/bin/env python3\n\"\"\"my_server.py - A simple MCP server\"\"\"\n\nfrom mcp.server import Server\nfrom mcp.server.stdio import stdio_server\nfrom mcp.types import Tool, TextContent\n\n# Create server instance\nserver = Server(\"my-server\")\n\n# Define a tool\n@server.tool()\nasync def hello(name: str) -> str:\n    \"\"\"Say hello to someone.\n\n    Args:\n        name: The name to greet\n    \"\"\"\n    return f\"Hello, {name}!\"\n\n@server.tool()\nasync def add_numbers(a: int, b: int) -> str:\n    \"\"\"Add two numbers together.\n\n    Args:\n        a: First number\n        b: Second number\n    \"\"\"\n    return str(a + b)\n\n# Run server\nasync def main():\n    async with stdio_server() as (read, write):\n        await server.run(read, write)\n\nif __name__ == \"__main__\":\n    import asyncio\n    asyncio.run(main())\n```\n\n### 3. Register with Claude\n\nAdd to `~/.claude/mcp.json`:\n```json\n{\n  \"mcpServers\": {\n    \"my-server\": {\n      \"command\": \"python3\",\n      \"args\": [\"/path/to/my_server.py\"]\n    }\n  }\n}\n```\n\n## TypeScript MCP Server\n\n### 1. Setup\n\n```bash\nmkdir my-mcp-server && cd my-mcp-server\nnpm init -y\nnpm install @modelcontextprotocol/sdk\n```\n\n### 2. Template\n\n```typescript\n// src/index.ts\nimport { Server } from \"@modelcontextprotocol/sdk/server/index.js\";\nimport { StdioServerTransport } from \"@modelcontextprotocol/sdk/server/stdio.js\";\n\nconst server = new Server({\n  name: \"my-server\",\n  version: \"1.0.0\",\n});\n\n// Define tools\nserver.setRequestHandler(\"tools/list\", async () => ({\n  tools: [\n    {\n      name: \"hello\",\n      description: \"Say hello to someone\",\n      inputSchema: {\n        type: \"object\",\n        properties: {\n          name: { type: \"string\", description: \"Name to greet\" },\n        },\n        required: [\"name\"],\n      },\n    },\n  ],\n}));\n\nserver.setRequestHandler(\"tools/call\", async (request) => {\n  if (request.params.name === \"hello\") {\n    const name = request.params.arguments.name;\n    return { content: [{ type: \"text\", text: `Hello, ${name}!` }] };\n  }\n  throw new Error(\"Unknown tool\");\n});\n\n// Start server\nconst transport = new StdioServerTransport();\nserver.connect(transport);\n```\n\n## Advanced Patterns\n\n### External API Integration\n\n```python\nimport httpx\nfrom mcp.server import Server\n\nserver = Server(\"weather-server\")\n\n@server.tool()\nasync def get_weather(city: str) -> str:\n    \"\"\"Get current weather for a city.\"\"\"\n    async with httpx.AsyncClient() as client:\n        resp = await client.get(\n            f\"https://api.weatherapi.com/v1/current.json\",\n            params={\"key\": \"YOUR_API_KEY\", \"q\": city}\n        )\n        data = resp.json()\n        return f\"{city}: {data['current']['temp_c']}C, {data['current']['condition']['text']}\"\n```\n\n### Database Access\n\n```python\nimport sqlite3\nfrom mcp.server import Server\n\nserver = Server(\"db-server\")\n\n@server.tool()\nasync def query_db(sql: str) -> str:\n    \"\"\"Execute a read-only SQL query.\"\"\"\n    if not sql.strip().upper().startswith(\"SELECT\"):\n        return \"Error: Only SELECT queries allowed\"\n\n    conn = sqlite3.connect(\"data.db\")\n    cursor = conn.execute(sql)\n    rows = cursor.fetchall()\n    conn.close()\n    return str(rows)\n```\n\n### Resources (Read-only Data)\n\n```python\n@server.resource(\"config://settings\")\nasync def get_settings() -> str:\n    \"\"\"Application settings.\"\"\"\n    return open(\"settings.json\").read()\n\n@server.resource(\"file://{path}\")\nasync def read_file(path: str) -> str:\n    \"\"\"Read a file from the workspace.\"\"\"\n    return open(path).read()\n```\n\n## Testing\n\n```bash\n# Test with MCP Inspector\nnpx @anthropics/mcp-inspector python3 my_server.py\n\n# Or send test messages directly\necho '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/list\"}' | python3 my_server.py\n```\n\n## Best Practices\n\n1. **Clear tool descriptions**: Claude uses these to decide when to call tools\n2. **Input validation**: Always validate and sanitize inputs\n3. **Error handling**: Return meaningful error messages\n4. **Async by default**: Use async/await for I/O operations\n5. **Security**: Never expose sensitive operations without auth\n6. **Idempotency**: Tools should be safe to retry\n"
+    },
+    {
+      "slug": "pdf",
+      "name": "pdf",
+      "dir": "skills/pdf",
+      "path": "skills/pdf/SKILL.md",
+      "desc": "Process PDF files - extract text, create PDFs, merge documents. Use when user asks to read PDF, create PDF, or work with PDF files.",
+      "descZh": "",
+      "triggers": [
+        "user asks to read PDF",
+        "create PDF",
+        "work with PDF files"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "python3",
+          "pip",
+          "pandoc",
+          "brew"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/shareAI-lab/learn-claude-code.git",
+        "copy": "cp -r skills/pdf ~/.claude/skills/pdf",
+        "raw": "https://raw.githubusercontent.com/shareAI-lab/learn-claude-code/ce8f9f186058939da54c9d6fead78dfb5d0fd6c3/skills/pdf/SKILL.md",
+        "saveAs": "~/.claude/skills/pdf/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:b143723126a9951c556063edbdf15fce252a505e11c85a3fdbaa221f1116d178",
+      "bytes": 2581,
+      "wordCount": 319,
+      "repoLicense": "MIT",
+      "commit": "ce8f9f186058939da54c9d6fead78dfb5d0fd6c3",
+      "branch": "main",
+      "body": "---\nname: pdf\ndescription: Process PDF files - extract text, create PDFs, merge documents. Use when user asks to read PDF, create PDF, or work with PDF files.\n---\n\n# PDF Processing Skill\n\nYou now have expertise in PDF manipulation. Follow these workflows:\n\n## Reading PDFs\n\n**Option 1: Quick text extraction (preferred)**\n```bash\n# Using pdftotext (poppler-utils)\npdftotext input.pdf -  # Output to stdout\npdftotext input.pdf output.txt  # Output to file\n\n# If pdftotext not available, try:\npython3 -c \"\nimport fitz  # PyMuPDF\ndoc = fitz.open('input.pdf')\nfor page in doc:\n    print(page.get_text())\n\"\n```\n\n**Option 2: Page-by-page with metadata**\n```python\nimport fitz  # pip install pymupdf\n\ndoc = fitz.open(\"input.pdf\")\nprint(f\"Pages: {len(doc)}\")\nprint(f\"Metadata: {doc.metadata}\")\n\nfor i, page in enumerate(doc):\n    text = page.get_text()\n    print(f\"--- Page {i+1} ---\")\n    print(text)\n```\n\n## Creating PDFs\n\n**Option 1: From Markdown (recommended)**\n```bash\n# Using pandoc\npandoc input.md -o output.pdf\n\n# With custom styling\npandoc input.md -o output.pdf --pdf-engine=xelatex -V geometry:margin=1in\n```\n\n**Option 2: Programmatically**\n```python\nfrom reportlab.lib.pagesizes import letter\nfrom reportlab.pdfgen import canvas\n\nc = canvas.Canvas(\"output.pdf\", pagesize=letter)\nc.drawString(100, 750, \"Hello, PDF!\")\nc.save()\n```\n\n**Option 3: From HTML**\n```bash\n# Using wkhtmltopdf\nwkhtmltopdf input.html output.pdf\n\n# Or with Python\npython3 -c \"\nimport pdfkit\npdfkit.from_file('input.html', 'output.pdf')\n\"\n```\n\n## Merging PDFs\n\n```python\nimport fitz\n\nresult = fitz.open()\nfor pdf_path in [\"file1.pdf\", \"file2.pdf\", \"file3.pdf\"]:\n    doc = fitz.open(pdf_path)\n    result.insert_pdf(doc)\nresult.save(\"merged.pdf\")\n```\n\n## Splitting PDFs\n\n```python\nimport fitz\n\ndoc = fitz.open(\"input.pdf\")\nfor i in range(len(doc)):\n    single = fitz.open()\n    single.insert_pdf(doc, from_page=i, to_page=i)\n    single.save(f\"page_{i+1}.pdf\")\n```\n\n## Key Libraries\n\n| Task | Library | Install |\n|------|---------|---------|\n| Read/Write/Merge | PyMuPDF | `pip install pymupdf` |\n| Create from scratch | ReportLab | `pip install reportlab` |\n| HTML to PDF | pdfkit | `pip install pdfkit` + wkhtmltopdf |\n| Text extraction | pdftotext | `brew install poppler` / `apt install poppler-utils` |\n\n## Best Practices\n\n1. **Always check if tools are installed** before using them\n2. **Handle encoding issues** - PDFs may contain various character encodings\n3. **Large PDFs**: Process page by page to avoid memory issues\n4. **OCR for scanned PDFs**: Use `pytesseract` if text extraction returns empty\n",
+      "bodyMd": "# PDF Processing Skill\n\nYou now have expertise in PDF manipulation. Follow these workflows:\n\n## Reading PDFs\n\n**Option 1: Quick text extraction (preferred)**\n```bash\n# Using pdftotext (poppler-utils)\npdftotext input.pdf -  # Output to stdout\npdftotext input.pdf output.txt  # Output to file\n\n# If pdftotext not available, try:\npython3 -c \"\nimport fitz  # PyMuPDF\ndoc = fitz.open('input.pdf')\nfor page in doc:\n    print(page.get_text())\n\"\n```\n\n**Option 2: Page-by-page with metadata**\n```python\nimport fitz  # pip install pymupdf\n\ndoc = fitz.open(\"input.pdf\")\nprint(f\"Pages: {len(doc)}\")\nprint(f\"Metadata: {doc.metadata}\")\n\nfor i, page in enumerate(doc):\n    text = page.get_text()\n    print(f\"--- Page {i+1} ---\")\n    print(text)\n```\n\n## Creating PDFs\n\n**Option 1: From Markdown (recommended)**\n```bash\n# Using pandoc\npandoc input.md -o output.pdf\n\n# With custom styling\npandoc input.md -o output.pdf --pdf-engine=xelatex -V geometry:margin=1in\n```\n\n**Option 2: Programmatically**\n```python\nfrom reportlab.lib.pagesizes import letter\nfrom reportlab.pdfgen import canvas\n\nc = canvas.Canvas(\"output.pdf\", pagesize=letter)\nc.drawString(100, 750, \"Hello, PDF!\")\nc.save()\n```\n\n**Option 3: From HTML**\n```bash\n# Using wkhtmltopdf\nwkhtmltopdf input.html output.pdf\n\n# Or with Python\npython3 -c \"\nimport pdfkit\npdfkit.from_file('input.html', 'output.pdf')\n\"\n```\n\n## Merging PDFs\n\n```python\nimport fitz\n\nresult = fitz.open()\nfor pdf_path in [\"file1.pdf\", \"file2.pdf\", \"file3.pdf\"]:\n    doc = fitz.open(pdf_path)\n    result.insert_pdf(doc)\nresult.save(\"merged.pdf\")\n```\n\n## Splitting PDFs\n\n```python\nimport fitz\n\ndoc = fitz.open(\"input.pdf\")\nfor i in range(len(doc)):\n    single = fitz.open()\n    single.insert_pdf(doc, from_page=i, to_page=i)\n    single.save(f\"page_{i+1}.pdf\")\n```\n\n## Key Libraries\n\n| Task | Library | Install |\n|------|---------|---------|\n| Read/Write/Merge | PyMuPDF | `pip install pymupdf` |\n| Create from scratch | ReportLab | `pip install reportlab` |\n| HTML to PDF | pdfkit | `pip install pdfkit` + wkhtmltopdf |\n| Text extraction | pdftotext | `brew install poppler` / `apt install poppler-utils` |\n\n## Best Practices\n\n1. **Always check if tools are installed** before using them\n2. **Handle encoding issues** - PDFs may contain various character encodings\n3. **Large PDFs**: Process page by page to avoid memory issues\n4. **OCR for scanned PDFs**: Use `pytesseract` if text extraction returns empty\n"
+    }
+  ]
+}

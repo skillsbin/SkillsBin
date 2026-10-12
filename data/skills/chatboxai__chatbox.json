@@ -1,0 +1,148 @@
+{
+  "repo": "chatboxai/chatbox",
+  "commit": "0ac6385ae1ff5bf778777826da3c5edcd55b61b8",
+  "branch": "main",
+  "fetchedAt": "2026-10-12T14:07:44.040Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "cherry-pick-pro",
+      "name": "cherry-pick-pro",
+      "dir": ".claude/skills/cherry-pick-pro",
+      "path": ".claude/skills/cherry-pick-pro/SKILL.md",
+      "desc": "Cherry-pick commits from chatbox-pro repo to the open chatbox repo, handling mobile-only files, package name differences, and other repo-specific exclusions.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "GPL-3.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git",
+          "pnpm",
+          "gh",
+          "playwright",
+          "awk"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/chatboxai/chatbox.git",
+        "copy": "cp -r .claude/skills/cherry-pick-pro ~/.claude/skills/cherry-pick-pro",
+        "raw": "https://raw.githubusercontent.com/chatboxai/chatbox/0ac6385ae1ff5bf778777826da3c5edcd55b61b8/.claude/skills/cherry-pick-pro/SKILL.md",
+        "saveAs": "~/.claude/skills/cherry-pick-pro/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:380e188a73f93a1b2a26ca80d8df66985afe945beb59c94fd68425159631c88e",
+      "bytes": 4936,
+      "wordCount": 694,
+      "repoLicense": "GPL-3.0",
+      "commit": "0ac6385ae1ff5bf778777826da3c5edcd55b61b8",
+      "branch": "main",
+      "body": "---\nname: cherry-pick-pro\ndescription: Cherry-pick commits from chatbox-pro repo to the open chatbox repo, handling mobile-only files, package name differences, and other repo-specific exclusions.\nuser_invocable: true\nread_when:\n  - Cherry-picking from pro to open repo\n  - Syncing pro commits to open source repo\n  - Releasing open source version\n---\n\n# Cherry Pick Pro\n\nCherry-pick commits from the `chatbox-pro` repo (`pro` remote) to the open `chatbox` repo, filtering out mobile-only changes and adjusting for repo differences.\n\n## Usage\n\n```\n/cherry-pick-pro [from_commit] [to_commit]\n```\n\n- `from_commit`: (optional) A **`pro/main` commit hash** to start from (exclusive). Must be a commit on `pro/main`, not an open-repo commit — see step 2. Defaults to auto-detecting the last synced pro commit.\n- `to_commit`: (optional) The commit hash to end at (inclusive). Defaults to `pro/main` HEAD.\n\n## Workflow\n\n### 1. Sync remotes first\n```bash\ngit fetch pro\ngit fetch origin\n```\n\n⚠️ **Tag pollution**: `git fetch pro` also fetches pro's tags (e.g. `vX.Y.Z` created on pro's release branch). These local tags point at **pro commits**, not open repo commits. Never push them as-is — see step 8.\n\n### 2. Identify commits to cherry-pick\n\n⚠️ The range bound **must be a `pro/main` commit**. The open repo and `pro/main` share no history (cherry-picks create new SHAs), so an open-repo commit hash as the lower bound makes `A..pro/main` return *all* of pro's history, not the increment.\n\nFind the last synced pro commit by reading the `cherry picked from pro commit <hash>` footer that step 5 writes into each open-repo commit, then list pro commits after it:\n```bash\n# last synced pro commit (the lower bound)\nlast=$(git log --grep=\"cherry picked from pro commit\" -1 --pretty=%B HEAD \\\n  | grep -oE 'pro commit [0-9a-f]+' | awk '{print $3}')\ngit log \"$last\"..pro/main --oneline --reverse  # commits to pick\n```\nIf no footer is found (first-ever sync), pass `from_commit` explicitly.\n\n### 3. Analyze each commit\nFor each commit, check the files it touches:\n```bash\ngit diff-tree --no-commit-id --name-only -r <commit>\n```\n\n### 4. Cherry-pick rules\n\n#### Files/directories to SKIP (delete if conflict):\n- `android/` - mobile-only, not in open repo\n- `ios/` - mobile-only, not in open repo\n- `capacitor.config.ts` - mobile config\n- `.github/` - open repo has no CI; workflow/config differs (see step 8)\n- `CLAUDE.md`, `AGENTS.md` - pro-specific AI config\n- `.cursorrules` - pro-specific\n- `.claude/` - pro-specific skills/config (including this skill itself), never sync to open repo\n\n#### Package name differences:\n- Pro uses: `xyz.chatboxapp.app`\n- Open uses: `xyz.chatboxapp.ce`\n- When resolving conflicts in `package.json` or `release/app/package.json`, always keep the open repo name (`xyz.chatboxapp.ce`)\n\n#### Pro-only dependencies to remove if added:\n- `@playwright/test` - pro testing only\n- `playwright` - pro testing only\n- `@ruguoapp/jk-analytics` - pro analytics only\n\n#### `pnpm-lock.yaml`:\n- Will almost always conflict. Accept either side, then run `pnpm install --no-frozen-lockfile` at the end to regenerate.\n\n### 5. Cherry-pick process\nFor each commit:\n1. Try `git cherry-pick <hash>` directly first\n2. If conflicts occur, use `--no-commit` and resolve:\n   - Remove mobile-only files with `git rm`\n   - Fix package name conflicts (keep `ce`)\n   - Remove pro-only dependencies\n   - Accept either side for `pnpm-lock.yaml`\n3. Commit with original message + `(cherry picked from pro commit <hash>)` note\n\n### 6. Finalize\nAfter all cherry-picks:\n```bash\npnpm install --no-frozen-lockfile  # regenerate lockfile\ngit add pnpm-lock.yaml\ngit commit -m \"chore: regenerate pnpm-lock.yaml for open repo\"\n```\n\n### 7. Verify\n```bash\ngit log --oneline <start>..HEAD  # review all new commits\npnpm install  # ensure deps resolve\n```\n\n### 8. Release (if syncing a version release)\n\nThe open repo has **no CI workflows** — releases are manual:\n\n1. Push the sync branch to `origin/main`\n2. Re-create the version tag on the **open repo's** commit. The local tag fetched from pro points at a pro commit — pushing it would leak pro's commit history into the open repo:\n   ```bash\n   git tag -d vX.Y.Z                 # delete pro's tag fetched in step 1\n   git tag vX.Y.Z <open-repo-head>   # re-create on open repo commit\n   git push origin vX.Y.Z\n   ```\n3. Create the GitHub Release manually (no binary assets; notes = changelog + install links, copy format from the previous release):\n   ```bash\n   gh release view vX.Y.(Z-1) --json body --jq '.body'  # get template\n   gh release create vX.Y.Z --title \"vX.Y.Z\" --latest --notes \"...\"\n   ```\n\nVersion bump convention: only `release/app/package.json` gets the new version; root `package.json` stays `0.0.1` in the open repo.\n\n## Example\n\n```\n/cherry-pick-pro\n```\nThis will auto-detect the last release on the current branch and cherry-pick all newer commits from `pro/main`.\n",
+      "bodyMd": "# Cherry Pick Pro\n\nCherry-pick commits from the `chatbox-pro` repo (`pro` remote) to the open `chatbox` repo, filtering out mobile-only changes and adjusting for repo differences.\n\n## Usage\n\n```\n/cherry-pick-pro [from_commit] [to_commit]\n```\n\n- `from_commit`: (optional) A **`pro/main` commit hash** to start from (exclusive). Must be a commit on `pro/main`, not an open-repo commit — see step 2. Defaults to auto-detecting the last synced pro commit.\n- `to_commit`: (optional) The commit hash to end at (inclusive). Defaults to `pro/main` HEAD.\n\n## Workflow\n\n### 1. Sync remotes first\n```bash\ngit fetch pro\ngit fetch origin\n```\n\n⚠️ **Tag pollution**: `git fetch pro` also fetches pro's tags (e.g. `vX.Y.Z` created on pro's release branch). These local tags point at **pro commits**, not open repo commits. Never push them as-is — see step 8.\n\n### 2. Identify commits to cherry-pick\n\n⚠️ The range bound **must be a `pro/main` commit**. The open repo and `pro/main` share no history (cherry-picks create new SHAs), so an open-repo commit hash as the lower bound makes `A..pro/main` return *all* of pro's history, not the increment.\n\nFind the last synced pro commit by reading the `cherry picked from pro commit <hash>` footer that step 5 writes into each open-repo commit, then list pro commits after it:\n```bash\n# last synced pro commit (the lower bound)\nlast=$(git log --grep=\"cherry picked from pro commit\" -1 --pretty=%B HEAD \\\n  | grep -oE 'pro commit [0-9a-f]+' | awk '{print $3}')\ngit log \"$last\"..pro/main --oneline --reverse  # commits to pick\n```\nIf no footer is found (first-ever sync), pass `from_commit` explicitly.\n\n### 3. Analyze each commit\nFor each commit, check the files it touches:\n```bash\ngit diff-tree --no-commit-id --name-only -r <commit>\n```\n\n### 4. Cherry-pick rules\n\n#### Files/directories to SKIP (delete if conflict):\n- `android/` - mobile-only, not in open repo\n- `ios/` - mobile-only, not in open repo\n- `capacitor.config.ts` - mobile config\n- `.github/` - open repo has no CI; workflow/config differs (see step 8)\n- `CLAUDE.md`, `AGENTS.md` - pro-specific AI config\n- `.cursorrules` - pro-specific\n- `.claude/` - pro-specific skills/config (including this skill itself), never sync to open repo\n\n#### Package name differences:\n- Pro uses: `xyz.chatboxapp.app`\n- Open uses: `xyz.chatboxapp.ce`\n- When resolving conflicts in `package.json` or `release/app/package.json`, always keep the open repo name (`xyz.chatboxapp.ce`)\n\n#### Pro-only dependencies to remove if added:\n- `@playwright/test` - pro testing only\n- `playwright` - pro testing only\n- `@ruguoapp/jk-analytics` - pro analytics only\n\n#### `pnpm-lock.yaml`:\n- Will almost always conflict. Accept either side, then run `pnpm install --no-frozen-lockfile` at the end to regenerate.\n\n### 5. Cherry-pick process\nFor each commit:\n1. Try `git cherry-pick <hash>` directly first\n2. If conflicts occur, use `--no-commit` and resolve:\n   - Remove mobile-only files with `git rm`\n   - Fix package name conflicts (keep `ce`)\n   - Remove pro-only dependencies\n   - Accept either side for `pnpm-lock.yaml`\n3. Commit with original message + `(cherry picked from pro commit <hash>)` note\n\n### 6. Finalize\nAfter all cherry-picks:\n```bash\npnpm install --no-frozen-lockfile  # regenerate lockfile\ngit add pnpm-lock.yaml\ngit commit -m \"chore: regenerate pnpm-lock.yaml for open repo\"\n```\n\n### 7. Verify\n```bash\ngit log --oneline <start>..HEAD  # review all new commits\npnpm install  # ensure deps resolve\n```\n\n### 8. Release (if syncing a version release)\n\nThe open repo has **no CI workflows** — releases are manual:\n\n1. Push the sync branch to `origin/main`\n2. Re-create the version tag on the **open repo's** commit. The local tag fetched from pro points at a pro commit — pushing it would leak pro's commit history into the open repo:\n   ```bash\n   git tag -d vX.Y.Z                 # delete pro's tag fetched in step 1\n   git tag vX.Y.Z <open-repo-head>   # re-create on open repo commit\n   git push origin vX.Y.Z\n   ```\n3. Create the GitHub Release manually (no binary assets; notes = changelog + install links, copy format from the previous release):\n   ```bash\n   gh release view vX.Y.(Z-1) --json body --jq '.body'  # get template\n   gh release create vX.Y.Z --title \"vX.Y.Z\" --latest --notes \"...\"\n   ```\n\nVersion bump convention: only `release/app/package.json` gets the new version; root `package.json` stays `0.0.1` in the open repo.\n\n## Example\n\n```\n/cherry-pick-pro\n```\nThis will auto-detect the last release on the current branch and cherry-pick all newer commits from `pro/main`.\n"
+    },
+    {
+      "slug": "i18n-translate",
+      "name": "i18n-translate",
+      "dir": ".claude/skills/i18n-translate",
+      "path": ".claude/skills/i18n-translate/SKILL.md",
+      "desc": "翻译 Chatbox Pro 当前未提交改动、暂存改动或用户指定 commit/range 中新增或受影响的 i18n key。当用户要求翻译、补全与改动 UI 文案相关的翻译时使用。Agent 需要阅读 diff 和组件上下文，遵守 skill 内置 glossary，并直接写 locale JSON；脚本只用于最后校验。",
+      "descZh": "",
+      "triggers": [
+        "最后校验"
+      ],
+      "version": "",
+      "license": "GPL-3.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git",
+          "node",
+          "pnpm"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/chatboxai/chatbox.git",
+        "copy": "cp -r .claude/skills/i18n-translate ~/.claude/skills/i18n-translate",
+        "raw": "https://raw.githubusercontent.com/chatboxai/chatbox/0ac6385ae1ff5bf778777826da3c5edcd55b61b8/.claude/skills/i18n-translate/SKILL.md",
+        "saveAs": "~/.claude/skills/i18n-translate/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:d1acf8f2dc60f233077d5a2293bfd18d45d04353a3ea473990b886d61e44fe53",
+      "bytes": 3660,
+      "wordCount": 168,
+      "repoLicense": "GPL-3.0",
+      "commit": "0ac6385ae1ff5bf778777826da3c5edcd55b61b8",
+      "branch": "main",
+      "body": "---\nname: i18n-translate\ndescription: 翻译 Chatbox Pro 当前未提交改动、暂存改动或用户指定 commit/range 中新增或受影响的 i18n key。当用户要求翻译、补全与改动 UI 文案相关的翻译时使用。Agent 需要阅读 diff 和组件上下文，遵守 skill 内置 glossary，并直接写 locale JSON；脚本只用于最后校验。\nmetadata:\n  short-description: 翻译 Chatbox 改动中的 i18n key\n---\n\n# i18n-translate\n\n你一名UI翻译者。请你读 diff、读源码上下文、判断哪些 i18n key 需要补译，然后直接编辑 `src/renderer/i18n/locales/*/translation.json`。注意不要运行 `pnpm translate`，也不要依赖抽取脚本来决定翻译内容。你(LLM)来检查哪些 key 需要翻译，并且直接翻译成目标语言。\n\n## 必读\n\n- 翻译前读取 `references/glossary.json`，这是本 skill 的术语表来源。\n- 默认处理工作区中所有未提交改动（包括已暂存和未暂存）；如果用户提供单个 commit SHA 或 Git range，则仅处理该范围内新增或修改的 key。\n- 如果用户提供的 commit 或 range 无法解析，请停止并向用户报告该输入无效，而不是猜测要处理的文件。\n\n## 怎么找 key\n\n从 diff/commit 中找新增或受影响的文案，重点看：\n\n- `t('...')`、`i18n.t('...')`\n- `<Trans i18nKey=\"...\">`\n- `i18nKey: '...'`，尤其是错误对象或 `src/shared` 中的 key\n- `src/renderer/i18n/for-key-scan.ts` 等动态 key 辅助文件\n- `src/renderer/i18n/locales/en/translation.json` 中被改动的英文 value\n\n\n## 翻译原则\n\n- 先理解 key 所在文件、组件、UI 角色和周围文案，再翻译。\n- UI 角色包括按钮、菜单、tooltip、aria label、placeholder、错误提示、toast、modal、设置项、状态文案、聊天消息和产品文案。\n- 参考同一组件中目标语言已有译文，保持语气和术语一致。\n- 以 `en[key] || key` 作为源文；大多数情况下 `en[key]` 应等于 key。先补全 `en/translation.json` 中缺失或空的 key，再翻译其他语言。\n- 如果 `en` 文案发生变化，更新所有已请求 locale 中对应 key 的翻译值；如果某个已有翻译需要更新而不是新增，请直接覆盖旧译文。\n- 当 `en` value 和源码 key 不一致时，按 3 步判断：\n  1. 先判断 `en` value 是否是有意的 slug key。\n  2. 如果不是，再检查是否由 `<Trans>` children 或动态 key 扫描造成的源文错误。\n  3. 只有在确认是源文错误时才修改源码，否则只更新 JSON。\n- 保留所有 `{{placeholder}}`、`<NamedTag>`、`<0>` 标签和源文前后空格。\n- 遵守 glossary 的保留词和强制译法。不要机械直译，写自然、符合目标语言 UI 习惯的译文。\n- 按语言逐个翻译：一种语言翻译完就立即写入该语言的 `translation.json`，再开始下一种语言。不要把所有语言的译文都攒到最后一次性写入。\n- 如果同一个英文 key 在不同 UI 角色中需要不同译法，先不要直接给出不同译文；停止并询问用户是否应将 key 改为更具体的名称，除非仓库已经有明确的命名约定。\n\n## 完成前\n\n可运行 checker 做确定性检查：\n\n```bash\nnode .codex/skills/i18n-translate/scripts/check-chatbox-i18n.mjs\n```\n\n如果你维护了本次改动 key 列表，可以做严格检查：\n\n```bash\nnode .codex/skills/i18n-translate/scripts/check-chatbox-i18n.mjs --keys-file /tmp/changed-i18n-keys.txt\n```\n\nchecker 默认只因缺 key、空 value、多余 key 失败；历史 glossary/placeholder 问题会作为 warning。不要提交 commit，把改动留给用户 review。\n",
+      "bodyMd": "# i18n-translate\n\n你一名UI翻译者。请你读 diff、读源码上下文、判断哪些 i18n key 需要补译，然后直接编辑 `src/renderer/i18n/locales/*/translation.json`。注意不要运行 `pnpm translate`，也不要依赖抽取脚本来决定翻译内容。你(LLM)来检查哪些 key 需要翻译，并且直接翻译成目标语言。\n\n## 必读\n\n- 翻译前读取 `references/glossary.json`，这是本 skill 的术语表来源。\n- 默认处理工作区中所有未提交改动（包括已暂存和未暂存）；如果用户提供单个 commit SHA 或 Git range，则仅处理该范围内新增或修改的 key。\n- 如果用户提供的 commit 或 range 无法解析，请停止并向用户报告该输入无效，而不是猜测要处理的文件。\n\n## 怎么找 key\n\n从 diff/commit 中找新增或受影响的文案，重点看：\n\n- `t('...')`、`i18n.t('...')`\n- `<Trans i18nKey=\"...\">`\n- `i18nKey: '...'`，尤其是错误对象或 `src/shared` 中的 key\n- `src/renderer/i18n/for-key-scan.ts` 等动态 key 辅助文件\n- `src/renderer/i18n/locales/en/translation.json` 中被改动的英文 value\n\n\n## 翻译原则\n\n- 先理解 key 所在文件、组件、UI 角色和周围文案，再翻译。\n- UI 角色包括按钮、菜单、tooltip、aria label、placeholder、错误提示、toast、modal、设置项、状态文案、聊天消息和产品文案。\n- 参考同一组件中目标语言已有译文，保持语气和术语一致。\n- 以 `en[key] || key` 作为源文；大多数情况下 `en[key]` 应等于 key。先补全 `en/translation.json` 中缺失或空的 key，再翻译其他语言。\n- 如果 `en` 文案发生变化，更新所有已请求 locale 中对应 key 的翻译值；如果某个已有翻译需要更新而不是新增，请直接覆盖旧译文。\n- 当 `en` value 和源码 key 不一致时，按 3 步判断：\n  1. 先判断 `en` value 是否是有意的 slug key。\n  2. 如果不是，再检查是否由 `<Trans>` children 或动态 key 扫描造成的源文错误。\n  3. 只有在确认是源文错误时才修改源码，否则只更新 JSON。\n- 保留所有 `{{placeholder}}`、`<NamedTag>`、`<0>` 标签和源文前后空格。\n- 遵守 glossary 的保留词和强制译法。不要机械直译，写自然、符合目标语言 UI 习惯的译文。\n- 按语言逐个翻译：一种语言翻译完就立即写入该语言的 `translation.json`，再开始下一种语言。不要把所有语言的译文都攒到最后一次性写入。\n- 如果同一个英文 key 在不同 UI 角色中需要不同译法，先不要直接给出不同译文；停止并询问用户是否应将 key 改为更具体的名称，除非仓库已经有明确的命名约定。\n\n## 完成前\n\n可运行 checker 做确定性检查：\n\n```bash\nnode .codex/skills/i18n-translate/scripts/check-chatbox-i18n.mjs\n```\n\n如果你维护了本次改动 key 列表，可以做严格检查：\n\n```bash\nnode .codex/skills/i18n-translate/scripts/check-chatbox-i18n.mjs --keys-file /tmp/changed-i18n-keys.txt\n```\n\nchecker 默认只因缺 key、空 value、多余 key 失败；历史 glossary/placeholder 问题会作为 warning。不要提交 commit，把改动留给用户 review。\n"
+    },
+    {
+      "slug": "session-rag-eval",
+      "name": "session-rag-eval",
+      "dir": "scripts/session-rag-eval",
+      "path": "scripts/session-rag-eval/SKILL.md",
+      "desc": "Run and debug Chatbox session attachment RAG model evaluation with synthetic and real long-file fixtures.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "GPL-3.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "node",
+          "pnpm",
+          "go"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/chatboxai/chatbox.git",
+        "copy": "cp -r scripts/session-rag-eval ~/.claude/skills/session-rag-eval",
+        "raw": "https://raw.githubusercontent.com/chatboxai/chatbox/0ac6385ae1ff5bf778777826da3c5edcd55b61b8/scripts/session-rag-eval/SKILL.md",
+        "saveAs": "~/.claude/skills/session-rag-eval/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:bb4cd4b8195ffea1353c5e6fa292a215e634cc72037a03231ca46a5d03fdfcce",
+      "bytes": 3031,
+      "wordCount": 360,
+      "repoLicense": "GPL-3.0",
+      "commit": "0ac6385ae1ff5bf778777826da3c5edcd55b61b8",
+      "branch": "main",
+      "body": "---\nname: session-rag-eval\ndescription: Run and debug Chatbox session attachment RAG model evaluation with synthetic and real long-file fixtures.\n---\n\n# Session Attachment RAG Eval\n\nUse this skill when validating file question-answering behavior for large chat attachments.\n\n## Goal\n\nVerify both sides of model behavior:\n\n- The model calls `query_session_attachment` when the answer depends on an uploaded large file.\n- The model avoids retrieval for clearly unrelated user requests.\n\nPrefer the Chatbox conversation-flow harness for product validation because it exercises the real renderer, config,\nlicense, local API, file upload, indexing, tool registration, and persisted messages.\n\n## Fixtures\n\nDefault fixture repo:\n\n```bash\n../../chatbox-session-rag-eval-fixtures\n```\n\nFixture types:\n\n- synthetic long documents with hidden needle facts;\n- Wikipedia-derived real long documents with source attribution;\n- direct positive cases;\n- implicit positive cases where the user does not explicitly ask to search the file;\n- unrelated negative cases.\n\nRegenerate fixtures in the fixture repo:\n\n```bash\nnode scripts/generate-fixtures.mjs\nnode scripts/fetch-real-fixtures.mjs\n```\n\n## Chatbox Flow\n\nStart the local API before running the harness. Then build with `USE_LOCAL_API=true`; the renderer API origin is compiled\ninto the bundle.\n\n```bash\nUSE_LOCAL_API=true node ./node_modules/electron-vite/bin/electron-vite.js build --mode development\npnpm eval:session-rag:chatbox -- --case long-citrine-threshold --keep-user-data\n```\n\nThe harness copies the real `config.json` into an isolated temporary userDataDir, injects a temporary default chat model\nif missing, and stores the session RAG sqlite DB at a separate temporary path.\n\n## Known Failure Modes\n\n- \"This attachment is too large...\" means `session_attachment_embedding` capability is false or unavailable for the\n  active local API/license path.\n- If requests go to production, rebuild with `USE_LOCAL_API=true`.\n- If Electron hangs at startup, check stale CDP/Electron processes. The harness now allocates a free CDP port.\n- If the assistant says the file is still indexing after DB says ready, inspect the persisted user message. The message\n  file must have `sessionAttachmentIndexStatus: \"ready\"` before context building.\n- Do not trust a log line that says the message was submitted unless the textarea cleared and the session contains the\n  user message.\n\n## Useful Cases\n\n```bash\npnpm eval:session-rag:chatbox -- --case long-citrine-threshold\npnpm eval:session-rag:chatbox -- --case implicit-citrine-current-policy\npnpm eval:session-rag:chatbox -- --case real-wiki-apollo-implicit-landing-site\npnpm eval:session-rag:chatbox -- --case multi-turn-real-wiki-apollo-followup\npnpm eval:session-rag:chatbox -- --case unrelated-simple-math\npnpm eval:session-rag:chatbox -- --case real-wiki-unrelated-capital\n```\n\nFor fast model-behavior iteration without Electron:\n\n```bash\npnpm eval:session-rag -- --dry-run\npnpm eval:session-rag -- --case implicit-citrine-current-policy\n```\n",
+      "bodyMd": "# Session Attachment RAG Eval\n\nUse this skill when validating file question-answering behavior for large chat attachments.\n\n## Goal\n\nVerify both sides of model behavior:\n\n- The model calls `query_session_attachment` when the answer depends on an uploaded large file.\n- The model avoids retrieval for clearly unrelated user requests.\n\nPrefer the Chatbox conversation-flow harness for product validation because it exercises the real renderer, config,\nlicense, local API, file upload, indexing, tool registration, and persisted messages.\n\n## Fixtures\n\nDefault fixture repo:\n\n```bash\n../../chatbox-session-rag-eval-fixtures\n```\n\nFixture types:\n\n- synthetic long documents with hidden needle facts;\n- Wikipedia-derived real long documents with source attribution;\n- direct positive cases;\n- implicit positive cases where the user does not explicitly ask to search the file;\n- unrelated negative cases.\n\nRegenerate fixtures in the fixture repo:\n\n```bash\nnode scripts/generate-fixtures.mjs\nnode scripts/fetch-real-fixtures.mjs\n```\n\n## Chatbox Flow\n\nStart the local API before running the harness. Then build with `USE_LOCAL_API=true`; the renderer API origin is compiled\ninto the bundle.\n\n```bash\nUSE_LOCAL_API=true node ./node_modules/electron-vite/bin/electron-vite.js build --mode development\npnpm eval:session-rag:chatbox -- --case long-citrine-threshold --keep-user-data\n```\n\nThe harness copies the real `config.json` into an isolated temporary userDataDir, injects a temporary default chat model\nif missing, and stores the session RAG sqlite DB at a separate temporary path.\n\n## Known Failure Modes\n\n- \"This attachment is too large...\" means `session_attachment_embedding` capability is false or unavailable for the\n  active local API/license path.\n- If requests go to production, rebuild with `USE_LOCAL_API=true`.\n- If Electron hangs at startup, check stale CDP/Electron processes. The harness now allocates a free CDP port.\n- If the assistant says the file is still indexing after DB says ready, inspect the persisted user message. The message\n  file must have `sessionAttachmentIndexStatus: \"ready\"` before context building.\n- Do not trust a log line that says the message was submitted unless the textarea cleared and the session contains the\n  user message.\n\n## Useful Cases\n\n```bash\npnpm eval:session-rag:chatbox -- --case long-citrine-threshold\npnpm eval:session-rag:chatbox -- --case implicit-citrine-current-policy\npnpm eval:session-rag:chatbox -- --case real-wiki-apollo-implicit-landing-site\npnpm eval:session-rag:chatbox -- --case multi-turn-real-wiki-apollo-followup\npnpm eval:session-rag:chatbox -- --case unrelated-simple-math\npnpm eval:session-rag:chatbox -- --case real-wiki-unrelated-capital\n```\n\nFor fast model-behavior iteration without Electron:\n\n```bash\npnpm eval:session-rag -- --dry-run\npnpm eval:session-rag -- --case implicit-citrine-current-policy\n```\n"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+.DS_Store
+node_modules/
+
+# Cloudflare Pages 构建产物（build-dist.sh 只把站点文件拷进来，采集器/工作流不进产物）
+dist/
+
+# 部署密钥（GITHUB_TOKEN / CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID…），永不入库
+.deploy.env
+.env
+.env.*
+!/.deploy.env.example
+
+# 旧账号导出的 DNS 记录（zone 迁移用），不入库
+secrets/
+.dns-backup.json
+*.zone
+
+# 候选审核 PR 的正文由 open-review-pr.mjs 生成，只用于 gh pr create --body-file
+crawler/candidates/pr-body.md
+
+# 构建脚本的 sed 备份残留
+*.bak
+
+# 本地 AI 工作笔记（工具内存，不属于项目产物）
+.workbuddy/
+.workbuddy
