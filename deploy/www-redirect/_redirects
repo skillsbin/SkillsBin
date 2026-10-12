@@ -1,0 +1,15 @@
+# www.skillsbin.cn → skillsbin.cn 全路径 301
+#
+# 为什么单独建一个 Pages 项目只放这一个文件：
+#   Cloudflare Pages 的 `_redirects` 只按**路径**匹配，source 写不了域名，
+#   所以主站项目（同时承载 apex 与 www 两个自定义域）无法区分来源主机。
+#   把一个"只包含 _redirects"的项目挂到 www 上，路径 `/*` 就等价于
+#   "www 的所有请求"，从而得到干净的 301。
+#
+# 备选方案（需要额外 CF 权限）：zone 级 Single Redirect Rule
+#   expression: (http.host eq "www.skillsbin.cn")
+#   action:     redirect 301 → concat("https://skillsbin.cn", http.request.uri.path)
+#
+# 部署：wrangler pages deploy deploy/www-redirect --project-name=skillsbin-www --branch=main
+
+/* https://skillsbin.cn/:splat 301

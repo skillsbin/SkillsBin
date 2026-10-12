@@ -758,13 +758,16 @@ Sitemap: ${ORIGIN}/sitemap.xml
 `, 'utf8');
 
 // 缓存治理：
-//   · HTML 每次回源校验（数据 12h 更新，宁可多一次校验也不能让访客看到旧数据）
+//   · HTML 不在这里设 Cache-Control —— Cloudflare Pages 默认给 HTML 的
+//     就是 `public, max-age=0, must-revalidate`，符合"每次回源校验"的要求。
+//     这一条必须留白：_headers 里多个规则同时匹配时，同名 header 会被**拼接**
+//     （实测 `/` 拿到 "max-age=0, must-revalidate, max-age=31536000, immutable"，
+//      浏览器取第一个 → assets 白拿一年缓存）。所以 `/*` 只放安全头，不碰缓存。
 //   · CSS/JS 由 build-dist.sh 注入内容指纹（style.css?v=<hash>），
 //     内容一变 URL 就变 → 可以放心用一年 immutable。
 //   · 图片没有指纹（og.png / favicon.svg 不参与哈希注入），一年 immutable
 //     会让改图后社交平台长期吃旧图，单独压到 1 天。
 writeFileSync(join(OUT, '_headers'), `/*
-  Cache-Control: public, max-age=0, must-revalidate
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: SAMEORIGIN
@@ -785,9 +788,17 @@ writeFileSync(join(OUT, '_headers'), `/*
   Cache-Control: public, max-age=3600
 `, 'utf8');
 
-// www → 主域 301（两个域都绑在 Pages 上，靠这里收敛权重，避免重复内容）
-writeFileSync(join(OUT, '_redirects'), `https://www.${SITE.domain}/* ${ORIGIN}/:splat 301
-`, 'utf8');
+// 说明：曾用 _redirects 做 www 301，但 Pages 的 _redirects 只按路径匹配，
+// source 带域名永不命中（实测 www 仍返回 200）。承载方式改为独立 Pages 项目
+// deploy/www-redirect/（自定义域 www.skillsbin.cn，全路径 301 到主域）。
+// 这里主动清掉遗留文件（CI 上是全新 checkout，本可不做；本地增量构建需要）。
+// 备选：zone 级 Single Redirect Rule（http.host eq "www.skillsbin.cn"），
+// 但需要 CF 令牌具备 Zone→Rulesets 权限，当前令牌没有。见 docs/上线记录.md。
+try {
+  if (existsSync(join(OUT, '_redirects'))) rmSync(join(OUT, '_redirects'));
+} catch {
+  /* 受限沙箱会拒绝删除，CI 上正常执行 */
+}
 
 /* ============================ 5. 守卫与报告 ============================ */
 const files = walk(OUT);

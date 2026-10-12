@@ -21,6 +21,10 @@ cd "$(dirname "$0")/.."
 NODE_BIN="${NODE_BIN:-node}"
 
 echo "▶ 预渲染 dist/ ..."
+# 先清空产物：预渲染只写不删，若某 skill 下架或改 slug，旧 HTML 会留在 dist 里一起发布（幽灵页面）。
+# CI 是全新 checkout、dist 从一开始就不存在，这一行主要服务本地增量构建；
+# 个别受限环境会拒绝批量删除，失败不阻塞（预渲染会覆盖同名文件）。
+rm -rf dist 2>/dev/null || true
 "$NODE_BIN" scripts/prerender.mjs
 
 # ---- 泄密检查：源码 / 配置 / 凭据 / 工作流不得进入产物 ----
