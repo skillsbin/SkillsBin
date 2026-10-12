@@ -115,9 +115,13 @@ function crumbs(list) {
     .join('')}</nav>`;
 }
 
-/** 列表页筛选栏（筛选在浏览器端完成，条件写进地址栏便于分享；不影响预渲染的 SEO 正文） */
+/** 列表页筛选栏（筛选在浏览器端完成，条件写进地址栏便于分享；不影响预渲染的 SEO 正文）
+ *  外层 details/summary：桌面端 CSS 隐藏 summary 恒展开；移动端由 app.js 收起为折叠面板 */
 function filterSidebar() {
   return `
+  <details class="m-filters" open>
+    <summary><svg class="icon" aria-hidden="true"><use href="#i-sliders"></use></svg>筛选与排序</summary>
+    <div class="m-filters-body">
   <div class="filter-group"><h4>宿主</h4>
     ${HOST_ORDER.filter((h) => hostCount[h])
       .map((h) => `<label><input type="checkbox" data-f="host" value="${h}"><span>${esc(hostMeta(h).label)}</span><span style="color:var(--c-text-3);margin-left:auto">${hostCount[h]}</span></label>`)
@@ -142,7 +146,9 @@ function filterSidebar() {
       .map(([v, l], i) => `<label><input type="radio" name="fresh" data-f="fresh" value="${v}"${i === 0 ? ' checked' : ''}><span>${l}</span></label>`)
       .join('')}
   </div>
-  <button class="btn sm" id="clear-filters" type="button">清空筛选</button>`;
+  <button class="btn sm" id="clear-filters" type="button">清空筛选</button>
+    </div>
+  </details>`;
 }
 
 /* ---------- 3.1 首页 ---------- */

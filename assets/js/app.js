@@ -362,6 +362,22 @@
     });
   }
 
+  /* ============================ 8.5 移动端筛选折叠 ============================
+   * 预渲染 HTML 里 <details class="m-filters" open>（保证 SEO 与无 JS 可见），
+   * 移动端默认收起为折叠面板，桌面端恒展开。 */
+  function initMobileFilters() {
+    var d = $('.m-filters');
+    if (!d) return;
+    var mq = window.matchMedia('(max-width: 760px)');
+    var sync = function () {
+      if (mq.matches) d.removeAttribute('open');
+      else d.setAttribute('open', '');
+    };
+    if (mq.addEventListener) mq.addEventListener('change', sync);
+    else if (mq.addListener) mq.addListener(sync);
+    sync();
+  }
+
   /* ============================ 9. 提交页联动 ============================ */
   function initSubmit() {
     var input = $('#sub-repo');
@@ -402,6 +418,7 @@
     initSearchPage();
     initListPage();
     initTabs();
+    initMobileFilters();
     initSubmit();
     initSynced();
   }
