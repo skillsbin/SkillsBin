@@ -757,11 +757,36 @@ Allow: /
 Sitemap: ${ORIGIN}/sitemap.xml
 `, 'utf8');
 
+// 缓存治理：
+//   · HTML 每次回源校验（数据 12h 更新，宁可多一次校验也不能让访客看到旧数据）
+//   · CSS/JS 由 build-dist.sh 注入内容指纹（style.css?v=<hash>），
+//     内容一变 URL 就变 → 可以放心用一年 immutable。
+//   · 图片没有指纹（og.png / favicon.svg 不参与哈希注入），一年 immutable
+//     会让改图后社交平台长期吃旧图，单独压到 1 天。
 writeFileSync(join(OUT, '_headers'), `/*
   Cache-Control: public, max-age=0, must-revalidate
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
 
-/assets/*
+/assets/css/*
   Cache-Control: public, max-age=31536000, immutable
+
+/assets/js/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/img/*
+  Cache-Control: public, max-age=86400
+
+/sitemap.xml
+  Cache-Control: public, max-age=3600
+
+/llms.txt
+  Cache-Control: public, max-age=3600
+`, 'utf8');
+
+// www → 主域 301（两个域都绑在 Pages 上，靠这里收敛权重，避免重复内容）
+writeFileSync(join(OUT, '_redirects'), `https://www.${SITE.domain}/* ${ORIGIN}/:splat 301
 `, 'utf8');
 
 /* ============================ 5. 守卫与报告 ============================ */
