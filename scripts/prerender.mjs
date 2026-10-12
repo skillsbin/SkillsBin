@@ -179,7 +179,7 @@ const homeContent = `
 <section class="section">
   <div class="container">
     <div class="section-head"><h2>按宿主挑选</h2><a class="more" href="/h/claude-code/">全部宿主 <svg class="icon" aria-hidden="true"><use href="#i-chevron-right"></use></svg></a></div>
-    <div class="chip-row">
+    <div class="chip-row host-picks">
       ${HOST_ORDER.filter((h) => hostCount[h])
         .map((h) => `<a class="chip${h === 'claude-code' ? ' solid' : ''}" href="/h/${h}/"><svg class="icon" aria-hidden="true"><use href="#${HOSTS[h].icon}"></use></svg>${esc(HOSTS[h].label)} <span style="color:var(--c-text-3)">${hostCount[h]}</span></a>`)
         .join('')}
@@ -190,7 +190,7 @@ const homeContent = `
 <section class="section">
   <div class="container">
     <div class="section-head"><h2>按用途浏览</h2></div>
-    <div class="grid cols-4">
+    <div class="grid cols-4 cat-tiles">
       ${CATEGORY_ORDER.filter((c) => catCount[c]).map((c) => {
         const m = catMeta(c);
         return `<a class="tile" href="/c/${m.slug}/"><span class="t-ico"><svg class="icon" aria-hidden="true"><use href="#${m.icon}"></use></svg></span><b>${esc(c)}</b><span>${catCount[c]} 个仓库</span></a>`;
