@@ -278,6 +278,7 @@ code, pre, .mono { font-family: var(--font-mono); font-size: 12.5px; }
 .filter-group > h4 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--c-text-3); margin-bottom: 9px; font-weight: 600; }
 .filter-group label { display: flex; align-items: center; gap: 8px; padding: 4px 0; font-size: 13.5px; color: var(--c-text-2); cursor: pointer; }
 .filter-group label:hover { color: var(--c-text); }
+.filter-group .cnt { color: var(--c-text-3); margin-left: auto; font-variant-numeric: tabular-nums; }
 .filter-group input[type="checkbox"], .filter-group input[type="radio"] { accent-color: var(--c-accent); }
 
 .toolbar { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
@@ -464,7 +465,7 @@ code, pre, .mono { font-family: var(--font-mono); font-size: 12.5px; }
   }
   .m-filters > summary {
     display: flex; align-items: center; gap: 8px;
-    padding: 12px 14px; font-size: 14px; font-weight: 600; cursor: pointer;
+    padding: 11px 14px; font-size: 13.5px; font-weight: 600; cursor: pointer;
     list-style: none;
   }
   .m-filters > summary::-webkit-details-marker { display: none; }
@@ -475,7 +476,40 @@ code, pre, .mono { font-family: var(--font-mono); font-size: 12.5px; }
     transform: rotate(45deg); transition: transform .15s;
   }
   .m-filters[open] > summary::after { transform: rotate(225deg); }
-  .m-filters > .m-filters-body { padding: 4px 14px 14px; border-top: 1px solid var(--c-border); }
+  .m-f-count {
+    min-width: 18px; height: 18px; padding: 0 6px; margin-left: 2px;
+    display: inline-grid; place-items: center;
+    background: var(--c-accent); color: #fff;
+    border-radius: var(--r-full); font-size: 11px; font-weight: 600; line-height: 1;
+  }
+  .m-filters > .m-filters-body { padding: 12px 12px 12px; border-top: 1px solid var(--c-border); }
+
+  /* ---- 选项改为药丸流式排布：紧凑、自动换行、选中态高亮 ---- */
+  .m-filters-body .filter-group { margin-bottom: 4px; }
+  .m-filters-body .filter-group > h4 { margin-bottom: 8px; }
+  .m-filters-body .filter-group label {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin: 0 6px 8px 0; padding: 8px 13px;
+    border: 1px solid var(--c-border); border-radius: var(--r-full);
+    background: var(--c-surface-2); color: var(--c-text-2);
+    font-size: 13px; line-height: 1.4; cursor: pointer; user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  /* 原生控件隐藏，用 label 自身表达选中态（JS 同步 .on 兜底老浏览器 :has） */
+  .m-filters-body .filter-group input[type="checkbox"],
+  .m-filters-body .filter-group input[type="radio"] {
+    position: absolute; width: 1px; height: 1px; margin: 0; opacity: 0; pointer-events: none;
+  }
+  .m-filters-body .filter-group label.on,
+  .m-filters-body .filter-group label:has(input:checked) {
+    background: var(--c-accent-soft); border-color: var(--c-accent-border); color: var(--c-accent); font-weight: 500;
+  }
+  .m-filters-body .filter-group label:has(input:focus-visible) { outline: 2px solid var(--c-accent); outline-offset: 2px; }
+  .m-filters-body .filter-group .cnt { margin-left: 0; font-size: 11.5px; opacity: .75; }
+  /* 「不限」等默认项选中时不再反白强调，避免整组看似全选 */
+  .m-filters-body .filter-group label.on:has(input[value="0"]:checked),
+  .m-filters-body .filter-group label:has(input[value="0"]:checked) { background: var(--c-surface-2); border-color: var(--c-border-strong); color: var(--c-text); }
+  .m-filters-body #clear-filters { margin-top: 4px; }
 }
 
 /* ------------------------------ 表单字段 ------------------------------ */

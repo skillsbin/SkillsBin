@@ -309,6 +309,15 @@
         if (ok) shown++;
       });
 
+      // 移动端折叠面板标题上的「已选条件数」徽章
+      var mfc = $('.m-f-count');
+      if (mfc) {
+        var n = f.host.length + f.cat.length + (f.nokey ? 1 : 0) + (f.nonet ? 1 : 0) +
+          (Number(f.stars) > 0 ? 1 : 0) + (Number(f.fresh) > 0 ? 1 : 0);
+        mfc.hidden = !n;
+        mfc.textContent = n;
+      }
+
       // 有筛选条件时不做分页（已预渲染的卡片直接过滤），因此隐藏分页器
       var filtered = !!(f.host.length || f.cat.length || f.nokey || f.nonet || Number(f.stars) || Number(f.fresh));
       if (pager) pager.hidden = filtered;
@@ -329,13 +338,22 @@
       writeUrl(f, sort);
     };
 
-    $$('[data-f]').forEach(function (el) { el.addEventListener('change', apply); });
+    // 药丸选中态：原生控件在移动端不可见，用 label.on 表达（:has 之外的老浏览器兜底）
+    var syncLabel = function (el) {
+      var lab = el.closest('label');
+      if (lab) lab.classList.toggle('on', el.checked);
+    };
+    $$('[data-f]').forEach(function (el) {
+      syncLabel(el);
+      el.addEventListener('change', function () { syncLabel(el); apply(); });
+    });
     if (sortSel) sortSel.addEventListener('change', apply);
     var clear = $('#clear-filters');
     if (clear) clear.addEventListener('click', function () {
       $$('[data-f]').forEach(function (el) {
         if (el.type === 'checkbox') el.checked = false;
         else el.checked = el.value === '0';
+        syncLabel(el);
       });
       apply();
     });

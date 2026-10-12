@@ -120,16 +120,16 @@ function crumbs(list) {
 function filterSidebar() {
   return `
   <details class="m-filters" open>
-    <summary><svg class="icon" aria-hidden="true"><use href="#i-sliders"></use></svg>筛选与排序</summary>
+    <summary><svg class="icon" aria-hidden="true"><use href="#i-sliders"></use></svg>筛选与排序<span class="m-f-count" hidden></span></summary>
     <div class="m-filters-body">
   <div class="filter-group"><h4>宿主</h4>
     ${HOST_ORDER.filter((h) => hostCount[h])
-      .map((h) => `<label><input type="checkbox" data-f="host" value="${h}"><span>${esc(hostMeta(h).label)}</span><span style="color:var(--c-text-3);margin-left:auto">${hostCount[h]}</span></label>`)
+      .map((h) => `<label><input type="checkbox" data-f="host" value="${h}"><span>${esc(hostMeta(h).label)}</span><span class="cnt">${hostCount[h]}</span></label>`)
       .join('')}
   </div>
   <div class="filter-group"><h4>用途</h4>
     ${CATEGORY_ORDER.filter((c) => catCount[c])
-      .map((c) => `<label><input type="checkbox" data-f="cat" value="${esc(c)}"><span>${esc(c)}</span><span style="color:var(--c-text-3);margin-left:auto">${catCount[c]}</span></label>`)
+      .map((c) => `<label><input type="checkbox" data-f="cat" value="${esc(c)}"><span>${esc(c)}</span><span class="cnt">${catCount[c]}</span></label>`)
       .join('')}
   </div>
   <div class="filter-group"><h4>依赖</h4>
