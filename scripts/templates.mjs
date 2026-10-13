@@ -44,6 +44,7 @@ export const ICON_SPRITE = `
 <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4.4 21 19.4H3Z"/><path d="M12 10v4M12 16.6h.01"/></symbol>
 <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3.4" y="5.4" width="17.2" height="13.2" rx="2"/><path d="m3.8 6.6 8.2 6 8.2-6"/></symbol>
 
+<symbol id="i-home" viewBox="0 0 24 24"><path d="M4 10.6 12 4.2l8 6.4V19a1.4 1.4 0 0 1-1.4 1.4H5.4A1.4 1.4 0 0 1 4 19Z"/><path d="M9.6 20.4v-5.4h4.8v5.4"/></symbol>
 <symbol id="i-host-generic" viewBox="0 0 24 24"><path d="M12 2.8 20.6 7.6v8.8L12 21.2 3.4 16.4V7.6Z"/><rect x="8.4" y="8.4" width="3" height="3" rx=".6" fill="currentColor" stroke="none"/><rect x="12.6" y="8.4" width="3" height="3" rx=".6" fill="currentColor" stroke="none"/><rect x="8.4" y="12.6" width="3" height="3" rx=".6" fill="currentColor" stroke="none"/><rect x="12.6" y="12.6" width="3" height="3" rx=".6" fill="currentColor" stroke="none"/></symbol>
 <symbol id="i-host-claude-code" viewBox="0 0 24 24"><path d="M12 3.2v6.2M12 14.6v6.2M3.2 12h6.2M14.6 12h6.2M6 6l3.4 3.4M14.6 14.6 18 18M18 6l-3.4 3.4M9.4 14.6 6 18"/></symbol>
 <symbol id="i-host-cursor" viewBox="0 0 24 24"><path d="M6.2 3.8 18.6 12l-6.2 1.6L9.6 20Z"/></symbol>

@@ -264,9 +264,21 @@ code, pre, .mono { font-family: var(--font-mono); font-size: 12.5px; }
 .cmd .btn { flex: none; }
 
 /* ------------------------------ 清单 ------------------------------ */
-.breadcrumb { display: flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--c-text-3); padding: 18px 0 6px; flex-wrap: wrap; }
+/* ------------------------------ 面包屑 ------------------------------ */
+/* 与卡片同一套容器语言：底色 + 描边 + 圆角，左对齐内容网格（不再是贴边的裸文字） */
+.breadcrumb {
+  display: inline-flex; align-items: center; gap: 7px; flex-wrap: wrap;
+  max-width: 100%;
+  font-size: 12.5px; line-height: 1.6; color: var(--c-text-2);
+  margin: 16px 0 0; padding: 6px 12px;
+  background: var(--c-surface-2); border: 1px solid var(--c-border);
+  border-radius: var(--r-full);
+}
+.breadcrumb .icon { font-size: 13px; color: var(--c-text-3); }
+.breadcrumb a { color: var(--c-text-2); }
 .breadcrumb a:hover { color: var(--c-accent); }
-.breadcrumb .sep { opacity: .5; }
+.breadcrumb .sep { opacity: .45; }
+.breadcrumb .cur { color: var(--c-text); font-weight: 600; }
 
 .page-head { padding: 6px 0 20px; border-bottom: 1px solid var(--c-border); margin-bottom: 22px; }
 .page-head h1 { font-size: 26px; }
@@ -320,7 +332,12 @@ code, pre, .mono { font-family: var(--font-mono); font-size: 12.5px; }
 
 .kv { display: grid; grid-template-columns: 132px 1fr; gap: 9px 16px; font-size: 13.5px; }
 .kv dt { color: var(--c-text-3); }
-.kv dd { margin: 0; }
+.kv dd { margin: 0; min-width: 0; }
+/* allowed-tools 等超长单行命令：在 dd 内横向滚动，不撑破容器 */
+.kv dd code {
+  display: inline-block; max-width: 100%;
+  overflow-x: auto; vertical-align: bottom; white-space: pre;
+}
 .kv dd .badge { margin-right: 4px; }
 
 .dep-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 9px; }
@@ -568,6 +585,8 @@ code, pre, .mono { font-family: var(--font-mono); font-size: 12.5px; }
 @media (max-width: 520px) {
   /* 压过 cols-4 的单列折叠，用途宫格保持两列 */
   .grid.cat-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* 面包屑窄屏必然换行，胶囊圆角改普通圆角避免变形 */
+  .breadcrumb { border-radius: var(--r-lg); font-size: 12px; }
 }
 
 /* ------------------------------ 详情页长描述截断 ------------------------------ */

@@ -106,13 +106,13 @@ function writePage(urlPath, html) {
 }
 
 function crumbs(list) {
-  return `<nav class="breadcrumb" aria-label="面包屑">${list
+  return `<div class="container"><nav class="breadcrumb" aria-label="面包屑"><svg class="icon" aria-hidden="true"><use href="#i-home"></use></svg>${list
     .map((c, i) =>
       i === list.length - 1
-        ? `<span>${esc(c.label)}</span>`
+        ? `<span class="cur">${esc(c.label)}</span>`
         : `<a href="${attr(c.href)}">${esc(c.label)}</a><span class="sep">/</span>`,
     )
-    .join('')}</nav>`;
+    .join('')}</nav></div>`;
 }
 
 /** 详情页描述：超长（含原文）包一层可展开/收起的截断容器，避免触发词罗列式长描述刷屏。
