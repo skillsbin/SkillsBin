@@ -813,7 +813,7 @@
       "dir": "skills/omnibus/building-react-quill-canvases",
       "path": "skills/omnibus/building-react-quill-canvases/SKILL.md",
       "desc": "Author the React + Quill implementation of a PostHog canvas: the single-component contract, the allowed imports, Quill (PostHog's design system) component and composition rules, theme-aware design tokens, loading skeletons, and the in-canvas date picker. Use after building-canvases has routed a canvas request to a React implementation — dashboards, data boards, forms, tools, or any canvas that should look native to PostHog.",
-      "descZh": "编写 React/TSX 单文件 canvas（对应源码项目里的 `src/canvas.tsx`）。",
+      "descZh": "编写 React/TSX 单文件 canvas（对应源码项目里的 src/canvas.tsx）。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1243,7 +1243,7 @@
       "dir": "skills/omnibus/consuming-endpoints-from-client-code",
       "path": "skills/omnibus/consuming-endpoints-from-client-code/SKILL.md",
       "desc": "Wire a PostHog endpoint into a client app or SDK. Covers fetching the OpenAPI spec, generating a typed client with openapi-generator or @hey-api/openapi-ts, sending the right auth header, shaping the variables payload (HogQL code_name vs insight breakdown property), handling rate-limit and materialised-endpoint error responses. Use when the user says \"how do I call my endpoint\", \"generate a client for this\", or \"what auth header do I use\".",
-      "descZh": "从客户端代码调用 endpoint，是 `creating-an-endpoint` 的调用方对偶技能。",
+      "descZh": "从客户端代码调用 endpoint，是 creating-an-endpoint 的调用方对偶技能。",
       "triggers": [
         "what auth hea"
       ],
@@ -1291,7 +1291,7 @@
       "dir": "skills/omnibus/context-layer-consolidation",
       "path": "skills/omnibus/context-layer-consolidation/SKILL.md",
       "desc": "Keep the context wiki coherent using the deterministic lint report queue",
-      "descZh": "上下文层收敛：先跑 `scripts/lint --report`，在 dream publisher 建分支之前把挂载 wiki 里的队列处理干净。",
+      "descZh": "上下文层收敛：先跑 scripts/lint --report，在 dream publisher 建分支之前把挂载 wiki 里的队列处理干净。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1378,7 +1378,7 @@
       "dir": "skills/omnibus/context-layer-health-check",
       "path": "skills/omnibus/context-layer-health-check/SKILL.md",
       "desc": "Semantic review of context wiki quality after deterministic consolidation",
-      "descZh": "上下文层体检：从 `git log --merges` 里读 `wiki-miss:` 行作为优先级信号，并排查相互矛盾的记载。",
+      "descZh": "上下文层体检：从 git log --merges 里读 wiki-miss: 行作为优先级信号，并排查相互矛盾的记载。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1684,7 +1684,7 @@
       "dir": "skills/omnibus/creating-online-evaluations",
       "path": "skills/omnibus/creating-online-evaluations/SKILL.md",
       "desc": "Author continuously-running online evaluations in PostHog AI observability, grounded in real failure modes you've identified. Use when the user wants evaluations that automatically score new generations or whole traces going forward — \"create an eval to catch X\", \"continuously check that responses do Y\", \"turn these failures into evals\". Covers letting the explored data decide how many evals to create, proposing that set for the user to pick, choosing the target and eval type (hog / llm_judge / sentiment), configuring a provider and model for an llm_judge eval (a provider key gates enabling, not creation), scoping which generations trigger it via conditions, creating disabled, verifying scope, enabling, and backfilling past data. Proposes a sentiment eval when no failure mode is worth catching. Finding and ranking the failure modes worth evaluating is its own job — use exploring-ai-failures first. To debug or manage evaluations that already exist, use exploring-llm-evaluations.",
-      "descZh": "创建在线评估：自动为每个匹配的 `$ai_generation` 或整条 trace 打分。",
+      "descZh": "创建在线评估：自动为每个匹配的 $ai_generation 或整条 trace 打分。",
       "triggers": [
         "whole traces going"
       ],
@@ -1950,7 +1950,7 @@
       "dir": "skills/omnibus/designing-email-templates",
       "path": "skills/omnibus/designing-email-templates/SKILL.md",
       "desc": "Author, save, and edit email templates in the PostHog workflows library — compose email design JSON with Liquid personalization and create and round-trip-edit templates over MCP. Use when asked to design, build, update, or fix an email template for workflows, broadcasts, or campaigns.",
-      "descZh": "设计 PostHog 工作流的邮件模板（群发活动与 `function_email`）。",
+      "descZh": "设计 PostHog 工作流的邮件模板（群发活动与 function_email）。",
       "triggers": [
         "asked to design",
         "build",

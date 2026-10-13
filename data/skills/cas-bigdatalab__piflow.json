@@ -180,7 +180,7 @@
       "dir": "workspace/dag_system_node/missing_operator_stop",
       "path": "workspace/dag_system_node/missing_operator_stop/SKILL.md",
       "desc": "用于 Workflow Planning 阶段的占位算子。当前 Skill 库不存在满足用户需求的业务 Skill 时，使用本算子保持 DAG 数据流完整，等待后续生成真实 Skill 后替换。",
-      "descZh": "占位算子：流程中缺少的能力先用它声明，承接上游输入并向下游暴露 `output` 槽位，保证 DAG 结构完整。",
+      "descZh": "占位算子：流程中缺少的能力先用它声明，承接上游输入并向下游暴露 output 槽位，保证 DAG 结构完整。",
       "triggers": [],
       "version": "",
       "license": "",
@@ -261,7 +261,7 @@
       "dir": "workspace/dag_system_node/source_stop",
       "path": "workspace/dag_system_node/source_stop/SKILL.md",
       "desc": "DAG 输入源算子。用于声明工作流的输入文件，并为下游算子提供数据源引用。该算子没有上游输入，必须作为 DAG 的起始节点使用。",
-      "descZh": "DAG 起始节点：声明一个输入文件并向下游暴露 `output` 槽位。",
+      "descZh": "DAG 起始节点：声明一个输入文件并向下游暴露 output 槽位。",
       "triggers": [
         "声明工作流的输入文件",
         "并为下游算子提供数据源引用"

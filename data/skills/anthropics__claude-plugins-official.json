@@ -60,7 +60,7 @@
       "dir": "external_plugins/discord/skills/configure",
       "path": "external_plugins/discord/skills/configure/SKILL.md",
       "desc": "Set up the Discord channel — save the bot token and review access policy. Use when the user pastes a Discord bot token, asks to configure Discord, asks \"how do I set this up\" or \"who can reach me,\" or wants to check channel status.",
-      "descZh": "配置 Discord 通道：把 bot token 写入 `~/.claude/channels/discord/.env` 并说明授权方式。",
+      "descZh": "配置 Discord 通道：把 bot token 写入 ~/.claude/channels/discord/.env 并说明授权方式。",
       "triggers": [],
       "version": "",
       "license": "Apache-2.0",
@@ -154,7 +154,7 @@
       "dir": "external_plugins/imessage/skills/configure",
       "path": "external_plugins/imessage/skills/configure/SKILL.md",
       "desc": "Check iMessage channel setup and review access policy. Use when the user asks to configure iMessage, asks \"how do I set this up\" or \"who can reach me,\" or wants to know why texts aren't reaching the assistant.",
-      "descZh": "配置 iMessage 通道：不需要 token，直接读本机 `~/Library/Messages/chat.db` 并说明权限要求。",
+      "descZh": "配置 iMessage 通道：不需要 token，直接读本机 ~/Library/Messages/chat.db 并说明权限要求。",
       "triggers": [
         "who can reach me",
         "or"
@@ -250,7 +250,7 @@
       "dir": "external_plugins/telegram/skills/configure",
       "path": "external_plugins/telegram/skills/configure/SKILL.md",
       "desc": "Set up the Telegram channel — save the bot token and review access policy. Use when the user pastes a Telegram bot token, asks to configure Telegram, asks \"how do I set this up\" or \"who can reach me,\" or wants to check channel status.",
-      "descZh": "配置另一条消息通道：把 bot token 写入 `<state-dir>/.env` 并引导完成授权。",
+      "descZh": "配置另一条消息通道：把 bot token 写入 <state-dir>/.env 并引导完成授权。",
       "triggers": [],
       "version": "",
       "license": "Apache-2.0",
@@ -563,7 +563,7 @@
       "dir": "plugins/example-plugin/skills/example-command",
       "path": "plugins/example-plugin/skills/example-command/SKILL.md",
       "desc": "An example user-invoked skill that demonstrates frontmatter options and the skills/<name>/SKILL.md layout",
-      "descZh": "演示 `skills/<name>/SKILL.md` 布局的用户触发式斜杠命令样例。",
+      "descZh": "演示 skills/<name>/SKILL.md 布局的用户触发式斜杠命令样例。",
       "triggers": [],
       "version": "",
       "license": "Apache-2.0",
@@ -1097,7 +1097,7 @@
       "dir": "plugins/plugin-dev/skills/command-development",
       "path": "plugins/plugin-dev/skills/command-development/SKILL.md",
       "desc": "This skill should be used when the user asks to \"create a slash command\", \"add a command\", \"write a custom command\", \"define command arguments\", \"use command frontmatter\", \"organize commands\", \"create command with file references\", \"interactive command\", \"use AskUserQuestion in command\", or needs guidance on slash command structure, YAML frontmatter fields, dynamic arguments, bash execution in commands, user interaction patterns, or command development best practices for Claude Code.",
-      "descZh": "开发斜杠命令（`.claude/commands/` 属旧格式，新写法请用 `.claude/skills/`）。",
+      "descZh": "开发斜杠命令（.claude/commands/ 属旧格式，新写法请用 .claude/skills/）。",
       "triggers": [
         "** Command requires specific tool access"
       ],
@@ -1231,7 +1231,7 @@
       "dir": "plugins/plugin-dev/skills/plugin-settings",
       "path": "plugins/plugin-dev/skills/plugin-settings/SKILL.md",
       "desc": "This skill should be used when the user asks about \"plugin settings\", \"store plugin configuration\", \"user-configurable plugin\", \".local.md files\", \"plugin state files\", \"read YAML frontmatter\", \"per-project plugin settings\", or wants to make plugin behavior configurable. Documents the .claude/plugin-name.local.md pattern for storing plugin-specific configuration with YAML frontmatter and markdown content.",
-      "descZh": "插件如何用 `.claude/plugin-name.local.md` 存放用户可配置的设置与状态。",
+      "descZh": "插件如何用 .claude/plugin-name.local.md 存放用户可配置的设置与状态。",
       "triggers": [],
       "version": "0.1.0",
       "license": "Apache-2.0",

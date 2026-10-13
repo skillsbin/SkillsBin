@@ -261,7 +261,7 @@
       "dir": "skills/qdrant-migration-tool",
       "path": "skills/qdrant-migration-tool/SKILL.md",
       "desc": "Guides use of the Qdrant Migration Tool CLI to move vectors, metadata, and sparse embeddings from another vector database into Qdrant. Use when someone asks 'how do I migrate from Pinecone/Weaviate/Milvus/Elasticsearch/OpenSearch/pgvector/s3/Azure/Chroma/Redis/MongoDB/FAISS/Solr to Qdrant', 'move my vector database to Qdrant', 'is there a migration tool for Qdrant', 'my migration got interrupted, how do I resume it', 'migration is too slow', or 'collection wasn't created after migration'. Also use when picking migration batch size, deciding on `--net=host`, or verifying data after a migration.",
-      "descZh": "数据迁移工具：以 Docker 容器方式交付（`registry.cloud.qdrant.io/library/qdrant-migration`），不是库。",
+      "descZh": "数据迁移工具：以 Docker 容器方式交付（registry.cloud.qdrant.io/library/qdrant-migration），不是库。",
       "triggers": [
         "starting a new migration and choosing the source-specific CLI subcommand."
       ],
@@ -1393,7 +1393,7 @@
       "dir": "skills/qdrant-search-quality/search-strategies/hybrid-search/search-types",
       "path": "skills/qdrant-search-quality/search-strategies/hybrid-search/search-types/SKILL.md",
       "desc": "Constructing prefetch queries for hybrid retrieval, including sparse/dense and multi-field setups, and choosing a sparse embedding model. Use when someone asks 'dense and sparse in one search?', 'how to combine multiple fields for retrieval?', 'payloads or sparse vectors for lexical?', 'which sparse embedding model to use?', or 'BM25 vs SPLADE?'",
-      "descZh": "检索类型：每个 `prefetch` 针对一个 query 只跑一次检索，需要留意组合方式。",
+      "descZh": "检索类型：每个 prefetch 针对一个 query 只跑一次检索，需要留意组合方式。",
       "triggers": [
         "pure vector search misses exact term or keyword matches and you need lexical retrieval alongside semantic search."
       ],
@@ -1485,7 +1485,7 @@
       "dir": "skills/qdrant-sizing",
       "path": "skills/qdrant-sizing/SKILL.md",
       "desc": "Sizes a Qdrant deployment before it is provisioned. Use when someone asks 'how much RAM do I need', 'how many nodes', 'how big should my cluster be', 'sizing', 'capacity planning', 'will N vectors fit', 'what instance type should I pick', or gives a vector count and dimensions and asks what to provision. Also use when an existing estimate needs checking before hardware or a cluster tier is bought.",
-      "descZh": "容量估算：不是 `点数量 × 维度 × 4`——原始向量只是内存占用的一部分。",
+      "descZh": "容量估算：不是 点数量 × 维度 × 4——原始向量只是内存占用的一部分。",
       "triggers": [
         "how many nodes",
         "someone asks how much RAM or disk they need, how much data should be kept in RAM, how to size memory for a given workloa"

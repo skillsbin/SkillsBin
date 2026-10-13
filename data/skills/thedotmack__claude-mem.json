@@ -192,7 +192,7 @@
       "dir": "cowork/skills/agent-cost-report",
       "path": "cowork/skills/agent-cost-report/SKILL.md",
       "desc": "Believable agent cost report for any period, default the last 7 full days PT, not counting today. Measured tokens from Claude Code transcripts priced at OpenRouter list prices (ESTIMATED), measured provider spend when a sanctioned source exists, note-taker cost separate, Timing-style HTML/PDF plus report.json, line-items.csv, evidence.json.",
-      "descZh": "用 `scripts/` 流水线（transcript → token → 成本）产出 Claude Code 用量成本报告。",
+      "descZh": "用 scripts/ 流水线（transcript → token → 成本）产出 Claude Code 用量成本报告。",
       "triggers": [],
       "version": "",
       "license": "Apache-2.0",
@@ -496,7 +496,7 @@
       "dir": "plugin/skills/design-is",
       "path": "plugin/skills/design-is/SKILL.md",
       "desc": "Audit a design against Dieter Rams' ten \"Good design is...\" principles, then hand off a /make-plan prompt for one of three outcomes — new design, refine design, or redesign. Use when the user says \"audit this design\", \"design review\", \"check this UI against Rams\", \"is this UI good\", \"critique this design\", \"design audit\", or asks for a critique that should lead to a plan.",
-      "descZh": "常规 UI 代码评审走 `/review`；本 skill 面向设计本身。",
+      "descZh": "常规 UI 代码评审走 /review；本 skill 面向设计本身。",
       "triggers": [
         "design review",
         "is this"
@@ -588,7 +588,7 @@
       "dir": "plugin/skills/handoff",
       "path": "plugin/skills/handoff/SKILL.md",
       "desc": "Generate a HANDOFF.md that captures goal, current state, files touched, failed attempts, and next steps — so a fresh Claude session can continue exactly where this one left off. Use when sessions are getting long, Claude keeps retrying the same broken solution, or the user wants to step away and resume later.",
-      "descZh": "生成结构化 `HANDOFF.md`，让全新的 Claude 会话拿到接着干所需的一切。",
+      "descZh": "生成结构化 HANDOFF.md，让全新的 Claude 会话拿到接着干所需的一切。",
       "triggers": [
         "the user wan"
       ],
@@ -816,7 +816,7 @@
       "dir": "plugin/skills/mem-search",
       "path": "plugin/skills/mem-search/SKILL.md",
       "desc": "Search claude-mem persistent cross-session memory through enforced progressive disclosure. Use for previous decisions, solutions, work history, and before saving your own durable notes.",
-      "descZh": "所有记忆检索统一用 `mem_search`；本地与远端 MCP 暴露同一套能力。",
+      "descZh": "所有记忆检索统一用 mem_search；本地与远端 MCP 暴露同一套能力。",
       "triggers": [],
       "version": "",
       "license": "Apache-2.0",

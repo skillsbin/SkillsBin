@@ -11,7 +11,7 @@
       "dir": ".agents/skills/sentry-triage",
       "path": ".agents/skills/sentry-triage/SKILL.md",
       "desc": "Triage WorldMonitor Sentry issues — classify unresolved events as noise, already-fixed, product bugs, or needs-human; optionally ship a tested fix. Use when the user says triage Sentry, pastes a WORLDMONITOR-* ID or sentry.io URL, or asks to investigate production errors.",
-      "descZh": "把旧版 Claude 命令 `.claude/commands/sentry-triage.md` 迁成 Cursor Agent Skill，用于 Sentry 问题分诊。",
+      "descZh": "把旧版 Claude 命令 .claude/commands/sentry-triage.md 迁成 Cursor Agent Skill，用于 Sentry 问题分诊。",
       "triggers": [
         "sentry"
       ],
@@ -57,7 +57,7 @@
       "dir": ".agents/skills/verify-worldmonitor",
       "path": ".agents/skills/verify-worldmonitor/SKILL.md",
       "desc": "Verify WorldMonitor dashboard behavior with existing browser tests or a scoped manual drive. Use for panels, map layers, settings, search, country briefs, boot, or dashboard screenshots.",
-      "descZh": "验证 WorldMonitor 主界面：跑在 `/dashboard` 的 Vite/TypeScript SPA。",
+      "descZh": "验证 WorldMonitor 主界面：跑在 /dashboard 的 Vite/TypeScript SPA。",
       "triggers": [],
       "version": "",
       "license": "AGPL-3.0",
@@ -860,7 +860,7 @@
       "dir": "skills/fetch-country-brief",
       "path": "skills/fetch-country-brief/SKILL.md",
       "desc": "Open the WorldMonitor country interface in a UI-capable MCP host. Use the text assessment endpoint for explicit text-only requests or clients without embedded UI.",
-      "descZh": "取某国简报（在 ChatGPT 等 MCP Apps 宿主里调 `open_country_brief`）。",
+      "descZh": "取某国简报（在 ChatGPT 等 MCP Apps 宿主里调 open_country_brief）。",
       "triggers": [],
       "version": "2",
       "license": "AGPL-3.0",

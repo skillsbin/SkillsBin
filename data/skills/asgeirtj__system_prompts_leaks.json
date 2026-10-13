@@ -1233,7 +1233,7 @@
       "dir": "Anthropic/claude-code/skills/keybindings-help",
       "path": "Anthropic/claude-code/skills/keybindings-help/SKILL.md",
       "desc": "Use when the user wants to customize keyboard shortcuts, rebind keys, add chord bindings, or modify ~/.claude/keybindings.json. Examples: \"rebind ctrl+s\", \"add a chord shortcut\", \"change the submit key\", \"customize keybindings\".",
-      "descZh": "创建或修改 `~/.claude/keybindings.json` 自定义键盘快捷键。",
+      "descZh": "创建或修改 ~/.claude/keybindings.json 自定义键盘快捷键。",
       "triggers": [
         "rebind keys",
         "add chord bindings",
@@ -1281,7 +1281,7 @@
       "dir": "Anthropic/claude-code/skills/loop",
       "path": "Anthropic/claude-code/skills/loop/SKILL.md",
       "desc": "Run a prompt or slash command on a recurring interval (e.g. /loop 5m /foo). Omit the interval to let the model self-pace.",
-      "descZh": "把输入解析成 `[间隔] <提示词>` 并按此安排循环执行。",
+      "descZh": "把输入解析成 [间隔] <提示词> 并按此安排循环执行。",
       "triggers": [
         "When the user wants to set up a recurring task, poll for status, or run something repeatedly on an interval (e.g. \"check the deploy every 5 minutes\", \"keep running /babysit-prs\"). Do NOT invoke for one-off tasks."
       ],
@@ -1523,7 +1523,7 @@
       "dir": "Anthropic/claude-code/skills/run-skill-generator",
       "path": "Anthropic/claude-code/skills/run-skill-generator/SKILL.md",
       "desc": "Author or improve the run-<unit> skill - a per-project skill that tells agents how to build, launch, and drive this project's app. Use when the user asks to set up the project, get it running, write run instructions, or verify build/run steps work from a clean environment.",
-      "descZh": "在 `<unit>/.claude/skills/run-<unit-name>/` 下生成一个运行类 skill。",
+      "descZh": "在 <unit>/.claude/skills/run-<unit-name>/ 下生成一个运行类 skill。",
       "triggers": [
         "get it running",
         "write run instructions",

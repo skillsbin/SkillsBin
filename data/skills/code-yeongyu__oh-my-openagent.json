@@ -11,7 +11,7 @@
       "dir": ".agents/skills/codex-qa",
       "path": ".agents/skills/codex-qa/SKILL.md",
       "desc": "QA the omo Codex Light edition (lazycodex / packages/omo-codex) itself, in strict isolation so ONLY our plugin is exercised, never the user's real ~/.codex. The first-party method drives the real `codex app-server` against an isolated CODEX_HOME plus a LOCAL mock model (no real API call), and proves a plugin hook fired by asserting hook/started + hook/completed notifications. Also: isolated install verification, per-component hook probes, a tmux TUI smoke, and runtime log observation (RUST_LOG / logs SQLite / /debug-config). Ships tested helper scripts each with a --self-test. Use whenever someone changes anything under packages/omo-codex or wants to QA, smoke-test, verify, or debug the Codex plugin, its hooks/components, the installer/config.toml, the app-server flow, or the Codex TUI. Triggers: codex qa, qa codex, codex-qa, test codex plugin, verify codex hook, codex app-server, lazycodex qa, isolated CODEX_HOME, prove codex hook fired, codex tui test.",
-      "descZh": "对 omo Codex Light 版本（`packages/omo-codex/`，以 lazycodex 发布）做质量验证。",
+      "descZh": "对 omo Codex Light 版本（packages/omo-codex/，以 lazycodex 发布）做质量验证。",
       "triggers": [
         "wants to QA",
         "smoke-test",
@@ -495,7 +495,7 @@
       "dir": ".agents/skills/senpi-qa",
       "path": ".agents/skills/senpi-qa/SKILL.md",
       "desc": "QA the omo Senpi adapter (packages/omo-senpi, packages/senpi-task) against the REAL senpi binary in strict isolation, and write every artifact to the one canonical evidence path .omo/evidence/omo-senpi-adapter/<slug>/. The live drivers under packages/omo-senpi/scripts/qa/ create their own isolated SENPI_CODING_AGENT_DIR and ignore the caller's, so the real ~/.senpi/agent is never written. Ships scripts/resolve-evidence-dir.mjs, which is the ONLY sanctioned way to pick an evidence directory: it rejects traversal, separators, absolute paths, and stray roots such as local-ignore/qa-evidence. Use whenever someone changes anything under packages/omo-senpi or packages/senpi-task, or wants to QA, smoke-test, verify, or debug the Senpi adapter, the task/team engine, the DAG, task RPC, or skill delivery. Triggers: senpi qa, qa senpi, senpi-qa, test senpi adapter, verify senpi task, senpi task e2e, senpi team e2e, task dag qa, live senpi driver, senpi evidence path.",
-      "descZh": "对 omo Senpi 适配层（`packages/omo-senpi/`）与任务引擎做质量验证。",
+      "descZh": "对 omo Senpi 适配层（packages/omo-senpi/）与任务引擎做质量验证。",
       "triggers": [
         "packages/senpi-task",
         "wants to"
@@ -596,7 +596,7 @@
       "dir": ".agents/skills/work-with-pr",
       "path": ".agents/skills/work-with-pr/SKILL.md",
       "desc": "Full PR lifecycle in a fresh task-owned git worktree: implement via the ulw-loop skill with mandatory evidence-bound manual QA → reviewer-readable English PR → verification loop (CI + Cubic, where Cubic is skipped only when its quota is exhausted) → merge by default → worktree cleanup. Decomposes one task into the smallest atomic, independently-mergeable PRs and builds the independent ones concurrently via one worktree per PR driven by parallel subagents or a team. Unbounded loop: any failing gate sends you back to fix-and-re-QA inside that PR's worktree. Use whenever implementation work needs to land as a PR. Triggers: 'create a PR', 'implement and PR', 'work on this and make a PR', 'implement issue', 'land this as a PR', 'split into atomic PRs', 'parallel PRs', 'work-with-pr', 'PR workflow', 'implement end to end', even when user just says 'implement X' if the context implies PR delivery.",
-      "descZh": "走完整个 PR 生命周期：从新建任务专用 worktree，到 `ulw-loop` 驱动的迭代与收尾。",
+      "descZh": "走完整个 PR 生命周期：从新建任务专用 worktree，到 ulw-loop 驱动的迭代与收尾。",
       "triggers": [],
       "version": "",
       "license": "",
@@ -644,7 +644,7 @@
       "dir": "packages/omo-codex/plugin/components/comment-checker/skills/comment-checker",
       "path": "packages/omo-codex/plugin/components/comment-checker/skills/comment-checker/SKILL.md",
       "desc": "Use when Codex needs to understand or respond to automatic comment-checker feedback emitted after an edit-like PostToolUse hook.",
-      "descZh": "注册 `PostToolUse` 钩子，在 `apply_patch`、`write`、`edit` 等写操作成功后检查注释。",
+      "descZh": "注册 PostToolUse 钩子，在 apply_patch、write、edit 等写操作成功后检查注释。",
       "triggers": [],
       "version": "",
       "license": "",
@@ -847,7 +847,7 @@
       "dir": "packages/omo-codex/plugin/components/lsp/skills/lsp",
       "path": "packages/omo-codex/plugin/components/lsp/skills/lsp/SKILL.md",
       "desc": "Use when Codex needs language-server diagnostics, definitions, references, symbols, or rename safety checks in the current workspace.",
-      "descZh": "通过工具接口调用 `lsp` MCP 工具（`lsp.*` 与 `mcp__lsp__*` 是工具调用名，不是 shell 命令）。",
+      "descZh": "通过工具接口调用 lsp MCP 工具（lsp.* 与 mcp__lsp__* 是工具调用名，不是 shell 命令）。",
       "triggers": [
         "definitions",
         "references",
@@ -1043,7 +1043,7 @@
       "dir": "packages/omo-codex/plugin/components/ulw-loop/skills/ulw-loop",
       "path": "packages/omo-codex/plugin/components/ulw-loop/skills/ulw-loop/SKILL.md",
       "desc": "A goal-like loop that decomposes work into systematic, evidence-bound ultrawork steps. Use when the user wants a goal loop or durable, checkpointed execution.",
-      "descZh": "用户要求 `ulw-loop` / `ulw`、持久目标执行或证据导向工作时使用。",
+      "descZh": "用户要求 ulw-loop / ulw、持久目标执行或证据导向工作时使用。",
       "triggers": [
         "durable",
         "checkpointed execution"
@@ -1140,7 +1140,7 @@
       "dir": "packages/omo-senpi/skills/give-me-tips",
       "path": "packages/omo-senpi/skills/give-me-tips/SKILL.md",
       "desc": "Explains any senpi tip in depth, including Tip: lines in the TUI. Use when the user asks about a tip, what a tipped feature does, or which tips they can see.",
-      "descZh": "Senpi 向用户展示提示：启动提示、使用技巧，以及 omo 注入的 `Tip:` 行。",
+      "descZh": "Senpi 向用户展示提示：启动提示、使用技巧，以及 omo 注入的 Tip: 行。",
       "triggers": [
         "which tips they can see"
       ],
@@ -1286,7 +1286,7 @@
       "dir": "packages/omo-senpi/skills/mass-ulw",
       "path": "packages/omo-senpi/skills/mass-ulw/SKILL.md",
       "desc": "Drives dependency-ordered child work through the native workflow tool, each phase's stages defined up front in one run, with retry/amend/send recovery. Use when the user asks for mass-ulw, a DAG of tasks, or fan-out work where some tasks must wait on others.",
-      "descZh": "用户要求 `mass-ulw`、任务 DAG 或分阶段 fan-out 等多 agent 作业时使用。",
+      "descZh": "用户要求 mass-ulw、任务 DAG 或分阶段 fan-out 等多 agent 作业时使用。",
       "triggers": [
         "a DAG of tasks"
       ],
@@ -1434,7 +1434,7 @@
       "dir": "packages/omo-senpi/skills/ulw-loop",
       "path": "packages/omo-senpi/skills/ulw-loop/SKILL.md",
       "desc": "A goal-like loop that decomposes work into systematic, evidence-bound ultrawork steps. Use when the user wants a goal loop or durable, checkpointed execution.",
-      "descZh": "`ulw-loop` 的另一宿主适配版本，同样面向持久目标执行与证据导向工作。",
+      "descZh": "ulw-loop 的另一宿主适配版本，同样面向持久目标执行与证据导向工作。",
       "triggers": [
         "durable",
         "checkpointed execution"
@@ -1482,7 +1482,7 @@
       "dir": "packages/omo-senpi/skills/ulw-plan",
       "path": "packages/omo-senpi/skills/ulw-plan/SKILL.md",
       "desc": "Explore-first planning consultant that writes one decision-complete work plan before coding. Use only on an explicit user request for the ulw-plan workflow or a plan before implementation; it never self-activates on a bare ulw run.",
-      "descZh": "`ulw-plan` 的另一宿主适配版本；其中可能混有 OpenCode 专属工具示例，注意替换。",
+      "descZh": "ulw-plan 的另一宿主适配版本；其中可能混有 OpenCode 专属工具示例，注意替换。",
       "triggers": [],
       "version": "",
       "license": "",
@@ -1628,7 +1628,7 @@
       "dir": "packages/omo-senpi/src/components/x-search/skill",
       "path": "packages/omo-senpi/src/components/x-search/skill/SKILL.md",
       "desc": "MUST read before searching X/Twitter with the x_search tool. When xAI is connected: date-bound every time-sensitive query (from_date >= yesterday, widen to 7 days), scope trusted accounts with allowed_x_handles, phrase queries as latest/recent with since:/from:/filter: operators, split into 2-3 searches by account and by keyword, and reconcile against web_search. Triggers: X search, Twitter search, tweets, posts on X, what people are saying on X, x_search, social signal.",
-      "descZh": "仅在已接入 xAI 账号时才有意义（调用 `x_search` 工具）。",
+      "descZh": "仅在已接入 xAI 账号时才有意义（调用 x_search 工具）。",
       "triggers": [],
       "version": "",
       "license": "",
@@ -1671,7 +1671,7 @@
       "dir": "packages/shared-skills/skills/ast-grep",
       "path": "packages/shared-skills/skills/ast-grep/SKILL.md",
       "desc": "Searches and rewrites code by AST shape across 25 languages. Use when the target is a syntax pattern (every call/class/import shaped like X, a codemod, a YAML rule) rather than literal text; for plain strings, comments, or filenames, use rg.",
-      "descZh": "`sg`（亦名 `ast-grep`）是覆盖 25 种语言的 AST 感知搜索与重写工具。",
+      "descZh": "sg（亦名 ast-grep）是覆盖 25 种语言的 AST 感知搜索与重写工具。",
       "triggers": [
         "a codemod",
         "a YAML r"
@@ -1923,7 +1923,7 @@
       "dir": "packages/shared-skills/skills/frontend",
       "path": "packages/shared-skills/skills/frontend/SKILL.md",
       "desc": "Builds, styles, and polishes web UI and UX. Use for any frontend, page, component, styling, layout, animation, or visual-quality task, or when asked to make an interface look or feel a certain way.",
-      "descZh": "本文件是路由表而非规则手册——规则放在 `references/` 下的四套 ruleset 中。",
+      "descZh": "本文件是路由表而非规则手册——规则放在 references/ 下的四套 ruleset 中。",
       "triggers": [],
       "version": "",
       "license": "",
@@ -2069,7 +2069,7 @@
       "dir": "packages/shared-skills/skills/lsp-setup",
       "path": "packages/shared-skills/skills/lsp-setup/SKILL.md",
       "desc": "Configures a language server so editor/agent tooling (diagnostics, go-to-definition, references, rename) works. Use when a project needs an LSP installed or wired, or a 'no LSP server configured' error appears.",
-      "descZh": "为项目配置合适的 Language Server，让 `lsp` MCP 工具可用。",
+      "descZh": "为项目配置合适的 Language Server，让 lsp MCP 工具可用。",
       "triggers": [
         "wired"
       ],
@@ -2228,7 +2228,7 @@
       "dir": "packages/shared-skills/skills/remove-ai-slops",
       "path": "packages/shared-skills/skills/remove-ai-slops/SKILL.md",
       "desc": "Removes AI-generated code smells from branch changes or an explicit file list behind regression tests. Use when the user asks to clean up, deslop, or remove AI-slop patterns from recent changes.",
-      "descZh": "清理 AI 味代码；默认范围是当前分支相对 `merge-base main` 的 diff。",
+      "descZh": "清理 AI 味代码；默认范围是当前分支相对 merge-base main 的 diff。",
       "triggers": [
         "deslop"
       ],
