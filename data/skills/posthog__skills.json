@@ -11,7 +11,7 @@
       "dir": "skills/omnibus/adding-warehouse-person-properties",
       "path": "skills/omnibus/adding-warehouse-person-properties/SKILL.md",
       "desc": "Sync columns from a synced data warehouse table onto PostHog person or group properties, so warehouse data becomes usable anywhere person and group properties already work: feature flag targeting, cohorts, insight filters and breakdowns, surveys, session replay filters, workflows, and the person profile. Use when the user wants to \"add a person property from my warehouse\", \"enrich people with Stripe/Postgres/Salesforce data\", \"put ARR or plan tier on my persons\", \"target a feature flag by a warehouse column\", \"sync warehouse columns onto groups or organizations\", or wants to inspect, backfill, disable, or debug an existing warehouse-backed person or group property.",
-      "descZh": "",
+      "descZh": "仓库属性映射：读取已同步的仓库表，把指定列写到 person 或 group 上。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -52,7 +52,7 @@
       "dir": "skills/omnibus/analyzing-expensive-users",
       "path": "skills/omnibus/analyzing-expensive-users/SKILL.md",
       "desc": "Analyze the most expensive users in AI observability and explain why they cost so much. Use when the user asks about top spenders, expensive users, per-user LLM cost, user-level cost drivers, or patterns behind high AI observability spend.",
-      "descZh": "",
+      "descZh": "分析项目里最烧钱的用户，找出成本集中在谁身上。",
       "triggers": [
         "expensive users",
         "per-user LLM cost",
@@ -97,7 +97,7 @@
       "dir": "skills/omnibus/analyzing-experiment-session-replays",
       "path": "skills/omnibus/analyzing-experiment-session-replays/SKILL.md",
       "desc": "Analyze session replay patterns across experiment variants to understand user behavior differences. Use when the user wants to see how users interact with different experiment variants, identify usability issues, compare behavior patterns between control and test groups, or get qualitative insights to complement quantitative experiment results. Also covers pairing the observed behavior with a linked survey when the user wants qualitative feedback beyond what recordings show.",
-      "descZh": "",
+      "descZh": "按实验分组分析会话录像，理解不同变体带来的行为差异。",
       "triggers": [
         "identify usab"
       ],
@@ -142,7 +142,7 @@
       "dir": "skills/omnibus/analyzing-offline-evaluations",
       "path": "skills/omnibus/analyzing-offline-evaluations/SKILL.md",
       "desc": "Inspect and compare offline AI evaluation experiments, diagnose case-level regressions, and follow scorer history across application, model, or prompt changes. Use when a user asks whether an offline run improved, why a case failed, how scores changed between runs, or how to publish externally computed offline results. Covers immutable scorer versions, comparable dataset cohorts, incomplete coverage, and selective payload reads.",
-      "descZh": "",
+      "descZh": "分析离线实验：读取在 PostHog 之外执行的应用与评估器写回的结果。",
       "triggers": [
         "why a case failed"
       ],
@@ -185,7 +185,7 @@
       "dir": "skills/omnibus/analyzing-task-runs",
       "path": "skills/omnibus/analyzing-task-runs/SKILL.md",
       "desc": "Split a completed PostHog task run into activity records — what the agent tried, whether it worked, what blocked it — and record each one through the report_activity tool. Use when a task asks to analyze a run, produce a task analysis, or review a run from an attached run log. Covers the log query protocol (bounded jq queries over the raw JSONL), both log schemas, the activity schema, and evidence verification. Records facts only; it does not suggest fixes.",
-      "descZh": "",
+      "descZh": "读取某次 task run 的日志，把其中发生的事整理成简短的活动清单。",
       "triggers": [
         "produce a task analysis"
       ],
@@ -233,7 +233,7 @@
       "dir": "skills/omnibus/assessing-heatmaps",
       "path": "skills/omnibus/assessing-heatmaps/SKILL.md",
       "desc": "Assesses what a page's heatmap is telling you and recommends concrete changes. Pulls click / rageclick / scroll-depth data for a URL, names the hot elements by cross-referencing autocapture events on the same page, and can create a saved heatmap the user opens in PostHog, then summarizes the behavior and proposes improvements.\\nTRIGGER when: user asks what a heatmap shows, why people aren't clicking something, where users rage-click, how far they scroll, what to change on a page based on heatmap/click data, or to 'analyze/assess/review the heatmap' for a URL.\\nDO NOT TRIGGER when: the user only wants to create a saved heatmap screenshot with no analysis (use heatmaps-saved-create directly), or is asking about session replay in general (use investigating-replay).",
-      "descZh": "",
+      "descZh": "用热力图回答「用户在这页面上点了哪、哪里暴怒点击、鼠标怎么移动」。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -276,7 +276,7 @@
       "dir": "skills/omnibus/auditing-endpoints",
       "path": "skills/omnibus/auditing-endpoints/SKILL.md",
       "desc": "Audit every endpoint in a PostHog project for staleness, failed materialisations, and unused materialised versions. Use when the user asks \"what endpoints can I clean up?\", \"are any of my endpoints broken?\", \"which materialised versions are still being called?\", or wants a one-shot cleanup pass over the Endpoints product. Produces a prioritised report grouped by issue type, with recommended actions but does not modify anything without explicit confirmation.",
-      "descZh": "",
+      "descZh": "对项目内的 Endpoints 产品做一次全项目审计。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -317,7 +317,7 @@
       "dir": "skills/omnibus/auditing-experiments-flags",
       "path": "skills/omnibus/auditing-experiments-flags/SKILL.md",
       "desc": "Audit PostHog experiments and feature flags for configuration issues, staleness, and best-practice violations. Read when the user asks to audit, health-check, or review experiments or feature flags, check flag hygiene, or verify experiment setup.",
-      "descZh": "",
+      "descZh": "对实验与功能开关跑配置审计。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -358,7 +358,7 @@
       "dir": "skills/omnibus/auditing-warehouse-source-health",
       "path": "skills/omnibus/auditing-warehouse-source-health/SKILL.md",
       "desc": "Audit the health of a PostHog project's data warehouse sources and syncs — find every broken or degraded source connection, sync schema, and webhook channel. Use when the user asks \"why are my imports failing?\", \"what's broken with my sources?\", \"why is my warehouse data stale?\", or wants a one-shot triage of source/sync health before deciding where to dig in. Produces a prioritized report grouped by severity, with recommended next steps. For materialized-view health use `auditing-warehouse-view-health`; for a single failing sync use `diagnosing-failed-warehouse-syncs`.",
-      "descZh": "",
+      "descZh": "对数据仓库管道的「来源与同步」侧做全项目审计。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -401,7 +401,7 @@
       "dir": "skills/omnibus/auditing-warehouse-view-health",
       "path": "skills/omnibus/auditing-warehouse-view-health/SKILL.md",
       "desc": "Audit the health of a PostHog project's materialized views (saved queries) — find every failed materialization and flag unused or stale materialized views that cost storage and compute. Use when the user asks \"which of my views are broken?\", \"why is this materialized view failing?\", \"are any of my views wasting compute?\", or wants a one-shot triage of view health. For source/sync health use `auditing-warehouse-source-health`.",
-      "descZh": "",
+      "descZh": "对数据仓库里的物化视图（物化保存查询）做全项目审计。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -444,7 +444,7 @@
       "dir": "skills/omnibus/authoring-data-quality-checks",
       "path": "skills/omnibus/authoring-data-quality-checks/SKILL.md",
       "desc": "Adds and runs data quality checks (dbt-test style assertions) on a project's warehouse tables and saved-query views, and HogQL catalog metrics: not-null, uniqueness, accepted values, referential integrity, row-count bounds, freshness, and custom HogQL. Metrics support custom SQL checks only. Use when asked to test a model, validate a view, check for nulls or duplicates, add data quality checks, find out why a number looks wrong, or judge whether a warehouse table is trustworthy before using it in an analysis. To describe what data *means* (metrics, certifications, joins), see setting-up-data-catalog instead. Trigger terms: data quality, data test, dbt test, not null check, uniqueness check, freshness check, referential integrity, row count check, validate model, is this table trustworthy.",
-      "descZh": "",
+      "descZh": "编写数据质量检查：一条断言针对一张仓库表、视图或 HogQL 目录指标，最终编译成可执行检查。",
       "triggers": [
         "asked to test a model",
         "validate a view",
@@ -493,7 +493,7 @@
       "dir": "skills/omnibus/authoring-error-tracking-alerts",
       "path": "skills/omnibus/authoring-error-tracking-alerts/SKILL.md",
       "desc": "Author error tracking alerts that fire when an issue is created, reopened, or starts spiking. Use when the user asks to set up error notifications, route exceptions to Slack/webhook/Linear, or evaluate which error events are worth alerting on. Covers trigger-event selection, integration choice, dedup against existing alerts, and shipping with the canonical message body shape.",
-      "descZh": "",
+      "descZh": "编写错误追踪告警——本质是「路由」问题而非度量问题，重点是触发事件该送到谁手里。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -534,7 +534,7 @@
       "dir": "skills/omnibus/authoring-log-alerts",
       "path": "skills/omnibus/authoring-log-alerts/SKILL.md",
       "desc": "Author useful, low-noise log alerts on services in a PostHog project. Use when the user asks to set up alerts for their logs, suggest alerts they should add, or evaluate whether a service is worth monitoring. Covers service triage, baseline characterisation, threshold drafting, back-testing via simulate, and shipping with a notification destination.",
-      "descZh": "",
+      "descZh": "编写日志告警——本质是度量问题而非猜测问题，追求命中要点而不是穷举。",
       "triggers": [
         "evaluate"
       ],
@@ -580,7 +580,7 @@
       "dir": "skills/omnibus/authoring-scouts",
       "path": "skills/omnibus/authoring-scouts/SKILL.md",
       "desc": "Write, edit, and adapt PostHog Signals scouts: scheduled agents that scan a project and report findings. Use to change a canonical scout's scope, thresholds, schedule, or dry-run settings; add a scout for an uncovered surface; record structured output from scheduled LLM scoring; or give feedback through notes. Covers SKILL.md structure, report requirements, follow-up report checks, structured output, duplicate detection, scratchpad memory, scout notes, per-team skills-store and canonical repository edits, and private prompt trials with saved rubrics. Trigger on \"write/edit/customize a signals scout\", \"new scout for X\", \"tune my scout schedule\", \"make a scout that watches <event>\", \"score/judge/measure X with a scout\", \"test/compare scout prompts\", \"generate scout rubrics\", \"structured output from a scout\", \"scout output to Slack\", \"leave a note for / give feedback to a scout\".",
-      "descZh": "",
+      "descZh": "编写 scout（定时自唤醒的 agent）：按自己的周期查看某个 PostHog 项目，判断哪些事真正值得关注。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -625,7 +625,7 @@
       "dir": "skills/omnibus/building-a-dashboard",
       "path": "skills/omnibus/building-a-dashboard/SKILL.md",
       "desc": "Build a new dashboard, or update an existing one, from a set of insights — the same job the in-app assistant does with its upsert-dashboard tool, but over MCP. Use when a user asks to create a dashboard, put several metrics/charts together on one page, assemble a dashboard for a topic (product analytics, retention, revenue, activation, etc.), or add/remove/replace insights on a dashboard they already have. Covers deciding create vs update, reusing existing insights vs creating new ones, and using PostHog's vetted dashboard templates as reference for what a strong dashboard on a topic looks like.",
-      "descZh": "",
+      "descZh": "搭建仪表盘：先确定哪些洞察该放在同一页，再组织成一组 tile。",
       "triggers": [
         "assemb"
       ],
@@ -671,7 +671,7 @@
       "dir": "skills/omnibus/building-canvases",
       "path": "skills/omnibus/building-canvases/SKILL.md",
       "desc": "Create or edit a PostHog freeform canvas — a sandboxed browser application (data board, document, form, small tool, graphics experiment) stored in PostHog and rendered by the desktop/web app. Use when a task asks to build, generate, update, or fix a standalone canvas app, or when a freeform canvas id is given as the publish target. For grid/home canvases, widget placements, or reusable components, use composing-grid-canvases instead. Covers resolving or creating the target canvas, choosing an implementation approach (React + Quill vs plain HTML/browser APIs), the read → edit → validate → publish → build loop, and which companion canvas skills to load for the details.",
-      "descZh": "",
+      "descZh": "编写 canvas：跑在 PostHog 沙箱 iframe 里的客户端浏览器应用。",
       "triggers": [
         "a task asks to build",
         "generate",
@@ -720,7 +720,7 @@
       "dir": "skills/omnibus/building-html-canvases",
       "path": "skills/omnibus/building-html-canvases/SKILL.md",
       "desc": "Author a PostHog canvas with semantic HTML, CSS, and direct browser APIs — documents, articles, generative graphics, 2D canvas and WebGL experiences, and focused experiments where React components add no useful structure. Use after building-canvases has routed a canvas request to a plain-HTML/browser-API implementation. Covers the thin component wrapper the current runtime requires, styling and theming without Quill, drawing surfaces, and animation/cleanup patterns.",
-      "descZh": "",
+      "descZh": "编写文档与图形类 canvas（书面报告、示意图等），而非应用型 canvas。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -765,7 +765,7 @@
       "dir": "skills/omnibus/building-loops",
       "path": "skills/omnibus/building-loops/SKILL.md",
       "desc": "Build a Loop for PostHog Desktop: a workflow that creates an AI task each time its trigger fires, optionally followed by a Slack or email notification with the task's result. Use when asked to create, set up, or change a loop, a recurring agent, a scheduled task, or an automation that runs an AI task when a GitHub, Slack, or PostHog event happens. Covers the exact graph, trigger configs, schedule presets, the notify step, structured output, and the test-run steps.",
-      "descZh": "",
+      "descZh": "搭建 Loop 工作流：一个触发条件加一个「创建 AI 任务」步骤，再挂可选的后续动作。",
       "triggers": [
         "asked to create",
         "set up",
@@ -813,7 +813,7 @@
       "dir": "skills/omnibus/building-react-quill-canvases",
       "path": "skills/omnibus/building-react-quill-canvases/SKILL.md",
       "desc": "Author the React + Quill implementation of a PostHog canvas: the single-component contract, the allowed imports, Quill (PostHog's design system) component and composition rules, theme-aware design tokens, loading skeletons, and the in-canvas date picker. Use after building-canvases has routed a canvas request to a React implementation — dashboards, data boards, forms, tools, or any canvas that should look native to PostHog.",
-      "descZh": "",
+      "descZh": "编写 React/TSX 单文件 canvas（对应源码项目里的 `src/canvas.tsx`）。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -857,7 +857,7 @@
       "dir": "skills/omnibus/building-workflows",
       "path": "skills/omnibus/building-workflows/SKILL.md",
       "desc": "Build, edit, test, enable, and monitor PostHog workflows over MCP. Author the action/edge graph so it runs and opens cleanly in the visual editor, then change drafts surgically with patch operations. Use when asked to build, set up, automate, change, fix, or debug a workflow, campaign, broadcast, drip sequence, or event-triggered automation in the workflows product.",
-      "descZh": "",
+      "descZh": "搭建 PostHog 工作流：由动作节点与连线组成的有向图。",
       "triggers": [
         "asked to build",
         "set up",
@@ -910,7 +910,7 @@
       "dir": "skills/omnibus/checking-deploy-timing",
       "path": "skills/omnibus/checking-deploy-timing/SKILL.md",
       "desc": "Determine when a PostHog code change reached a given environment by reading the hidden GIT deploy annotations in the project and correlating them with the merge commit on GitHub. Use when PostHog staff ask \"when was X deployed\", \"is my change live in the US/EU yet\", \"has my PR shipped\", \"did the fix roll out to prod-us\", or otherwise want to know whether/when a commit, PR, or feature went out to a region. Do not answer deploy-timing questions from event/data volume alone — that only shows when data changed, not when code shipped.",
-      "descZh": "",
+      "descZh": "PostHog 的 CI 每次提交都会写入部署标记（annotation），据此核对实际部署时间。",
       "triggers": [
         "has my PR"
       ],
@@ -957,7 +957,7 @@
       "dir": "skills/omnibus/checking-member-access",
       "path": "skills/omnibus/checking-member-access/SKILL.md",
       "desc": "Explains what a member or a role can do in a PostHog project, using the access control MCP tools. Use when the user asks what someone can see or edit, who can edit dashboards or feature flags, why a member can or cannot open a dashboard, notebook or table, what a role grants, which properties are hidden from someone, or how the project's default access is set. Covers what each level means, how the stored rule, the enforced level and the inherited access relate, what the null values mean, which tool answers which question, and when the answer needs the role tools too.",
-      "descZh": "",
+      "descZh": "用访问控制工具回答「这个人在这里能做什么」。",
       "triggers": [
         "edit",
         "who can edit dashboards",
@@ -1003,7 +1003,7 @@
       "dir": "skills/omnibus/choosing-trend-or-slope-view",
       "path": "skills/omnibus/choosing-trend-or-slope-view/SKILL.md",
       "desc": "Clarify how to visualize change over a time range before building a trend. Use whenever the user asks how much something changed, grew, dropped, improved, or regressed between two points or periods — \"how much did X change from A to B\", \"before vs after\", \"start vs end\", \"week over week\", \"compare this month to last\", \"change over time\" — or mentions a \"slope chart\" / \"slopegraph\". Two readings of \"change\" need different charts: the whole trend (a line, every interval) versus just the two endpoints (a slope, start vs end). Ask which they want, then render it. Not for choosing a saved insight ChartDisplayType in the insight editor.",
-      "descZh": "",
+      "descZh": "「X 从 A 到 B 怎么变了」本身有歧义——趋势图与斜率图回答的是两个不同问题，帮你选出对的那个。",
       "triggers": [
         "grew",
         "dropped",
@@ -1049,7 +1049,7 @@
       "dir": "skills/omnibus/cleaning-up-stale-feature-flags",
       "path": "skills/omnibus/cleaning-up-stale-feature-flags/SKILL.md",
       "desc": "Identify stale feature flags in a PostHog project and clean up the code that checks them. Use when the user wants to find, audit, or remove unused, fully rolled out, or abandoned feature flags, run a feature flag hygiene review or a weekly cleanup, reduce feature flag tech debt, or asks \"which flags can I remove?\". When the agent can read and edit a repository it performs the code cleanup itself: tested local changes, and one draft PR per flag when the user authorizes publishing. Agents without repository access generate a tailored cleanup prompt instead. Covers staleness detection, dependency checking, retained-path rules, and the code-first ordering. This skill does not archive or otherwise change a flag in PostHog.",
-      "descZh": "",
+      "descZh": "找出已失去用途的功能开关，并安全地下线清理。",
       "triggers": [
         "the user wants to find",
         "audit",
@@ -1101,7 +1101,7 @@
       "dir": "skills/omnibus/composing-grid-canvases",
       "path": "skills/omnibus/composing-grid-canvases/SKILL.md",
       "desc": "Compose PostHog grid canvases — widget grids (including the user's home canvas) built from reusable component canvases. Use when a task asks to add, fill, move, resize, or remove a widget on a grid or home canvas, to compose a whole canvas of widgets from one ask, to build a reusable widget/component, or when a placement id or grid canvas id is the target. Covers the component store search → configure → fork → build ladder, the component placement contract (size, configSchema), the placement lifecycle (pending/generating/live/failed), the guarded layout patch loop, and reading the canvas's comment threads.",
-      "descZh": "",
+      "descZh": "编写网格 canvas：本质是组合而非应用——一组格子，每格渲染一个组件。",
       "triggers": [
         "a task asks to add",
         "fill",
@@ -1151,7 +1151,7 @@
       "dir": "skills/omnibus/configuring-experiment-analytics",
       "path": "skills/omnibus/configuring-experiment-analytics/SKILL.md",
       "desc": "Configures the analytics side of a PostHog experiment — exposure criteria (server-resolved default exposure event vs custom exposure events), primary and secondary metrics, the supported metric types (count, sum, ratio with `math` and `math_property`, retention with `retention_window_start` and `start_handling`), multivariate user handling (\"Exclude from analysis\" vs \"Use first seen variant\"), and how to read results once the experiment is live. Use when the user adds or edits a primary or secondary metric (e.g. \"add a secondary metric tracking 'downloaded_file' per user\"), sets up a ratio metric (e.g. \"revenue from purchase_completed / pageviews\"), sets up a retention metric (e.g. \"$pageview → uploaded_file, 7-day window\"), configures custom exposure (e.g. \"only count users who hit /checkout\"), changes multivariate handling, or asks \"who is in the analysis?\", \"how do I measure impact?\", \"is this winning?\", \"what's the confidence level?\", or \"should I ship?\".",
-      "descZh": "",
+      "descZh": "实验分析配置：谁被纳入分析，以及如何度量影响。",
       "triggers": [
         "the user adds",
         "edits a primary",
@@ -1196,7 +1196,7 @@
       "dir": "skills/omnibus/configuring-experiment-rollout",
       "path": "skills/omnibus/configuring-experiment-rollout/SKILL.md",
       "desc": "Configures the rollout shape of a PostHog experiment — the variant split (50/50, 80/20, A/B/C ratios), the overall rollout percentage that gates how many users enter the experiment, and the disambiguation when a percentage like \"roll out to 25%\" could mean either. Use when the user mentions a rollout percentage, variant split, or traffic distribution; gives a ratio like 60/40, 70/30, or 80/20; asks \"who sees the test variant?\"; wants to increase, decrease, or change the rollout or split on a draft or running experiment; weighs equal vs uneven splits; or proposes a mid-experiment split change (often an anti-pattern that needs reset or end-and-restart).",
-      "descZh": "",
+      "descZh": "实验放量配置：谁看到哪个变体。",
       "triggers": [
         "variant split",
         "traffic distribution",
@@ -1243,7 +1243,7 @@
       "dir": "skills/omnibus/consuming-endpoints-from-client-code",
       "path": "skills/omnibus/consuming-endpoints-from-client-code/SKILL.md",
       "desc": "Wire a PostHog endpoint into a client app or SDK. Covers fetching the OpenAPI spec, generating a typed client with openapi-generator or @hey-api/openapi-ts, sending the right auth header, shaping the variables payload (HogQL code_name vs insight breakdown property), handling rate-limit and materialised-endpoint error responses. Use when the user says \"how do I call my endpoint\", \"generate a client for this\", or \"what auth header do I use\".",
-      "descZh": "",
+      "descZh": "从客户端代码调用 endpoint，是 `creating-an-endpoint` 的调用方对偶技能。",
       "triggers": [
         "what auth hea"
       ],
@@ -1291,7 +1291,7 @@
       "dir": "skills/omnibus/context-layer-consolidation",
       "path": "skills/omnibus/context-layer-consolidation/SKILL.md",
       "desc": "Keep the context wiki coherent using the deterministic lint report queue",
-      "descZh": "",
+      "descZh": "上下文层收敛：先跑 `scripts/lint --report`，在 dream publisher 建分支之前把挂载 wiki 里的队列处理干净。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1332,7 +1332,7 @@
       "dir": "skills/omnibus/context-layer-dreaming",
       "path": "skills/omnibus/context-layer-dreaming/SKILL.md",
       "desc": "Synthesizes recent organizational activity into a durable context wiki. Use when running a nightly or incremental context-layer dream, or when updating sourced organizational context from completed work.",
-      "descZh": "",
+      "descZh": "上下文层「做梦」：用近期组织活动中可靠、有出处的事实来改进挂载的上下文 wiki。",
       "triggers": [
         "running a nightly"
       ],
@@ -1378,7 +1378,7 @@
       "dir": "skills/omnibus/context-layer-health-check",
       "path": "skills/omnibus/context-layer-health-check/SKILL.md",
       "desc": "Semantic review of context wiki quality after deterministic consolidation",
-      "descZh": "",
+      "descZh": "上下文层体检：从 `git log --merges` 里读 `wiki-miss:` 行作为优先级信号，并排查相互矛盾的记载。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1421,7 +1421,7 @@
       "dir": "skills/omnibus/copying-endpoints-across-projects",
       "path": "skills/omnibus/copying-endpoints-across-projects/SKILL.md",
       "desc": "Copy a PostHog endpoint (a saved HogQL/insight query exposed as an API route) to another project in the same organization, or duplicate it under a new name in the same project. Use when the user wants to duplicate an endpoint, promote an endpoint from staging to production, replicate an endpoint's query/variables/freshness config in another workspace, or clone an endpoint to iterate on it. Unlike feature flags and experiments, endpoints have NO native cross-project copy tool — this skill covers the read-then-recreate flow (endpoint-get then endpoint-create), the active-project switching it requires, name-collision checks, and the safe defaults (land unmaterialised in the target, verify with endpoint-run). Does not cover editing endpoint versions (see managing-endpoint-versions) or authoring a brand-new endpoint from scratch (see creating-an-endpoint).",
-      "descZh": "",
+      "descZh": "跨项目复制 endpoint（把 HogQL 或洞察查询暴露成的可调用 API 路由）。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1464,7 +1464,7 @@
       "dir": "skills/omnibus/copying-flags-across-projects",
       "path": "skills/omnibus/copying-flags-across-projects/SKILL.md",
       "desc": "Copy a feature flag from one PostHog project to one or more target projects in the same organization. Use when the user wants to duplicate a flag, promote a flag from staging to production, sync flags across projects, or replicate a flag configuration in a different workspace. Covers cohort remapping, scheduled-change handling, encrypted payloads, and the safe defaults (disabled in target, no scheduled changes).",
-      "descZh": "",
+      "descZh": "把功能开关从源项目复制到一个或多个目标项目。",
       "triggers": [
         "sync flags"
       ],
@@ -1507,7 +1507,7 @@
       "dir": "skills/omnibus/creating-ai-subscription",
       "path": "skills/omnibus/creating-ai-subscription/SKILL.md",
       "desc": "Create a recurring AI-generated PostHog report — schedule a free-text prompt to run on a cron, with the LLM-synthesized markdown delivered to email, Slack, or Microsoft Teams on each tick. Use when the user wants a recurring AI summary of X on any cadence (daily, weekly, monthly, yearly) rather than a one-off report. (To attach an AI summary to an existing insight/dashboard subscription instead of a free-text prompt, see `managing-subscriptions` and its `summary_enabled` option.)",
-      "descZh": "",
+      "descZh": "创建 AI 订阅：按计划把 PostHog 报告投递到邮件、Slack 或 Microsoft Teams。",
       "triggers": [
         "weekly",
         "monthly",
@@ -1552,7 +1552,7 @@
       "dir": "skills/omnibus/creating-an-endpoint",
       "path": "skills/omnibus/creating-an-endpoint/SKILL.md",
       "desc": "Create a PostHog endpoint with the right shape on the first try — covers query kind choice, name conventions, what to expose as variables (HogQL code_name vs insight breakdown), data_freshness_seconds, and whether to materialise on day one. Use when the user says \"create an endpoint\", \"expose this query as an API\", \"turn this insight into an endpoint\", or asks for help structuring a new endpoint. Steers away from common mistakes: materialising a query with cohort breakdowns or an ineligible compare query, inline-only variables on a materialised endpoint, unbounded date ranges, ambiguous names.",
-      "descZh": "",
+      "descZh": "用正确的配置新建 endpoint：把 HogQL 或洞察查询暴露为可调用的 API 路由。",
       "triggers": [
         "turn this insight into"
       ],
@@ -1597,7 +1597,7 @@
       "dir": "skills/omnibus/creating-box-plot-insights",
       "path": "skills/omnibus/creating-box-plot-insights/SKILL.md",
       "desc": "Creates product analytics or SQL-backed box plot insights in PostHog. Use when a user asks to create, build, or save a box plot, visualize a numeric distribution, compare quartiles or medians across dates or groups, or turn SQL results into a box plot. Chooses between a standard Trends box plot and a SQL insight, validates the distribution data, saves the insight, and verifies it.",
-      "descZh": "",
+      "descZh": "创建箱线图洞察：需要的是分布数据而非已聚合的均值或总量，选最简单的能表达分布的查询类型。",
       "triggers": [
         "a user asks to create",
         "build",
@@ -1643,7 +1643,7 @@
       "dir": "skills/omnibus/creating-experiments",
       "path": "skills/omnibus/creating-experiments/SKILL.md",
       "desc": "Guides agents through experiment creation: reading the project's setup with experiment-setup-context, defining the hypothesis, configuring rollout and bucketing, setting up analytics and running time, and reporting which choices are guesses. Delegates rollout decisions to configuring-experiment-rollout and metric setup to configuring-experiment-analytics.\\nTRIGGER when: user asks to create a new experiment or A/B test, OR when you are about to call experiment-create.\\nDO NOT TRIGGER when: user is updating an existing experiment, managing lifecycle, or only browsing experiments.",
-      "descZh": "",
+      "descZh": "创建 A/B 实验：先读项目，再走三步流程，最后回读草稿确认。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1684,7 +1684,7 @@
       "dir": "skills/omnibus/creating-online-evaluations",
       "path": "skills/omnibus/creating-online-evaluations/SKILL.md",
       "desc": "Author continuously-running online evaluations in PostHog AI observability, grounded in real failure modes you've identified. Use when the user wants evaluations that automatically score new generations or whole traces going forward — \"create an eval to catch X\", \"continuously check that responses do Y\", \"turn these failures into evals\". Covers letting the explored data decide how many evals to create, proposing that set for the user to pick, choosing the target and eval type (hog / llm_judge / sentiment), configuring a provider and model for an llm_judge eval (a provider key gates enabling, not creation), scoping which generations trigger it via conditions, creating disabled, verifying scope, enabling, and backfilling past data. Proposes a sentiment eval when no failure mode is worth catching. Finding and ranking the failure modes worth evaluating is its own job — use exploring-ai-failures first. To debug or manage evaluations that already exist, use exploring-llm-evaluations.",
-      "descZh": "",
+      "descZh": "创建在线评估：自动为每个匹配的 `$ai_generation` 或整条 trace 打分。",
       "triggers": [
         "whole traces going"
       ],
@@ -1730,7 +1730,7 @@
       "dir": "skills/omnibus/creating-replay-vision-scanners",
       "path": "skills/omnibus/creating-replay-vision-scanners/SKILL.md",
       "desc": "Guides agents through creating and safely sizing a Replay Vision scanner: choosing the scanner type (monitor/classifier/scorer/summarizer), shaping the RecordingsQuery that selects sessions, and — crucially — estimating the credits it will spend and checking the org's remaining budget before creating, so a broad scanner doesn't exhaust the budget on its first scheduled sweep.\\nTRIGGER when: user asks to create, set up, or configure a Replay Vision scanner, OR when you are about to call vision-scanners-create, OR when widening an existing scanner's query, sampling_rate, or sampling_mode (or moving it to a pricier model) via vision-scanners-update.\\nDO NOT TRIGGER when: only reading scanners or observations, deleting a scanner, or running an existing scanner against sessions on demand (vision-scanners-scan-session/-scan-sessions). For a one-off question about sessions you already have, use vision-scanners-inline-scan rather than creating a scanner — the skill's first section covers when that applies.",
-      "descZh": "",
+      "descZh": "创建录像视觉扫描器：一个常驻的 LLM 探针，启用后持续跑在会话录像上。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1773,7 +1773,7 @@
       "dir": "skills/omnibus/creating-surveys",
       "path": "skills/omnibus/creating-surveys/SKILL.md",
       "desc": "Creates and launches PostHog surveys through MCP, including NPS/CSAT popovers, hosted feedback forms, and headless surveys. Guides survey type selection, audience targeting, draft review, and launch readiness. Use when asked to create a survey or form, or before calling survey-create. For investigating an existing survey's delivery or responses, use debugging-surveys instead.",
-      "descZh": "",
+      "descZh": "创建问卷：先按目标写出可用草稿，再校验投放人群与触达方式。",
       "triggers": [
         "asked to create a survey",
         "form"
@@ -1819,7 +1819,7 @@
       "dir": "skills/omnibus/debugging-experiments",
       "path": "skills/omnibus/debugging-experiments/SKILL.md",
       "desc": "Debug and support PostHog Experiments (A/B tests) for a customer looking at their own results. Use whenever an experiment support ticket is pasted or a customer asks a results question, most commonly \"why aren't my exposures even?\", \"why is one variant getting no traffic?\", \"why am I missing / seeing too few exposures?\", \"why does the bias banner show?\", or \"why don't PostHog's numbers match my SQL?\". Pulls the experiment's real data read-only, matches it to a known-cause catalog, and produces a customer-facing explanation, fix, and review of the pertinent numbers. Loads diagnosing-experiment-health as its deep diagnostic library. DO NOT TRIGGER when: creating an experiment (use creating-experiments), only configuring rollout (configuring-experiment-rollout) or metrics (configuring-experiment-analytics), asking lifecycle questions (managing-experiment-lifecycle), or the underlying feature flag is what's misbehaving rather than the results (use debugging-feature-flags).",
-      "descZh": "",
+      "descZh": "排查实验：功能开关随机分组、SDK 上报与结果计算，是哪一环出了问题。",
       "triggers": [
         "most co"
       ],
@@ -1862,7 +1862,7 @@
       "dir": "skills/omnibus/debugging-failed-data-quality-checks",
       "path": "skills/omnibus/debugging-failed-data-quality-checks/SKILL.md",
       "desc": "Finds out why a data quality check failed or errored, looks at the rows it matched, and recommends the fix. Also covers a materialized view refresh that the data quality gate did not publish. Use when asked why a check is red, what rows failed, why a view shows \"Not published\", why a view's data is stale after a refresh, or how to get a blocked refresh published. Trigger terms: failed check, failing rows, errored check, data quality failure, not published, blocked materialization, unpublished refresh, check keeps failing.",
-      "descZh": "",
+      "descZh": "排查数据质量检查失败：一次检查有四种终态，按其状态定位原因。",
       "triggers": [
         "what rows failed",
         "why a view's"
@@ -1906,7 +1906,7 @@
       "dir": "skills/omnibus/debugging-surveys",
       "path": "skills/omnibus/debugging-surveys/SKILL.md",
       "desc": "Diagnose PostHog Surveys configuration and responses across all five SDKs (web/posthog-js, iOS, Android, Flutter, React Native). Use whenever a Surveys support ticket is pasted (\"survey not showing\", \"fewer responses than expected\", \"responses disappeared\", \"responses are incomplete\", \"only the first question was answered\", \"the user says they didn't mean to submit\", \"survey shows on wrong platform\"), or when diagnosing why a survey does or doesn't display. Covers the eligibility pipeline, how a response actually gets stored (partial responses, branching, optional questions, auto-submit), cross-SDK feature parity, the known-cause catalog, read-only diagnostic queries, staff access, and the customer-reply style guide.",
-      "descZh": "",
+      "descZh": "排查问卷：从创建到展示，无代码应用内表单是哪一步没生效。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1950,7 +1950,7 @@
       "dir": "skills/omnibus/designing-email-templates",
       "path": "skills/omnibus/designing-email-templates/SKILL.md",
       "desc": "Author, save, and edit email templates in the PostHog workflows library — compose email design JSON with Liquid personalization and create and round-trip-edit templates over MCP. Use when asked to design, build, update, or fix an email template for workflows, broadcasts, or campaigns.",
-      "descZh": "",
+      "descZh": "设计 PostHog 工作流的邮件模板（群发活动与 `function_email`）。",
       "triggers": [
         "asked to design",
         "build",
@@ -2000,7 +2000,7 @@
       "dir": "skills/omnibus/designing-replay-vision-scanners",
       "path": "skills/omnibus/designing-replay-vision-scanners/SKILL.md",
       "desc": "Designs a Replay Vision scanner that produces trustworthy observations: one visible question per scanner, a type chosen from the answer shape, a query that selects only sessions able to answer it, a prompt that demands on-screen proof and allows no or inconclusive, a model picked by the cost of a wrong answer, and a first-batch test pass. Sizing and the create call stay in creating-replay-vision-scanners.\\nTRIGGER when: user wants to design, draft, or improve a Replay Vision scanner or its prompt, asks what to scan for, asks why a scanner returns vague observations, or asks an agent to propose scanners for a product.\\nDO NOT TRIGGER when: the question and prompt are settled and the job is to size and create (use creating-replay-vision-scanners), the scanner targets one experiment (use scanning-experiments-with-replay-vision), or the job is to read existing observations (use exploring-replay-vision-observations).",
-      "descZh": "",
+      "descZh": "设计录像视觉扫描器：一次一条录像、一个提示词，观察录像并写下结论。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -2043,7 +2043,7 @@
       "dir": "skills/omnibus/diagnosing-ci-and-merge-bottlenecks",
       "path": "skills/omnibus/diagnosing-ci-and-merge-bottlenecks/SKILL.md",
       "desc": "Diagnoses CI and pull-request pipeline health for a GitHub repo using the engineering analytics MCP tools — pull-requests (PR list with CI status), workflow-health (per-workflow CI trends), and pr-lifecycle (a single PR's timeline). Use when asked whether CI is getting faster or slower, which GitHub Actions workflow is the slow or flaky long-pole, how long PRs take from open to merge, how an author's merge time compares to the cohort, which open PRs have failing or pending CI, or where a specific pull request is stuck. Triggers on \"engineering analytics\", \"is CI getting slower\", \"slow workflow\", \"flaky CI\", \"time to merge\", \"cycle time\", \"PR throughput\", \"failing checks\", \"where is PR <n> stuck\", \"CI long pole\", \"what's holding up this PR\". For a verdict on one specific CI failure (whose fault, which commit) use investigating-ci-failures; to save these numbers as insights use turning-engineering-analytics-into-insights.",
-      "descZh": "",
+      "descZh": "把 PR 当成「用户」来做工程分析：定位 CI 与合并环节的瓶颈。",
       "triggers": [
         "slower"
       ],
@@ -2086,7 +2086,7 @@
       "dir": "skills/omnibus/diagnosing-endpoint-performance",
       "path": "skills/omnibus/diagnosing-endpoint-performance/SKILL.md",
       "desc": "Diagnose why a PostHog endpoint is slow or expensive and propose a concrete fix — bump the cache TTL, enable materialisation, restructure variables, or rewrite the query. Use when the user says \"this endpoint is slow\", \"my endpoint times out\", \"we're hitting the cost cap on this one\", or asks \"should I materialise this?\". Focuses on a single named endpoint, not a project-wide audit.",
-      "descZh": "",
+      "descZh": "针对某个慢、贵或不稳的 endpoint 做性能诊断并给出结论。",
       "triggers": [
         "my endpoint times out"
       ],
@@ -2131,7 +2131,7 @@
       "dir": "skills/omnibus/diagnosing-experiment-health",
       "path": "skills/omnibus/diagnosing-experiment-health/SKILL.md",
       "desc": "Runs diagnostics and a health check on one PostHog experiment: its setup, exposures, results and changes during the run. Covers 0 exposures, sample ratio mismatch, lost or uneven exposures, users in multiple variants, identity faults, who the experiment counts, significance traps (peeking, A/A, 'target reached', Bayesian vs Frequentist, sequential, CUPED), mid-run edits, pause and freeze, and survey follow-up.\\nTRIGGER when: user asks 'is my experiment healthy / set up right / biased?' or 'why 0 exposures?', asks why it counts different people than their insight, mentions the bias or mismatch warning, an uneven split, significance that flips, numbers that disagree with their SQL, results that changed after an edit, or wants user feedback on an experiment.\\nDO NOT TRIGGER when: creating an experiment (use creating-experiments), only configuring rollout (use configuring-experiment-rollout) or metrics (use configuring-experiment-analytics), or only asking lifecycle questions (use managing-experiment-lifecycle).",
-      "descZh": "",
+      "descZh": "排查实验健康度：「结果看起来不对、有偏或为空」时该怎么办。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -2175,7 +2175,7 @@
       "dir": "skills/omnibus/diagnosing-failed-warehouse-syncs",
       "path": "skills/omnibus/diagnosing-failed-warehouse-syncs/SKILL.md",
       "desc": "Diagnose why a data warehouse sync is failing and recommend the right recovery action. Use when the user asks \"why isn't my Stripe/Postgres/Hubspot sync working?\", \"this table has been stuck for hours\", \"the data in the warehouse looks wrong\", or wants to troubleshoot a specific source or schema. Covers source-level vs schema-level failures, stuck Running states, credential and schema-drift errors, incremental-field misconfig, CDC prerequisite failures, and the cancel / reload / resync / delete-data recovery actions.",
-      "descZh": "",
+      "descZh": "自顶向下排查仓库同步失败：来源 → schema → 表，定位卡住或产出脏数据的那一环。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -2218,7 +2218,7 @@
       "dir": "skills/omnibus/diagnosing-missing-recordings",
       "path": "skills/omnibus/diagnosing-missing-recordings/SKILL.md",
       "desc": "Diagnoses why a session recording is missing or was not captured. Use when a user asks why a session has no replay, why recordings aren't appearing, or wants to troubleshoot session replay capture issues for a specific session ID or across their project. Covers SDK diagnostic signals, project settings, sampling, triggers, ad blockers, and quota/billing scenarios.",
-      "descZh": "",
+      "descZh": "排查「为什么这段会话没被录到」或「我怎么一条录像都没有」。",
       "triggers": [
         "wants to trou"
       ],

@@ -2,186 +2,9 @@
   "repo": "mem0ai/mem0",
   "commit": "d26ba5e4518cef7fff3c66d4f715b21adf9feabe",
   "branch": "main",
-  "fetchedAt": "2026-10-13T05:36:18.714Z",
+  "fetchedAt": "2026-10-13T06:41:26.331Z",
   "parseFail": 0,
   "skills": [
-    {
-      "slug": "forget",
-      "name": "forget",
-      "dir": "integrations/antigravity-plugin/skills/forget",
-      "path": "integrations/antigravity-plugin/skills/forget/SKILL.md",
-      "desc": "Delete the Mem0 memories stored for this repository and this user. Use when the user asks to forget, clear, wipe, or delete memories.",
-      "descZh": "",
-      "triggers": [
-        "the user asks to forget",
-        "clear",
-        "wipe",
-        "delete memories"
-      ],
-      "version": "",
-      "license": "Apache-2.0",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": false,
-        "bins": [
-          "python3"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/mem0ai/mem0.git",
-        "copy": "cp -r integrations/antigravity-plugin/skills/forget ~/.claude/skills/forget",
-        "raw": "https://raw.githubusercontent.com/mem0ai/mem0/d26ba5e4518cef7fff3c66d4f715b21adf9feabe/integrations/antigravity-plugin/skills/forget/SKILL.md",
-        "saveAs": "~/.claude/skills/forget/SKILL.md",
-        "marketplace": "/plugin marketplace add mem0ai/mem0"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:9645050b5e82035f4a121d9354692dbc27b563ce0c80fc3fb413dbcc19ec4a3d",
-      "bytes": 1064,
-      "wordCount": 126,
-      "repoLicense": "Apache-2.0",
-      "commit": "d26ba5e4518cef7fff3c66d4f715b21adf9feabe",
-      "branch": "main",
-      "body": "---\nname: forget\ndescription: Delete the Mem0 memories stored for this repository and this user. Use when the user asks to forget, clear, wipe, or delete memories.\ndisable-model-invocation: true\n---\n\n# Forget this repository's memories\n\nThis permanently deletes remote memories. Before running anything, tell the\nuser exactly what will be deleted: their own memories for this repository\nonly. The repository's project memory is shared by everyone who works in it,\nso it stays unless the user explicitly asks to delete that too.\n\nAfter the user confirms, run:\n\n```bash\npython3 \"${ANTIGRAVITY_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"antigravity\"  forget --remote --yes\n```\n\nIf the user also asked to delete the repository's shared project memory, add\n`--include-project-memory` and say that this removes it for every teammate.\n\nReport what the command output says was deleted. If the user only wants local\ndata cleared (evidence log, pending queue), run the same command without\n`--remote`. Never pass `--yes` before the user has confirmed in this\nconversation.\n",
-      "bodyMd": "# Forget this repository's memories\n\nThis permanently deletes remote memories. Before running anything, tell the\nuser exactly what will be deleted: their own memories for this repository\nonly. The repository's project memory is shared by everyone who works in it,\nso it stays unless the user explicitly asks to delete that too.\n\nAfter the user confirms, run:\n\n```bash\npython3 \"${ANTIGRAVITY_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"antigravity\"  forget --remote --yes\n```\n\nIf the user also asked to delete the repository's shared project memory, add\n`--include-project-memory` and say that this removes it for every teammate.\n\nReport what the command output says was deleted. If the user only wants local\ndata cleared (evidence log, pending queue), run the same command without\n`--remote`. Never pass `--yes` before the user has confirmed in this\nconversation.\n"
-    },
-    {
-      "slug": "pause",
-      "name": "pause",
-      "dir": "integrations/antigravity-plugin/skills/pause",
-      "path": "integrations/antigravity-plugin/skills/pause/SKILL.md",
-      "desc": "Pause Mem0 memory capture on this machine. Use when the user wants to stop memories being recorded, for example for private work or experiments.",
-      "descZh": "",
-      "triggers": [
-        "experiment"
-      ],
-      "version": "",
-      "license": "Apache-2.0",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": false,
-        "bins": [
-          "python3"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/mem0ai/mem0.git",
-        "copy": "cp -r integrations/antigravity-plugin/skills/pause ~/.claude/skills/pause",
-        "raw": "https://raw.githubusercontent.com/mem0ai/mem0/d26ba5e4518cef7fff3c66d4f715b21adf9feabe/integrations/antigravity-plugin/skills/pause/SKILL.md",
-        "saveAs": "~/.claude/skills/pause/SKILL.md",
-        "marketplace": "/plugin marketplace add mem0ai/mem0"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:a461aefc4c6e7b488a752740790cb7492b69499da968873dc884761db0e96c71",
-      "bytes": 772,
-      "wordCount": 76,
-      "repoLicense": "Apache-2.0",
-      "commit": "d26ba5e4518cef7fff3c66d4f715b21adf9feabe",
-      "branch": "main",
-      "body": "---\nname: pause\ndescription: Pause Mem0 memory capture on this machine. Use when the user wants to stop memories being recorded, for example for private work or experiments.\ndisable-model-invocation: true\n---\n\n# Pause memory capture\n\nTo pause (hooks stop capturing and sending session content; a minimal\ntelemetry ping still fires at session start, under your Mem0 account email,\nunless `MEM0_TELEMETRY=false`):\n\n```bash\npython3 \"${ANTIGRAVITY_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"antigravity\"  pause\n```\n\nConfirm the new state back to the user, and remind them that already-created\nmemories still exist and remain searchable. Pending unsent packets are held\nwhile paused, not expired, and are delivered after resuming. To turn capture\nback on, use `/mem0:resume`.\n",
-      "bodyMd": "# Pause memory capture\n\nTo pause (hooks stop capturing and sending session content; a minimal\ntelemetry ping still fires at session start, under your Mem0 account email,\nunless `MEM0_TELEMETRY=false`):\n\n```bash\npython3 \"${ANTIGRAVITY_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"antigravity\"  pause\n```\n\nConfirm the new state back to the user, and remind them that already-created\nmemories still exist and remain searchable. Pending unsent packets are held\nwhile paused, not expired, and are delivered after resuming. To turn capture\nback on, use `/mem0:resume`.\n"
-    },
-    {
-      "slug": "resume",
-      "name": "resume",
-      "dir": "integrations/antigravity-plugin/skills/resume",
-      "path": "integrations/antigravity-plugin/skills/resume/SKILL.md",
-      "desc": "Resume Mem0 memory capture after it was paused with /mem0:pause.",
-      "descZh": "",
-      "triggers": [],
-      "version": "",
-      "license": "Apache-2.0",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": false,
-        "bins": [
-          "python3"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/mem0ai/mem0.git",
-        "copy": "cp -r integrations/antigravity-plugin/skills/resume ~/.claude/skills/resume",
-        "raw": "https://raw.githubusercontent.com/mem0ai/mem0/d26ba5e4518cef7fff3c66d4f715b21adf9feabe/integrations/antigravity-plugin/skills/resume/SKILL.md",
-        "saveAs": "~/.claude/skills/resume/SKILL.md",
-        "marketplace": "/plugin marketplace add mem0ai/mem0"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:407107a19a4594a5d33aa510fa2cb152ac51c1edf300e24bc0be36bd3058fe53",
-      "bytes": 476,
-      "wordCount": 44,
-      "repoLicense": "Apache-2.0",
-      "commit": "d26ba5e4518cef7fff3c66d4f715b21adf9feabe",
-      "branch": "main",
-      "body": "---\nname: resume\ndescription: Resume Mem0 memory capture after it was paused with /mem0:pause.\ndisable-model-invocation: true\n---\n\n# Resume memory capture\n\nResume memory capture for this machine.\n\nRun:\n\n```bash\npython3 \"${ANTIGRAVITY_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"antigravity\"  resume\n```\n\nConfirm to the user that capture is active again. New sessions record evidence and\ncreate memories as normal; nothing that happened while paused is retroactively\ncaptured.\n",
-      "bodyMd": "# Resume memory capture\n\nResume memory capture for this machine.\n\nRun:\n\n```bash\npython3 \"${ANTIGRAVITY_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"antigravity\"  resume\n```\n\nConfirm to the user that capture is active again. New sessions record evidence and\ncreate memories as normal; nothing that happened while paused is retroactively\ncaptured.\n"
-    },
-    {
-      "slug": "search",
-      "name": "search",
-      "dir": "integrations/antigravity-plugin/skills/search",
-      "path": "integrations/antigravity-plugin/skills/search/SKILL.md",
-      "desc": "Search memories from earlier Antigravity sessions in this repository. Use it when earlier work may already explain the code, error, decision, or command you need, so you can avoid repeating file reads, searches, or experiments.",
-      "descZh": "",
-      "triggers": [],
-      "version": "",
-      "license": "Apache-2.0",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": false,
-        "bins": []
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/mem0ai/mem0.git",
-        "copy": "cp -r integrations/antigravity-plugin/skills/search ~/.claude/skills/search",
-        "raw": "https://raw.githubusercontent.com/mem0ai/mem0/d26ba5e4518cef7fff3c66d4f715b21adf9feabe/integrations/antigravity-plugin/skills/search/SKILL.md",
-        "saveAs": "~/.claude/skills/search/SKILL.md",
-        "marketplace": "/plugin marketplace add mem0ai/mem0"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:841f07e1b8ae194dd6d61975a95a8d59820f6201c6c17ee688cfa6cf7a46df62",
-      "bytes": 1352,
-      "wordCount": 143,
-      "repoLicense": "Apache-2.0",
-      "commit": "d26ba5e4518cef7fff3c66d4f715b21adf9feabe",
-      "branch": "main",
-      "body": "---\nname: search\ndescription: Search memories from earlier Antigravity sessions in this repository. Use it when earlier work may already explain the code, error, decision, or command you need, so you can avoid repeating file reads, searches, or experiments.\nargument-hint: \"[question] [--top-k number] [--category category-name] [--scope repo|dir|mine] [--run-id session-id]\"\ndisable-model-invocation: true\n---\n\n# Search memories\n\nCall `search_memories` with the user's question. Treat `--top-k`, `--category`,\n`--scope`, and `--run-id` as tool arguments instead of including them in the\nquery.\n\nOmit `top_k` to use Mem0's configured default. Omit `category` to search every\ncategory. Omit `scope` to use the configured default, normally `repo`: this\nrepository's shared memory, which everyone who works in it contributes to,\nplus your own preferences.\n\nPass `scope` when the question needs something else: `dir` to narrow the\nshared memory to the directory you are working in (a package inside a\nmonorepo), `mine` for your own preferences alone.\n\nPass `run_id` with any scope to retrieve memories saved in a specific coding-agent\nsession. Omit `run_id` to search across sessions. It filters the memories returned;\nit does not identify the session making the search request. Use a known session ID,\nnever invent one. Return the tool's result directly.\n",
-      "bodyMd": "# Search memories\n\nCall `search_memories` with the user's question. Treat `--top-k`, `--category`,\n`--scope`, and `--run-id` as tool arguments instead of including them in the\nquery.\n\nOmit `top_k` to use Mem0's configured default. Omit `category` to search every\ncategory. Omit `scope` to use the configured default, normally `repo`: this\nrepository's shared memory, which everyone who works in it contributes to,\nplus your own preferences.\n\nPass `scope` when the question needs something else: `dir` to narrow the\nshared memory to the directory you are working in (a package inside a\nmonorepo), `mine` for your own preferences alone.\n\nPass `run_id` with any scope to retrieve memories saved in a specific coding-agent\nsession. Omit `run_id` to search across sessions. It filters the memories returned;\nit does not identify the session making the search request. Use a known session ID,\nnever invent one. Return the tool's result directly.\n"
-    },
     {
       "slug": "status",
       "name": "status",
@@ -227,183 +50,6 @@
       "branch": "main",
       "body": "---\nname: status\ndescription: Show whether Mem0 memory is working in this repository, covering configuration, capture state, pending flushes, and whether the Mem0 API key is valid. Use when the user asks whether memory is on, why a memory is missing, or anything looks broken.\ndisable-model-invocation: false\n---\n\n# Memory status\n\nRun both commands and report the combined result in plain language:\n\n```bash\npython3 \"${ANTIGRAVITY_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"antigravity\"  status --json\npython3 \"${ANTIGRAVITY_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"antigravity\"  doctor\n```\n\nSummarize, using only fields the JSON actually reports: whether capture is\nactive or paused, the user ID and repository scope (`repo_id`), whether an\nAPI key is configured, the event/flush/retrieval counts (`flushes` is the\nnumber of completed flushes, not a pending count), and the doctor check\nresults. If doctor reports an authentication failure (401 / invalid key), say\nclearly that the Mem0 API key is invalid or expired and that memories are NOT\nbeing created. Never report an auth failure as \"no memories found\". Suggest\nreinstalling with `--config api_key=...` in that case.\n",
       "bodyMd": "# Memory status\n\nRun both commands and report the combined result in plain language:\n\n```bash\npython3 \"${ANTIGRAVITY_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"antigravity\"  status --json\npython3 \"${ANTIGRAVITY_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"antigravity\"  doctor\n```\n\nSummarize, using only fields the JSON actually reports: whether capture is\nactive or paused, the user ID and repository scope (`repo_id`), whether an\nAPI key is configured, the event/flush/retrieval counts (`flushes` is the\nnumber of completed flushes, not a pending count), and the doctor check\nresults. If doctor reports an authentication failure (401 / invalid key), say\nclearly that the Mem0 API key is invalid or expired and that memories are NOT\nbeing created. Never report an auth failure as \"no memories found\". Suggest\nreinstalling with `--config api_key=...` in that case.\n"
-    },
-    {
-      "slug": "forget-2",
-      "name": "forget",
-      "dir": "integrations/claude-code-plugin/skills/forget",
-      "path": "integrations/claude-code-plugin/skills/forget/SKILL.md",
-      "desc": "Delete the Mem0 memories stored for this repository and this user. Use when the user asks to forget, clear, wipe, or delete memories.",
-      "descZh": "",
-      "triggers": [
-        "the user asks to forget",
-        "clear",
-        "wipe",
-        "delete memories"
-      ],
-      "version": "",
-      "license": "Apache-2.0",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": false,
-        "bins": [
-          "python3"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/mem0ai/mem0.git",
-        "copy": "cp -r integrations/claude-code-plugin/skills/forget ~/.claude/skills/forget-2",
-        "raw": "https://raw.githubusercontent.com/mem0ai/mem0/d26ba5e4518cef7fff3c66d4f715b21adf9feabe/integrations/claude-code-plugin/skills/forget/SKILL.md",
-        "saveAs": "~/.claude/skills/forget-2/SKILL.md",
-        "marketplace": "/plugin marketplace add mem0ai/mem0"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:014824e65b2acee8c47d70c34604befd979fb6522eaee799463572f055851fb3",
-      "bytes": 1100,
-      "wordCount": 128,
-      "repoLicense": "Apache-2.0",
-      "commit": "d26ba5e4518cef7fff3c66d4f715b21adf9feabe",
-      "branch": "main",
-      "body": "---\nname: forget\ndescription: Delete the Mem0 memories stored for this repository and this user. Use when the user asks to forget, clear, wipe, or delete memories.\ndisable-model-invocation: true\n---\n\n# Forget this repository's memories\n\nThis permanently deletes remote memories. Before running anything, tell the\nuser exactly what will be deleted: their own memories for this repository\nonly. The repository's project memory is shared by everyone who works in it,\nso it stays unless the user explicitly asks to delete that too.\n\nAfter the user confirms, run:\n\n```bash\npython3 \"${CLAUDE_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"claude-code\" --plugin-data-dir \"${CLAUDE_PLUGIN_DATA}\" forget --remote --yes\n```\n\nIf the user also asked to delete the repository's shared project memory, add\n`--include-project-memory` and say that this removes it for every teammate.\n\nReport what the command output says was deleted. If the user only wants local\ndata cleared (evidence log, pending queue), run the same command without\n`--remote`. Never pass `--yes` before the user has confirmed in this\nconversation.\n",
-      "bodyMd": "# Forget this repository's memories\n\nThis permanently deletes remote memories. Before running anything, tell the\nuser exactly what will be deleted: their own memories for this repository\nonly. The repository's project memory is shared by everyone who works in it,\nso it stays unless the user explicitly asks to delete that too.\n\nAfter the user confirms, run:\n\n```bash\npython3 \"${CLAUDE_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"claude-code\" --plugin-data-dir \"${CLAUDE_PLUGIN_DATA}\" forget --remote --yes\n```\n\nIf the user also asked to delete the repository's shared project memory, add\n`--include-project-memory` and say that this removes it for every teammate.\n\nReport what the command output says was deleted. If the user only wants local\ndata cleared (evidence log, pending queue), run the same command without\n`--remote`. Never pass `--yes` before the user has confirmed in this\nconversation.\n"
-    },
-    {
-      "slug": "pause-2",
-      "name": "pause",
-      "dir": "integrations/claude-code-plugin/skills/pause",
-      "path": "integrations/claude-code-plugin/skills/pause/SKILL.md",
-      "desc": "Pause Mem0 memory capture on this machine. Use when the user wants to stop memories being recorded, for example for private work or experiments.",
-      "descZh": "",
-      "triggers": [
-        "experiment"
-      ],
-      "version": "",
-      "license": "Apache-2.0",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": false,
-        "bins": [
-          "python3"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/mem0ai/mem0.git",
-        "copy": "cp -r integrations/claude-code-plugin/skills/pause ~/.claude/skills/pause-2",
-        "raw": "https://raw.githubusercontent.com/mem0ai/mem0/d26ba5e4518cef7fff3c66d4f715b21adf9feabe/integrations/claude-code-plugin/skills/pause/SKILL.md",
-        "saveAs": "~/.claude/skills/pause-2/SKILL.md",
-        "marketplace": "/plugin marketplace add mem0ai/mem0"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:4283898a6f33f8b821afbd604b53a273ec5fa64abf34830d180bac515e9c78e9",
-      "bytes": 808,
-      "wordCount": 78,
-      "repoLicense": "Apache-2.0",
-      "commit": "d26ba5e4518cef7fff3c66d4f715b21adf9feabe",
-      "branch": "main",
-      "body": "---\nname: pause\ndescription: Pause Mem0 memory capture on this machine. Use when the user wants to stop memories being recorded, for example for private work or experiments.\ndisable-model-invocation: true\n---\n\n# Pause memory capture\n\nTo pause (hooks stop capturing and sending session content; a minimal\ntelemetry ping still fires at session start, under your Mem0 account email,\nunless `MEM0_TELEMETRY=false`):\n\n```bash\npython3 \"${CLAUDE_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"claude-code\" --plugin-data-dir \"${CLAUDE_PLUGIN_DATA}\" pause\n```\n\nConfirm the new state back to the user, and remind them that already-created\nmemories still exist and remain searchable. Pending unsent packets are held\nwhile paused, not expired, and are delivered after resuming. To turn capture\nback on, use `/mem0:resume`.\n",
-      "bodyMd": "# Pause memory capture\n\nTo pause (hooks stop capturing and sending session content; a minimal\ntelemetry ping still fires at session start, under your Mem0 account email,\nunless `MEM0_TELEMETRY=false`):\n\n```bash\npython3 \"${CLAUDE_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"claude-code\" --plugin-data-dir \"${CLAUDE_PLUGIN_DATA}\" pause\n```\n\nConfirm the new state back to the user, and remind them that already-created\nmemories still exist and remain searchable. Pending unsent packets are held\nwhile paused, not expired, and are delivered after resuming. To turn capture\nback on, use `/mem0:resume`.\n"
-    },
-    {
-      "slug": "resume-2",
-      "name": "resume",
-      "dir": "integrations/claude-code-plugin/skills/resume",
-      "path": "integrations/claude-code-plugin/skills/resume/SKILL.md",
-      "desc": "Resume Mem0 memory capture after it was paused with /mem0:pause.",
-      "descZh": "",
-      "triggers": [],
-      "version": "",
-      "license": "Apache-2.0",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": false,
-        "bins": [
-          "python3"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/mem0ai/mem0.git",
-        "copy": "cp -r integrations/claude-code-plugin/skills/resume ~/.claude/skills/resume-2",
-        "raw": "https://raw.githubusercontent.com/mem0ai/mem0/d26ba5e4518cef7fff3c66d4f715b21adf9feabe/integrations/claude-code-plugin/skills/resume/SKILL.md",
-        "saveAs": "~/.claude/skills/resume-2/SKILL.md",
-        "marketplace": "/plugin marketplace add mem0ai/mem0"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:e566d28ae5ce4978ff30c4c53ad36d9dbe2f1e2c2296ad15ccc9473ada56ed14",
-      "bytes": 512,
-      "wordCount": 46,
-      "repoLicense": "Apache-2.0",
-      "commit": "d26ba5e4518cef7fff3c66d4f715b21adf9feabe",
-      "branch": "main",
-      "body": "---\nname: resume\ndescription: Resume Mem0 memory capture after it was paused with /mem0:pause.\ndisable-model-invocation: true\n---\n\n# Resume memory capture\n\nResume memory capture for this machine.\n\nRun:\n\n```bash\npython3 \"${CLAUDE_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"claude-code\" --plugin-data-dir \"${CLAUDE_PLUGIN_DATA}\" resume\n```\n\nConfirm to the user that capture is active again. New sessions record evidence and\ncreate memories as normal; nothing that happened while paused is retroactively\ncaptured.\n",
-      "bodyMd": "# Resume memory capture\n\nResume memory capture for this machine.\n\nRun:\n\n```bash\npython3 \"${CLAUDE_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"claude-code\" --plugin-data-dir \"${CLAUDE_PLUGIN_DATA}\" resume\n```\n\nConfirm to the user that capture is active again. New sessions record evidence and\ncreate memories as normal; nothing that happened while paused is retroactively\ncaptured.\n"
-    },
-    {
-      "slug": "search-2",
-      "name": "search",
-      "dir": "integrations/claude-code-plugin/skills/search",
-      "path": "integrations/claude-code-plugin/skills/search/SKILL.md",
-      "desc": "Search memories from earlier Claude Code sessions in this repository. Use it when earlier work may already explain the code, error, decision, or command you need, so you can avoid repeating file reads, searches, or experiments.",
-      "descZh": "",
-      "triggers": [],
-      "version": "",
-      "license": "Apache-2.0",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": false,
-        "bins": []
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/mem0ai/mem0.git",
-        "copy": "cp -r integrations/claude-code-plugin/skills/search ~/.claude/skills/search-2",
-        "raw": "https://raw.githubusercontent.com/mem0ai/mem0/d26ba5e4518cef7fff3c66d4f715b21adf9feabe/integrations/claude-code-plugin/skills/search/SKILL.md",
-        "saveAs": "~/.claude/skills/search-2/SKILL.md",
-        "marketplace": "/plugin marketplace add mem0ai/mem0"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:864dac82800c03015b405783164df6cee05567f97c5b0af3531ead690fcc9b74",
-      "bytes": 1352,
-      "wordCount": 143,
-      "repoLicense": "Apache-2.0",
-      "commit": "d26ba5e4518cef7fff3c66d4f715b21adf9feabe",
-      "branch": "main",
-      "body": "---\nname: search\ndescription: Search memories from earlier Claude Code sessions in this repository. Use it when earlier work may already explain the code, error, decision, or command you need, so you can avoid repeating file reads, searches, or experiments.\nargument-hint: \"[question] [--top-k number] [--category category-name] [--scope repo|dir|mine] [--run-id session-id]\"\ndisable-model-invocation: true\n---\n\n# Search memories\n\nCall `search_memories` with the user's question. Treat `--top-k`, `--category`,\n`--scope`, and `--run-id` as tool arguments instead of including them in the\nquery.\n\nOmit `top_k` to use Mem0's configured default. Omit `category` to search every\ncategory. Omit `scope` to use the configured default, normally `repo`: this\nrepository's shared memory, which everyone who works in it contributes to,\nplus your own preferences.\n\nPass `scope` when the question needs something else: `dir` to narrow the\nshared memory to the directory you are working in (a package inside a\nmonorepo), `mine` for your own preferences alone.\n\nPass `run_id` with any scope to retrieve memories saved in a specific coding-agent\nsession. Omit `run_id` to search across sessions. It filters the memories returned;\nit does not identify the session making the search request. Use a known session ID,\nnever invent one. Return the tool's result directly.\n",
-      "bodyMd": "# Search memories\n\nCall `search_memories` with the user's question. Treat `--top-k`, `--category`,\n`--scope`, and `--run-id` as tool arguments instead of including them in the\nquery.\n\nOmit `top_k` to use Mem0's configured default. Omit `category` to search every\ncategory. Omit `scope` to use the configured default, normally `repo`: this\nrepository's shared memory, which everyone who works in it contributes to,\nplus your own preferences.\n\nPass `scope` when the question needs something else: `dir` to narrow the\nshared memory to the directory you are working in (a package inside a\nmonorepo), `mine` for your own preferences alone.\n\nPass `run_id` with any scope to retrieve memories saved in a specific coding-agent\nsession. Omit `run_id` to search across sessions. It filters the memories returned;\nit does not identify the session making the search request. Use a known session ID,\nnever invent one. Return the tool's result directly.\n"
     },
     {
       "slug": "status-2",
@@ -452,183 +98,6 @@
       "bodyMd": "# Memory status\n\nRun both commands and report the combined result in plain language:\n\n```bash\npython3 \"${CLAUDE_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"claude-code\" --plugin-data-dir \"${CLAUDE_PLUGIN_DATA}\" status --json\npython3 \"${CLAUDE_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"claude-code\" --plugin-data-dir \"${CLAUDE_PLUGIN_DATA}\" doctor\n```\n\nSummarize, using only fields the JSON actually reports: whether capture is\nactive or paused, the user ID and repository scope (`repo_id`), whether an\nAPI key is configured, the event/flush/retrieval counts (`flushes` is the\nnumber of completed flushes, not a pending count), and the doctor check\nresults. If doctor reports an authentication failure (401 / invalid key), say\nclearly that the Mem0 API key is invalid or expired and that memories are NOT\nbeing created. Never report an auth failure as \"no memories found\". Suggest\nreinstalling with `--config api_key=...` in that case.\n"
     },
     {
-      "slug": "forget-3",
-      "name": "forget",
-      "dir": "integrations/codex-plugin/skills/forget",
-      "path": "integrations/codex-plugin/skills/forget/SKILL.md",
-      "desc": "Delete the Mem0 memories stored for this repository and this user. Use when the user asks to forget, clear, wipe, or delete memories.",
-      "descZh": "",
-      "triggers": [
-        "the user asks to forget",
-        "clear",
-        "wipe",
-        "delete memories"
-      ],
-      "version": "",
-      "license": "Apache-2.0",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": false,
-        "bins": [
-          "python3"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/mem0ai/mem0.git",
-        "copy": "cp -r integrations/codex-plugin/skills/forget ~/.claude/skills/forget-3",
-        "raw": "https://raw.githubusercontent.com/mem0ai/mem0/d26ba5e4518cef7fff3c66d4f715b21adf9feabe/integrations/codex-plugin/skills/forget/SKILL.md",
-        "saveAs": "~/.claude/skills/forget-3/SKILL.md",
-        "marketplace": "/plugin marketplace add mem0ai/mem0"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:3627a5b7c53caf77aa32712fa1708bb72638ddb881cacfb84a73945cc79d7cad",
-      "bytes": 1080,
-      "wordCount": 128,
-      "repoLicense": "Apache-2.0",
-      "commit": "d26ba5e4518cef7fff3c66d4f715b21adf9feabe",
-      "branch": "main",
-      "body": "---\nname: forget\ndescription: Delete the Mem0 memories stored for this repository and this user. Use when the user asks to forget, clear, wipe, or delete memories.\ndisable-model-invocation: true\n---\n\n# Forget this repository's memories\n\nThis permanently deletes remote memories. Before running anything, tell the\nuser exactly what will be deleted: their own memories for this repository\nonly. The repository's project memory is shared by everyone who works in it,\nso it stays unless the user explicitly asks to delete that too.\n\nAfter the user confirms, run:\n\n```bash\npython3 \"${PLUGIN_ROOT}/core/memory_cli.py\" --harness \"codex\" --plugin-data-dir \"${PLUGIN_DATA}\" forget --remote --yes\n```\n\nIf the user also asked to delete the repository's shared project memory, add\n`--include-project-memory` and say that this removes it for every teammate.\n\nReport what the command output says was deleted. If the user only wants local\ndata cleared (evidence log, pending queue), run the same command without\n`--remote`. Never pass `--yes` before the user has confirmed in this\nconversation.\n",
-      "bodyMd": "# Forget this repository's memories\n\nThis permanently deletes remote memories. Before running anything, tell the\nuser exactly what will be deleted: their own memories for this repository\nonly. The repository's project memory is shared by everyone who works in it,\nso it stays unless the user explicitly asks to delete that too.\n\nAfter the user confirms, run:\n\n```bash\npython3 \"${PLUGIN_ROOT}/core/memory_cli.py\" --harness \"codex\" --plugin-data-dir \"${PLUGIN_DATA}\" forget --remote --yes\n```\n\nIf the user also asked to delete the repository's shared project memory, add\n`--include-project-memory` and say that this removes it for every teammate.\n\nReport what the command output says was deleted. If the user only wants local\ndata cleared (evidence log, pending queue), run the same command without\n`--remote`. Never pass `--yes` before the user has confirmed in this\nconversation.\n"
-    },
-    {
-      "slug": "pause-3",
-      "name": "pause",
-      "dir": "integrations/codex-plugin/skills/pause",
-      "path": "integrations/codex-plugin/skills/pause/SKILL.md",
-      "desc": "Pause Mem0 memory capture on this machine. Use when the user wants to stop memories being recorded, for example for private work or experiments.",
-      "descZh": "",
-      "triggers": [
-        "experiment"
-      ],
-      "version": "",
-      "license": "Apache-2.0",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": false,
-        "bins": [
-          "python3"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/mem0ai/mem0.git",
-        "copy": "cp -r integrations/codex-plugin/skills/pause ~/.claude/skills/pause-3",
-        "raw": "https://raw.githubusercontent.com/mem0ai/mem0/d26ba5e4518cef7fff3c66d4f715b21adf9feabe/integrations/codex-plugin/skills/pause/SKILL.md",
-        "saveAs": "~/.claude/skills/pause-3/SKILL.md",
-        "marketplace": "/plugin marketplace add mem0ai/mem0"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:062872b7dcebee61ec4a23e6f041d9e8335aec11cc7bb7b3ca30bd2d4850db52",
-      "bytes": 788,
-      "wordCount": 78,
-      "repoLicense": "Apache-2.0",
-      "commit": "d26ba5e4518cef7fff3c66d4f715b21adf9feabe",
-      "branch": "main",
-      "body": "---\nname: pause\ndescription: Pause Mem0 memory capture on this machine. Use when the user wants to stop memories being recorded, for example for private work or experiments.\ndisable-model-invocation: true\n---\n\n# Pause memory capture\n\nTo pause (hooks stop capturing and sending session content; a minimal\ntelemetry ping still fires at session start, under your Mem0 account email,\nunless `MEM0_TELEMETRY=false`):\n\n```bash\npython3 \"${PLUGIN_ROOT}/core/memory_cli.py\" --harness \"codex\" --plugin-data-dir \"${PLUGIN_DATA}\" pause\n```\n\nConfirm the new state back to the user, and remind them that already-created\nmemories still exist and remain searchable. Pending unsent packets are held\nwhile paused, not expired, and are delivered after resuming. To turn capture\nback on, use `/mem0:resume`.\n",
-      "bodyMd": "# Pause memory capture\n\nTo pause (hooks stop capturing and sending session content; a minimal\ntelemetry ping still fires at session start, under your Mem0 account email,\nunless `MEM0_TELEMETRY=false`):\n\n```bash\npython3 \"${PLUGIN_ROOT}/core/memory_cli.py\" --harness \"codex\" --plugin-data-dir \"${PLUGIN_DATA}\" pause\n```\n\nConfirm the new state back to the user, and remind them that already-created\nmemories still exist and remain searchable. Pending unsent packets are held\nwhile paused, not expired, and are delivered after resuming. To turn capture\nback on, use `/mem0:resume`.\n"
-    },
-    {
-      "slug": "resume-3",
-      "name": "resume",
-      "dir": "integrations/codex-plugin/skills/resume",
-      "path": "integrations/codex-plugin/skills/resume/SKILL.md",
-      "desc": "Resume Mem0 memory capture after it was paused with /mem0:pause.",
-      "descZh": "",
-      "triggers": [],
-      "version": "",
-      "license": "Apache-2.0",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": false,
-        "bins": [
-          "python3"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/mem0ai/mem0.git",
-        "copy": "cp -r integrations/codex-plugin/skills/resume ~/.claude/skills/resume-3",
-        "raw": "https://raw.githubusercontent.com/mem0ai/mem0/d26ba5e4518cef7fff3c66d4f715b21adf9feabe/integrations/codex-plugin/skills/resume/SKILL.md",
-        "saveAs": "~/.claude/skills/resume-3/SKILL.md",
-        "marketplace": "/plugin marketplace add mem0ai/mem0"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:7bc66c8de756275e3d3756e8425f79cdea1d6b2f9dd91d545a24b91c9a6763fd",
-      "bytes": 492,
-      "wordCount": 46,
-      "repoLicense": "Apache-2.0",
-      "commit": "d26ba5e4518cef7fff3c66d4f715b21adf9feabe",
-      "branch": "main",
-      "body": "---\nname: resume\ndescription: Resume Mem0 memory capture after it was paused with /mem0:pause.\ndisable-model-invocation: true\n---\n\n# Resume memory capture\n\nResume memory capture for this machine.\n\nRun:\n\n```bash\npython3 \"${PLUGIN_ROOT}/core/memory_cli.py\" --harness \"codex\" --plugin-data-dir \"${PLUGIN_DATA}\" resume\n```\n\nConfirm to the user that capture is active again. New sessions record evidence and\ncreate memories as normal; nothing that happened while paused is retroactively\ncaptured.\n",
-      "bodyMd": "# Resume memory capture\n\nResume memory capture for this machine.\n\nRun:\n\n```bash\npython3 \"${PLUGIN_ROOT}/core/memory_cli.py\" --harness \"codex\" --plugin-data-dir \"${PLUGIN_DATA}\" resume\n```\n\nConfirm to the user that capture is active again. New sessions record evidence and\ncreate memories as normal; nothing that happened while paused is retroactively\ncaptured.\n"
-    },
-    {
-      "slug": "search-3",
-      "name": "search",
-      "dir": "integrations/codex-plugin/skills/search",
-      "path": "integrations/codex-plugin/skills/search/SKILL.md",
-      "desc": "Search memories from earlier Codex sessions in this repository. Use it when earlier work may already explain the code, error, decision, or command you need, so you can avoid repeating file reads, searches, or experiments.",
-      "descZh": "",
-      "triggers": [],
-      "version": "",
-      "license": "Apache-2.0",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": false,
-        "bins": []
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/mem0ai/mem0.git",
-        "copy": "cp -r integrations/codex-plugin/skills/search ~/.claude/skills/search-3",
-        "raw": "https://raw.githubusercontent.com/mem0ai/mem0/d26ba5e4518cef7fff3c66d4f715b21adf9feabe/integrations/codex-plugin/skills/search/SKILL.md",
-        "saveAs": "~/.claude/skills/search-3/SKILL.md",
-        "marketplace": "/plugin marketplace add mem0ai/mem0"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:7d4f9afee9646f584fb63a0d98601ab1c78eee66b51205a26c570150af29b236",
-      "bytes": 1346,
-      "wordCount": 143,
-      "repoLicense": "Apache-2.0",
-      "commit": "d26ba5e4518cef7fff3c66d4f715b21adf9feabe",
-      "branch": "main",
-      "body": "---\nname: search\ndescription: Search memories from earlier Codex sessions in this repository. Use it when earlier work may already explain the code, error, decision, or command you need, so you can avoid repeating file reads, searches, or experiments.\nargument-hint: \"[question] [--top-k number] [--category category-name] [--scope repo|dir|mine] [--run-id session-id]\"\ndisable-model-invocation: true\n---\n\n# Search memories\n\nCall `search_memories` with the user's question. Treat `--top-k`, `--category`,\n`--scope`, and `--run-id` as tool arguments instead of including them in the\nquery.\n\nOmit `top_k` to use Mem0's configured default. Omit `category` to search every\ncategory. Omit `scope` to use the configured default, normally `repo`: this\nrepository's shared memory, which everyone who works in it contributes to,\nplus your own preferences.\n\nPass `scope` when the question needs something else: `dir` to narrow the\nshared memory to the directory you are working in (a package inside a\nmonorepo), `mine` for your own preferences alone.\n\nPass `run_id` with any scope to retrieve memories saved in a specific coding-agent\nsession. Omit `run_id` to search across sessions. It filters the memories returned;\nit does not identify the session making the search request. Use a known session ID,\nnever invent one. Return the tool's result directly.\n",
-      "bodyMd": "# Search memories\n\nCall `search_memories` with the user's question. Treat `--top-k`, `--category`,\n`--scope`, and `--run-id` as tool arguments instead of including them in the\nquery.\n\nOmit `top_k` to use Mem0's configured default. Omit `category` to search every\ncategory. Omit `scope` to use the configured default, normally `repo`: this\nrepository's shared memory, which everyone who works in it contributes to,\nplus your own preferences.\n\nPass `scope` when the question needs something else: `dir` to narrow the\nshared memory to the directory you are working in (a package inside a\nmonorepo), `mine` for your own preferences alone.\n\nPass `run_id` with any scope to retrieve memories saved in a specific coding-agent\nsession. Omit `run_id` to search across sessions. It filters the memories returned;\nit does not identify the session making the search request. Use a known session ID,\nnever invent one. Return the tool's result directly.\n"
-    },
-    {
       "slug": "status-3",
       "name": "status",
       "dir": "integrations/codex-plugin/skills/status",
@@ -673,183 +142,6 @@
       "branch": "main",
       "body": "---\nname: status\ndescription: Show whether Mem0 memory is working in this repository, covering configuration, capture state, pending flushes, and whether the Mem0 API key is valid. Use when the user asks whether memory is on, why a memory is missing, or anything looks broken.\ndisable-model-invocation: false\n---\n\n# Memory status\n\nRun both commands and report the combined result in plain language:\n\n```bash\npython3 \"${PLUGIN_ROOT}/core/memory_cli.py\" --harness \"codex\" --plugin-data-dir \"${PLUGIN_DATA}\" status --json\npython3 \"${PLUGIN_ROOT}/core/memory_cli.py\" --harness \"codex\" --plugin-data-dir \"${PLUGIN_DATA}\" doctor\n```\n\nSummarize, using only fields the JSON actually reports: whether capture is\nactive or paused, the user ID and repository scope (`repo_id`), whether an\nAPI key is configured, the event/flush/retrieval counts (`flushes` is the\nnumber of completed flushes, not a pending count), and the doctor check\nresults. If doctor reports an authentication failure (401 / invalid key), say\nclearly that the Mem0 API key is invalid or expired and that memories are NOT\nbeing created. Never report an auth failure as \"no memories found\". Suggest\nreinstalling with `--config api_key=...` in that case.\n",
       "bodyMd": "# Memory status\n\nRun both commands and report the combined result in plain language:\n\n```bash\npython3 \"${PLUGIN_ROOT}/core/memory_cli.py\" --harness \"codex\" --plugin-data-dir \"${PLUGIN_DATA}\" status --json\npython3 \"${PLUGIN_ROOT}/core/memory_cli.py\" --harness \"codex\" --plugin-data-dir \"${PLUGIN_DATA}\" doctor\n```\n\nSummarize, using only fields the JSON actually reports: whether capture is\nactive or paused, the user ID and repository scope (`repo_id`), whether an\nAPI key is configured, the event/flush/retrieval counts (`flushes` is the\nnumber of completed flushes, not a pending count), and the doctor check\nresults. If doctor reports an authentication failure (401 / invalid key), say\nclearly that the Mem0 API key is invalid or expired and that memories are NOT\nbeing created. Never report an auth failure as \"no memories found\". Suggest\nreinstalling with `--config api_key=...` in that case.\n"
-    },
-    {
-      "slug": "forget-4",
-      "name": "forget",
-      "dir": "integrations/cursor-plugin/skills/forget",
-      "path": "integrations/cursor-plugin/skills/forget/SKILL.md",
-      "desc": "Delete the Mem0 memories stored for this repository and this user. Use when the user asks to forget, clear, wipe, or delete memories.",
-      "descZh": "",
-      "triggers": [
-        "the user asks to forget",
-        "clear",
-        "wipe",
-        "delete memories"
-      ],
-      "version": "",
-      "license": "Apache-2.0",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": false,
-        "bins": [
-          "python3"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/mem0ai/mem0.git",
-        "copy": "cp -r integrations/cursor-plugin/skills/forget ~/.claude/skills/forget-4",
-        "raw": "https://raw.githubusercontent.com/mem0ai/mem0/d26ba5e4518cef7fff3c66d4f715b21adf9feabe/integrations/cursor-plugin/skills/forget/SKILL.md",
-        "saveAs": "~/.claude/skills/forget-4/SKILL.md",
-        "marketplace": "/plugin marketplace add mem0ai/mem0"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:9555f9dd5974697954c84b80529e5d940864f2839a472835ef98db482d508b85",
-      "bytes": 1054,
-      "wordCount": 126,
-      "repoLicense": "Apache-2.0",
-      "commit": "d26ba5e4518cef7fff3c66d4f715b21adf9feabe",
-      "branch": "main",
-      "body": "---\nname: forget\ndescription: Delete the Mem0 memories stored for this repository and this user. Use when the user asks to forget, clear, wipe, or delete memories.\ndisable-model-invocation: true\n---\n\n# Forget this repository's memories\n\nThis permanently deletes remote memories. Before running anything, tell the\nuser exactly what will be deleted: their own memories for this repository\nonly. The repository's project memory is shared by everyone who works in it,\nso it stays unless the user explicitly asks to delete that too.\n\nAfter the user confirms, run:\n\n```bash\npython3 \"${CURSOR_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"cursor\"  forget --remote --yes\n```\n\nIf the user also asked to delete the repository's shared project memory, add\n`--include-project-memory` and say that this removes it for every teammate.\n\nReport what the command output says was deleted. If the user only wants local\ndata cleared (evidence log, pending queue), run the same command without\n`--remote`. Never pass `--yes` before the user has confirmed in this\nconversation.\n",
-      "bodyMd": "# Forget this repository's memories\n\nThis permanently deletes remote memories. Before running anything, tell the\nuser exactly what will be deleted: their own memories for this repository\nonly. The repository's project memory is shared by everyone who works in it,\nso it stays unless the user explicitly asks to delete that too.\n\nAfter the user confirms, run:\n\n```bash\npython3 \"${CURSOR_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"cursor\"  forget --remote --yes\n```\n\nIf the user also asked to delete the repository's shared project memory, add\n`--include-project-memory` and say that this removes it for every teammate.\n\nReport what the command output says was deleted. If the user only wants local\ndata cleared (evidence log, pending queue), run the same command without\n`--remote`. Never pass `--yes` before the user has confirmed in this\nconversation.\n"
-    },
-    {
-      "slug": "pause-4",
-      "name": "pause",
-      "dir": "integrations/cursor-plugin/skills/pause",
-      "path": "integrations/cursor-plugin/skills/pause/SKILL.md",
-      "desc": "Pause Mem0 memory capture on this machine. Use when the user wants to stop memories being recorded, for example for private work or experiments.",
-      "descZh": "",
-      "triggers": [
-        "experiment"
-      ],
-      "version": "",
-      "license": "Apache-2.0",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": false,
-        "bins": [
-          "python3"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/mem0ai/mem0.git",
-        "copy": "cp -r integrations/cursor-plugin/skills/pause ~/.claude/skills/pause-4",
-        "raw": "https://raw.githubusercontent.com/mem0ai/mem0/d26ba5e4518cef7fff3c66d4f715b21adf9feabe/integrations/cursor-plugin/skills/pause/SKILL.md",
-        "saveAs": "~/.claude/skills/pause-4/SKILL.md",
-        "marketplace": "/plugin marketplace add mem0ai/mem0"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:b57f34562e27edb52f70cdb6acc753d30bf261873b89a922d49ea2a661a898d8",
-      "bytes": 762,
-      "wordCount": 76,
-      "repoLicense": "Apache-2.0",
-      "commit": "d26ba5e4518cef7fff3c66d4f715b21adf9feabe",
-      "branch": "main",
-      "body": "---\nname: pause\ndescription: Pause Mem0 memory capture on this machine. Use when the user wants to stop memories being recorded, for example for private work or experiments.\ndisable-model-invocation: true\n---\n\n# Pause memory capture\n\nTo pause (hooks stop capturing and sending session content; a minimal\ntelemetry ping still fires at session start, under your Mem0 account email,\nunless `MEM0_TELEMETRY=false`):\n\n```bash\npython3 \"${CURSOR_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"cursor\"  pause\n```\n\nConfirm the new state back to the user, and remind them that already-created\nmemories still exist and remain searchable. Pending unsent packets are held\nwhile paused, not expired, and are delivered after resuming. To turn capture\nback on, use `/mem0:resume`.\n",
-      "bodyMd": "# Pause memory capture\n\nTo pause (hooks stop capturing and sending session content; a minimal\ntelemetry ping still fires at session start, under your Mem0 account email,\nunless `MEM0_TELEMETRY=false`):\n\n```bash\npython3 \"${CURSOR_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"cursor\"  pause\n```\n\nConfirm the new state back to the user, and remind them that already-created\nmemories still exist and remain searchable. Pending unsent packets are held\nwhile paused, not expired, and are delivered after resuming. To turn capture\nback on, use `/mem0:resume`.\n"
-    },
-    {
-      "slug": "resume-4",
-      "name": "resume",
-      "dir": "integrations/cursor-plugin/skills/resume",
-      "path": "integrations/cursor-plugin/skills/resume/SKILL.md",
-      "desc": "Resume Mem0 memory capture after it was paused with /mem0:pause.",
-      "descZh": "",
-      "triggers": [],
-      "version": "",
-      "license": "Apache-2.0",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": false,
-        "bins": [
-          "python3"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/mem0ai/mem0.git",
-        "copy": "cp -r integrations/cursor-plugin/skills/resume ~/.claude/skills/resume-4",
-        "raw": "https://raw.githubusercontent.com/mem0ai/mem0/d26ba5e4518cef7fff3c66d4f715b21adf9feabe/integrations/cursor-plugin/skills/resume/SKILL.md",
-        "saveAs": "~/.claude/skills/resume-4/SKILL.md",
-        "marketplace": "/plugin marketplace add mem0ai/mem0"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:4c60467b846685d5f011afe0251481bf7b8da70e52a34d366af5ff00931112df",
-      "bytes": 466,
-      "wordCount": 44,
-      "repoLicense": "Apache-2.0",
-      "commit": "d26ba5e4518cef7fff3c66d4f715b21adf9feabe",
-      "branch": "main",
-      "body": "---\nname: resume\ndescription: Resume Mem0 memory capture after it was paused with /mem0:pause.\ndisable-model-invocation: true\n---\n\n# Resume memory capture\n\nResume memory capture for this machine.\n\nRun:\n\n```bash\npython3 \"${CURSOR_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"cursor\"  resume\n```\n\nConfirm to the user that capture is active again. New sessions record evidence and\ncreate memories as normal; nothing that happened while paused is retroactively\ncaptured.\n",
-      "bodyMd": "# Resume memory capture\n\nResume memory capture for this machine.\n\nRun:\n\n```bash\npython3 \"${CURSOR_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"cursor\"  resume\n```\n\nConfirm to the user that capture is active again. New sessions record evidence and\ncreate memories as normal; nothing that happened while paused is retroactively\ncaptured.\n"
-    },
-    {
-      "slug": "search-4",
-      "name": "search",
-      "dir": "integrations/cursor-plugin/skills/search",
-      "path": "integrations/cursor-plugin/skills/search/SKILL.md",
-      "desc": "Search memories from earlier Cursor sessions in this repository. Use it when earlier work may already explain the code, error, decision, or command you need, so you can avoid repeating file reads, searches, or experiments.",
-      "descZh": "",
-      "triggers": [],
-      "version": "",
-      "license": "Apache-2.0",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": false,
-        "bins": []
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/mem0ai/mem0.git",
-        "copy": "cp -r integrations/cursor-plugin/skills/search ~/.claude/skills/search-4",
-        "raw": "https://raw.githubusercontent.com/mem0ai/mem0/d26ba5e4518cef7fff3c66d4f715b21adf9feabe/integrations/cursor-plugin/skills/search/SKILL.md",
-        "saveAs": "~/.claude/skills/search-4/SKILL.md",
-        "marketplace": "/plugin marketplace add mem0ai/mem0"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:69b13f9c88562d08c1a794d5566331aca5c95919cfb79966cbdb57759b62724f",
-      "bytes": 1347,
-      "wordCount": 143,
-      "repoLicense": "Apache-2.0",
-      "commit": "d26ba5e4518cef7fff3c66d4f715b21adf9feabe",
-      "branch": "main",
-      "body": "---\nname: search\ndescription: Search memories from earlier Cursor sessions in this repository. Use it when earlier work may already explain the code, error, decision, or command you need, so you can avoid repeating file reads, searches, or experiments.\nargument-hint: \"[question] [--top-k number] [--category category-name] [--scope repo|dir|mine] [--run-id session-id]\"\ndisable-model-invocation: true\n---\n\n# Search memories\n\nCall `search_memories` with the user's question. Treat `--top-k`, `--category`,\n`--scope`, and `--run-id` as tool arguments instead of including them in the\nquery.\n\nOmit `top_k` to use Mem0's configured default. Omit `category` to search every\ncategory. Omit `scope` to use the configured default, normally `repo`: this\nrepository's shared memory, which everyone who works in it contributes to,\nplus your own preferences.\n\nPass `scope` when the question needs something else: `dir` to narrow the\nshared memory to the directory you are working in (a package inside a\nmonorepo), `mine` for your own preferences alone.\n\nPass `run_id` with any scope to retrieve memories saved in a specific coding-agent\nsession. Omit `run_id` to search across sessions. It filters the memories returned;\nit does not identify the session making the search request. Use a known session ID,\nnever invent one. Return the tool's result directly.\n",
-      "bodyMd": "# Search memories\n\nCall `search_memories` with the user's question. Treat `--top-k`, `--category`,\n`--scope`, and `--run-id` as tool arguments instead of including them in the\nquery.\n\nOmit `top_k` to use Mem0's configured default. Omit `category` to search every\ncategory. Omit `scope` to use the configured default, normally `repo`: this\nrepository's shared memory, which everyone who works in it contributes to,\nplus your own preferences.\n\nPass `scope` when the question needs something else: `dir` to narrow the\nshared memory to the directory you are working in (a package inside a\nmonorepo), `mine` for your own preferences alone.\n\nPass `run_id` with any scope to retrieve memories saved in a specific coding-agent\nsession. Omit `run_id` to search across sessions. It filters the memories returned;\nit does not identify the session making the search request. Use a known session ID,\nnever invent one. Return the tool's result directly.\n"
     },
     {
       "slug": "status-4",
@@ -898,7 +190,7 @@
       "bodyMd": "# Memory status\n\nRun both commands and report the combined result in plain language:\n\n```bash\npython3 \"${CURSOR_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"cursor\"  status --json\npython3 \"${CURSOR_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"cursor\"  doctor\n```\n\nSummarize, using only fields the JSON actually reports: whether capture is\nactive or paused, the user ID and repository scope (`repo_id`), whether an\nAPI key is configured, the event/flush/retrieval counts (`flushes` is the\nnumber of completed flushes, not a pending count), and the doctor check\nresults. If doctor reports an authentication failure (401 / invalid key), say\nclearly that the Mem0 API key is invalid or expired and that memories are NOT\nbeing created. Never report an auth failure as \"no memories found\". Suggest\nreinstalling with `--config api_key=...` in that case.\n"
     },
     {
-      "slug": "forget-5",
+      "slug": "forget",
       "name": "forget",
       "dir": "integrations/kimi-plugin/skills/forget",
       "path": "integrations/kimi-plugin/skills/forget/SKILL.md",
@@ -929,9 +221,9 @@
       },
       "install": {
         "clone": "git clone --depth 1 https://github.com/mem0ai/mem0.git",
-        "copy": "cp -r integrations/kimi-plugin/skills/forget ~/.claude/skills/forget-5",
+        "copy": "cp -r integrations/kimi-plugin/skills/forget ~/.claude/skills/forget",
         "raw": "https://raw.githubusercontent.com/mem0ai/mem0/d26ba5e4518cef7fff3c66d4f715b21adf9feabe/integrations/kimi-plugin/skills/forget/SKILL.md",
-        "saveAs": "~/.claude/skills/forget-5/SKILL.md",
+        "saveAs": "~/.claude/skills/forget/SKILL.md",
         "marketplace": "/plugin marketplace add mem0ai/mem0"
       },
       "bodyInline": true,
@@ -946,7 +238,7 @@
       "bodyMd": "# Forget this repository's memories\n\nThis permanently deletes remote memories. Before running anything, tell the\nuser exactly what will be deleted: their own memories for this repository\nonly. The repository's project memory is shared by everyone who works in it,\nso it stays unless the user explicitly asks to delete that too.\n\nAfter the user confirms, run:\n\n```bash\npython3 \"${KIMI_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"kimi\"  forget --remote --yes\n```\n\nIf the user also asked to delete the repository's shared project memory, add\n`--include-project-memory` and say that this removes it for every teammate.\n\nReport what the command output says was deleted. If the user only wants local\ndata cleared (evidence log, pending queue), run the same command without\n`--remote`. Never pass `--yes` before the user has confirmed in this\nconversation.\n"
     },
     {
-      "slug": "pause-5",
+      "slug": "pause",
       "name": "pause",
       "dir": "integrations/kimi-plugin/skills/pause",
       "path": "integrations/kimi-plugin/skills/pause/SKILL.md",
@@ -974,9 +266,9 @@
       },
       "install": {
         "clone": "git clone --depth 1 https://github.com/mem0ai/mem0.git",
-        "copy": "cp -r integrations/kimi-plugin/skills/pause ~/.claude/skills/pause-5",
+        "copy": "cp -r integrations/kimi-plugin/skills/pause ~/.claude/skills/pause",
         "raw": "https://raw.githubusercontent.com/mem0ai/mem0/d26ba5e4518cef7fff3c66d4f715b21adf9feabe/integrations/kimi-plugin/skills/pause/SKILL.md",
-        "saveAs": "~/.claude/skills/pause-5/SKILL.md",
+        "saveAs": "~/.claude/skills/pause/SKILL.md",
         "marketplace": "/plugin marketplace add mem0ai/mem0"
       },
       "bodyInline": true,
@@ -1036,7 +328,7 @@
       "bodyMd": "# Remember something for future sessions\n\nMem0 creates memories from the session automatically — there is no separate\nwrite command. When the user asks to remember something:\n\n1. Restate the fact clearly and completely in your reply, in one or two\n   sentences, including any names, values, or paths it depends on. Your visible\n   reply is what memory extraction reads, so a precise restatement is what gets\n   remembered.\n2. Tell the user it will be saved with this session's memories when the session\n   ends or compacts, and that it will surface in future sessions in this\n   repository (they can check later with /mem0:search).\n\nDo not invent a storage confirmation or a memory ID — creation happens in the\nbackground after the session.\n"
     },
     {
-      "slug": "resume-5",
+      "slug": "resume",
       "name": "resume",
       "dir": "integrations/kimi-plugin/skills/resume",
       "path": "integrations/kimi-plugin/skills/resume/SKILL.md",
@@ -1062,9 +354,9 @@
       },
       "install": {
         "clone": "git clone --depth 1 https://github.com/mem0ai/mem0.git",
-        "copy": "cp -r integrations/kimi-plugin/skills/resume ~/.claude/skills/resume-5",
+        "copy": "cp -r integrations/kimi-plugin/skills/resume ~/.claude/skills/resume",
         "raw": "https://raw.githubusercontent.com/mem0ai/mem0/d26ba5e4518cef7fff3c66d4f715b21adf9feabe/integrations/kimi-plugin/skills/resume/SKILL.md",
-        "saveAs": "~/.claude/skills/resume-5/SKILL.md",
+        "saveAs": "~/.claude/skills/resume/SKILL.md",
         "marketplace": "/plugin marketplace add mem0ai/mem0"
       },
       "bodyInline": true,
@@ -1079,7 +371,7 @@
       "bodyMd": "# Resume memory capture\n\nResume memory capture for this machine.\n\nRun:\n\n```bash\npython3 \"${KIMI_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"kimi\"  resume\n```\n\nConfirm to the user that capture is active again. New sessions record evidence and\ncreate memories as normal; nothing that happened while paused is retroactively\ncaptured.\n"
     },
     {
-      "slug": "search-5",
+      "slug": "search",
       "name": "search",
       "dir": "integrations/kimi-plugin/skills/search",
       "path": "integrations/kimi-plugin/skills/search/SKILL.md",
@@ -1103,9 +395,9 @@
       },
       "install": {
         "clone": "git clone --depth 1 https://github.com/mem0ai/mem0.git",
-        "copy": "cp -r integrations/kimi-plugin/skills/search ~/.claude/skills/search-5",
+        "copy": "cp -r integrations/kimi-plugin/skills/search ~/.claude/skills/search",
         "raw": "https://raw.githubusercontent.com/mem0ai/mem0/d26ba5e4518cef7fff3c66d4f715b21adf9feabe/integrations/kimi-plugin/skills/search/SKILL.md",
-        "saveAs": "~/.claude/skills/search-5/SKILL.md",
+        "saveAs": "~/.claude/skills/search/SKILL.md",
         "marketplace": "/plugin marketplace add mem0ai/mem0"
       },
       "bodyInline": true,
@@ -1164,228 +456,6 @@
       "branch": "main",
       "body": "---\nname: status\ndescription: Show whether Mem0 memory is working in this repository, covering configuration, capture state, pending flushes, and whether the Mem0 API key is valid. Use when the user asks whether memory is on, why a memory is missing, or anything looks broken.\ndisable-model-invocation: false\n---\n\n# Memory status\n\nRun both commands and report the combined result in plain language:\n\n```bash\npython3 \"${KIMI_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"kimi\"  status --json\npython3 \"${KIMI_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"kimi\"  doctor\n```\n\nSummarize, using only fields the JSON actually reports: whether capture is\nactive or paused, the user ID and repository scope (`repo_id`), whether an\nAPI key is configured, the event/flush/retrieval counts (`flushes` is the\nnumber of completed flushes, not a pending count), and the doctor check\nresults. If doctor reports an authentication failure (401 / invalid key), say\nclearly that the Mem0 API key is invalid or expired and that memories are NOT\nbeing created. Never report an auth failure as \"no memories found\". Suggest\nreinstalling with `--config api_key=...` in that case.\n",
       "bodyMd": "# Memory status\n\nRun both commands and report the combined result in plain language:\n\n```bash\npython3 \"${KIMI_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"kimi\"  status --json\npython3 \"${KIMI_PLUGIN_ROOT}/core/memory_cli.py\" --harness \"kimi\"  doctor\n```\n\nSummarize, using only fields the JSON actually reports: whether capture is\nactive or paused, the user ID and repository scope (`repo_id`), whether an\nAPI key is configured, the event/flush/retrieval counts (`flushes` is the\nnumber of completed flushes, not a pending count), and the doctor check\nresults. If doctor reports an authentication failure (401 / invalid key), say\nclearly that the Mem0 API key is invalid or expired and that memories are NOT\nbeing created. Never report an auth failure as \"no memories found\". Suggest\nreinstalling with `--config api_key=...` in that case.\n"
-    },
-    {
-      "slug": "forget-6",
-      "name": "forget",
-      "dir": "integrations/mem0-agent-plugin/skills/forget",
-      "path": "integrations/mem0-agent-plugin/skills/forget/SKILL.md",
-      "desc": "Delete the Mem0 memories stored for this repository and this user. Use when the user asks to forget, clear, wipe, or delete memories.",
-      "descZh": "",
-      "triggers": [
-        "the user asks to forget",
-        "clear",
-        "wipe",
-        "delete memories"
-      ],
-      "version": "",
-      "license": "Apache-2.0",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": false,
-        "bins": [
-          "python3"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/mem0ai/mem0.git",
-        "copy": "cp -r integrations/mem0-agent-plugin/skills/forget ~/.claude/skills/forget-6",
-        "raw": "https://raw.githubusercontent.com/mem0ai/mem0/d26ba5e4518cef7fff3c66d4f715b21adf9feabe/integrations/mem0-agent-plugin/skills/forget/SKILL.md",
-        "saveAs": "~/.claude/skills/forget-6/SKILL.md",
-        "marketplace": "/plugin marketplace add mem0ai/mem0"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:d67f56404af0aab0e166dc78c2cbcafd9b1a5134c674ff1cfbb55dde4c4a168f",
-      "bytes": 1022,
-      "wordCount": 126,
-      "repoLicense": "Apache-2.0",
-      "commit": "d26ba5e4518cef7fff3c66d4f715b21adf9feabe",
-      "branch": "main",
-      "body": "---\nname: forget\ndescription: Delete the Mem0 memories stored for this repository and this user. Use when the user asks to forget, clear, wipe, or delete memories.\n---\n\n# Forget this repository's memories\n\nThis permanently deletes remote memories. Before running anything, tell the\nuser exactly what will be deleted: their own memories for this repository\nonly. The repository's project memory is shared by everyone who works in it,\nso it stays unless the user explicitly asks to delete that too.\n\nAfter the user confirms, run:\n\n```bash\npython3 \"${PLUGIN_ROOT}/core/memory_cli.py\" --harness \"coding-agent\"  forget --remote --yes\n```\n\nIf the user also asked to delete the repository's shared project memory, add\n`--include-project-memory` and say that this removes it for every teammate.\n\nReport what the command output says was deleted. If the user only wants local\ndata cleared (evidence log, pending queue), run the same command without\n`--remote`. Never pass `--yes` before the user has confirmed in this\nconversation.\n",
-      "bodyMd": "# Forget this repository's memories\n\nThis permanently deletes remote memories. Before running anything, tell the\nuser exactly what will be deleted: their own memories for this repository\nonly. The repository's project memory is shared by everyone who works in it,\nso it stays unless the user explicitly asks to delete that too.\n\nAfter the user confirms, run:\n\n```bash\npython3 \"${PLUGIN_ROOT}/core/memory_cli.py\" --harness \"coding-agent\"  forget --remote --yes\n```\n\nIf the user also asked to delete the repository's shared project memory, add\n`--include-project-memory` and say that this removes it for every teammate.\n\nReport what the command output says was deleted. If the user only wants local\ndata cleared (evidence log, pending queue), run the same command without\n`--remote`. Never pass `--yes` before the user has confirmed in this\nconversation.\n"
-    },
-    {
-      "slug": "pause-6",
-      "name": "pause",
-      "dir": "integrations/mem0-agent-plugin/skills/pause",
-      "path": "integrations/mem0-agent-plugin/skills/pause/SKILL.md",
-      "desc": "Pause Mem0 memory capture on this machine. Use when the user wants to stop memories being recorded, for example for private work or experiments.",
-      "descZh": "",
-      "triggers": [
-        "experiment"
-      ],
-      "version": "",
-      "license": "Apache-2.0",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": false,
-        "bins": [
-          "python3"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/mem0ai/mem0.git",
-        "copy": "cp -r integrations/mem0-agent-plugin/skills/pause ~/.claude/skills/pause-6",
-        "raw": "https://raw.githubusercontent.com/mem0ai/mem0/d26ba5e4518cef7fff3c66d4f715b21adf9feabe/integrations/mem0-agent-plugin/skills/pause/SKILL.md",
-        "saveAs": "~/.claude/skills/pause-6/SKILL.md",
-        "marketplace": "/plugin marketplace add mem0ai/mem0"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:e985fe126c8fd0890ed37675c1ec99e83f0ccdba4ff2b0d47f2118c3f1d81115",
-      "bytes": 730,
-      "wordCount": 76,
-      "repoLicense": "Apache-2.0",
-      "commit": "d26ba5e4518cef7fff3c66d4f715b21adf9feabe",
-      "branch": "main",
-      "body": "---\nname: pause\ndescription: Pause Mem0 memory capture on this machine. Use when the user wants to stop memories being recorded, for example for private work or experiments.\n---\n\n# Pause memory capture\n\nTo pause (hooks stop capturing and sending session content; a minimal\ntelemetry ping still fires at session start, under your Mem0 account email,\nunless `MEM0_TELEMETRY=false`):\n\n```bash\npython3 \"${PLUGIN_ROOT}/core/memory_cli.py\" --harness \"coding-agent\"  pause\n```\n\nConfirm the new state back to the user, and remind them that already-created\nmemories still exist and remain searchable. Pending unsent packets are held\nwhile paused, not expired, and are delivered after resuming. To turn capture\nback on, use `/mem0:resume`.\n",
-      "bodyMd": "# Pause memory capture\n\nTo pause (hooks stop capturing and sending session content; a minimal\ntelemetry ping still fires at session start, under your Mem0 account email,\nunless `MEM0_TELEMETRY=false`):\n\n```bash\npython3 \"${PLUGIN_ROOT}/core/memory_cli.py\" --harness \"coding-agent\"  pause\n```\n\nConfirm the new state back to the user, and remind them that already-created\nmemories still exist and remain searchable. Pending unsent packets are held\nwhile paused, not expired, and are delivered after resuming. To turn capture\nback on, use `/mem0:resume`.\n"
-    },
-    {
-      "slug": "remember-2",
-      "name": "remember",
-      "dir": "integrations/mem0-agent-plugin/skills/remember",
-      "path": "integrations/mem0-agent-plugin/skills/remember/SKILL.md",
-      "desc": "Acknowledge a \"remember this\" request and make sure it is captured well. Use when the user explicitly asks to remember, note, or save something for future sessions.",
-      "descZh": "",
-      "triggers": [
-        "note"
-      ],
-      "version": "",
-      "license": "Apache-2.0",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": false,
-        "bins": [
-          "make"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/mem0ai/mem0.git",
-        "copy": "cp -r integrations/mem0-agent-plugin/skills/remember ~/.claude/skills/remember-2",
-        "raw": "https://raw.githubusercontent.com/mem0ai/mem0/d26ba5e4518cef7fff3c66d4f715b21adf9feabe/integrations/mem0-agent-plugin/skills/remember/SKILL.md",
-        "saveAs": "~/.claude/skills/remember-2/SKILL.md",
-        "marketplace": "/plugin marketplace add mem0ai/mem0"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:af060e0c82c2eaab505ebd1640006c357fc435f6fe1beb5a42a3f865ccc4f067",
-      "bytes": 947,
-      "wordCount": 121,
-      "repoLicense": "Apache-2.0",
-      "commit": "d26ba5e4518cef7fff3c66d4f715b21adf9feabe",
-      "branch": "main",
-      "body": "---\nname: remember\ndescription: Acknowledge a \"remember this\" request and make sure it is captured well. Use when the user explicitly asks to remember, note, or save something for future sessions.\n---\n\n# Remember something for future sessions\n\nMem0 creates memories from the session automatically — there is no separate\nwrite command. When the user asks to remember something:\n\n1. Restate the fact clearly and completely in your reply, in one or two\n   sentences, including any names, values, or paths it depends on. Your visible\n   reply is what memory extraction reads, so a precise restatement is what gets\n   remembered.\n2. Tell the user it will be saved with this session's memories when the session\n   ends or compacts, and that it will surface in future sessions in this\n   repository (they can check later with /mem0:search).\n\nDo not invent a storage confirmation or a memory ID — creation happens in the\nbackground after the session.\n",
-      "bodyMd": "# Remember something for future sessions\n\nMem0 creates memories from the session automatically — there is no separate\nwrite command. When the user asks to remember something:\n\n1. Restate the fact clearly and completely in your reply, in one or two\n   sentences, including any names, values, or paths it depends on. Your visible\n   reply is what memory extraction reads, so a precise restatement is what gets\n   remembered.\n2. Tell the user it will be saved with this session's memories when the session\n   ends or compacts, and that it will surface in future sessions in this\n   repository (they can check later with /mem0:search).\n\nDo not invent a storage confirmation or a memory ID — creation happens in the\nbackground after the session.\n"
-    },
-    {
-      "slug": "resume-6",
-      "name": "resume",
-      "dir": "integrations/mem0-agent-plugin/skills/resume",
-      "path": "integrations/mem0-agent-plugin/skills/resume/SKILL.md",
-      "desc": "Resume Mem0 memory capture after it was paused with /mem0:pause.",
-      "descZh": "",
-      "triggers": [],
-      "version": "",
-      "license": "Apache-2.0",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": false,
-        "bins": [
-          "python3"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/mem0ai/mem0.git",
-        "copy": "cp -r integrations/mem0-agent-plugin/skills/resume ~/.claude/skills/resume-6",
-        "raw": "https://raw.githubusercontent.com/mem0ai/mem0/d26ba5e4518cef7fff3c66d4f715b21adf9feabe/integrations/mem0-agent-plugin/skills/resume/SKILL.md",
-        "saveAs": "~/.claude/skills/resume-6/SKILL.md",
-        "marketplace": "/plugin marketplace add mem0ai/mem0"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:78d9e6a54194c9d7d45d5e918a399370baa186910c3eb66d9b7e78c7872f1872",
-      "bytes": 434,
-      "wordCount": 44,
-      "repoLicense": "Apache-2.0",
-      "commit": "d26ba5e4518cef7fff3c66d4f715b21adf9feabe",
-      "branch": "main",
-      "body": "---\nname: resume\ndescription: Resume Mem0 memory capture after it was paused with /mem0:pause.\n---\n\n# Resume memory capture\n\nResume memory capture for this machine.\n\nRun:\n\n```bash\npython3 \"${PLUGIN_ROOT}/core/memory_cli.py\" --harness \"coding-agent\"  resume\n```\n\nConfirm to the user that capture is active again. New sessions record evidence and\ncreate memories as normal; nothing that happened while paused is retroactively\ncaptured.\n",
-      "bodyMd": "# Resume memory capture\n\nResume memory capture for this machine.\n\nRun:\n\n```bash\npython3 \"${PLUGIN_ROOT}/core/memory_cli.py\" --harness \"coding-agent\"  resume\n```\n\nConfirm to the user that capture is active again. New sessions record evidence and\ncreate memories as normal; nothing that happened while paused is retroactively\ncaptured.\n"
-    },
-    {
-      "slug": "search-6",
-      "name": "search",
-      "dir": "integrations/mem0-agent-plugin/skills/search",
-      "path": "integrations/mem0-agent-plugin/skills/search/SKILL.md",
-      "desc": "Search memories from earlier Coding Agent sessions in this repository. Use it when earlier work may already explain the code, error, decision, or command you need, so you can avoid repeating file reads, searches, or experiments.",
-      "descZh": "",
-      "triggers": [],
-      "version": "",
-      "license": "Apache-2.0",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": false,
-        "bins": []
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/mem0ai/mem0.git",
-        "copy": "cp -r integrations/mem0-agent-plugin/skills/search ~/.claude/skills/search-6",
-        "raw": "https://raw.githubusercontent.com/mem0ai/mem0/d26ba5e4518cef7fff3c66d4f715b21adf9feabe/integrations/mem0-agent-plugin/skills/search/SKILL.md",
-        "saveAs": "~/.claude/skills/search-6/SKILL.md",
-        "marketplace": "/plugin marketplace add mem0ai/mem0"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:04534598f9216dd7de2bc07d8371bd7a0a7ee293a61ac5feb2c5c8e441075202",
-      "bytes": 1204,
-      "wordCount": 143,
-      "repoLicense": "Apache-2.0",
-      "commit": "d26ba5e4518cef7fff3c66d4f715b21adf9feabe",
-      "branch": "main",
-      "body": "---\nname: search\ndescription: Search memories from earlier Coding Agent sessions in this repository. Use it when earlier work may already explain the code, error, decision, or command you need, so you can avoid repeating file reads, searches, or experiments.\n---\n\n# Search memories\n\nCall `search_memories` with the user's question. Treat `--top-k`, `--category`,\n`--scope`, and `--run-id` as tool arguments instead of including them in the\nquery.\n\nOmit `top_k` to use Mem0's configured default. Omit `category` to search every\ncategory. Omit `scope` to use the configured default, normally `repo`: this\nrepository's shared memory, which everyone who works in it contributes to,\nplus your own preferences.\n\nPass `scope` when the question needs something else: `dir` to narrow the\nshared memory to the directory you are working in (a package inside a\nmonorepo), `mine` for your own preferences alone.\n\nPass `run_id` with any scope to retrieve memories saved in a specific coding-agent\nsession. Omit `run_id` to search across sessions. It filters the memories returned;\nit does not identify the session making the search request. Use a known session ID,\nnever invent one. Return the tool's result directly.\n",
-      "bodyMd": "# Search memories\n\nCall `search_memories` with the user's question. Treat `--top-k`, `--category`,\n`--scope`, and `--run-id` as tool arguments instead of including them in the\nquery.\n\nOmit `top_k` to use Mem0's configured default. Omit `category` to search every\ncategory. Omit `scope` to use the configured default, normally `repo`: this\nrepository's shared memory, which everyone who works in it contributes to,\nplus your own preferences.\n\nPass `scope` when the question needs something else: `dir` to narrow the\nshared memory to the directory you are working in (a package inside a\nmonorepo), `mine` for your own preferences alone.\n\nPass `run_id` with any scope to retrieve memories saved in a specific coding-agent\nsession. Omit `run_id` to search across sessions. It filters the memories returned;\nit does not identify the session making the search request. Use a known session ID,\nnever invent one. Return the tool's result directly.\n"
     },
     {
       "slug": "status-6",
@@ -1836,7 +906,7 @@
       "bodyMd": "# Context Loader\n\nPre-fetches relevant memories to prime context before working on a task or topic.\n\n## Steps\n\n1. **Extract topics** from current message/task. Identify: subject areas, people mentioned, project names, goal references.\n\n2. **Call `mem0_memory` once** with `action=\"search\"` and a focused question about the task.\n\n3. **Output compact context block** (max 10 memories):\n\n```\ncontext-loader: loaded <N> memories for \"<task summary>\"\n  - [decisions] <content> [mem0:<short_id>]\n  - [preferences] <content> [mem0:<short_id>]\n  - [lessons] <content> [mem0:<short_id>]\n```\n\n4. If **zero results**: output nothing. Don't announce empty context.\n\n## Constraints\n\n- **Read-only** — never modify or delete memories\n- **Max 10 memories** returned (most relevant only)\n- **Silent on empty** — only surfaces findings if relevant context exists\n- Skip memories already visible in current session context\n"
     },
     {
-      "slug": "forget-7",
+      "slug": "forget-2",
       "name": "forget",
       "dir": "integrations/pi-agent-plugin/skills/forget",
       "path": "integrations/pi-agent-plugin/skills/forget/SKILL.md",
@@ -1864,9 +934,9 @@
       },
       "install": {
         "clone": "git clone --depth 1 https://github.com/mem0ai/mem0.git",
-        "copy": "cp -r integrations/pi-agent-plugin/skills/forget ~/.claude/skills/forget-7",
+        "copy": "cp -r integrations/pi-agent-plugin/skills/forget ~/.claude/skills/forget-2",
         "raw": "https://raw.githubusercontent.com/mem0ai/mem0/d26ba5e4518cef7fff3c66d4f715b21adf9feabe/integrations/pi-agent-plugin/skills/forget/SKILL.md",
-        "saveAs": "~/.claude/skills/forget-7/SKILL.md",
+        "saveAs": "~/.claude/skills/forget-2/SKILL.md",
         "marketplace": "/plugin marketplace add mem0ai/mem0"
       },
       "bodyInline": true,
@@ -1881,7 +951,7 @@
       "bodyMd": "# Forget\n\nDelete specific memories from Mem0.\n\n## Execution\n\n### Step 1: Parse input\n\nThe user provides either:\n- A search query: `/mem0-forget travel plans`\n- A memory ID: `/mem0-forget <memory_id>`\n\nIf no argument, ask: \"What should I forget? Provide a search query or memory ID.\"\n\n### Step 2: Find memories\n\n**If memory ID provided** (looks like a UUID or hex string):\n- Use `mem0_memory` tool with `action=\"search\"` and the ID as query, or look it up directly.\n- Show: `Found: \"<memory content first 120 chars>\" (created <date>)`\n\n**If search query provided:**\n- Use `mem0_memory` tool with `action=\"search\"`, `query=<user's query>`.\n- Show numbered list:\n  ```\n  Found <N> memories matching \"<query>\":\n  1. <content, 120 chars> [<category>] [ID: <short_id>]\n  2. ...\n  ```\n\n### Step 3: Confirm\n\nAsk: \"Delete which memories? Enter numbers (e.g., 1,3,5), 'all', or 'cancel'.\"\n\nFor a single memory ID, ask: \"Delete this memory? [y/N]\"\n\n**Never delete without confirmation.** This is destructive.\n\n### Step 4: Delete\n\nFor each confirmed memory, use `mem0_memory` tool with `action=\"delete\"` and the memory ID.\n\n### Step 5: Report\n\n```\nDeleted <N> memories.\n```\n\nIf any deletions failed, report which ones and why.\n"
     },
     {
-      "slug": "remember-3",
+      "slug": "remember-2",
       "name": "remember",
       "dir": "integrations/pi-agent-plugin/skills/remember",
       "path": "integrations/pi-agent-plugin/skills/remember/SKILL.md",
@@ -1910,9 +980,9 @@
       },
       "install": {
         "clone": "git clone --depth 1 https://github.com/mem0ai/mem0.git",
-        "copy": "cp -r integrations/pi-agent-plugin/skills/remember ~/.claude/skills/remember-3",
+        "copy": "cp -r integrations/pi-agent-plugin/skills/remember ~/.claude/skills/remember-2",
         "raw": "https://raw.githubusercontent.com/mem0ai/mem0/d26ba5e4518cef7fff3c66d4f715b21adf9feabe/integrations/pi-agent-plugin/skills/remember/SKILL.md",
-        "saveAs": "~/.claude/skills/remember-3/SKILL.md",
+        "saveAs": "~/.claude/skills/remember-2/SKILL.md",
         "marketplace": "/plugin marketplace add mem0ai/mem0"
       },
       "bodyInline": true,
@@ -1927,7 +997,7 @@
       "bodyMd": "# Remember\n\nStore a fact, preference, or learning directly into Mem0.\n\n## Execution\n\n### Step 1: Extract the content\n\nThe user provides the content as an argument: `/mem0-remember <text>`\n\nIf no text was provided, ask: \"What should I remember?\"\n\n### Step 2: Classify the memory\n\nBased on the content, pick the best category:\n\n| Content signal | Category |\n|---|---|\n| \"I prefer...\", \"I like...\", \"use X instead of Y\" | `preferences` |\n| \"we decided...\", \"always use...\", \"never...\" | `decisions` |\n| \"I learned...\", \"figured out...\", \"don't try...\" | `lessons` |\n| \"my goal is...\", \"I want to...\", \"working toward...\" | `goals` |\n| \"I work at...\", \"my role is...\", \"my team...\" | `work` |\n| \"every day I...\", \"my workflow is...\" | `routines` |\n| \"I'm working on...\", \"the project involves...\" | `projects` |\n| \"John is...\", \"my manager...\", \"the team...\" | `relationships` |\n| \"my name is...\", \"I'm from...\", \"I studied...\" | `identity` |\n| setup, tools, config, environment | `technical` |\n| anything else | `lessons` |\n\n### Step 3: Store\n\nUse the `mem0_memory` tool with:\n- `action=\"add\"`\n- `content=\"<the user's text>\"`\n\nThe `/mem0-remember` command stores verbatim — no inference. This is already handled by the command.\n\n### Step 4: Confirm\n\n```\nRemembered as <category>: \"<content, first 80 chars>\"\n```\n\nAppend `...` only if content was truncated (longer than 80 chars).\n"
     },
     {
-      "slug": "search-7",
+      "slug": "search-2",
       "name": "search",
       "dir": "integrations/pi-agent-plugin/skills/search",
       "path": "integrations/pi-agent-plugin/skills/search/SKILL.md",
@@ -1951,9 +1021,9 @@
       },
       "install": {
         "clone": "git clone --depth 1 https://github.com/mem0ai/mem0.git",
-        "copy": "cp -r integrations/pi-agent-plugin/skills/search ~/.claude/skills/search-7",
+        "copy": "cp -r integrations/pi-agent-plugin/skills/search ~/.claude/skills/search-2",
         "raw": "https://raw.githubusercontent.com/mem0ai/mem0/d26ba5e4518cef7fff3c66d4f715b21adf9feabe/integrations/pi-agent-plugin/skills/search/SKILL.md",
-        "saveAs": "~/.claude/skills/search-7/SKILL.md",
+        "saveAs": "~/.claude/skills/search-2/SKILL.md",
         "marketplace": "/plugin marketplace add mem0ai/mem0"
       },
       "bodyInline": true,

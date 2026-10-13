@@ -2,7 +2,7 @@
   "repo": "affaan-m/ECC",
   "commit": "b92f181b3b748d1abbc2afd94af6aa7d8c8fca29",
   "branch": "main",
-  "fetchedAt": "2026-10-12T14:09:28.018Z",
+  "fetchedAt": "2026-10-13T06:28:34.860Z",
   "parseFail": 0,
   "skills": [
     {
@@ -11,7 +11,7 @@
       "dir": ".agents/skills/agent-introspection-debugging",
       "path": ".agents/skills/agent-introspection-debugging/SKILL.md",
       "desc": "Structured self-debugging workflow for AI agent failures using capture, diagnosis, contained recovery, and introspection reports. Use when an agent run fails and you need a reproducible diagnosis instead of a retry.",
-      "descZh": "",
+      "descZh": "AI agent 失败的结构化自调试：捕获、诊断、受控恢复与内省报告，用于可复现地定位 agent 运行失败。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -56,7 +56,7 @@
       "dir": ".agents/skills/agent-sort",
       "path": ".agents/skills/agent-sort/SKILL.md",
       "desc": "Build an evidence-backed ECC install plan for a specific repo by sorting skills, commands, rules, hooks, and extras into DAILY vs LIBRARY buckets using parallel repo-aware review passes. Use when ECC should be trimmed to what a project actually needs instead of loading the full bundle.",
-      "descZh": "",
+      "descZh": "为特定仓库生成有据可依的 ECC 安装方案：用并行评审把 skills、commands、rules、hooks 与附加项分成「日常」与「备用」两类。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -104,7 +104,7 @@
       "dir": ".agents/skills/api-design",
       "path": ".agents/skills/api-design/SKILL.md",
       "desc": "REST API design patterns including resource naming, status codes, pagination, filtering, error responses, versioning, and rate limiting for production APIs. Use when designing or reviewing REST endpoints, resource names, status codes, pagination, or versioning.",
-      "descZh": "",
+      "descZh": "REST API 设计模式：资源命名、状态码、分页、过滤、错误响应、版本控制与限流。",
       "triggers": [
         "designing",
         "reviewing REST endpoints",
@@ -157,7 +157,7 @@
       "dir": ".agents/skills/article-writing",
       "path": ".agents/skills/article-writing/SKILL.md",
       "desc": "Write articles, guides, blog posts, tutorials, newsletter issues, and other long-form content in a distinctive voice derived from supplied examples or brand guidance. Use when the user wants polished written content longer than a paragraph, especially when voice consistency, structure, and credibility matter.",
-      "descZh": "",
+      "descZh": "写文章、指南、博客、教程与通讯：按给定样例或品牌指导提炼出有辨识度的文风。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -202,7 +202,7 @@
       "dir": ".agents/skills/backend-patterns",
       "path": ".agents/skills/backend-patterns/SKILL.md",
       "desc": "Backend architecture patterns, API design, database optimization, and server-side best practices for Node.js, Express, and Next.js API routes. Use when building or reviewing Node.js, Express, or Next.js API routes and their data access.",
-      "descZh": "",
+      "descZh": "后端架构模式：API 设计、数据库优化与服务端最佳实践，面向 Node.js、Express 与 Next.js API 路由。",
       "triggers": [
         "building",
         "reviewing Node"
@@ -250,7 +250,7 @@
       "dir": ".agents/skills/benchmark-methodology",
       "path": ".agents/skills/benchmark-methodology/SKILL.md",
       "desc": "Use after competitive-platform-analysis has produced a tiered competitor set. Scores each competitor across nine weighted dimensions (positioning, voice, visual craft, offer packaging, evidence, enterprise-readiness, thought leadership, pricing, client's strategic tension) with explicit 1–5 rubrics and a tension-plot. Precedes competitive-report-structure.",
-      "descZh": "",
+      "descZh": "在竞品分析产出分层竞品集之后使用：按九个加权维度（定位、文风、视觉工艺、报价打包等）给每个竞品打分。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -293,7 +293,7 @@
       "dir": ".agents/skills/brand-discovery",
       "path": ".agents/skills/brand-discovery/SKILL.md",
       "desc": "Use when a brand needs to discover or articulate its identity through structured multi-session interviews. Covers purpose, positioning, audience, personality, voice, narrative, and founder-brand tension across 8 modules using laddering, 5 Whys, and projective techniques. Produces a resumable session with disk-persisted state and a master brandbook (90_SYNTHESIS.md).",
-      "descZh": "",
+      "descZh": "通过多轮结构化访谈帮品牌厘清身份：宗旨、定位、受众、个性、语气与叙事等。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -338,7 +338,7 @@
       "dir": ".agents/skills/brand-voice",
       "path": ".agents/skills/brand-voice/SKILL.md",
       "desc": "Build a source-derived writing style profile from real posts, essays, launch notes, docs, or site copy, then reuse that profile across content, outreach, and social workflows. Use when the user wants voice consistency without generic AI writing tropes.",
-      "descZh": "",
+      "descZh": "从真实文章、随笔、发布说明、文档或站点文案中提炼写作风格画像，再复用到内容、外联与社媒流程。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -381,7 +381,7 @@
       "dir": ".agents/skills/bun-runtime",
       "path": ".agents/skills/bun-runtime/SKILL.md",
       "desc": "Bun as runtime, package manager, bundler, and test runner. When to choose Bun vs Node, migration notes, and Vercel support.",
-      "descZh": "",
+      "descZh": "Bun 作为运行时、包管理器、打包器与测试运行器：何时选 Bun 而非 Node、迁移注意点与 Vercel 支持。",
       "triggers": [
         "adopting Bun, migrating from Node, writing or debugging Bun scripts/tests, or configuring Bun on Vercel or other platfor"
       ],
@@ -431,7 +431,7 @@
       "dir": ".agents/skills/change-impact",
       "path": ".agents/skills/change-impact/SKILL.md",
       "desc": "Perform evidence-backed impact analysis before changing code, data, interfaces, or governance documents, then compare the planned impact with the actual diff after implementation. Covers call paths, data and schema, API contracts, tests, documentation, ADRs, deployment, migration, and rollback. Use for cross-module or high-risk changes, database migrations, authentication, public interfaces, blast-radius questions, pre-change checks, and post-implementation alignment.",
-      "descZh": "",
+      "descZh": "改动前的有据影响分析：涉及代码、数据、接口或治理文档时先评估影响，实施后再与真实 diff 对照。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -476,7 +476,7 @@
       "dir": ".agents/skills/coding-standards",
       "path": ".agents/skills/coding-standards/SKILL.md",
       "desc": "Baseline cross-project coding conventions for naming, readability, immutability, and code-quality review. Use detailed frontend or backend skills for framework-specific patterns. Use when reviewing code quality or naming with no framework-specific skill that applies.",
-      "descZh": "",
+      "descZh": "跨项目通用编码规范：命名、可读性、不可变性与代码质量评审（框架专属模式见前后端专项 skill）。",
       "triggers": [
         "reviewing code quality"
       ],
@@ -521,7 +521,7 @@
       "dir": ".agents/skills/competitive-platform-analysis",
       "path": ".agents/skills/competitive-platform-analysis/SKILL.md",
       "desc": "Use when scoping a competitive landscape — identifying, categorising, and score-filtering a competitor set before any benchmarking begins. Decides who counts as a competitor, which tier they belong to, and which sources to mine. First step in the three-skill competitive pipeline; precedes benchmark-methodology.",
-      "descZh": "",
+      "descZh": "界定竞争格局：在开始对标之前先识别、归类并按分数筛选竞品集，决定谁算竞品、谁不算。",
       "triggers": [
         "categorising"
       ],
@@ -566,7 +566,7 @@
       "dir": ".agents/skills/competitive-report-structure",
       "path": ".agents/skills/competitive-report-structure/SKILL.md",
       "desc": "Use after benchmark-methodology has produced scored competitor profile cards. Assembles findings into a decision-grade report: landscape map, competitor profiles, benchmarking matrix, white-space analysis, strategic recommendations, and team alignment trigger questions. Final step in the three-skill competitive pipeline.",
-      "descZh": "",
+      "descZh": "在打分产出竞品画像卡之后，把发现组装成可决策报告：格局图、竞品画像与对标矩阵等。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -611,7 +611,7 @@
       "dir": ".agents/skills/content-engine",
       "path": ".agents/skills/content-engine/SKILL.md",
       "desc": "Create platform-native content systems for X, LinkedIn, TikTok, YouTube, newsletters, and repurposed multi-platform campaigns. Use when the user wants social posts, threads, scripts, content calendars, or one source asset adapted cleanly across platforms.",
-      "descZh": "",
+      "descZh": "为 X、LinkedIn、TikTok、YouTube 与邮件通讯搭建平台原生内容体系：社媒帖、长推、脚本与多平台复用。",
       "triggers": [
         "threads",
         "scripts",
@@ -659,7 +659,7 @@
       "dir": ".agents/skills/context-and-decisions",
       "path": ".agents/skills/context-and-decisions/SKILL.md",
       "desc": "Govern stable domain context with a narrowly scoped CONTEXT.md when needed, and route hard-to-reverse decisions to ECC's existing architecture-decision-records skill. Use when domain terms require repeated explanation, one term has multiple meanings, unclear language causes module-boundary mistakes, or domain semantics must remain separate from architecture decisions.",
-      "descZh": "",
+      "descZh": "用范围收敛的 CONTEXT.md 管理稳定的领域上下文，并把难以回退的决策转给 ECC 既有的架构决策记录（ADR）skill。",
       "triggers": [
         "unclear languag"
       ],
@@ -704,7 +704,7 @@
       "dir": ".agents/skills/crosspost",
       "path": ".agents/skills/crosspost/SKILL.md",
       "desc": "Multi-platform content distribution across X, LinkedIn, Threads, and Bluesky. Adapts content per platform using content-engine patterns. Never posts identical content cross-platform. Use when the user wants to distribute content across social platforms.",
-      "descZh": "",
+      "descZh": "跨 X、LinkedIn、Threads 与 Bluesky 的多平台分发：按平台改写内容，绝不原样重复投放。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -747,7 +747,7 @@
       "dir": ".agents/skills/deep-research",
       "path": ".agents/skills/deep-research/SKILL.md",
       "desc": "Multi-source deep research using firecrawl and exa MCPs. Searches the web, synthesizes findings, and delivers cited reports with source attribution. Use when the user wants thorough research on any topic with evidence and citations.",
-      "descZh": "",
+      "descZh": "多源深度研究：用 firecrawl 与 exa 检索网络、综合发现，产出带引用与出处的报告。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -792,7 +792,7 @@
       "dir": ".agents/skills/dmux-workflows",
       "path": ".agents/skills/dmux-workflows/SKILL.md",
       "desc": "Multi-agent orchestration using dmux (tmux pane manager for AI agents). Patterns for parallel agent workflows across Claude Code, Codex, OpenCode, and other harnesses. Use when running multiple agent sessions in parallel or coordinating multi-agent development workflows.",
-      "descZh": "",
+      "descZh": "用 dmux（面向 AI agent 的 tmux 面板管理器）做多 agent 编排：跨 Claude Code、Codex、OpenCode 等 harness 的并行工作流。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -840,7 +840,7 @@
       "dir": ".agents/skills/docs-governance",
       "path": ".agents/skills/docs-governance/SKILL.md",
       "desc": "Route broad documentation-governance requests to existing ECC skills and run an opt-in, read-only audit of mapped documentation roles, links, ADR indexes, and evidence references. Use when a user asks for documentation governance, project-knowledge organization, documentation integrity, or a deterministic docs audit without naming a narrower skill.",
-      "descZh": "",
+      "descZh": "把宽泛的文档治理请求路由到既有的 ECC skill，并对已映射的文档角色、链接、ADR 索引与证据引用做只读审计。",
       "triggers": [
         "documentation in"
       ],
@@ -889,7 +889,7 @@
       "dir": ".agents/skills/documentation-lookup",
       "path": ".agents/skills/documentation-lookup/SKILL.md",
       "desc": "Use up-to-date library and framework docs via Context7 MCP instead of training data. Activates for setup questions, API references, code examples, or when the user names a framework (e.g. React, Next.js, Prisma).",
-      "descZh": "",
+      "descZh": "用 Context7 取最新的库与框架文档，而不是依赖训练数据：适配安装问题、API 参考与代码示例。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -932,7 +932,7 @@
       "dir": ".agents/skills/e2e-testing",
       "path": ".agents/skills/e2e-testing/SKILL.md",
       "desc": "Playwright E2E testing patterns, Page Object Model, configuration, CI/CD integration, artifact management, and flaky test strategies. Use when writing Playwright tests, structuring page objects, or fixing flaky E2E runs in CI.",
-      "descZh": "",
+      "descZh": "Playwright 端到端测试：页面对象模型、配置、CI/CD 集成、产物管理与不稳定测试的应对。",
       "triggers": [
         "writing Playwright tests",
         "structuring page objects"
@@ -982,7 +982,7 @@
       "dir": ".agents/skills/ecc-conventions",
       "path": ".agents/skills/ecc-conventions/SKILL.md",
       "desc": "Development conventions and patterns for ECC. JavaScript project with conventional commits.",
-      "descZh": "",
+      "descZh": "ECC 项目的开发约定与模式（JavaScript 项目，遵循 conventional commits）。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1028,7 +1028,7 @@
       "dir": ".agents/skills/eval-harness",
       "path": ".agents/skills/eval-harness/SKILL.md",
       "desc": "Formal evaluation framework for Claude Code sessions implementing eval-driven development (EDD) principles. Use when a Claude Code workflow needs a formal eval before it is trusted or changed.",
-      "descZh": "",
+      "descZh": "面向 Claude Code 会话的正式评估框架，落地 eval-driven development（EDD）：在信任一个 workflow 之前先跑评估。",
       "triggers": [
         "changed"
       ],
@@ -1077,7 +1077,7 @@
       "dir": ".agents/skills/exa-search",
       "path": ".agents/skills/exa-search/SKILL.md",
       "desc": "Neural search via Exa MCP for web, code, and company research. Use when the user needs web search, code examples, company intel, people lookup, or AI-powered deep research with Exa's neural search engine.",
-      "descZh": "",
+      "descZh": "经 Exa 做神经搜索：网页、代码与公司调研，用于找代码示例、公司情报或 AI 驱动的深度研究。",
       "triggers": [
         "code examples",
         "company intel",
@@ -1129,7 +1129,7 @@
       "dir": ".agents/skills/fal-ai-media",
       "path": ".agents/skills/fal-ai-media/SKILL.md",
       "desc": "Unified media generation via fal.ai MCP — image, video, and audio. Covers text-to-image (Nano Banana), text/image-to-video (Seedance, Kling, Veo 3), text-to-speech (CSM-1B), and video-to-audio (ThinkSound). Use when the user wants to generate images, videos, or audio with AI.",
-      "descZh": "",
+      "descZh": "经 fal.ai 统一生成媒体：图像（Nano Banana）、文／图生视频（Seedance、Kling、Veo 3）与语音合成（CSM-1B）等。",
       "triggers": [
         "videos",
         "audio with AI"
@@ -1179,7 +1179,7 @@
       "dir": ".agents/skills/frontend-patterns",
       "path": ".agents/skills/frontend-patterns/SKILL.md",
       "desc": "Frontend development patterns for React, Next.js, state management, performance optimization, and UI best practices. Use when building or reviewing React or Next.js components, state, or render performance.",
-      "descZh": "",
+      "descZh": "前端开发模式：React、Next.js、状态管理、性能优化与 UI 最佳实践。",
       "triggers": [
         "building",
         "reviewing React",
@@ -1226,7 +1226,7 @@
       "dir": ".agents/skills/frontend-slides",
       "path": ".agents/skills/frontend-slides/SKILL.md",
       "desc": "Create stunning, animation-rich HTML presentations from scratch or by converting PowerPoint files. Use when the user wants to build a presentation, convert a PPT/PPTX to web, or create slides for a talk/pitch. Helps non-designers discover their aesthetic through visual exploration rather than abstract choices.",
-      "descZh": "",
+      "descZh": "从零创建或从 PowerPoint 转换出动画丰富的 HTML 演示：把 PPT/PPTX 转成网页演示。",
       "triggers": [
         "create slides for a"
       ],
@@ -1275,7 +1275,7 @@
       "dir": ".agents/skills/investor-materials",
       "path": ".agents/skills/investor-materials/SKILL.md",
       "desc": "Create and update pitch decks, one-pagers, investor memos, accelerator applications, financial models, and fundraising materials. Use when the user needs investor-facing documents, projections, use-of-funds tables, milestone plans, or materials that must stay internally consistent across multiple fundraising assets.",
-      "descZh": "",
+      "descZh": "制作与更新融资材料：路演 PPT、一页纸、投资人备忘录、加速器申请与财务模型。",
       "triggers": [
         "projections",
         "use-of-funds tables",
@@ -1324,7 +1324,7 @@
       "dir": ".agents/skills/investor-outreach",
       "path": ".agents/skills/investor-outreach/SKILL.md",
       "desc": "Draft cold emails, warm intro blurbs, follow-ups, update emails, and investor communications for fundraising. Use when the user wants outreach to angels, VCs, strategic investors, or accelerators and needs concise, personalized, investor-facing messaging.",
-      "descZh": "",
+      "descZh": "融资外联写作：冷邮件、熟人引荐语、跟进、进展更新与投资人沟通。",
       "triggers": [
         "VCs",
         "strategic investors"
@@ -1373,7 +1373,7 @@
       "dir": ".agents/skills/market-research",
       "path": ".agents/skills/market-research/SKILL.md",
       "desc": "Conduct market research, competitive analysis, investor due diligence, and industry intelligence with source attribution and decision-oriented summaries. Use when the user wants market sizing, competitor comparisons, fund research, technology scans, or research that informs business decisions.",
-      "descZh": "",
+      "descZh": "市场调研、竞品分析、投资人尽调与行业情报：带来源标注与面向决策的摘要。",
       "triggers": [
         "competitor comparisons",
         "fund research",
@@ -1420,7 +1420,7 @@
       "dir": ".agents/skills/mcp-dependency-review",
       "path": ".agents/skills/mcp-dependency-review/SKILL.md",
       "desc": "Statically review MCP configuration for mutable package references before approval or CI, without executing discovered MCP servers. Use when reviewing .mcp.json, Cursor, VS Code, Claude, Windsurf, or other repo-scoped MCP config.",
-      "descZh": "",
+      "descZh": "在批准或进 CI 之前，静态审查 MCP 配置里可变的包引用，不执行任何被发现的 MCP 服务。",
       "triggers": [
         "reviewing"
       ],
@@ -1474,7 +1474,7 @@
       "dir": ".agents/skills/mcp-server-patterns",
       "path": ".agents/skills/mcp-server-patterns/SKILL.md",
       "desc": "Build MCP servers with Node/TypeScript SDK — tools, resources, prompts, Zod validation, stdio vs Streamable HTTP. Use Context7 or official MCP docs for latest API. Use when building or debugging an MCP server — tools, resources, prompts, validation, or transport choice.",
-      "descZh": "",
+      "descZh": "用 Node/TypeScript SDK 构建 MCP server：tools、resources、prompts、Zod 校验，以及 stdio 与 Streamable HTTP 传输。",
       "triggers": [
         "building",
         "resources",
@@ -1528,7 +1528,7 @@
       "dir": ".agents/skills/mle-workflow",
       "path": ".agents/skills/mle-workflow/SKILL.md",
       "desc": "Production machine-learning engineering workflow for data contracts, reproducible training, model evaluation, deployment, monitoring, and rollback. Use when building, reviewing, or hardening ML systems beyond one-off notebooks.",
-      "descZh": "",
+      "descZh": "生产级机器学习工程流程：数据契约、可复现训练、模型评估、部署、监控与回滚。",
       "triggers": [
         "building",
         "reviewing"
@@ -1580,7 +1580,7 @@
       "dir": ".agents/skills/module-regression",
       "path": ".agents/skills/module-regression/SKILL.md",
       "desc": "Govern cross-module regression in large repositories with a REGRESSION.md ledger that records each module's downstream consumers and executable acceptance command. After a change, run the changed module and every affected downstream command, and use observed exit codes as regression evidence under the project's delivery policy. Use for module regression, regression ledgers, impact audits, downstream verification, and changes where modifying A may break B.",
-      "descZh": "",
+      "descZh": "用 REGRESSION.md 台账治理大型仓库的跨模块回归：记录每个模块的下游消费方与可执行验收命令，改完再核对。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1626,7 +1626,7 @@
       "dir": ".agents/skills/nextjs-turbopack",
       "path": ".agents/skills/nextjs-turbopack/SKILL.md",
       "desc": "Next.js 16+ and Turbopack — incremental bundling, FS caching, dev speed, and when to use Turbopack vs webpack.",
-      "descZh": "",
+      "descZh": "Next.js 16+ 与 Turbopack：增量打包、文件系统缓存、开发速度，以及何时该用 Turbopack 而非 webpack。",
       "triggers": [
         "developing or debugging Next.js 16+ apps, diagnosing slow dev startup or HMR, or optimizing production bundles."
       ],
@@ -1671,7 +1671,7 @@
       "dir": ".agents/skills/plan-canvas",
       "path": ".agents/skills/plan-canvas/SKILL.md",
       "desc": "Open plans and HTML artifacts in a local browser canvas where the human annotates elements, chats, and approves or requests changes without leaving the page. Use when presenting a plan for review, or when feedback like \"move this, change that\" is easier pointed at than typed.",
-      "descZh": "",
+      "descZh": "在本地浏览器画布里打开计划与 HTML 产物：直接标注元素、对话，并在页内批准或要求修改。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1716,7 +1716,7 @@
       "dir": ".agents/skills/product-capability",
       "path": ".agents/skills/product-capability/SKILL.md",
       "desc": "Translate PRD intent, roadmap asks, or product discussions into an implementation-ready capability plan that exposes constraints, invariants, interfaces, and unresolved decisions before multi-service work starts. Use when the user needs an ECC-native PRD-to-SRS lane instead of vague planning prose.",
-      "descZh": "",
+      "descZh": "把 PRD 意图、路线图诉求或产品讨论翻译成可落地的能力方案，暴露约束、不变量、接口与未决问题。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1761,7 +1761,7 @@
       "dir": ".agents/skills/security-review",
       "path": ".agents/skills/security-review/SKILL.md",
       "desc": "Use this skill when adding authentication, handling user input, working with secrets, creating API endpoints, or implementing payment/sensitive features. Provides comprehensive security checklist and patterns.",
-      "descZh": "",
+      "descZh": "安全审查：新增鉴权、处理用户输入、涉及密钥、创建 API 端点或做支付等敏感功能时，给出全面的安全建议。",
       "triggers": [
         "adding authentication",
         "handling user input",
@@ -1812,7 +1812,7 @@
       "dir": ".agents/skills/skill-host-compat",
       "path": ".agents/skills/skill-host-compat/SKILL.md",
       "desc": "Lint ECC skills for Codex/Cursor-safe frontmatter and Claude-only substitutions before a skill PR.",
-      "descZh": "",
+      "descZh": "在提 skill PR 前检查 ECC skill：frontmatter 是否对 Codex/Cursor 安全，是否用了 Claude 专有替换语法。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1859,7 +1859,7 @@
       "dir": ".agents/skills/strategic-compact",
       "path": ".agents/skills/strategic-compact/SKILL.md",
       "desc": "Suggests manual context compaction at logical intervals to preserve context through task phases rather than arbitrary auto-compaction. Use when a session is approaching a context limit and a task phase is a natural place to compact.",
-      "descZh": "",
+      "descZh": "在逻辑间隔处建议手动压缩上下文，以任务阶段为单位保全上下文，而不是任由自动压缩随意触发。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1905,7 +1905,7 @@
       "dir": ".agents/skills/tdd-workflow",
       "path": ".agents/skills/tdd-workflow/SKILL.md",
       "desc": "Use this skill when writing new features, fixing bugs, or refactoring code. Enforces test-driven development with 80%+ coverage including unit, integration, and E2E tests.",
-      "descZh": "",
+      "descZh": "测试驱动开发：写新功能、修 bug 或重构时强制 TDD，覆盖率 80% 以上，含单元、集成与 E2E 测试。",
       "triggers": [
         "writing new features",
         "fixing bugs",
@@ -1961,7 +1961,7 @@
       "dir": ".agents/skills/test-collaboration",
       "path": ".agents/skills/test-collaboration/SKILL.md",
       "desc": "Inventory and govern a project's test assets. Connect requirements, business rules, risks, bugs, and cross-boundary contracts to stable TEST-IDs and executable evidence in the repository's existing test registry or TESTS.md. Use for test inventory, test gap analysis, unit/integration/contract/E2E/smoke classification, bug-to-test regression protection, consumer/provider contract testing, test-necessity review, and pre-delivery evidence review.",
-      "descZh": "",
+      "descZh": "盘点并治理项目的测试资产：把需求、业务规则、风险、缺陷与跨边界契约关联到稳定的 TEST-ID 与可执行证据。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -2009,7 +2009,7 @@
       "dir": ".agents/skills/unified-memory",
       "path": ".agents/skills/unified-memory/SKILL.md",
       "desc": "Share durable, inspectable context and handoffs between Claude, Codex, Hermes, Cursor, OpenCode, and other agents through the local ECC Memory Vault. Use when an agent must save work state, transfer context, resume another agent's task, or search shared project knowledge.",
-      "descZh": "",
+      "descZh": "通过本地 ECC Memory Vault，在 Claude、Codex、Hermes、Cursor、OpenCode 等 agent 之间共享可检查的上下文与交接。",
       "triggers": [
         "transfer context",
         "search sh"
@@ -2059,7 +2059,7 @@
       "dir": ".agents/skills/verification-loop",
       "path": ".agents/skills/verification-loop/SKILL.md",
       "desc": "A comprehensive verification system for Claude Code sessions. Use when verifying a Claude Code session's work before claiming it is complete.",
-      "descZh": "",
+      "descZh": "Claude Code 会话的完整验证系统：在宣称任务完成之前逐项核实工作成果。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -2108,7 +2108,7 @@
       "dir": ".agents/skills/video-editing",
       "path": ".agents/skills/video-editing/SKILL.md",
       "desc": "AI-assisted video editing workflows for cutting, structuring, and augmenting real footage. Covers the full pipeline from raw capture through FFmpeg, Remotion, ElevenLabs, fal.ai, and final polish in Descript or CapCut. Use when the user wants to edit video, cut footage, create vlogs, or build video content.",
-      "descZh": "",
+      "descZh": "AI 辅助视频剪辑：切分、组织结构并增强真实素材，覆盖从原始拍摄到 FFmpeg、Remotion、ElevenLabs、fal.ai 的全流程。",
       "triggers": [
         "cut footage",
         "create vlogs",
@@ -2160,7 +2160,7 @@
       "dir": ".agents/skills/x-api",
       "path": ".agents/skills/x-api/SKILL.md",
       "desc": "X/Twitter API integration for posting tweets, threads, reading timelines, search, and analytics. Covers OAuth auth patterns, rate limits, and platform-native content posting. Use when the user wants to interact with X programmatically.",
-      "descZh": "",
+      "descZh": "X/Twitter API 集成：发推、发长推、读时间线、搜索与分析，含 OAuth 认证模式、限流与平台原生内容发布。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -2205,7 +2205,7 @@
       "dir": ".cursor/skills/article-writing",
       "path": ".cursor/skills/article-writing/SKILL.md",
       "desc": "Write articles, guides, blog posts, tutorials, newsletter issues, and other long-form content in a distinctive voice derived from supplied examples or brand guidance. Use when the user wants polished written content longer than a paragraph, especially when voice consistency, structure, and credibility matter.",
-      "descZh": "",
+      "descZh": "写长文的重复条目——与 article-writing 内容相同，源于仓库内重复的 SKILL.md。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -2243,62 +2243,12 @@
       "bodyMd": "# Article Writing\n\nWrite long-form content that sounds like a real person or brand, not generic AI output.\n\n## When to Activate\n\n- drafting blog posts, essays, launch posts, guides, tutorials, or newsletter issues\n- turning notes, transcripts, or research into polished articles\n- matching an existing founder, operator, or brand voice from examples\n- tightening structure, pacing, and evidence in already-written long-form copy\n\n## Core Rules\n\n1. Lead with the concrete thing: example, output, anecdote, number, screenshot description, or code block.\n2. Explain after the example, not before.\n3. Prefer short, direct sentences over padded ones.\n4. Use specific numbers when available and sourced.\n5. Never invent biographical facts, company metrics, or customer evidence.\n\n## Voice Capture Workflow\n\nIf the user wants a specific voice, collect one or more of:\n- published articles\n- newsletters\n- X / LinkedIn posts\n- docs or memos\n- a short style guide\n\nThen extract:\n- sentence length and rhythm\n- whether the voice is formal, conversational, or sharp\n- favored rhetorical devices such as parentheses, lists, fragments, or questions\n- tolerance for humor, opinion, and contrarian framing\n- formatting habits such as headers, bullets, code blocks, and pull quotes\n\nIf no voice references are given, default to a direct, operator-style voice: concrete, practical, and low on hype.\n\n## Banned Patterns\n\nDelete and rewrite any of these:\n- generic openings like \"In today's rapidly evolving landscape\"\n- filler transitions such as \"Moreover\" and \"Furthermore\"\n- hype phrases like \"game-changer\", \"cutting-edge\", or \"revolutionary\"\n- vague claims without evidence\n- biography or credibility claims not backed by provided context\n\n## Writing Process\n\n1. Clarify the audience and purpose.\n2. Build a skeletal outline with one purpose per section.\n3. Start each section with evidence, example, or scene.\n4. Expand only where the next sentence earns its place.\n5. Remove anything that sounds templated or self-congratulatory.\n\n## Structure Guidance\n\n### Technical Guides\n- open with what the reader gets\n- use code or terminal examples in every major section\n- end with concrete takeaways, not a soft summary\n\n### Essays / Opinion Pieces\n- start with tension, contradiction, or a sharp observation\n- keep one argument thread per section\n- use examples that earn the opinion\n\n### Newsletters\n- keep the first screen strong\n- mix insight with updates, not diary filler\n- use clear section labels and easy skim structure\n\n## Quality Gate\n\nBefore delivering:\n- verify factual claims against provided sources\n- remove filler and corporate language\n- confirm the voice matches the supplied examples\n- ensure every section adds new information\n- check formatting for the intended platform\n"
     },
     {
-      "slug": "bun-runtime-2",
-      "name": "bun-runtime",
-      "dir": ".cursor/skills/bun-runtime",
-      "path": ".cursor/skills/bun-runtime/SKILL.md",
-      "desc": "Bun as runtime, package manager, bundler, and test runner. When to choose Bun vs Node, migration notes, and Vercel support.",
-      "descZh": "",
-      "triggers": [
-        "adopting Bun, migrating from Node, writing or debugging Bun scripts/tests, or configuring Bun on Vercel or other platfor"
-      ],
-      "version": "",
-      "license": "MIT",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "cursor",
-        "gemini",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": true,
-        "bins": [
-          "node",
-          "npm",
-          "yarn",
-          "bun"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/affaan-m/ECC.git",
-        "copy": "cp -r .cursor/skills/bun-runtime ~/.claude/skills/bun-runtime-2",
-        "raw": "https://raw.githubusercontent.com/affaan-m/ECC/b92f181b3b748d1abbc2afd94af6aa7d8c8fca29/.cursor/skills/bun-runtime/SKILL.md",
-        "saveAs": "~/.claude/skills/bun-runtime-2/SKILL.md",
-        "marketplace": "/plugin marketplace add affaan-m/ECC"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:8d30e8c0c9e218433e140792b94756c6bbe2c8e06c94e66ddb49900e84af4043",
-      "bytes": 5743,
-      "wordCount": 764,
-      "repoLicense": "MIT",
-      "commit": "b92f181b3b748d1abbc2afd94af6aa7d8c8fca29",
-      "branch": "main",
-      "body": "---\nname: bun-runtime\ndescription: Bun as runtime, package manager, bundler, and test runner. When to choose Bun vs Node, migration notes, and Vercel support.\norigin: ECC\n---\n\n# Bun Runtime\n\nBun is a fast all-in-one JavaScript runtime and toolkit: runtime, package manager, bundler, and test runner.\n\n## When to Use\n\n- **Prefer Bun** for: new JS/TS projects, scripts where install/run speed matters, Vercel deployments with Bun runtime, and when you want a single toolchain (run + install + test + build).\n- **Prefer Node** for: maximum ecosystem compatibility, legacy tooling that assumes Node, or when a dependency has known Bun issues.\n\nUse when: adopting Bun, migrating from Node, writing or debugging Bun scripts/tests, or configuring Bun on Vercel or other platforms.\n\n## How It Works\n\n- **Version baseline**: guidance below targets Bun 1.4.x. Check the actual version with `bun --version` before relying on flag names, since CLI flags can change between releases.\n- **Runtime**: Drop-in Node-compatible runtime, built on JavaScriptCore. As of Bun 1.4 the runtime itself is implemented in Rust (migrated from Zig). Not 100% Node-compatible — some native addons, less-common `node:` internal APIs, and packages that depend on Node-specific internals can still fail; verify before depending on it in production.\n- **Package manager**: Bun includes a package manager; installation performance depends on the project, network conditions, and cache state. Lockfile is `bun.lock` (text) by default in current Bun; older versions used `bun.lockb` (binary) — Bun still reads that format for migration, but new projects should use `bun.lock`.\n- **Bundler**: Built-in bundler and transpiler for apps and libraries.\n- **Test runner**: Built-in `bun test` with a Jest-like API.\n\n**Migration from Node**: Replace `node script.js` with `bun run script.js` or `bun script.js`. Run `bun install` in place of `npm install`; most packages work. Use `bun run` for npm scripts; `bun x` for npx-style one-off runs. Node built-ins are supported; prefer Bun APIs where they exist for better performance.\n\n**Package and workspace commands**: `bun add <pkg>` / `bun remove <pkg>` / `bun update [pkg]` manage dependencies; `bun outdated` lists stale deps. `bun pm ls` lists project dependencies and resolved versions using the lockfile; `--all` includes transitive dependencies. It is not an integrity check of installed file contents. [`bun audit`](https://bun.com/docs/pm/cli/audit) queries registry advisories using package names and versions from `bun.lock`; it does not modify `package.json`, `bun.lock`, or `node_modules`. Review approved destinations before sending private package metadata. Packages whose scoped registry lacks an advisory endpoint are skipped and do not affect the exit code. `bun audit fix` upgrades and installs dependencies, changing the lockfile and installed packages and sometimes direct version pins; review it as a modifying install operation, including applicable lifecycle scripts. `bun dedupe` collapses duplicate installs, and `bun prune` removes packages no longer referenced. Monorepos use a root `workspaces` array in `package.json` (same convention as npm/yarn); run a script in one workspace with `bun run --filter <pkg-name> <script>`.\n\n**Built-in APIs**: reach for these before adding a dependency — `Bun.file` / `Bun.write` for file I/O, `bun:sqlite` for an embedded SQLite database, `Bun.serve` for an HTTP/WebSocket server, [`Bun.sql`](https://bun.com/docs/runtime/sql) for SQL databases, [`Bun.redis`](https://bun.com/docs/runtime/redis) for Redis, and [`Bun.S3Client`](https://bun.com/docs/runtime/s3) for S3-compatible object storage. See the [1.4 release notes](https://bun.com/blog/bun-v1.4) for the rest of what's new.\n\n**Vercel**: Set `bunVersion: \"1.4.x\"` in `vercel.json` to use Bun 1.4 (Rust runtime). See [Vercel's Bun runtime docs](https://vercel.com/docs/functions/runtimes/bun). Build: `bun run build` or `bun build ./src/index.ts --outdir=dist`. Install: `bun install --frozen-lockfile` for reproducible deploys.\n\n**Reference**: [Bun 1.4 release notes](https://bun.com/blog/bun-v1.4).\n\n## Examples\n\n### Run and install\n\n```bash\n# Install dependencies (creates/updates bun.lock)\nbun install\n\n# Run a script or file\nbun run dev\nbun run src/index.ts\nbun src/index.ts\n```\n\n### Scripts and env\n\n```bash\nbun run --env-file=.env dev\nFOO=bar bun run script.ts\n```\n\n### Testing\n\n```bash\nbun test\nbun test --watch\n```\n\nFor CI on Bun 1.4, available options include `bun test --changed[=<ref>]` for affected tests, `bun test --isolate` for per-file globals, `bun test --parallel[=<n>]` for worker processes, and `bun test --shard=<n>/<count>` for CI partitioning. `--isolate` creates a fresh JavaScript global for each file in the same process and cleans up documented per-file resources; it is not a process or security sandbox. `--parallel` enables it by default. `--timings=<file>` reads prior durations for scheduling; `--update-timings` records durations. Example: `bun test --parallel --timings=./test-timings.json --update-timings`. Check the installed version's help and documentation before choosing timing-file paths for a multi-shard workflow.\n\n```typescript\n// test/example.test.ts\nimport { expect, test } from \"bun:test\";\n\ntest(\"add\", () => {\n  expect(1 + 2).toBe(3);\n});\n```\n\n### Runtime API\n\n```typescript\nconst file = Bun.file(\"package.json\");\nconst json = await file.json();\n\nBun.serve({\n  port: 3000,\n  fetch(req) {\n    return new Response(\"Hello\");\n  },\n});\n```\n\n## Best Practices\n\n- Commit the lockfile (`bun.lock`) for reproducible installs.\n- Prefer `bun run` for scripts. For TypeScript, Bun runs `.ts` natively.\n- Keep dependencies up to date; Bun and the ecosystem evolve quickly.\n",
-      "bodyMd": "# Bun Runtime\n\nBun is a fast all-in-one JavaScript runtime and toolkit: runtime, package manager, bundler, and test runner.\n\n## When to Use\n\n- **Prefer Bun** for: new JS/TS projects, scripts where install/run speed matters, Vercel deployments with Bun runtime, and when you want a single toolchain (run + install + test + build).\n- **Prefer Node** for: maximum ecosystem compatibility, legacy tooling that assumes Node, or when a dependency has known Bun issues.\n\nUse when: adopting Bun, migrating from Node, writing or debugging Bun scripts/tests, or configuring Bun on Vercel or other platforms.\n\n## How It Works\n\n- **Version baseline**: guidance below targets Bun 1.4.x. Check the actual version with `bun --version` before relying on flag names, since CLI flags can change between releases.\n- **Runtime**: Drop-in Node-compatible runtime, built on JavaScriptCore. As of Bun 1.4 the runtime itself is implemented in Rust (migrated from Zig). Not 100% Node-compatible — some native addons, less-common `node:` internal APIs, and packages that depend on Node-specific internals can still fail; verify before depending on it in production.\n- **Package manager**: Bun includes a package manager; installation performance depends on the project, network conditions, and cache state. Lockfile is `bun.lock` (text) by default in current Bun; older versions used `bun.lockb` (binary) — Bun still reads that format for migration, but new projects should use `bun.lock`.\n- **Bundler**: Built-in bundler and transpiler for apps and libraries.\n- **Test runner**: Built-in `bun test` with a Jest-like API.\n\n**Migration from Node**: Replace `node script.js` with `bun run script.js` or `bun script.js`. Run `bun install` in place of `npm install`; most packages work. Use `bun run` for npm scripts; `bun x` for npx-style one-off runs. Node built-ins are supported; prefer Bun APIs where they exist for better performance.\n\n**Package and workspace commands**: `bun add <pkg>` / `bun remove <pkg>` / `bun update [pkg]` manage dependencies; `bun outdated` lists stale deps. `bun pm ls` lists project dependencies and resolved versions using the lockfile; `--all` includes transitive dependencies. It is not an integrity check of installed file contents. [`bun audit`](https://bun.com/docs/pm/cli/audit) queries registry advisories using package names and versions from `bun.lock`; it does not modify `package.json`, `bun.lock`, or `node_modules`. Review approved destinations before sending private package metadata. Packages whose scoped registry lacks an advisory endpoint are skipped and do not affect the exit code. `bun audit fix` upgrades and installs dependencies, changing the lockfile and installed packages and sometimes direct version pins; review it as a modifying install operation, including applicable lifecycle scripts. `bun dedupe` collapses duplicate installs, and `bun prune` removes packages no longer referenced. Monorepos use a root `workspaces` array in `package.json` (same convention as npm/yarn); run a script in one workspace with `bun run --filter <pkg-name> <script>`.\n\n**Built-in APIs**: reach for these before adding a dependency — `Bun.file` / `Bun.write` for file I/O, `bun:sqlite` for an embedded SQLite database, `Bun.serve` for an HTTP/WebSocket server, [`Bun.sql`](https://bun.com/docs/runtime/sql) for SQL databases, [`Bun.redis`](https://bun.com/docs/runtime/redis) for Redis, and [`Bun.S3Client`](https://bun.com/docs/runtime/s3) for S3-compatible object storage. See the [1.4 release notes](https://bun.com/blog/bun-v1.4) for the rest of what's new.\n\n**Vercel**: Set `bunVersion: \"1.4.x\"` in `vercel.json` to use Bun 1.4 (Rust runtime). See [Vercel's Bun runtime docs](https://vercel.com/docs/functions/runtimes/bun). Build: `bun run build` or `bun build ./src/index.ts --outdir=dist`. Install: `bun install --frozen-lockfile` for reproducible deploys.\n\n**Reference**: [Bun 1.4 release notes](https://bun.com/blog/bun-v1.4).\n\n## Examples\n\n### Run and install\n\n```bash\n# Install dependencies (creates/updates bun.lock)\nbun install\n\n# Run a script or file\nbun run dev\nbun run src/index.ts\nbun src/index.ts\n```\n\n### Scripts and env\n\n```bash\nbun run --env-file=.env dev\nFOO=bar bun run script.ts\n```\n\n### Testing\n\n```bash\nbun test\nbun test --watch\n```\n\nFor CI on Bun 1.4, available options include `bun test --changed[=<ref>]` for affected tests, `bun test --isolate` for per-file globals, `bun test --parallel[=<n>]` for worker processes, and `bun test --shard=<n>/<count>` for CI partitioning. `--isolate` creates a fresh JavaScript global for each file in the same process and cleans up documented per-file resources; it is not a process or security sandbox. `--parallel` enables it by default. `--timings=<file>` reads prior durations for scheduling; `--update-timings` records durations. Example: `bun test --parallel --timings=./test-timings.json --update-timings`. Check the installed version's help and documentation before choosing timing-file paths for a multi-shard workflow.\n\n```typescript\n// test/example.test.ts\nimport { expect, test } from \"bun:test\";\n\ntest(\"add\", () => {\n  expect(1 + 2).toBe(3);\n});\n```\n\n### Runtime API\n\n```typescript\nconst file = Bun.file(\"package.json\");\nconst json = await file.json();\n\nBun.serve({\n  port: 3000,\n  fetch(req) {\n    return new Response(\"Hello\");\n  },\n});\n```\n\n## Best Practices\n\n- Commit the lockfile (`bun.lock`) for reproducible installs.\n- Prefer `bun run` for scripts. For TypeScript, Bun runs `.ts` natively.\n- Keep dependencies up to date; Bun and the ecosystem evolve quickly.\n"
-    },
-    {
       "slug": "content-engine-2",
       "name": "content-engine",
       "dir": ".cursor/skills/content-engine",
       "path": ".cursor/skills/content-engine/SKILL.md",
       "desc": "Create platform-native content systems for X, LinkedIn, TikTok, YouTube, newsletters, and repurposed multi-platform campaigns. Use when the user wants social posts, threads, scripts, content calendars, or one source asset adapted cleanly across platforms.",
-      "descZh": "",
+      "descZh": "平台原生内容体系的重复副本——与 content-engine 内容相同。",
       "triggers": [
         "threads",
         "scripts",
@@ -2341,49 +2291,6 @@
       "branch": "main",
       "body": "---\nname: content-engine\ndescription: Create platform-native content systems for X, LinkedIn, TikTok, YouTube, newsletters, and repurposed multi-platform campaigns. Use when the user wants social posts, threads, scripts, content calendars, or one source asset adapted cleanly across platforms.\norigin: ECC\n---\n\n# Content Engine\n\nTurn one idea into strong, platform-native content instead of posting the same thing everywhere.\n\n## When to Activate\n\n- writing X posts or threads\n- drafting LinkedIn posts or launch updates\n- scripting short-form video or YouTube explainers\n- repurposing articles, podcasts, demos, or docs into social content\n- building a lightweight content plan around a launch, milestone, or theme\n\n## First Questions\n\nClarify:\n- source asset: what are we adapting from\n- audience: builders, investors, customers, operators, or general audience\n- platform: X, LinkedIn, TikTok, YouTube, newsletter, or multi-platform\n- goal: awareness, conversion, recruiting, authority, launch support, or engagement\n\n## Core Rules\n\n1. Adapt for the platform. Do not cross-post the same copy.\n2. Hooks matter more than summaries.\n3. Every post should carry one clear idea.\n4. Use specifics over slogans.\n5. Keep the ask small and clear.\n\n## Platform Guidance\n\n### X\n- open fast\n- one idea per post or per tweet in a thread\n- keep links out of the main body unless necessary\n- avoid hashtag spam\n\n### LinkedIn\n- strong first line\n- short paragraphs\n- more explicit framing around lessons, results, and takeaways\n\n### TikTok / Short Video\n- first 3 seconds must interrupt attention\n- script around visuals, not just narration\n- one demo, one claim, one CTA\n\n### YouTube\n- show the result early\n- structure by chapter\n- refresh the visual every 20-30 seconds\n\n### Newsletter\n- deliver one clear lens, not a bundle of unrelated items\n- make section titles skimmable\n- keep the opening paragraph doing real work\n\n## Repurposing Flow\n\nDefault cascade:\n1. anchor asset: article, video, demo, memo, or launch doc\n2. extract 3-7 atomic ideas\n3. write platform-native variants\n4. trim repetition across outputs\n5. align CTAs with platform intent\n\n## Deliverables\n\nWhen asked for a campaign, return:\n- the core angle\n- platform-specific drafts\n- optional posting order\n- optional CTA variants\n- any missing inputs needed before publishing\n\n## Quality Gate\n\nBefore delivering:\n- each draft reads natively for its platform\n- hooks are strong and specific\n- no generic hype language\n- no duplicated copy across platforms unless requested\n- the CTA matches the content and audience\n",
       "bodyMd": "# Content Engine\n\nTurn one idea into strong, platform-native content instead of posting the same thing everywhere.\n\n## When to Activate\n\n- writing X posts or threads\n- drafting LinkedIn posts or launch updates\n- scripting short-form video or YouTube explainers\n- repurposing articles, podcasts, demos, or docs into social content\n- building a lightweight content plan around a launch, milestone, or theme\n\n## First Questions\n\nClarify:\n- source asset: what are we adapting from\n- audience: builders, investors, customers, operators, or general audience\n- platform: X, LinkedIn, TikTok, YouTube, newsletter, or multi-platform\n- goal: awareness, conversion, recruiting, authority, launch support, or engagement\n\n## Core Rules\n\n1. Adapt for the platform. Do not cross-post the same copy.\n2. Hooks matter more than summaries.\n3. Every post should carry one clear idea.\n4. Use specifics over slogans.\n5. Keep the ask small and clear.\n\n## Platform Guidance\n\n### X\n- open fast\n- one idea per post or per tweet in a thread\n- keep links out of the main body unless necessary\n- avoid hashtag spam\n\n### LinkedIn\n- strong first line\n- short paragraphs\n- more explicit framing around lessons, results, and takeaways\n\n### TikTok / Short Video\n- first 3 seconds must interrupt attention\n- script around visuals, not just narration\n- one demo, one claim, one CTA\n\n### YouTube\n- show the result early\n- structure by chapter\n- refresh the visual every 20-30 seconds\n\n### Newsletter\n- deliver one clear lens, not a bundle of unrelated items\n- make section titles skimmable\n- keep the opening paragraph doing real work\n\n## Repurposing Flow\n\nDefault cascade:\n1. anchor asset: article, video, demo, memo, or launch doc\n2. extract 3-7 atomic ideas\n3. write platform-native variants\n4. trim repetition across outputs\n5. align CTAs with platform intent\n\n## Deliverables\n\nWhen asked for a campaign, return:\n- the core angle\n- platform-specific drafts\n- optional posting order\n- optional CTA variants\n- any missing inputs needed before publishing\n\n## Quality Gate\n\nBefore delivering:\n- each draft reads natively for its platform\n- hooks are strong and specific\n- no generic hype language\n- no duplicated copy across platforms unless requested\n- the CTA matches the content and audience\n"
-    },
-    {
-      "slug": "documentation-lookup-2",
-      "name": "documentation-lookup",
-      "dir": ".cursor/skills/documentation-lookup",
-      "path": ".cursor/skills/documentation-lookup/SKILL.md",
-      "desc": "Use up-to-date library and framework docs via Context7 MCP instead of training data. Activates for setup questions, API references, code examples, or when the user names a framework (e.g. React, Next.js, Prisma).",
-      "descZh": "",
-      "triggers": [],
-      "version": "",
-      "license": "MIT",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "cursor",
-        "gemini",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": true,
-        "network": true,
-        "bins": []
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/affaan-m/ECC.git",
-        "copy": "cp -r .cursor/skills/documentation-lookup ~/.claude/skills/documentation-lookup-2",
-        "raw": "https://raw.githubusercontent.com/affaan-m/ECC/b92f181b3b748d1abbc2afd94af6aa7d8c8fca29/.cursor/skills/documentation-lookup/SKILL.md",
-        "saveAs": "~/.claude/skills/documentation-lookup-2/SKILL.md",
-        "marketplace": "/plugin marketplace add affaan-m/ECC"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:89cc655f72a5e3a947e88b7bae419c068f9ea34101b3fc9e7129184432b507cd",
-      "bytes": 4900,
-      "wordCount": 679,
-      "repoLicense": "MIT",
-      "commit": "b92f181b3b748d1abbc2afd94af6aa7d8c8fca29",
-      "branch": "main",
-      "body": "---\nname: documentation-lookup\ndescription: Use up-to-date library and framework docs via Context7 MCP instead of training data. Activates for setup questions, API references, code examples, or when the user names a framework (e.g. React, Next.js, Prisma).\norigin: ECC\n---\n\n# Documentation Lookup (Context7)\n\nWhen the user asks about libraries, frameworks, or APIs, fetch current documentation via the Context7 MCP (tools `resolve-library-id` and `query-docs`) instead of relying on training data.\n\n## Core Concepts\n\n- **Context7**: MCP server that exposes live documentation; use it instead of training data for libraries and APIs.\n- **resolve-library-id**: Returns Context7-compatible library IDs (e.g. `/vercel/next.js`) from a library name and query.\n- **query-docs**: Fetches documentation and code snippets for a given library ID and question. Always call resolve-library-id first to get a valid library ID.\n\n## When to use\n\nActivate when the user:\n\n- Asks setup or configuration questions (e.g. \"How do I configure Next.js middleware?\")\n- Requests code that depends on a library (\"Write a Prisma query for...\")\n- Needs API or reference information (\"What are the Supabase auth methods?\")\n- Mentions specific frameworks or libraries (React, Vue, Svelte, Express, Tailwind, Prisma, Supabase, etc.)\n\nUse this skill whenever the request depends on accurate, up-to-date behavior of a library, framework, or API. Applies across harnesses that have the Context7 MCP configured (e.g. Claude Code, Cursor, Codex).\n\n## How it works\n\n### Step 1: Resolve the Library ID\n\nCall the **resolve-library-id** MCP tool with:\n\n- **libraryName**: The library or product name taken from the user's question (e.g. `Next.js`, `Prisma`, `Supabase`).\n- **query**: The user's full question. This improves relevance ranking of results.\n\nYou must obtain a Context7-compatible library ID (format `/org/project` or `/org/project/version`) before querying docs. Do not call query-docs without a valid library ID from this step.\n\n### Step 2: Select the Best Match\n\nFrom the resolution results, choose one result using:\n\n- **Name match**: Prefer exact or closest match to what the user asked for.\n- **Benchmark score**: Higher scores indicate better documentation quality (100 is highest).\n- **Source reputation**: Prefer High or Medium reputation when available.\n- **Version**: If the user specified a version (e.g. \"React 19\", \"Next.js 15\"), prefer a version-specific library ID if listed (e.g. `/org/project/v1.2.0`).\n\n### Step 3: Fetch the Documentation\n\nCall the **query-docs** MCP tool with:\n\n- **libraryId**: The selected Context7 library ID from Step 2 (e.g. `/vercel/next.js`).\n- **query**: The user's specific question or task. Be specific to get relevant snippets.\n\nLimit: do not call query-docs (or resolve-library-id) more than 3 times per question. If the answer is unclear after 3 calls, state the uncertainty and use the best information you have rather than guessing.\n\n### Step 4: Use the Documentation\n\n- Answer the user's question using the fetched, current information.\n- Include relevant code examples from the docs when helpful.\n- Cite the library or version when it matters (e.g. \"In Next.js 15...\").\n\n## Examples\n\n### Example: Next.js middleware\n\n1. Call **resolve-library-id** with `libraryName: \"Next.js\"`, `query: \"How do I set up Next.js middleware?\"`.\n2. From results, pick the best match (e.g. `/vercel/next.js`) by name and benchmark score.\n3. Call **query-docs** with `libraryId: \"/vercel/next.js\"`, `query: \"How do I set up Next.js middleware?\"`.\n4. Use the returned snippets and text to answer; include a minimal `middleware.ts` example from the docs if relevant.\n\n### Example: Prisma query\n\n1. Call **resolve-library-id** with `libraryName: \"Prisma\"`, `query: \"How do I query with relations?\"`.\n2. Select the official Prisma library ID (e.g. `/prisma/prisma`).\n3. Call **query-docs** with that `libraryId` and the query.\n4. Return the Prisma Client pattern (e.g. `include` or `select`) with a short code snippet from the docs.\n\n### Example: Supabase auth methods\n\n1. Call **resolve-library-id** with `libraryName: \"Supabase\"`, `query: \"What are the auth methods?\"`.\n2. Pick the Supabase docs library ID.\n3. Call **query-docs**; summarize the auth methods and show minimal examples from the fetched docs.\n\n## Best Practices\n\n- **Be specific**: Use the user's full question as the query where possible for better relevance.\n- **Version awareness**: When users mention versions, use version-specific library IDs from the resolve step when available.\n- **Prefer official sources**: When multiple matches exist, prefer official or primary packages over community forks.\n- **No sensitive data**: Redact API keys, passwords, tokens, and other secrets from any query sent to Context7. Treat the user's question as potentially containing secrets before passing it to resolve-library-id or query-docs.\n",
-      "bodyMd": "# Documentation Lookup (Context7)\n\nWhen the user asks about libraries, frameworks, or APIs, fetch current documentation via the Context7 MCP (tools `resolve-library-id` and `query-docs`) instead of relying on training data.\n\n## Core Concepts\n\n- **Context7**: MCP server that exposes live documentation; use it instead of training data for libraries and APIs.\n- **resolve-library-id**: Returns Context7-compatible library IDs (e.g. `/vercel/next.js`) from a library name and query.\n- **query-docs**: Fetches documentation and code snippets for a given library ID and question. Always call resolve-library-id first to get a valid library ID.\n\n## When to use\n\nActivate when the user:\n\n- Asks setup or configuration questions (e.g. \"How do I configure Next.js middleware?\")\n- Requests code that depends on a library (\"Write a Prisma query for...\")\n- Needs API or reference information (\"What are the Supabase auth methods?\")\n- Mentions specific frameworks or libraries (React, Vue, Svelte, Express, Tailwind, Prisma, Supabase, etc.)\n\nUse this skill whenever the request depends on accurate, up-to-date behavior of a library, framework, or API. Applies across harnesses that have the Context7 MCP configured (e.g. Claude Code, Cursor, Codex).\n\n## How it works\n\n### Step 1: Resolve the Library ID\n\nCall the **resolve-library-id** MCP tool with:\n\n- **libraryName**: The library or product name taken from the user's question (e.g. `Next.js`, `Prisma`, `Supabase`).\n- **query**: The user's full question. This improves relevance ranking of results.\n\nYou must obtain a Context7-compatible library ID (format `/org/project` or `/org/project/version`) before querying docs. Do not call query-docs without a valid library ID from this step.\n\n### Step 2: Select the Best Match\n\nFrom the resolution results, choose one result using:\n\n- **Name match**: Prefer exact or closest match to what the user asked for.\n- **Benchmark score**: Higher scores indicate better documentation quality (100 is highest).\n- **Source reputation**: Prefer High or Medium reputation when available.\n- **Version**: If the user specified a version (e.g. \"React 19\", \"Next.js 15\"), prefer a version-specific library ID if listed (e.g. `/org/project/v1.2.0`).\n\n### Step 3: Fetch the Documentation\n\nCall the **query-docs** MCP tool with:\n\n- **libraryId**: The selected Context7 library ID from Step 2 (e.g. `/vercel/next.js`).\n- **query**: The user's specific question or task. Be specific to get relevant snippets.\n\nLimit: do not call query-docs (or resolve-library-id) more than 3 times per question. If the answer is unclear after 3 calls, state the uncertainty and use the best information you have rather than guessing.\n\n### Step 4: Use the Documentation\n\n- Answer the user's question using the fetched, current information.\n- Include relevant code examples from the docs when helpful.\n- Cite the library or version when it matters (e.g. \"In Next.js 15...\").\n\n## Examples\n\n### Example: Next.js middleware\n\n1. Call **resolve-library-id** with `libraryName: \"Next.js\"`, `query: \"How do I set up Next.js middleware?\"`.\n2. From results, pick the best match (e.g. `/vercel/next.js`) by name and benchmark score.\n3. Call **query-docs** with `libraryId: \"/vercel/next.js\"`, `query: \"How do I set up Next.js middleware?\"`.\n4. Use the returned snippets and text to answer; include a minimal `middleware.ts` example from the docs if relevant.\n\n### Example: Prisma query\n\n1. Call **resolve-library-id** with `libraryName: \"Prisma\"`, `query: \"How do I query with relations?\"`.\n2. Select the official Prisma library ID (e.g. `/prisma/prisma`).\n3. Call **query-docs** with that `libraryId` and the query.\n4. Return the Prisma Client pattern (e.g. `include` or `select`) with a short code snippet from the docs.\n\n### Example: Supabase auth methods\n\n1. Call **resolve-library-id** with `libraryName: \"Supabase\"`, `query: \"What are the auth methods?\"`.\n2. Pick the Supabase docs library ID.\n3. Call **query-docs**; summarize the auth methods and show minimal examples from the fetched docs.\n\n## Best Practices\n\n- **Be specific**: Use the user's full question as the query where possible for better relevance.\n- **Version awareness**: When users mention versions, use version-specific library IDs from the resolve step when available.\n- **Prefer official sources**: When multiple matches exist, prefer official or primary packages over community forks.\n- **No sensitive data**: Redact API keys, passwords, tokens, and other secrets from any query sent to Context7. Treat the user's question as potentially containing secrets before passing it to resolve-library-id or query-docs.\n"
     }
   ]
 }

@@ -200,7 +200,55 @@ for (let i = 0; i < queue.length; i++) {
     }
   }
   const canonical = new Set(byHash.values());
-  let dupDropped = 0;
+
+  /* 近似去重（第二层）：一个 skill 常为不同宿主/发布通道各存一份 —— `.agents/` 与
+     `.cursor/`、`integrations/*-plugin/`、`.kimi/` 与 `.qwen/`，以及 `skills/x` 与
+     `public/.well-known/agent-skills/x` —— 正文只差几行 frontmatter 或宿主配置，
+     contentHash 不同，精确去重抓不到，页面就出现 `bun-runtime` 与 `bun-runtime-2`
+     两份几乎逐字相同的条目（koala73/worldmonitor 48 条里 17 条是这种）。
+     判据（同基础 slug 分组内，组内先按路径深浅排序，最浅者为「正主」）：
+       A. 家族式：组内**其余成员与最浅者**的正文行集合 Jaccard 全部 ≥ 0.70 → 只留最浅者。
+          专收 `integrations/*-plugin/skills/pause` 这类「一份逻辑 skill、N 个宿主各存一份」
+          （实测 0.73 ~ 0.87）。
+       B. 否则退化为两两比较：Jaccard ≥ 0.85 → 丢其中较深的那份。
+     刻意不把 A 的门槛继续下调：**语言版本必须保住**。`translations/de|ar|cs|bg/…` 与原文
+     实测只有 0.12 ~ 0.18，连「正文几乎全是代码、几乎没有散文」的希腊语版本也只有 0.72
+     —— 只要组里混入任意一门真翻译，A 条的条件就会失败并自动退回更保守的 B 条。 */
+  const NEAR_DUP_FAMILY = 0.7;
+  const NEAR_DUP_PAIR = 0.85;
+  const lineSet = (t) => new Set(String(t || '').split('\n').map((x) => x.trim()).filter((x) => x.length > 4));
+  const jaccard = (a, b) => {
+    let n = 0;
+    for (const x of a) if (b.has(x)) n++;
+    return n / (a.size + b.size - n || 1);
+  };
+  const byBase = new Map();
+  for (const f of canonical) {
+    const k = String(f.skill.slug || '').toLowerCase();
+    if (!byBase.has(k)) byBase.set(k, []);
+    byBase.get(k).push(f);
+  }
+  const nearDrop = new Set();
+  for (const arr of byBase.values()) {
+    if (arr.length < 2) continue;
+    const sorted = arr
+      .slice()
+      .sort((a, b) => depthOf(a.path) - depthOf(b.path) || a.path.length - b.path.length);
+    const sets = sorted.map((f) => lineSet(splitFrontmatter(f.text).body));
+    if (sets.slice(1).every((s) => jaccard(sets[0], s) >= NEAR_DUP_FAMILY)) {
+      for (let k = 1; k < sorted.length; k++) nearDrop.add(sorted[k]);
+      continue;
+    }
+    for (let i = 0; i < sorted.length; i++) {
+      for (let j = i + 1; j < sorted.length; j++) {
+        if (nearDrop.has(sorted[i]) || nearDrop.has(sorted[j])) continue;
+        if (jaccard(sets[i], sets[j]) < NEAR_DUP_PAIR) continue;
+        nearDrop.add(sorted[j]); // sorted 已按深浅升序，j 恒为更深的一份
+      }
+    }
+  }
+  for (const d of nearDrop) canonical.delete(d);
+  let dupDropped = nearDrop.size;
   const seenSlugs = new Set(); // 同仓库可能出现重名目录（如 .claude/skills/x 与 harness/x），URL 必须唯一
   for (const f of fetched) {
     if (!f.ok) {
@@ -243,7 +291,7 @@ for (let i = 0; i < queue.length; i++) {
   stats.parseFail += fail;
   if (dupDropped) {
     stats.dupDropped = (stats.dupDropped || 0) + dupDropped;
-    console.log(`按内容去重：丢弃 ${dupDropped} 份重复 SKILL.md（保留路径最浅的那份）`);
+    console.log(`去重：丢弃 ${dupDropped} 份重复 SKILL.md（其中 ${nearDrop.size} 份为多宿主近似副本，保留路径最浅的那份）`);
   }
 
   // 一个 skill 都没解析出来时，两种成因必须分开处理 —— 合在一起会把好仓库误删：

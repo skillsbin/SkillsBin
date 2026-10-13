@@ -11,7 +11,7 @@
       "dir": "plugins/accessibility-compliance/skills/screen-reader-testing",
       "path": "plugins/accessibility-compliance/skills/screen-reader-testing/SKILL.md",
       "desc": "Test web applications with screen readers including VoiceOver, NVDA, and JAWS. Use when validating screen reader compatibility, debugging accessibility issues, or ensuring assistive technology support.",
-      "descZh": "",
+      "descZh": "用屏幕阅读器（VoiceOver、NVDA、JAWS）测试 Web 应用：验证兼容性、排查无障碍问题。",
       "triggers": [
         "ensuring assist"
       ],
@@ -57,7 +57,7 @@
       "dir": "plugins/accessibility-compliance/skills/wcag-audit-patterns",
       "path": "plugins/accessibility-compliance/skills/wcag-audit-patterns/SKILL.md",
       "desc": "Conduct WCAG 2.2 accessibility audits with automated testing, manual verification, and remediation guidance. Use when auditing websites for accessibility, fixing WCAG violations, or implementing accessible design patterns.",
-      "descZh": "",
+      "descZh": "按 WCAG 2.2 做无障碍审计：自动检测加人工核验，并给出修复建议。",
       "triggers": [
         "fixing WCAG violations"
       ],
@@ -101,7 +101,7 @@
       "dir": "plugins/agent-teams/skills/multi-reviewer-patterns",
       "path": "plugins/agent-teams/skills/multi-reviewer-patterns/SKILL.md",
       "desc": "Coordinate parallel code reviews across multiple quality dimensions with finding deduplication, severity calibration, and consolidated reporting. Use this skill when organizing multi-reviewer code reviews, calibrating finding severity, or consolidating review results.",
-      "descZh": "",
+      "descZh": "多个评审维度并行代码审查：发现项去重、严重度校准与汇总报告。",
       "triggers": [
         "consolidating rev"
       ],
@@ -145,7 +145,7 @@
       "dir": "plugins/agent-teams/skills/parallel-debugging",
       "path": "plugins/agent-teams/skills/parallel-debugging/SKILL.md",
       "desc": "Debug complex issues using competing hypotheses with parallel investigation, evidence collection, and root cause arbitration. Use this skill when debugging bugs with multiple potential causes, performing root cause analysis, or organizing parallel investigation workflows.",
-      "descZh": "",
+      "descZh": "并行调试：用相互竞争的假设并行调查、收集证据并仲裁根因。",
       "triggers": [
         "organizi"
       ],
@@ -189,7 +189,7 @@
       "dir": "plugins/agent-teams/skills/parallel-feature-development",
       "path": "plugins/agent-teams/skills/parallel-feature-development/SKILL.md",
       "desc": "Coordinate parallel feature development with file ownership strategies, conflict avoidance rules, and integration patterns for multi-agent implementation. Use this skill when decomposing a large feature into independent work streams, when two or more agents need to implement different layers of the same system simultaneously, when establishing file ownership to prevent merge conflicts in a shared codebase, when designing interface contracts so parallel implementers can build against each other's APIs before they are ready, or when deciding whether to use vertical slices versus horizontal layers for a full-stack feature.",
-      "descZh": "",
+      "descZh": "并行开发多个功能：文件归属策略、冲突规避规则与多 agent 集成模式。",
       "triggers": [
         "when two",
         "more agents need to"
@@ -234,7 +234,7 @@
       "dir": "plugins/agent-teams/skills/task-coordination-strategies",
       "path": "plugins/agent-teams/skills/task-coordination-strategies/SKILL.md",
       "desc": "Decompose complex tasks, design dependency graphs, and coordinate multi-agent work with proper task descriptions and workload balancing. Use this skill when breaking down work for agent teams, managing task dependencies, or monitoring team progress.",
-      "descZh": "",
+      "descZh": "任务拆分与协调：设计依赖图、写出清晰任务描述并平衡多 agent 的负载。",
       "triggers": [
         "monitoring team progres"
       ],
@@ -278,7 +278,7 @@
       "dir": "plugins/agent-teams/skills/team-communication-protocols",
       "path": "plugins/agent-teams/skills/team-communication-protocols/SKILL.md",
       "desc": "Structured messaging protocols for agent team communication including message type selection, plan approval, shutdown procedures, and anti-patterns to avoid. Use this skill when establishing communication norms for a newly spawned team, when deciding whether to send a direct message or a broadcast, when a team-lead needs to review and approve an implementer's plan before work begins, when orchestrating a graceful team shutdown after all tasks are complete, or when debugging why teammates are not coordinating correctly at integration points.",
-      "descZh": "",
+      "descZh": "agent 团队通信协议：消息类型选择、计划审批、关停流程与要避免的反模式。",
       "triggers": [],
       "version": "1.0.2",
       "license": "MIT",
@@ -320,7 +320,7 @@
       "dir": "plugins/agent-teams/skills/team-composition-patterns",
       "path": "plugins/agent-teams/skills/team-composition-patterns/SKILL.md",
       "desc": "Design optimal agent team compositions with sizing heuristics, preset configurations, and agent type selection. Use this skill when deciding how many agents to spawn for a task, when choosing between a review team versus a feature team versus a debug team, when selecting the correct subagent_type for each role to ensure agents have the tools they need, when configuring display modes (tmux, iTerm2, in-process) for a CI or local environment, or when building a custom team composition for a non-standard workflow such as a migration or security audit.",
-      "descZh": "",
+      "descZh": "设计最优 agent 团队构成：规模启发式、预设配置与 agent 类型选择。",
       "triggers": [],
       "version": "1.0.2",
       "license": "MIT",
@@ -362,7 +362,7 @@
       "dir": "plugins/api-scaffolding/skills/fastapi-templates",
       "path": "plugins/api-scaffolding/skills/fastapi-templates/SKILL.md",
       "desc": "Create production-ready FastAPI projects with async patterns, dependency injection, and comprehensive error handling. Use when building new FastAPI applications or setting up backend API projects.",
-      "descZh": "",
+      "descZh": "生产级 FastAPI 项目模板：异步模式、依赖注入与完善的错误处理。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -406,7 +406,7 @@
       "dir": "plugins/avoid-ai-writing/skills/avoid-ai-writing",
       "path": "plugins/avoid-ai-writing/skills/avoid-ai-writing/SKILL.md",
       "desc": "Audit and rewrite prose so it stops reading as machine-generated. Use this skill when asked to remove AI-isms, clean up AI writing, edit a draft for AI tells, audit a README, changelog, release note, PR description, or blog post for machine-sounding prose, or make text sound less like AI. Supports a detect-only mode, a rewrite mode, and an edit-in-place mode, with optional voice and context profiles.",
-      "descZh": "",
+      "descZh": "审计并改写文稿，去掉「机器味」：清除 AI 腔、审 README 与变更日志，让文字读起来像人写的。",
       "triggers": [
         "asked to remove AI-isms",
         "clean up AI writing",
@@ -454,7 +454,7 @@
       "dir": "plugins/backend-development/skills/api-design-principles",
       "path": "plugins/backend-development/skills/api-design-principles/SKILL.md",
       "desc": "Master REST and GraphQL API design principles to build intuitive, scalable, and maintainable APIs that delight developers. Use when designing new APIs, reviewing API specifications, or establishing API design standards.",
-      "descZh": "",
+      "descZh": "REST 与 GraphQL API 设计原则：做出直观、可扩展、易维护的接口。",
       "triggers": [
         "designing new APIs"
       ],
@@ -498,7 +498,7 @@
       "dir": "plugins/backend-development/skills/architecture-patterns",
       "path": "plugins/backend-development/skills/architecture-patterns/SKILL.md",
       "desc": "Implement proven backend architecture patterns including Clean Architecture, Hexagonal Architecture, and Domain-Driven Design. Use this skill when designing clean architecture for a new microservice, when refactoring a monolith to use bounded contexts, when implementing hexagonal or onion architecture patterns, or when debugging dependency cycles between application layers.",
-      "descZh": "",
+      "descZh": "后端架构模式落地：整洁架构、六边形架构与领域驱动设计（DDD）。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -543,7 +543,7 @@
       "dir": "plugins/backend-development/skills/cqrs-implementation",
       "path": "plugins/backend-development/skills/cqrs-implementation/SKILL.md",
       "desc": "Implement Command Query Responsibility Segregation for scalable architectures. Use when separating read and write models, optimizing query performance, or building event-sourced systems.",
-      "descZh": "",
+      "descZh": "实现 CQRS（命令查询职责分离）：分离读写模型、优化查询性能，或构建事件溯源系统。",
       "triggers": [
         "building event-sourced"
       ],
@@ -587,7 +587,7 @@
       "dir": "plugins/backend-development/skills/event-store-design",
       "path": "plugins/backend-development/skills/event-store-design/SKILL.md",
       "desc": "Design and implement event stores for event-sourced systems. Use when building event sourcing infrastructure, choosing event store technologies, or implementing event persistence patterns.",
-      "descZh": "",
+      "descZh": "事件存储设计：为事件溯源系统选型、定义事件持久化模式并落地实现。",
       "triggers": [
         "implementing"
       ],
@@ -631,7 +631,7 @@
       "dir": "plugins/backend-development/skills/microservices-patterns",
       "path": "plugins/backend-development/skills/microservices-patterns/SKILL.md",
       "desc": "Design microservices architectures with service boundaries, event-driven communication, and resilience patterns. Use when building distributed systems, decomposing monoliths, or implementing microservices.",
-      "descZh": "",
+      "descZh": "微服务架构：服务边界划分、事件驱动通信与弹性模式，用于拆分单体或构建分布式系统。",
       "triggers": [
         "decomposing monoliths"
       ],
@@ -675,7 +675,7 @@
       "dir": "plugins/backend-development/skills/projection-patterns",
       "path": "plugins/backend-development/skills/projection-patterns/SKILL.md",
       "desc": "Build read models and projections from event streams. Use when implementing CQRS read sides, building materialized views, or optimizing query performance in event-sourced systems.",
-      "descZh": "",
+      "descZh": "从事件流构建读模型与投影：实现 CQRS 读侧、物化视图与查询优化。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -719,7 +719,7 @@
       "dir": "plugins/backend-development/skills/saga-orchestration",
       "path": "plugins/backend-development/skills/saga-orchestration/SKILL.md",
       "desc": "Implement saga patterns for distributed transactions and cross-aggregate workflows. Use this skill when implementing distributed transactions across microservices where 2PC is unavailable, designing compensating actions for failed order workflows that span inventory, payment, and shipping services, building event-driven saga coordinators for travel booking systems that must roll back hotel, flight, and car rental reservations atomically, or debugging stuck saga states in production where compensation steps never complete.",
-      "descZh": "",
+      "descZh": "Saga 模式：在无法用两阶段提交的微服务场景下实现分布式事务与跨聚合工作流。",
       "triggers": [
         "desig"
       ],
@@ -766,7 +766,7 @@
       "dir": "plugins/backend-development/skills/temporal-python-testing",
       "path": "plugins/backend-development/skills/temporal-python-testing/SKILL.md",
       "desc": "Test Temporal workflows with pytest, time-skipping, and mocking strategies. Covers unit testing, integration testing, replay testing, and local development setup. Use when implementing Temporal workflow tests or debugging test failures.",
-      "descZh": "",
+      "descZh": "测试 Temporal 工作流：pytest、时间跳跃与 mock 策略，覆盖单元、集成与重放测试。",
       "triggers": [
         "debugging test failures"
       ],
@@ -813,7 +813,7 @@
       "dir": "plugins/backend-development/skills/workflow-orchestration-patterns",
       "path": "plugins/backend-development/skills/workflow-orchestration-patterns/SKILL.md",
       "desc": "Design durable workflows with Temporal for distributed systems. Covers workflow vs activity separation, saga patterns, state management, and determinism constraints. Use when building long-running processes, distributed transactions, or microservice orchestration.",
-      "descZh": "",
+      "descZh": "用 Temporal 设计持久化工作流：工作流与活动分离、saga 模式、状态管理与确定性约束。",
       "triggers": [
         "distributed transactions"
       ],
@@ -857,7 +857,7 @@
       "dir": "plugins/before-you-build/skills/before-you-build",
       "path": "plugins/before-you-build/skills/before-you-build/SKILL.md",
       "desc": "Pre-build product and feature risk review for founders, product managers, and AI-assisted builders. Use this skill when the user is about to build a landing page, MVP, SaaS product, internal tool, agent workflow, or major feature and needs to check demand, positioning, monetization, retention, trust, distribution, and adoption risk before implementation starts.",
-      "descZh": "",
+      "descZh": "动手之前的产品与功能风险评审：面向创始人、产品经理与 AI 辅助开发者，在做落地页、MVP、SaaS 之前先把风险想清楚。",
       "triggers": [
         "MVP",
         "SaaS product",
@@ -904,7 +904,7 @@
       "dir": "plugins/block-no-verify/skills/block-no-verify-hook",
       "path": "plugins/block-no-verify/skills/block-no-verify-hook/SKILL.md",
       "desc": "Configure a PreToolUse hook to prevent AI agents from skipping git pre-commit hooks with --no-verify and other bypass flags. Use when setting up Claude Code projects that enforce commit quality gates.",
-      "descZh": "",
+      "descZh": "配置 PreToolUse 钩子，阻止 AI agent 用 --no-verify 等旗标跳过 git 提交前钩子。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -951,7 +951,7 @@
       "dir": "plugins/blockchain-web3/skills/defi-protocol-templates",
       "path": "plugins/blockchain-web3/skills/defi-protocol-templates/SKILL.md",
       "desc": "Implement DeFi protocols with production-ready templates for staking, AMMs, governance, and flash loans. Use when building decentralized finance applications or smart contract protocols.",
-      "descZh": "",
+      "descZh": "DeFi 协议模板：质押、AMM、治理与闪电贷，用于构建去中心化金融应用与合约。",
       "triggers": [
         "smart contract protocols"
       ],
@@ -995,7 +995,7 @@
       "dir": "plugins/blockchain-web3/skills/nft-standards",
       "path": "plugins/blockchain-web3/skills/nft-standards/SKILL.md",
       "desc": "Implement NFT standards (ERC-721, ERC-1155) with proper metadata handling, minting strategies, and marketplace integration. Use when creating NFT contracts, building NFT marketplaces, or implementing digital asset systems.",
-      "descZh": "",
+      "descZh": "NFT 标准实现（ERC-721、ERC-1155）：元数据处理、铸造策略与市场集成。",
       "triggers": [
         "creating NFT contracts"
       ],
@@ -1039,7 +1039,7 @@
       "dir": "plugins/blockchain-web3/skills/solidity-security",
       "path": "plugins/blockchain-web3/skills/solidity-security/SKILL.md",
       "desc": "Master smart contract security best practices to prevent common vulnerabilities and implement secure Solidity patterns. Use when writing smart contracts, auditing existing contracts, or implementing security measures for blockchain applications.",
-      "descZh": "",
+      "descZh": "智能合约安全最佳实践：规避常见漏洞，写出安全的 Solidity 模式。",
       "triggers": [
         "writing smart contracts"
       ],
@@ -1083,7 +1083,7 @@
       "dir": "plugins/blockchain-web3/skills/web3-testing",
       "path": "plugins/blockchain-web3/skills/web3-testing/SKILL.md",
       "desc": "Test smart contracts comprehensively using Hardhat and Foundry with unit tests, integration tests, and mainnet forking. Use when testing Solidity contracts, setting up blockchain test suites, or validating DeFi protocols.",
-      "descZh": "",
+      "descZh": "用 Hardhat 与 Foundry 全面测试智能合约：单元测试、集成测试与主网分叉测试。",
       "triggers": [
         "validating DeFi protocol"
       ],
@@ -1129,7 +1129,7 @@
       "dir": "plugins/brand-landingpage/skills/brand-landingpage",
       "path": "plugins/brand-landingpage/skills/brand-landingpage/SKILL.md",
       "desc": "Brand-first landing page designer — runs a brand-identity interview (colors, typography, shape language), then generates and iterates on a polished landing page via Stitch with deployment-ready HTML. Use when the user asks to create, design, or build a landing page, homepage, or marketing page and has no established visual direction. Skip when they have a design mockup, need a dashboard or app UI, are working at component level, building a multi-page app, or restyling with known design tokens — use frontend-design instead.",
-      "descZh": "",
+      "descZh": "品牌优先的落地页设计：先做品牌识别访谈（配色、字体、形状语言），再用 Stitch 生成并迭代落地页。",
       "triggers": [
         "the user asks to create",
         "design",
@@ -1179,7 +1179,7 @@
       "dir": "plugins/business-analytics/skills/data-storytelling",
       "path": "plugins/business-analytics/skills/data-storytelling/SKILL.md",
       "desc": "Transform data into compelling narratives using visualization, context, and persuasive structure. Use when presenting analytics to stakeholders, creating data reports, or building executive presentations.",
-      "descZh": "",
+      "descZh": "把数据讲成故事：用可视化、背景与有说服力的结构，面向干系人做汇报或数据报告。",
       "triggers": [
         "creating data reports"
       ],
@@ -1225,7 +1225,7 @@
       "dir": "plugins/business-analytics/skills/kpi-dashboard-design",
       "path": "plugins/business-analytics/skills/kpi-dashboard-design/SKILL.md",
       "desc": "Design effective KPI dashboards with metrics selection, visualization best practices, and real-time monitoring patterns. Use this skill when building an executive SaaS metrics dashboard tracking MRR, churn, and LTV/CAC ratios; designing an operations center with live service health and request throughput; creating a cohort retention analysis view for a product team; or debugging a dashboard where metrics contradict each other due to inconsistent calculation methodology.",
-      "descZh": "",
+      "descZh": "设计有效的 KPI 看板：指标选择、可视化最佳实践与实时监控模式。",
       "triggers": [
         "churn",
         "and LTV/CAC ratios",
@@ -1273,7 +1273,7 @@
       "dir": "plugins/cicd-automation/skills/deployment-pipeline-design",
       "path": "plugins/cicd-automation/skills/deployment-pipeline-design/SKILL.md",
       "desc": "Design multi-stage CI/CD pipelines with approval gates, security checks, and deployment orchestration. Use this skill when designing zero-downtime deployment pipelines, implementing canary rollout strategies, setting up multi-environment promotion workflows, or debugging failed deployment gates in CI/CD.",
-      "descZh": "",
+      "descZh": "多阶段 CI/CD 流水线设计：审批门、安全校验与部署编排，实现零停机发布与灰度。",
       "triggers": [
         "sett"
       ],
@@ -1321,7 +1321,7 @@
       "dir": "plugins/cicd-automation/skills/github-actions-templates",
       "path": "plugins/cicd-automation/skills/github-actions-templates/SKILL.md",
       "desc": "Create production-ready GitHub Actions workflows for automated testing, building, and deploying applications. Use when setting up CI/CD with GitHub Actions, automating development workflows, or creating reusable workflow templates.",
-      "descZh": "",
+      "descZh": "生产级 GitHub Actions 工作流：自动测试、构建与部署。",
       "triggers": [
         "creating reusab"
       ],
@@ -1373,7 +1373,7 @@
       "dir": "plugins/cicd-automation/skills/gitlab-ci-patterns",
       "path": "plugins/cicd-automation/skills/gitlab-ci-patterns/SKILL.md",
       "desc": "Build GitLab CI/CD pipelines with multi-stage workflows, caching, and distributed runners for scalable automation. Use when implementing GitLab CI/CD, optimizing pipeline performance, or setting up automated testing and deployment.",
-      "descZh": "",
+      "descZh": "GitLab CI/CD 流水线：多阶段工作流、缓存与分布式 runner。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1422,7 +1422,7 @@
       "dir": "plugins/cicd-automation/skills/secrets-management",
       "path": "plugins/cicd-automation/skills/secrets-management/SKILL.md",
       "desc": "Implement secure secrets management for CI/CD pipelines using Vault, AWS Secrets Manager, or native platform solutions. Use when handling sensitive credentials, rotating secrets, or securing CI/CD environments.",
-      "descZh": "",
+      "descZh": "CI/CD 密钥管理：用 Vault、AWS Secrets Manager 或平台原生方案安全存放与轮换凭据。",
       "triggers": [
         "rotating secrets"
       ],
@@ -1474,7 +1474,7 @@
       "dir": "plugins/cloud-infrastructure/skills/cost-optimization",
       "path": "plugins/cloud-infrastructure/skills/cost-optimization/SKILL.md",
       "desc": "Optimize cloud costs across AWS, Azure, GCP, and OCI through resource rightsizing, tagging strategies, reserved instances, and spending analysis. Use when reducing cloud expenses, analyzing infrastructure costs, or implementing cost governance policies.",
-      "descZh": "",
+      "descZh": "云成本优化（AWS、Azure、GCP、OCI）：资源规格调整、标签策略、预留实例与开销分析。",
       "triggers": [
         "reducing cloud expenses"
       ],
@@ -1521,7 +1521,7 @@
       "dir": "plugins/cloud-infrastructure/skills/hybrid-cloud-networking",
       "path": "plugins/cloud-infrastructure/skills/hybrid-cloud-networking/SKILL.md",
       "desc": "Configure secure, high-performance connectivity between on-premises infrastructure and cloud platforms using VPN and dedicated connections. Use when building hybrid cloud architectures, connecting data centers to cloud, or implementing secure cross-premises networking.",
-      "descZh": "",
+      "descZh": "混合云网络：用 VPN 与专线打通本地机房与云，做安全高性能互联。",
       "triggers": [
         "implementing sec"
       ],
@@ -1568,7 +1568,7 @@
       "dir": "plugins/cloud-infrastructure/skills/istio-traffic-management",
       "path": "plugins/cloud-infrastructure/skills/istio-traffic-management/SKILL.md",
       "desc": "Configure Istio traffic management including routing, load balancing, circuit breakers, and canary deployments. Use when implementing service mesh traffic policies, progressive delivery, or resilience patterns.",
-      "descZh": "",
+      "descZh": "Istio 流量管理：路由、负载均衡、熔断与金丝雀发布。",
       "triggers": [
         "progressive delivery",
         "resilience patterns"
@@ -1613,7 +1613,7 @@
       "dir": "plugins/cloud-infrastructure/skills/linkerd-patterns",
       "path": "plugins/cloud-infrastructure/skills/linkerd-patterns/SKILL.md",
       "desc": "Implement Linkerd service mesh patterns for lightweight, security-focused service mesh deployments. Use when setting up Linkerd, configuring traffic policies, or implementing zero-trust networking with minimal overhead.",
-      "descZh": "",
+      "descZh": "Linkerd 服务网格：轻量、安全优先的网格部署、流量策略与零信任。",
       "triggers": [
         "setting up Linkerd"
       ],
@@ -1660,7 +1660,7 @@
       "dir": "plugins/cloud-infrastructure/skills/mtls-configuration",
       "path": "plugins/cloud-infrastructure/skills/mtls-configuration/SKILL.md",
       "desc": "Configure mutual TLS (mTLS) for zero-trust service-to-service communication. Use when implementing zero-trust networking, certificate management, or securing internal service communication.",
-      "descZh": "",
+      "descZh": "配置双向 TLS（mTLS）：为零信任的服务间通信做证书管理与内部鉴权。",
       "triggers": [
         "certificate management"
       ],
@@ -1704,7 +1704,7 @@
       "dir": "plugins/cloud-infrastructure/skills/multi-cloud-architecture",
       "path": "plugins/cloud-infrastructure/skills/multi-cloud-architecture/SKILL.md",
       "desc": "Design multi-cloud architectures using a decision framework to select and integrate services across AWS, Azure, GCP, and OCI. Use when building multi-cloud systems, avoiding vendor lock-in, or leveraging best-of-breed services from multiple providers.",
-      "descZh": "",
+      "descZh": "多云架构设计：用决策框架在 AWS、Azure、GCP、OCI 间选型与集成，避免厂商锁定。",
       "triggers": [
         "avoiding vendor lock-in"
       ],
@@ -1753,7 +1753,7 @@
       "dir": "plugins/cloud-infrastructure/skills/service-mesh-observability",
       "path": "plugins/cloud-infrastructure/skills/service-mesh-observability/SKILL.md",
       "desc": "Implement comprehensive observability for service meshes including distributed tracing, metrics, and visualization. Use when setting up mesh monitoring, debugging latency issues, or implementing SLOs for service communication.",
-      "descZh": "",
+      "descZh": "服务网格可观测性：分布式追踪、指标与可视化，用于排查延迟与故障。",
       "triggers": [
         "debugging latency issues"
       ],
@@ -1797,7 +1797,7 @@
       "dir": "plugins/cloud-infrastructure/skills/terraform-module-library",
       "path": "plugins/cloud-infrastructure/skills/terraform-module-library/SKILL.md",
       "desc": "Build reusable Terraform modules for AWS, Azure, GCP, and OCI infrastructure following infrastructure-as-code best practices. Use when creating infrastructure modules, standardizing cloud provisioning, or implementing reusable IaC components.",
-      "descZh": "",
+      "descZh": "可复用 Terraform 模块库：按 IaC 最佳实践覆盖 AWS、Azure、GCP、OCI，统一云上基建。",
       "triggers": [
         "implementing reusabl"
       ],
@@ -1845,7 +1845,7 @@
       "dir": "plugins/conductor/skills/context-driven-development",
       "path": "plugins/conductor/skills/context-driven-development/SKILL.md",
       "desc": "Creates and maintains project context artifacts (product.md, tech-stack.md, workflow.md, tracks.md) in a `conductor/` directory. Scaffolds new projects from scratch, extracts context from existing codebases, validates artifact consistency before implementation, and synchronizes documents as the project evolves. Use when setting up a project, creating or updating product docs, managing a tech stack file, defining development workflows, tracking work units, onboarding to an existing codebase, or running project scaffolding.",
-      "descZh": "",
+      "descZh": "维护项目上下文产物（product.md、tech-stack.md、workflow.md、tracks.md）：在 conductor/ 目录下从零脚手架新项目或抽取既有上下文。",
       "triggers": [
         "setting up a project",
         "creating",
@@ -1895,7 +1895,7 @@
       "dir": "plugins/conductor/skills/track-management",
       "path": "plugins/conductor/skills/track-management/SKILL.md",
       "desc": "Use this skill when creating, managing, or working with Conductor tracks - the logical work units for features, bugs, and refactors. Applies to spec.md, plan.md, and track lifecycle operations.",
-      "descZh": "",
+      "descZh": "管理 Conductor 的 track——功能、缺陷与重构的逻辑工作单元，涉及 spec.md、plan.md 与生命周期操作。",
       "triggers": [
         "creating",
         "managing"
@@ -1940,7 +1940,7 @@
       "dir": "plugins/conductor/skills/workflow-patterns",
       "path": "plugins/conductor/skills/workflow-patterns/SKILL.md",
       "desc": "Use this skill when implementing tasks according to Conductor's TDD workflow, handling phase checkpoints, managing git commits for tasks, or understanding the verification protocol.",
-      "descZh": "",
+      "descZh": "按 Conductor 的 TDD 工作流实施任务：阶段检查点、逐任务 git 提交与验证协议。",
       "triggers": [
         "mana"
       ],
@@ -1986,7 +1986,7 @@
       "dir": "plugins/data-engineering/skills/airflow-dag-patterns",
       "path": "plugins/data-engineering/skills/airflow-dag-patterns/SKILL.md",
       "desc": "Build production Apache Airflow DAGs with best practices for operators, sensors, testing, and deployment. Use when creating data pipelines, orchestrating workflows, or scheduling batch jobs.",
-      "descZh": "",
+      "descZh": "生产级 Airflow DAG：operator、sensor、测试与部署的最佳实践，用于数据管道与批处理调度。",
       "triggers": [
         "creating data pipelines",
         "orchestrating workflows",
@@ -2034,7 +2034,7 @@
       "dir": "plugins/data-engineering/skills/data-quality-frameworks",
       "path": "plugins/data-engineering/skills/data-quality-frameworks/SKILL.md",
       "desc": "Implement data quality validation with Great Expectations, dbt tests, and data contracts. Use when building data quality pipelines, implementing validation rules, or establishing data contracts.",
-      "descZh": "",
+      "descZh": "数据质量校验体系：用 Great Expectations、dbt tests 与数据契约建立验证规则。",
       "triggers": [
         "establishing data contr"
       ],
@@ -2081,7 +2081,7 @@
       "dir": "plugins/data-engineering/skills/dbt-transformation-patterns",
       "path": "plugins/data-engineering/skills/dbt-transformation-patterns/SKILL.md",
       "desc": "Master dbt (data build tool) for analytics engineering with model organization, testing, documentation, and incremental strategies. Use when building data transformations, creating data models, or implementing analytics engineering best practices.",
-      "descZh": "",
+      "descZh": "dbt 数据分析工程：模型组织、测试、文档与增量策略。",
       "triggers": [
         "creating data models"
       ],
@@ -2127,7 +2127,7 @@
       "dir": "plugins/data-engineering/skills/spark-optimization",
       "path": "plugins/data-engineering/skills/spark-optimization/SKILL.md",
       "desc": "Optimize Apache Spark jobs with partitioning, caching, shuffle optimization, and memory tuning. Use when improving Spark performance, debugging slow jobs, or scaling data processing pipelines.",
-      "descZh": "",
+      "descZh": "Spark 作业优化：分区、缓存、shuffle 优化与内存调优。",
       "triggers": [
         "debugging slow jobs"
       ],
@@ -2173,7 +2173,7 @@
       "dir": "plugins/database-design/skills/postgresql-table-design",
       "path": "plugins/database-design/skills/postgresql-table-design/SKILL.md",
       "desc": "Use this skill when designing or reviewing a PostgreSQL-specific schema. Covers best-practices, data types, indexing, constraints, performance patterns, and advanced features",
-      "descZh": "",
+      "descZh": "PostgreSQL 表结构设计：数据类型、索引、约束、性能模式与高级特性。",
       "triggers": [
         "designing"
       ],
@@ -2217,7 +2217,7 @@
       "dir": "plugins/developer-essentials/skills/auth-implementation-patterns",
       "path": "plugins/developer-essentials/skills/auth-implementation-patterns/SKILL.md",
       "desc": "Master authentication and authorization patterns including JWT, OAuth2, session management, and RBAC to build secure, scalable access control systems. Use when implementing auth systems, securing APIs, or debugging security issues.",
-      "descZh": "",
+      "descZh": "认证与授权模式：JWT、OAuth2、会话管理与 RBAC，构建安全可扩展的访问控制。",
       "triggers": [
         "securing APIs"
       ],
@@ -2261,7 +2261,7 @@
       "dir": "plugins/developer-essentials/skills/bazel-build-optimization",
       "path": "plugins/developer-essentials/skills/bazel-build-optimization/SKILL.md",
       "desc": "Optimize Bazel builds for large-scale monorepos. Use when configuring Bazel, implementing remote execution, or optimizing build performance for enterprise codebases.",
-      "descZh": "",
+      "descZh": "Bazel 构建优化：面向大型 monorepo，配置远程执行与构建性能调优。",
       "triggers": [
         "configuring Bazel"
       ],

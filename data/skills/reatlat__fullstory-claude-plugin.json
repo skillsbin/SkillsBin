@@ -11,7 +11,7 @@
       "dir": "skills/a11y-analyzer",
       "path": "skills/a11y-analyzer/SKILL.md",
       "desc": "Accessibility analysis from session data — keyboard-only navigation patterns, focus order issues, screen reader compatibility, and accessibility regressions. Use when auditing a11y compliance, investigating accessibility bugs, or validating inclusive design.",
-      "descZh": "",
+      "descZh": "从真实用户会话分析无障碍问题：键盘导航路径、焦点陷阱、缺失标签等。",
       "triggers": [
         "auditing a11y compliance"
       ],
@@ -54,7 +54,7 @@
       "dir": "skills/annotation-ops",
       "path": "skills/annotation-ops/SKILL.md",
       "desc": "Create and manage Fullstory timeline annotations — deploy markers, experiment start/end, incident windows, and release notes. Use when the user wants to mark a deploy, experiment, incident, or any notable event on the Fullstory timeline.",
-      "descZh": "",
+      "descZh": "在 Fullstory 时间线上创建与管理标注，把发版、实验与事故对齐到会话时间轴。",
       "triggers": [
         "experiment",
         "incident"
@@ -100,7 +100,7 @@
       "dir": "skills/anomaly-detector",
       "path": "skills/anomaly-detector/SKILL.md",
       "desc": "Proactive anomaly detection — scan metrics for statistical outliers, sudden changes, and unexpected patterns. Use when the user wants to know if something unusual happened, when a metric changed unexpectedly, or for automated health monitoring.",
-      "descZh": "",
+      "descZh": "扫描产品数据中的异常：突增、骤降与失守的指标。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -141,7 +141,7 @@
       "dir": "skills/api-monitor",
       "path": "skills/api-monitor/SKILL.md",
       "desc": "Monitor API call patterns from session data — endpoint latency, error rates, popular endpoints, and API-driven UX issues. Use when investigating backend performance impact on UX, API errors affecting users, or endpoint usage patterns.",
-      "descZh": "",
+      "descZh": "监控影响用户体验的接口调用：哪些端点慢、哪些在报错，以及故障如何传导。",
       "triggers": [
         "endpoint us"
       ],
@@ -186,7 +186,7 @@
       "dir": "skills/benchmark-analyzer",
       "path": "skills/benchmark-analyzer/SKILL.md",
       "desc": "Establish performance baselines and benchmarks — compare current metrics to historical averages, set targets, and track progress over time. Use when setting KPIs, establishing baselines, or measuring against goals.",
-      "descZh": "",
+      "descZh": "建立基线、设定目标并跟踪进展，把原始指标变成可对比的基准。",
       "triggers": [
         "setting KPIs",
         "establishing baselines",
@@ -231,7 +231,7 @@
       "dir": "skills/campaign-tracker",
       "path": "skills/campaign-tracker/SKILL.md",
       "desc": "Track marketing campaign performance — UTM-tagged traffic, landing page conversion, campaign cohort behavior, and ROI signals. Use when analyzing campaign performance, measuring landing page effectiveness, or comparing marketing channels.",
-      "descZh": "",
+      "descZh": "端到端跟踪营销活动：从 UTM 点击到转化，并做分层行为分析。",
       "triggers": [
         "comparing marketi"
       ],
@@ -276,7 +276,7 @@
       "dir": "skills/changelog-detective",
       "path": "skills/changelog-detective/SKILL.md",
       "desc": "Detect what changed in the product by comparing before and after a deploy or date — find new behaviors, new errors, changed user flows, and unexpected side effects that weren't in the release notes. Use after a deploy or when the user suspects something changed but doesn't know what.",
-      "descZh": "",
+      "descZh": "发版后到底改了什么——不看发布说明，只看会话数据揭示的实情。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -319,7 +319,7 @@
       "dir": "skills/cohort-compass",
       "path": "skills/cohort-compass/SKILL.md",
       "desc": "Advanced cohort management — build, compare, and track user cohorts over time. Use when working with persistent user groups (enterprise vs free, new vs returning, by country or plan) across multiple analyses.",
-      "descZh": "",
+      "descZh": "构建、管理并对比用户分群，让多次分析的分段口径保持一致。",
       "triggers": [
         "new vs returning",
         "by country"
@@ -365,7 +365,7 @@
       "dir": "skills/comparisons",
       "path": "skills/comparisons/SKILL.md",
       "desc": "How to structure A vs B comparisons in Fullstory — when to use dimensionality (event/session properties) vs separate segments (user-level properties), and why the distinction matters for correctness.",
-      "descZh": "",
+      "descZh": "用户要求对比 A 与 B 时，先判断对比维度属于哪一类，再选对应机制。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -408,7 +408,7 @@
       "dir": "skills/customer-360",
       "path": "skills/customer-360/SKILL.md",
       "desc": "Full 360-degree view of a specific customer — sessions, purchases, errors, support interactions, engagement history. Use when support needs context on a customer, sales wants to understand a prospect's behavior, or you need to investigate an escalated issue.",
-      "descZh": "",
+      "descZh": "单个客户的完整视图：全部会话、关键动作、受挫事件、购买与参与度。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -449,7 +449,7 @@
       "dir": "skills/dashboard-builder",
       "path": "skills/dashboard-builder/SKILL.md",
       "desc": "Build and manage recurring dashboard views of key metrics — set up daily/weekly monitoring with saved metrics and segments. Use when the user wants to create a recurring dashboard, set up KPI monitoring, or establish a baseline.",
-      "descZh": "",
+      "descZh": "搭建周期性指标看板：定义关键指标、保存复用并生成日报或周报。",
       "triggers": [
         "set up KPI monitoring",
         "establish a base"
@@ -495,7 +495,7 @@
       "dir": "skills/deploy-radar",
       "path": "skills/deploy-radar/SKILL.md",
       "desc": "Post-deploy validation — check errors, conversion, and frustrations before and after a deploy timestamp. Use when the user deploys code and wants to know if anything broke.",
-      "descZh": "",
+      "descZh": "发版后健康检查：对比部署前后的关键指标，捕捉回归、新错误与异常。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -536,7 +536,7 @@
       "dir": "skills/error-forensics",
       "path": "skills/error-forensics/SKILL.md",
       "desc": "Investigate JavaScript errors, console errors, network failures, and crashes in production. Use when debugging user-reported issues, tracking error frequency, finding sessions with specific errors, or determining whether a bug is widespread or isolated.",
-      "descZh": "",
+      "descZh": "定位生产环境故障：JS 错误、网络失败与控制台异常，并追到根因。",
       "triggers": [
         "tracking error frequency"
       ],
@@ -579,7 +579,7 @@
       "dir": "skills/experiment-analyzer",
       "path": "skills/experiment-analyzer/SKILL.md",
       "desc": "A/B test and experiment analysis — measure statistical impact, segment breakdowns, and before/after comparisons. Use when the user is running an experiment, wants to know if a variant won, or needs to measure the impact of a change.",
-      "descZh": "",
+      "descZh": "分析 A/B 实验：度量影响、检验统计有效性并按分群拆解结果。",
       "triggers": [
         "needs to measure the"
       ],
@@ -622,7 +622,7 @@
       "dir": "skills/feature-adoption",
       "path": "skills/feature-adoption/SKILL.md",
       "desc": "Track feature adoption — who's using the new feature, how deeply, are they sticking with it, and what's blocking adoption. Use when launching a new feature, measuring feature engagement, or understanding feature usage patterns.",
-      "descZh": "",
+      "descZh": "跟踪新功能的采用情况：谁在用、用得多深、是否回流，以及卡在哪里。",
       "triggers": [
         "launching a new feature"
       ],
@@ -665,7 +665,7 @@
       "dir": "skills/form-analyzer",
       "path": "skills/form-analyzer/SKILL.md",
       "desc": "Form field-level analysis — abandonment by field, validation errors, time-to-complete, and which fields cause users to leave. Use when investigating form performance, signup drop-off, or checkout form friction.",
-      "descZh": "",
+      "descZh": "逐字段的表单分析：哪个字段导致放弃、校验错误集中在哪里、每个字段耗时多久。",
       "triggers": [
         "signup drop-off",
         "checkout form friction"
@@ -709,7 +709,7 @@
       "dir": "skills/frustration-hunter",
       "path": "skills/frustration-hunter/SKILL.md",
       "desc": "Finds and ranks user frustration signals — rage clicks, dead clicks, form abandonment, error spikes. Use when asking \"what's frustrating users\", \"where are users struggling\", or \"what's the biggest UX problem right now\". Uses Fullstory's opportunity detection, then drills into sessions for root cause.",
-      "descZh": "",
+      "descZh": "找出最让用户受挫的问题，按影响排序，并以真实会话证据支撑。",
       "triggers": [
         "what's the biggest UX"
       ],
@@ -752,7 +752,7 @@
       "dir": "skills/funnel-doctor",
       "path": "skills/funnel-doctor/SKILL.md",
       "desc": "Conversion funnel analysis — find where users drop off, quantify the loss, and diagnose why. Use when asking about conversion rates, funnel abandonment, checkout completion, signup flow performance, or \"where are we losing users.\"",
-      "descZh": "",
+      "descZh": "诊断转化漏斗：找出最漏的那一步、量化损失，并给出能解释它的会话记录。",
       "triggers": [
         "funnel abandonment",
         "checkout completion",
@@ -797,7 +797,7 @@
       "dir": "skills/general-analysis",
       "path": "skills/general-analysis/SKILL.md",
       "desc": "Fullstory analytics workflow. Use when answering a question that requires measuring user behavior — counts, rates, trends, breakdowns, or cohort comparisons. Builds segments and metrics, computes results, then investigates sessions to explain what the numbers mean.",
-      "descZh": "",
+      "descZh": "通用分析：先吃透三个核心概念，再决定用哪些工具。",
       "triggers": [
         "rates",
         "trends",
@@ -844,7 +844,7 @@
       "dir": "skills/heatmap-generator",
       "path": "skills/heatmap-generator/SKILL.md",
       "desc": "Generate click and interaction heatmaps from session data — visualize where users click, tap, and hover on any page. Use when asking \"what do users click on most\", \"are users clicking non-clickable elements\", or \"where should we place the CTA\".",
-      "descZh": "",
+      "descZh": "用真实会话数据生成交互热力图：点击密度、点击区域与暴怒点击热点。",
       "triggers": [
         "whe"
       ],
@@ -889,7 +889,7 @@
       "dir": "skills/incident-responder",
       "path": "skills/incident-responder/SKILL.md",
       "desc": "Structured incident response workflow — detect, investigate, communicate, and resolve using session data as evidence. Use when an incident is declared, a production issue is reported, or the on-call engineer needs session evidence.",
-      "descZh": "",
+      "descZh": "用 Fullstory 会话数据做结构化事故响应：判定影响范围、找到受影响用户并推进处理。",
       "triggers": [
         "an incident is declared"
       ],
@@ -932,7 +932,7 @@
       "dir": "skills/jira-bug-reporter",
       "path": "skills/jira-bug-reporter/SKILL.md",
       "desc": "Create detailed bug reports from session evidence — auto-populate Jira tickets with session URLs, error messages, device info, and reproduction steps. Use when the user wants to file a bug from a Fullstory session.",
-      "descZh": "",
+      "descZh": "把会话证据转成详尽的 bug 报告，自动带上会话链接、报错信息与设备信息。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -975,7 +975,7 @@
       "dir": "skills/journey-builder",
       "path": "skills/journey-builder/SKILL.md",
       "desc": "Build, compute, and update Fullstory Journey objects from natural language — visualize common user paths, find drop-off points, and compare journey variants. Use when asking about user flows, path analysis, journey maps, or \"what paths do users take.\"",
-      "descZh": "",
+      "descZh": "用自然语言构建 Fullstory Journey，省去手工逐步配置；Journey 展示最常见路径。",
       "triggers": [
         "asking about user flows",
         "path analysis",
@@ -1021,7 +1021,7 @@
       "dir": "skills/lifecycle-analyzer",
       "path": "skills/lifecycle-analyzer/SKILL.md",
       "desc": "Analyze the user lifecycle — new, active, at-risk, and churned users. Use when understanding user progression, identifying at-risk users, or measuring lifecycle conversion rates.",
-      "descZh": "",
+      "descZh": "把用户映射到生命周期各阶段（新客、活跃、流失风险、已流失），并理解阶段间的迁移原因。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1062,7 +1062,7 @@
       "dir": "skills/metric-auditor",
       "path": "skills/metric-auditor/SKILL.md",
       "desc": "Audit existing metrics and segments for staleness, duplicates, bad configuration, and naming issues. Use when the user wants to clean up their Fullstory account, find redundant objects, or understand what already exists.",
-      "descZh": "",
+      "descZh": "审计 Fullstory 账号：找重复指标、没人用的陈旧分群与配置错误的对象。",
       "triggers": [
         "find redundant objects",
         "understand"
@@ -1106,7 +1106,7 @@
       "dir": "skills/mobile-analyzer",
       "path": "skills/mobile-analyzer/SKILL.md",
       "desc": "Mobile-specific UX analysis — touch interactions, viewport issues, scroll behavior, mobile vs desktop patterns, and responsive design validation. Use when investigating mobile experience, responsive design bugs, or mobile conversion rates.",
-      "descZh": "",
+      "descZh": "深挖移动端体验：触摸事件、视口问题、响应式缺陷与移动端特有故障。",
       "triggers": [
         "responsive design bugs",
         "mobile conversion rates"
@@ -1152,7 +1152,7 @@
       "dir": "skills/nps-proxy",
       "path": "skills/nps-proxy/SKILL.md",
       "desc": "Behavioral proxy for user satisfaction — use frustration signals, engagement patterns, and conversion behavior as a real-time NPS alternative. Use when the user wants to measure satisfaction but doesn't have survey data in Fullstory.",
-      "descZh": "",
+      "descZh": "没有问卷数据时，用行为衡量满意度：受挫信号、参与度模式等。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1193,7 +1193,7 @@
       "dir": "skills/onboarding-tutor",
       "path": "skills/onboarding-tutor/SKILL.md",
       "desc": "Interactive onboarding guide for new Fullstory MCP users — teaches the mental model, walks through first queries, and explains how to use each skill. Use when a new team member needs to learn how to use Fullstory through Claude.",
-      "descZh": "",
+      "descZh": "带新用户上手 Fullstory MCP：讲清心智模型、跑通第一批查询并解释后续怎么用。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1234,7 +1234,7 @@
       "dir": "skills/page-performance",
       "path": "skills/page-performance/SKILL.md",
       "desc": "Page-level performance analysis — load times, errors by page, device breakdown, and page-to-page navigation patterns. Use when asking about specific page health, comparing pages, or finding pages with performance issues.",
-      "descZh": "",
+      "descZh": "分析页面级健康度：加载耗时、错误、设备分布以及页面间的跳转路径。",
       "triggers": [
         "comparing pages"
       ],
@@ -1279,7 +1279,7 @@
       "dir": "skills/persona-builder",
       "path": "skills/persona-builder/SKILL.md",
       "desc": "Build behavioral user personas from session data — identify distinct user types by their actual behavior, not demographics. Use when the team needs data-driven personas, wants to understand who their users really are, or needs to align product decisions to real user behavior.",
-      "descZh": "",
+      "descZh": "基于真实会话数据构建行为画像：用户实际是谁，取决于他们实际做了什么。",
       "triggers": [
         "ne"
       ],
@@ -1324,7 +1324,7 @@
       "dir": "skills/predictive-alerts",
       "path": "skills/predictive-alerts/SKILL.md",
       "desc": "Proactive alerting based on trend analysis — predict when a metric will cross a threshold and alert before it happens. Use when setting up early warning systems, monitoring for regressions, or creating proactive alert rules.",
-      "descZh": "",
+      "descZh": "配置前瞻性告警：在指标越过临界值之前预警，而不是事后通报。",
       "triggers": [
         "creating proactive alert"
       ],
@@ -1367,7 +1367,7 @@
       "dir": "skills/privacy-auditor",
       "path": "skills/privacy-auditor/SKILL.md",
       "desc": "Audit Fullstory session capture for PII leaks, verify privacy rules, and check recording block rules. Use when the user is concerned about privacy compliance, wants to verify masking rules, or needs to find sessions that may contain sensitive data.",
-      "descZh": "",
+      "descZh": "审计会话采集中的 PII 暴露风险，验证隐私规则是否生效并找出问题会话。",
       "triggers": [
         "needs to"
       ],
@@ -1410,7 +1410,7 @@
       "dir": "skills/query-translator",
       "path": "skills/query-translator/SKILL.md",
       "desc": "Translate vague business questions into precise Fullstory queries — help users who know what they want to ask but not how to express it. Use when the user says \"I want to know X but I'm not sure how to ask Fullstory.\"",
-      "descZh": "",
+      "descZh": "帮「知道想查什么、但不会表述」的用户把需求转成 Fullstory 查询。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1451,7 +1451,7 @@
       "dir": "skills/quick-stats",
       "path": "skills/quick-stats/SKILL.md",
       "desc": "Lightning-fast answers to simple numeric questions — \"how many users yesterday\", \"what's the conversion rate\", \"how many sessions today\". Use when the question is a single number, no analysis needed. Skips the full general-analysis workflow.",
-      "descZh": "",
+      "descZh": "只要一个数字：不做分析、不查会话、不做校验，直接给数并附上下文。",
       "triggers": [
         "no analysis needed"
       ],
@@ -1496,7 +1496,7 @@
       "dir": "skills/report-deck",
       "path": "skills/report-deck/SKILL.md",
       "desc": "Turn Fullstory research findings into a presentation-ready report — slide structure, speaker notes, and export to PPTX or PDF. Use when the user asks for a deck, slides, presentation, or report from their analytics.",
-      "descZh": "",
+      "descZh": "把 Fullstory 研究转成结构化汇报材料，支持任意输出格式（Markdown 评审稿等）。",
       "triggers": [
         "slides",
         "presentation"
@@ -1545,7 +1545,7 @@
       "dir": "skills/retention-analyzer",
       "path": "skills/retention-analyzer/SKILL.md",
       "desc": "User retention analysis — N-day retention, cohort stickiness, returning vs new user patterns, and churn signals. Use when asking about retention rates, user stickiness, churn analysis, or \"are users coming back?\"",
-      "descZh": "",
+      "descZh": "度量用户留存：多少人回流、多久回流一次、谁有流失风险。",
       "triggers": [
         "user stickiness",
         "churn analysis",
@@ -1593,7 +1593,7 @@
       "dir": "skills/revenue-impact",
       "path": "skills/revenue-impact/SKILL.md",
       "desc": "Attach revenue estimates to UX issues and conversion problems. Use when the user wants to know what a friction point or conversion drop is costing in dollars.",
-      "descZh": "",
+      "descZh": "估算体验问题带来的收入损失，把暴怒点击、转化下滑与错误飙升折算成金额。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1634,7 +1634,7 @@
       "dir": "skills/scroll-depth-analyzer",
       "path": "skills/scroll-depth-analyzer/SKILL.md",
       "desc": "Analyze how far users scroll on key pages — content visibility, where users stop reading, and whether important content is being seen. Use when evaluating page layout, content effectiveness, or CTA placement.",
-      "descZh": "",
+      "descZh": "衡量用户滚动深度：在哪里停下、看到了什么、关键内容是否真的被看到。",
       "triggers": [
         "evaluating page layout",
         "content effectiveness",
@@ -1681,7 +1681,7 @@
       "dir": "skills/segment-wizard",
       "path": "skills/segment-wizard/SKILL.md",
       "desc": "Interactive guided segment building for non-technical users — helps construct complex user cohorts with validation and preview. Use when a non-analyst user needs to build a segment but doesn't know how to express it in a query.",
-      "descZh": "",
+      "descZh": "为非技术用户提供引导式分群搭建，帮产品、设计与支持人员建出精准分群。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1724,7 +1724,7 @@
       "dir": "skills/session-playlist",
       "path": "skills/session-playlist/SKILL.md",
       "desc": "Curate playlists of Fullstory sessions for team review — bundle related sessions with notes, timestamps, and context. Use when sharing session evidence with the team, preparing for a bug review, or creating a highlight reel of user behavior.",
-      "descZh": "",
+      "descZh": "编排与分享 Fullstory 会话合集，可带备注、时间戳与背景说明。",
       "triggers": [
         "creating a highligh"
       ],
@@ -1767,7 +1767,7 @@
       "dir": "skills/session-review",
       "path": "skills/session-review/SKILL.md",
       "desc": "Use when diagnosing user-reported issues, investigating bugs, analyzing user behavior, or validating UI correctness using Fullstory session recordings.",
-      "descZh": "",
+      "descZh": "回看会话还原事实：既用于诊断客户报告的 bug，也用于验证改动效果。",
       "triggers": [
         "investigating bugs",
         "analyzing user behavior",
@@ -1812,7 +1812,7 @@
       "dir": "skills/session-search",
       "path": "skills/session-search/SKILL.md",
       "desc": "Search across sessions by user properties, device, browser, custom events, or page — find the needle in the haystack. Use when you need to find specific sessions without a pre-built metric or segment.",
-      "descZh": "",
+      "descZh": "跨用户属性、设备、浏览器、自定义事件与页面检索会话，无需手写查询。",
       "triggers": [
         "segment"
       ],
@@ -1855,7 +1855,7 @@
       "dir": "skills/slack-reporter",
       "path": "skills/slack-reporter/SKILL.md",
       "desc": "Format Fullstory findings for Slack — structured summaries with key stats, session links, and action items ready to paste into team channels. Use when the user wants to share findings with their team in Slack.",
-      "descZh": "",
+      "descZh": "把 Fullstory 结论整理成干净、易扫读的 Slack 消息：关键数据、会话证据与待办。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1898,7 +1898,7 @@
       "dir": "skills/user-journey",
       "path": "skills/user-journey/SKILL.md",
       "desc": "Trace a specific user's journey across sessions — what they did, where they struggled, and what happened before and after a reported issue. Use when investigating a specific user, reproducing a bug report, or understanding a high-value customer's experience.",
-      "descZh": "",
+      "descZh": "追踪单个用户跨多次会话的路径：做了什么、卡在哪、之后发生了什么。",
       "triggers": [
         "reproducing a bug report"
       ],
@@ -1941,7 +1941,7 @@
       "dir": "skills/webhook-health",
       "path": "skills/webhook-health/SKILL.md",
       "desc": "Monitor FullStory webhook delivery — success rates, errors, latency, and webhook-driven integration health. Use when troubleshooting webhook failures, monitoring integration health, or verifying webhook configuration.",
-      "descZh": "",
+      "descZh": "监控 Fullstory webhook 投递：数据是否流向集成、是否投递失败、有没有丢事件。",
       "triggers": [
         "verifying webhook conf"
       ],
@@ -1984,7 +1984,7 @@
       "dir": "skills/weekly-digest",
       "path": "skills/weekly-digest/SKILL.md",
       "desc": "Automated weekly summary of what changed in your product — top frustrations, new errors, trends up/down, conversion changes. Use when asking \"what changed this week\", \"give me the weekly recap\", or \"what's new since last week.\"",
-      "descZh": "",
+      "descZh": "结构化的每周产品总结：受挫点、错误、转化趋势与值得注意的变化。",
       "triggers": [
         "give me the weekly recap"
       ],

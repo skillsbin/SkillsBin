@@ -11,7 +11,7 @@
       "dir": "packages/cli",
       "path": "packages/cli/SKILL.md",
       "desc": "Review frontend code and live pages against the Front-End Checklist (380+ rules for accessibility, performance, SEO, security, HTML, CSS, JavaScript, images, i18n, privacy, testing) using the `frontendchecklist` CLI. Use when writing, reviewing, or shipping HTML/CSS/JS/JSX/TSX/Vue/Svelte/Astro code, before a commit or PR, or when asked to audit a public URL.",
-      "descZh": "",
+      "descZh": "命令行入口：按 Front-End Checklist（380 多条规则，覆盖无障碍、性能、SEO、安全、HTML/CSS/JS、图像、i18n、隐私等）审查前端代码与线上页面。",
       "triggers": [
         "writing",
         "reviewing",
@@ -59,7 +59,7 @@
       "dir": "plugins/front-end-checklist/skills/frontend-checklist-global",
       "path": "plugins/front-end-checklist/skills/frontend-checklist-global/SKILL.md",
       "desc": "Use when auditing or improving any frontend codebase against the full Front-End Checklist rule corpus through one entry point.",
-      "descZh": "",
+      "descZh": "全量审计入口：用一个入口把前端代码库对照完整的 Front-End Checklist 规则集做体检与改进。",
       "triggers": [
         "auditing"
       ],
@@ -102,7 +102,7 @@
       "dir": "skills/404-page",
       "path": "skills/404-page/SKILL.md",
       "desc": "Use when reviewing templates, rendered HTML, or shared components related to Create a custom 404 error page. Validate the final browser-facing markup, not just the source framework abstraction.",
-      "descZh": "",
+      "descZh": "自定义 404 页面：校验浏览器实际渲染出的标记，而不只看源码模板。",
       "triggers": [
         "reviewing templates",
         "rendered HTML"
@@ -146,7 +146,7 @@
       "dir": "skills/about-page",
       "path": "skills/about-page/SKILL.md",
       "desc": "Use when auditing metadata, crawlability, structured data, or indexability related to Create a dedicated About page. Verify the rendered HTML and HTTP response rather than relying only on source files.",
-      "descZh": "",
+      "descZh": "独立的「关于」页：检查其元数据、可抓取性、结构化数据与可索引性。",
       "triggers": [
         "auditing metadata",
         "crawlability",
@@ -191,7 +191,7 @@
       "dir": "skills/accessibility-testing",
       "path": "skills/accessibility-testing/SKILL.md",
       "desc": "Use when reviewing component libraries, page flows, or CI pipelines that need repeatable accessibility checks. Automated testing is strongest at catching structural and attribute-level issues; it does not replace keyboard, screen reader, and manual UX testing.",
-      "descZh": "",
+      "descZh": "可重复的无障碍测试：用于组件库、页面流程与 CI 流水线；自动化最擅长抓结构性与属性层面的问题。",
       "triggers": [
         "page flows"
       ],
@@ -236,7 +236,7 @@
       "dir": "skills/accessible-authentication",
       "path": "skills/accessible-authentication/SKILL.md",
       "desc": "Use when reviewing sign-in, sign-up, MFA, CAPTCHA, recovery, and re-auth flows. Evaluate the full authentication path, including error handling and backup methods, not just the primary login form.",
-      "descZh": "",
+      "descZh": "无障碍登录全链路：注册、登录、MFA、验证码、找回与重新认证，并检查错误处理与备用方式。",
       "triggers": [
         "reviewing sign-in",
         "sign-up",
@@ -284,7 +284,7 @@
       "dir": "skills/accessible-notifications",
       "path": "skills/accessible-notifications/SKILL.md",
       "desc": "Use when reviewing templates, rendered HTML, or shared components related to Make notifications accessible. Validate the final browser-facing markup, not just the source framework abstraction.",
-      "descZh": "",
+      "descZh": "让通知可被辅助技术识别：校验实际渲染出的标记。",
       "triggers": [
         "reviewing templates",
         "rendered HTML"
@@ -330,7 +330,7 @@
       "dir": "skills/accessible-tables",
       "path": "skills/accessible-tables/SKILL.md",
       "desc": "Use when reviewing rendered HTML, interactive components, or design-system patterns related to Use semantic table markup for screen readers. Check native semantics first, then inspect keyboard behavior, focus flow, accessible names, and screen-reader output where relevant.",
-      "descZh": "",
+      "descZh": "用语义化表格标记服务屏幕阅读器：优先用原生语义，再补 ARIA。",
       "triggers": [
         "reviewing rendered HTML",
         "interactive components"
@@ -374,7 +374,7 @@
       "dir": "skills/accessible-tooltips",
       "path": "skills/accessible-tooltips/SKILL.md",
       "desc": "Use when reviewing templates, rendered HTML, or shared components related to Create accessible tooltips. Validate the final browser-facing markup, not just the source framework abstraction.",
-      "descZh": "",
+      "descZh": "无障碍提示气泡：校验实际渲染的标记。",
       "triggers": [
         "reviewing templates",
         "rendered HTML"
@@ -418,7 +418,7 @@
       "dir": "skills/accesskeys",
       "path": "skills/accesskeys/SKILL.md",
       "desc": "Use when reviewing rendered HTML, interactive components, or design-system patterns related to Ensure accesskey values are unique. Check native semantics first, then inspect keyboard behavior, focus flow, accessible names, and screen-reader output where relevant.",
-      "descZh": "",
+      "descZh": "确保 accesskey 取值唯一，并检查它与浏览器和辅助技术的快捷键冲突。",
       "triggers": [
         "reviewing rendered HTML",
         "interactive components"
@@ -462,7 +462,7 @@
       "dir": "skills/accordion-accessibility",
       "path": "skills/accordion-accessibility/SKILL.md",
       "desc": "Use when reviewing templates, rendered HTML, or shared components related to Make accordions keyboard navigable. Validate the final browser-facing markup, not just the source framework abstraction.",
-      "descZh": "",
+      "descZh": "让手风琴组件可以用键盘操作。",
       "triggers": [
         "reviewing templates",
         "rendered HTML"
@@ -508,7 +508,7 @@
       "dir": "skills/affiliate-disclosure",
       "path": "skills/affiliate-disclosure/SKILL.md",
       "desc": "Use when auditing metadata, crawlability, structured data, or indexability related to Provide clear affiliate disclosures. Verify the rendered HTML and HTTP response rather than relying only on source files.",
-      "descZh": "",
+      "descZh": "明确标注联盟推广的披露信息。",
       "triggers": [
         "auditing metadata",
         "crawlability",
@@ -553,7 +553,7 @@
       "dir": "skills/ai-content",
       "path": "skills/ai-content/SKILL.md",
       "desc": "Use when auditing metadata, crawlability, structured data, or indexability related to Audit and refine AI-generated content. Verify the rendered HTML and HTTP response rather than relying only on source files.",
-      "descZh": "",
+      "descZh": "审计并打磨 AI 生成的内容。",
       "triggers": [
         "auditing metadata",
         "crawlability",
@@ -598,7 +598,7 @@
       "dir": "skills/all-noindex-pages",
       "path": "skills/all-noindex-pages/SKILL.md",
       "desc": "Use when auditing metadata, crawlability, structured data, or indexability related to Audit all noindex pages. Verify the rendered HTML and HTTP response rather than relying only on source files.",
-      "descZh": "",
+      "descZh": "盘点站点上所有 noindex 页面，确认没有被误标。",
       "triggers": [
         "auditing metadata",
         "crawlability",
@@ -643,7 +643,7 @@
       "dir": "skills/alt-text",
       "path": "skills/alt-text/SKILL.md",
       "desc": "Use when reviewing image assets, markup, and CDN or build transforms related to Provide meaningful alt text for images. Check encoded size, rendered size, loading strategy, and above-the-fold impact together.",
-      "descZh": "",
+      "descZh": "为图片提供有意义的替代文本：同时检查编码尺寸、渲染尺寸与加载策略。",
       "triggers": [
         "reviewing image assets",
         "markup",
@@ -688,7 +688,7 @@
       "dir": "skills/anchor-smooth-scroll",
       "path": "skills/anchor-smooth-scroll/SKILL.md",
       "desc": "Use when reviewing rendered HTML, interactive components, or design-system patterns related to Provide instant anchor scroll option. Check native semantics first, then inspect keyboard behavior, focus flow, accessible names, and screen-reader output where relevant.",
-      "descZh": "",
+      "descZh": "提供锚点跳转的「立即滚动」选项，照顾偏好减少动效的用户。",
       "triggers": [
         "reviewing rendered HTML",
         "interactive components"
@@ -732,7 +732,7 @@
       "dir": "skills/anchor-text",
       "path": "skills/anchor-text/SKILL.md",
       "desc": "Use when auditing metadata, crawlability, structured data, or indexability related to Use descriptive anchor text. Verify the rendered HTML and HTTP response rather than relying only on source files.",
-      "descZh": "",
+      "descZh": "使用有描述性的链接锚文本，而不是「点击这里」。",
       "triggers": [
         "auditing metadata",
         "crawlability",
@@ -777,7 +777,7 @@
       "dir": "skills/animated-content",
       "path": "skills/animated-content/SKILL.md",
       "desc": "Use when auditing slow page loads, heavy assets, or rendering delays related to Convert animated GIFs to video. Verify the actual bottleneck in DevTools, Lighthouse, or field data before recommending changes.",
-      "descZh": "",
+      "descZh": "把动图 GIF 换成视频：用 DevTools 或 Lighthouse 确认真实瓶颈。",
       "triggers": [
         "auditing slow page loads",
         "heavy assets"
@@ -823,7 +823,7 @@
       "dir": "skills/animation-performance",
       "path": "skills/animation-performance/SKILL.md",
       "desc": "Use when reviewing stylesheets, component styles, and responsive behavior related to Use transform and opacity for animations. Check the rendered layout across breakpoints and interaction states before proposing a fix.",
-      "descZh": "",
+      "descZh": "动画只用 transform 与 opacity：跨断点检查渲染布局。",
       "triggers": [
         "reviewing stylesheets",
         "component styles"
@@ -869,7 +869,7 @@
       "dir": "skills/aria-allowed-attr",
       "path": "skills/aria-allowed-attr/SKILL.md",
       "desc": "Use when reviewing rendered HTML, interactive components, or design-system patterns related to Use only allowed ARIA attributes for each role. Check native semantics first, then inspect keyboard behavior, focus flow, accessible names, and screen-reader output where relevant.",
-      "descZh": "",
+      "descZh": "只给对应 role 使用被允许的 ARIA 属性。",
       "triggers": [
         "reviewing rendered HTML",
         "interactive components"
@@ -913,7 +913,7 @@
       "dir": "skills/aria-command-name",
       "path": "skills/aria-command-name/SKILL.md",
       "desc": "Use when reviewing rendered HTML, interactive components, or design-system patterns related to Provide accessible names for ARIA command elements. Check native semantics first, then inspect keyboard behavior, focus flow, accessible names, and screen-reader output where relevant.",
-      "descZh": "",
+      "descZh": "ARIA 命令类元素要有可访问名称。",
       "triggers": [
         "reviewing rendered HTML",
         "interactive components"
@@ -957,7 +957,7 @@
       "dir": "skills/aria-deprecated-role",
       "path": "skills/aria-deprecated-role/SKILL.md",
       "desc": "Use when reviewing rendered HTML, interactive components, or design-system patterns related to Avoid using deprecated ARIA roles. Check native semantics first, then inspect keyboard behavior, focus flow, accessible names, and screen-reader output where relevant.",
-      "descZh": "",
+      "descZh": "避免使用已废弃的 ARIA role。",
       "triggers": [
         "reviewing rendered HTML",
         "interactive components"
@@ -1001,7 +1001,7 @@
       "dir": "skills/aria-dialog-name",
       "path": "skills/aria-dialog-name/SKILL.md",
       "desc": "Use when reviewing rendered HTML, interactive components, or design-system patterns related to Ensure dialogs have an accessible name. Check native semantics first, then inspect keyboard behavior, focus flow, accessible names, and screen-reader output where relevant.",
-      "descZh": "",
+      "descZh": "对话框必须有无障碍名称。",
       "triggers": [
         "reviewing rendered HTML",
         "interactive components"
@@ -1045,7 +1045,7 @@
       "dir": "skills/aria-hidden-body",
       "path": "skills/aria-hidden-body/SKILL.md",
       "desc": "Use when reviewing rendered HTML, interactive components, or design-system patterns related to Do not use aria-hidden on the document body. Check native semantics first, then inspect keyboard behavior, focus flow, accessible names, and screen-reader output where relevant.",
-      "descZh": "",
+      "descZh": "不要在 document.body 上使用 aria-hidden。",
       "triggers": [
         "reviewing rendered HTML",
         "interactive components"
@@ -1089,7 +1089,7 @@
       "dir": "skills/aria-hidden-focus",
       "path": "skills/aria-hidden-focus/SKILL.md",
       "desc": "Use when reviewing rendered HTML, interactive components, or design-system patterns related to Remove focusable elements from aria-hidden containers. Check native semantics first, then inspect keyboard behavior, focus flow, accessible names, and screen-reader output where relevant.",
-      "descZh": "",
+      "descZh": "把可聚焦元素移出 aria-hidden 容器。",
       "triggers": [
         "reviewing rendered HTML",
         "interactive components"
@@ -1133,7 +1133,7 @@
       "dir": "skills/aria-input-field-name",
       "path": "skills/aria-input-field-name/SKILL.md",
       "desc": "Use when applies to all `<input>` (except type=hidden), `<textarea>`, `<select>`, and custom form widgets using role=textbox, role=combobox, role=spinbutton, role=searchbox, or role=listbox.",
-      "descZh": "",
+      "descZh": "所有 input、textarea、select 与自定义表单控件（textbox、combobox、spinbutton 等）都要有可访问名称。",
       "triggers": [
         "`<textarea>`",
         "`<select>`",
@@ -1178,7 +1178,7 @@
       "dir": "skills/aria-labels",
       "path": "skills/aria-labels/SKILL.md",
       "desc": "Use when reviewing rendered HTML, interactive components, or design-system patterns related to Provide accessible names for all interactive elements. Check native semantics first, then inspect keyboard behavior, focus flow, accessible names, and screen-reader output where relevant.",
-      "descZh": "",
+      "descZh": "为所有交互元素提供可访问名称。",
       "triggers": [
         "reviewing rendered HTML",
         "interactive components"
@@ -1222,7 +1222,7 @@
       "dir": "skills/aria-live-regions",
       "path": "skills/aria-live-regions/SKILL.md",
       "desc": "Use when reviewing rendered HTML, interactive components, or design-system patterns related to Announce dynamic content with ARIA live regions. Check native semantics first, then inspect keyboard behavior, focus flow, accessible names, and screen-reader output where relevant.",
-      "descZh": "",
+      "descZh": "用 ARIA live region 播报动态内容。",
       "triggers": [
         "reviewing rendered HTML",
         "interactive components"
@@ -1266,7 +1266,7 @@
       "dir": "skills/aria-meter-name",
       "path": "skills/aria-meter-name/SKILL.md",
       "desc": "Use when reviewing rendered HTML, interactive components, or design-system patterns related to Provide accessible names for meter elements. Check native semantics first, then inspect keyboard behavior, focus flow, accessible names, and screen-reader output where relevant.",
-      "descZh": "",
+      "descZh": "meter 元素要有可访问名称。",
       "triggers": [
         "reviewing rendered HTML",
         "interactive components"
@@ -1310,7 +1310,7 @@
       "dir": "skills/aria-progressbar-name",
       "path": "skills/aria-progressbar-name/SKILL.md",
       "desc": "Use when reviewing rendered HTML, interactive components, or design-system patterns related to Provide accessible names for progress bars. Check native semantics first, then inspect keyboard behavior, focus flow, accessible names, and screen-reader output where relevant.",
-      "descZh": "",
+      "descZh": "进度条要有可访问名称。",
       "triggers": [
         "reviewing rendered HTML",
         "interactive components"
@@ -1354,7 +1354,7 @@
       "dir": "skills/aria-required-attr",
       "path": "skills/aria-required-attr/SKILL.md",
       "desc": "Use when reviewing rendered HTML, interactive components, or design-system patterns related to Include required ARIA attributes for roles. Check native semantics first, then inspect keyboard behavior, focus flow, accessible names, and screen-reader output where relevant.",
-      "descZh": "",
+      "descZh": "补齐各 role 要求的必需 ARIA 属性。",
       "triggers": [
         "reviewing rendered HTML",
         "interactive components"
@@ -1398,7 +1398,7 @@
       "dir": "skills/aria-required-children",
       "path": "skills/aria-required-children/SKILL.md",
       "desc": "Use when applies to custom ARIA widgets using composite roles: tablist, list, listbox, menu, menubar, tree, treegrid, grid, rowgroup, row, radiogroup. Use when reviewing components built with div/span elements that replace native HTML list, select, or nav elements.",
-      "descZh": "",
+      "descZh": "复合 role（tablist、listbox、menu、treegrid 等）必须有正确的子元素结构。",
       "triggers": [
         "list",
         "listbox",
@@ -1444,7 +1444,7 @@
       "dir": "skills/aria-required-parent",
       "path": "skills/aria-required-parent/SKILL.md",
       "desc": "Use when reviewing rendered HTML, interactive components, or design-system patterns related to Ensure ARIA roles are contained by required parent roles. Check native semantics first, then inspect keyboard behavior, focus flow, accessible names, and screen-reader output where relevant.",
-      "descZh": "",
+      "descZh": "确保 ARIA role 位于其要求的父 role 之下。",
       "triggers": [
         "reviewing rendered HTML",
         "interactive components"
@@ -1488,7 +1488,7 @@
       "dir": "skills/aria-roles",
       "path": "skills/aria-roles/SKILL.md",
       "desc": "Use when reviewing rendered HTML, interactive components, or design-system patterns related to Use valid ARIA role values. Check native semantics first, then inspect keyboard behavior, focus flow, accessible names, and screen-reader output where relevant.",
-      "descZh": "",
+      "descZh": "使用合法的 ARIA role 取值。",
       "triggers": [
         "reviewing rendered HTML",
         "interactive components"
@@ -1532,7 +1532,7 @@
       "dir": "skills/aria-text",
       "path": "skills/aria-text/SKILL.md",
       "desc": "Use when reviewing rendered HTML, interactive components, or design-system patterns related to Avoid focusable descendants in role='text' elements. Check native semantics first, then inspect keyboard behavior, focus flow, accessible names, and screen-reader output where relevant.",
-      "descZh": "",
+      "descZh": "role=\"text\" 元素内避免可聚焦的后代元素。",
       "triggers": [
         "reviewing rendered HTML",
         "interactive components"
@@ -1576,7 +1576,7 @@
       "dir": "skills/aria-toggle-field-name",
       "path": "skills/aria-toggle-field-name/SKILL.md",
       "desc": "Use when reviewing rendered HTML, interactive components, or design-system patterns related to Provide accessible names for toggle fields. Check native semantics first, then inspect keyboard behavior, focus flow, accessible names, and screen-reader output where relevant.",
-      "descZh": "",
+      "descZh": "开关类字段要有可访问名称。",
       "triggers": [
         "reviewing rendered HTML",
         "interactive components"
@@ -1620,7 +1620,7 @@
       "dir": "skills/aria-tooltip-name",
       "path": "skills/aria-tooltip-name/SKILL.md",
       "desc": "Use when reviewing rendered HTML, interactive components, or design-system patterns related to Provide accessible names for tooltips. Check native semantics first, then inspect keyboard behavior, focus flow, accessible names, and screen-reader output where relevant.",
-      "descZh": "",
+      "descZh": "tooltip 要有可访问名称。",
       "triggers": [
         "reviewing rendered HTML",
         "interactive components"
@@ -1664,7 +1664,7 @@
       "dir": "skills/aria-treeitem-name",
       "path": "skills/aria-treeitem-name/SKILL.md",
       "desc": "Use when applies to custom tree widgets built with role='tree', role='treeitem', and role='group'. Common in file explorers, nested navigation menus, org charts, and any UI where items can be expanded or collapsed to reveal children.",
-      "descZh": "",
+      "descZh": "自定义树控件（role=tree/treeitem/group）要有可访问名称，常见于文件浏览器与嵌套导航。",
       "triggers": [
         "role='treeitem",
         "and role='group"
@@ -1710,7 +1710,7 @@
       "dir": "skills/aria-valid-attr-value",
       "path": "skills/aria-valid-attr-value/SKILL.md",
       "desc": "Use when reviewing rendered HTML, interactive components, or design-system patterns related to Use valid values for ARIA attributes. Check native semantics first, then inspect keyboard behavior, focus flow, accessible names, and screen-reader output where relevant.",
-      "descZh": "",
+      "descZh": "ARIA 属性的取值必须合法。",
       "triggers": [
         "reviewing rendered HTML",
         "interactive components"
@@ -1754,7 +1754,7 @@
       "dir": "skills/aria-valid-attr",
       "path": "skills/aria-valid-attr/SKILL.md",
       "desc": "Use when reviewing rendered HTML, interactive components, or design-system patterns related to Ensure ARIA attributes are valid. Check native semantics first, then inspect keyboard behavior, focus flow, accessible names, and screen-reader output where relevant.",
-      "descZh": "",
+      "descZh": "ARIA 属性本身必须合法。",
       "triggers": [
         "reviewing rendered HTML",
         "interactive components"
@@ -1798,7 +1798,7 @@
       "dir": "skills/article-links",
       "path": "skills/article-links/SKILL.md",
       "desc": "Use when auditing metadata, crawlability, structured data, or indexability related to Optimize article link density. Verify the rendered HTML and HTTP response rather than relying only on source files.",
-      "descZh": "",
+      "descZh": "优化文章内的链接密度。",
       "triggers": [
         "auditing metadata",
         "crawlability",
@@ -1843,7 +1843,7 @@
       "dir": "skills/article",
       "path": "skills/article/SKILL.md",
       "desc": "Use when auditing metadata, crawlability, structured data, or indexability related to Implement valid Article structured data. Verify the rendered HTML and HTTP response rather than relying only on source files.",
-      "descZh": "",
+      "descZh": "实现合法的 Article 结构化数据。",
       "triggers": [
         "auditing metadata",
         "crawlability",
@@ -1888,7 +1888,7 @@
       "dir": "skills/audio-descriptions",
       "path": "skills/audio-descriptions/SKILL.md",
       "desc": "Use when reviewing rendered HTML, interactive components, or design-system patterns related to Provide audio descriptions for video. Check native semantics first, then inspect keyboard behavior, focus flow, accessible names, and screen-reader output where relevant.",
-      "descZh": "",
+      "descZh": "为视频提供音频描述。",
       "triggers": [
         "reviewing rendered HTML",
         "interactive components"
@@ -1932,7 +1932,7 @@
       "dir": "skills/author-byline",
       "path": "skills/author-byline/SKILL.md",
       "desc": "Use when auditing metadata, crawlability, structured data, or indexability related to Display clear author bylines. Verify the rendered HTML and HTTP response rather than relying only on source files.",
-      "descZh": "",
+      "descZh": "展示清晰的作者署名。",
       "triggers": [
         "auditing metadata",
         "crawlability",
@@ -1977,7 +1977,7 @@
       "dir": "skills/author-expertise",
       "path": "skills/author-expertise/SKILL.md",
       "desc": "Use when auditing metadata, crawlability, structured data, or indexability related to Highlight author credentials and expertise. Verify the rendered HTML and HTTP response rather than relying only on source files.",
-      "descZh": "",
+      "descZh": "突出作者的资历与专业背景。",
       "triggers": [
         "auditing metadata",
         "crawlability",
@@ -2022,7 +2022,7 @@
       "dir": "skills/author-info",
       "path": "skills/author-info/SKILL.md",
       "desc": "Use when auditing metadata, crawlability, structured data, or indexability related to Implement comprehensive author markup. Verify the rendered HTML and HTTP response rather than relying only on source files.",
-      "descZh": "",
+      "descZh": "实现完整的作者标记。",
       "triggers": [
         "auditing metadata",
         "crawlability",
@@ -2067,7 +2067,7 @@
       "dir": "skills/autofocus-avoidance",
       "path": "skills/autofocus-avoidance/SKILL.md",
       "desc": "Use when reviewing rendered HTML, interactive components, or design-system patterns related to Avoid autofocus on form fields. Check native semantics first, then inspect keyboard behavior, focus flow, accessible names, and screen-reader output where relevant.",
-      "descZh": "",
+      "descZh": "避免在表单字段上使用 autofocus。",
       "triggers": [
         "reviewing rendered HTML",
         "interactive components"
@@ -2111,7 +2111,7 @@
       "dir": "skills/autoplay-media",
       "path": "skills/autoplay-media/SKILL.md",
       "desc": "Use when reviewing rendered HTML, interactive components, or design-system patterns related to Avoid autoplaying media. Check native semantics first, then inspect keyboard behavior, focus flow, accessible names, and screen-reader output where relevant.",
-      "descZh": "",
+      "descZh": "避免自动播放媒体。",
       "triggers": [
         "reviewing rendered HTML",
         "interactive components"
@@ -2155,7 +2155,7 @@
       "dir": "skills/avif-format",
       "path": "skills/avif-format/SKILL.md",
       "desc": "Use when reviewing image assets, markup, and CDN or build transforms related to Use AVIF format for modern browsers. Check encoded size, rendered size, loading strategy, and above-the-fold impact together.",
-      "descZh": "",
+      "descZh": "面向现代浏览器使用 AVIF 图像格式。",
       "triggers": [
         "reviewing image assets",
         "markup",
@@ -2200,7 +2200,7 @@
       "dir": "skills/avoid-eval",
       "path": "skills/avoid-eval/SKILL.md",
       "desc": "Use when reviewing scripts, client components, bundles, or runtime behavior related to Never use eval() or unsafe dynamic code execution. Inspect both source code and the browser execution path so fixes target the real bottleneck or bug.",
-      "descZh": "",
+      "descZh": "绝不使用 eval() 或其它不安全的动态代码执行：源码与浏览器运行行为都要查。",
       "triggers": [
         "reviewing scripts",
         "client components",

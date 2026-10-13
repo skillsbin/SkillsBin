@@ -2,7 +2,7 @@
   "repo": "upstash/context7",
   "commit": "33414e6e3fc157c936348ca8ddba25e50dacaeee",
   "branch": "master",
-  "fetchedAt": "2026-10-13T05:37:42.691Z",
+  "fetchedAt": "2026-10-13T06:41:46.820Z",
   "parseFail": 0,
   "skills": [
     {
@@ -50,55 +50,6 @@
       "bodyMd": "# Context7 Documentation Lookup\n\nRetrieve current documentation and code examples from [Context7](https://context7.com) using the `resolve-library-id` and `query-docs` tools that ship with this extension.\n\n## When to use\n\nReach for these tools whenever a question involves a specific library, framework, SDK, CLI tool, or cloud service. Examples:\n\n- \"How do I configure caching in Next.js 16?\"\n- \"What's the syntax for Prisma's `findMany` with relations?\"\n- \"Show me a working Tailwind v4 install for a Vite app.\"\n- \"How do I rate-limit with `@upstash/ratelimit`?\"\n\n## Workflow\n\n1. **Resolve the library ID.** Call `resolve-library-id` with the library name and what to look up in the library's documentation. The tool returns matching libraries with their Context7 IDs (`/org/project` format), descriptions, snippet counts, and quality scores. Pick the best match — prioritize official sources, name match, and high benchmark scores.\n2. **Query the docs.** Call `query-docs` with the chosen library ID and what to look up in the library's documentation, scoped to a single concept — if the question spans multiple distinct concepts, make a separate call per concept with the same library ID, unless the question is about how the concepts interact. The tool returns documentation snippets and code examples.\n3. **Answer.** Cite the library ID you used and quote code examples verbatim when relevant.\n\nIf the user supplies a library ID in `/org/project` or `/org/project/version` format directly, skip step 1 and call `query-docs` immediately.\n\n## Constraints\n\n- Do not call either tool more than 3 times per question.\n- Do not pass API keys, passwords, credentials, personal data, or proprietary code as the `query` argument — it is sent to the Context7 API.\n- Authentication uses the `CONTEXT7_API_KEY` environment variable. Get a key at https://context7.com/dashboard if requests fail with an auth error.\n"
     },
     {
-      "slug": "context7-mcp",
-      "name": "context7-mcp",
-      "dir": "plugins/agent-plugins/context7/skills/context7-mcp",
-      "path": "plugins/agent-plugins/context7/skills/context7-mcp/SKILL.md",
-      "desc": "Fetches current, version-specific library documentation and code examples through the Context7 MCP server. Use whenever the user asks about a library, framework, SDK, API, CLI tool, or cloud service, including API syntax, configuration, setup instructions, version migration, CLI usage, and library-specific debugging. Use when generating code that calls a third-party library, and when the user names a version such as Next.js 15 or React 19. Use even for well-known libraries like React, Vue, Next.js, Prisma, Supabase, Express, Tailwind, Django, and Spring Boot, because training data may not reflect recent changes. Prefer this over web search for library documentation. Do not use it for refactoring, writing scripts from scratch, debugging business logic, code review, or general programming concepts, or when the user has already supplied the relevant documentation.",
-      "descZh": "接上 Context7 MCP，让 AI 编辑器在回答库 / 框架 / SDK 用法之前先取到当前版本的官方文档与示例代码，缓解模型只记得旧版 API 的问题。",
-      "triggers": [
-        "framework",
-        "SDK",
-        "API",
-        "CLI tool",
-        "cloud service",
-        "inclu"
-      ],
-      "version": "",
-      "license": "MIT",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": false,
-        "bins": [
-          "make"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/upstash/context7.git",
-        "copy": "cp -r plugins/agent-plugins/context7/skills/context7-mcp ~/.claude/skills/context7-mcp",
-        "raw": "https://raw.githubusercontent.com/upstash/context7/33414e6e3fc157c936348ca8ddba25e50dacaeee/plugins/agent-plugins/context7/skills/context7-mcp/SKILL.md",
-        "saveAs": "~/.claude/skills/context7-mcp/SKILL.md",
-        "marketplace": "/plugin marketplace add upstash/context7"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:99f31814733079106d708f2ab676e27b784219e318b3f10c98ecda44477658c2",
-      "bytes": 3329,
-      "wordCount": 365,
-      "repoLicense": "MIT",
-      "commit": "33414e6e3fc157c936348ca8ddba25e50dacaeee",
-      "branch": "master",
-      "body": "---\nname: context7-mcp\ndescription: Fetches current, version-specific library documentation and code examples through the Context7 MCP server. Use whenever the user asks about a library, framework, SDK, API, CLI tool, or cloud service, including API syntax, configuration, setup instructions, version migration, CLI usage, and library-specific debugging. Use when generating code that calls a third-party library, and when the user names a version such as Next.js 15 or React 19. Use even for well-known libraries like React, Vue, Next.js, Prisma, Supabase, Express, Tailwind, Django, and Spring Boot, because training data may not reflect recent changes. Prefer this over web search for library documentation. Do not use it for refactoring, writing scripts from scratch, debugging business logic, code review, or general programming concepts, or when the user has already supplied the relevant documentation.\n---\n\nWhen the user asks about libraries, frameworks, or needs code examples, use Context7 to fetch current documentation instead of relying on training data.\n\n## When to Use This Skill\n\nActivate this skill when the user:\n\n- Asks setup or configuration questions (\"How do I configure Next.js middleware?\")\n- Requests code involving libraries (\"Write a Prisma query for...\")\n- Needs API references (\"What are the Supabase auth methods?\")\n- Mentions specific frameworks (React, Vue, Svelte, Express, Tailwind, etc.)\n\n## How to Fetch Documentation\n\n### Step 1: Resolve the Library ID\n\nCall `resolve-library-id` with:\n\n- `libraryName`: The library name extracted from the user's question\n- `query`: What to look up in the library's documentation (improves relevance ranking)\n\n### Step 2: Select the Best Match\n\nFrom the resolution results, choose based on:\n\n- Exact or closest name match to what the user asked for\n- Higher benchmark scores indicate better documentation quality\n- If the user mentioned a version (e.g., \"React 19\"), prefer version-specific IDs\n\n### Step 3: Fetch the Documentation\n\nCall `query-docs` with:\n\n- `libraryId`: The selected Context7 library ID (e.g., `/vercel/next.js`)\n- `query`: What to look up in the library's documentation, scoped to a single concept\n\nIf the user's question spans multiple distinct concepts (e.g. routing and auth and caching), make a separate `query-docs` call per concept with the same library ID, unless the question is about how the concepts interact. Combined queries dilute ranking and return shallow results for each topic.\n\n### Step 4: Use the Documentation\n\nIncorporate the fetched documentation into your response:\n\n- Answer the user's question using current, accurate information\n- Include relevant code examples from the docs\n- Cite the library version when relevant\n\n## Guidelines\n\n- **Be specific**: Describe what to look up in the library's documentation, but keep each query to a single concept\n- **One topic per query**: Split multi-topic questions into separate `query-docs` calls. Resolve the library ID once, then query per concept, unless the question is about how the concepts interact\n- **Version awareness**: When users mention versions (\"Next.js 15\", \"React 19\"), use version-specific library IDs if available from the resolution step\n- **Prefer official sources**: When multiple matches exist, prefer official/primary packages over community forks\n",
-      "bodyMd": "When the user asks about libraries, frameworks, or needs code examples, use Context7 to fetch current documentation instead of relying on training data.\n\n## When to Use This Skill\n\nActivate this skill when the user:\n\n- Asks setup or configuration questions (\"How do I configure Next.js middleware?\")\n- Requests code involving libraries (\"Write a Prisma query for...\")\n- Needs API references (\"What are the Supabase auth methods?\")\n- Mentions specific frameworks (React, Vue, Svelte, Express, Tailwind, etc.)\n\n## How to Fetch Documentation\n\n### Step 1: Resolve the Library ID\n\nCall `resolve-library-id` with:\n\n- `libraryName`: The library name extracted from the user's question\n- `query`: What to look up in the library's documentation (improves relevance ranking)\n\n### Step 2: Select the Best Match\n\nFrom the resolution results, choose based on:\n\n- Exact or closest name match to what the user asked for\n- Higher benchmark scores indicate better documentation quality\n- If the user mentioned a version (e.g., \"React 19\"), prefer version-specific IDs\n\n### Step 3: Fetch the Documentation\n\nCall `query-docs` with:\n\n- `libraryId`: The selected Context7 library ID (e.g., `/vercel/next.js`)\n- `query`: What to look up in the library's documentation, scoped to a single concept\n\nIf the user's question spans multiple distinct concepts (e.g. routing and auth and caching), make a separate `query-docs` call per concept with the same library ID, unless the question is about how the concepts interact. Combined queries dilute ranking and return shallow results for each topic.\n\n### Step 4: Use the Documentation\n\nIncorporate the fetched documentation into your response:\n\n- Answer the user's question using current, accurate information\n- Include relevant code examples from the docs\n- Cite the library version when relevant\n\n## Guidelines\n\n- **Be specific**: Describe what to look up in the library's documentation, but keep each query to a single concept\n- **One topic per query**: Split multi-topic questions into separate `query-docs` calls. Resolve the library ID once, then query per concept, unless the question is about how the concepts interact\n- **Version awareness**: When users mention versions (\"Next.js 15\", \"React 19\"), use version-specific library IDs if available from the resolution step\n- **Prefer official sources**: When multiple matches exist, prefer official/primary packages over community forks\n"
-    },
-    {
       "slug": "context7-cli",
       "name": "context7-cli",
       "dir": "skills/context7-cli",
@@ -143,12 +94,12 @@
       "bodyMd": "# ctx7 CLI\n\nThe Context7 CLI does two things: fetches up-to-date library documentation and sets up Context7 MCP for your editor.\n\nMake sure the CLI is up to date before running commands:\n\n```bash\nnpm install -g ctx7@latest\n```\n\nOr run directly without installing:\n\n```bash\nnpx ctx7@latest <command>\n```\n\n## What this skill covers\n\n- **[Documentation](references/docs.md)** — Fetch current docs for any library. Use when writing code, verifying API signatures, or when training data may be outdated.\n- **[Setup](references/setup.md)** — Configure Context7 MCP for Claude Code / Cursor / OpenCode.\n\n## Quick Reference\n\n```bash\n# Documentation\nctx7 library <name> <query>           # Step 1: resolve library ID\nctx7 docs <libraryId> <query>         # Step 2: fetch docs\n\n# Setup\nctx7 setup                            # Configure Context7 MCP (interactive)\nctx7 login                            # Log in for higher rate limits\nctx7 whoami                           # Check current login status\n```\n\n## Authentication\n\n```bash\nctx7 login               # Opens browser for OAuth\nctx7 login --no-browser  # Prints URL instead of opening browser\nctx7 logout              # Clear stored tokens\nctx7 whoami              # Show current login status (name + email)\n```\n\nMost commands work without login. Exception: `ctx7 setup` requires it unless `--api-key` or `--oauth` is passed. Login also unlocks higher rate limits on docs commands.\n\nSet an API key via environment variable to skip interactive login entirely:\n\n```bash\nexport CONTEXT7_API_KEY=your_key\n```\n\n## Common Mistakes\n\n- Library IDs require a `/` prefix — `/facebook/react` not `facebook/react`\n- Always run `ctx7 library` first — `ctx7 docs react \"hooks\"` will fail without a valid ID\n"
     },
     {
-      "slug": "context7-mcp-2",
+      "slug": "context7-mcp",
       "name": "context7-mcp",
       "dir": "skills/context7-mcp",
       "path": "skills/context7-mcp/SKILL.md",
       "desc": "This skill should be used when the user asks about libraries, frameworks, API references, or needs code examples. Activates for setup questions, code generation involving libraries, or mentions of specific frameworks like React, Vue, Next.js, Prisma, Supabase, etc.",
-      "descZh": "",
+      "descZh": "接上 Context7 MCP，让 AI 编辑器在回答库 / 框架 / SDK 用法之前先取到当前版本的官方文档与示例代码，缓解模型只记得旧版 API 的问题。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -168,9 +119,9 @@
       },
       "install": {
         "clone": "git clone --depth 1 https://github.com/upstash/context7.git",
-        "copy": "cp -r skills/context7-mcp ~/.claude/skills/context7-mcp-2",
+        "copy": "cp -r skills/context7-mcp ~/.claude/skills/context7-mcp",
         "raw": "https://raw.githubusercontent.com/upstash/context7/33414e6e3fc157c936348ca8ddba25e50dacaeee/skills/context7-mcp/SKILL.md",
-        "saveAs": "~/.claude/skills/context7-mcp-2/SKILL.md",
+        "saveAs": "~/.claude/skills/context7-mcp/SKILL.md",
         "marketplace": "/plugin marketplace add upstash/context7"
       },
       "bodyInline": true,

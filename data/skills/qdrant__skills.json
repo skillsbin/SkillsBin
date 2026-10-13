@@ -11,7 +11,7 @@
       "dir": "meta/qdrant-advisor",
       "path": "meta/qdrant-advisor/SKILL.md",
       "desc": "Diagnose, troubleshoot, and advise on any Qdrant deployment by loading the latest official Qdrant skills live from skills.qdrant.tech. Use this whenever someone raises a Qdrant problem or question — slow or degraded search, high or growing memory / OOM crashes, optimizer stuck or slow, indexing slowness, scaling and sharding decisions (node count, QPS, latency, multitenancy, vertical vs horizontal), poor or irrelevant search results, hybrid search and reranking, embedding-model migration, version upgrades and compatibility, monitoring and observability (Prometheus, Grafana, health checks, /metrics, /telemetry), deployment choices (local, Docker, self-hosted, Qdrant Cloud, embedded), or client-SDK questions (Python, TypeScript, Rust, Go, .NET, Java). Trigger especially when the context is clearly a Qdrant cluster, collection, or vector-search deployment. Always prefer this skill over answering from memory: it pulls current, authoritative guidance and only the relevant context.",
-      "descZh": "",
+      "descZh": "Qdrant 总入口：不要凭记忆回答，先按问题路由到对应参考文档再作答（Qdrant 演进很快）。",
       "triggers": [
         "question — slow",
         "degraded search",
@@ -62,7 +62,7 @@
       "dir": "skills/qdrant-clients-sdk",
       "path": "skills/qdrant-clients-sdk/SKILL.md",
       "desc": "Qdrant provides client SDKs for various programming languages, allowing easy integration with Qdrant deployments.",
-      "descZh": "",
+      "descZh": "Qdrant 官方支持的客户端 SDK 汇总与选用（含 Python、TypeScript 等）。",
       "triggers": [],
       "version": "",
       "license": "Apache-2.0",
@@ -115,7 +115,7 @@
       "dir": "skills/qdrant-deployment-options",
       "path": "skills/qdrant-deployment-options/SKILL.md",
       "desc": "Guides Qdrant deployment selection. Use when someone asks 'how to deploy Qdrant', 'Docker vs Cloud', 'local mode', 'embedded Qdrant', 'Qdrant EDGE', 'which deployment option', 'self-hosted vs cloud', or 'need lowest latency deployment'. Also use when choosing between deployment types for a new project.",
-      "descZh": "",
+      "descZh": "部署选型：先厘清需求——要托管运维还是完全掌控？能否接受网络延迟？",
       "triggers": [
         "Docker vs Cloud",
         "local mode",
@@ -164,7 +164,7 @@
       "dir": "skills/qdrant-edge",
       "path": "skills/qdrant-edge/SKILL.md",
       "desc": "Guides building on Qdrant Edge, the embedded in-process shard. Use when someone asks 'how to sync Edge with the server', 'keep a local shard in sync with Qdrant Cloud', 'BM25 or keyword search on Edge', 'hybrid search on Edge', 'embeddings on device', 'Edge snapshots', 'apply a partial snapshot', 'why is my Edge search empty after inserts', or is writing custom sync, BM25, or fusion code against qdrant-edge. Also use when deciding what Edge ships built-in versus what you must implement.",
-      "descZh": "",
+      "descZh": "Qdrant Edge：嵌进你进程内的引擎（Python/Rust 绑定），不是薄封装的本地点量库。",
       "triggers": [
         "seeding a shard from a server, keeping it fresh, backing it up, or aggregating many devices into one collection."
       ],
@@ -210,7 +210,7 @@
       "dir": "skills/qdrant-hybrid-cloud-setup",
       "path": "skills/qdrant-hybrid-cloud-setup/SKILL.md",
       "desc": "Setting up and running Qdrant Hybrid Cloud on your own Kubernetes cluster (managed, on-prem, or edge): prerequisites, storage/CSI and backups, installing the Qdrant Cloud agent and operator, creating/exposing/securing clusters, registry mirroring, and secret rotation. Use when someone wants to set up, install, deploy, or configure Hybrid Cloud on their own infrastructure; is running Qdrant on their own EKS, GKE, AKS, OpenShift, or other Kubernetes; asks about the agent or operator, a storage class or volume snapshots for Hybrid Cloud, exposing a cluster, mirroring Qdrant images, or rotating secrets; or when a Hybrid Cloud install is failing on storage or connectivity.",
-      "descZh": "",
+      "descZh": "Qdrant 混合云搭建：控制面托管、数据面跑在自己的基础设施上。",
       "triggers": [
         "someone wants to set up",
         "install",
@@ -261,7 +261,7 @@
       "dir": "skills/qdrant-migration-tool",
       "path": "skills/qdrant-migration-tool/SKILL.md",
       "desc": "Guides use of the Qdrant Migration Tool CLI to move vectors, metadata, and sparse embeddings from another vector database into Qdrant. Use when someone asks 'how do I migrate from Pinecone/Weaviate/Milvus/Elasticsearch/OpenSearch/pgvector/s3/Azure/Chroma/Redis/MongoDB/FAISS/Solr to Qdrant', 'move my vector database to Qdrant', 'is there a migration tool for Qdrant', 'my migration got interrupted, how do I resume it', 'migration is too slow', or 'collection wasn't created after migration'. Also use when picking migration batch size, deciding on `--net=host`, or verifying data after a migration.",
-      "descZh": "",
+      "descZh": "数据迁移工具：以 Docker 容器方式交付（`registry.cloud.qdrant.io/library/qdrant-migration`），不是库。",
       "triggers": [
         "starting a new migration and choosing the source-specific CLI subcommand."
       ],
@@ -306,7 +306,7 @@
       "dir": "skills/qdrant-model-migration",
       "path": "skills/qdrant-model-migration/SKILL.md",
       "desc": "Guides embedding model migration in Qdrant without downtime. Use when someone asks 'how to switch embedding models', 'how to migrate vectors', 'how to update to a new model', 'zero-downtime model change', 'how to re-embed my data', or 'can I use two models at once'. Also use when upgrading model dimensions, switching providers, or A/B testing models.",
-      "descZh": "",
+      "descZh": "模型迁移：不同模型产出的向量互不兼容，不能在同一个向量字段里混用新旧 embedding。",
       "triggers": [
         "how to migrate vectors",
         "how to update to",
@@ -351,7 +351,7 @@
       "dir": "skills/qdrant-monitoring",
       "path": "skills/qdrant-monitoring/SKILL.md",
       "desc": "Guides Qdrant monitoring and observability setup. Use when someone asks 'how to monitor Qdrant', 'what metrics to track', 'is Qdrant healthy', 'optimizer stuck', 'why is memory growing', 'requests are slow', 'set up alerts', 'cluster health check', or needs to set up Prometheus, Grafana, health checks, or log centralization. Also use when debugging production issues that require metric analysis.",
-      "descZh": "",
+      "descZh": "监控诊断入口：先按症状在路由表中匹配，再读对应文档作答。",
       "triggers": [
         "what metrics to track",
         "is Qdrant healthy",
@@ -400,7 +400,7 @@
       "dir": "skills/qdrant-monitoring/debugging",
       "path": "skills/qdrant-monitoring/debugging/SKILL.md",
       "desc": "Diagnoses Qdrant production issues using metrics and observability tools. Use when someone reports 'optimizer stuck', 'indexing too slow', 'memory too high', 'OOM crash', 'queries are slow', 'latency spike', or 'search was fast now it's slow'. Also use when performance degrades without obvious config changes.",
-      "descZh": "",
+      "descZh": "排查 Qdrant 问题：先看优化器状态——多数生产问题源于后台优化在抢资源。",
       "triggers": [
         "indexing too slow",
         "memory too high",
@@ -449,7 +449,7 @@
       "dir": "skills/qdrant-monitoring/setup",
       "path": "skills/qdrant-monitoring/setup/SKILL.md",
       "desc": "Guides Qdrant monitoring setup including Prometheus scraping, health probes, Hybrid Cloud metrics, alerting, and log centralization. Use when someone asks 'how to set up monitoring', 'Prometheus config', 'Grafana dashboard', 'health check endpoints', 'how to scrape Hybrid Cloud', 'what alerts to set', 'how to centralize logs', or 'audit logging'.",
-      "descZh": "",
+      "descZh": "监控搭建顺序：先接通 Prometheus 抓取，再做健康探针，最后配告警，不要跳过监控就上线。",
       "triggers": [
         "Prometheus config",
         "Grafana dashboard",
@@ -497,7 +497,7 @@
       "dir": "skills/qdrant-multitenancy",
       "path": "skills/qdrant-multitenancy/SKILL.md",
       "desc": "Guides tenant isolation architecture in Qdrant for multi-tenant or multi-user applications. Use when someone asks 'how to isolate customer data', 'how to build multi-tenant search/RAG', 'how many collections should I create', 'how to partition tenants by payload', 'a customer's data legally has to stay in a certain country or region'. Also use when they describe a symptom: one customer's data is way bigger than the rest and slowing everyone down, or one tenant is hogging resources.",
-      "descZh": "",
+      "descZh": "多租户：用 payload 分区隔离不同租户的数据，而不是每个租户一个 collection。",
       "triggers": [
         "how",
         "you have many tenants of roughly similar, modest size. This is the recommended default for most users."
@@ -544,7 +544,7 @@
       "dir": "skills/qdrant-performance-optimization",
       "path": "skills/qdrant-performance-optimization/SKILL.md",
       "desc": "Navigation hub linking sub-skills for proactive Qdrant tuning: search speed, indexing performance, and memory usage optimization. Use when planning configuration or capacity changes to improve speed and efficiency. For diagnosing an active production slowdown or analyzing live metrics, use qdrant-monitoring instead.",
-      "descZh": "",
+      "descZh": "性能优化入口：先按症状匹配路由表，再读对应文档给方案。",
       "triggers": [
         "planning configuration"
       ],
@@ -591,7 +591,7 @@
       "dir": "skills/qdrant-performance-optimization/indexing-performance-optimization",
       "path": "skills/qdrant-performance-optimization/indexing-performance-optimization/SKILL.md",
       "desc": "Diagnoses and fixes slow Qdrant indexing and data ingestion. Use when someone reports 'uploads are slow', 'indexing takes forever', 'optimizer is stuck', 'HNSW build time too long', or 'data uploaded but search is bad'. Also use when optimizer status shows errors, segments won't merge, or indexing threshold questions arise.",
-      "descZh": "",
+      "descZh": "索引性能：Qdrant 不会立即建 HNSW 索引，小段先用暴力检索，超过阈值才建。",
       "triggers": [
         "indexing takes forever",
         "optimizer is stuck",
@@ -637,7 +637,7 @@
       "dir": "skills/qdrant-performance-optimization/memory-usage-optimization",
       "path": "skills/qdrant-performance-optimization/memory-usage-optimization/SKILL.md",
       "desc": "Diagnoses and reduces Qdrant memory usage. Use when someone reports 'memory too high', 'RAM keeps growing', 'node crashed', 'out of memory', 'memory leak', or asks 'why is memory usage so high?', 'how to reduce RAM?'. Also use when memory doesn't match calculations, quantization didn't help, or nodes crash during recovery.",
-      "descZh": "",
+      "descZh": "内存占用优化：区分 Qdrant 使用的两类内存，分别定位与压缩。",
       "triggers": [
         "RAM keeps growing",
         "node crashed",
@@ -684,7 +684,7 @@
       "dir": "skills/qdrant-performance-optimization/search-speed-optimization",
       "path": "skills/qdrant-performance-optimization/search-speed-optimization/SKILL.md",
       "desc": "Diagnoses and fixes slow Qdrant search. Use when someone reports 'search is slow', 'high latency', 'queries take too long', 'low QPS', 'throughput too low', 'filtered search is slow', or 'search was fast but now it's slow'. Also use when search performance degrades after config changes or data growth.",
-      "descZh": "",
+      "descZh": "检索变慢的常见原因排查与优化路径。",
       "triggers": [
         "high latency",
         "queries take too long",
@@ -731,7 +731,7 @@
       "dir": "skills/qdrant-scaling",
       "path": "skills/qdrant-scaling/SKILL.md",
       "desc": "Guides Qdrant scaling decisions. Use when someone asks 'how many nodes do I need', 'data doesn't fit on one node', 'need more throughput or QPS', 'CPU is pegged / can't keep up with the request rate', 'one query is slow / p99 or tail latency too high', 'cluster is slow', 'too many tenants', 'vertical or horizontal', 'how to shard', 'need to add capacity', 'large limit / pagination / scroll is slow', or 'only recent data matters / expiring old vectors / retention window'.",
-      "descZh": "",
+      "descZh": "扩容入口：先按症状匹配路由表，再读对应文档给出扩容方案。",
       "triggers": [
         "need more throug"
       ],
@@ -780,7 +780,7 @@
       "dir": "skills/qdrant-scaling/minimize-latency",
       "path": "skills/qdrant-scaling/minimize-latency/SKILL.md",
       "desc": "Guides Qdrant query latency optimization. Use when someone asks 'search is slow', 'how to reduce latency', 'p99 is too high', 'tail latency', 'single query too slow', 'how to make search faster', or 'latency spikes'.",
-      "descZh": "",
+      "descZh": "降低单次查询延迟：延迟取决于查询执行路径上最慢的那一环。",
       "triggers": [
         "how to reduce latency",
         "p99 is too high",
@@ -828,7 +828,7 @@
       "dir": "skills/qdrant-scaling/scaling-data-volume",
       "path": "skills/qdrant-scaling/scaling-data-volume/SKILL.md",
       "desc": "Guides Qdrant data volume scaling decisions. Use when someone asks 'data doesn't fit on one node', 'too much data', 'need more storage', 'vertical or horizontal scaling', 'tenant scaling', 'time window rotation', or 'data growth exceeds capacity'.",
-      "descZh": "",
+      "descZh": "数据量增长的扩容场景与做法。",
       "triggers": [
         "too much data",
         "need more storage",
@@ -879,7 +879,7 @@
       "dir": "skills/qdrant-scaling/scaling-data-volume/horizontal-scaling",
       "path": "skills/qdrant-scaling/scaling-data-volume/horizontal-scaling/SKILL.md",
       "desc": "Diagnoses and guides Qdrant horizontal scaling decisions. Use when someone asks 'vertical or horizontal?', 'how many nodes?', 'how many shards?', 'how to add nodes', 'resharding', 'data doesn't fit', or 'need more capacity'. Also use when data growth outpaces current deployment.",
-      "descZh": "",
+      "descZh": "水平扩容：先垂直（运维简单、无网络开销，单节点可到约 1 亿向量）再加节点。",
       "triggers": [
         "someone asks 'vertical",
         "horizontal",
@@ -926,7 +926,7 @@
       "dir": "skills/qdrant-scaling/scaling-data-volume/sliding-time-window",
       "path": "skills/qdrant-scaling/scaling-data-volume/sliding-time-window/SKILL.md",
       "desc": "Guides sliding time window scaling in Qdrant. Use when someone asks 'only recent data matters', 'how to expire old vectors', 'time-based data rotation', 'delete old data efficiently', 'social media feed search', 'news search', 'log search with retention', or 'how to keep only last N months of data'.",
-      "descZh": "",
+      "descZh": "滑动时间窗：只有近期数据需要快速检索时（社交动态、新闻、工单日志）的建模方式。",
       "triggers": [
         "time-based data rot",
         "data has natural time boundaries (daily, weekly, monthly). Preferred because queries span all time periods in one reques"
@@ -972,7 +972,7 @@
       "dir": "skills/qdrant-scaling/scaling-data-volume/tenant-scaling",
       "path": "skills/qdrant-scaling/scaling-data-volume/tenant-scaling/SKILL.md",
       "desc": "Guides Qdrant multi-tenant scaling. Use when someone asks 'how to scale tenants', 'one collection per tenant?', 'tenant isolation', 'dedicated shards', or reports tenant performance issues. Also use when multi-tenant workloads outgrow shared infrastructure.",
-      "descZh": "",
+      "descZh": "租户规模扩展：不要一租户一 collection——几百个之后就难以为继且浪费资源。",
       "triggers": [
         "legal/compliance requirements demand per-tenant encryption keys or physical data separation — not merely \"tenants should"
       ],
@@ -1017,7 +1017,7 @@
       "dir": "skills/qdrant-scaling/scaling-data-volume/vertical-scaling",
       "path": "skills/qdrant-scaling/scaling-data-volume/vertical-scaling/SKILL.md",
       "desc": "Guides Qdrant vertical scaling decisions. Use when someone asks 'how to scale up a node', 'need more RAM', 'upgrade node size', 'vertical scaling', 'resize cluster', 'scale up vs scale out', or when memory/CPU is insufficient on current nodes. Also use when someone wants to avoid the complexity of horizontal scaling.",
-      "descZh": "",
+      "descZh": "垂直扩容：给现有节点加 CPU、内存或磁盘，而不是加节点。",
       "triggers": [
         "need more RAM",
         "upgrade node size",
@@ -1066,7 +1066,7 @@
       "dir": "skills/qdrant-scaling/scaling-qps",
       "path": "skills/qdrant-scaling/scaling-qps/SKILL.md",
       "desc": "Guides Qdrant query throughput (QPS) scaling. Use when someone asks 'how to increase QPS', 'need more throughput', 'queries per second too low', 'batch search', 'read replicas', or 'how to handle more concurrent queries'.",
-      "descZh": "",
+      "descZh": "吞吐扩容：处理更高的每秒并发查询量。",
       "triggers": [
         "need more throughput"
       ],
@@ -1111,7 +1111,7 @@
       "dir": "skills/qdrant-scaling/scaling-query-volume",
       "path": "skills/qdrant-scaling/scaling-query-volume/SKILL.md",
       "desc": "Guides Qdrant query volume scaling. Use when someone asks 'query returns too many results', 'scroll performance', 'large limit values', 'paginating search results', 'fetching many vectors', or 'high cardinality results'.",
-      "descZh": "",
+      "descZh": "查询量扩容：大 limit + 多分片时，朴素做法会把结果全量拉回再截断，需要改写策略。",
       "triggers": [
         "scroll performance",
         "large limit values"
@@ -1155,7 +1155,7 @@
       "dir": "skills/qdrant-search-quality",
       "path": "skills/qdrant-search-quality/SKILL.md",
       "desc": "Diagnoses and improves Qdrant search relevance. Use when someone reports 'search results are bad', 'wrong results', 'low precision', 'low recall', 'irrelevant matches', 'missing expected results', or asks 'how to improve search quality?', 'which embedding model?', 'should I use hybrid search?', 'how to combine keyword and vector search / fusion / RRF / prefetch?', 'should I use reranking?', 'relevance feedback?', 'how to measure retrieval quality?', 'build a golden set', 'ground truth dataset', 'how to score recall@k?', 'is my improvement real / statistically significant?', or 'should I fine-tune my embedding model?'. Also use when search quality degrades after quantization, model change, or data growth.",
-      "descZh": "",
+      "descZh": "检索质量入口：先按症状匹配路由表，再读对应文档作答。",
       "triggers": [
         "wrong results",
         "low precision",
@@ -1204,7 +1204,7 @@
       "dir": "skills/qdrant-search-quality/diagnosis",
       "path": "skills/qdrant-search-quality/diagnosis/SKILL.md",
       "desc": "Diagnoses Qdrant search quality issues. Use when someone reports 'results are bad', 'wrong results', 'not relevant results', 'missing matches', 'recall is low', 'approximate search worse than exact', 'which embedding model', 'should I fine-tune my embedding model', 'quality dropped after quantization', 'how to measure retrieval quality', 'build a golden set', 'ground truth dataset', 'how to score recall@k', or 'is my improvement real / statistically significant'. Also use when search quality degrades without obvious changes.",
-      "descZh": "",
+      "descZh": "检索质量诊断前置：先建立两种「标准答案」——带标注的查询集与其他可对照的基准。",
       "triggers": [
         "wrong results",
         "not relevant results",
@@ -1252,7 +1252,7 @@
       "dir": "skills/qdrant-search-quality/search-strategies",
       "path": "skills/qdrant-search-quality/search-strategies/SKILL.md",
       "desc": "Guides Qdrant search strategy selection. Use when someone asks 'should I use hybrid search?', 'how to rerank?', 'results are not relevant', 'I don't get needed results from my dataset but they're there', 'retrieval quality is not good enough', 'results too similar', 'need diversity', 'MMR', 'relevance feedback', 'recommendation API', 'discovery API', or 'missing keyword matches'",
-      "descZh": "",
+      "descZh": "进阶检索策略：在确认 embedding 模型选对之后用来补强基础向量检索。",
       "triggers": [
         "pure vector search misses keyword/domain term matches, or the use case benefits from combining searches on multiple repr"
       ],
@@ -1299,7 +1299,7 @@
       "dir": "skills/qdrant-search-quality/search-strategies/hybrid-search",
       "path": "skills/qdrant-search-quality/search-strategies/hybrid-search/SKILL.md",
       "desc": "Explains hybrid search in Qdrant. Use when someone asks 'how do I setup hybrid search?', 'how to combine keyword and semantic search?', 'sparse plus dense vectors?', 'missing keyword matches', 'how to combine results from multiple searches?' and 'combining multiple representations'. Also use for how a hybrid query is scoped: 'how is IDF scoped?', 'can one tenant's data contaminate another tenant's scoring?'",
-      "descZh": "",
+      "descZh": "混合检索：并行跑两种以上检索并融合结果。",
       "triggers": [
         "different tenants share one collection and you need to understand hybrid search isolation guarantees."
       ],
@@ -1348,7 +1348,7 @@
       "dir": "skills/qdrant-search-quality/search-strategies/hybrid-search/combining-searches",
       "path": "skills/qdrant-search-quality/search-strategies/hybrid-search/combining-searches/SKILL.md",
       "desc": "Fusing scores from multiple searches into a single ranked result (RRF, DBSF, custom fusion). Use when someone asks 'RRF or DBSF?', 'how to combine sparse and dense', 'how to combine scores from multiple searches?', 'custom fusion', 'fusion is not producing good results', 'how do I tune RRF', 'what k should I use', or 'how do I set fusion weights'",
-      "descZh": "",
+      "descZh": "结果融合：外层查询把各并行 prefetch 的候选列表融合成一份排序结果。",
       "triggers": [
         "someone asks 'RRF",
         "DBSF",
@@ -1393,7 +1393,7 @@
       "dir": "skills/qdrant-search-quality/search-strategies/hybrid-search/search-types",
       "path": "skills/qdrant-search-quality/search-strategies/hybrid-search/search-types/SKILL.md",
       "desc": "Constructing prefetch queries for hybrid retrieval, including sparse/dense and multi-field setups, and choosing a sparse embedding model. Use when someone asks 'dense and sparse in one search?', 'how to combine multiple fields for retrieval?', 'payloads or sparse vectors for lexical?', 'which sparse embedding model to use?', or 'BM25 vs SPLADE?'",
-      "descZh": "",
+      "descZh": "检索类型：每个 `prefetch` 针对一个 query 只跑一次检索，需要留意组合方式。",
       "triggers": [
         "pure vector search misses exact term or keyword matches and you need lexical retrieval alongside semantic search."
       ],
@@ -1439,7 +1439,7 @@
       "dir": "skills/qdrant-search-quality/search-strategies/relevance-feedback",
       "path": "skills/qdrant-search-quality/search-strategies/relevance-feedback/SKILL.md",
       "desc": "Expanding the candidate pool via relevance feedback, as an alternative to reranking when a dense retriever is too weak. Use when someone asks about 'Qdrant's Relevance Feedback API', 'improving dense search relevance/recall', 'how to discover/get more relevant results from vector search', 'cheaper/better alternative to reranking', 'using a more heavy/big embedding model for dense search but can't afford it', 'finding more relevant documents beyond the initial search pool', or 'feedback loops'. Also trigger when the user has a search quality problem due to a dense retriever being weak and is considering reranking as a solution — this API may be a better fit",
-      "descZh": "",
+      "descZh": "重排序：对已召回的文档重新排序；Qdrant 的相关性反馈（RF）机制说明。",
       "triggers": [
         "setting up RF for a new use case — a new collection, feedback model, or embedding model powering ANN search."
       ],
@@ -1485,7 +1485,7 @@
       "dir": "skills/qdrant-sizing",
       "path": "skills/qdrant-sizing/SKILL.md",
       "desc": "Sizes a Qdrant deployment before it is provisioned. Use when someone asks 'how much RAM do I need', 'how many nodes', 'how big should my cluster be', 'sizing', 'capacity planning', 'will N vectors fit', 'what instance type should I pick', or gives a vector count and dimensions and asks what to provision. Also use when an existing estimate needs checking before hardware or a cluster tier is bought.",
-      "descZh": "",
+      "descZh": "容量估算：不是 `点数量 × 维度 × 4`——原始向量只是内存占用的一部分。",
       "triggers": [
         "how many nodes",
         "someone asks how much RAM or disk they need, how much data should be kept in RAM, how to size memory for a given workloa"
@@ -1531,7 +1531,7 @@
       "dir": "skills/qdrant-version-upgrade",
       "path": "skills/qdrant-version-upgrade/SKILL.md",
       "desc": "Covers upgrading Qdrant server and SDKs without interrupting availability or losing data integrity. Use when someone asks 'how do I upgrade Qdrant', 'can I jump from 1.15 to 1.18', 'rolling upgrade without downtime', 'do I upgrade the client or the server first', 'which SDK version matches my server', 'what should I check before upgrading', or 'something changed after we upgraded'.",
-      "descZh": "",
+      "descZh": "版本升级：Qdrant 的版本兼容性保证与升级路径。",
       "triggers": [
         "can I jump from 1",
         "the running version is two or more minor versions behind the target."
