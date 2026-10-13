@@ -3,6 +3,9 @@ node_modules/
 
 # Cloudflare Pages 构建产物（build-dist.sh 只把站点文件拷进来，采集器/工作流不进产物）
 dist/
+# 本地无法 rm -rf dist（沙箱拦批量删除），干净构建靠 mv dist dist.stale.<ts>；这些备份不入库
+dist.stale.*
+dist-*
 
 # 部署密钥（GITHUB_TOKEN / CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID…），永不入库
 .deploy.env
