@@ -116,14 +116,16 @@ function crumbs(list) {
 }
 
 /** 详情页描述：超长（含原文）包一层可展开/收起的截断容器，避免触发词罗列式长描述刷屏。
- *  正文始终在 DOM 里（SEO），截断只是视觉层；展开动作由 app.js 切换 .closed。 */
-function descLead(main, orig = '') {
+ *  正文始终在 DOM 里（SEO），截断只是视觉层；展开动作由 app.js 切换 .closed。
+ *  note：来源说明（如「仓库级简介」），渲染为按钮旁的灰色小字。 */
+function descLead(main, orig = '', note = '') {
   const hasEn = !!main && !!orig;
   const total = String(main || '').length + (hasEn ? String(orig).length : 0);
   const lead = `<p class="lead">${esc(main || '（未填写描述）')}${hasEn ? `<span class="en">原文：${esc(orig)}</span>` : ''}</p>`;
+  const noteHtml = note ? `<span class="desc-note">${esc(note)}</span>` : '';
   return total > 220
-    ? `<div class="desc-wrap closed">${lead}<button class="desc-toggle" type="button" aria-expanded="false">展开全文</button></div>`
-    : lead;
+    ? `<div class="desc-wrap closed">${lead}<span class="desc-foot"><button class="desc-toggle" type="button" aria-expanded="false">展开全文</button>${noteHtml}</span></div>`
+    : `${lead}${noteHtml ? `<div class="desc-foot">${noteHtml}</div>` : ''}`;
 }
 
 /** 列表页筛选栏（筛选在浏览器端完成，条件写进地址栏便于分享；不影响预渲染的 SEO 正文）
@@ -357,7 +359,12 @@ for (const r of repos) {
 for (const { repo: r, skill: s } of withPages) {
   const url = SKILL_URL(r, s);
   const zh = s.descZh || '';
-  const summary = zh || s.desc;
+  /* 中文简介回退：skill 级摘要缺失时先用所属仓库的摘要顶上（否则中文用户看到的是英文原文，
+     无法判断这是什么 skill）；页面会注明这是仓库级简介，避免误导 */
+  const repoZh = r.descZh || '';
+  const summaryZh = zh || repoZh;
+  const zhFromRepo = !zh && !!repoZh;
+  const summary = summaryZh || s.desc;
   const deps = s.requires || { apiKey: false, network: false, bins: [] };
   const raw = s.install?.raw || `https://raw.githubusercontent.com/${r.owner}/${r.repo}/${s.commit || 'HEAD'}/${s.path}`;
   const tabs = [];
@@ -372,7 +379,7 @@ for (const { repo: r, skill: s } of withPages) {
 
   const body = s.bodyInline
     ? `<div class="origin-bar"><svg class="icon" aria-hidden="true"><use href="#i-shield"></use></svg>来源 <strong>${esc(r.owner)}/${esc(r.repo)}</strong>@${esc((s.commit || '').slice(0, 7))} · 许可 <strong>${esc(licenseLabel(s.license || r.license) || '未声明')}</strong> · 内容未修改</div><div class="prose">${mdToHtml(s.bodyMd || s.body || '')}</div>`
-    : `<p class="notice">本站未内联该 skill 的正文（许可不在允许再分发的白名单内，或作者未声明许可）。下面是本站撰写的摘要，完整内容请查看原文。</p>
+    : `<p class="notice">本站未内联该 skill 的正文（许可不在允许再分发的白名单内，或作者未声明许可）。${zhFromRepo ? '下面是所属仓库的中文简介；该 skill 尚无单独撰写的中文摘要，' : '下面是本站撰写的摘要，'}完整内容请查看原文。</p>
        <p class="prose">${esc(summary)}</p>
        <div class="actions"><a class="btn" href="https://github.com/${attr(r.owner)}/${attr(r.repo)}/blob/${attr(s.commit || s.branch || 'HEAD')}/${attr(s.path)}" target="_blank" rel="noopener noreferrer">查看原文（GitHub）<svg class="icon" aria-hidden="true"><use href="#i-external"></use></svg></a></div>`;
 
@@ -391,7 +398,7 @@ for (const { repo: r, skill: s } of withPages) {
 <div class="container">
   <div class="detail-hero">
     <h1>${esc(s.name)} ${tierBadge(r.quality.tier)}</h1>
-    ${descLead(summary, zh ? s.desc : '')}
+    ${descLead(summary, summaryZh ? s.desc : '', zhFromRepo ? '仓库级简介：该 skill 尚无单独撰写的中文摘要' : '')}
     <div class="tagline">
       ${catChip(r.category)}
       ${r.hosts.map((h) => hostChip(h)).join('')}

@@ -66,6 +66,12 @@ jobs:
             node crawler/crawl.mjs --no-discover
           fi
 
+      # 2.5) 套用中文摘要覆盖层（data/desczh.json 是唯一来源）。
+      #      采集会重建 data/skills/<id>.json 并把 skill 级 descZh 清空，
+      #      所以每轮都必须重新套用，否则新采到的页面又变回英文原文。
+      - name: Apply Chinese summaries
+        run: node scripts/apply-desczh.mjs
+
       # 3) 采集产物提交回主分支（含 data/skills/<id>.json 明细层）
       - name: Commit data
         id: commit

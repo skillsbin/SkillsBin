@@ -35,9 +35,23 @@ for p in dist/crawler dist/.github dist/.deploy.env dist/.workbuddy dist/.git di
     LEAKED=1
   fi
 done
-# .deploy.env 的内容也可能被误拷进其它文件，抽查关键字段名
-if grep -rl "GITHUB_TOKEN=\|CLOUDFLARE_API_TOKEN=" dist 2>/dev/null | head -3 | grep -q .; then
-  echo "LEAK! 产物中出现凭据字段名" >&2
+# .deploy.env 的内容也可能被误拷进其它文件。**只认凭据值，不认字段名**：
+# 抓到的 skill 正文里出现 `GITHUB_TOKEN=xxx` 是文档示例，用字段名判定会误报
+# （首轮 225 仓库采集后就是被这条拦下的）。本地构建时 .deploy.env 不一定在环境里，先 source。
+if [ -f .deploy.env ]; then
+  # shellcheck disable=SC1091
+  set -a; . ./.deploy.env; set +a
+fi
+for v in "${CLOUDFLARE_API_TOKEN:-}" "${GH_PAT:-}" "${GITHUB_TOKEN:-}" "${CF_OLD_API_TOKEN:-}"; do
+  [ ${#v} -ge 12 ] || continue
+  if grep -rqF "$v" dist 2>/dev/null; then
+    echo "LEAK! 产物中出现凭据值（前缀 ${v:0:6}…）" >&2
+    LEAKED=1
+  fi
+done
+# 形态兜底：GitHub token 前缀 / 高熵长串
+if grep -rlE "(ghp_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,}|gho_[A-Za-z0-9]{30,})" dist 2>/dev/null | head -3 | grep -q .; then
+  echo "LEAK! 产物中出现 GitHub token 形态字符串" >&2
   LEAKED=1
 fi
 [ "$LEAKED" -eq 0 ] || { echo "❌ 产物包含非站点文件，已中止发布" >&2; exit 1; }

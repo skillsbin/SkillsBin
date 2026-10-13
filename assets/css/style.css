@@ -604,4 +604,8 @@ code, pre, .mono { font-family: var(--font-mono); font-size: 12.5px; }
   -webkit-tap-highlight-color: transparent;
 }
 .desc-toggle:hover { text-decoration: underline; }
+/* 「展开全文」与来源说明同一行，仅在有说明时出现 */
+.desc-foot { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+.desc-foot .desc-toggle { margin-top: 0; }
+.desc-note { font-size: 12px; color: var(--c-text-3); }
 
