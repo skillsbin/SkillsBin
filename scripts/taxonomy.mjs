@@ -14,7 +14,12 @@ export const CATEGORIES = {
   自动化: { slug: 'automation', icon: 'i-sliders', intro: '工作流编排、定时任务、浏览器操作、CI 集成类的 skill。这类 skill 会真实产生副作用，安装前建议先看清它调用了哪些外部命令。' },
   运维: { slug: 'ops', icon: 'i-shield', intro: '部署、容器、集群、监控、日志排查类的 skill。多数依赖外部命令（docker / kubectl / cloud CLI），对执行环境有明确要求。' },
   生活: { slug: 'life', icon: 'i-mail', intro: '日历、邮件、笔记、健康、出行、记账类的 skill。把日常工具接到 agent 上，属于「个人助理」方向，通常需要账号授权或 API Key。' },
-  未分类: { slug: 'uncategorized', icon: 'i-info', intro: '尚未归入八大用途的 skill。多数是新仓库或描述过短，分类规则尚未覆盖 —— 这类占比超过 20% 时说明分类关键词需要补充。' },
+  办公: { slug: 'office', icon: 'i-briefcase', intro: '会议纪要、文档格式转换、演示与表格批量处理、合同与表单类的 skill。把「文件在几个工具之间来回搬」的动作压实，多数要读写本地文件，安装时注意授予的目录范围。' },
+  媒体: { slug: 'media', icon: 'i-play', intro: '图像、音频、视频的生成与处理类 skill——文生图、配音合成、字幕生成、剪辑与转码。通常依赖外部模型服务或 ffmpeg 一类命令行工具，产出是媒体文件而不是文本。' },
+  营销: { slug: 'marketing', icon: 'i-megaphone', intro: 'SEO、社媒运营、广告投放、增长实验与转化文案类的 skill。产出会直接对外发布，使用前建议先确认品牌口径与平台规则，避免 agent 自行改写对外表达。' },
+  安全: { slug: 'security', icon: 'i-lock', intro: '漏洞扫描、渗透辅助、依赖与密钥审计、合规检查类的 skill。这类能力本身带攻击性，务必只在已获授权的目标上使用，并留意操作留痕与法律边界。' },
+  学习: { slug: 'learning', icon: 'i-cap', intro: '知识梳理、讲解教学、闪卡与复习计划、读书笔记类的 skill。常用于把一堆资料压缩成可反复复习的结构，对长文本读取与结构化输出能力有要求。' },
+  未分类: { slug: 'uncategorized', icon: 'i-info', intro: '尚未归入其他用途的 skill。多数是新仓库或描述过短，分类规则尚未覆盖 —— 这类占比超过 20% 时说明分类关键词需要补充。' },
 };
 
 export const HOSTS = {
@@ -40,7 +45,7 @@ function slugHost(h) {
 export const hostSlug = (h) => (HOSTS[h] ? h : slugHost(h));
 
 /** 未分类之外的分类顺序（用于首页宫格与导航） */
-export const CATEGORY_ORDER = ['编码', '写作', '研究', '数据', '设计', '自动化', '运维', '生活'];
+export const CATEGORY_ORDER = ['编码', '写作', '研究', '数据', '设计', '自动化', '运维', '办公', '媒体', '营销', '安全', '学习', '生活'];
 
 /** 宿主展示顺序 */
 export const HOST_ORDER = ['claude-code', 'cursor', 'cline', 'codex', 'mcp', 'gemini', 'windsurf', 'generic'];

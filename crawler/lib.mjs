@@ -77,10 +77,14 @@ export function inferHosts(treePaths, repoMeta = {}, hostRules = {}) {
  * 用途分类：按关键词命中数取最高者（不是先命中先归属）。
  * 理由：单纯「先命中先归属」会让「编码」吃掉一切 —— 几乎所有 skill 描述里都有 code 一词。
  * ASCII 关键词用词边界匹配（避免 claude-code 里的 code 误命中），CJK 用子串匹配。
+ *
+ * 权重（categoryWeights，config 可配，默认 1）：「编码」的关键词（code/test/api…）
+ * 在所有技术类仓库描述里都高频出现，纯计数会让它压过领域类。降权后按「命中数 × 权重」
+ * 比较，编码仍能在只有技术词的仓库上胜出，但遇到明确的领域词时让位。
  */
 const escRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
-export function inferCategory(repoMeta, skills, categoryRules) {
+export function inferCategory(repoMeta, skills, categoryRules, categoryWeights = {}) {
   const hay = [
     repoMeta.description || '',
     ...skills.map((s) => `${s.name} ${s.desc} ${(s.triggers || []).join(' ')}`),
@@ -97,7 +101,7 @@ export function inferCategory(repoMeta, skills, categoryRules) {
         n++;
       }
     }
-    if (n) scores[cat] = n;
+    if (n) scores[cat] = n * (categoryWeights[cat] ?? 1);
   }
 
   const best = Object.entries(scores).sort((a, b) => b[1] - a[1])[0];

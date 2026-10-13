@@ -230,7 +230,7 @@ for (let i = 0; i < queue.length; i++) {
     tiers: CONFIG.tiers,
     now,
   });
-  const category = inferCategory(meta, skills, CONFIG.categoryRules || {});
+  const category = inferCategory(meta, skills, CONFIG.categoryRules || {}, CONFIG.categoryWeights || {});
 
   const item = {
     id: rid,

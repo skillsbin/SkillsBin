@@ -45,6 +45,11 @@ export const ICON_SPRITE = `
 <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3.4" y="5.4" width="17.2" height="13.2" rx="2"/><path d="m3.8 6.6 8.2 6 8.2-6"/></symbol>
 
 <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 10.6 12 4.2l8 6.4V19a1.4 1.4 0 0 1-1.4 1.4H5.4A1.4 1.4 0 0 1 4 19Z"/><path d="M9.6 20.4v-5.4h4.8v5.4"/></symbol>
+<symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="3.4" y="7.6" width="17.2" height="11.8" rx="2.2"/><path d="M9.2 7.6V5.8a1.6 1.6 0 0 1 1.6-1.6h2.4a1.6 1.6 0 0 1 1.6 1.6v1.8M3.4 12.6h17.2"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.4"/><path d="m10.2 8.6 5.6 3.4-5.6 3.4Z"/></symbol>
+<symbol id="i-megaphone" viewBox="0 0 24 24"><path d="M4 10.4h3.4L14.6 7v10.2L7.4 13.6H4Z"/><path d="M17.6 9.4a3.6 3.6 0 0 1 0 5.2"/><path d="M8 13.6v3.6"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.6" y="10.4" width="14.8" height="9.4" rx="2.2"/><path d="M8.4 10.4V7.8a3.6 3.6 0 0 1 7.2 0v2.6M12 14.2v2.6"/></symbol>
+<symbol id="i-cap" viewBox="0 0 24 24"><path d="m3.4 9.6 8.6-4.2 8.6 4.2-8.6 4.2Z"/><path d="M7.8 11.8v4.4c0 1 1.9 1.8 4.2 1.8s4.2-.8 4.2-1.8v-4.4"/></symbol>
 <symbol id="i-host-generic" viewBox="0 0 24 24"><path d="M12 2.8 20.6 7.6v8.8L12 21.2 3.4 16.4V7.6Z"/><rect x="8.4" y="8.4" width="3" height="3" rx=".6" fill="currentColor" stroke="none"/><rect x="12.6" y="8.4" width="3" height="3" rx=".6" fill="currentColor" stroke="none"/><rect x="8.4" y="12.6" width="3" height="3" rx=".6" fill="currentColor" stroke="none"/><rect x="12.6" y="12.6" width="3" height="3" rx=".6" fill="currentColor" stroke="none"/></symbol>
 <symbol id="i-host-claude-code" viewBox="0 0 24 24"><path d="M12 3.2v6.2M12 14.6v6.2M3.2 12h6.2M14.6 12h6.2M6 6l3.4 3.4M14.6 14.6 18 18M18 6l-3.4 3.4M9.4 14.6 6 18"/></symbol>
 <symbol id="i-host-cursor" viewBox="0 0 24 24"><path d="M6.2 3.8 18.6 12l-6.2 1.6L9.6 20Z"/></symbol>

@@ -48,50 +48,87 @@ const add = (full, extra) => {
 
 console.log('\n▶ 发现层');
 
-/* S5 仓库搜索（30 次/分钟） */
+/* S5 仓库搜索（30 次/分钟）—— 支持分页，否则每轮只看到各 topic 的前 50 个（永远是同一批） */
+const repoPages = Math.max(1, D.queryPages ?? 1);
 for (const q of D.queries || []) {
   const query = q
     .replace('{minStars}', String(D.minStars ?? 150))
     .replace('{daysAgo}', new Date(Date.now() - (D.daysAgo ?? 60) * 86400000).toISOString().slice(0, 10));
-  const r = await gh.search(`/search/repositories?q=${encodeURIComponent(query)}&sort=stars&order=desc&per_page=50`);
-  const items = r.data?.items || [];
   let kept = 0;
-  for (const it of items) {
-    if (it.fork || it.archived) continue;
-    if ((it.stargazers_count || 0) < (D.minStars ?? 150)) continue;
-    add(it.full_name, { source: 'repo-search', stars: it.stargazers_count, desc: it.description || '', pushedAt: it.pushed_at });
-    kept++;
-  }
-  console.log(`  · repo  ${query}  → ${items.length} 命中，收 ${kept}`);
-}
-
-/* S4 代码搜索（独立配额 10 次/分钟，必须带 token）—— 每轮限次 */
-if (WITH_CODE && D.codeQueries?.length) {
-  let used = 0;
-  for (const q of D.codeQueries) {
-    if (used >= (D.codeSearchPerRun ?? 10)) break;
-    const r = await gh.search(`/search/code?q=${encodeURIComponent(q)}&per_page=100`);
-    if (r.status === 403 || r.status === 429) {
-      console.log(`  · code  ${q}  → 限流，跳过`);
-      continue;
-    }
-    used++;
+  for (let page = 1; page <= repoPages; page++) {
+    const r = await gh.search(`/search/repositories?q=${encodeURIComponent(query)}&sort=stars&order=desc&per_page=50&page=${page}`);
     const items = r.data?.items || [];
-    let kept = 0;
+    if (!items.length) break;
     for (const it of items) {
-      const repo = it.repository;
-      if (!repo || repo.fork || repo.archived) continue;
-      add(repo.full_name, { source: 'code-search', stars: repo.stargazers_count, desc: repo.description || '', pushedAt: repo.pushed_at });
+      if (it.fork || it.archived) continue;
+      if ((it.stargazers_count || 0) < (D.minStars ?? 150)) continue;
+      add(it.full_name, { source: 'repo-search', stars: it.stargazers_count, desc: it.description || '', pushedAt: it.pushed_at });
       kept++;
     }
-    console.log(`  · code  ${q}  → ${r.data?.total_count ?? '?'} 命中，收 ${kept}`);
   }
+  console.log(`  · repo  ${query}  → 收 ${kept}（${repoPages} 页）`);
 }
 
-/* 候选按星标排序，单轮上限 */
+/* S4 代码搜索（独立配额 10 次/分钟，必须带 token）—— 每轮限次
+   命中的仓库按定义**含 SKILL.md / marketplace.json / .clinerules**，是最靠谱的候选来源。
+   ⚠️ 坑：/search/code 返回的 repository 对象**不含 stargazers_count / pushed_at**
+   （GitHub 只给 id/name/full_name/owner/description/fork/...），若直接入库，
+   后面的 stars>=minStars 过滤会把它们全部筛掉（表现为「候选清一色高星通用仓库」）。
+   因此先收集去重，再对前 codeEnrichLimit 个补查 /repos/:owner/:repo 拿真实星标。 */
+if (WITH_CODE && D.codeQueries?.length) {
+  const codePages = Math.max(1, D.codeQueryPages ?? 1);
+  const limit = D.codeSearchPerRun ?? 10;
+  const codeFound = new Map();
+  let used = 0;
+  outer: for (const q of D.codeQueries) {
+    let kept = 0;
+    for (let page = 1; page <= codePages; page++) {
+      if (used >= limit) break outer;
+      const r = await gh.search(`/search/code?q=${encodeURIComponent(q)}&per_page=100&page=${page}`);
+      if (r.status === 403 || r.status === 429) {
+        console.log(`  · code  ${q}  → 限流，跳过（第 ${page} 页）`);
+        continue outer;
+      }
+      used++;
+      const items = r.data?.items || [];
+      if (!items.length) break;
+      for (const it of items) {
+        const repo = it.repository;
+        if (!repo || repo.fork || repo.archived) continue;
+        const key = repo.full_name.toLowerCase();
+        if (inWatchlist.has(key)) continue;
+        if (!codeFound.has(key)) codeFound.set(key, { key: repo.full_name, desc: repo.description || '' });
+        kept++;
+      }
+    }
+    console.log(`  · code  ${q}  → 收 ${kept}`);
+  }
+
+  // 补查星标（有上限，避免刷爆核心配额）
+  const enrichLimit = D.codeEnrichLimit ?? 200;
+  const toEnrich = [...codeFound.values()].slice(0, enrichLimit);
+  let enriched = 0;
+  for (const c of toEnrich) {
+    const r = await gh.get(`/repos/${c.key}`);
+    const it = r.data;
+    if (!it || it.fork || it.archived) continue;
+    add(c.key, { source: 'code-search', stars: it.stargazers_count, desc: it.description || c.desc || '', pushedAt: it.pushed_at });
+    enriched++;
+  }
+  console.log(`  · code  补查星标 ${enriched}/${toEnrich.length} 个（去重后代码搜索候选 ${codeFound.size}）`);
+}
+
+/* 候选截断：**代码搜索优先**（已证明含 skill 文件），再按星标排。
+   原实现纯按星标截断，会把几万星的通用 AI 仓库（AutoGPT / prompts.chat 之类，
+   往往不含 SKILL.md）塞满配额，真正含 skill 的低星仓库全被挤掉。 */
+const srcDist = {};
+for (const c of found.values()) srcDist[c.source] = (srcDist[c.source] || 0) + 1;
+console.log(`\n  去重后汇总：${JSON.stringify(srcDist)}（共 ${found.size}）`);
+
+const SRC_RANK = { 'code-search': 0, 'repo-search': 1 };
 const candidates = [...found.values()]
   .filter((c) => (c.stars || 0) >= (D.minStars ?? 150))
-  .sort((a, b) => (b.stars || 0) - (a.stars || 0))
+  .sort((a, b) => (SRC_RANK[a.source] ?? 2) - (SRC_RANK[b.source] ?? 2) || (b.stars || 0) - (a.stars || 0))
   .slice(0, D.maxNewPerRun ?? 25)
   .map((c) => ({ ...c, discoveredAt: new Date().toISOString() }));
 
