@@ -23,6 +23,10 @@ on:
   schedule:
     - cron: '0 */12 * * *'   # 每 12 小时（UTC）；config.limits.refreshHours=20 必须 > 12
   workflow_dispatch:
+  # 手动立刻跑一轮的入口：PAT 只有 fine-grained 的 Contents 权限时无法调 workflow_dispatch
+  # （需要 Actions: write），但可以 POST /repos/:o/:r/dispatches 发此事件。
+  repository_dispatch:
+    types: [sync-now]
 
 permissions:
   contents: write
