@@ -204,15 +204,7 @@ code, pre, .mono { font-family: var(--font-mono); font-size: 12.5px; }
 .card-meta { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--c-text-3); margin-top: auto; flex-wrap: wrap; }
 .card-meta .dot { width: 3px; height: 3px; border-radius: 50%; background: currentColor; opacity: .5; }
 
-/* 分类 / 宿主宫格 */
-.tile {
-  display: flex; flex-direction: column; gap: 6px; padding: 15px;
-  background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--r-lg);
-}
-.tile:hover { border-color: var(--c-accent-border); color: var(--c-text); }
-.tile .t-ico { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; background: var(--c-accent-soft); color: var(--c-accent); font-size: 16px; }
-.tile b { font-size: 14px; font-weight: 600; }
-.tile span { font-size: 12px; color: var(--c-text-3); }
+/* 药丸（宿主 / 用途分类共用） */
 
 .chip-row { display: flex; gap: 8px; flex-wrap: wrap; }
 .chip {
@@ -572,19 +564,9 @@ code, pre, .mono { font-family: var(--font-mono); font-size: 12.5px; }
     justify-content: flex-start; padding: 9px 12px;
     border-radius: var(--r-lg); font-size: 13px; color: var(--c-text);
   }
-  /* 用途大卡片 → 两列横条（图标居左跨两行，名称+数量居右；原来单列 8 张约占 1000px 高） */
-  .grid.cat-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-  .grid.cat-tiles .tile {
-    display: grid; grid-template-columns: 28px 1fr; grid-template-rows: auto auto;
-    column-gap: 10px; row-gap: 0; align-items: center; padding: 10px 11px;
-  }
-  .grid.cat-tiles .tile .t-ico { grid-row: 1 / span 2; width: 28px; height: 28px; font-size: 15px; }
-  .grid.cat-tiles .tile b { font-size: 13.5px; }
-  .grid.cat-tiles .tile span { font-size: 11.5px; }
+  /* 用途分类与宿主同款药丸流式布局（桌面/移动一致，无需特殊处理） */
 }
 @media (max-width: 520px) {
-  /* 压过 cols-4 的单列折叠，用途宫格保持两列 */
-  .grid.cat-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   /* 面包屑窄屏必然换行，胶囊圆角改普通圆角避免变形 */
   .breadcrumb { border-radius: var(--r-lg); font-size: 12px; }
 }

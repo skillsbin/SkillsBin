@@ -261,10 +261,10 @@ const homeContent = `
 <section class="section">
   <div class="container">
     <div class="section-head"><h2>按用途浏览</h2></div>
-    <div class="grid cols-4 cat-tiles">
+    <div class="chip-row cat-chips">
       ${CATEGORY_ORDER.filter((c) => catCount[c]).map((c) => {
         const m = catMeta(c);
-        return `<a class="tile" href="/c/${m.slug}/"><span class="t-ico"><svg class="icon" aria-hidden="true"><use href="#${m.icon}"></use></svg></span><b>${esc(c)}</b><span>${catCount[c]} 个仓库</span></a>`;
+        return `<a class="chip" href="/c/${m.slug}/"><svg class="icon" aria-hidden="true"><use href="#${m.icon}"></use></svg>${esc(c)} <span style="color:var(--c-text-3)">${catCount[c]}</span></a>`;
       }).join('')}
     </div>
   </div>
