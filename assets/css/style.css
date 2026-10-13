@@ -570,3 +570,19 @@ code, pre, .mono { font-family: var(--font-mono); font-size: 12.5px; }
   .grid.cat-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
+/* ------------------------------ 详情页长描述截断 ------------------------------ */
+/* 超过阈值（约 220 字符）时默认只显示 4 行，点「展开全文」看完整内容；
+   正文始终在 DOM 中，不影响 SEO 与无 JS 场景的文本可读性 */
+.desc-wrap.closed .lead {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.desc-toggle {
+  margin-top: 4px; padding: 0; border: 0; background: none;
+  cursor: pointer; font: inherit; font-size: 13px; color: var(--c-accent);
+  -webkit-tap-highlight-color: transparent;
+}
+.desc-toggle:hover { text-decoration: underline; }
+

@@ -429,6 +429,19 @@
   }
 
   /* ============================ 启动 ============================ */
+  /* ============================ 10. 详情页长描述展开/收起 ============================ */
+  function initDescToggle() {
+    $$('.desc-toggle').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var wrap = btn.closest('.desc-wrap');
+        if (!wrap) return;
+        var closed = wrap.classList.toggle('closed');
+        btn.textContent = closed ? '展开全文' : '收起';
+        btn.setAttribute('aria-expanded', String(!closed));
+      });
+    });
+  }
+
   function boot() {
     initTheme();
     initSearchBoxes();
@@ -437,6 +450,7 @@
     initListPage();
     initTabs();
     initMobileFilters();
+    initDescToggle();
     initSubmit();
     initSynced();
   }

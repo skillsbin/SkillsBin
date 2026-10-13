@@ -115,6 +115,17 @@ function crumbs(list) {
     .join('')}</nav>`;
 }
 
+/** 详情页描述：超长（含原文）包一层可展开/收起的截断容器，避免触发词罗列式长描述刷屏。
+ *  正文始终在 DOM 里（SEO），截断只是视觉层；展开动作由 app.js 切换 .closed。 */
+function descLead(main, orig = '') {
+  const hasEn = !!main && !!orig;
+  const total = String(main || '').length + (hasEn ? String(orig).length : 0);
+  const lead = `<p class="lead">${esc(main || '（未填写描述）')}${hasEn ? `<span class="en">原文：${esc(orig)}</span>` : ''}</p>`;
+  return total > 220
+    ? `<div class="desc-wrap closed">${lead}<button class="desc-toggle" type="button" aria-expanded="false">展开全文</button></div>`
+    : lead;
+}
+
 /** 列表页筛选栏（筛选在浏览器端完成，条件写进地址栏便于分享；不影响预渲染的 SEO 正文）
  *  外层 details/summary：桌面端 CSS 隐藏 summary 恒展开；移动端由 app.js 收起为折叠面板 */
 function filterSidebar() {
@@ -298,7 +309,7 @@ for (const r of repos) {
       <span class="repo-avatar"><img src="https://github.com/${attr(r.owner)}.png?size=104" alt="" loading="lazy" onerror="this.remove()"><svg class="icon" aria-hidden="true" style="position:absolute"><use href="#i-hexagons"></use></svg></span>
       <div style="flex:1;min-width:260px">
         <h1>${esc(r.owner)}/${esc(r.repo)}</h1>
-        <p class="lead">${esc(zh || r.desc || '（仓库未填写描述）')}${zh && r.desc ? `<span class="en">${esc(r.desc)}</span>` : ''}</p>
+        ${descLead(zh || r.desc || '（仓库未填写描述）', zh && r.desc ? r.desc : '')}
         <div class="tagline">
           ${tierBadge(r.quality.tier)}
           ${catChip(r.category)}
@@ -376,11 +387,11 @@ for (const { repo: r, skill: s } of withPages) {
       site: SITE, title: `${s.name}`, base: '', active: '', ogType: 'article',
       description: `${summary.slice(0, 100)} — 宿主：${r.hosts.map((h) => hostMeta(h).label).join(' / ')} · 来自 ${r.owner}/${r.repo}`.slice(0, 155),
       canonical: `${ORIGIN}${url}`,
-      content: `${crumbs([{ label: '首页', href: '/' }, { label: '全部 Skill', href: '/skills/' }, { label: r.category, href: `/c/${catMeta(r.category).slug}/` }, { label: s.name }])}
+      content: `${crumbs([{ label: '首页', href: '/' }, { label: '全部 Skill', href: '/skills/' }, { label: `${r.owner}/${r.repo}`, href: REPO_URL(r) }, { label: s.name }])}
 <div class="container">
   <div class="detail-hero">
     <h1>${esc(s.name)} ${tierBadge(r.quality.tier)}</h1>
-    <p class="lead">${esc(summary)}${zh && s.desc ? `<span class="en">原文：${esc(s.desc)}</span>` : ''}</p>
+    ${descLead(summary, zh ? s.desc : '')}
     <div class="tagline">
       ${catChip(r.category)}
       ${r.hosts.map((h) => hostChip(h)).join('')}
