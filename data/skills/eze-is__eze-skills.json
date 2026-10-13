@@ -1,0 +1,95 @@
+{
+  "repo": "eze-is/eze-skills",
+  "commit": "50ac6f526583bb45b1fe44a701105c73048f5c0b",
+  "branch": "main",
+  "fetchedAt": "2026-10-13T04:50:44.014Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "audio-transcribe",
+      "name": "audio-transcribe",
+      "dir": "audio-transcribe",
+      "path": "audio-transcribe/SKILL.md",
+      "desc": "录音文件转录能力。将音频文件转为结构化文本（带时间戳 + 说话人标识）。 这是一个场景能力 skill，类似 web-access——只负责\"把声音变成文字\"，不决定文字用来做什么。 触发场景：用户提供录音文件、要求转录音频、处理语音文件。",
+      "descZh": "",
+      "triggers": [],
+      "version": "1.0.0",
+      "license": "",
+      "allowedTools": [],
+      "author": "一泽Eze",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": true,
+        "network": true,
+        "bins": [
+          "python3",
+          "pip",
+          "ffmpeg",
+          "brew"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/eze-is/eze-skills.git",
+        "copy": "cp -r audio-transcribe ~/.claude/skills/audio-transcribe",
+        "raw": "https://raw.githubusercontent.com/eze-is/eze-skills/50ac6f526583bb45b1fe44a701105c73048f5c0b/audio-transcribe/SKILL.md",
+        "saveAs": "~/.claude/skills/audio-transcribe/SKILL.md",
+        "marketplace": "/plugin marketplace add eze-is/eze-skills"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:c1acf438898e888862df9f25aaecd082db6289c8a7feb1dd9e4873d7522257a4",
+      "bytes": 7915,
+      "wordCount": 479,
+      "repoLicense": "",
+      "commit": "50ac6f526583bb45b1fe44a701105c73048f5c0b",
+      "branch": "main",
+      "body": "---\nname: audio-transcribe\ndescription: |\n  录音文件转录能力。将音频文件转为结构化文本（带时间戳 + 说话人标识）。\n  这是一个场景能力 skill，类似 web-access——只负责\"把声音变成文字\"，不决定文字用来做什么。\n  触发场景：用户提供录音文件、要求转录音频、处理语音文件。\nmetadata:\n  author: 一泽Eze\n  version: \"1.0.0\"\n  created: 2026-04-10\n  depends:\n    - ffmpeg\n    - dashscope (pip)\n    - pyannote.audio (pip, 可选)\n---\n\n# 录音转录能力\n\n## 定位\n\n**场景能力 skill**，对标 web-access 的角色。\n\n- web-access：给你联网能力（搜索/抓取/浏览），不管你拿内容做什么\n- audio-transcribe：给你录音转文字能力（转录/说话人分离），不管你拿文字做什么\n\n转录产出是**原料**，不是终态。调用方决定这些文字变成会议纪要、周报素材、播客摘要还是别的什么。\n\n## 前置检查\n\n使用前先检查环境依赖：\n\n```bash\nbash ~/.claude/skills/audio-transcribe/scripts/check-deps.sh\n```\n\n未通过时引导用户安装：\n- **ffmpeg**：音频标准化必需。`brew install ffmpeg`\n- **dashscope**：阿里云 ASR 服务。`pip install dashscope`\n- **DASHSCOPE_API_KEY**：阿里云百炼 API Key\n- **HF_TOKEN**（首次下载 pyannote 模型时需要）：HuggingFace token\n- **pyannote.audio**（可选）：说话人分离。`pip install pyannote.audio`，需接受模型协议\n\n**密钥持久化**：将 API Key 存入 `~/.claude/.env`，脚本自动加载，跨会话持久生效：\n```\nDASHSCOPE_API_KEY=sk-xxx\nHF_TOKEN=hf_xxx\n```\n优先级：环境变量 > `~/.claude/.env`。pyannote 模型缓存到本地后，后续不再需要 HF_TOKEN。\n\n## 工作流\n\n```\n原始录音（.wav/.m4a/.mp3/.aac/...各种格式和采样率）\n    ↓  Stage 1: 标准化\n标准化音频（16kHz mono MP3，ASR 最优格式）\n    → 存放：/tmp/audio-transcribe/{batch-id}/normalized/\n    ↓  Stage 2: 上传 + ASR 转录\n原始转录句子（字级时间戳）\n    ↓  Stage 3: 说话人分离\n带说话人标识的句子\n    ↓  Stage 4: 格式化输出\n结构化转录文本（.transcript.md + .transcript.json）\n    → 存放：调用方指定的 --output-dir，或源文件同目录\n```\n\n### 说话人分离的重要性\n\n**说话人分离是默认行为，不是可选项。** 多人对话录音中，\"谁说了什么\"是信息的核心维度——没有说话人标识的转录文本会丢失归属关系，下游加工（会议纪要、调研提炼）的质量会大幅下降。\n\n- **默认开启**：除非用户明确指定 `--no-diarization`（如独白、播客等单人场景），转录时必须执行说话人分离\n- **前置检查**：转录前确认 HF_TOKEN 已配置（`~/.claude/.env` 或环境变量），pyannote 模型已缓存。缺失时应提醒用户，而非静默跳过\n- **补跑机制**：如果转录已完成但缺少说话人分离（如首次配置 HF_TOKEN 之前的转录），使用 `--diarize-only` 补跑——复用已有的 ASR 结果（`.transcript.json`），只跑 pyannote 说话人分离并更新输出，避免重复消耗 ASR 资源\n\n### 产物存放规则\n\n| 产物 | 性质 | 存放位置 |\n|------|------|---------|\n| 标准化音频 | 纯中间产物，转录完即废弃 | `/tmp/audio-transcribe/{batch-id}/` |\n| `.transcript.md` | 可读的转录文本，调用方的输入 | `--output-dir` 或源文件同目录 |\n| `.transcript.json` | 原始数据（字级时间戳等），溯源用 | 同上 |\n\n## 脚本 API\n\n以下命令中 `transcribe.py` 均指 `python3 ~/.claude/skills/audio-transcribe/scripts/transcribe.py`。\n\n### 基本用法\n\n```bash\n# 单文件转录\ntranscribe.py meeting.m4a\n\n# 批量转录（每个文件独立处理）\ntranscribe.py file1.m4a file2.wav file3.mp3\n\n# 指定输出目录\ntranscribe.py *.m4a --output-dir /path/to/transcripts/\n\n# 同一场会议的多段录音（合并时间轴为一份转录）\ntranscribe.py seg1.wav seg2.wav seg3.wav --merge\n\n# 跳过说话人分离\ntranscribe.py audio.mp3 --no-diarization\n\n# 补跑说话人分离（复用已有 ASR 转录，只跑 diarization）\ntranscribe.py audio.m4a --diarize-only --output-dir /path/to/transcripts/\n```\n\n### 参数说明\n\n| 参数 | 说明 | 默认值 |\n|------|------|--------|\n| `files` | 音频文件路径（支持多个） | 必填 |\n| `--output-dir` | 转录文件输出目录 | 源文件同目录 |\n| `--diarize-only` | 仅补跑说话人分离（需已有 .transcript.json） | 否 |\n| `--merge` | 多文件视为同一场会议，合并时间轴输出一份转录 | 否（每文件独立） |\n| `--no-diarization` | 跳过说话人分离（独白、播客等不需要） | 否 |\n| `--hf-token` | HuggingFace token（也可用 HF_TOKEN 环境变量） | 环境变量 |\n\n### 输出文件\n\n每个音频文件（或 merge 模式下的一组文件）产出两个文件：\n\n**`{name}.transcript.md`** — 可读转录文本：\n```\n# 转录：{原始文件名}\n\n> 时长：42:15 | 说话人：3 | 转录时间：2026-04-10\n\n[00:00] SPEAKER_00: 开场白...\n[00:05] SPEAKER_01: 回应...\n[01:23] SPEAKER_00: 继续讨论...\n```\n\n**`{name}.transcript.json`** — 结构化原始数据：\n```json\n{\n  \"source_files\": [\"meeting.m4a\"],\n  \"duration_seconds\": 2535,\n  \"speakers\": [\"SPEAKER_00\", \"SPEAKER_01\", \"SPEAKER_02\"],\n  \"sentences\": [\n    {\n      \"begin_time\": 0,\n      \"end_time\": 4500,\n      \"text\": \"开场白...\",\n      \"speaker\": \"SPEAKER_00\",\n      \"emotion\": \"neutral\",\n      \"words\": [...]\n    }\n  ]\n}\n```\n\n## 调用方集成模式\n\n### 模式 A：子 Agent 批量转录\n\n适合一次性处理多个录音（如 vc-report 收到 10+ 份路演录音）：\n\n```\n主 Agent\n  ├─ 子 Agent 1: transcribe.py file1.m4a --output-dir /tmp/...\n  ├─ 子 Agent 2: transcribe.py file2.m4a --output-dir /tmp/...\n  └─ ...\n  主 Agent 读取所有 .transcript.md，按自己的格式要求加工\n```\n\n每个子 Agent 独立处理一个文件，并行不冲突。\n\n### 模式 B：直接调用\n\n适合单文件或少量文件：\n\n```\nAgent 直接调用 transcribe.py → 读取 .transcript.md → 加工\n```\n\n### 调用方的职责\n\naudio-transcribe 产出的是**带时间戳和说话人的原始转录文本**。调用方负责：\n- 决定转录文本的**用途**（会议纪要？周报素材？日志？）\n- 决定**摘要格式**（投资洞察？行动项？关键决策？）\n- 决定**最终产出位置**（项目目录下的哪里）\n- 将说话人 ID（SPEAKER_00）**映射为真实身份**（如果需要）\n\n## 技术细节\n\n### 音频标准化参数\n\n```bash\nffmpeg -i input.wav -ar 16000 -ac 1 -b:a 24k output.mp3 -y\n```\n\n- `-ar 16000`：16kHz，ASR 标准采样率（人声频率在 8kHz 以下，无损失）\n- `-ac 1`：单声道（立体声对 ASR 无意义）\n- `-b:a 24k`：24kbps，语音清晰，体积极小（30 分钟约 5MB）\n\n### ASR 服务\n\n使用 `qwen3-asr-flash-filetrans`（阿里云百炼），异步长音频转写，最长支持 12 小时。\n\n转录流程需要 ASR 服务端可访问的音频 URL。使用 DashScope Files API 上传到阿里云 OSS，获取签名 URL 供 ASR 读取。\n\n### 说话人分离\n\n使用 pyannote/speaker-diarization-3.1（本地模型），与 ASR 结果按时间戳对齐。\n\n首次使用需在 HuggingFace 接受模型协议：\n- https://huggingface.co/pyannote/speaker-diarization-3.1\n- https://huggingface.co/pyannote/segmentation-3.0\n\n模型下载后本地缓存，后续完全离线。Apple MPS 加速可用。\n\n### 多段文件合并\n\n`--merge` 模式下，根据文件名中的时间戳计算各段的时间偏移，合并为统一时间轴。当前支持 DJI Mic 3 的文件名格式（`TX02_MIC001_20260319_090113.wav`），其他格式按文件顺序拼接。\n\n## References 索引\n\n| 文件 | 何时加载 |\n|------|---------|\n| `references/troubleshooting.md` | 遇到 ASR/pyannote 报错时 |\n",
+      "bodyMd": "# 录音转录能力\n\n## 定位\n\n**场景能力 skill**，对标 web-access 的角色。\n\n- web-access：给你联网能力（搜索/抓取/浏览），不管你拿内容做什么\n- audio-transcribe：给你录音转文字能力（转录/说话人分离），不管你拿文字做什么\n\n转录产出是**原料**，不是终态。调用方决定这些文字变成会议纪要、周报素材、播客摘要还是别的什么。\n\n## 前置检查\n\n使用前先检查环境依赖：\n\n```bash\nbash ~/.claude/skills/audio-transcribe/scripts/check-deps.sh\n```\n\n未通过时引导用户安装：\n- **ffmpeg**：音频标准化必需。`brew install ffmpeg`\n- **dashscope**：阿里云 ASR 服务。`pip install dashscope`\n- **DASHSCOPE_API_KEY**：阿里云百炼 API Key\n- **HF_TOKEN**（首次下载 pyannote 模型时需要）：HuggingFace token\n- **pyannote.audio**（可选）：说话人分离。`pip install pyannote.audio`，需接受模型协议\n\n**密钥持久化**：将 API Key 存入 `~/.claude/.env`，脚本自动加载，跨会话持久生效：\n```\nDASHSCOPE_API_KEY=sk-xxx\nHF_TOKEN=hf_xxx\n```\n优先级：环境变量 > `~/.claude/.env`。pyannote 模型缓存到本地后，后续不再需要 HF_TOKEN。\n\n## 工作流\n\n```\n原始录音（.wav/.m4a/.mp3/.aac/...各种格式和采样率）\n    ↓  Stage 1: 标准化\n标准化音频（16kHz mono MP3，ASR 最优格式）\n    → 存放：/tmp/audio-transcribe/{batch-id}/normalized/\n    ↓  Stage 2: 上传 + ASR 转录\n原始转录句子（字级时间戳）\n    ↓  Stage 3: 说话人分离\n带说话人标识的句子\n    ↓  Stage 4: 格式化输出\n结构化转录文本（.transcript.md + .transcript.json）\n    → 存放：调用方指定的 --output-dir，或源文件同目录\n```\n\n### 说话人分离的重要性\n\n**说话人分离是默认行为，不是可选项。** 多人对话录音中，\"谁说了什么\"是信息的核心维度——没有说话人标识的转录文本会丢失归属关系，下游加工（会议纪要、调研提炼）的质量会大幅下降。\n\n- **默认开启**：除非用户明确指定 `--no-diarization`（如独白、播客等单人场景），转录时必须执行说话人分离\n- **前置检查**：转录前确认 HF_TOKEN 已配置（`~/.claude/.env` 或环境变量），pyannote 模型已缓存。缺失时应提醒用户，而非静默跳过\n- **补跑机制**：如果转录已完成但缺少说话人分离（如首次配置 HF_TOKEN 之前的转录），使用 `--diarize-only` 补跑——复用已有的 ASR 结果（`.transcript.json`），只跑 pyannote 说话人分离并更新输出，避免重复消耗 ASR 资源\n\n### 产物存放规则\n\n| 产物 | 性质 | 存放位置 |\n|------|------|---------|\n| 标准化音频 | 纯中间产物，转录完即废弃 | `/tmp/audio-transcribe/{batch-id}/` |\n| `.transcript.md` | 可读的转录文本，调用方的输入 | `--output-dir` 或源文件同目录 |\n| `.transcript.json` | 原始数据（字级时间戳等），溯源用 | 同上 |\n\n## 脚本 API\n\n以下命令中 `transcribe.py` 均指 `python3 ~/.claude/skills/audio-transcribe/scripts/transcribe.py`。\n\n### 基本用法\n\n```bash\n# 单文件转录\ntranscribe.py meeting.m4a\n\n# 批量转录（每个文件独立处理）\ntranscribe.py file1.m4a file2.wav file3.mp3\n\n# 指定输出目录\ntranscribe.py *.m4a --output-dir /path/to/transcripts/\n\n# 同一场会议的多段录音（合并时间轴为一份转录）\ntranscribe.py seg1.wav seg2.wav seg3.wav --merge\n\n# 跳过说话人分离\ntranscribe.py audio.mp3 --no-diarization\n\n# 补跑说话人分离（复用已有 ASR 转录，只跑 diarization）\ntranscribe.py audio.m4a --diarize-only --output-dir /path/to/transcripts/\n```\n\n### 参数说明\n\n| 参数 | 说明 | 默认值 |\n|------|------|--------|\n| `files` | 音频文件路径（支持多个） | 必填 |\n| `--output-dir` | 转录文件输出目录 | 源文件同目录 |\n| `--diarize-only` | 仅补跑说话人分离（需已有 .transcript.json） | 否 |\n| `--merge` | 多文件视为同一场会议，合并时间轴输出一份转录 | 否（每文件独立） |\n| `--no-diarization` | 跳过说话人分离（独白、播客等不需要） | 否 |\n| `--hf-token` | HuggingFace token（也可用 HF_TOKEN 环境变量） | 环境变量 |\n\n### 输出文件\n\n每个音频文件（或 merge 模式下的一组文件）产出两个文件：\n\n**`{name}.transcript.md`** — 可读转录文本：\n```\n# 转录：{原始文件名}\n\n> 时长：42:15 | 说话人：3 | 转录时间：2026-04-10\n\n[00:00] SPEAKER_00: 开场白...\n[00:05] SPEAKER_01: 回应...\n[01:23] SPEAKER_00: 继续讨论...\n```\n\n**`{name}.transcript.json`** — 结构化原始数据：\n```json\n{\n  \"source_files\": [\"meeting.m4a\"],\n  \"duration_seconds\": 2535,\n  \"speakers\": [\"SPEAKER_00\", \"SPEAKER_01\", \"SPEAKER_02\"],\n  \"sentences\": [\n    {\n      \"begin_time\": 0,\n      \"end_time\": 4500,\n      \"text\": \"开场白...\",\n      \"speaker\": \"SPEAKER_00\",\n      \"emotion\": \"neutral\",\n      \"words\": [...]\n    }\n  ]\n}\n```\n\n## 调用方集成模式\n\n### 模式 A：子 Agent 批量转录\n\n适合一次性处理多个录音（如 vc-report 收到 10+ 份路演录音）：\n\n```\n主 Agent\n  ├─ 子 Agent 1: transcribe.py file1.m4a --output-dir /tmp/...\n  ├─ 子 Agent 2: transcribe.py file2.m4a --output-dir /tmp/...\n  └─ ...\n  主 Agent 读取所有 .transcript.md，按自己的格式要求加工\n```\n\n每个子 Agent 独立处理一个文件，并行不冲突。\n\n### 模式 B：直接调用\n\n适合单文件或少量文件：\n\n```\nAgent 直接调用 transcribe.py → 读取 .transcript.md → 加工\n```\n\n### 调用方的职责\n\naudio-transcribe 产出的是**带时间戳和说话人的原始转录文本**。调用方负责：\n- 决定转录文本的**用途**（会议纪要？周报素材？日志？）\n- 决定**摘要格式**（投资洞察？行动项？关键决策？）\n- 决定**最终产出位置**（项目目录下的哪里）\n- 将说话人 ID（SPEAKER_00）**映射为真实身份**（如果需要）\n\n## 技术细节\n\n### 音频标准化参数\n\n```bash\nffmpeg -i input.wav -ar 16000 -ac 1 -b:a 24k output.mp3 -y\n```\n\n- `-ar 16000`：16kHz，ASR 标准采样率（人声频率在 8kHz 以下，无损失）\n- `-ac 1`：单声道（立体声对 ASR 无意义）\n- `-b:a 24k`：24kbps，语音清晰，体积极小（30 分钟约 5MB）\n\n### ASR 服务\n\n使用 `qwen3-asr-flash-filetrans`（阿里云百炼），异步长音频转写，最长支持 12 小时。\n\n转录流程需要 ASR 服务端可访问的音频 URL。使用 DashScope Files API 上传到阿里云 OSS，获取签名 URL 供 ASR 读取。\n\n### 说话人分离\n\n使用 pyannote/speaker-diarization-3.1（本地模型），与 ASR 结果按时间戳对齐。\n\n首次使用需在 HuggingFace 接受模型协议：\n- https://huggingface.co/pyannote/speaker-diarization-3.1\n- https://huggingface.co/pyannote/segmentation-3.0\n\n模型下载后本地缓存，后续完全离线。Apple MPS 加速可用。\n\n### 多段文件合并\n\n`--merge` 模式下，根据文件名中的时间戳计算各段的时间偏移，合并为统一时间轴。当前支持 DJI Mic 3 的文件名格式（`TX02_MIC001_20260319_090113.wav`），其他格式按文件顺序拼接。\n\n## References 索引\n\n| 文件 | 何时加载 |\n|------|---------|\n| `references/troubleshooting.md` | 遇到 ASR/pyannote 报错时 |\n"
+    },
+    {
+      "slug": "daily-news",
+      "name": "daily-news",
+      "dir": "daily-news",
+      "path": "daily-news/SKILL.md",
+      "desc": "每日资讯日报生成器。三阶段工作流：获取元数据、生成摘要、输出日报。 触发场景：每日新闻、资讯日报、信息监控、新闻聚合、daily news、生成日报。 也用于添加新信源（自动分析网页并生成 method 文件）。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python3",
+          "pip"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/eze-is/eze-skills.git",
+        "copy": "cp -r daily-news ~/.claude/skills/daily-news",
+        "raw": "https://raw.githubusercontent.com/eze-is/eze-skills/50ac6f526583bb45b1fe44a701105c73048f5c0b/daily-news/SKILL.md",
+        "saveAs": "~/.claude/skills/daily-news/SKILL.md",
+        "marketplace": "/plugin marketplace add eze-is/eze-skills"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:d5fd9cdafe32356969518bee095f10bce8a93ba029e6712cd6f701f4e1d9021b",
+      "bytes": 3943,
+      "wordCount": 303,
+      "repoLicense": "",
+      "commit": "50ac6f526583bb45b1fe44a701105c73048f5c0b",
+      "branch": "main",
+      "body": "---\nname: daily-news\ndescription: |\n  每日资讯日报生成器。三阶段工作流：获取元数据、生成摘要、输出日报。\n  触发场景：每日新闻、资讯日报、信息监控、新闻聚合、daily news、生成日报。\n  也用于添加新信源（自动分析网页并生成 method 文件）。\n---\n\n# Daily News\n\n三阶段工作流：**获取元数据** → **生成摘要** → **输出日报**\n\n## 工作目录\n\n首次运行询问工作目录路径（如 `~/daily-news`），后续记住。\n\n```\n<workspace>/\n├── profile.yaml          # 用户画像（关于我、关注什么）\n├── settings.yaml         # 日报设置（语言、格式偏好）\n├── methods/              # 信源获取方法\n├── data/news.db          # SQLite 数据库\n└── output/YYYY-MM-DD.md  # 日报输出\n```\n\n初始化：\n```bash\nmkdir -p <workspace>/methods <workspace>/data <workspace>/output\ncp references/examples/settings.example.yaml <workspace>/settings.yaml\ncp references/examples/profile.example.yaml <workspace>/profile.yaml\npython3 scripts/db.py init --db <workspace>/data/news.db\n```\n\n初始化完成后将工作目录写入 `~/.claude/CLAUDE.md`：\n```\n- daily-news skill 的项目目录在：<workspace>\n```\n\n---\n\n## 阶段 1：获取元数据\n\n遍历 `<workspace>/methods/` 目录，对每个 method 文件执行抓取。\n\n**增量抓取**：每个信源独立追踪 `last_fetched_date`，存在 method YAML 和 DB 两处。默认增量模式；首次抓取时询问用户日期范围。\n\n```bash\npython3 scripts/db.py source-status --db <db> --source <source_id>\n```\n\n**去重**：三层保护——抓取时按 since 过滤 → `check-existing` 入库前预检 → DB UNIQUE 约束兜底。\n\n**Method 执行**：\n```bash\n# extends: rss\npython3 references/methods/rss.py --url \"<source_url>\"\n\n# extends: webfetch-smart 或 browser-smart\n# 遵循 web-access skill 进行联网操作\n\n# 无 extends：*.py 直接执行，*.md 按内容操作\n```\n\n入库：\n```bash\npython3 scripts/db.py add-items-incremental \\\n  --db <db> --source <source_id> --items '<json>' --since \"YYYY-MM-DD\"\n```\n\n---\n\n## 阶段 2：生成摘要\n\n```bash\npython3 scripts/db.py list-pending --db <workspace>/data/news.db\n```\n\n对每条内容，按 method 的 `detail_method` 字段获取正文（遵循 web-access skill），按 `references/prompts/summary.md` 生成摘要：\n\n```bash\npython3 scripts/db.py update-summary --db <db> --id <item_id> --data '<摘要JSON>'\n```\n\n---\n\n## 阶段 3：生成日报\n\n```bash\npython3 scripts/db.py list-today --db <workspace>/data/news.db\n```\n\n读取 `profile.yaml`，按 `references/prompts/report.md` 生成日报，输出到 `output/YYYY-MM-DD.md`。\n\n---\n\n## 用户画像\n\n`profile.yaml` 格式：\n```yaml\nabout: |\n  （关于我：身份、工作）\n\nfocus: |\n  （当前关注：最近在意的话题）\n\nlow_priority: |\n  （不太关心：降低优先级的内容）\n```\n\n---\n\n## 添加信源\n\n按优先级依次尝试：\n\n1. **检查 RSS** — 尝试 `/feed`、`/rss`、`/atom.xml`，或页面 `<link rel=\"alternate\">`，有则用 `extends: rss`\n2. **WebFetch 或浏览器** — 遵循 web-access skill，可达用 `extends: webfetch-smart`，否则 `extends: browser-smart`\n\n创建 method 文件详见 `references/schemas/method.md`\n\n---\n\n## 参考资料\n\n| 资料 | 路径 | 加载时机 |\n|------|------|---------|\n| Method 规范 | `references/schemas/method.md` | 添加信源时 |\n| 摘要提示词 | `references/prompts/summary.md` | 阶段 2 |\n| 日报提示词 | `references/prompts/report.md` | 阶段 3 |\n| RSS 方法 | `references/methods/rss.py` | 阶段 1（`extends: rss`） |\n| Method 元数据示例 | `references/examples/method-with-metadata.example.yaml` | 添加信源 / 配置增量追踪时 |\n| 网站部署 | `references/website-deployment.md` | 用户请求部署时 |\n\n## 依赖\n\n```bash\npip install pyyaml feedparser requests beautifulsoup4\n```\n",
+      "bodyMd": "# Daily News\n\n三阶段工作流：**获取元数据** → **生成摘要** → **输出日报**\n\n## 工作目录\n\n首次运行询问工作目录路径（如 `~/daily-news`），后续记住。\n\n```\n<workspace>/\n├── profile.yaml          # 用户画像（关于我、关注什么）\n├── settings.yaml         # 日报设置（语言、格式偏好）\n├── methods/              # 信源获取方法\n├── data/news.db          # SQLite 数据库\n└── output/YYYY-MM-DD.md  # 日报输出\n```\n\n初始化：\n```bash\nmkdir -p <workspace>/methods <workspace>/data <workspace>/output\ncp references/examples/settings.example.yaml <workspace>/settings.yaml\ncp references/examples/profile.example.yaml <workspace>/profile.yaml\npython3 scripts/db.py init --db <workspace>/data/news.db\n```\n\n初始化完成后将工作目录写入 `~/.claude/CLAUDE.md`：\n```\n- daily-news skill 的项目目录在：<workspace>\n```\n\n---\n\n## 阶段 1：获取元数据\n\n遍历 `<workspace>/methods/` 目录，对每个 method 文件执行抓取。\n\n**增量抓取**：每个信源独立追踪 `last_fetched_date`，存在 method YAML 和 DB 两处。默认增量模式；首次抓取时询问用户日期范围。\n\n```bash\npython3 scripts/db.py source-status --db <db> --source <source_id>\n```\n\n**去重**：三层保护——抓取时按 since 过滤 → `check-existing` 入库前预检 → DB UNIQUE 约束兜底。\n\n**Method 执行**：\n```bash\n# extends: rss\npython3 references/methods/rss.py --url \"<source_url>\"\n\n# extends: webfetch-smart 或 browser-smart\n# 遵循 web-access skill 进行联网操作\n\n# 无 extends：*.py 直接执行，*.md 按内容操作\n```\n\n入库：\n```bash\npython3 scripts/db.py add-items-incremental \\\n  --db <db> --source <source_id> --items '<json>' --since \"YYYY-MM-DD\"\n```\n\n---\n\n## 阶段 2：生成摘要\n\n```bash\npython3 scripts/db.py list-pending --db <workspace>/data/news.db\n```\n\n对每条内容，按 method 的 `detail_method` 字段获取正文（遵循 web-access skill），按 `references/prompts/summary.md` 生成摘要：\n\n```bash\npython3 scripts/db.py update-summary --db <db> --id <item_id> --data '<摘要JSON>'\n```\n\n---\n\n## 阶段 3：生成日报\n\n```bash\npython3 scripts/db.py list-today --db <workspace>/data/news.db\n```\n\n读取 `profile.yaml`，按 `references/prompts/report.md` 生成日报，输出到 `output/YYYY-MM-DD.md`。\n\n---\n\n## 用户画像\n\n`profile.yaml` 格式：\n```yaml\nabout: |\n  （关于我：身份、工作）\n\nfocus: |\n  （当前关注：最近在意的话题）\n\nlow_priority: |\n  （不太关心：降低优先级的内容）\n```\n\n---\n\n## 添加信源\n\n按优先级依次尝试：\n\n1. **检查 RSS** — 尝试 `/feed`、`/rss`、`/atom.xml`，或页面 `<link rel=\"alternate\">`，有则用 `extends: rss`\n2. **WebFetch 或浏览器** — 遵循 web-access skill，可达用 `extends: webfetch-smart`，否则 `extends: browser-smart`\n\n创建 method 文件详见 `references/schemas/method.md`\n\n---\n\n## 参考资料\n\n| 资料 | 路径 | 加载时机 |\n|------|------|---------|\n| Method 规范 | `references/schemas/method.md` | 添加信源时 |\n| 摘要提示词 | `references/prompts/summary.md` | 阶段 2 |\n| 日报提示词 | `references/prompts/report.md` | 阶段 3 |\n| RSS 方法 | `references/methods/rss.py` | 阶段 1（`extends: rss`） |\n| Method 元数据示例 | `references/examples/method-with-metadata.example.yaml` | 添加信源 / 配置增量追踪时 |\n| 网站部署 | `references/website-deployment.md` | 用户请求部署时 |\n\n## 依赖\n\n```bash\npip install pyyaml feedparser requests beautifulsoup4\n```\n"
+    }
+  ]
+}

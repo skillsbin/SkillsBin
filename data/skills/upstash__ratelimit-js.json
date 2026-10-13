@@ -1,0 +1,48 @@
+{
+  "repo": "upstash/ratelimit-js",
+  "commit": "fccd840d6e0f893f50bc677107fba4d913a414e3",
+  "branch": "main",
+  "fetchedAt": "2026-10-13T04:48:56.396Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "skills",
+      "name": "upstash-ratelimit-ts",
+      "dir": "skills",
+      "path": "skills/SKILL.md",
+      "desc": "Lightweight guidance for using the Redis Rate Limit TypeScript SDK, including setup steps, basic usage, and pointers to advanced algorithm, features, pricing, and traffic‑protection docs.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/upstash/ratelimit-js.git",
+        "copy": "cp -r skills ~/.claude/skills/skills",
+        "raw": "https://raw.githubusercontent.com/upstash/ratelimit-js/fccd840d6e0f893f50bc677107fba4d913a414e3/skills/SKILL.md",
+        "saveAs": "~/.claude/skills/skills/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:dc99873f4e95d54fdd1e6e38a26355107461004ec3d98f048a4e7528b4f26001",
+      "bytes": 1253,
+      "wordCount": 141,
+      "repoLicense": "MIT",
+      "commit": "fccd840d6e0f893f50bc677107fba4d913a414e3",
+      "branch": "main",
+      "body": "---\nname: upstash-ratelimit-ts\ndescription: Lightweight guidance for using the Redis Rate Limit TypeScript SDK, including setup steps, basic usage, and pointers to advanced algorithm, features, pricing, and traffic‑protection docs.\n---\n\n# Rate Limit TS SDK\n\n## Quick Start\n- Install the SDK and connect to Redis.\n- Create a rate limiter and apply it to incoming operations.\n\nExample:\n```ts\nimport { Ratelimit } from \"@upstash/ratelimit\";\nimport { Redis } from \"@upstash/redis\";\n\nconst redis = new Redis({ url: \"<url>\", token: \"<token>\" });\nconst limiter = new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(5, \"10s\") });\n\nconst { success } = await limiter.limit(\"user-id\");\nif (!success) {\n  // throttled\n}\n```\n\n## Other Skill Files\n- **algorithms.md**: Describes all available rate‑limiting algorithms and how they behave.\n- **pricing-cost.md**: Explains pricing, Redis cost implications, and operational considerations.\n- **features.md**: Lists SDK features such as prefixes, custom keys, and behavioral options.\n- **methods-getting-started.md**: Full method reference for the SDK's API and getting started guide.\n- **traffic-protection.md**: Guidance on applying rate limiting for traffic shaping, abuse prevention, and protection patterns.\n",
+      "bodyMd": "# Rate Limit TS SDK\n\n## Quick Start\n- Install the SDK and connect to Redis.\n- Create a rate limiter and apply it to incoming operations.\n\nExample:\n```ts\nimport { Ratelimit } from \"@upstash/ratelimit\";\nimport { Redis } from \"@upstash/redis\";\n\nconst redis = new Redis({ url: \"<url>\", token: \"<token>\" });\nconst limiter = new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(5, \"10s\") });\n\nconst { success } = await limiter.limit(\"user-id\");\nif (!success) {\n  // throttled\n}\n```\n\n## Other Skill Files\n- **algorithms.md**: Describes all available rate‑limiting algorithms and how they behave.\n- **pricing-cost.md**: Explains pricing, Redis cost implications, and operational considerations.\n- **features.md**: Lists SDK features such as prefixes, custom keys, and behavioral options.\n- **methods-getting-started.md**: Full method reference for the SDK's API and getting started guide.\n- **traffic-protection.md**: Guidance on applying rate limiting for traffic shaping, abuse prevention, and protection patterns.\n"
+    }
+  ]
+}

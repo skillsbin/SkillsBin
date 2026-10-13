@@ -1,0 +1,137 @@
+{
+  "repo": "legioncodeinc/honeycomb",
+  "commit": "19bc218c558af82fe93564aa743b5d09dcad9924",
+  "branch": "main",
+  "fetchedAt": "2026-10-13T04:50:20.677Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "assets",
+      "name": "honeycomb-design",
+      "dir": "assets",
+      "path": "assets/SKILL.md",
+      "desc": "Use this skill to generate well-branded interfaces and assets for Honeycomb (shared AI agent memory, a Legion Code × Activeloop product), either for production or throwaway prototypes/mocks/etc. Contains essential design guidelines, colors, type, fonts, assets, and UI kit components for prototyping.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "AGPL-3.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/legioncodeinc/honeycomb.git",
+        "copy": "cp -r assets ~/.claude/skills/assets",
+        "raw": "https://raw.githubusercontent.com/legioncodeinc/honeycomb/19bc218c558af82fe93564aa743b5d09dcad9924/assets/SKILL.md",
+        "saveAs": "~/.claude/skills/assets/SKILL.md",
+        "marketplace": "/plugin marketplace add legioncodeinc/honeycomb"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:b049c09b60ccb7781af2c00286b5b812f97fe06a946df3bfb370a584b6ed676f",
+      "bytes": 2299,
+      "wordCount": 286,
+      "repoLicense": "AGPL-3.0",
+      "commit": "19bc218c558af82fe93564aa743b5d09dcad9924",
+      "branch": "main",
+      "body": "---\nname: honeycomb-design\ndescription: Use this skill to generate well-branded interfaces and assets for Honeycomb (shared AI agent memory, a Legion Code × Activeloop product), either for production or throwaway prototypes/mocks/etc. Contains essential design guidelines, colors, type, fonts, assets, and UI kit components for prototyping.\nuser-invocable: true\n---\n\nRead the `readme.md` file within this skill, and explore the other available files.\n\nIf creating visual artifacts (slides, mocks, throwaway prototypes, etc), copy assets out and create static HTML files for the user to view. If working on production code, you can copy assets and read the rules here to become an expert in designing with this brand.\n\nIf the user invokes this skill without any other guidance, ask them what they want to build or design, ask some questions, and act as an expert designer who outputs HTML artifacts _or_ production code, depending on the need.\n\n## Where things are\n- `styles.css` — the one stylesheet to link; `@import`s everything in `tokens/`.\n- `tokens/` — colors (honey/pollinate/verified + surfaces), typography (Inter + JetBrains Mono), spacing/radii/motion, `@font-face`.\n- `components/` — React primitives: `core/` (Button, Badge, Card, Input) and `honeycomb/` (MemoryCard, Kpi). Each has a `.prompt.md` with usage.\n- `ui_kits/dashboard/` — interactive recreation of Honeycomb's daemon-served dashboard; the reference for any full Honeycomb surface.\n- `guidelines/cards/` — small specimen cards for every foundation.\n- `logos/` — logomark, wordmark, partner logos, fonts.\n\n## Non-negotiables\n- Dark-native, warm near-black canvas. Honey amber `#F7A823` is the one brand hue — **one saturated honey region per view** (scarcity rule). Pollinate violet is only for the Pollinating loop; verified-green only for source-backed states.\n- **Mono (JetBrains Mono) is the texture of trust** — every memory key, id, hash, path, count, timestamp, recall query.\n- Sentence case; lowercase `honeycomb` wordmark. No emoji. Icons = Lucide (1.5px stroke, geometric).\n- Cards = 1px border on `bg.elevated`, 12px radius, no shadow. The only expressive light is the honey/pollinate glow on one focused element.\n- Every recalled memory shows its **source** and **score**. Claims carry evidence.\n",
+      "bodyMd": "Read the `readme.md` file within this skill, and explore the other available files.\n\nIf creating visual artifacts (slides, mocks, throwaway prototypes, etc), copy assets out and create static HTML files for the user to view. If working on production code, you can copy assets and read the rules here to become an expert in designing with this brand.\n\nIf the user invokes this skill without any other guidance, ask them what they want to build or design, ask some questions, and act as an expert designer who outputs HTML artifacts _or_ production code, depending on the need.\n\n## Where things are\n- `styles.css` — the one stylesheet to link; `@import`s everything in `tokens/`.\n- `tokens/` — colors (honey/pollinate/verified + surfaces), typography (Inter + JetBrains Mono), spacing/radii/motion, `@font-face`.\n- `components/` — React primitives: `core/` (Button, Badge, Card, Input) and `honeycomb/` (MemoryCard, Kpi). Each has a `.prompt.md` with usage.\n- `ui_kits/dashboard/` — interactive recreation of Honeycomb's daemon-served dashboard; the reference for any full Honeycomb surface.\n- `guidelines/cards/` — small specimen cards for every foundation.\n- `logos/` — logomark, wordmark, partner logos, fonts.\n\n## Non-negotiables\n- Dark-native, warm near-black canvas. Honey amber `#F7A823` is the one brand hue — **one saturated honey region per view** (scarcity rule). Pollinate violet is only for the Pollinating loop; verified-green only for source-backed states.\n- **Mono (JetBrains Mono) is the texture of trust** — every memory key, id, hash, path, count, timestamp, recall query.\n- Sentence case; lowercase `honeycomb` wordmark. No emoji. Icons = Lucide (1.5px stroke, geometric).\n- Cards = 1px border on `bg.elevated`, 12px radius, no shadow. The only expressive light is the honey/pollinate glow on one focused element.\n- Every recalled memory shows its **source** and **score**. Claims carry evidence.\n"
+    },
+    {
+      "slug": "honeycomb-memory",
+      "name": "honeycomb-memory",
+      "dir": "harnesses/claude-code/skills/honeycomb-memory",
+      "path": "harnesses/claude-code/skills/honeycomb-memory/SKILL.md",
+      "desc": "Use before starting non-trivial work that Honeycomb may already have prior context for (a past decision, a stated convention, where something lives), when a recalled memory should be cited and possibly zoomed into for detail, or after a decision, preference, durable fact, or gotcha emerges that is worth remembering for next time. Searches with hivemind_search/memory_search, zooms a promising hit with hivemind_read, and stores new memories with memory_store using the correct type.",
+      "descZh": "",
+      "triggers": [
+        "Before re-explaining a convention the user has already stated, before re-deciding something already decided, when the user asks \"did we cover this before\" or \"what did we decide about X\", or right after a decision/preference/gotcha is stated in the conversation."
+      ],
+      "version": "",
+      "license": "AGPL-3.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/legioncodeinc/honeycomb.git",
+        "copy": "cp -r harnesses/claude-code/skills/honeycomb-memory ~/.claude/skills/honeycomb-memory",
+        "raw": "https://raw.githubusercontent.com/legioncodeinc/honeycomb/19bc218c558af82fe93564aa743b5d09dcad9924/harnesses/claude-code/skills/honeycomb-memory/SKILL.md",
+        "saveAs": "~/.claude/skills/honeycomb-memory/SKILL.md",
+        "marketplace": "/plugin marketplace add legioncodeinc/honeycomb"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:3ad98e20fbf890f3ed0a898207cce08fbcda9bfb2b5940ca85416fbb41be76e4",
+      "bytes": 3928,
+      "wordCount": 494,
+      "repoLicense": "AGPL-3.0",
+      "commit": "19bc218c558af82fe93564aa743b5d09dcad9924",
+      "branch": "main",
+      "body": "---\nname: honeycomb-memory\ndescription: Use before starting non-trivial work that Honeycomb may already have prior context for (a past decision, a stated convention, where something lives), when a recalled memory should be cited and possibly zoomed into for detail, or after a decision, preference, durable fact, or gotcha emerges that is worth remembering for next time. Searches with hivemind_search/memory_search, zooms a promising hit with hivemind_read, and stores new memories with memory_store using the correct type.\nwhen_to_use: Before re-explaining a convention the user has already stated, before re-deciding something already decided, when the user asks \"did we cover this before\" or \"what did we decide about X\", or right after a decision/preference/gotcha is stated in the conversation.\n---\n\n# Honeycomb memory\n\nHoneycomb is a cross-harness memory system. It stores decisions, conventions, preferences, facts,\ngotchas, and references, and makes them recallable across sessions and across harnesses through a\nlocal daemon exposed here as MCP tools. This skill teaches three behaviors; each points at one of\nthose existing tools. It never invents a new tool.\n\n## 1. Search before non-trivial work\n\nBefore starting a task that plausibly has prior context, e.g. it touches a past decision, a stated\nconvention, or \"where does X live\", call `hivemind_search` (or `memory_search`) with a query\ndescribing the task FIRST, rather than asking the user to re-explain something they may have\nalready told Honeycomb.\n\n- `hivemind_search` runs the hybrid recall (lexical + semantic, degraded-honest) over durable\n  memory and returns refs you can zoom into.\n- `memory_search` is the direct memory-table search when you already know you want a memory, not a\n  broader recall.\n\nThis is the token-cheap, model-driven complement to Honeycomb's always-on recall floor: it fires\nonly when this skill decides it is relevant, not on every turn.\n\n## 2. Cite recalled decisions, and zoom for detail\n\nWhen a search surfaces a prior decision or convention, cite it in your work rather than silently\nre-deciding it. If the hit is a summary and you need more detail, e.g. the exact wording, the\nsurrounding turns, use `hivemind_read` to zoom the ref down:\n\n- `depth: 1` (the default) resolves to the Tier-2 summary.\n- `depth: 2` resolves to Tier-3 raw turns (bounded by the daemon's turn cap).\n\nDo not silently ignore a recalled decision that conflicts with what you are about to do. Surface\nthe conflict to the user instead of overriding it unprompted.\n\n## 3. Store with the right type\n\nAfter a decision, a stated preference, or a durable fact emerges in the conversation, e.g. the user\npicks an approach, corrects your assumption, or states a fact about the system, call `memory_store`\nso it is recallable next time. Classify it using the closed memory-type taxonomy the tool publishes\nin its own schema (do not invent a type outside this set):\n\n- `fact` (default): a stable, verifiable truth about the system, codebase, or domain.\n- `convention`: how things are done here, idioms and patterns to follow by default.\n- `preference`: the user/team's stated way of working, corrections and do/don't guidance.\n- `decision`: an architectural or design choice and its rationale, don't relitigate it.\n- `gotcha`: a non-obvious trap, failure mode, or constraint to watch out for.\n- `reference`: a pointer to an external resource (URL, dashboard, ticket, doc).\n\nPrefer the most specific type over `fact` when the content clearly fits `convention`,\n`preference`, `decision`, `gotcha`, or `reference` instead.\n\n## Inert-safe\n\nIf the Honeycomb MCP server is not registered in this session, `hivemind_search`, `memory_search`,\n`hivemind_read`, and `memory_store` simply are not in the available tool list. This skill has no\neffect in that case: do not attempt to work around a missing tool, and do not tell the user memory\nis unavailable unless asked.\n",
+      "bodyMd": "# Honeycomb memory\n\nHoneycomb is a cross-harness memory system. It stores decisions, conventions, preferences, facts,\ngotchas, and references, and makes them recallable across sessions and across harnesses through a\nlocal daemon exposed here as MCP tools. This skill teaches three behaviors; each points at one of\nthose existing tools. It never invents a new tool.\n\n## 1. Search before non-trivial work\n\nBefore starting a task that plausibly has prior context, e.g. it touches a past decision, a stated\nconvention, or \"where does X live\", call `hivemind_search` (or `memory_search`) with a query\ndescribing the task FIRST, rather than asking the user to re-explain something they may have\nalready told Honeycomb.\n\n- `hivemind_search` runs the hybrid recall (lexical + semantic, degraded-honest) over durable\n  memory and returns refs you can zoom into.\n- `memory_search` is the direct memory-table search when you already know you want a memory, not a\n  broader recall.\n\nThis is the token-cheap, model-driven complement to Honeycomb's always-on recall floor: it fires\nonly when this skill decides it is relevant, not on every turn.\n\n## 2. Cite recalled decisions, and zoom for detail\n\nWhen a search surfaces a prior decision or convention, cite it in your work rather than silently\nre-deciding it. If the hit is a summary and you need more detail, e.g. the exact wording, the\nsurrounding turns, use `hivemind_read` to zoom the ref down:\n\n- `depth: 1` (the default) resolves to the Tier-2 summary.\n- `depth: 2` resolves to Tier-3 raw turns (bounded by the daemon's turn cap).\n\nDo not silently ignore a recalled decision that conflicts with what you are about to do. Surface\nthe conflict to the user instead of overriding it unprompted.\n\n## 3. Store with the right type\n\nAfter a decision, a stated preference, or a durable fact emerges in the conversation, e.g. the user\npicks an approach, corrects your assumption, or states a fact about the system, call `memory_store`\nso it is recallable next time. Classify it using the closed memory-type taxonomy the tool publishes\nin its own schema (do not invent a type outside this set):\n\n- `fact` (default): a stable, verifiable truth about the system, codebase, or domain.\n- `convention`: how things are done here, idioms and patterns to follow by default.\n- `preference`: the user/team's stated way of working, corrections and do/don't guidance.\n- `decision`: an architectural or design choice and its rationale, don't relitigate it.\n- `gotcha`: a non-obvious trap, failure mode, or constraint to watch out for.\n- `reference`: a pointer to an external resource (URL, dashboard, ticket, doc).\n\nPrefer the most specific type over `fact` when the content clearly fits `convention`,\n`preference`, `decision`, `gotcha`, or `reference` instead.\n\n## Inert-safe\n\nIf the Honeycomb MCP server is not registered in this session, `hivemind_search`, `memory_search`,\n`hivemind_read`, and `memory_store` simply are not in the available tool list. This skill has no\neffect in that case: do not attempt to work around a missing tool, and do not tell the user memory\nis unavailable unless asked.\n"
+    },
+    {
+      "slug": "skills",
+      "name": "honeycomb",
+      "dir": "harnesses/openclaw/skills",
+      "path": "harnesses/openclaw/skills/SKILL.md",
+      "desc": "Honeycomb persistent shared memory for the OpenClaw harness — auto-capture and recall across sessions via the local Honeycomb daemon.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "AGPL-3.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/legioncodeinc/honeycomb.git",
+        "copy": "cp -r harnesses/openclaw/skills ~/.claude/skills/skills",
+        "raw": "https://raw.githubusercontent.com/legioncodeinc/honeycomb/19bc218c558af82fe93564aa743b5d09dcad9924/harnesses/openclaw/skills/SKILL.md",
+        "saveAs": "~/.claude/skills/skills/SKILL.md",
+        "marketplace": "/plugin marketplace add legioncodeinc/honeycomb"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:7b812fd71de1cf279d765a0ba6af1f77ad1166c002594692dbd92fcb662a5e43",
+      "bytes": 545,
+      "wordCount": 44,
+      "repoLicense": "AGPL-3.0",
+      "commit": "19bc218c558af82fe93564aa743b5d09dcad9924",
+      "branch": "main",
+      "body": "---\nname: honeycomb\ndescription: Honeycomb persistent shared memory for the OpenClaw harness — auto-capture and recall across sessions via the local Honeycomb daemon.\n---\n\n# honeycomb (OpenClaw)\n\nThin OpenClaw adapter for Honeycomb. Routes capture/recall through the local\nHoneycomb daemon on port 3850. No DeepLake access path ships in this bundle.\n\nRuntime tuning is supplied via `openclaw.json` under\n`plugins.entries.honeycomb.config.tuning` and applied by the plugin's\n`register()` into `globalThis.__honeycomb_tuning__` (PRD-001b FR-7).\n",
+      "bodyMd": "# honeycomb (OpenClaw)\n\nThin OpenClaw adapter for Honeycomb. Routes capture/recall through the local\nHoneycomb daemon on port 3850. No DeepLake access path ships in this bundle.\n\nRuntime tuning is supplied via `openclaw.json` under\n`plugins.entries.honeycomb.config.tuning` and applied by the plugin's\n`register()` into `globalThis.__honeycomb_tuning__` (PRD-001b FR-7).\n"
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "repo": "numman-ali/zai-cli",
+  "commit": "4a137081e769ea1596ebbaddab9034b758758554",
+  "branch": "main",
+  "fetchedAt": "2026-10-13T04:50:22.902Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "zai-cli",
+      "name": "zai-cli",
+      "dir": "skills/zai-cli",
+      "path": "skills/zai-cli/SKILL.md",
+      "desc": "Z.AI CLI providing: - Vision: image/video analysis, OCR, UI-to-code, error diagnosis (GLM-4.6V) - Search: real-time web search with domain/recency filtering - Reader: web page to markdown extraction - Repo: GitHub code search and reading via ZRead - Tools: MCP tool discovery and raw calls - Code: TypeScript tool chaining Use for visual content analysis, web search, page reading, or GitHub exploration. Requires Z_AI_API_KEY.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": true,
+        "network": true,
+        "bins": [
+          "npx"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/numman-ali/zai-cli.git",
+        "copy": "cp -r skills/zai-cli ~/.claude/skills/zai-cli",
+        "raw": "https://raw.githubusercontent.com/numman-ali/zai-cli/4a137081e769ea1596ebbaddab9034b758758554/skills/zai-cli/SKILL.md",
+        "saveAs": "~/.claude/skills/zai-cli/SKILL.md",
+        "marketplace": "/plugin marketplace add numman-ali/zai-cli"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:089a052b677179a98a9ccffb97e3e8c493eec9b469dfe3136b5e75f3a576a1f7",
+      "bytes": 2111,
+      "wordCount": 254,
+      "repoLicense": "MIT",
+      "commit": "4a137081e769ea1596ebbaddab9034b758758554",
+      "branch": "main",
+      "body": "---\nname: zai-cli\ndescription: |\n  Z.AI CLI providing:\n  - Vision: image/video analysis, OCR, UI-to-code, error diagnosis (GLM-4.6V)\n  - Search: real-time web search with domain/recency filtering\n  - Reader: web page to markdown extraction\n  - Repo: GitHub code search and reading via ZRead\n  - Tools: MCP tool discovery and raw calls\n  - Code: TypeScript tool chaining\n  Use for visual content analysis, web search, page reading, or GitHub exploration. Requires Z_AI_API_KEY.\n---\n\n# ZAI CLI\n\nAccess Z.AI capabilities via `npx zai-cli`. The CLI is self-documenting - use `--help` at any level.\n\n## Setup\n\n```bash\nexport Z_AI_API_KEY=\"your-api-key\"\n```\n\nGet a key at: https://z.ai/manage-apikey/apikey-list\n\n## Commands\n\n| Command | Purpose | Help |\n|---------|---------|------|\n| vision | Analyze images, screenshots, videos | `--help` for 8 subcommands |\n| search | Real-time web search | `--help` for filtering options |\n| read | Fetch web pages as markdown | `--help` for format options |\n| repo | GitHub code search and reading | `--help` for tree/search/read |\n| tools | List available MCP tools | |\n| tool | Show tool schema | |\n| call | Raw MCP tool invocation | |\n| code | TypeScript tool chaining | |\n| doctor | Check setup and connectivity | |\n\n## Quick Start\n\n```bash\n# Analyze an image\nnpx zai-cli vision analyze ./screenshot.png \"What errors do you see?\"\n\n# Search the web\nnpx zai-cli search \"React 19 new features\" --count 5\n\n# Read a web page\nnpx zai-cli read https://docs.example.com/api\nnpx zai-cli read https://docs.example.com/api --with-images-summary --no-gfm\n\n# Explore a GitHub repo\nnpx zai-cli repo search facebook/react \"server components\"\nnpx zai-cli repo search openai/codex \"config\" --language en\nnpx zai-cli repo tree openai/codex --path codex-rs --depth 2\n\n# Check setup\nnpx zai-cli doctor\n```\n\n## Output\n\nDefault: **data-only** (raw output for token efficiency).\nUse `--output-format json` for `{ success, data, timestamp }` wrapping.\n\n## Advanced\n\nFor raw MCP tool calls (`tools`, `tool`, `call`), Code Mode, and performance tuning (cache/retries),\nsee `references/advanced.md`.\n",
+      "bodyMd": "# ZAI CLI\n\nAccess Z.AI capabilities via `npx zai-cli`. The CLI is self-documenting - use `--help` at any level.\n\n## Setup\n\n```bash\nexport Z_AI_API_KEY=\"your-api-key\"\n```\n\nGet a key at: https://z.ai/manage-apikey/apikey-list\n\n## Commands\n\n| Command | Purpose | Help |\n|---------|---------|------|\n| vision | Analyze images, screenshots, videos | `--help` for 8 subcommands |\n| search | Real-time web search | `--help` for filtering options |\n| read | Fetch web pages as markdown | `--help` for format options |\n| repo | GitHub code search and reading | `--help` for tree/search/read |\n| tools | List available MCP tools | |\n| tool | Show tool schema | |\n| call | Raw MCP tool invocation | |\n| code | TypeScript tool chaining | |\n| doctor | Check setup and connectivity | |\n\n## Quick Start\n\n```bash\n# Analyze an image\nnpx zai-cli vision analyze ./screenshot.png \"What errors do you see?\"\n\n# Search the web\nnpx zai-cli search \"React 19 new features\" --count 5\n\n# Read a web page\nnpx zai-cli read https://docs.example.com/api\nnpx zai-cli read https://docs.example.com/api --with-images-summary --no-gfm\n\n# Explore a GitHub repo\nnpx zai-cli repo search facebook/react \"server components\"\nnpx zai-cli repo search openai/codex \"config\" --language en\nnpx zai-cli repo tree openai/codex --path codex-rs --depth 2\n\n# Check setup\nnpx zai-cli doctor\n```\n\n## Output\n\nDefault: **data-only** (raw output for token efficiency).\nUse `--output-format json` for `{ success, data, timestamp }` wrapping.\n\n## Advanced\n\nFor raw MCP tool calls (`tools`, `tool`, `call`), Code Mode, and performance tuning (cache/retries),\nsee `references/advanced.md`.\n"
+    }
+  ]
+}

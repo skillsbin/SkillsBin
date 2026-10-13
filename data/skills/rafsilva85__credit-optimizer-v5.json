@@ -1,0 +1,51 @@
+{
+  "repo": "rafsilva85/credit-optimizer-v5",
+  "commit": "37eb57a8fb2506e8e1c1c5458748bac439c2f521",
+  "branch": "main",
+  "fetchedAt": "2026-10-13T04:51:13.049Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "credit-optimizer",
+      "name": "credit-optimizer",
+      "dir": "",
+      "path": "SKILL.md",
+      "desc": "Automatically optimize AI agent credit usage by routing tasks to the most cost-efficient execution path. Use when you want to reduce AI API costs by 30-75% without quality loss, classify task complexity before execution, route simple tasks to free or low-cost models, split complex tasks into optimized sub-tasks, or detect vague prompts before wasting credits.",
+      "descZh": "",
+      "triggers": [],
+      "version": "5.2.0",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "rafsilva85",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/rafsilva85/credit-optimizer-v5.git",
+        "copy": "",
+        "raw": "https://raw.githubusercontent.com/rafsilva85/credit-optimizer-v5/37eb57a8fb2506e8e1c1c5458748bac439c2f521/SKILL.md",
+        "saveAs": "~/.claude/skills/credit-optimizer/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:f905d4bd1c1ae5a85b1266105f95cbf63683c07166e93b78d980d95031c34f4b",
+      "bytes": 4126,
+      "wordCount": 530,
+      "repoLicense": "MIT",
+      "commit": "37eb57a8fb2506e8e1c1c5458748bac439c2f521",
+      "branch": "main",
+      "body": "---\nname: credit-optimizer\ndescription: Automatically optimize AI agent credit usage by routing tasks to the most cost-efficient execution path. Use when you want to reduce AI API costs by 30-75% without quality loss, classify task complexity before execution, route simple tasks to free or low-cost models, split complex tasks into optimized sub-tasks, or detect vague prompts before wasting credits.\nversion: 5.2.0\nauthor: rafsilva85\nlicense: MIT\ncompatibility: claude-code, cursor, codex, manus, opencode\n---\n\n# Credit Optimizer v5\n\n**Automatically optimize AI agent credit/token usage by routing tasks to the most cost-efficient execution path — with zero quality loss.**\n\nAudited across 53 real-world scenarios. 30-75% cost savings. 0% quality degradation.\n\n## When to Use This Skill\n\n- Before executing any AI task that consumes credits or tokens\n- When you want to minimize API costs without sacrificing output quality\n- When processing batches of tasks with varying complexity\n- When you need to decide between different model tiers (free/standard/premium)\n\n## How It Works\n\n### Step 1: Task Classification\n\nAnalyze the incoming task and classify it into one of these categories:\n\n| Category | Examples | Typical Savings |\n|----------|----------|-----------------|\n| Simple Q&A | Definitions, facts, conversions | 90-100% (use free tier) |\n| Code Generation | Scripts, functions, refactoring | 40-60% |\n| Research | Multi-source analysis, synthesis | 20-40% |\n| Creative Writing | Articles, stories, marketing copy | 30-50% |\n| Data Analysis | CSV processing, visualization | 40-70% |\n| Complex Reasoning | Multi-step logic, architecture | 10-20% |\n\n### Step 2: Prompt Quality Check\n\nBefore executing, evaluate the prompt:\n\n1. **Clarity Score** (1-10): Is the request specific enough?\n   - Score < 5: Ask for clarification BEFORE executing (saves wasted credits)\n   - Score 5-7: Add reasonable assumptions and proceed\n   - Score 8+: Execute directly\n\n2. **Scope Detection**: Can this be split into smaller, cheaper sub-tasks?\n   - If YES: Break into atomic tasks, route each independently\n   - If NO: Route as single task\n\n3. **Data Requirement Check**: Does this need real-time data?\n   - If YES: Use tools/search first, then process with cheaper model\n   - If NO: Use internal knowledge with appropriate model tier\n\n### Step 3: Model Routing\n\nRoute to the optimal execution path:\n\n```\nIF task is simple Q&A or formatting:\n  → Use FREE tier / Chat mode (no credits)\n  \nIF task is medium complexity (code, writing, basic analysis):\n  → Use STANDARD tier\n  \nIF task requires deep reasoning, multi-step logic, or creative excellence:\n  → Use PREMIUM/MAX tier\n  \nIF task is mixed complexity:\n  → SPLIT into sub-tasks and route each independently\n```\n\n### Step 4: Execution Optimization\n\nDuring execution, apply these optimizations:\n\n- **Context Pruning**: Only include relevant context, not entire conversation history\n- **Output Scoping**: Request specific output format to avoid verbose responses\n- **Caching**: Check if similar tasks were recently completed\n- **Batch Processing**: Group similar sub-tasks for efficient processing\n\n## Efficiency Directives\n\n1. **Never use premium models for tasks that standard can handle equally well**\n2. **Always check if the task can be answered from cached/known information first**\n3. **Split compound requests into atomic tasks before routing**\n4. **Ask for clarification on vague prompts — it's cheaper than re-doing work**\n5. **Use structured output formats to reduce token waste**\n\n## Audit Results Summary\n\n| Metric | Result |\n|--------|--------|\n| Scenarios tested | 53 |\n| Average savings | 30-75% |\n| Quality loss | 0% |\n| Quality improvement cases | 2 |\n| False routing rate | < 3% |\n\n## Links\n\n- **Website**: [creditopt.ai](https://creditopt.ai)\n- **GitHub**: [github.com/rafsilva85/manus-credit-optimizer](https://github.com/rafsilva85/manus-credit-optimizer)\n- **MCP Server**: Available as Python MCP server for programmatic integration\n- **Full Manus Skill**: Available at [Gumroad](https://rafaamaral.gumroad.com/l/credit-optimizer-v5) ($29, one-time)\n",
+      "bodyMd": "# Credit Optimizer v5\n\n**Automatically optimize AI agent credit/token usage by routing tasks to the most cost-efficient execution path — with zero quality loss.**\n\nAudited across 53 real-world scenarios. 30-75% cost savings. 0% quality degradation.\n\n## When to Use This Skill\n\n- Before executing any AI task that consumes credits or tokens\n- When you want to minimize API costs without sacrificing output quality\n- When processing batches of tasks with varying complexity\n- When you need to decide between different model tiers (free/standard/premium)\n\n## How It Works\n\n### Step 1: Task Classification\n\nAnalyze the incoming task and classify it into one of these categories:\n\n| Category | Examples | Typical Savings |\n|----------|----------|-----------------|\n| Simple Q&A | Definitions, facts, conversions | 90-100% (use free tier) |\n| Code Generation | Scripts, functions, refactoring | 40-60% |\n| Research | Multi-source analysis, synthesis | 20-40% |\n| Creative Writing | Articles, stories, marketing copy | 30-50% |\n| Data Analysis | CSV processing, visualization | 40-70% |\n| Complex Reasoning | Multi-step logic, architecture | 10-20% |\n\n### Step 2: Prompt Quality Check\n\nBefore executing, evaluate the prompt:\n\n1. **Clarity Score** (1-10): Is the request specific enough?\n   - Score < 5: Ask for clarification BEFORE executing (saves wasted credits)\n   - Score 5-7: Add reasonable assumptions and proceed\n   - Score 8+: Execute directly\n\n2. **Scope Detection**: Can this be split into smaller, cheaper sub-tasks?\n   - If YES: Break into atomic tasks, route each independently\n   - If NO: Route as single task\n\n3. **Data Requirement Check**: Does this need real-time data?\n   - If YES: Use tools/search first, then process with cheaper model\n   - If NO: Use internal knowledge with appropriate model tier\n\n### Step 3: Model Routing\n\nRoute to the optimal execution path:\n\n```\nIF task is simple Q&A or formatting:\n  → Use FREE tier / Chat mode (no credits)\n  \nIF task is medium complexity (code, writing, basic analysis):\n  → Use STANDARD tier\n  \nIF task requires deep reasoning, multi-step logic, or creative excellence:\n  → Use PREMIUM/MAX tier\n  \nIF task is mixed complexity:\n  → SPLIT into sub-tasks and route each independently\n```\n\n### Step 4: Execution Optimization\n\nDuring execution, apply these optimizations:\n\n- **Context Pruning**: Only include relevant context, not entire conversation history\n- **Output Scoping**: Request specific output format to avoid verbose responses\n- **Caching**: Check if similar tasks were recently completed\n- **Batch Processing**: Group similar sub-tasks for efficient processing\n\n## Efficiency Directives\n\n1. **Never use premium models for tasks that standard can handle equally well**\n2. **Always check if the task can be answered from cached/known information first**\n3. **Split compound requests into atomic tasks before routing**\n4. **Ask for clarification on vague prompts — it's cheaper than re-doing work**\n5. **Use structured output formats to reduce token waste**\n\n## Audit Results Summary\n\n| Metric | Result |\n|--------|--------|\n| Scenarios tested | 53 |\n| Average savings | 30-75% |\n| Quality loss | 0% |\n| Quality improvement cases | 2 |\n| False routing rate | < 3% |\n\n## Links\n\n- **Website**: [creditopt.ai](https://creditopt.ai)\n- **GitHub**: [github.com/rafsilva85/manus-credit-optimizer](https://github.com/rafsilva85/manus-credit-optimizer)\n- **MCP Server**: Available as Python MCP server for programmatic integration\n- **Full Manus Skill**: Available at [Gumroad](https://rafaamaral.gumroad.com/l/credit-optimizer-v5) ($29, one-time)\n"
+    }
+  ]
+}

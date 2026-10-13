@@ -1,0 +1,53 @@
+{
+  "repo": "lijigang/ljg-skill-roundtable",
+  "commit": "754e9e9ef4d3dccd7d4c453b8e81b13d668677e9",
+  "branch": "main",
+  "fetchedAt": "2026-10-13T04:49:34.742Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "ljg-roundtable",
+      "name": "ljg-roundtable",
+      "dir": "skills/ljg-roundtable",
+      "path": "skills/ljg-roundtable/SKILL.md",
+      "desc": "Structured roundtable discussion framework with a truth-seeking moderator who invites representative figures for dialectical debate on any topic. Use when user says \"圆桌讨论\", \"圆桌\", \"roundtable\", \"辩论\", or wants to explore a topic through multi-perspective structured debate.",
+      "descZh": "",
+      "triggers": [
+        "user says \"圆桌讨论",
+        "圆桌",
+        "roundtable",
+        "辩论"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/lijigang/ljg-skill-roundtable.git",
+        "copy": "cp -r skills/ljg-roundtable ~/.claude/skills/ljg-roundtable",
+        "raw": "https://raw.githubusercontent.com/lijigang/ljg-skill-roundtable/754e9e9ef4d3dccd7d4c453b8e81b13d668677e9/skills/ljg-roundtable/SKILL.md",
+        "saveAs": "~/.claude/skills/ljg-roundtable/SKILL.md",
+        "marketplace": "/plugin marketplace add lijigang/ljg-skill-roundtable"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:c1d2a7206cb348c895315b3fc99c4bf6ac85749d3b125de120ed47ca2e0c7b34",
+      "bytes": 5079,
+      "wordCount": 210,
+      "repoLicense": "MIT",
+      "commit": "754e9e9ef4d3dccd7d4c453b8e81b13d668677e9",
+      "branch": "main",
+      "body": "---\r\nname: ljg-roundtable\r\ndescription: >-\r\n  Structured roundtable discussion framework with a truth-seeking moderator\r\n  who invites representative figures for dialectical debate on any topic.\r\n  Use when user says \"圆桌讨论\", \"圆桌\", \"roundtable\", \"辩论\",\r\n  or wants to explore a topic through multi-perspective structured debate.\r\n---\r\n\r\n## Usage\r\n\r\n<example>\r\nUser: 圆桌讨论 人工智能是否拥有真正的创造力？\r\nAssistant: [Launches roundtable with moderator and representative figures]\r\n</example>\r\n\r\n<example>\r\nUser: 圆桌 自由意志是否存在？\r\nAssistant: [Launches roundtable discussion on free will]\r\n</example>\r\n\r\n## Instructions\r\n\r\n为了执行本项技能，请严格按照以下步骤操作：\r\n\r\n1. **读取参考资料**\r\n   读取 `~/.claude/skills/ljg-roundtable/references/original-prompt.org` 了解原始框架设计意图。\r\n\r\n2. **解析议题**\r\n   从用户输入中提取核心议题。如果用户只说\"圆桌讨论\"未给议题，询问议题。\r\n\r\n3. **选人：提议代表人物**\r\n   根据议题，选择 3-5 位**真实历史/当代人物**作为代表，覆盖尽可能多的立场维度。每位人物需要：\r\n   - 姓名（真实人物，非虚构）\r\n   - MBTI 人格类型\r\n   - 核心立场（一句话）\r\n   - 选择理由（为什么此人对此议题有独特视角）\r\n\r\n   选人原则：\r\n   - 立场必须形成**张力网络**（非简单正反方）\r\n   - 优先选择在该领域有**经典著作或知名言论**的人物\r\n   - 至少包含一位\"意外视角\"——来自议题本身领域之外的人\r\n\r\n4. **开场：统一定义**\r\n   以主持人身份开场，展示参会人物列表，然后提出**定义性问题**：\r\n   > 「在深入探讨之前，我们应当如何定义 [议题核心概念]？它的核心要素是什么？」\r\n\r\n   每位参会者依次发言，格式为：\r\n   ```\r\n   【人物名】【行动标签】：发言内容\r\n\r\n   **简言之**：一句话总结\r\n   ```\r\n\r\n   行动标签包括：`陈述`、`质疑`、`补充`、`反驳`、`修正`、`综合`\r\n\r\n5. **对话循环**\r\n   每轮执行以下流程：\r\n\r\n   **5a. 动态发言轮**\r\n   - 不是每人固定说一次——根据讨论动态决定谁该发言\r\n   - 每人发言必须是对**前面发言的回应**（质疑/补充/反驳），不许自说自话\r\n   - 每段发言末尾必须有 `**简言之**：` 一句话压缩\r\n\r\n   **5b. 主持人综述**\r\n   发言结束后，主持人做三件事：\r\n   - 提炼本轮**核心争议点**（不是面面俱到，而是找到最深的裂缝）\r\n   - 生成**ASCII 思考框架图**（拓扑图/矩阵/光谱/树形——选最贴合本轮结构的形式）\r\n   - 提出**下一层引导问题**（从核心争议中生长出来的更深问题）\r\n\r\n   ASCII 图的设计原则：\r\n   - 高度概括本轮讨论的**结构**，不是复述内容\r\n   - 标出正/负反馈环、因果链、张力维度\r\n   - 形式不固定：可以是 2x2 矩阵、光谱轴、因果环路、层级树——哪种最见骨用哪种\r\n\r\n   **5c. 用户指令**\r\n   综述后展示指令菜单：\r\n   ```\r\n   【主持】：(指令: 可 / 止 / 深入此节 / 引入新人物)\r\n   ```\r\n\r\n   指令含义：\r\n   - `可`：接受下一层问题，继续推进\r\n   - `止`：结束讨论，进入总结\r\n   - `深入此节`：不推进新问题，继续围绕当前争议点深挖\r\n   - `引入新人物`：用户指定一位新人物加入（主持人介绍并请其就当前话题表态）\r\n\r\n6. **结束：生成知识网络**\r\n   用户发出 `止` 指令后：\r\n   - 主持人做**全局总结**\r\n   - 生成**完整知识网络** ASCII 图：标出所有关键概念、立场、争议点及其关系\r\n   - 列出**未解决的开放问题**（讨论中暴露但未穷尽的方向）\r\n\r\n7. **写入 org 文件**\r\n   将讨论全貌整合为 org-mode 格式并写入文件：\r\n   1. 运行 `date +%Y%m%dT%H%M%S` 获取时间戳\r\n   2. 写入 `~/Documents/notes/{timestamp}--圆桌-{议题关键词}__roundtable.org`\r\n   3. org 文件结构：\r\n      ```org\r\n      #+title: 圆桌：{议题}\r\n      #+date: [{日期}]\r\n      #+filetags: :roundtable:\r\n      * 议题与参会者\r\n      * 各轮讨论记录\r\n      ** 第 N 轮：{引导问题}\r\n      *** 发言记录\r\n      *** 核心争议\r\n      *** ASCII 框架图\r\n      * 知识网络（全局）\r\n      * 开放问题\r\n      ```\r\n   4. 向用户报告文件路径\r\n\r\n### 主持人行为准则\r\n\r\n- **理性之锚**：冷静客观，不偏向任何一方\r\n- **挖深不铺广**：每轮只追一条最深的裂缝，不面面俱到\r\n- **求真 > 和谐**：鼓励尖锐但有建设性的交锋，拒绝表面共识\r\n- **元认知**：在综述中暴露讨论的**结构**（假设、前提、推理链），不只复述内容\r\n\r\n### 参会者行为准则\r\n\r\n- 必须**忠于其真实思想体系**发言，不是泛泛而谈\r\n- 引用/化用其**经典著作或知名观点**\r\n- 发言有锋芒：质疑要见骨，补充要推进，不说正确的废话\r\n- 每段结尾 `**简言之**` 一句话压到极致\r\n",
+      "bodyMd": "## Usage\r\n\r\n<example>\r\nUser: 圆桌讨论 人工智能是否拥有真正的创造力？\r\nAssistant: [Launches roundtable with moderator and representative figures]\r\n</example>\r\n\r\n<example>\r\nUser: 圆桌 自由意志是否存在？\r\nAssistant: [Launches roundtable discussion on free will]\r\n</example>\r\n\r\n## Instructions\r\n\r\n为了执行本项技能，请严格按照以下步骤操作：\r\n\r\n1. **读取参考资料**\r\n   读取 `~/.claude/skills/ljg-roundtable/references/original-prompt.org` 了解原始框架设计意图。\r\n\r\n2. **解析议题**\r\n   从用户输入中提取核心议题。如果用户只说\"圆桌讨论\"未给议题，询问议题。\r\n\r\n3. **选人：提议代表人物**\r\n   根据议题，选择 3-5 位**真实历史/当代人物**作为代表，覆盖尽可能多的立场维度。每位人物需要：\r\n   - 姓名（真实人物，非虚构）\r\n   - MBTI 人格类型\r\n   - 核心立场（一句话）\r\n   - 选择理由（为什么此人对此议题有独特视角）\r\n\r\n   选人原则：\r\n   - 立场必须形成**张力网络**（非简单正反方）\r\n   - 优先选择在该领域有**经典著作或知名言论**的人物\r\n   - 至少包含一位\"意外视角\"——来自议题本身领域之外的人\r\n\r\n4. **开场：统一定义**\r\n   以主持人身份开场，展示参会人物列表，然后提出**定义性问题**：\r\n   > 「在深入探讨之前，我们应当如何定义 [议题核心概念]？它的核心要素是什么？」\r\n\r\n   每位参会者依次发言，格式为：\r\n   ```\r\n   【人物名】【行动标签】：发言内容\r\n\r\n   **简言之**：一句话总结\r\n   ```\r\n\r\n   行动标签包括：`陈述`、`质疑`、`补充`、`反驳`、`修正`、`综合`\r\n\r\n5. **对话循环**\r\n   每轮执行以下流程：\r\n\r\n   **5a. 动态发言轮**\r\n   - 不是每人固定说一次——根据讨论动态决定谁该发言\r\n   - 每人发言必须是对**前面发言的回应**（质疑/补充/反驳），不许自说自话\r\n   - 每段发言末尾必须有 `**简言之**：` 一句话压缩\r\n\r\n   **5b. 主持人综述**\r\n   发言结束后，主持人做三件事：\r\n   - 提炼本轮**核心争议点**（不是面面俱到，而是找到最深的裂缝）\r\n   - 生成**ASCII 思考框架图**（拓扑图/矩阵/光谱/树形——选最贴合本轮结构的形式）\r\n   - 提出**下一层引导问题**（从核心争议中生长出来的更深问题）\r\n\r\n   ASCII 图的设计原则：\r\n   - 高度概括本轮讨论的**结构**，不是复述内容\r\n   - 标出正/负反馈环、因果链、张力维度\r\n   - 形式不固定：可以是 2x2 矩阵、光谱轴、因果环路、层级树——哪种最见骨用哪种\r\n\r\n   **5c. 用户指令**\r\n   综述后展示指令菜单：\r\n   ```\r\n   【主持】：(指令: 可 / 止 / 深入此节 / 引入新人物)\r\n   ```\r\n\r\n   指令含义：\r\n   - `可`：接受下一层问题，继续推进\r\n   - `止`：结束讨论，进入总结\r\n   - `深入此节`：不推进新问题，继续围绕当前争议点深挖\r\n   - `引入新人物`：用户指定一位新人物加入（主持人介绍并请其就当前话题表态）\r\n\r\n6. **结束：生成知识网络**\r\n   用户发出 `止` 指令后：\r\n   - 主持人做**全局总结**\r\n   - 生成**完整知识网络** ASCII 图：标出所有关键概念、立场、争议点及其关系\r\n   - 列出**未解决的开放问题**（讨论中暴露但未穷尽的方向）\r\n\r\n7. **写入 org 文件**\r\n   将讨论全貌整合为 org-mode 格式并写入文件：\r\n   1. 运行 `date +%Y%m%dT%H%M%S` 获取时间戳\r\n   2. 写入 `~/Documents/notes/{timestamp}--圆桌-{议题关键词}__roundtable.org`\r\n   3. org 文件结构：\r\n      ```org\r\n      #+title: 圆桌：{议题}\r\n      #+date: [{日期}]\r\n      #+filetags: :roundtable:\r\n      * 议题与参会者\r\n      * 各轮讨论记录\r\n      ** 第 N 轮：{引导问题}\r\n      *** 发言记录\r\n      *** 核心争议\r\n      *** ASCII 框架图\r\n      * 知识网络（全局）\r\n      * 开放问题\r\n      ```\r\n   4. 向用户报告文件路径\r\n\r\n### 主持人行为准则\r\n\r\n- **理性之锚**：冷静客观，不偏向任何一方\r\n- **挖深不铺广**：每轮只追一条最深的裂缝，不面面俱到\r\n- **求真 > 和谐**：鼓励尖锐但有建设性的交锋，拒绝表面共识\r\n- **元认知**：在综述中暴露讨论的**结构**（假设、前提、推理链），不只复述内容\r\n\r\n### 参会者行为准则\r\n\r\n- 必须**忠于其真实思想体系**发言，不是泛泛而谈\r\n- 引用/化用其**经典著作或知名观点**\r\n- 发言有锋芒：质疑要见骨，补充要推进，不说正确的废话\r\n- 每段结尾 `**简言之**` 一句话压到极致\r\n"
+    }
+  ]
+}

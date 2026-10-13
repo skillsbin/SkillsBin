@@ -1,0 +1,967 @@
+{
+  "repo": "cas-bigdatalab/piflow",
+  "commit": "ad8d0108a54a4257307d4946dc9250e26f24c63f",
+  "branch": "master",
+  "fetchedAt": "2026-10-13T04:49:15.314Z",
+  "parseFail": 27,
+  "skills": [
+    {
+      "slug": "qc10-timeconsistency",
+      "name": "error_output_path",
+      "dir": "workspace/skills/QC10_TimeConsistency",
+      "path": "workspace/skills/QC10_TimeConsistency/SKILL.md",
+      "desc": "异常数据文件（可选），包含时间一致性检查不通过的记录",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/cas-bigdatalab/piflow.git",
+        "copy": "cp -r workspace/skills/QC10_TimeConsistency ~/.claude/skills/qc10-timeconsistency",
+        "raw": "https://raw.githubusercontent.com/cas-bigdatalab/piflow/ad8d0108a54a4257307d4946dc9250e26f24c63f/workspace/skills/QC10_TimeConsistency/SKILL.md",
+        "saveAs": "~/.claude/skills/qc10-timeconsistency/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:d1459768fd2b94bdf3f10f783d8db2766fa9f23aa1e0aa61a19b3d46a6de3d0f",
+      "bytes": 5585,
+      "wordCount": 278,
+      "repoLicense": "",
+      "commit": "ad8d0108a54a4257307d4946dc9250e26f24c63f",
+      "branch": "master",
+      "body": "---\nname: QC10_TimeConsistency\ndescription: |\n  时间一致性检查工具。读取被检验表，按时间序列检查数据的时间一致性，\n  判断相邻时间点的数据变化是否在合理范围内，识别并标记异常数据，最后输出为相同格式的文件。\n  当用户提到时间一致性检查、时间序列校验、数据变化检查、时序一致性等需求时使用此skill。\n  即使用户没有说出\"时间一致性\"，只要任务涉及检查数据的时间序列一致性，就应该使用此skill。\n\nname_zh: QC10_时间一致性检查算子\ninput_params:\n  - name: input_path\n    type: string\n    required: true\n    description: 输入文件路径\n\n  - name: origin_output_path\n    type: string\n    required: true\n    description: 处理后数据输出路径\n\n  - name: field_name\n    type: string\n    required: true\n    description: 一致性检查字段名\n\n  - name: range_of_change\n    type: float\n    required: true\n    description: 年变化量（允许的变化阈值）\n\n  - name: change_type\n    type: string\n    required: true\n    description: 变化类型（正值/负值/绝对值）\n\n  - name: qc_mark\n    type: string\n    required: true\n    description: 质控标识\n\n  - name: error_output_path\n    type: string\n    required: false\n    description: 异常数据输出路径（可选）\n\n  - name: mark_field_name\n    type: string\n    required: false\n    default: QC0000\n    description: 质控标识字段名\n\n  - name: id_field_name\n    type: string\n    required: false\n    default: ID0000\n    description: 唯一ID字段名\n\noutput_params:\n  - name: origin_output_path\n    type: csv_file\n    description: 处理后原始数据文件，带质控标识\n\n  - name: error_output_path\n    type: csv_file\n    description: 异常数据文件（可选），包含时间一致性检查不通过的记录\ntag: 数据校验\npublisher: COMMUNITY\n---\n\n# QC10_TimeConsistency 时间一致性检查Skill\n\n## 功能概述\n\n本skill用于检查数据的时间一致性，按时间序列（年份）排序，对比相邻时间点的数据变化是否在合理范围内。如果数据变化超出允许的变化范围，则标记为异常。\n\n## 触发条件\n\n当用户请求以下任务时，应使用此skill：\n- 时间一致性检查\n- 时间序列校验\n- 数据变化检查\n- 时序一致性检验\n- 检查数据变化是否合理\n\n## 处理逻辑\n\n1. 读取输入的被检验数据\n2. 按分组字段（sss000, sscode, fa0110, fa0112）和时间字段（yyyy00）排序\n3. 关联相邻时间点的记录，计算差值\n4. 根据变化类型（正值/负值/绝对值）判断是否超出允许范围\n5. 为异常数据添加质控标识\n6. 输出两个文件：\n   - 处理后的原始数据（带质控标识）\n   - 异常数据（可选）\n\n## 分组字段\n\n默认分组字段（用于区分不同数据组）：\n- sss000\n- sscode\n- fa0110\n- fa0112\n- yyyy00（时间排序字段）\n\n## 支持的文件格式\n\n- CSV (.csv)\n- TSV (.tsv)\n- Excel (.xls, .xlsx)\n- SPSS (.sav)\n\n## 使用方法\n\n### 步骤1：获取用户输入输出路径及参数\n\n向用户确认：\n1. 输入文件路径\n2. 处理后数据输出路径\n3. 异常数据输出路径（可选）\n4. 一致性检查字段名\n5. 年变化量\n6. 变化类型（正值/负值/绝对值）\n7. 质控标识\n8. 质控标识字段名（默认：QC0000）\n9. 唯一ID字段名（默认：ID0000）\n\n### 步骤2：执行时间一致性检查脚本\n\n在 `scripts/` 目录下找到 `QC10_TimeConsistency.py`，使用Python执行：\n\n```bash\npython scripts/QC10_TimeConsistency.py \\\n    --input_path <输入文件> \\\n    --origin_output_path <处理后数据输出> \\\n    --error_output_path <异常数据输出> \\\n    --field_name <检查字段> \\\n    --range_of_change <年变化量> \\\n    --change_type <正值|负值|绝对值> \\\n    --qc_mark \"<质控标识>\" \\\n    --mark_field_name <质控字段名> \\\n    --id_field_name <ID字段名>\n```\n\n### 步骤3：返回结果\n\n- 如果有异常数据：显示异常数量并输出异常数据预览\n- 如果无异常：告知用户校验通过\n\n## 参数说明\n\n| 参数 | 必填 | 说明 |\n|------|------|------|\n| `--input_path` | 是 | 输入文件路径 |\n| `--origin_output_path` | 是 | 处理后数据输出路径 |\n| `--error_output_path` | 否 | 异常数据输出路径（可选） |\n| `--field_name` | 是 | 一致性检查字段名 |\n| `--range_of_change` | 是 | 年变化量（允许的变化阈值） |\n| `--change_type` | 是 | 变化类型：正值/负值/绝对值 |\n| `--qc_mark` | 是 | 质控标识 |\n| `--mark_field_name` | 否 | 质控标识字段名，默认QC0000 |\n| `--id_field_name` | 否 | 唯一ID字段名，默认ID0000 |\n\n## 变化类型说明\n\n- **正值**：检查数据增加量是否超出允许范围\n- **负值**：检查数据减少量是否超出允许范围\n- **绝对值**：检查数据变化的绝对值是否超出允许范围\n\n## 输出示例\n\n### 有异常数据\n```\n[OK] Using encoding GB2312 successfully read CSV file\n########## Exception: Time consistency check failed!!!\nAbnormal data count: 25\nFirst 10 abnormal records:\n...\n```\n\n### 无异常数据\n```\n[OK] Using encoding GB2312 successfully read CSV file\nSuccessfully written file: /path/to/output.csv\nTime consistency check passed!\n```\n\n## 注意事项\n\n1. 数据需要包含必要的分组字段：sss000, sscode, fa0110, fa0112, yyyy00\n2. 年变化量是指允许的年度变化阈值\n3. 变化类型决定判断异常的条件\n4. 输出两个文件：处理后的原始数据（标记质控结果）和异常数据（可选）\n",
+      "bodyMd": "# QC10_TimeConsistency 时间一致性检查Skill\n\n## 功能概述\n\n本skill用于检查数据的时间一致性，按时间序列（年份）排序，对比相邻时间点的数据变化是否在合理范围内。如果数据变化超出允许的变化范围，则标记为异常。\n\n## 触发条件\n\n当用户请求以下任务时，应使用此skill：\n- 时间一致性检查\n- 时间序列校验\n- 数据变化检查\n- 时序一致性检验\n- 检查数据变化是否合理\n\n## 处理逻辑\n\n1. 读取输入的被检验数据\n2. 按分组字段（sss000, sscode, fa0110, fa0112）和时间字段（yyyy00）排序\n3. 关联相邻时间点的记录，计算差值\n4. 根据变化类型（正值/负值/绝对值）判断是否超出允许范围\n5. 为异常数据添加质控标识\n6. 输出两个文件：\n   - 处理后的原始数据（带质控标识）\n   - 异常数据（可选）\n\n## 分组字段\n\n默认分组字段（用于区分不同数据组）：\n- sss000\n- sscode\n- fa0110\n- fa0112\n- yyyy00（时间排序字段）\n\n## 支持的文件格式\n\n- CSV (.csv)\n- TSV (.tsv)\n- Excel (.xls, .xlsx)\n- SPSS (.sav)\n\n## 使用方法\n\n### 步骤1：获取用户输入输出路径及参数\n\n向用户确认：\n1. 输入文件路径\n2. 处理后数据输出路径\n3. 异常数据输出路径（可选）\n4. 一致性检查字段名\n5. 年变化量\n6. 变化类型（正值/负值/绝对值）\n7. 质控标识\n8. 质控标识字段名（默认：QC0000）\n9. 唯一ID字段名（默认：ID0000）\n\n### 步骤2：执行时间一致性检查脚本\n\n在 `scripts/` 目录下找到 `QC10_TimeConsistency.py`，使用Python执行：\n\n```bash\npython scripts/QC10_TimeConsistency.py \\\n    --input_path <输入文件> \\\n    --origin_output_path <处理后数据输出> \\\n    --error_output_path <异常数据输出> \\\n    --field_name <检查字段> \\\n    --range_of_change <年变化量> \\\n    --change_type <正值|负值|绝对值> \\\n    --qc_mark \"<质控标识>\" \\\n    --mark_field_name <质控字段名> \\\n    --id_field_name <ID字段名>\n```\n\n### 步骤3：返回结果\n\n- 如果有异常数据：显示异常数量并输出异常数据预览\n- 如果无异常：告知用户校验通过\n\n## 参数说明\n\n| 参数 | 必填 | 说明 |\n|------|------|------|\n| `--input_path` | 是 | 输入文件路径 |\n| `--origin_output_path` | 是 | 处理后数据输出路径 |\n| `--error_output_path` | 否 | 异常数据输出路径（可选） |\n| `--field_name` | 是 | 一致性检查字段名 |\n| `--range_of_change` | 是 | 年变化量（允许的变化阈值） |\n| `--change_type` | 是 | 变化类型：正值/负值/绝对值 |\n| `--qc_mark` | 是 | 质控标识 |\n| `--mark_field_name` | 否 | 质控标识字段名，默认QC0000 |\n| `--id_field_name` | 否 | 唯一ID字段名，默认ID0000 |\n\n## 变化类型说明\n\n- **正值**：检查数据增加量是否超出允许范围\n- **负值**：检查数据减少量是否超出允许范围\n- **绝对值**：检查数据变化的绝对值是否超出允许范围\n\n## 输出示例\n\n### 有异常数据\n```\n[OK] Using encoding GB2312 successfully read CSV file\n########## Exception: Time consistency check failed!!!\nAbnormal data count: 25\nFirst 10 abnormal records:\n...\n```\n\n### 无异常数据\n```\n[OK] Using encoding GB2312 successfully read CSV file\nSuccessfully written file: /path/to/output.csv\nTime consistency check passed!\n```\n\n## 注意事项\n\n1. 数据需要包含必要的分组字段：sss000, sscode, fa0110, fa0112, yyyy00\n2. 年变化量是指允许的年度变化阈值\n3. 变化类型决定判断异常的条件\n4. 输出两个文件：处理后的原始数据（标记质控结果）和异常数据（可选）\n"
+    },
+    {
+      "slug": "qc12-constantfieldcheck",
+      "name": "idFieldName",
+      "dir": "workspace/skills/QC12_ConstantFieldCheck",
+      "path": "workspace/skills/QC12_ConstantFieldCheck/SKILL.md",
+      "desc": "恒定字段一致性检查后的结构化数据文件，带质控标识",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/cas-bigdatalab/piflow.git",
+        "copy": "cp -r workspace/skills/QC12_ConstantFieldCheck ~/.claude/skills/qc12-constantfieldcheck",
+        "raw": "https://raw.githubusercontent.com/cas-bigdatalab/piflow/ad8d0108a54a4257307d4946dc9250e26f24c63f/workspace/skills/QC12_ConstantFieldCheck/SKILL.md",
+        "saveAs": "~/.claude/skills/qc12-constantfieldcheck/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:44437c7f5a3a14752651e520abd037b63b6afd2aa2092e5ae7cab8c30dd529dc",
+      "bytes": 4876,
+      "wordCount": 243,
+      "repoLicense": "",
+      "commit": "ad8d0108a54a4257307d4946dc9250e26f24c63f",
+      "branch": "master",
+      "body": "---\nname: QC12_ConstantFieldCheck\ndescription: |\n  特定字段恒定下的其他字段不一致检查工具。读取被检验表，当某些字段（恒定字段）的值相同时，\n  检查其他指定字段（差异字段）是否存在多个不同的值，如果存在则标记为异常数据，最后输出为相同格式的文件。\n  当用户提到恒定字段检查、字段一致性检查、分组内差异检查等需求时使用此skill。\n  即使用户没有说出\"恒定字段\"，只要任务涉及检查分组内字段是否存在不一致，就应该使用此skill。\n\nname_zh: QC12_特定字段恒定下的其他字段不一致检查算子\ninput_params:\n  - name: input_path\n    type: string\n    required: true\n    description: 输入文件路径\n\n  - name: output_path\n    type: string\n    required: true\n    description: 输出文件路径\n\n  - name: constantFieldsNames\n    type: string\n    required: true\n    description: 恒定字段，逗号分隔（如：field1,field2）\n\n  - name: diffFieldsNames\n    type: string\n    required: true\n    description: 差异字段，逗号分隔（如：field3,field4）\n\n  - name: QcMark\n    type: string\n    required: true\n    description: 质控标识\n\n  - name: markFieldName\n    type: string\n    required: false\n    default: QC0000\n    description: 质控标识字段名\n\n  - name: idFieldName\n    type: string\n    required: false\n    default: ID0000\n    description: 唯一ID字段名\n\noutput_params:\n  - name: output_path\n    type: csv_file\n    description: 恒定字段一致性检查后的结构化数据文件，带质控标识\ntag: 数据校验\npublisher: COMMUNITY\n---\n\n# QC12_ConstantFieldCheck 恒定字段一致性检查Skill\n\n## 功能概述\n\n本skill用于检查当特定字段（恒定字段）的值相同时，其他指定字段（差异字段）是否存在多个不同的值。如果存在不一致，则标记为异常数据。\n\n## 触发条件\n\n当用户请求以下任务时，应使用此skill：\n- 恒定字段检查\n- 字段一致性检查\n- 分组内差异检查\n- 检查分组内字段是否一致\n- 检查相同条件下的字段是否相同\n\n## 处理逻辑\n\n1. 读取输入的被检验数据\n2. 解析恒定字段列表和差异字段列表\n3. 按恒定字段进行分组\n4. 检查每个分组内差异字段的唯一值数量\n5. 如果差异字段存在多个不同值，标记该分组的所有数据为异常\n6. 为异常数据添加质控标识\n7. 输出处理后的数据文件\n\n## 支持的文件格式\n\n- CSV (.csv)\n- TSV (.tsv)\n- Excel (.xls, .xlsx)\n- SPSS (.sav)\n\n## 使用方法\n\n### 步骤1：获取用户输入输出路径及参数\n\n向用户确认：\n1. 输入文件路径\n2. 输出文件路径\n3. 恒定字段名（逗号分隔，按这些字段进行分组）\n4. 差异字段名（逗号分隔，检查这些字段是否存在不一致）\n5. 质控标识\n6. 质控标识字段名（默认：QC0000）\n7. 唯一ID字段名（默认：ID0000）\n\n### 步骤2：执行恒定字段一致性检查脚本\n\n在 `scripts/` 目录下找到 `QC12_ConstantFieldCheck.py`，使用Python执行：\n\n```bash\npython scripts/QC12_ConstantFieldCheck.py \\\n    --input_path <输入文件> \\\n    --output_path <输出文件> \\\n    --constantFieldsNames \"<恒定字段>\" \\\n    --diffFieldsNames \"<差异字段>\" \\\n    --QcMark \"<质控标识>\" \\\n    --markFieldName <质控字段名> \\\n    --idFieldName <ID字段名>\n```\n\n### 步骤3：返回结果\n\n告知用户处理完成。\n\n## 参数说明\n\n| 参数 | 必填 | 说明 |\n|------|------|------|\n| `--input_path` | 是 | 输入文件路径 |\n| `--output_path` | 是 | 输出文件路径 |\n| `--constantFieldsNames` | 是 | 恒定字段，逗号分隔（如：field1,field2） |\n| `--diffFieldsNames` | 是 | 差异字段，逗号分隔（如：field3,field4） |\n| `--QcMark` | 是 | 质控标识 |\n| `--markFieldName` | 否 | 质控标识字段名，默认QC0000 |\n| `--idFieldName` | 否 | 唯一ID字段名，默认ID0000 |\n\n## 使用示例\n\n假设有以下数据：\n\n| ID | region | type | value |\n|----|-------|------|-------|\n| 1  | A     | 1    | 100   |\n| 2  | A     | 1    | 200   |\n| 3  | B     | 2    | 150   |\n\n如果设置：\n- 恒定字段：region\n- 差异字段：value\n\n则检查结果：region=A的分组中，value有100和200两个不同值，存在不一致，标记为异常。\n\n## 输出示例\n\n```\n[OK] Using encoding GB2312 successfully read CSV file\nSuccessfully read file: /path/to/input.csv, shape: (1000, 18)\nProcessing completed! Output saved to: /path/to/output.csv\n```\n\n## 注意事项\n\n1. 恒定字段用于数据分组，相同值的记录被分为一组\n2. 检查差异字段在同一分组内是否存在多个不同的值\n3. 如果分组内差异字段存在多个不同值，该分组的所有记录都会被标记为异常\n4. 质控标识会追加到原有的质控标识字段中，用分号分隔\n",
+      "bodyMd": "# QC12_ConstantFieldCheck 恒定字段一致性检查Skill\n\n## 功能概述\n\n本skill用于检查当特定字段（恒定字段）的值相同时，其他指定字段（差异字段）是否存在多个不同的值。如果存在不一致，则标记为异常数据。\n\n## 触发条件\n\n当用户请求以下任务时，应使用此skill：\n- 恒定字段检查\n- 字段一致性检查\n- 分组内差异检查\n- 检查分组内字段是否一致\n- 检查相同条件下的字段是否相同\n\n## 处理逻辑\n\n1. 读取输入的被检验数据\n2. 解析恒定字段列表和差异字段列表\n3. 按恒定字段进行分组\n4. 检查每个分组内差异字段的唯一值数量\n5. 如果差异字段存在多个不同值，标记该分组的所有数据为异常\n6. 为异常数据添加质控标识\n7. 输出处理后的数据文件\n\n## 支持的文件格式\n\n- CSV (.csv)\n- TSV (.tsv)\n- Excel (.xls, .xlsx)\n- SPSS (.sav)\n\n## 使用方法\n\n### 步骤1：获取用户输入输出路径及参数\n\n向用户确认：\n1. 输入文件路径\n2. 输出文件路径\n3. 恒定字段名（逗号分隔，按这些字段进行分组）\n4. 差异字段名（逗号分隔，检查这些字段是否存在不一致）\n5. 质控标识\n6. 质控标识字段名（默认：QC0000）\n7. 唯一ID字段名（默认：ID0000）\n\n### 步骤2：执行恒定字段一致性检查脚本\n\n在 `scripts/` 目录下找到 `QC12_ConstantFieldCheck.py`，使用Python执行：\n\n```bash\npython scripts/QC12_ConstantFieldCheck.py \\\n    --input_path <输入文件> \\\n    --output_path <输出文件> \\\n    --constantFieldsNames \"<恒定字段>\" \\\n    --diffFieldsNames \"<差异字段>\" \\\n    --QcMark \"<质控标识>\" \\\n    --markFieldName <质控字段名> \\\n    --idFieldName <ID字段名>\n```\n\n### 步骤3：返回结果\n\n告知用户处理完成。\n\n## 参数说明\n\n| 参数 | 必填 | 说明 |\n|------|------|------|\n| `--input_path` | 是 | 输入文件路径 |\n| `--output_path` | 是 | 输出文件路径 |\n| `--constantFieldsNames` | 是 | 恒定字段，逗号分隔（如：field1,field2） |\n| `--diffFieldsNames` | 是 | 差异字段，逗号分隔（如：field3,field4） |\n| `--QcMark` | 是 | 质控标识 |\n| `--markFieldName` | 否 | 质控标识字段名，默认QC0000 |\n| `--idFieldName` | 否 | 唯一ID字段名，默认ID0000 |\n\n## 使用示例\n\n假设有以下数据：\n\n| ID | region | type | value |\n|----|-------|------|-------|\n| 1  | A     | 1    | 100   |\n| 2  | A     | 1    | 200   |\n| 3  | B     | 2    | 150   |\n\n如果设置：\n- 恒定字段：region\n- 差异字段：value\n\n则检查结果：region=A的分组中，value有100和200两个不同值，存在不一致，标记为异常。\n\n## 输出示例\n\n```\n[OK] Using encoding GB2312 successfully read CSV file\nSuccessfully read file: /path/to/input.csv, shape: (1000, 18)\nProcessing completed! Output saved to: /path/to/output.csv\n```\n\n## 注意事项\n\n1. 恒定字段用于数据分组，相同值的记录被分为一组\n2. 检查差异字段在同一分组内是否存在多个不同的值\n3. 如果分组内差异字段存在多个不同值，该分组的所有记录都会被标记为异常\n4. 质控标识会追加到原有的质控标识字段中，用分号分隔\n"
+    },
+    {
+      "slug": "qc15-timechangerange",
+      "name": "mark_field_name",
+      "dir": "workspace/skills/QC15_TimeChangeRange",
+      "path": "workspace/skills/QC15_TimeChangeRange/SKILL.md",
+      "desc": "最大变化范围检验后的结构化数据文件，带质控标识",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/cas-bigdatalab/piflow.git",
+        "copy": "cp -r workspace/skills/QC15_TimeChangeRange ~/.claude/skills/qc15-timechangerange",
+        "raw": "https://raw.githubusercontent.com/cas-bigdatalab/piflow/ad8d0108a54a4257307d4946dc9250e26f24c63f/workspace/skills/QC15_TimeChangeRange/SKILL.md",
+        "saveAs": "~/.claude/skills/qc15-timechangerange/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:deb5a4a84bcc288aa1f23b8d4a2b6e76f425c4642cce70982012fb2c778769b3",
+      "bytes": 5404,
+      "wordCount": 246,
+      "repoLicense": "",
+      "commit": "ad8d0108a54a4257307d4946dc9250e26f24c63f",
+      "branch": "master",
+      "body": "---\nname: QC15_TimeChangeRange\ndescription: |\n  最大变化范围检验工具。读取时间序列数据，检查在特定时间窗口内，数据是否出现了异常剧烈波动，\n  即在任意两个读数之间，其差值（变化量）的绝对值超出了预设的容忍阈值，识别并标记异常数据，最后输出为相同格式的文件。\n  当用户提到最大变化范围检验、变化范围检验、时间序列波动检验、窗口变化检测等需求时使用此skill。\n  即使用户没有说出\"最大变化范围\"，只要任务涉及检查时间序列数据在时间窗口内的变化幅度是否异常，就应该使用此skill。\n\nname_zh: QC15_最大变化范围检验算子\ninput_params:\n  - name: input_path\n    type: string\n    required: true\n    description: 输入文件路径\n\n  - name: output_path\n    type: string\n    required: true\n    description: 输出文件路径\n\n  - name: conditions\n    type: string\n    required: true\n    description: 检验条件，格式：字段名,阈值,窗口大小，多行用换行分隔\n\n  - name: time_field\n    type: string\n    required: true\n    description: 时间字段名（用于排序判断连续性）\n\n  - name: time_format\n    type: string\n    required: true\n    description: 时间格式（如：%Y-%m-%d %H:%M:%S）\n\n  - name: qc_mark\n    type: string\n    required: false\n    default: \"最大变化范围检验异常\"\n    description: 质控标识\n\n  - name: mark_field_name\n    type: string\n    required: false\n    default: QC0000\n    description: 质控标识字段名\n\noutput_params:\n  - name: output_path\n    type: csv_file\n    description: 最大变化范围检验后的结构化数据文件，带质控标识\ntag: 数据校验\npublisher: COMMUNITY\n---\n\n# QC15_TimeChangeRange 最大变化范围检验Skill\n\n## 功能概述\n\n本skill用于检查时间序列数据在特定时间窗口内是否出现了异常剧烈的波动。具体来说，计算滑动窗口内（指定连续次数）的最大值与最小值之差，如果差值超出预设的阈值，则标记为异常数据。\n\n## 触发条件\n\n当用户请求以下任务时，应使用此skill：\n- 最大变化范围检验\n- 变化范围检验\n- 时间序列波动检验\n- 窗口变化检测\n- 检查数据变化幅度是否过大\n- 时间窗口内异常波动检测\n\n## 处理逻辑\n\n1. 读取输入的被检验数据\n2. 解析变化范围检验条件（字段名、阈值、窗口大小）\n3. 按时间字段排序\n4. 对每个指定字段，计算滑动窗口内的最大值和最小值\n5. 如果窗口内最大值-最小值 >= 阈值，标记为异常\n6. 为异常数据添加质控标识\n7. 输出处理后的数据文件\n\n## 支持的文件格式\n\n- CSV (.csv)\n- TSV (.tsv)\n- Excel (.xls, .xlsx)\n- SPSS (.sav)\n\n## 使用方法\n\n### 步骤1：获取用户输入输出路径及参数\n\n向用户确认：\n1. 输入文件路径\n2. 输出文件路径\n3. 变化范围检验条件（格式：字段名,阈值,窗口大小）\n4. 时间字段名\n5. 时间格式\n6. 质控标识（默认：最大变化范围检验异常）\n7. 质控标识字段名（默认：QC0000）\n\n### 步骤2：执行最大变化范围检验脚本\n\n在 `scripts/` 目录下找到 `QC15_TimeChangeRange.py`，使用Python执行：\n\n```bash\npython scripts/QC15_TimeChangeRange.py \\\n    --input_path <输入文件> \\\n    --output_path <输出文件> \\\n    --conditions \"<检验条件>\" \\\n    --time_field <时间字段> \\\n    --time_format \"<时间格式>\" \\\n    --qc_mark \"<质控标识>\" \\\n    --mark_field_name <质控字段名>\n```\n\n### 步骤3：返回结果\n\n告知用户处理完成。\n\n## 参数说明\n\n| 参数 | 必填 | 说明 |\n|------|------|------|\n| `--input_path` | 是 | 输入文件路径 |\n| `--output_path` | 是 | 输出文件路径 |\n| `--conditions` | 是 | 检验条件，格式：字段名,阈值,窗口大小（如：Do_ppm,1,3）多行用换行分隔 |\n| `--time_field` | 是 | 时间字段名（用于排序判断连续性） |\n| `--time_format` | 是 | 时间格式（如：%Y-%m-%d %H:%M:%S） |\n| `--qc_mark` | 否 | 质控标识，默认\"最大变化范围检验异常\" |\n| `--mark_field_name` | 否 | 质控标识字段名，默认QC0000 |\n\n## 检验条件格式\n\n每行格式：`字段名,阈值,窗口大小`\n\n示例：\n```\nDo_ppm,1,3\nTemp_C,2,4\npH,4,5\n```\n\n表示：\n- Do_ppm字段在3个连续时间点内最大值-最小值>=1则标记异常\n- Temp_C字段在4个连续时间点内最大值-最小值>=2则标记异常\n- pH字段在5个连续时间点内最大值-最小值>=4则标记异常\n\n## 时间格式示例\n\n| 格式 | 示例 |\n|------|------|\n| %Y-%m-%d | 2024-01-15 |\n| %Y-%m-%d %H:%M:%S | 2024-01-15 14:30:00 |\n| %Y/%m/%d | 2024/01/15 |\n\n## 输出示例\n\n```\n[OK] Using encoding GB2312 successfully read CSV file\nReading input data: /path/to/input.csv\nWriting output data: /path/to/output.csv\nProcessing completed!\n```\n\n质控标识格式示例：`最大变化范围检验异常(Do_ppm)` 表示Do_ppm字段在指定时间窗口内变化幅度过大\n\n## 注意事项\n\n1. 检验条件格式：字段名,阈值,窗口大小，每行一个字段\n2. 阈值：窗口内最大值-最小值的最小允许差值\n3. 窗口大小：连续时间点的数量（用于计算滑动窗口）\n4. 数据按时间字段排序后进行检查\n5. 质控标识格式：质控标识(异常字段1,异常字段2,...)\n6. 与原有质控标识用分号拼接\n",
+      "bodyMd": "# QC15_TimeChangeRange 最大变化范围检验Skill\n\n## 功能概述\n\n本skill用于检查时间序列数据在特定时间窗口内是否出现了异常剧烈的波动。具体来说，计算滑动窗口内（指定连续次数）的最大值与最小值之差，如果差值超出预设的阈值，则标记为异常数据。\n\n## 触发条件\n\n当用户请求以下任务时，应使用此skill：\n- 最大变化范围检验\n- 变化范围检验\n- 时间序列波动检验\n- 窗口变化检测\n- 检查数据变化幅度是否过大\n- 时间窗口内异常波动检测\n\n## 处理逻辑\n\n1. 读取输入的被检验数据\n2. 解析变化范围检验条件（字段名、阈值、窗口大小）\n3. 按时间字段排序\n4. 对每个指定字段，计算滑动窗口内的最大值和最小值\n5. 如果窗口内最大值-最小值 >= 阈值，标记为异常\n6. 为异常数据添加质控标识\n7. 输出处理后的数据文件\n\n## 支持的文件格式\n\n- CSV (.csv)\n- TSV (.tsv)\n- Excel (.xls, .xlsx)\n- SPSS (.sav)\n\n## 使用方法\n\n### 步骤1：获取用户输入输出路径及参数\n\n向用户确认：\n1. 输入文件路径\n2. 输出文件路径\n3. 变化范围检验条件（格式：字段名,阈值,窗口大小）\n4. 时间字段名\n5. 时间格式\n6. 质控标识（默认：最大变化范围检验异常）\n7. 质控标识字段名（默认：QC0000）\n\n### 步骤2：执行最大变化范围检验脚本\n\n在 `scripts/` 目录下找到 `QC15_TimeChangeRange.py`，使用Python执行：\n\n```bash\npython scripts/QC15_TimeChangeRange.py \\\n    --input_path <输入文件> \\\n    --output_path <输出文件> \\\n    --conditions \"<检验条件>\" \\\n    --time_field <时间字段> \\\n    --time_format \"<时间格式>\" \\\n    --qc_mark \"<质控标识>\" \\\n    --mark_field_name <质控字段名>\n```\n\n### 步骤3：返回结果\n\n告知用户处理完成。\n\n## 参数说明\n\n| 参数 | 必填 | 说明 |\n|------|------|------|\n| `--input_path` | 是 | 输入文件路径 |\n| `--output_path` | 是 | 输出文件路径 |\n| `--conditions` | 是 | 检验条件，格式：字段名,阈值,窗口大小（如：Do_ppm,1,3）多行用换行分隔 |\n| `--time_field` | 是 | 时间字段名（用于排序判断连续性） |\n| `--time_format` | 是 | 时间格式（如：%Y-%m-%d %H:%M:%S） |\n| `--qc_mark` | 否 | 质控标识，默认\"最大变化范围检验异常\" |\n| `--mark_field_name` | 否 | 质控标识字段名，默认QC0000 |\n\n## 检验条件格式\n\n每行格式：`字段名,阈值,窗口大小`\n\n示例：\n```\nDo_ppm,1,3\nTemp_C,2,4\npH,4,5\n```\n\n表示：\n- Do_ppm字段在3个连续时间点内最大值-最小值>=1则标记异常\n- Temp_C字段在4个连续时间点内最大值-最小值>=2则标记异常\n- pH字段在5个连续时间点内最大值-最小值>=4则标记异常\n\n## 时间格式示例\n\n| 格式 | 示例 |\n|------|------|\n| %Y-%m-%d | 2024-01-15 |\n| %Y-%m-%d %H:%M:%S | 2024-01-15 14:30:00 |\n| %Y/%m/%d | 2024/01/15 |\n\n## 输出示例\n\n```\n[OK] Using encoding GB2312 successfully read CSV file\nReading input data: /path/to/input.csv\nWriting output data: /path/to/output.csv\nProcessing completed!\n```\n\n质控标识格式示例：`最大变化范围检验异常(Do_ppm)` 表示Do_ppm字段在指定时间窗口内变化幅度过大\n\n## 注意事项\n\n1. 检验条件格式：字段名,阈值,窗口大小，每行一个字段\n2. 阈值：窗口内最大值-最小值的最小允许差值\n3. 窗口大小：连续时间点的数量（用于计算滑动窗口）\n4. 数据按时间字段排序后进行检查\n5. 质控标识格式：质控标识(异常字段1,异常字段2,...)\n6. 与原有质控标识用分号拼接\n"
+    },
+    {
+      "slug": "qc3-numericdatathresholdcheck",
+      "name": "error_output_path",
+      "dir": "workspace/skills/QC3_NumericDataThresholdCheck",
+      "path": "workspace/skills/QC3_NumericDataThresholdCheck/SKILL.md",
+      "desc": "错误数据文件（可选），包含超出阈值范围的记录",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/cas-bigdatalab/piflow.git",
+        "copy": "cp -r workspace/skills/QC3_NumericDataThresholdCheck ~/.claude/skills/qc3-numericdatathresholdcheck",
+        "raw": "https://raw.githubusercontent.com/cas-bigdatalab/piflow/ad8d0108a54a4257307d4946dc9250e26f24c63f/workspace/skills/QC3_NumericDataThresholdCheck/SKILL.md",
+        "saveAs": "~/.claude/skills/qc3-numericdatathresholdcheck/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:0a38dc2237940c6bc495648d9e8ec637f357445b00bf851e9dc77cd0f5e3f70e",
+      "bytes": 4487,
+      "wordCount": 161,
+      "repoLicense": "",
+      "commit": "ad8d0108a54a4257307d4946dc9250e26f24c63f",
+      "branch": "master",
+      "body": "---\nname: \"QC3_NumericDataThresholdCheck\"\ndescription: \"数值数据阈值检验工具。读取结构化数据文件（CSV、TSV、Excel等），检查数值字段是否在指定的门限范围内，不允许超出门限值之外，最后输出为同格式的文件。当用户需要对数据进行阈值检验、数值范围检查、数据质量控制等操作时使用此skill。\"\n\nname_zh: QC3_数值数据阈值检验算子\ninput_params:\n  - name: input_path\n    type: string\n    required: true\n    description: 输入文件路径\n\n  - name: origin_output_path\n    type: string\n    required: true\n    description: 输出文件路径（与输入文件格式相同）\n\n  - name: field_name\n    type: string\n    required: true\n    description: 要检查的字段名\n\n  - name: max_value\n    type: float\n    required: true\n    description: 最大值\n\n  - name: min_value\n    type: float\n    required: true\n    description: 最小值\n\n  - name: qc_mark\n    type: string\n    required: true\n    description: QC标记\n\n  - name: error_output_path\n    type: string\n    required: false\n    description: 错误数据输出文件路径\n\n  - name: additional_condition\n    type: string\n    required: false\n    description: 额外条件\n\n  - name: mark_field_name\n    type: string\n    required: false\n    default: QC0000\n    description: 标记字段名\n\n  - name: id_field_name\n    type: string\n    required: false\n    default: ID0000\n    description: ID字段名\n\noutput_params:\n  - name: origin_output_path\n    type: csv_file\n    description: 阈值检验后的结构化数据文件，带质控标记\n\n  - name: error_output_path\n    type: csv_file\n    description: 错误数据文件（可选），包含超出阈值范围的记录\ntag: 数据校验\npublisher: COMMUNITY\n---\n\n# QC3_NumericDataThresholdCheck\n\n## 功能说明\n\n该skill提供数值数据阈值检验的能力，具体包括：\n\n1. **读取结构化文件**：支持 CSV、TSV、Excel 等多种格式的结构化数据文件\n2. **数值阈值检验**：将被检验表中的属性项值与门限比对，检查是否在门限范围\n3. **输出结果**：将检验后的数据输出为同格式的文件\n\n## 核心功能\n\n### 1. 数值数据阈值检验\n\n通过执行 `QC3_NumericDataThresholdCheck.py` 脚本，读取输入文件，检查数值字段是否在指定的阈值范围内，并输出处理后的文件。\n\n**调用方式**：\n```bash\npython scripts/QC3_NumericDataThresholdCheck.py --input_path <输入文件路径> --origin_output_path <输出文件路径> --field_name <字段名> --max_value <最大值> --min_value <最小值> --qc_mark <QC标记>\n```\n\n**参数说明**：\n- `--input_path`：必填，输入文件路径（支持 CSV、TSV、Excel 等格式）\n- `--origin_output_path`：必填，输出文件路径（与输入文件格式相同）\n- `--error_output_path`：可选，错误数据输出文件路径\n- `--field_name`：必填，要检查的字段名\n- `--max_value`：必填，最大值\n- `--min_value`：必填，最小值\n- `--additional_condition`：可选，额外条件\n- `--qc_mark`：必填，QC标记\n- `--mark_field_name`：可选，标记字段名\n- `--id_field_name`：可选，ID字段名\n\n**使用示例**：\n```bash\n# 检查 DBH 字段在 0-100 之间\npython scripts/QC3_NumericDataThresholdCheck.py --input_path data.csv --origin_output_path output.csv --field_name DBH --max_value 100 --min_value 0 --qc_mark \"DBH阈值检验\"\n```\n\n## 脚本说明\n\n### QC3_NumericDataThresholdCheck.py\n- **功能**：数值数据阈值检验的核心逻辑\n- **调用接口**：通过命令行参数接收输入输出路径和阈值配置\n- **特性**：\n  - 支持多种结构化文件格式\n  - 灵活的阈值配置\n  - 保留原始数据格式\n  - 详细的检验结果输出\n\n### data_io.py\n- **功能**：结构化文件读写工具\n- **支持格式**：CSV、TSV、Excel、SPSS\n- **特性**：\n  - 自动检测文件编码\n  - 多编码重试机制\n  - 智能处理不同文件格式\n\n## 注意事项\n\n1. 确保输入文件存在且格式正确\n2. 阈值配置格式必须为 `字段名:最小值-最大值`，多个字段用逗号分隔\n3. 输出路径需要有写入权限\n4. 脚本在用户本地执行，依赖 Python 环境\n5. 支持 Windows 和 Linux 系统\n\n## 依赖\n\n- Python 3.x\n- pandas 库\n- chardet 库（用于自动检测文件编码）\n- openpyxl 库（用于 Excel 文件处理）\n- xlrd 库（用于旧版 Excel 文件处理）\n- pyreadstat 库（用于 SPSS 文件处理）",
+      "bodyMd": "# QC3_NumericDataThresholdCheck\n\n## 功能说明\n\n该skill提供数值数据阈值检验的能力，具体包括：\n\n1. **读取结构化文件**：支持 CSV、TSV、Excel 等多种格式的结构化数据文件\n2. **数值阈值检验**：将被检验表中的属性项值与门限比对，检查是否在门限范围\n3. **输出结果**：将检验后的数据输出为同格式的文件\n\n## 核心功能\n\n### 1. 数值数据阈值检验\n\n通过执行 `QC3_NumericDataThresholdCheck.py` 脚本，读取输入文件，检查数值字段是否在指定的阈值范围内，并输出处理后的文件。\n\n**调用方式**：\n```bash\npython scripts/QC3_NumericDataThresholdCheck.py --input_path <输入文件路径> --origin_output_path <输出文件路径> --field_name <字段名> --max_value <最大值> --min_value <最小值> --qc_mark <QC标记>\n```\n\n**参数说明**：\n- `--input_path`：必填，输入文件路径（支持 CSV、TSV、Excel 等格式）\n- `--origin_output_path`：必填，输出文件路径（与输入文件格式相同）\n- `--error_output_path`：可选，错误数据输出文件路径\n- `--field_name`：必填，要检查的字段名\n- `--max_value`：必填，最大值\n- `--min_value`：必填，最小值\n- `--additional_condition`：可选，额外条件\n- `--qc_mark`：必填，QC标记\n- `--mark_field_name`：可选，标记字段名\n- `--id_field_name`：可选，ID字段名\n\n**使用示例**：\n```bash\n# 检查 DBH 字段在 0-100 之间\npython scripts/QC3_NumericDataThresholdCheck.py --input_path data.csv --origin_output_path output.csv --field_name DBH --max_value 100 --min_value 0 --qc_mark \"DBH阈值检验\"\n```\n\n## 脚本说明\n\n### QC3_NumericDataThresholdCheck.py\n- **功能**：数值数据阈值检验的核心逻辑\n- **调用接口**：通过命令行参数接收输入输出路径和阈值配置\n- **特性**：\n  - 支持多种结构化文件格式\n  - 灵活的阈值配置\n  - 保留原始数据格式\n  - 详细的检验结果输出\n\n### data_io.py\n- **功能**：结构化文件读写工具\n- **支持格式**：CSV、TSV、Excel、SPSS\n- **特性**：\n  - 自动检测文件编码\n  - 多编码重试机制\n  - 智能处理不同文件格式\n\n## 注意事项\n\n1. 确保输入文件存在且格式正确\n2. 阈值配置格式必须为 `字段名:最小值-最大值`，多个字段用逗号分隔\n3. 输出路径需要有写入权限\n4. 脚本在用户本地执行，依赖 Python 环境\n5. 支持 Windows 和 Linux 系统\n\n## 依赖\n\n- Python 3.x\n- pandas 库\n- chardet 库（用于自动检测文件编码）\n- openpyxl 库（用于 Excel 文件处理）\n- xlrd 库（用于旧版 Excel 文件处理）\n- pyreadstat 库（用于 SPSS 文件处理）"
+    },
+    {
+      "slug": "qc4-associationrulecheck",
+      "name": "error_output_path",
+      "dir": "workspace/skills/QC4_AssociationRuleCheck",
+      "path": "workspace/skills/QC4_AssociationRuleCheck/SKILL.md",
+      "desc": "异常数据文件（可选），包含不满足约束条件的记录",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/cas-bigdatalab/piflow.git",
+        "copy": "cp -r workspace/skills/QC4_AssociationRuleCheck ~/.claude/skills/qc4-associationrulecheck",
+        "raw": "https://raw.githubusercontent.com/cas-bigdatalab/piflow/ad8d0108a54a4257307d4946dc9250e26f24c63f/workspace/skills/QC4_AssociationRuleCheck/SKILL.md",
+        "saveAs": "~/.claude/skills/qc4-associationrulecheck/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:a41960713f0a1ce61c58676e5094fd6e5f9bdfca0c8a3ec83dd78f2e26a0039a",
+      "bytes": 5870,
+      "wordCount": 306,
+      "repoLicense": "",
+      "commit": "ad8d0108a54a4257307d4946dc9250e26f24c63f",
+      "branch": "master",
+      "body": "---\nname: QC4_AssociationRuleCheck\ndescription: |\n  数值关联规则校验工具。读取被检验表，根据用户自定义的条件表达式（类似Hive SQL规则）进行数据校验，\n  具有关联关系的数据项需满足特定约束条件。不满足条件的数据会标记质控标识并输出异常数据。\n  当用户提到关联规则校验、数据约束校验、自定义规则校验、条件表达式校验等需求时使用此skill。\n  即使用户没有说出\"关联规则\"，只要任务涉及根据自定义条件表达式进行数据校验，就应该使用此skill。\n\nname_zh: QC4_数值关联规则校验算子\ninput_params:\n  - name: input_path\n    type: string\n    required: true\n    description: 输入文件路径\n\n  - name: origin_output_path\n    type: string\n    required: true\n    description: 处理后原始数据输出路径\n\n  - name: expression\n    type: string\n    required: true\n    description: 条件表达式（pandas eval语法）\n\n  - name: filter_type\n    type: string\n    required: true\n    description: yes=满足表达式为正确数据，not=满足表达式为异常数据\n\n  - name: qc_mark\n    type: string\n    required: true\n    description: 质控标识\n\n  - name: error_output_path\n    type: string\n    required: false\n    description: 异常数据输出路径（可选）\n\n  - name: mark_field_name\n    type: string\n    required: false\n    default: QC0000\n    description: 质控标识字段名\n\n  - name: id_field_name\n    type: string\n    required: false\n    default: ID0000\n    description: 唯一ID字段名\n\noutput_params:\n  - name: origin_output_path\n    type: csv_file\n    description: 处理后原始数据文件，带质控标识\n\n  - name: error_output_path\n    type: csv_file\n    description: 异常数据文件（可选），包含不满足约束条件的记录\ntag: 数据校验\npublisher: COMMUNITY\n---\n\n# QC4_AssociationRuleCheck 关联规则校验Skill\n\n## 功能概述\n\n本skill用于根据用户自定义的条件表达式（类似Hive SQL/HiveQL规则）对数据进行校验，具有关联关系的数据项需满足特定约束条件。不满足条件的数据会标记质控标识并输出异常数据。\n\n## 触发条件\n\n当用户请求以下任务时，应使用此skill：\n- 关联规则校验\n- 数据约束校验\n- 自定义规则校验\n- 条件表达式校验\n- 数据逻辑校验\n- 根据表达式检查数据\n\n## 处理逻辑\n\n1. 读取输入的被检验数据\n2. 解析并执行用户自定义的条件表达式（pandas eval语法）\n3. 根据filter_type参数判断：\n   - `not`：满足表达式的是异常数据\n   - `yes`：满足表达式的是正确数据（取反）\n4. 为异常数据添加质控标识\n5. 输出两个文件：\n   - 处理后的原始数据（带质控标识）\n   - 异常数据（可选）\n\n## 支持的文件格式\n\n- CSV (.csv)\n- TSV (.tsv)\n- Excel (.xls, .xlsx)\n- SPSS (.sav)\n\n## 使用方法\n\n### 步骤1：获取用户输入输出路径及参数\n\n向用户确认：\n1. 输入文件路径\n2. 处理后原始数据输出路径\n3. 异常数据输出路径（可选）\n4. 条件表达式（pandas eval语法）\n5. 过滤类型（yes/not）\n6. 质控标识\n7. 质控标识字段名（默认：QC0000）\n8. 唯一ID字段名（默认：ID0000）\n\n### 步骤2：执行关联规则校验脚本\n\n在 `scripts/` 目录下找到 `QC4_AssociationRuleCheck.py`，使用Python执行：\n\n```bash\npython scripts/QC4_AssociationRuleCheck.py \\\n    --input_path <输入文件> \\\n    --origin_output_path <处理后数据输出> \\\n    --error_output_path <异常数据输出> \\\n    --expression \"<条件表达式>\" \\\n    --filter_type <yes|not> \\\n    --qc_mark \"<质控标识>\" \\\n    --mark_field_name <质控字段名> \\\n    --id_field_name <ID字段名>\n```\n\n### 步骤3：返回结果\n\n- 如果有异常数据：显示异常数量并输出异常数据预览\n- 如果无异常：告知用户校验通过\n\n## 参数说明\n\n| 参数 | 必填 | 说明 |\n|------|------|------|\n| `--input_path` | 是 | 输入文件路径 |\n| `--origin_output_path` | 是 | 处理后原始数据输出路径 |\n| `--error_output_path` | 否 | 异常数据输出路径（可选） |\n| `--expression` | 是 | 条件表达式（pandas eval语法） |\n| `--filter_type` | 是 | yes：满足表达式的是正确数据；not：满足表达式的是异常数据 |\n| `--qc_mark` | 是 | 质控标识 |\n| `--mark_field_name` | 否 | 质控标识字段名，默认QC0000 |\n| `--id_field_name` | 否 | 唯一ID字段名，默认ID0000 |\n\n## 表达式语法说明\n\n支持以下pandas eval语法：\n1. 关系运算：`==`, `!=`, `<`, `<=`, `>`, `>=`, `isna`, `notna`, `str.contains`\n2. 逻辑运算：`&`, `|`, `~`\n3. 数值运算：`round`, `abs`, `sin`, `cos`\n4. 字符串函数：`str.len`, `str.lower`, `str.upper`, `str.strip`\n5. 数学运算：`+`, `-`, `*`, `/`, `%`\n6. 类型转换：`astype`，例：`age.astype('float')`\n\n## 输出示例\n\n### 有异常数据\n```\n[OK] Using encoding GB2312 successfully read CSV file\nReading input data: /path/to/input.csv\nStarting numeric association rule check...\nWriting processed data: /path/to/output.csv\n==================================================\nFound 25 abnormal records, first 10 preview:\n...\n==================================================\n```\n\n### 无异常数据\n```\n[OK] Using encoding GB2312 successfully read CSV file\nReading input data: /path/to/input.csv\nStarting numeric association rule check...\nWriting processed data: /path/to/output.csv\nNo abnormal data found\n```\n\n## 注意事项\n\n1. 条件表达式使用pandas eval语法，需符合pandas规范\n2. filter_type参数决定表达式的含义：\n   - `not`：满足表达式 = 异常数据\n   - `yes`：满足表达式 = 正确数据（取反后才是异常数据）\n3. 输出两个文件：处理后的原始数据（标记质控结果）和异常数据（可选）\n",
+      "bodyMd": "# QC4_AssociationRuleCheck 关联规则校验Skill\n\n## 功能概述\n\n本skill用于根据用户自定义的条件表达式（类似Hive SQL/HiveQL规则）对数据进行校验，具有关联关系的数据项需满足特定约束条件。不满足条件的数据会标记质控标识并输出异常数据。\n\n## 触发条件\n\n当用户请求以下任务时，应使用此skill：\n- 关联规则校验\n- 数据约束校验\n- 自定义规则校验\n- 条件表达式校验\n- 数据逻辑校验\n- 根据表达式检查数据\n\n## 处理逻辑\n\n1. 读取输入的被检验数据\n2. 解析并执行用户自定义的条件表达式（pandas eval语法）\n3. 根据filter_type参数判断：\n   - `not`：满足表达式的是异常数据\n   - `yes`：满足表达式的是正确数据（取反）\n4. 为异常数据添加质控标识\n5. 输出两个文件：\n   - 处理后的原始数据（带质控标识）\n   - 异常数据（可选）\n\n## 支持的文件格式\n\n- CSV (.csv)\n- TSV (.tsv)\n- Excel (.xls, .xlsx)\n- SPSS (.sav)\n\n## 使用方法\n\n### 步骤1：获取用户输入输出路径及参数\n\n向用户确认：\n1. 输入文件路径\n2. 处理后原始数据输出路径\n3. 异常数据输出路径（可选）\n4. 条件表达式（pandas eval语法）\n5. 过滤类型（yes/not）\n6. 质控标识\n7. 质控标识字段名（默认：QC0000）\n8. 唯一ID字段名（默认：ID0000）\n\n### 步骤2：执行关联规则校验脚本\n\n在 `scripts/` 目录下找到 `QC4_AssociationRuleCheck.py`，使用Python执行：\n\n```bash\npython scripts/QC4_AssociationRuleCheck.py \\\n    --input_path <输入文件> \\\n    --origin_output_path <处理后数据输出> \\\n    --error_output_path <异常数据输出> \\\n    --expression \"<条件表达式>\" \\\n    --filter_type <yes|not> \\\n    --qc_mark \"<质控标识>\" \\\n    --mark_field_name <质控字段名> \\\n    --id_field_name <ID字段名>\n```\n\n### 步骤3：返回结果\n\n- 如果有异常数据：显示异常数量并输出异常数据预览\n- 如果无异常：告知用户校验通过\n\n## 参数说明\n\n| 参数 | 必填 | 说明 |\n|------|------|------|\n| `--input_path` | 是 | 输入文件路径 |\n| `--origin_output_path` | 是 | 处理后原始数据输出路径 |\n| `--error_output_path` | 否 | 异常数据输出路径（可选） |\n| `--expression` | 是 | 条件表达式（pandas eval语法） |\n| `--filter_type` | 是 | yes：满足表达式的是正确数据；not：满足表达式的是异常数据 |\n| `--qc_mark` | 是 | 质控标识 |\n| `--mark_field_name` | 否 | 质控标识字段名，默认QC0000 |\n| `--id_field_name` | 否 | 唯一ID字段名，默认ID0000 |\n\n## 表达式语法说明\n\n支持以下pandas eval语法：\n1. 关系运算：`==`, `!=`, `<`, `<=`, `>`, `>=`, `isna`, `notna`, `str.contains`\n2. 逻辑运算：`&`, `|`, `~`\n3. 数值运算：`round`, `abs`, `sin`, `cos`\n4. 字符串函数：`str.len`, `str.lower`, `str.upper`, `str.strip`\n5. 数学运算：`+`, `-`, `*`, `/`, `%`\n6. 类型转换：`astype`，例：`age.astype('float')`\n\n## 输出示例\n\n### 有异常数据\n```\n[OK] Using encoding GB2312 successfully read CSV file\nReading input data: /path/to/input.csv\nStarting numeric association rule check...\nWriting processed data: /path/to/output.csv\n==================================================\nFound 25 abnormal records, first 10 preview:\n...\n==================================================\n```\n\n### 无异常数据\n```\n[OK] Using encoding GB2312 successfully read CSV file\nReading input data: /path/to/input.csv\nStarting numeric association rule check...\nWriting processed data: /path/to/output.csv\nNo abnormal data found\n```\n\n## 注意事项\n\n1. 条件表达式使用pandas eval语法，需符合pandas规范\n2. filter_type参数决定表达式的含义：\n   - `not`：满足表达式 = 异常数据\n   - `yes`：满足表达式 = 正确数据（取反后才是异常数据）\n3. 输出两个文件：处理后的原始数据（标记质控结果）和异常数据（可选）\n"
+    },
+    {
+      "slug": "qc5-batchthresholdcheck",
+      "name": "mark_field_name",
+      "dir": "workspace/skills/QC5_BatchThresholdCheck",
+      "path": "workspace/skills/QC5_BatchThresholdCheck/SKILL.md",
+      "desc": "批量阈值检验后的结构化数据文件，带质控标识",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/cas-bigdatalab/piflow.git",
+        "copy": "cp -r workspace/skills/QC5_BatchThresholdCheck ~/.claude/skills/qc5-batchthresholdcheck",
+        "raw": "https://raw.githubusercontent.com/cas-bigdatalab/piflow/ad8d0108a54a4257307d4946dc9250e26f24c63f/workspace/skills/QC5_BatchThresholdCheck/SKILL.md",
+        "saveAs": "~/.claude/skills/qc5-batchthresholdcheck/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:c848edd7ef77c63dc4300c4abc6fb43d67bc4c7f44d966d2a6ffdb2a82ec5fec",
+      "bytes": 4444,
+      "wordCount": 231,
+      "repoLicense": "",
+      "commit": "ad8d0108a54a4257307d4946dc9250e26f24c63f",
+      "branch": "master",
+      "body": "---\nname: QC5_BatchThresholdCheck\ndescription: |\n  批量阈值检验工具。读取被检验表和阈值表，将数据列的值与阈值表中定义的上下限进行比对，\n  识别并标记超出允许范围（包括上限和下限）或为空值的数据点，最后输出为相同格式的文件。\n  当用户提到批量阈值检验、阈值表校验、多字段阈值检查、范围校验等需求时使用此skill。\n  即使用户没有明确说出\"批量阈值\"，只要任务涉及根据阈值表进行多字段范围校验，就应该使用此skill。\n\nname_zh: QC5_批量阈值检验算子\ninput_params:\n  - name: original_data_path\n    type: string\n    required: true\n    description: 被检验数据文件路径\n\n  - name: threshold_data_path\n    type: string\n    required: true\n    description: 阈值表文件路径（包含field、max_value、min_value三列）\n\n  - name: output_path\n    type: string\n    required: true\n    description: 处理后数据输出路径\n\n  - name: qc_mark\n    type: string\n    required: true\n    description: 质控标识（如QC5）\n\n  - name: mark_field_name\n    type: string\n    required: false\n    default: QC0000\n    description: 质控标识字段名\n\noutput_params:\n  - name: output_path\n    type: csv_file\n    description: 批量阈值检验后的结构化数据文件，带质控标识\ntag: 数据校验\npublisher: COMMUNITY\n---\n\n# QC5_BatchThresholdCheck 批量阈值检验Skill\n\n## 功能概述\n\n本skill用于将数据表中的字段值与阈值表中定义的上下限进行批量比对，识别并标记超出允许范围（包括上限和下限）或为空值的数据点。\n\n## 触发条件\n\n当用户请求以下任务时，应使用此skill：\n- 批量阈值检验\n- 阈值表校验\n- 多字段阈值检查\n- 范围校验\n- 检查数值是否在阈值范围内\n- 批量范围检查\n\n## 处理逻辑\n\n1. 读取被检验表和阈值表数据\n2. 从阈值表构建阈值映射表（字段名 -> 最大值, 最小值）\n3. 遍历数据表的每一行，检查每个阈值字段：\n   - 如果字段值为空，标记为异常\n   - 如果字段值超出最大值或小于最小值，标记为异常\n4. 为异常数据添加质控标识（格式：QC5(异常字段1,异常字段2,...)）\n5. 输出处理后的数据文件\n\n## 阈值表格式\n\n阈值表必须包含以下三列：\n- `field`：字段名\n- `max_value`：最大值\n- `min_value`：最小值\n\n## 支持的文件格式\n\n- CSV (.csv)\n- TSV (.tsv)\n- Excel (.xls, .xlsx)\n- SPSS (.sav)\n\n## 使用方法\n\n### 步骤1：获取用户输入输出路径及参数\n\n向用户确认：\n1. 被检验表路径\n2. 阈值表路径\n3. 输出文件路径\n4. 质控标识（如：QC5）\n5. 质控标识字段名（默认：QC0000）\n\n### 步骤2：执行批量阈值检验脚本\n\n在 `scripts/` 目录下找到 `QC5_BatchThresholdCheck.py`，使用Python执行：\n\n```bash\npython scripts/QC5_BatchThresholdCheck.py \\\n    --original_data_path <被检验表> \\\n    --threshold_data_path <阈值表> \\\n    --output_path <输出文件> \\\n    --qc_mark \"<质控标识>\" \\\n    --mark_field_name <质控字段名>\n```\n\n### 步骤3：返回结果\n\n告知用户处理完成，异常数据已标记质控标识。\n\n## 参数说明\n\n| 参数 | 必填 | 说明 |\n|------|------|------|\n| `--original_data_path` | 是 | 被检验数据文件路径 |\n| `--threshold_data_path` | 是 | 阈值表文件路径 |\n| `--output_path` | 是 | 处理后数据输出路径 |\n| `--qc_mark` | 是 | 质控标识（如QC5） |\n| `--mark_field_name` | 否 | 质控标识字段名，默认QC0000 |\n\n## 阈值表示例\n\n| field | max_value | min_value |\n|-------|-----------|-----------|\n| age   | 120       | 0         |\n| height| 300       | 0         |\n| weight| 500       | 1         |\n\n## 输出示例\n\n```\n[OK] Using encoding GB2312 successfully read CSV file\nSuccessfully read file: /path/to/original.csv, shape: (1000, 18)\nSuccessfully read file: /path/to/threshold.csv, shape: (5, 3)\nSuccessfully written file: /path/to/output.csv\nProcessing completed! Output saved to: /path/to/output.csv\n```\n\n质控标识格式示例：`QC5(age,height)` 表示age和height字段超出阈值范围\n\n## 注意事项\n\n1. 阈值表必须包含field、max_value、min_value三列\n2. 超出阈值范围或为空的值都会被标记\n3. 质控标识格式：质控标识(异常字段1,异常字段2,...)\n4. 多个异常字段用逗号分隔\n5. 与原有质控标识用分号拼接\n",
+      "bodyMd": "# QC5_BatchThresholdCheck 批量阈值检验Skill\n\n## 功能概述\n\n本skill用于将数据表中的字段值与阈值表中定义的上下限进行批量比对，识别并标记超出允许范围（包括上限和下限）或为空值的数据点。\n\n## 触发条件\n\n当用户请求以下任务时，应使用此skill：\n- 批量阈值检验\n- 阈值表校验\n- 多字段阈值检查\n- 范围校验\n- 检查数值是否在阈值范围内\n- 批量范围检查\n\n## 处理逻辑\n\n1. 读取被检验表和阈值表数据\n2. 从阈值表构建阈值映射表（字段名 -> 最大值, 最小值）\n3. 遍历数据表的每一行，检查每个阈值字段：\n   - 如果字段值为空，标记为异常\n   - 如果字段值超出最大值或小于最小值，标记为异常\n4. 为异常数据添加质控标识（格式：QC5(异常字段1,异常字段2,...)）\n5. 输出处理后的数据文件\n\n## 阈值表格式\n\n阈值表必须包含以下三列：\n- `field`：字段名\n- `max_value`：最大值\n- `min_value`：最小值\n\n## 支持的文件格式\n\n- CSV (.csv)\n- TSV (.tsv)\n- Excel (.xls, .xlsx)\n- SPSS (.sav)\n\n## 使用方法\n\n### 步骤1：获取用户输入输出路径及参数\n\n向用户确认：\n1. 被检验表路径\n2. 阈值表路径\n3. 输出文件路径\n4. 质控标识（如：QC5）\n5. 质控标识字段名（默认：QC0000）\n\n### 步骤2：执行批量阈值检验脚本\n\n在 `scripts/` 目录下找到 `QC5_BatchThresholdCheck.py`，使用Python执行：\n\n```bash\npython scripts/QC5_BatchThresholdCheck.py \\\n    --original_data_path <被检验表> \\\n    --threshold_data_path <阈值表> \\\n    --output_path <输出文件> \\\n    --qc_mark \"<质控标识>\" \\\n    --mark_field_name <质控字段名>\n```\n\n### 步骤3：返回结果\n\n告知用户处理完成，异常数据已标记质控标识。\n\n## 参数说明\n\n| 参数 | 必填 | 说明 |\n|------|------|------|\n| `--original_data_path` | 是 | 被检验数据文件路径 |\n| `--threshold_data_path` | 是 | 阈值表文件路径 |\n| `--output_path` | 是 | 处理后数据输出路径 |\n| `--qc_mark` | 是 | 质控标识（如QC5） |\n| `--mark_field_name` | 否 | 质控标识字段名，默认QC0000 |\n\n## 阈值表示例\n\n| field | max_value | min_value |\n|-------|-----------|-----------|\n| age   | 120       | 0         |\n| height| 300       | 0         |\n| weight| 500       | 1         |\n\n## 输出示例\n\n```\n[OK] Using encoding GB2312 successfully read CSV file\nSuccessfully read file: /path/to/original.csv, shape: (1000, 18)\nSuccessfully read file: /path/to/threshold.csv, shape: (5, 3)\nSuccessfully written file: /path/to/output.csv\nProcessing completed! Output saved to: /path/to/output.csv\n```\n\n质控标识格式示例：`QC5(age,height)` 表示age和height字段超出阈值范围\n\n## 注意事项\n\n1. 阈值表必须包含field、max_value、min_value三列\n2. 超出阈值范围或为空的值都会被标记\n3. 质控标识格式：质控标识(异常字段1,异常字段2,...)\n4. 多个异常字段用逗号分隔\n5. 与原有质控标识用分号拼接\n"
+    },
+    {
+      "slug": "qc6-singlefieldmultithresholdcheck",
+      "name": "error_output",
+      "dir": "workspace/skills/QC6_SingleFieldMultiThresholdCheck",
+      "path": "workspace/skills/QC6_SingleFieldMultiThresholdCheck/SKILL.md",
+      "desc": "异常数据文件（可选），包含不满足阈值条件的记录",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/cas-bigdatalab/piflow.git",
+        "copy": "cp -r workspace/skills/QC6_SingleFieldMultiThresholdCheck ~/.claude/skills/qc6-singlefieldmultithresholdcheck",
+        "raw": "https://raw.githubusercontent.com/cas-bigdatalab/piflow/ad8d0108a54a4257307d4946dc9250e26f24c63f/workspace/skills/QC6_SingleFieldMultiThresholdCheck/SKILL.md",
+        "saveAs": "~/.claude/skills/qc6-singlefieldmultithresholdcheck/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:6fbbf45dc0d196ce2e3b16c6ec1ba955894a6f170406582537c8fb9fea0707d9",
+      "bytes": 6112,
+      "wordCount": 317,
+      "repoLicense": "",
+      "commit": "ad8d0108a54a4257307d4946dc9250e26f24c63f",
+      "branch": "master",
+      "body": "---\nname: QC6_SingleFieldMultiThresholdCheck\ndescription: |\n  单字段多条件阈值检验工具。读取被检验表和阈值表，将指定字段的属性项值与阈值表中定义的多条件门限进行比对，\n  检查是否在门限范围内，不允许超出门限值（包括上限和下限）。不满足条件的数据会标记质控标识并输出异常数据。\n  当用户提到单字段阈值检验、多条件阈值检验、单字段多条件检查等需求时使用此skill。\n  即使用户没有说出\"单字段多条件\"，只要任务涉及根据多个条件进行单字段阈值校验，就应该使用此skill。\n\nname_zh: QC6_单字段多条件阈值检验算子\ninput_params:\n  - name: original_file\n    type: string\n    required: true\n    description: 被检验数据文件路径\n\n  - name: threshold_file\n    type: string\n    required: true\n    description: 阈值表文件路径\n\n  - name: origin_output\n    type: string\n    required: true\n    description: 处理后原始数据输出路径\n\n  - name: field_name\n    type: string\n    required: true\n    description: 阈值检测字段名\n\n  - name: qc_mark\n    type: string\n    required: true\n    description: 质控标识\n\n  - name: error_output\n    type: string\n    required: false\n    description: 异常数据输出路径（可选）\n\n  - name: mark_field_name\n    type: string\n    required: false\n    default: QC0000\n    description: 质控标识字段名\n\n  - name: id_field_name\n    type: string\n    required: false\n    default: ID0000\n    description: 唯一ID字段名\n\noutput_params:\n  - name: origin_output\n    type: csv_file\n    description: 处理后原始数据文件，带质控标识\n\n  - name: error_output\n    type: csv_file\n    description: 异常数据文件（可选），包含不满足阈值条件的记录\ntag: 数据校验\npublisher: COMMUNITY\n---\n\n# QC6_SingleFieldMultiThresholdCheck 单字段多条件阈值检验Skill\n\n## 功能概述\n\n本skill用于将被检验表中的指定字段的属性项值与阈值表中定义的多条件门限进行比对，检查是否在门限范围内（不允许超出门限值包括上限和下限）。不满足条件的数据会标记质控标识并输出异常数据。\n\n## 触发条件\n\n当用户请求以下任务时，应使用此skill：\n- 单字段阈值检验\n- 多条件阈值检验\n- 单字段多条件检查\n- 指定字段的范围校验\n- 字段多条件门限检查\n\n## 处理逻辑\n\n1. 读取被检验表和阈值表数据\n2. 根据用户指定的检测字段，遍历阈值表的每一行条件\n3. 对每一行数据检查是否满足阈值条件：\n   - max开头的列：检查字段值是否大于最大值\n   - min开头的列：检查字段值是否小于最小值\n   - 其他列：作为匹配条件进行精确匹配\n4. 如果数据不满足任何阈值条件，则标记为异常\n5. 为异常数据添加质控标识\n6. 输出两个文件：\n   - 处理后的原始数据（带质控标识）\n   - 异常数据（可选）\n\n## 阈值表格式\n\n阈值表可以包含以下类型的列：\n- `max_xxx`：最大值条件（如max_age表示age字段的最大值）\n- `min_xxx`：最小值条件（如min_age表示age字段的最小值）\n- 其他列：作为匹配条件进行精确匹配\n\n## 支持的文件格式\n\n- CSV (.csv)\n- TSV (.tsv)\n- Excel (.xls, .xlsx)\n- SPSS (.sav)\n\n## 使用方法\n\n### 步骤1：获取用户输入输出路径及参数\n\n向用户确认：\n1. 被检验表路径\n2. 阈值表路径\n3. 处理后原始数据输出路径\n4. 异常数据输出路径（可选）\n5. 检测字段名\n6. 质控标识\n7. 质控标识字段名（默认：QC0000）\n8. 唯一ID字段名（默认：ID0000）\n\n### 步骤2：执行单字段多条件阈值检验脚本\n\n在 `scripts/` 目录下找到 `QC6_SingleFieldMultiThresholdCheck.py`，使用Python执行：\n\n```bash\npython scripts/QC6_SingleFieldMultiThresholdCheck.py \\\n    --original_file <被检验表> \\\n    --threshold_file <阈值表> \\\n    --origin_output <处理后数据输出> \\\n    --error_output <异常数据输出> \\\n    --field_name <检测字段> \\\n    --qc_mark \"<质控标识>\" \\\n    --mark_field_name <质控字段名> \\\n    --id_field_name <ID字段名>\n```\n\n### 步骤3：返回结果\n\n- 如果有异常数据：显示异常数量并输出异常数据预览\n- 如果无异常：告知用户校验通过\n\n## 参数说明\n\n| 参数 | 必填 | 说明 |\n|------|------|------|\n| `--original_file` | 是 | 被检验数据文件路径 |\n| `--threshold_file` | 是 | 阈值表文件路径 |\n| `--origin_output` | 是 | 处理后原始数据输出路径 |\n| `--error_output` | 否 | 异常数据输出路径（可选） |\n| `--field_name` | 是 | 阈值检测字段名 |\n| `--qc_mark` | 是 | 质控标识 |\n| `--mark_field_name` | 否 | 质控标识字段名，默认QC0000 |\n| `--id_field_name` | 否 | 唯一ID字段名，默认ID0000 |\n\n## 阈值表示例\n\n| min_age | max_age | region |\n|---------|---------|-------|\n| 0      | 18      | north |\n| 19     | 60      | south |\n| 61     | 120     | east  |\n\n表示：\n- region=north时，age需要在0-18之间\n- region=south时，age需要在19-60之间\n- region=east时，age需要在61-120之间\n\n## 输出示例\n\n### 有异常数据\n```\n[OK] Using encoding GB2312 successfully read CSV file\nSuccessfully read file: /path/to/original.csv, shape: (1000, 18)\nSuccessfully read file: /path/to/threshold.csv, shape: (3, 3)\n########## Exception: Threshold check failed: out of range!!!\nFirst 10 abnormal records:\n...\n```\n\n### 无异常数据\n```\n[OK] Using encoding GB2312 successfully read CSV file\nSuccessfully read file: /path/to/original.csv, shape: (1000, 18)\nSuccessfully read file: /path/to/threshold.csv, shape: (3, 3)\nSuccessfully written file: /path/to/output.csv\n```\n\n## 注意事项\n\n1. 阈值表支持多条件组合判断\n2. max开头的列表示最大值限制\n3. min开头的列表示最小值限制\n4. 其他列作为精确匹配条件\n5. 数据必须满足阈值表中任意一行条件，否则标记为异常\n6. 输出两个文件：处理后的原始数据（标记质控结果）和异常数据（可选）\n",
+      "bodyMd": "# QC6_SingleFieldMultiThresholdCheck 单字段多条件阈值检验Skill\n\n## 功能概述\n\n本skill用于将被检验表中的指定字段的属性项值与阈值表中定义的多条件门限进行比对，检查是否在门限范围内（不允许超出门限值包括上限和下限）。不满足条件的数据会标记质控标识并输出异常数据。\n\n## 触发条件\n\n当用户请求以下任务时，应使用此skill：\n- 单字段阈值检验\n- 多条件阈值检验\n- 单字段多条件检查\n- 指定字段的范围校验\n- 字段多条件门限检查\n\n## 处理逻辑\n\n1. 读取被检验表和阈值表数据\n2. 根据用户指定的检测字段，遍历阈值表的每一行条件\n3. 对每一行数据检查是否满足阈值条件：\n   - max开头的列：检查字段值是否大于最大值\n   - min开头的列：检查字段值是否小于最小值\n   - 其他列：作为匹配条件进行精确匹配\n4. 如果数据不满足任何阈值条件，则标记为异常\n5. 为异常数据添加质控标识\n6. 输出两个文件：\n   - 处理后的原始数据（带质控标识）\n   - 异常数据（可选）\n\n## 阈值表格式\n\n阈值表可以包含以下类型的列：\n- `max_xxx`：最大值条件（如max_age表示age字段的最大值）\n- `min_xxx`：最小值条件（如min_age表示age字段的最小值）\n- 其他列：作为匹配条件进行精确匹配\n\n## 支持的文件格式\n\n- CSV (.csv)\n- TSV (.tsv)\n- Excel (.xls, .xlsx)\n- SPSS (.sav)\n\n## 使用方法\n\n### 步骤1：获取用户输入输出路径及参数\n\n向用户确认：\n1. 被检验表路径\n2. 阈值表路径\n3. 处理后原始数据输出路径\n4. 异常数据输出路径（可选）\n5. 检测字段名\n6. 质控标识\n7. 质控标识字段名（默认：QC0000）\n8. 唯一ID字段名（默认：ID0000）\n\n### 步骤2：执行单字段多条件阈值检验脚本\n\n在 `scripts/` 目录下找到 `QC6_SingleFieldMultiThresholdCheck.py`，使用Python执行：\n\n```bash\npython scripts/QC6_SingleFieldMultiThresholdCheck.py \\\n    --original_file <被检验表> \\\n    --threshold_file <阈值表> \\\n    --origin_output <处理后数据输出> \\\n    --error_output <异常数据输出> \\\n    --field_name <检测字段> \\\n    --qc_mark \"<质控标识>\" \\\n    --mark_field_name <质控字段名> \\\n    --id_field_name <ID字段名>\n```\n\n### 步骤3：返回结果\n\n- 如果有异常数据：显示异常数量并输出异常数据预览\n- 如果无异常：告知用户校验通过\n\n## 参数说明\n\n| 参数 | 必填 | 说明 |\n|------|------|------|\n| `--original_file` | 是 | 被检验数据文件路径 |\n| `--threshold_file` | 是 | 阈值表文件路径 |\n| `--origin_output` | 是 | 处理后原始数据输出路径 |\n| `--error_output` | 否 | 异常数据输出路径（可选） |\n| `--field_name` | 是 | 阈值检测字段名 |\n| `--qc_mark` | 是 | 质控标识 |\n| `--mark_field_name` | 否 | 质控标识字段名，默认QC0000 |\n| `--id_field_name` | 否 | 唯一ID字段名，默认ID0000 |\n\n## 阈值表示例\n\n| min_age | max_age | region |\n|---------|---------|-------|\n| 0      | 18      | north |\n| 19     | 60      | south |\n| 61     | 120     | east  |\n\n表示：\n- region=north时，age需要在0-18之间\n- region=south时，age需要在19-60之间\n- region=east时，age需要在61-120之间\n\n## 输出示例\n\n### 有异常数据\n```\n[OK] Using encoding GB2312 successfully read CSV file\nSuccessfully read file: /path/to/original.csv, shape: (1000, 18)\nSuccessfully read file: /path/to/threshold.csv, shape: (3, 3)\n########## Exception: Threshold check failed: out of range!!!\nFirst 10 abnormal records:\n...\n```\n\n### 无异常数据\n```\n[OK] Using encoding GB2312 successfully read CSV file\nSuccessfully read file: /path/to/original.csv, shape: (1000, 18)\nSuccessfully read file: /path/to/threshold.csv, shape: (3, 3)\nSuccessfully written file: /path/to/output.csv\n```\n\n## 注意事项\n\n1. 阈值表支持多条件组合判断\n2. max开头的列表示最大值限制\n3. min开头的列表示最小值限制\n4. 其他列作为精确匹配条件\n5. 数据必须满足阈值表中任意一行条件，否则标记为异常\n6. 输出两个文件：处理后的原始数据（标记质控结果）和异常数据（可选）\n"
+    },
+    {
+      "slug": "qc7-batchinputthresholdcheck",
+      "name": "mark_field_name",
+      "dir": "workspace/skills/QC7_BatchInputThresholdCheck",
+      "path": "workspace/skills/QC7_BatchInputThresholdCheck/SKILL.md",
+      "desc": "批量阈值检验后的结构化数据文件，带质控标识",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/cas-bigdatalab/piflow.git",
+        "copy": "cp -r workspace/skills/QC7_BatchInputThresholdCheck ~/.claude/skills/qc7-batchinputthresholdcheck",
+        "raw": "https://raw.githubusercontent.com/cas-bigdatalab/piflow/ad8d0108a54a4257307d4946dc9250e26f24c63f/workspace/skills/QC7_BatchInputThresholdCheck/SKILL.md",
+        "saveAs": "~/.claude/skills/qc7-batchinputthresholdcheck/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:80b1e8a93ff3b614399b633e5ab03bb14e42b7e523977359d40b55be9483f89d",
+      "bytes": 4360,
+      "wordCount": 194,
+      "repoLicense": "",
+      "commit": "ad8d0108a54a4257307d4946dc9250e26f24c63f",
+      "branch": "master",
+      "body": "---\nname: QC7_BatchInputThresholdCheck\ndescription: |\n  批量阈值检验-输入框工具。读取被检验表，将数据列的值与输入阈值条件中定义的上下限进行比对，\n  识别并标记超出允许范围（包括上限和下限）或为空值的数据点，最后输出为相同格式的文件。\n  当用户提到批量阈值检验、输入框阈值检验、多字段阈值检查、范围校验等需求时使用此skill。\n  即使用户没有明确说出\"批量阈值输入框\"，只要任务涉及根据输入的阈值条件进行批量范围校验，就应该使用此skill。\n\nname_zh: QC7_批量阈值检验-输入框算子\ninput_params:\n  - name: input_path\n    type: string\n    required: true\n    description: 输入文件路径\n\n  - name: output_path\n    type: string\n    required: true\n    description: 输出文件路径\n\n  - name: conditions\n    type: string\n    required: true\n    description: 阈值条件，格式：字段名,最大值,最小值，多行用换行分隔\n\n  - name: qc_mark\n    type: string\n    required: true\n    description: 质控标识\n\n  - name: mark_field_name\n    type: string\n    required: false\n    default: QC0000\n    description: 质控标识字段名\n\noutput_params:\n  - name: output_path\n    type: csv_file\n    description: 批量阈值检验后的结构化数据文件，带质控标识\ntag: 数据校验\npublisher: COMMUNITY\n---\n\n# QC7_BatchInputThresholdCheck 批量阈值检验(输入框) Skill\n\n## 功能概述\n\n本skill用于将数据表中的字段值与用户输入的阈值条件（上下限）进行批量比对，识别并标记超出允许范围（包括上限和下限）或为空值的数据点。\n\n## 触发条件\n\n当用户请求以下任务时，应使用此skill：\n- 批量阈值检验\n- 输入框阈值检验\n- 多字段阈值检查\n- 范围校验\n- 检查数值是否在输入的阈值范围内\n- 批量输入范围检查\n\n## 处理逻辑\n\n1. 解析用户输入的阈值条件（格式：字段名,最大值,最小值）\n2. 读取被检验数据\n3. 遍历阈值映射表，检查每个字段：\n   - 如果字段值为空，标记为异常\n   - 如果字段值超出最大值或小于最小值，标记为异常\n4. 为异常数据添加质控标识（格式：QC7(异常字段1,异常字段2,...)）\n5. 输出处理后的数据文件\n\n## 支持的文件格式\n\n- CSV (.csv)\n- TSV (.tsv)\n- Excel (.xls, .xlsx)\n- SPSS (.sav)\n\n## 使用方法\n\n### 步骤1：获取用户输入输出路径及参数\n\n向用户确认：\n1. 输入文件路径\n2. 输出文件路径\n3. 阈值检验条件（格式：字段名,最大值,最小值，多行用换行分隔）\n4. 质控标识（如：QC7）\n5. 质控标识字段名（默认：QC0000）\n\n### 步骤2：执行批量阈值检验脚本\n\n在 `scripts/` 目录下找到 `QC7_BatchInputThresholdCheck.py`，使用Python执行：\n\n```bash\npython scripts/QC7_BatchInputThresholdCheck.py \\\n    --input-path <输入文件> \\\n    --output-path <输出文件> \\\n    --conditions \"<阈值条件>\" \\\n    --qc-mark \"<质控标识>\" \\\n    --mark-field-name <质控字段名>\n```\n\n### 步骤3：返回结果\n\n告知用户处理完成，异常数据已标记质控标识。\n\n## 参数说明\n\n| 参数 | 必填 | 说明 |\n|------|------|------|\n| `--input-path` | 是 | 输入文件路径 |\n| `--output-path` | 是 | 输出文件路径 |\n| `--conditions` | 是 | 阈值条件，格式：字段名,最大值,最小值，多行用换行分隔 |\n| `--qc-mark` | 是 | 质控标识 |\n| `--mark-field-name` | 否 | 质控标识字段名，默认QC0000 |\n\n## 阈值条件格式\n\n每行格式：`字段名,最大值,最小值`\n\n示例：\n```\nTemp,36,-5\npH,14,0\nage,120,0\n```\n\n表示：\n- Temp字段值需要在-5到36之间\n- pH字段值需要在0到14之间\n- age字段值需要在0到120之间\n\n## 输出示例\n\n```\n[OK] Using encoding GB2312 successfully read CSV file\nSuccessfully read file: /path/to/input.csv, shape: (1000, 18)\nSuccessfully written file: /path/to/output.csv\n```\n\n质控标识格式示例：`QC7(Temp,pH)` 表示Temp和pH字段超出阈值范围\n\n## 注意事项\n\n1. 阈值条件格式：字段名,最大值,最小值，每行一个字段\n2. 超出阈值范围或为空的值都会被标记\n3. 质控标识格式：质控标识(异常字段1,异常字段2,...)\n4. 多个异常字段用逗号分隔\n5. 与原有质控标识用分号拼接\n",
+      "bodyMd": "# QC7_BatchInputThresholdCheck 批量阈值检验(输入框) Skill\n\n## 功能概述\n\n本skill用于将数据表中的字段值与用户输入的阈值条件（上下限）进行批量比对，识别并标记超出允许范围（包括上限和下限）或为空值的数据点。\n\n## 触发条件\n\n当用户请求以下任务时，应使用此skill：\n- 批量阈值检验\n- 输入框阈值检验\n- 多字段阈值检查\n- 范围校验\n- 检查数值是否在输入的阈值范围内\n- 批量输入范围检查\n\n## 处理逻辑\n\n1. 解析用户输入的阈值条件（格式：字段名,最大值,最小值）\n2. 读取被检验数据\n3. 遍历阈值映射表，检查每个字段：\n   - 如果字段值为空，标记为异常\n   - 如果字段值超出最大值或小于最小值，标记为异常\n4. 为异常数据添加质控标识（格式：QC7(异常字段1,异常字段2,...)）\n5. 输出处理后的数据文件\n\n## 支持的文件格式\n\n- CSV (.csv)\n- TSV (.tsv)\n- Excel (.xls, .xlsx)\n- SPSS (.sav)\n\n## 使用方法\n\n### 步骤1：获取用户输入输出路径及参数\n\n向用户确认：\n1. 输入文件路径\n2. 输出文件路径\n3. 阈值检验条件（格式：字段名,最大值,最小值，多行用换行分隔）\n4. 质控标识（如：QC7）\n5. 质控标识字段名（默认：QC0000）\n\n### 步骤2：执行批量阈值检验脚本\n\n在 `scripts/` 目录下找到 `QC7_BatchInputThresholdCheck.py`，使用Python执行：\n\n```bash\npython scripts/QC7_BatchInputThresholdCheck.py \\\n    --input-path <输入文件> \\\n    --output-path <输出文件> \\\n    --conditions \"<阈值条件>\" \\\n    --qc-mark \"<质控标识>\" \\\n    --mark-field-name <质控字段名>\n```\n\n### 步骤3：返回结果\n\n告知用户处理完成，异常数据已标记质控标识。\n\n## 参数说明\n\n| 参数 | 必填 | 说明 |\n|------|------|------|\n| `--input-path` | 是 | 输入文件路径 |\n| `--output-path` | 是 | 输出文件路径 |\n| `--conditions` | 是 | 阈值条件，格式：字段名,最大值,最小值，多行用换行分隔 |\n| `--qc-mark` | 是 | 质控标识 |\n| `--mark-field-name` | 否 | 质控标识字段名，默认QC0000 |\n\n## 阈值条件格式\n\n每行格式：`字段名,最大值,最小值`\n\n示例：\n```\nTemp,36,-5\npH,14,0\nage,120,0\n```\n\n表示：\n- Temp字段值需要在-5到36之间\n- pH字段值需要在0到14之间\n- age字段值需要在0到120之间\n\n## 输出示例\n\n```\n[OK] Using encoding GB2312 successfully read CSV file\nSuccessfully read file: /path/to/input.csv, shape: (1000, 18)\nSuccessfully written file: /path/to/output.csv\n```\n\n质控标识格式示例：`QC7(Temp,pH)` 表示Temp和pH字段超出阈值范围\n\n## 注意事项\n\n1. 阈值条件格式：字段名,最大值,最小值，每行一个字段\n2. 超出阈值范围或为空的值都会被标记\n3. 质控标识格式：质控标识(异常字段1,异常字段2,...)\n4. 多个异常字段用逗号分隔\n5. 与原有质控标识用分号拼接\n"
+    },
+    {
+      "slug": "qc8-datatypecheck",
+      "name": "mark_field_name",
+      "dir": "workspace/skills/QC8_DataTypeCheck",
+      "path": "workspace/skills/QC8_DataTypeCheck/SKILL.md",
+      "desc": "数据类型检查后的结构化数据文件，带质控标识",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/cas-bigdatalab/piflow.git",
+        "copy": "cp -r workspace/skills/QC8_DataTypeCheck ~/.claude/skills/qc8-datatypecheck",
+        "raw": "https://raw.githubusercontent.com/cas-bigdatalab/piflow/ad8d0108a54a4257307d4946dc9250e26f24c63f/workspace/skills/QC8_DataTypeCheck/SKILL.md",
+        "saveAs": "~/.claude/skills/qc8-datatypecheck/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:e1ca8e6a387995bb71eaf932fc4c2e559491b13757517db025730d067dbf37bf",
+      "bytes": 3974,
+      "wordCount": 185,
+      "repoLicense": "",
+      "commit": "ad8d0108a54a4257307d4946dc9250e26f24c63f",
+      "branch": "master",
+      "body": "---\nname: QC8_DataTypeCheck\ndescription: |\n  数据类型检查工具。读取被检验表，检查指定数值型字段的数据类型是否正确（是否能转换为数值型），\n  并标记不合格的数据点，最后输出为相同格式的文件。\n  当用户提到数据类型检查、数值类型校验、字段类型检查、数据格式校验等需求时使用此skill。\n  即使用户没有说出\"数据类型检查\"，只要任务涉及检查数据字段类型是否正确，就应该使用此skill。\n\nname_zh: QC8_数据类型检查算子\ninput_params:\n  - name: input_path\n    type: string\n    required: true\n    description: 输入文件路径\n\n  - name: output_path\n    type: string\n    required: true\n    description: 输出文件路径\n\n  - name: check_fields_name\n    type: string\n    required: true\n    description: 检查字段名，逗号分隔（如：field1,field2）\n\n  - name: qc_mark\n    type: string\n    required: true\n    description: 质控标识\n\n  - name: mark_field_name\n    type: string\n    required: false\n    default: QC0000\n    description: 质控标识字段名\n\noutput_params:\n  - name: output_path\n    type: csv_file\n    description: 数据类型检查后的结构化数据文件，带质控标识\ntag: 数据校验\npublisher: COMMUNITY\n---\n\n# QC8_DataTypeCheck 数据类型检查Skill\n\n## 功能概述\n\n本skill用于检查指定数值型字段的数据类型是否正确（是否能转换为数值型），将无法转换为数值型的数据标记为不合格，并输出处理后的数据文件。\n\n## 触发条件\n\n当用户请求以下任务时，应使用此skill：\n- 数据类型检查\n- 数值类型校验\n- 字段类型检查\n- 数据格式校验\n- 检查字段是否为数值型\n- 验证数据类型\n\n## 处理逻辑\n\n1. 读取输入的被检验数据\n2. 解析需要检查的字段列表（逗号分隔）\n3. 对每个指定字段进行检查：\n   - 如果字段值可以转换为数值型，则为正常\n   - 如果字段值无法转换为数值型（如包含字母、特殊字符等），则标记为异常\n   - 空值（NA/NaN）不判定为错误\n4. 为异常数据添加质控标识（格式：QC8(字段1,字段2,...)）\n5. 输出处理后的数据文件\n\n## 支持的文件格式\n\n- CSV (.csv)\n- TSV (.tsv)\n- Excel (.xls, .xlsx)\n- SPSS (.sav)\n\n## 使用方法\n\n### 步骤1：获取用户输入输出路径及参数\n\n向用户确认：\n1. 输入文件路径\n2. 输出文件路径\n3. 检查字段名（逗号分隔）\n4. 质控标识（如：QC8）\n5. 质控标识字段名（默认：QC0000）\n\n### 步骤2：执行数据类型检查脚本\n\n在 `scripts/` 目录下找到 `QC8_DataTypeCheck.py`，使用Python执行：\n\n```bash\npython scripts/QC8_DataTypeCheck.py \\\n    --input_path <输入文件> \\\n    --output_path <输出文件> \\\n    --check_fields_name \"<检查字段>\" \\\n    --qc_mark \"<质控标识>\" \\\n    --mark_field_name <质控字段名>\n```\n\n### 步骤3：返回结果\n\n告知用户处理完成，异常数据已标记质控标识。\n\n## 参数说明\n\n| 参数 | 必填 | 说明 |\n|------|------|------|\n| `--input_path` | 是 | 输入文件路径 |\n| `--output_path` | 是 | 输出文件路径 |\n| `--check_fields_name` | 是 | 检查字段名，逗号分隔（如：field1,field2） |\n| `--qc_mark` | 是 | 质控标识 |\n| `--mark_field_name` | 否 | 质控标识字段名，默认QC0000 |\n\n## 输出示例\n\n```\n[OK] Using encoding GB2312 successfully read CSV file\nReading input data: /path/to/input.csv\nStarting data type check, check fields: fa0116,fa0118\nWriting output data: /path/to/output.csv\nProcessing completed!\n```\n\n质控标识格式示例：`QC8(fa0116)` 表示fa0116字段存在非数值型数据\n\n## 注意事项\n\n1. 检查字段名用逗号分隔，可以同时检查多个字段\n2. 空值（NA/NaN）不会被标记为错误\n3. 质控标识格式：质控标识(异常字段1,异常字段2,...)\n4. 多个异常字段用逗号分隔\n5. 与原有质控标识用分号拼接\n",
+      "bodyMd": "# QC8_DataTypeCheck 数据类型检查Skill\n\n## 功能概述\n\n本skill用于检查指定数值型字段的数据类型是否正确（是否能转换为数值型），将无法转换为数值型的数据标记为不合格，并输出处理后的数据文件。\n\n## 触发条件\n\n当用户请求以下任务时，应使用此skill：\n- 数据类型检查\n- 数值类型校验\n- 字段类型检查\n- 数据格式校验\n- 检查字段是否为数值型\n- 验证数据类型\n\n## 处理逻辑\n\n1. 读取输入的被检验数据\n2. 解析需要检查的字段列表（逗号分隔）\n3. 对每个指定字段进行检查：\n   - 如果字段值可以转换为数值型，则为正常\n   - 如果字段值无法转换为数值型（如包含字母、特殊字符等），则标记为异常\n   - 空值（NA/NaN）不判定为错误\n4. 为异常数据添加质控标识（格式：QC8(字段1,字段2,...)）\n5. 输出处理后的数据文件\n\n## 支持的文件格式\n\n- CSV (.csv)\n- TSV (.tsv)\n- Excel (.xls, .xlsx)\n- SPSS (.sav)\n\n## 使用方法\n\n### 步骤1：获取用户输入输出路径及参数\n\n向用户确认：\n1. 输入文件路径\n2. 输出文件路径\n3. 检查字段名（逗号分隔）\n4. 质控标识（如：QC8）\n5. 质控标识字段名（默认：QC0000）\n\n### 步骤2：执行数据类型检查脚本\n\n在 `scripts/` 目录下找到 `QC8_DataTypeCheck.py`，使用Python执行：\n\n```bash\npython scripts/QC8_DataTypeCheck.py \\\n    --input_path <输入文件> \\\n    --output_path <输出文件> \\\n    --check_fields_name \"<检查字段>\" \\\n    --qc_mark \"<质控标识>\" \\\n    --mark_field_name <质控字段名>\n```\n\n### 步骤3：返回结果\n\n告知用户处理完成，异常数据已标记质控标识。\n\n## 参数说明\n\n| 参数 | 必填 | 说明 |\n|------|------|------|\n| `--input_path` | 是 | 输入文件路径 |\n| `--output_path` | 是 | 输出文件路径 |\n| `--check_fields_name` | 是 | 检查字段名，逗号分隔（如：field1,field2） |\n| `--qc_mark` | 是 | 质控标识 |\n| `--mark_field_name` | 否 | 质控标识字段名，默认QC0000 |\n\n## 输出示例\n\n```\n[OK] Using encoding GB2312 successfully read CSV file\nReading input data: /path/to/input.csv\nStarting data type check, check fields: fa0116,fa0118\nWriting output data: /path/to/output.csv\nProcessing completed!\n```\n\n质控标识格式示例：`QC8(fa0116)` 表示fa0116字段存在非数值型数据\n\n## 注意事项\n\n1. 检查字段名用逗号分隔，可以同时检查多个字段\n2. 空值（NA/NaN）不会被标记为错误\n3. 质控标识格式：质控标识(异常字段1,异常字段2,...)\n4. 多个异常字段用逗号分隔\n5. 与原有质控标识用分号拼接\n"
+    },
+    {
+      "slug": "alphanumeric-filter",
+      "name": "text_key",
+      "dir": "workspace/skills/alphanumeric_filter",
+      "path": "workspace/skills/alphanumeric_filter/SKILL.md",
+      "desc": "过滤后的JSON文件，包含保留的样本数据",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "pip"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/cas-bigdatalab/piflow.git",
+        "copy": "cp -r workspace/skills/alphanumeric_filter ~/.claude/skills/alphanumeric-filter",
+        "raw": "https://raw.githubusercontent.com/cas-bigdatalab/piflow/ad8d0108a54a4257307d4946dc9250e26f24c63f/workspace/skills/alphanumeric_filter/SKILL.md",
+        "saveAs": "~/.claude/skills/alphanumeric-filter/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:f59f00bd3c126270cfabfe2a75c9b826ca28d347558f151368e4327704194d43",
+      "bytes": 4174,
+      "wordCount": 249,
+      "repoLicense": "",
+      "commit": "ad8d0108a54a4257307d4946dc9250e26f24c63f",
+      "branch": "master",
+      "body": "---\nname: alphanumeric_filter\ndescription: |\n  字母数字比例过滤器。过滤文本中字母/数字比例不在指定范围内的样本。\n  当用户提到文本过滤、比例筛选、字母比例、数字比例、清理乱码文本等需求时使用此skill。\n  即使用户没有明确说出\"过滤\"，只要任务涉及根据文本中字母或数字的比例来筛选数据，\n  就应该使用此skill。\n\nname_zh: 字母数字比例过滤器算子\ninput_params:\n  - name: input\n    type: string\n    required: true\n    description: 输入JSON文件路径\n\n  - name: output\n    type: string\n    required: true\n    description: 输出JSON文件路径\n\n  - name: min_ratio\n    type: float\n    required: false\n    default: 0.25\n    description: 最小字母数字比例\n\n  - name: max_ratio\n    type: float\n    required: false\n    default: 1.0\n    description: 最大字母数字比例\n\n  - name: tokenization\n    type: bool\n    required: false\n    default: false\n    description: 是否使用tokenization计算比例\n\n  - name: text_key\n    type: string\n    required: false\n    default: text\n    description: 文本字段的键名\n\noutput_params:\n  - name: output\n    type: json_file\n    description: 过滤后的JSON文件，包含保留的样本数据\ntag: 数据筛选\npublisher: COMMUNITY\n---\n\n# Alphanumeric Filter 字母数字比例过滤 Skill\n\n## 功能概述\n\n本skill根据文本中字母/数字字符的比例进行过滤，只保留比例在指定范围内的样本。\n常用于清理乱码文本、过滤特殊字符过多的内容等场景。\n\n## 触发条件\n\n当用户请求以下任务时，应使用此skill：\n- 文本过滤\n- 比例筛选\n- 字母比例过滤\n- 数字比例过滤\n- 清理乱码文本\n- 特殊字符过滤\n\n## 核心参数说明\n\n### 必需参数\n| 参数 | 说明 |\n|------|------|\n| `--input` | 输入JSON文件路径 |\n| `--output` | 输出JSON文件路径 |\n\n### 可选参数\n| 参数 | 说明 | 默认值 |\n|------|------|--------|\n| `--min_ratio` | 最小字母数字比例 | `0.25` |\n| `--max_ratio` | 最大字母数字比例 | `1.0` |\n| `--tokenization` | 是否使用tokenization计算 | `False` |\n| `--text_key` | 文本字段的键名 | `text` |\n\n## 输入文件格式\n\n```json\n[\n  {\"text\": \"正常的英文文本内容\"},\n  {\"text\": \"包含123数字的文本\"},\n  {\"text\": \"只有符号！！！...\"},\n  {\"text\": \"混合内容abc123中文\"}\n]\n```\n\n## 使用方法\n\n### 过滤字母数字比例在0.25-1.0之间的样本（默认）\n```bash\npython scripts/run_alphanumeric_filter.py \\\n  --input ./input.json \\\n  --output ./output.json\n```\n\n### 过滤字母数字比例在0.3-0.8之间的样本\n```bash\npython scripts/run_alphanumeric_filter.py \\\n  --input ./input.json \\\n  --output ./output.json \\\n  --min_ratio 0.3 \\\n  --max_ratio 0.8\n```\n\n### 使用tokenization模式（更精确但更慢）\n```bash\npython scripts/run_alphanumeric_filter.py \\\n  --input ./input.json \\\n  --output ./output.json \\\n  --tokenization True\n```\n\n## 过滤示例\n\n| 文本 | 字母数字比例 | 过滤结果 (0.2-0.9) |\n|------|-------------|---------------------|\n| `Hello World` | 高 | 保留 |\n| `a=1\\nb\\nc=1+2+3` | 中 | 保留 |\n| `，。、„\"\"«»１»` | 低 | 过滤 |\n| `emoji表情😊😸31231` | 中 | 保留 |\n\n## 输出示例\n\n**命令行输出：**\n```\n[OK] Alphanumeric filtering completed!\n   Min ratio: 0.25\n   Max ratio: 1.0\n   Tokenization: False\n   Original documents: 6\n   Filtered documents: 5\n   Removed documents: 1\n   Input file: ./input.json\n   Output file: ./output.json\n```\n\n**输出JSON格式：**\n```json\n[\n  {\"text\": \"过滤后保留的文本1\"},\n  {\"text\": \"过滤后保留的文本2\"}\n]\n```\n\n## 环境要求\n\n**安装依赖：**\n本SKILL使用依赖 data_juicer，请在调用前安装好python环境并安装data_juicer：\n```bash\npip install py-data-juicer\n```\n\n## 注意事项\n\n1. **比例计算**：默认按字符计算，`tokenization=True` 时按token计算\n2. **默认值**：`max_ratio` 默认无限制（保留所有高比例样本）\n3. **过滤逻辑**：只保留比例在 [min_ratio, max_ratio] 范围内的样本\n4. **适用场景**：清理乱码、过滤特殊字符过多的文本\n",
+      "bodyMd": "# Alphanumeric Filter 字母数字比例过滤 Skill\n\n## 功能概述\n\n本skill根据文本中字母/数字字符的比例进行过滤，只保留比例在指定范围内的样本。\n常用于清理乱码文本、过滤特殊字符过多的内容等场景。\n\n## 触发条件\n\n当用户请求以下任务时，应使用此skill：\n- 文本过滤\n- 比例筛选\n- 字母比例过滤\n- 数字比例过滤\n- 清理乱码文本\n- 特殊字符过滤\n\n## 核心参数说明\n\n### 必需参数\n| 参数 | 说明 |\n|------|------|\n| `--input` | 输入JSON文件路径 |\n| `--output` | 输出JSON文件路径 |\n\n### 可选参数\n| 参数 | 说明 | 默认值 |\n|------|------|--------|\n| `--min_ratio` | 最小字母数字比例 | `0.25` |\n| `--max_ratio` | 最大字母数字比例 | `1.0` |\n| `--tokenization` | 是否使用tokenization计算 | `False` |\n| `--text_key` | 文本字段的键名 | `text` |\n\n## 输入文件格式\n\n```json\n[\n  {\"text\": \"正常的英文文本内容\"},\n  {\"text\": \"包含123数字的文本\"},\n  {\"text\": \"只有符号！！！...\"},\n  {\"text\": \"混合内容abc123中文\"}\n]\n```\n\n## 使用方法\n\n### 过滤字母数字比例在0.25-1.0之间的样本（默认）\n```bash\npython scripts/run_alphanumeric_filter.py \\\n  --input ./input.json \\\n  --output ./output.json\n```\n\n### 过滤字母数字比例在0.3-0.8之间的样本\n```bash\npython scripts/run_alphanumeric_filter.py \\\n  --input ./input.json \\\n  --output ./output.json \\\n  --min_ratio 0.3 \\\n  --max_ratio 0.8\n```\n\n### 使用tokenization模式（更精确但更慢）\n```bash\npython scripts/run_alphanumeric_filter.py \\\n  --input ./input.json \\\n  --output ./output.json \\\n  --tokenization True\n```\n\n## 过滤示例\n\n| 文本 | 字母数字比例 | 过滤结果 (0.2-0.9) |\n|------|-------------|---------------------|\n| `Hello World` | 高 | 保留 |\n| `a=1\\nb\\nc=1+2+3` | 中 | 保留 |\n| `，。、„\"\"«»１»` | 低 | 过滤 |\n| `emoji表情😊😸31231` | 中 | 保留 |\n\n## 输出示例\n\n**命令行输出：**\n```\n[OK] Alphanumeric filtering completed!\n   Min ratio: 0.25\n   Max ratio: 1.0\n   Tokenization: False\n   Original documents: 6\n   Filtered documents: 5\n   Removed documents: 1\n   Input file: ./input.json\n   Output file: ./output.json\n```\n\n**输出JSON格式：**\n```json\n[\n  {\"text\": \"过滤后保留的文本1\"},\n  {\"text\": \"过滤后保留的文本2\"}\n]\n```\n\n## 环境要求\n\n**安装依赖：**\n本SKILL使用依赖 data_juicer，请在调用前安装好python环境并安装data_juicer：\n```bash\npip install py-data-juicer\n```\n\n## 注意事项\n\n1. **比例计算**：默认按字符计算，`tokenization=True` 时按token计算\n2. **默认值**：`max_ratio` 默认无限制（保留所有高比例样本）\n3. **过滤逻辑**：只保留比例在 [min_ratio, max_ratio] 范围内的样本\n4. **适用场景**：清理乱码、过滤特殊字符过多的文本\n"
+    },
+    {
+      "slug": "average-line-length-filter",
+      "name": "text_key",
+      "dir": "workspace/skills/average_line_length_filter",
+      "path": "workspace/skills/average_line_length_filter/SKILL.md",
+      "desc": "过滤后的JSON文件，包含平均行长度在指定范围内的样本",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "pip"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/cas-bigdatalab/piflow.git",
+        "copy": "cp -r workspace/skills/average_line_length_filter ~/.claude/skills/average-line-length-filter",
+        "raw": "https://raw.githubusercontent.com/cas-bigdatalab/piflow/ad8d0108a54a4257307d4946dc9250e26f24c63f/workspace/skills/average_line_length_filter/SKILL.md",
+        "saveAs": "~/.claude/skills/average-line-length-filter/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:cebe6ca330450b3009eccd5fe6c899c2cf198b3fb66c949b5ba96bb3aef008fd",
+      "bytes": 3987,
+      "wordCount": 284,
+      "repoLicense": "",
+      "commit": "ad8d0108a54a4257307d4946dc9250e26f24c63f",
+      "branch": "master",
+      "body": "---\nname: average_line_length_filter\ndescription: |\n  平均行长度过滤器。过滤文本平均行长度不在指定范围内的样本。\n  当用户提到行长度过滤、平均行长度、文本行长度筛选、按行筛选等需求时使用此skill。\n  即使用户没有明确说出\"平均行长度\"，只要任务涉及根据文本中每行的平均长度来筛选数据，\n  就应该使用此skill。\n\nname_zh: 平均行长度过滤器算子\ninput_params:\n  - name: input\n    type: string\n    required: true\n    description: 输入JSON文件路径\n\n  - name: output\n    type: string\n    required: true\n    description: 输出JSON文件路径\n\n  - name: min_len\n    type: float\n    required: false\n    default: 10\n    description: 最小平均行长度\n\n  - name: max_len\n    type: float\n    required: false\n    description: 最大平均行长度（默认无限制）\n\n  - name: text_key\n    type: string\n    required: false\n    default: text\n    description: 文本字段的键名\n\noutput_params:\n  - name: output\n    type: json_file\n    description: 过滤后的JSON文件，包含平均行长度在指定范围内的样本\ntag: 数据筛选\npublisher: COMMUNITY\n---\n\n# Average Line Length Filter 平均行长度过滤 Skill\n\n## 功能概述\n\n本skill根据文本的平均行长度进行过滤，只保留平均行长度在指定范围内的样本。\n常用于过滤过短或过长的文本行、清理格式不规范的文本等场景。\n\n## 触发条件\n\n当用户请求以下任务时，应使用此skill：\n- 行长度过滤\n- 平均行长度筛选\n- 文本行长度过滤\n- 按行筛选\n- 清理过长文本\n- 清理过短文本\n\n## 核心参数说明\n\n### 必需参数\n| 参数 | 说明 |\n|------|------|\n| `--input` | 输入JSON文件路径 |\n| `--output` | 输出JSON文件路径 |\n\n### 可选参数\n| 参数 | 说明 | 默认值 |\n|------|------|--------|\n| `--min_len` | 最小平均行长度 | `10` |\n| `--max_len` | 最大平均行长度 | `无限制` |\n| `--text_key` | 文本字段的键名 | `text` |\n\n## 输入文件格式\n\n```json\n[\n  {\"text\": \"第一行\\n第二行\\n第三行\"},\n  {\"text\": \"只有一行\"},\n  {\"text\": \"长文本内容\\n带有换行\"}\n]\n```\n\n## 使用方法\n\n### 过滤平均行长度在10-100之间的样本（默认）\n```bash\npython scripts/run_average_line_length_filter.py \\\n  --input ./input.json \\\n  --output ./output.json\n```\n\n### 过滤平均行长度在20-50之间的样本\n```bash\npython scripts/run_average_line_length_filter.py \\\n  --input ./input.json \\\n  --output ./output.json \\\n  --min_len 20 \\\n  --max_len 50\n```\n\n### 只设置最小长度（无上限）\n```bash\npython scripts/run_average_line_length_filter.py \\\n  --input ./input.json \\\n  --output ./output.json \\\n  --min_len 15\n```\n\n## 过滤示例\n\n| 文本 | 行数 | 平均行长度 | 过滤结果 (10-20) |\n|------|------|-----------|------------------|\n| `a=1\\nb\\nc=1+2+3\\nd=6` | 4 | 4 | 过滤 |\n| `Today is Sund Sunda and it's a happy day!\\nYou know` | 2 | 26 | 过滤 |\n| `a v s e e f g a qkc` | 1 | 17 | 保留 |\n| `，。、„\"\"«»１»` | 1 | 12 | 保留 |\n| `Do you need a cup of coffee?` | 1 | 25 | 过滤 |\n\n## 输出示例\n\n**命令行输出：**\n```\n[OK] Average line length filtering completed!\n   Min length: 10\n   Max length: 20\n   Original documents: 6\n   Filtered documents: 2\n   Removed documents: 4\n   Input file: ./input.json\n   Output file: ./output.json\n```\n\n**输出JSON格式：**\n```json\n[\n  {\"text\": \"过滤后保留的文本1\"},\n  {\"text\": \"过滤后保留的文本2\"}\n]\n```\n\n## 环境要求\n\n**安装依赖：**\n本SKILL使用依赖 data_juicer，请在调用前安装好python环境并安装data_juicer：\n```bash\npip install py-data-juicer\n```\n\n## 注意事项\n\n1. **平均行长度计算**：`总字符数 / 行数`\n2. **默认值**：`max_len` 默认无限制\n3. **过滤逻辑**：只保留平均行长度在 [min_len, max_len] 范围内的样本\n4. **适用场景**：清理过短/过长文本行、过滤格式不规范文本\n",
+      "bodyMd": "# Average Line Length Filter 平均行长度过滤 Skill\n\n## 功能概述\n\n本skill根据文本的平均行长度进行过滤，只保留平均行长度在指定范围内的样本。\n常用于过滤过短或过长的文本行、清理格式不规范的文本等场景。\n\n## 触发条件\n\n当用户请求以下任务时，应使用此skill：\n- 行长度过滤\n- 平均行长度筛选\n- 文本行长度过滤\n- 按行筛选\n- 清理过长文本\n- 清理过短文本\n\n## 核心参数说明\n\n### 必需参数\n| 参数 | 说明 |\n|------|------|\n| `--input` | 输入JSON文件路径 |\n| `--output` | 输出JSON文件路径 |\n\n### 可选参数\n| 参数 | 说明 | 默认值 |\n|------|------|--------|\n| `--min_len` | 最小平均行长度 | `10` |\n| `--max_len` | 最大平均行长度 | `无限制` |\n| `--text_key` | 文本字段的键名 | `text` |\n\n## 输入文件格式\n\n```json\n[\n  {\"text\": \"第一行\\n第二行\\n第三行\"},\n  {\"text\": \"只有一行\"},\n  {\"text\": \"长文本内容\\n带有换行\"}\n]\n```\n\n## 使用方法\n\n### 过滤平均行长度在10-100之间的样本（默认）\n```bash\npython scripts/run_average_line_length_filter.py \\\n  --input ./input.json \\\n  --output ./output.json\n```\n\n### 过滤平均行长度在20-50之间的样本\n```bash\npython scripts/run_average_line_length_filter.py \\\n  --input ./input.json \\\n  --output ./output.json \\\n  --min_len 20 \\\n  --max_len 50\n```\n\n### 只设置最小长度（无上限）\n```bash\npython scripts/run_average_line_length_filter.py \\\n  --input ./input.json \\\n  --output ./output.json \\\n  --min_len 15\n```\n\n## 过滤示例\n\n| 文本 | 行数 | 平均行长度 | 过滤结果 (10-20) |\n|------|------|-----------|------------------|\n| `a=1\\nb\\nc=1+2+3\\nd=6` | 4 | 4 | 过滤 |\n| `Today is Sund Sunda and it's a happy day!\\nYou know` | 2 | 26 | 过滤 |\n| `a v s e e f g a qkc` | 1 | 17 | 保留 |\n| `，。、„\"\"«»１»` | 1 | 12 | 保留 |\n| `Do you need a cup of coffee?` | 1 | 25 | 过滤 |\n\n## 输出示例\n\n**命令行输出：**\n```\n[OK] Average line length filtering completed!\n   Min length: 10\n   Max length: 20\n   Original documents: 6\n   Filtered documents: 2\n   Removed documents: 4\n   Input file: ./input.json\n   Output file: ./output.json\n```\n\n**输出JSON格式：**\n```json\n[\n  {\"text\": \"过滤后保留的文本1\"},\n  {\"text\": \"过滤后保留的文本2\"}\n]\n```\n\n## 环境要求\n\n**安装依赖：**\n本SKILL使用依赖 data_juicer，请在调用前安装好python环境并安装data_juicer：\n```bash\npip install py-data-juicer\n```\n\n## 注意事项\n\n1. **平均行长度计算**：`总字符数 / 行数`\n2. **默认值**：`max_len` 默认无限制\n3. **过滤逻辑**：只保留平均行长度在 [min_len, max_len] 范围内的样本\n4. **适用场景**：清理过短/过长文本行、过滤格式不规范文本\n"
+    },
+    {
+      "slug": "batch-data-splitter",
+      "name": "random_seed",
+      "dir": "workspace/skills/batch_data_splitter",
+      "path": "workspace/skills/batch_data_splitter/SKILL.md",
+      "desc": "分割结果清单文件路径（JSON，含 splits_dir/output_files/total_count/actual_num_splits/samples_per_split）",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/cas-bigdatalab/piflow.git",
+        "copy": "cp -r workspace/skills/batch_data_splitter ~/.claude/skills/batch-data-splitter",
+        "raw": "https://raw.githubusercontent.com/cas-bigdatalab/piflow/ad8d0108a54a4257307d4946dc9250e26f24c63f/workspace/skills/batch_data_splitter/SKILL.md",
+        "saveAs": "~/.claude/skills/batch-data-splitter/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:2e969cd421ce62cd2902300e42d343bb38c3def6f059ed211dadd2292805e501",
+      "bytes": 4253,
+      "wordCount": 189,
+      "repoLicense": "",
+      "commit": "ad8d0108a54a4257307d4946dc9250e26f24c63f",
+      "branch": "master",
+      "body": "---\nname: batch_data_splitter\ndescription: |\n  批量数据均匀分片工具。读取json/jsonl/csv输入，按份数或固定条数切成多个子文件，输出一个清单JSON供下游节点消费。\n  当用户提到数据分割、批量拆分、数据分片、均匀分块等需求时使用此skill。\n  即使用户没有明确说出\"分片\"，只要任务是把整份批量数据均匀拆成多个文件，就应该使用此skill。\n  不负责按字段分组导出或随机采样。\n\nname_zh: 批量数据均匀分割算子\ninput_params:\n  - name: input\n    type: string\n    required: true\n    description: 输入文件路径（支持json/jsonl/csv）\n\n  - name: output_dir\n    type: string\n    required: true\n    description: 分割结果输出目录路径\n\n  - name: num_splits\n    type: string\n    required: false\n    default: \"0\"\n    description: 分割份数（0表示按chunk_size分割）\n\n  - name: chunk_size\n    type: string\n    required: false\n    default: \"1000\"\n    description: 每份样本数量\n\n  - name: output_prefix\n    type: string\n    required: false\n    default: split\n    description: 输出文件名前缀\n\n  - name: shuffle\n    type: string\n    required: false\n    default: \"False\"\n    description: 是否打乱顺序后分割\n\n  - name: random_seed\n    type: string\n    required: false\n    default: \"42\"\n    description: 随机种子（shuffle时使用）\n\noutput_params:\n  - name: output_dir\n    type: file\n    default: output_manifest.json\n    description: 分割结果清单文件路径（JSON，含 splits_dir/output_files/total_count/actual_num_splits/samples_per_split）\n\ntag: 数据筛选\npublisher: COMMUNITY\n---\n\n# Batch Data Splitter 批量数据均匀分割 Skill\n\n## 功能概述\n\n本skill面向大容量批量数据集进行均等分割，可设定分割份数或单份样本容量，将整体数据集均匀划分为多组子数据集。\n无差别平均分配原始样本，保持各组数据分布一致性，适配流水线分批运算、多任务并行处理、数据分库存储等业务场景。\n\n## 触发条件\n\n当用户请求以下任务时，应使用此skill：\n- 批量拆分\n- 数据分片\n- 均匀划分\n- 按份数切块\n- 按固定条数切块\n\n## 核心参数说明\n\n### 必需参数\n- `--input`：输入文件路径\n- `--output_dir`：输出清单文件路径（JSON），实际分割文件写入同名 `_splits/` 子目录\n\n### 可选参数\n- `--num_splits`：分割份数，默认 0（0 表示按 chunk_size 分割）\n- `--chunk_size`：每份样本数量，默认 1000\n- `--output_prefix`：输出文件名前缀，默认 `split`\n- `--shuffle`：是否打乱顺序，默认 false\n- `--random_seed`：随机种子，默认 42\n\n## 输入文件格式\n\n支持 `json`、`jsonl`、`csv`。\n\n## 使用方法\n\n### 按份数分割\n```bash\npython scripts/run_batch_data_splitter.py \\\n  --input corpus.csv \\\n  --output_dir ./splits_manifest.json \\\n  --num_splits 10\n```\n\n### 按每份数量分割\n```bash\npython scripts/run_batch_data_splitter.py \\\n  --input corpus.csv \\\n  --output_dir ./splits_manifest.json \\\n  --chunk_size 5000\n```\n\n### 打乱后分割\n```bash\npython scripts/run_batch_data_splitter.py \\\n  --input corpus.csv \\\n  --output_dir ./splits_manifest.json \\\n  --num_splits 5 \\\n  --shuffle true\n```\n\n## 输出示例\n\n```\n[OK] Batch data splitting completed!\n   Input file: corpus.csv\n   Total samples: 11\n   Number of splits: 4\n   Samples per split: [3, 3, 3, 2]\n   Manifest file: ./splits_manifest.json\n   Splits directory: ./splits_manifest_splits\n   Output files:\n     - split_001.csv (3 samples)\n     - split_002.csv (3 samples)\n     - split_003.csv (3 samples)\n     - split_004.csv (2 samples)\n```\n\n## 环境要求\n\n- Python 3.x\n- 标准库即可运行\n\n## 注意事项\n\n1. 如果总数不能整除，最后一份可能样本数较少。\n2. `num_splits` 优先级高于 `chunk_size`。\n3. 当 `num_splits` 大于总样本数时，会自动收敛为最多生成 `total_count` 份。\n4. 输出文件名格式：`{prefix}_{序号}.{扩展名}`。\n5. `--output_dir` 指定的是清单 JSON 文件路径，实际分割文件写入同名 `_splits/` 子目录，是引擎下游节点可消费的单文件输出。\n6. 这里只做均匀分片，不做比例拆分或分层保持。\n",
+      "bodyMd": "# Batch Data Splitter 批量数据均匀分割 Skill\n\n## 功能概述\n\n本skill面向大容量批量数据集进行均等分割，可设定分割份数或单份样本容量，将整体数据集均匀划分为多组子数据集。\n无差别平均分配原始样本，保持各组数据分布一致性，适配流水线分批运算、多任务并行处理、数据分库存储等业务场景。\n\n## 触发条件\n\n当用户请求以下任务时，应使用此skill：\n- 批量拆分\n- 数据分片\n- 均匀划分\n- 按份数切块\n- 按固定条数切块\n\n## 核心参数说明\n\n### 必需参数\n- `--input`：输入文件路径\n- `--output_dir`：输出清单文件路径（JSON），实际分割文件写入同名 `_splits/` 子目录\n\n### 可选参数\n- `--num_splits`：分割份数，默认 0（0 表示按 chunk_size 分割）\n- `--chunk_size`：每份样本数量，默认 1000\n- `--output_prefix`：输出文件名前缀，默认 `split`\n- `--shuffle`：是否打乱顺序，默认 false\n- `--random_seed`：随机种子，默认 42\n\n## 输入文件格式\n\n支持 `json`、`jsonl`、`csv`。\n\n## 使用方法\n\n### 按份数分割\n```bash\npython scripts/run_batch_data_splitter.py \\\n  --input corpus.csv \\\n  --output_dir ./splits_manifest.json \\\n  --num_splits 10\n```\n\n### 按每份数量分割\n```bash\npython scripts/run_batch_data_splitter.py \\\n  --input corpus.csv \\\n  --output_dir ./splits_manifest.json \\\n  --chunk_size 5000\n```\n\n### 打乱后分割\n```bash\npython scripts/run_batch_data_splitter.py \\\n  --input corpus.csv \\\n  --output_dir ./splits_manifest.json \\\n  --num_splits 5 \\\n  --shuffle true\n```\n\n## 输出示例\n\n```\n[OK] Batch data splitting completed!\n   Input file: corpus.csv\n   Total samples: 11\n   Number of splits: 4\n   Samples per split: [3, 3, 3, 2]\n   Manifest file: ./splits_manifest.json\n   Splits directory: ./splits_manifest_splits\n   Output files:\n     - split_001.csv (3 samples)\n     - split_002.csv (3 samples)\n     - split_003.csv (3 samples)\n     - split_004.csv (2 samples)\n```\n\n## 环境要求\n\n- Python 3.x\n- 标准库即可运行\n\n## 注意事项\n\n1. 如果总数不能整除，最后一份可能样本数较少。\n2. `num_splits` 优先级高于 `chunk_size`。\n3. 当 `num_splits` 大于总样本数时，会自动收敛为最多生成 `total_count` 份。\n4. 输出文件名格式：`{prefix}_{序号}.{扩展名}`。\n5. `--output_dir` 指定的是清单 JSON 文件路径，实际分割文件写入同名 `_splits/` 子目录，是引擎下游节点可消费的单文件输出。\n6. 这里只做均匀分片，不做比例拆分或分层保持。\n"
+    },
+    {
+      "slug": "bdbe-cellanno",
+      "name": "output_dir",
+      "dir": "workspace/skills/bdbe_cellanno",
+      "path": "workspace/skills/bdbe_cellanno/SKILL.md",
+      "desc": "细胞类型注释结果JSON，包含每个细胞的类型标签及分布统计",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/cas-bigdatalab/piflow.git",
+        "copy": "cp -r workspace/skills/bdbe_cellanno ~/.claude/skills/bdbe-cellanno",
+        "raw": "https://raw.githubusercontent.com/cas-bigdatalab/piflow/ad8d0108a54a4257307d4946dc9250e26f24c63f/workspace/skills/bdbe_cellanno/SKILL.md",
+        "saveAs": "~/.claude/skills/bdbe-cellanno/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:67bbb4e640bab8c57536105cf86b089217c5fcf9a8bc701136e7d4dff0d9c43c",
+      "bytes": 3018,
+      "wordCount": 132,
+      "repoLicense": "",
+      "commit": "ad8d0108a54a4257307d4946dc9250e26f24c63f",
+      "branch": "master",
+      "body": "---\nname: bdbe_cellanno\ndescription: 本skill是用于单细胞测序数据分析的专用技能，首先需要用户上传需要处理的单细胞测序数据，再对经过预处理的单细胞表达数据进行自动化细胞类型注释。它通过基因比对、数据标准化、降维等一系列流程，将细胞聚类结果与已知参考数据库进行匹配，从而为每个细胞分配生物学功能标签。\ncompatibility:\n  - python\n  - requests\n\nname_zh: 单细胞测序细胞类型注释算子\ninput_params:\n  - name: input_file\n    type: string\n    required: true\n    description: 输入单细胞测序数据文件路径（h5ad格式）\n\n  - name: species\n    type: string\n    required: true\n    description: 物种类型，如 mouse、human 等\n\n  - name: output_dir\n    type: string\n    required: false\n    description: 输出目录，默认在上传文件所在目录\n\noutput_params:\n  - name: output_dir\n    type: json_file\n    description: 细胞类型注释结果JSON，包含每个细胞的类型标签及分布统计\n\ntag: 科学计算\npublisher: COMMUNITY\n---\n\n\n## Trigger\n\n当用户希望\"对单细胞数据进行自动化细胞类型注释\"、”使用单细胞数据注释工具“等情况时触发。\n\n## Parameters\n\n| 参数名 | 类型 | 说明 | 示例值 | 是否必填 |\n| :--- | :--- | :--- | :--- | :--- |\n| input_file | string | 输入单细胞测序数据文件路径 | D:\\hqr\\workspace\\Agent\\source\\mouse_ERX2609603 | 是 |\n| species | string | 物种类型 | mouse | 是 |\n| output_dir | string | 输出目录，默认在上传文件所在目录 | D:\\hqr\\workspace\\Agent\\output | 否 |\n\n## Examples\n\n### Example 1: 基本使用\n\n```bash\npython scripts/bdbe_cellanno.py --input_file \"D:\\hqr\\workspace\\Agent\\source\\mouse_ERX2609603\" --species mouse\n```\n\n### Example 2: 指定输出目录\n\n```bash\npython scripts/bdbe_cellanno.py --input_file \"D:\\hqr\\workspace\\Agent\\source\\mouse_ERX2609603\" --species mouse --output_dir \"D:\\hqr\\workspace\\Agent\\output\"\n```\n\n## Implementation\n\n### 核心流程\n\n1. **文件上传** - 上传待注释的单细胞数据集文件，获取文件唯一标识ID\n2. **启动分析** - 触发细胞类型注释分析，获取分析任务ID\n3. **获取结果** - 轮询获取分析结果，直至返回有效结果\n4. **下载文件** - 下载生成的细胞类型注释结果文件\n\n### 接口说明\n\n- **文件上传接口**：`https://www.bdbe.cn/kun/api/upload` (POST)\n- **分析触发接口**：`https://www.bdbe.cn/kun/api/analysis?tool=CellAnno&id={file_id}&species={species}` (GET)\n- **结果获取接口**：`https://www.bdbe.cn/kun/api/result?id={task_id}` (GET)\n- **文件下载接口**：`https://www.bdbe.cn/kun/api/result/download?link={link}` (GET)\n\n## Notes\n\n- 支持的文件格式：h5ad格式\n- 分析过程可能需要较长时间，脚本会自动轮询等待结果\n- 结果包含细胞类型注释列表和CSV格式的结果文件\n- 下载的结果文件默认保存在上传文件所在目录，也可通过output_dir参数指定",
+      "bodyMd": "## Trigger\n\n当用户希望\"对单细胞数据进行自动化细胞类型注释\"、”使用单细胞数据注释工具“等情况时触发。\n\n## Parameters\n\n| 参数名 | 类型 | 说明 | 示例值 | 是否必填 |\n| :--- | :--- | :--- | :--- | :--- |\n| input_file | string | 输入单细胞测序数据文件路径 | D:\\hqr\\workspace\\Agent\\source\\mouse_ERX2609603 | 是 |\n| species | string | 物种类型 | mouse | 是 |\n| output_dir | string | 输出目录，默认在上传文件所在目录 | D:\\hqr\\workspace\\Agent\\output | 否 |\n\n## Examples\n\n### Example 1: 基本使用\n\n```bash\npython scripts/bdbe_cellanno.py --input_file \"D:\\hqr\\workspace\\Agent\\source\\mouse_ERX2609603\" --species mouse\n```\n\n### Example 2: 指定输出目录\n\n```bash\npython scripts/bdbe_cellanno.py --input_file \"D:\\hqr\\workspace\\Agent\\source\\mouse_ERX2609603\" --species mouse --output_dir \"D:\\hqr\\workspace\\Agent\\output\"\n```\n\n## Implementation\n\n### 核心流程\n\n1. **文件上传** - 上传待注释的单细胞数据集文件，获取文件唯一标识ID\n2. **启动分析** - 触发细胞类型注释分析，获取分析任务ID\n3. **获取结果** - 轮询获取分析结果，直至返回有效结果\n4. **下载文件** - 下载生成的细胞类型注释结果文件\n\n### 接口说明\n\n- **文件上传接口**：`https://www.bdbe.cn/kun/api/upload` (POST)\n- **分析触发接口**：`https://www.bdbe.cn/kun/api/analysis?tool=CellAnno&id={file_id}&species={species}` (GET)\n- **结果获取接口**：`https://www.bdbe.cn/kun/api/result?id={task_id}` (GET)\n- **文件下载接口**：`https://www.bdbe.cn/kun/api/result/download?link={link}` (GET)\n\n## Notes\n\n- 支持的文件格式：h5ad格式\n- 分析过程可能需要较长时间，脚本会自动轮询等待结果\n- 结果包含细胞类型注释列表和CSV格式的结果文件\n- 下载的结果文件默认保存在上传文件所在目录，也可通过output_dir参数指定"
+    },
+    {
+      "slug": "bdbe-homo",
+      "name": "page_size",
+      "dir": "workspace/skills/bdbe_homo",
+      "path": "workspace/skills/bdbe_homo/SKILL.md",
+      "desc": "检索结果JSON，包含数据集列表和总数等信息",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/cas-bigdatalab/piflow.git",
+        "copy": "cp -r workspace/skills/bdbe_homo ~/.claude/skills/bdbe-homo",
+        "raw": "https://raw.githubusercontent.com/cas-bigdatalab/piflow/ad8d0108a54a4257307d4946dc9250e26f24c63f/workspace/skills/bdbe_homo/SKILL.md",
+        "saveAs": "~/.claude/skills/bdbe-homo/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:e3b8eb86263c6fd492f51acd7b4cb952fb9d3c5f7470918a9344fd8f979d3ca3",
+      "bytes": 3388,
+      "wordCount": 156,
+      "repoLicense": "",
+      "commit": "ad8d0108a54a4257307d4946dc9250e26f24c63f",
+      "branch": "master",
+      "body": "---\nname: bdbe_homo\ndescription: 根据多维度筛选条件检索单细胞测序相关的预训练数据集，支持分页查询，返回符合条件的数据集详情，并格式化展示查询结果。\ncompatibility:\n  - python\n  - requests\n\nname_zh: 单细胞测序数据集检索算子\ninput_params:\n  - name: organism\n    type: string\n    required: true\n    description: 生物物种（必填参数）\n\n  - name: organ\n    type: string\n    required: false\n    description: 组织/器官\n\n  - name: class\n    type: string\n    required: false\n    description: 分类\n\n  - name: time\n    type: string\n    required: false\n    description: 发育/采样时间\n\n  - name: gender\n    type: string\n    required: false\n    description: 性别\n\n  - name: cell_line\n    type: string\n    required: false\n    description: 细胞系\n\n  - name: organoid\n    type: string\n    required: false\n    description: 类器官\n\n  - name: tumor\n    type: string\n    required: false\n    description: 肿瘤相关\n\n  - name: page_num\n    type: int\n    required: false\n    default: 1\n    description: 分页页码（从1开始）\n\n  - name: page_size\n    type: int\n    required: false\n    default: 10\n    description: 每页返回数据集数量\n\noutput_params:\n  - name: query_result\n    type: json_file\n    description: 检索结果JSON，包含数据集列表和总数等信息\ntag: 科学计算\npublisher: COMMUNITY\n---\n\n# bdbe_homo Skill\n\n## 功能描述\n根据多维度筛选条件检索单细胞测序相关的预训练数据集，支持分页查询，返回符合条件的数据集详情，并格式化展示查询结果。\n\n## 核心功能\n- 支持多维度筛选条件（生物物种、组织/器官、分类、时间、性别等）\n- 支持分页查询\n- 格式化展示查询结果\n- 处理长结果输出\n\n## 参数说明\n- `organism`：生物物种（必填参数）\n- `organ`：组织/器官（可选）\n- `class`：分类（可选）\n- `time`：发育/采样时间（可选）\n- `gender`：性别（可选）\n- `cell_line`：细胞系（可选）\n- `organoid`：类器官（可选）\n- `tumor`：肿瘤相关（可选）\n- `page_num`：分页页码（从1开始，默认1）\n- `page_size`：每页返回数据集数量（默认10）\n\n## 依赖\n- requests\n- json\n\n## 使用示例\n\n### 基本使用\n```bash\npython scripts/bdbe_homo.py --organism \"Acomys cahirinus\"\n```\n\n### 带筛选条件\n```bash\npython scripts/bdbe_homo.py --organism \"Acomys cahirinus\" --organ \"ear\" --page_num 1 --page_size 5\n```\n\n## 输入输出示例\n\n#### 输入\n```bash\npython scripts/bdbe_homo.py --organism \"Acomys cahirinus\"\n```\n\n#### 输出\n```\n查询结果：\n总数据集数量: 5\n\n数据集 1:\n- ID: 62385\n- 唯一标识: KUN00100200008268\n- 样本编号: GSM5519177\n- 生物物种: Acomys cahirinus\n- 分类: organ\n- 组织/器官: ear\n- 细胞系: not applicable\n- 发育/采样时间: Adult\n- 性别: not applicable\n- 系列编号: GSE182141\n- 原始数据量: 8559\n- 质控后数据量: 8148\n- 注释后数据量: 8148\n- 数据文件路径: scope/Mouse/GSM5519177_prepared.h5ad\n- 数据授权类型: open access\n- 测序平台: 10x\n\n页码: 1, 每页数量: 10\n```\n\n## 注意事项\n- `organism`参数为必填项\n- 所有参数支持模糊/精准匹配，空值表示不筛选该维度\n- 如果结果过长，会自动输出到临时文件并读取展示\n- 响应状态码为0表示检索成功，非0为异常",
+      "bodyMd": "# bdbe_homo Skill\n\n## 功能描述\n根据多维度筛选条件检索单细胞测序相关的预训练数据集，支持分页查询，返回符合条件的数据集详情，并格式化展示查询结果。\n\n## 核心功能\n- 支持多维度筛选条件（生物物种、组织/器官、分类、时间、性别等）\n- 支持分页查询\n- 格式化展示查询结果\n- 处理长结果输出\n\n## 参数说明\n- `organism`：生物物种（必填参数）\n- `organ`：组织/器官（可选）\n- `class`：分类（可选）\n- `time`：发育/采样时间（可选）\n- `gender`：性别（可选）\n- `cell_line`：细胞系（可选）\n- `organoid`：类器官（可选）\n- `tumor`：肿瘤相关（可选）\n- `page_num`：分页页码（从1开始，默认1）\n- `page_size`：每页返回数据集数量（默认10）\n\n## 依赖\n- requests\n- json\n\n## 使用示例\n\n### 基本使用\n```bash\npython scripts/bdbe_homo.py --organism \"Acomys cahirinus\"\n```\n\n### 带筛选条件\n```bash\npython scripts/bdbe_homo.py --organism \"Acomys cahirinus\" --organ \"ear\" --page_num 1 --page_size 5\n```\n\n## 输入输出示例\n\n#### 输入\n```bash\npython scripts/bdbe_homo.py --organism \"Acomys cahirinus\"\n```\n\n#### 输出\n```\n查询结果：\n总数据集数量: 5\n\n数据集 1:\n- ID: 62385\n- 唯一标识: KUN00100200008268\n- 样本编号: GSM5519177\n- 生物物种: Acomys cahirinus\n- 分类: organ\n- 组织/器官: ear\n- 细胞系: not applicable\n- 发育/采样时间: Adult\n- 性别: not applicable\n- 系列编号: GSE182141\n- 原始数据量: 8559\n- 质控后数据量: 8148\n- 注释后数据量: 8148\n- 数据文件路径: scope/Mouse/GSM5519177_prepared.h5ad\n- 数据授权类型: open access\n- 测序平台: 10x\n\n页码: 1, 每页数量: 10\n```\n\n## 注意事项\n- `organism`参数为必填项\n- 所有参数支持模糊/精准匹配，空值表示不筛选该维度\n- 如果结果过长，会自动输出到临时文件并读取展示\n- 响应状态码为0表示检索成功，非0为异常"
+    },
+    {
+      "slug": "bdbe-scnorm",
+      "name": "auxiliary_files",
+      "dir": "workspace/skills/bdbe_scnorm",
+      "path": "workspace/skills/bdbe_scnorm/SKILL.md",
+      "desc": "辅助文件，包含state.json、dataset_info.json等",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "python",
+          "python3"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/cas-bigdatalab/piflow.git",
+        "copy": "cp -r workspace/skills/bdbe_scnorm ~/.claude/skills/bdbe-scnorm",
+        "raw": "https://raw.githubusercontent.com/cas-bigdatalab/piflow/ad8d0108a54a4257307d4946dc9250e26f24c63f/workspace/skills/bdbe_scnorm/SKILL.md",
+        "saveAs": "~/.claude/skills/bdbe-scnorm/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:63636f171fabd79f61173d2bb65eccf22707bc4a487c34c20334c2dd678f9479",
+      "bytes": 2754,
+      "wordCount": 97,
+      "repoLicense": "",
+      "commit": "ad8d0108a54a4257307d4946dc9250e26f24c63f",
+      "branch": "master",
+      "body": "---\nname: bdbe_scnorm\ndescription: 用于单细胞测序数据预处理的专用技能，对单细胞表达矩阵进行标准化处理，以消除技术偏差，为聚类、差异表达分析提供可靠的数据基础。\ncompatibility:\n  - python\n  - requests\n\nname_zh: 单细胞测序数据预处理算子\ninput_params:\n  - name: input_file\n    type: string\n    required: true\n    description: 输入单细胞测序数据文件路径（支持h5ad、csv等格式）\n\n  - name: species\n    type: string\n    required: true\n    description: 物种类型，如 mouse、human 等\n\n  - name: output_dir\n    type: string\n    required: false\n    description: 输出目录，默认在上传文件所在目录\n\noutput_params:\n  - name: output_dir\n    type: h5ad_file\n    description: 标准化后的单细胞数据集文件（h5ad格式）\n\n  - name: auxiliary_files\n    type: json_file\n    description: 辅助文件，包含state.json、dataset_info.json等\ntag: 科学计算\npublisher: COMMUNITY\n---\n\n# bdbe_scnorm Skill\n\n## 功能描述\n本skill是用于单细胞测序数据预处理的专用技能，首先需要用户上传需要处理的单细胞测序数据，再对单细胞表达矩阵进行标准化处理，以消除技术偏差，为聚类、差异表达分析提供可靠的数据基础。\n\n## 核心功能\n- 支持上传单细胞测序数据文件\n- 触发标准化分析任务\n- 获取并展示分析结果\n- 支持下载标准化后的数据集\n\n## 参数说明\n- `input_file`：输入单细胞测序数据文件路径（必要参数）\n- `species`：物种类型（必要参数），如 mouse、human 等\n\n## 依赖\n- requests\n- json\n\n## 使用示例\n\n### 基本使用\n```bash\npython scripts/bdbe_scnorm.py --input_file mouse_ERX2557277.csv --species mouse\n```\n\n## 输入输出示例\n\n#### 输入\n```bash\npython scripts/bdbe_scnorm.py --input_file mouse_ERX2557277.csv --species mouse\n```\n\n#### 输出\n```\n正在上传文件: mouse_ERX2557277.csv\n上传成功，文件ID: 36885\n\n正在启动标准化分析...\n分析任务启动成功，任务ID: 1063\n\n正在获取分析结果...\n分析完成，结果文件：\n\n核心文件：\n- d5f99079c24ca7b47667bddd59d23621.h5ad\n  下载链接: https://www.bdbe.cn/kun/api/result/download?link=-1/python3/mnt/run.py/2026-03-10T10_40_10.091473/output/mouse/d5f99079c24ca7b47667bddd59d23621.h5ad\n\n辅助文件：\n- state.json\n- dataset_info.json\n- sorted_length.pickle\n- data-00000-of-00001.arrow\n- logs.txt\n\n分析完成！\n```\n\n## 注意事项\n- 支持的文件格式：h5ad、csv 等常见单细胞数据格式\n- 文件大小限制：建议不超过100MB\n- 分析时间：根据数据大小，可能需要几分钟到几十分钟\n- 物种参数：必须指定正确的物种类型，如 mouse、human 等",
+      "bodyMd": "# bdbe_scnorm Skill\n\n## 功能描述\n本skill是用于单细胞测序数据预处理的专用技能，首先需要用户上传需要处理的单细胞测序数据，再对单细胞表达矩阵进行标准化处理，以消除技术偏差，为聚类、差异表达分析提供可靠的数据基础。\n\n## 核心功能\n- 支持上传单细胞测序数据文件\n- 触发标准化分析任务\n- 获取并展示分析结果\n- 支持下载标准化后的数据集\n\n## 参数说明\n- `input_file`：输入单细胞测序数据文件路径（必要参数）\n- `species`：物种类型（必要参数），如 mouse、human 等\n\n## 依赖\n- requests\n- json\n\n## 使用示例\n\n### 基本使用\n```bash\npython scripts/bdbe_scnorm.py --input_file mouse_ERX2557277.csv --species mouse\n```\n\n## 输入输出示例\n\n#### 输入\n```bash\npython scripts/bdbe_scnorm.py --input_file mouse_ERX2557277.csv --species mouse\n```\n\n#### 输出\n```\n正在上传文件: mouse_ERX2557277.csv\n上传成功，文件ID: 36885\n\n正在启动标准化分析...\n分析任务启动成功，任务ID: 1063\n\n正在获取分析结果...\n分析完成，结果文件：\n\n核心文件：\n- d5f99079c24ca7b47667bddd59d23621.h5ad\n  下载链接: https://www.bdbe.cn/kun/api/result/download?link=-1/python3/mnt/run.py/2026-03-10T10_40_10.091473/output/mouse/d5f99079c24ca7b47667bddd59d23621.h5ad\n\n辅助文件：\n- state.json\n- dataset_info.json\n- sorted_length.pickle\n- data-00000-of-00001.arrow\n- logs.txt\n\n分析完成！\n```\n\n## 注意事项\n- 支持的文件格式：h5ad、csv 等常见单细胞数据格式\n- 文件大小限制：建议不超过100MB\n- 分析时间：根据数据大小，可能需要几分钟到几十分钟\n- 物种参数：必须指定正确的物种类型，如 mouse、human 等"
+    },
+    {
+      "slug": "bdbe-sexdetermine",
+      "name": "output_dir",
+      "dir": "workspace/skills/bdbe_sexdetermine",
+      "path": "workspace/skills/bdbe_sexdetermine/SKILL.md",
+      "desc": "性别判定结果CSV文件，包含每个样本的性别标签",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/cas-bigdatalab/piflow.git",
+        "copy": "cp -r workspace/skills/bdbe_sexdetermine ~/.claude/skills/bdbe-sexdetermine",
+        "raw": "https://raw.githubusercontent.com/cas-bigdatalab/piflow/ad8d0108a54a4257307d4946dc9250e26f24c63f/workspace/skills/bdbe_sexdetermine/SKILL.md",
+        "saveAs": "~/.claude/skills/bdbe-sexdetermine/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:618aa64ff51b417bb234a0d75f4f373402bb4cd037ec6ab4533c54194fe72037",
+      "bytes": 3098,
+      "wordCount": 138,
+      "repoLicense": "",
+      "commit": "ad8d0108a54a4257307d4946dc9250e26f24c63f",
+      "branch": "master",
+      "body": "---\nname: bdbe_sexdetermine\ndescription: 本skill是用于单细胞样本性别判定的专用技能，首先需要用户上传需要处理的单细胞样本数据，再判定未标注性别的样本，或纠正标注错误的性别信息，生成最后的修正文件。\ncompatibility:\n  - python\n  - requests\n\nname_zh: 单细胞样本性别判定算子\ninput_params:\n  - name: input_file\n    type: string\n    required: true\n    description: 输入单细胞样本数据文件路径（CSV格式）\n\n  - name: species\n    type: string\n    required: true\n    description: 物种类型，如 mouse、human 等\n\n  - name: output_dir\n    type: string\n    required: false\n    description: 输出目录，默认在上传文件所在目录\n\noutput_params:\n  - name: output_dir\n    type: csv_file\n    description: 性别判定结果CSV文件，包含每个样本的性别标签\ntag: 科学计算\npublisher: COMMUNITY\n---\n\n\n# Skill: bdbe_sexdetermine\n\n## Overview\n\n本skill是用于单细胞样本性别判定的专用技能，首先需要用户上传需要处理的单细胞样本数据，再判定未标注性别的样本，或纠正标注错误的性别信息，生成最后的修正文件。\n\n## Trigger\n\n当用户希望\"对单细胞样本进行性别判定\"、”使用单细胞样本性别判定工具“等情况时触发。\n\n## Parameters\n\n| 参数名 | 类型 | 说明 | 示例值 | 是否必填 |\n| :--- | :--- | :--- | :--- | :--- |\n| input_file | string | 输入单细胞样本数据文件路径 | D:\\hqr\\workspace\\Agent\\source\\mousedemo.csv | 是 |\n| species | string | 物种类型 | mouse | 是 |\n| output_dir | string | 输出目录，默认在上传文件所在目录 | D:\\hqr\\workspace\\Agent\\output | 否 |\n\n## Examples\n\n### Example 1: 基本使用\n\n```bash\npython scripts/bdbe_sexdetermine.py --input_file \"D:\\hqr\\workspace\\Agent\\source\\mousedemo.csv\" --species mouse\n```\n\n### Example 2: 指定输出目录\n\n```bash\npython scripts/bdbe_sexdetermine.py --input_file \"D:\\hqr\\workspace\\Agent\\source\\mousedemo.csv\" --species mouse --output_dir \"D:\\hqr\\workspace\\Agent\\output\"\n```\n\n## Implementation\n\n### 核心流程\n\n1. **文件上传** - 上传待判定性别的单细胞样本文件，获取文件唯一标识ID\n2. **启动分析** - 触发性别判定分析，获取分析任务ID\n3. **获取结果** - 轮询获取分析结果，直至返回有效结果\n4. **下载文件** - 下载生成的性别判定结果文件\n\n### 接口说明\n\n- **文件上传接口**：`https://www.bdbe.cn/kun/api/upload` (POST)\n- **分析触发接口**：`https://www.bdbe.cn/kun/api/analysis?tool=SexDetermine&id={file_id}&species={species}` (GET)\n- **结果获取接口**：`https://www.bdbe.cn/kun/api/result?id={task_id}` (GET)\n- **文件下载接口**：`https://www.bdbe.cn/kun/api/result/download?link={link}` (GET)\n\n## Notes\n\n- 支持的文件格式：CSV格式\n- 分析过程可能需要较长时间，脚本会自动轮询等待结果\n- 结果包含样本性别判定列表和CSV格式的结果文件\n- 下载的结果文件默认保存在上传文件所在目录，也可通过output_dir参数指定",
+      "bodyMd": "# Skill: bdbe_sexdetermine\n\n## Overview\n\n本skill是用于单细胞样本性别判定的专用技能，首先需要用户上传需要处理的单细胞样本数据，再判定未标注性别的样本，或纠正标注错误的性别信息，生成最后的修正文件。\n\n## Trigger\n\n当用户希望\"对单细胞样本进行性别判定\"、”使用单细胞样本性别判定工具“等情况时触发。\n\n## Parameters\n\n| 参数名 | 类型 | 说明 | 示例值 | 是否必填 |\n| :--- | :--- | :--- | :--- | :--- |\n| input_file | string | 输入单细胞样本数据文件路径 | D:\\hqr\\workspace\\Agent\\source\\mousedemo.csv | 是 |\n| species | string | 物种类型 | mouse | 是 |\n| output_dir | string | 输出目录，默认在上传文件所在目录 | D:\\hqr\\workspace\\Agent\\output | 否 |\n\n## Examples\n\n### Example 1: 基本使用\n\n```bash\npython scripts/bdbe_sexdetermine.py --input_file \"D:\\hqr\\workspace\\Agent\\source\\mousedemo.csv\" --species mouse\n```\n\n### Example 2: 指定输出目录\n\n```bash\npython scripts/bdbe_sexdetermine.py --input_file \"D:\\hqr\\workspace\\Agent\\source\\mousedemo.csv\" --species mouse --output_dir \"D:\\hqr\\workspace\\Agent\\output\"\n```\n\n## Implementation\n\n### 核心流程\n\n1. **文件上传** - 上传待判定性别的单细胞样本文件，获取文件唯一标识ID\n2. **启动分析** - 触发性别判定分析，获取分析任务ID\n3. **获取结果** - 轮询获取分析结果，直至返回有效结果\n4. **下载文件** - 下载生成的性别判定结果文件\n\n### 接口说明\n\n- **文件上传接口**：`https://www.bdbe.cn/kun/api/upload` (POST)\n- **分析触发接口**：`https://www.bdbe.cn/kun/api/analysis?tool=SexDetermine&id={file_id}&species={species}` (GET)\n- **结果获取接口**：`https://www.bdbe.cn/kun/api/result?id={task_id}` (GET)\n- **文件下载接口**：`https://www.bdbe.cn/kun/api/result/download?link={link}` (GET)\n\n## Notes\n\n- 支持的文件格式：CSV格式\n- 分析过程可能需要较长时间，脚本会自动轮询等待结果\n- 结果包含样本性别判定列表和CSV格式的结果文件\n- 下载的结果文件默认保存在上传文件所在目录，也可通过output_dir参数指定"
+    },
+    {
+      "slug": "calibrate-qa-mapper",
+      "name": "response_key",
+      "dir": "workspace/skills/calibrate_qa_mapper",
+      "path": "workspace/skills/calibrate_qa_mapper/SKILL.md",
+      "desc": "校准后的问答对JSON文件，包含校准后的query和response",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": true,
+        "network": true,
+        "bins": [
+          "python",
+          "pip"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/cas-bigdatalab/piflow.git",
+        "copy": "cp -r workspace/skills/calibrate_qa_mapper ~/.claude/skills/calibrate-qa-mapper",
+        "raw": "https://raw.githubusercontent.com/cas-bigdatalab/piflow/ad8d0108a54a4257307d4946dc9250e26f24c63f/workspace/skills/calibrate_qa_mapper/SKILL.md",
+        "saveAs": "~/.claude/skills/calibrate-qa-mapper/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:4949b2bf715f6081d12a5790b6f1eb540d8988a127c879cd61f08c0fcf357ffb",
+      "bytes": 4208,
+      "wordCount": 251,
+      "repoLicense": "",
+      "commit": "ad8d0108a54a4257307d4946dc9250e26f24c63f",
+      "branch": "master",
+      "body": "---\nname: calibrate_qa_mapper\ndescription: |\n  基于参考文本校准问答对。当用户提到问答校准、校准QA、语言风格校准、问答对优化等需求时使用此skill。\n  即使用户没有明确说出\"校准\"，只要任务涉及根据参考文本调整问答对使其更符合特定风格，就应该使用此skill。\n\nname_zh: 基于参考文本校准问答对算子\ninput_params:\n  - name: input_path\n    type: string\n    required: true\n    description: 输入JSON文件路径\n\n  - name: output_path\n    type: string\n    required: true\n    description: 输出JSON文件路径\n\n  - name: api_model\n    type: string\n    required: true\n    description: LLM模型名称，如 'qwen2.5-72b-instruct'\n\n  - name: api_endpoint\n    type: string\n    required: false\n    description: API端点URL\n\n  - name: response_path\n    type: string\n    required: false\n    default: choices.0.message.content\n    description: 响应内容路径\n\n  - name: text_key\n    type: string\n    required: false\n    default: text\n    description: 参考文本字段名\n\n  - name: query_key\n    type: string\n    required: false\n    default: query\n    description: 问题字段名\n\n  - name: response_key\n    type: string\n    required: false\n    default: response\n    description: 回答字段名\n\noutput_params:\n  - name: output_path\n    type: json_file\n    description: 校准后的问答对JSON文件，包含校准后的query和response\ntag: 数据转换\npublisher: COMMUNITY\n---\n\n# Calibrate QA Mapper\n\n基于参考文本校准问答对，使问答对更详细、准确，并贴合参考文本的语言风格。\n\n本SKILL使用依赖data_juicer，请在调用前安装好python环境并安装data_juicer，你可用同以下指令进行安装：\n```\npip install py-data-juicer\n```\n\n## 核心参数\n\n| 参数 | 类型 | 必填 | 默认值 | 说明 |\n|------|------|------|--------|------|\n| input_path | string | 是 | - | 输入JSON文件路径 |\n| output_path | string | 是 | - | 输出JSON文件路径 |\n| api_model | string | 是 | - | LLM模型名称，如 'qwen2.5-72b-instruct' |\n| api_endpoint | string | 否 | - | API端点URL |\n| response_path | string | 否 | choices.0.message.content | 响应内容路径 |\n| text_key | string | 否 | text | 参考文本字段名 |\n| query_key | string | 否 | query | 问题字段名 |\n| response_key | string | 否 | response | 回答字段名 |\n\n## 使用方法\n\n```bash\npython scripts/run_calibrate_qa_mapper.py --input_path <input_path> --output_path <output_path> --api_model <model_name> [--api_endpoint <endpoint>] [--response_path <path>] [--text_key <key>] [--query_key <key>] [--response_key <key>]\n```\n\n## 实现原理\n\n参照测试代码 test_calibrate_qa_mapper.py 中的 `_run_op` 函数：\n\n```python\n# 1. 初始化算子（必须指定api_model）\nop = CalibrateQAMapper(api_model='qwen2.5-72b-instruct')\n\n# 2. 处理样本\nsamples = [{'text': reference, 'query': '...', 'response': '...'}]\nresult = op.process(samples)  # 使用process处理批次\n```\n\n## 输入输出格式\n\n### 输入格式 (JSON数组)\n\n```json\n[\n  {\n    \"text\": \"参考文本，包含语言风格示例...\",\n    \"query\": \"原始问题\",\n    \"response\": \"原始回答\"\n  }\n]\n```\n\n### 输出格式 (JSON数组)\n\n```json\n[\n  {\n    \"text\": \"参考文本，包含语言风格示例...\",\n    \"query\": \"校准后的问题\",\n    \"response\": \"校准后的回答\"\n  }\n]\n```\n\n## 示例\n\n### 示例1：基本用法\n\n```bash\npython scripts/run_calibrate_qa_mapper.py --input_path example_input.json --output_path output.json --api_model \"qwen2.5-72b-instruct\"\n```\n\n### 示例2：指定API端点\n\n```bash\npython scripts/run_calibrate_qa_mapper.py --input_path example_input.json --output_path output.json --api_model \"qwen2.5-72b-instruct\" --api_endpoint \"https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions\"\n```\n\n## 注意事项\n\n- **必须设置环境变量**：使用前需设置 API key\n  ```bash\n  export OPENAI_API_KEY=your_api_key\n  # 或\n  export DASHSCOPE_API_KEY=your_api_key\n  ```\n- api_model 参数必须指定\n- 输入数据需要包含 text（参考）、query（问题）、response（回答）三个字段\n- 该算子调用 LLM API，可能需要较长时间\n",
+      "bodyMd": "# Calibrate QA Mapper\n\n基于参考文本校准问答对，使问答对更详细、准确，并贴合参考文本的语言风格。\n\n本SKILL使用依赖data_juicer，请在调用前安装好python环境并安装data_juicer，你可用同以下指令进行安装：\n```\npip install py-data-juicer\n```\n\n## 核心参数\n\n| 参数 | 类型 | 必填 | 默认值 | 说明 |\n|------|------|------|--------|------|\n| input_path | string | 是 | - | 输入JSON文件路径 |\n| output_path | string | 是 | - | 输出JSON文件路径 |\n| api_model | string | 是 | - | LLM模型名称，如 'qwen2.5-72b-instruct' |\n| api_endpoint | string | 否 | - | API端点URL |\n| response_path | string | 否 | choices.0.message.content | 响应内容路径 |\n| text_key | string | 否 | text | 参考文本字段名 |\n| query_key | string | 否 | query | 问题字段名 |\n| response_key | string | 否 | response | 回答字段名 |\n\n## 使用方法\n\n```bash\npython scripts/run_calibrate_qa_mapper.py --input_path <input_path> --output_path <output_path> --api_model <model_name> [--api_endpoint <endpoint>] [--response_path <path>] [--text_key <key>] [--query_key <key>] [--response_key <key>]\n```\n\n## 实现原理\n\n参照测试代码 test_calibrate_qa_mapper.py 中的 `_run_op` 函数：\n\n```python\n# 1. 初始化算子（必须指定api_model）\nop = CalibrateQAMapper(api_model='qwen2.5-72b-instruct')\n\n# 2. 处理样本\nsamples = [{'text': reference, 'query': '...', 'response': '...'}]\nresult = op.process(samples)  # 使用process处理批次\n```\n\n## 输入输出格式\n\n### 输入格式 (JSON数组)\n\n```json\n[\n  {\n    \"text\": \"参考文本，包含语言风格示例...\",\n    \"query\": \"原始问题\",\n    \"response\": \"原始回答\"\n  }\n]\n```\n\n### 输出格式 (JSON数组)\n\n```json\n[\n  {\n    \"text\": \"参考文本，包含语言风格示例...\",\n    \"query\": \"校准后的问题\",\n    \"response\": \"校准后的回答\"\n  }\n]\n```\n\n## 示例\n\n### 示例1：基本用法\n\n```bash\npython scripts/run_calibrate_qa_mapper.py --input_path example_input.json --output_path output.json --api_model \"qwen2.5-72b-instruct\"\n```\n\n### 示例2：指定API端点\n\n```bash\npython scripts/run_calibrate_qa_mapper.py --input_path example_input.json --output_path output.json --api_model \"qwen2.5-72b-instruct\" --api_endpoint \"https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions\"\n```\n\n## 注意事项\n\n- **必须设置环境变量**：使用前需设置 API key\n  ```bash\n  export OPENAI_API_KEY=your_api_key\n  # 或\n  export DASHSCOPE_API_KEY=your_api_key\n  ```\n- api_model 参数必须指定\n- 输入数据需要包含 text（参考）、query（问题）、response（回答）三个字段\n- 该算子调用 LLM API，可能需要较长时间\n"
+    },
+    {
+      "slug": "calibrate-query-mapper",
+      "name": "response_path",
+      "dir": "workspace/skills/calibrate_query_mapper",
+      "path": "workspace/skills/calibrate_query_mapper/SKILL.md",
+      "desc": "校准后的JSON文件，包含校准后的query字段",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": true,
+        "network": true,
+        "bins": [
+          "python",
+          "pip"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/cas-bigdatalab/piflow.git",
+        "copy": "cp -r workspace/skills/calibrate_query_mapper ~/.claude/skills/calibrate-query-mapper",
+        "raw": "https://raw.githubusercontent.com/cas-bigdatalab/piflow/ad8d0108a54a4257307d4946dc9250e26f24c63f/workspace/skills/calibrate_query_mapper/SKILL.md",
+        "saveAs": "~/.claude/skills/calibrate-query-mapper/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:4d1e43df32020d390adcefd1d787da0c1ff8511784a0028cfeb205134795cd11",
+      "bytes": 3531,
+      "wordCount": 197,
+      "repoLicense": "",
+      "commit": "ad8d0108a54a4257307d4946dc9250e26f24c63f",
+      "branch": "master",
+      "body": "---\nname: calibrate_query_mapper\ndescription: |\n  基于参考文本校准问答对中的查询（问题）。当用户提到校准问题、校准查询、语言风格校准、问题优化等需求时使用此skill。\n  即使用户没有明确说出\"校准\"，只要任务涉及根据参考文本调整问答对中的问题，就应该使用此skill。\n\nname_zh: 基于参考文本校准问答对中的查询（问题）算子\ninput_params:\n  - name: input_path\n    type: string\n    required: true\n    description: 输入JSON文件路径\n\n  - name: output_path\n    type: string\n    required: true\n    description: 输出JSON文件路径\n\n  - name: api_model\n    type: string\n    required: true\n    description: LLM模型名称，如 'qwen2.5-72b-instruct'\n\n  - name: api_endpoint\n    type: string\n    required: false\n    description: API端点URL\n\n  - name: response_path\n    type: string\n    required: false\n    default: choices.0.message.content\n    description: 响应内容路径\n\noutput_params:\n  - name: output_path\n    type: json_file\n    description: 校准后的JSON文件，包含校准后的query字段\ntag: 数据转换\npublisher: COMMUNITY\n---\n\n# Calibrate Query Mapper\n\n基于参考文本校准问答对中的查询（问题），使问题更加详细、准确，并贴合参考文本的语言风格。\n\n本SKILL使用依赖data_juicer，请在调用前安装好python环境并安装data_juicer，你可用同以下指令进行安装：\n```\npip install py-data-juicer\n```\n\n## 核心参数\n\n| 参数 | 类型 | 必填 | 默认值 | 说明 |\n|------|------|------|--------|------|\n| input_path | string | 是 | - | 输入JSON文件路径 |\n| output_path | string | 是 | - | 输出JSON文件路径 |\n| api_model | string | 是 | - | LLM模型名称，如 'qwen2.5-72b-instruct' |\n| api_endpoint | string | 否 | - | API端点URL |\n| response_path | string | 否 | choices.0.message.content | 响应内容路径 |\n\n## 使用方法\n\n```bash\npython scripts/run_calibrate_query_mapper.py --input_path <input_path> --output_path <output_path> --api_model <model_name> [--api_endpoint <endpoint>] [--response_path <path>]\n```\n\n## 实现原理\n\n参照测试代码 test_calibrate_query_mapper.py 中的 `_run_op` 函数：\n\n```python\n# 1. 初始化算子（必须指定api_model）\nop = CalibrateQueryMapper(api_model='qwen2.5-72b-instruct')\n\n# 2. 将数据转为Dataset，使用 op.run(dataset) 处理\ndataset = Dataset.from_list(samples)\nresult_dataset = op.run(dataset)\n```\n\n## 输入输出格式\n\n### 输入格式 (JSON数组)\n\n```json\n[\n  {\n    \"text\": \"参考文本，包含语言风格示例...\",\n    \"query\": \"原始问题\",\n    \"response\": \"原始回答\"\n  }\n]\n```\n\n### 输出格式 (JSON数组)\n\n```json\n[\n  {\n    \"text\": \"参考文本，包含语言风格示例...\",\n    \"query\": \"校准后的问题\",\n    \"response\": \"原始回答\"\n  }\n]\n```\n\n注意：此算子只校准 query 字段，response 字段保持不变。\n\n## 示例\n\n```bash\npython scripts/run_calibrate_query_mapper.py --input_path example_input.json --output_path output.json --api_model \"qwen2.5-72b-instruct\"\n```\n\n## 注意事项\n\n- **必须设置环境变量**：使用前需设置 API key\n  ```bash\n  export OPENAI_API_KEY=your_api_key\n  # 或\n  export DASHSCOPE_API_KEY=your_api_key\n  ```\n- api_model 参数必须指定\n- 输入数据需要包含 text（参考）、query（问题）、response（回答）三个字段\n- 该算子只校准问题（query），回答（response）保持不变\n- 该算子调用 LLM API，可能需要较长时间\n",
+      "bodyMd": "# Calibrate Query Mapper\n\n基于参考文本校准问答对中的查询（问题），使问题更加详细、准确，并贴合参考文本的语言风格。\n\n本SKILL使用依赖data_juicer，请在调用前安装好python环境并安装data_juicer，你可用同以下指令进行安装：\n```\npip install py-data-juicer\n```\n\n## 核心参数\n\n| 参数 | 类型 | 必填 | 默认值 | 说明 |\n|------|------|------|--------|------|\n| input_path | string | 是 | - | 输入JSON文件路径 |\n| output_path | string | 是 | - | 输出JSON文件路径 |\n| api_model | string | 是 | - | LLM模型名称，如 'qwen2.5-72b-instruct' |\n| api_endpoint | string | 否 | - | API端点URL |\n| response_path | string | 否 | choices.0.message.content | 响应内容路径 |\n\n## 使用方法\n\n```bash\npython scripts/run_calibrate_query_mapper.py --input_path <input_path> --output_path <output_path> --api_model <model_name> [--api_endpoint <endpoint>] [--response_path <path>]\n```\n\n## 实现原理\n\n参照测试代码 test_calibrate_query_mapper.py 中的 `_run_op` 函数：\n\n```python\n# 1. 初始化算子（必须指定api_model）\nop = CalibrateQueryMapper(api_model='qwen2.5-72b-instruct')\n\n# 2. 将数据转为Dataset，使用 op.run(dataset) 处理\ndataset = Dataset.from_list(samples)\nresult_dataset = op.run(dataset)\n```\n\n## 输入输出格式\n\n### 输入格式 (JSON数组)\n\n```json\n[\n  {\n    \"text\": \"参考文本，包含语言风格示例...\",\n    \"query\": \"原始问题\",\n    \"response\": \"原始回答\"\n  }\n]\n```\n\n### 输出格式 (JSON数组)\n\n```json\n[\n  {\n    \"text\": \"参考文本，包含语言风格示例...\",\n    \"query\": \"校准后的问题\",\n    \"response\": \"原始回答\"\n  }\n]\n```\n\n注意：此算子只校准 query 字段，response 字段保持不变。\n\n## 示例\n\n```bash\npython scripts/run_calibrate_query_mapper.py --input_path example_input.json --output_path output.json --api_model \"qwen2.5-72b-instruct\"\n```\n\n## 注意事项\n\n- **必须设置环境变量**：使用前需设置 API key\n  ```bash\n  export OPENAI_API_KEY=your_api_key\n  # 或\n  export DASHSCOPE_API_KEY=your_api_key\n  ```\n- api_model 参数必须指定\n- 输入数据需要包含 text（参考）、query（问题）、response（回答）三个字段\n- 该算子只校准问题（query），回答（response）保持不变\n- 该算子调用 LLM API，可能需要较长时间\n"
+    },
+    {
+      "slug": "calibrate-response-mapper",
+      "name": "response_path",
+      "dir": "workspace/skills/calibrate_response_mapper",
+      "path": "workspace/skills/calibrate_response_mapper/SKILL.md",
+      "desc": "校准后的JSON文件，包含校准后的response字段",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": true,
+        "network": true,
+        "bins": [
+          "python",
+          "pip"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/cas-bigdatalab/piflow.git",
+        "copy": "cp -r workspace/skills/calibrate_response_mapper ~/.claude/skills/calibrate-response-mapper",
+        "raw": "https://raw.githubusercontent.com/cas-bigdatalab/piflow/ad8d0108a54a4257307d4946dc9250e26f24c63f/workspace/skills/calibrate_response_mapper/SKILL.md",
+        "saveAs": "~/.claude/skills/calibrate-response-mapper/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:b356958559fe25f434f8b5ddc57b13e633040c2fc2dc34b4d682da080bbb024e",
+      "bytes": 3528,
+      "wordCount": 197,
+      "repoLicense": "",
+      "commit": "ad8d0108a54a4257307d4946dc9250e26f24c63f",
+      "branch": "master",
+      "body": "---\nname: calibrate_response_mapper\ndescription: |\n  基于参考文本校准问答对中的响应。当用户提到校准回答、校准响应、语言风格校准、回答优化等需求时使用此skill。\n  即使用户没有明确说出\"校准\"，只要任务涉及根据参考文本调整问答对中的回答，就应该使用此skill。\n\nname_zh: 基于参考文本校准问答对中的响应算子\ninput_params:\n  - name: input_path\n    type: string\n    required: true\n    description: 输入JSON文件路径\n\n  - name: output_path\n    type: string\n    required: true\n    description: 输出JSON文件路径\n\n  - name: api_model\n    type: string\n    required: true\n    description: LLM模型名称，如 'qwen2.5-72b-instruct'\n\n  - name: api_endpoint\n    type: string\n    required: false\n    description: API端点URL\n\n  - name: response_path\n    type: string\n    required: false\n    default: choices.0.message.content\n    description: 响应内容路径\n\noutput_params:\n  - name: output_path\n    type: json_file\n    description: 校准后的JSON文件，包含校准后的response字段\ntag: 数据转换\npublisher: COMMUNITY\n---\n\n# Calibrate Response Mapper\n\n基于参考文本校准问答对中的响应（回答），使回答更加详细、准确，并贴合参考文本的语言风格。\n\n本SKILL使用依赖data_juicer，请在调用前安装好python环境并安装data_juicer，你可用同以下指令进行安装：\n```\npip install py-data-juicer\n```\n\n## 核心参数\n\n| 参数 | 类型 | 必填 | 默认值 | 说明 |\n|------|------|------|--------|------|\n| input_path | string | 是 | - | 输入JSON文件路径 |\n| output_path | string | 是 | - | 输出JSON文件路径 |\n| api_model | string | 是 | - | LLM模型名称，如 'qwen2.5-72b-instruct' |\n| api_endpoint | string | 否 | - | API端点URL |\n| response_path | string | 否 | choices.0.message.content | 响应内容路径 |\n\n## 使用方法\n\n```bash\npython scripts/run_calibrate_response_mapper.py --input_path <input_path> --output_path <output_path> --api_model <model_name> [--api_endpoint <endpoint>] [--response_path <path>]\n```\n\n## 实现原理\n\n参照测试代码 test_calibrate_response_mapper.py 中的 `_run_op` 函数：\n\n```python\n# 1. 初始化算子（必须指定api_model）\nop = CalibrateResponseMapper(api_model='qwen2.5-72b-instruct')\n\n# 2. 将数据转为Dataset，使用 op.run(dataset) 处理\ndataset = Dataset.from_list(samples)\nresult_dataset = op.run(dataset)\n```\n\n## 输入输出格式\n\n### 输入格式 (JSON数组)\n\n```json\n[\n  {\n    \"text\": \"参考文本，包含语言风格示例...\",\n    \"query\": \"原始问题\",\n    \"response\": \"原始回答\"\n  }\n]\n```\n\n### 输出格式 (JSON数组)\n\n```json\n[\n  {\n    \"text\": \"参考文本，包含语言风格示例...\",\n    \"query\": \"原始问题\",\n    \"response\": \"校准后的回答\"\n  }\n]\n```\n\n注意：此算子只校准 response 字段，query 字段保持不变。\n\n## 示例\n\n```bash\npython scripts/run_calibrate_response_mapper.py --input_path example_input.json --output_path output.json --api_model \"qwen2.5-72b-instruct\"\n```\n\n## 注意事项\n\n- **必须设置环境变量**：使用前需设置 API key\n  ```bash\n  export OPENAI_API_KEY=your_api_key\n  # 或\n  export DASHSCOPE_API_KEY=your_api_key\n  ```\n- api_model 参数必须指定\n- 输入数据需要包含 text（参考）、query（问题）、response（回答）三个字段\n- 该算子只校准回答（response），问题（query）保持不变\n- 该算子调用 LLM API，可能需要较长时间\n",
+      "bodyMd": "# Calibrate Response Mapper\n\n基于参考文本校准问答对中的响应（回答），使回答更加详细、准确，并贴合参考文本的语言风格。\n\n本SKILL使用依赖data_juicer，请在调用前安装好python环境并安装data_juicer，你可用同以下指令进行安装：\n```\npip install py-data-juicer\n```\n\n## 核心参数\n\n| 参数 | 类型 | 必填 | 默认值 | 说明 |\n|------|------|------|--------|------|\n| input_path | string | 是 | - | 输入JSON文件路径 |\n| output_path | string | 是 | - | 输出JSON文件路径 |\n| api_model | string | 是 | - | LLM模型名称，如 'qwen2.5-72b-instruct' |\n| api_endpoint | string | 否 | - | API端点URL |\n| response_path | string | 否 | choices.0.message.content | 响应内容路径 |\n\n## 使用方法\n\n```bash\npython scripts/run_calibrate_response_mapper.py --input_path <input_path> --output_path <output_path> --api_model <model_name> [--api_endpoint <endpoint>] [--response_path <path>]\n```\n\n## 实现原理\n\n参照测试代码 test_calibrate_response_mapper.py 中的 `_run_op` 函数：\n\n```python\n# 1. 初始化算子（必须指定api_model）\nop = CalibrateResponseMapper(api_model='qwen2.5-72b-instruct')\n\n# 2. 将数据转为Dataset，使用 op.run(dataset) 处理\ndataset = Dataset.from_list(samples)\nresult_dataset = op.run(dataset)\n```\n\n## 输入输出格式\n\n### 输入格式 (JSON数组)\n\n```json\n[\n  {\n    \"text\": \"参考文本，包含语言风格示例...\",\n    \"query\": \"原始问题\",\n    \"response\": \"原始回答\"\n  }\n]\n```\n\n### 输出格式 (JSON数组)\n\n```json\n[\n  {\n    \"text\": \"参考文本，包含语言风格示例...\",\n    \"query\": \"原始问题\",\n    \"response\": \"校准后的回答\"\n  }\n]\n```\n\n注意：此算子只校准 response 字段，query 字段保持不变。\n\n## 示例\n\n```bash\npython scripts/run_calibrate_response_mapper.py --input_path example_input.json --output_path output.json --api_model \"qwen2.5-72b-instruct\"\n```\n\n## 注意事项\n\n- **必须设置环境变量**：使用前需设置 API key\n  ```bash\n  export OPENAI_API_KEY=your_api_key\n  # 或\n  export DASHSCOPE_API_KEY=your_api_key\n  ```\n- api_model 参数必须指定\n- 输入数据需要包含 text（参考）、query（问题）、response（回答）三个字段\n- 该算子只校准回答（response），问题（query）保持不变\n- 该算子调用 LLM API，可能需要较长时间\n"
+    },
+    {
+      "slug": "canvas-design",
+      "name": "canvas-design",
+      "dir": "workspace/skills/canvas-design",
+      "path": "workspace/skills/canvas-design/SKILL.md",
+      "desc": "Create beautiful visual art in .png and .pdf documents using design philosophy. You should use this skill when the user asks to create a poster, piece of art, design, or other static piece. Create original visual designs, never copying existing artists' work to avoid copyright violations.",
+      "descZh": "",
+      "triggers": [
+        "piece of art",
+        "design",
+        "other static piece"
+      ],
+      "version": "",
+      "license": "Complete terms in LICENSE.txt",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "go",
+          "make",
+          "poetry"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/cas-bigdatalab/piflow.git",
+        "copy": "cp -r workspace/skills/canvas-design ~/.claude/skills/canvas-design",
+        "raw": "https://raw.githubusercontent.com/cas-bigdatalab/piflow/ad8d0108a54a4257307d4946dc9250e26f24c63f/workspace/skills/canvas-design/SKILL.md",
+        "saveAs": "~/.claude/skills/canvas-design/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:c3055068c406385d04c49338bab270b2c22c5146490f9a4257e572652b61a729",
+      "bytes": 12003,
+      "wordCount": 1693,
+      "repoLicense": "",
+      "commit": "ad8d0108a54a4257307d4946dc9250e26f24c63f",
+      "branch": "master",
+      "body": "---\nname: canvas-design\ndescription: Create beautiful visual art in .png and .pdf documents using design philosophy. You should use this skill when the user asks to create a poster, piece of art, design, or other static piece. Create original visual designs, never copying existing artists' work to avoid copyright violations.\nlicense: Complete terms in LICENSE.txt\ntag: AI处理\n\nname_zh: 画布设计算子\npublisher: COMMUNITY\n---\n\nThese are instructions for creating design philosophies - aesthetic movements that are then EXPRESSED VISUALLY. Output only .md files, .pdf files, and .png files.\n\nComplete this in two steps:\n1. Design Philosophy Creation (.md file)\n2. Express by creating it on a canvas (.pdf file or .png file)\n\nFirst, undertake this task:\n\n## DESIGN PHILOSOPHY CREATION\n\nTo begin, create a VISUAL PHILOSOPHY (not layouts or templates) that will be interpreted through:\n- Form, space, color, composition\n- Images, graphics, shapes, patterns\n- Minimal text as visual accent\n\n### THE CRITICAL UNDERSTANDING\n- What is received: Some subtle input or instructions by the user that should be taken into account, but used as a foundation; it should not constrain creative freedom.\n- What is created: A design philosophy/aesthetic movement.\n- What happens next: Then, the same version receives the philosophy and EXPRESSES IT VISUALLY - creating artifacts that are 90% visual design, 10% essential text.\n\nConsider this approach:\n- Write a manifesto for an art movement\n- The next phase involves making the artwork\n\nThe philosophy must emphasize: Visual expression. Spatial communication. Artistic interpretation. Minimal words.\n\n### HOW TO GENERATE A VISUAL PHILOSOPHY\n\n**Name the movement** (1-2 words): \"Brutalist Joy\" / \"Chromatic Silence\" / \"Metabolist Dreams\"\n\n**Articulate the philosophy** (4-6 paragraphs - concise but complete):\n\nTo capture the VISUAL essence, express how the philosophy manifests through:\n- Space and form\n- Color and material\n- Scale and rhythm\n- Composition and balance\n- Visual hierarchy\n\n**CRITICAL GUIDELINES:**\n- **Avoid redundancy**: Each design aspect should be mentioned once. Avoid repeating points about color theory, spatial relationships, or typographic principles unless adding new depth.\n- **Emphasize craftsmanship REPEATEDLY**: The philosophy MUST stress multiple times that the final work should appear as though it took countless hours to create, was labored over with care, and comes from someone at the absolute top of their field. This framing is essential - repeat phrases like \"meticulously crafted,\" \"the product of deep expertise,\" \"painstaking attention,\" \"master-level execution.\"\n- **Leave creative space**: Remain specific about the aesthetic direction, but concise enough that the next Claude has room to make interpretive choices also at a extremely high level of craftmanship.\n\nThe philosophy must guide the next version to express ideas VISUALLY, not through text. Information lives in design, not paragraphs.\n\n### PHILOSOPHY EXAMPLES\n\n**\"Concrete Poetry\"**\nPhilosophy: Communication through monumental form and bold geometry.\nVisual expression: Massive color blocks, sculptural typography (huge single words, tiny labels), Brutalist spatial divisions, Polish poster energy meets Le Corbusier. Ideas expressed through visual weight and spatial tension, not explanation. Text as rare, powerful gesture - never paragraphs, only essential words integrated into the visual architecture. Every element placed with the precision of a master craftsman.\n\n**\"Chromatic Language\"**\nPhilosophy: Color as the primary information system.\nVisual expression: Geometric precision where color zones create meaning. Typography minimal - small sans-serif labels letting chromatic fields communicate. Think Josef Albers' interaction meets data visualization. Information encoded spatially and chromatically. Words only to anchor what color already shows. The result of painstaking chromatic calibration.\n\n**\"Analog Meditation\"**\nPhilosophy: Quiet visual contemplation through texture and breathing room.\nVisual expression: Paper grain, ink bleeds, vast negative space. Photography and illustration dominate. Typography whispered (small, restrained, serving the visual). Japanese photobook aesthetic. Images breathe across pages. Text appears sparingly - short phrases, never explanatory blocks. Each composition balanced with the care of a meditation practice.\n\n**\"Organic Systems\"**\nPhilosophy: Natural clustering and modular growth patterns.\nVisual expression: Rounded forms, organic arrangements, color from nature through architecture. Information shown through visual diagrams, spatial relationships, iconography. Text only for key labels floating in space. The composition tells the story through expert spatial orchestration.\n\n**\"Geometric Silence\"**\nPhilosophy: Pure order and restraint.\nVisual expression: Grid-based precision, bold photography or stark graphics, dramatic negative space. Typography precise but minimal - small essential text, large quiet zones. Swiss formalism meets Brutalist material honesty. Structure communicates, not words. Every alignment the work of countless refinements.\n\n*These are condensed examples. The actual design philosophy should be 4-6 substantial paragraphs.*\n\n### ESSENTIAL PRINCIPLES\n- **VISUAL PHILOSOPHY**: Create an aesthetic worldview to be expressed through design\n- **MINIMAL TEXT**: Always emphasize that text is sparse, essential-only, integrated as visual element - never lengthy\n- **SPATIAL EXPRESSION**: Ideas communicate through space, form, color, composition - not paragraphs\n- **ARTISTIC FREEDOM**: The next Claude interprets the philosophy visually - provide creative room\n- **PURE DESIGN**: This is about making ART OBJECTS, not documents with decoration\n- **EXPERT CRAFTSMANSHIP**: Repeatedly emphasize the final work must look meticulously crafted, labored over with care, the product of countless hours by someone at the top of their field\n\n**The design philosophy should be 4-6 paragraphs long.** Fill it with poetic design philosophy that brings together the core vision. Avoid repeating the same points. Keep the design philosophy generic without mentioning the intention of the art, as if it can be used wherever. Output the design philosophy as a .md file.\n\n---\n\n## DEDUCING THE SUBTLE REFERENCE\n\n**CRITICAL STEP**: Before creating the canvas, identify the subtle conceptual thread from the original request.\n\n**THE ESSENTIAL PRINCIPLE**:\nThe topic is a **subtle, niche reference embedded within the art itself** - not always literal, always sophisticated. Someone familiar with the subject should feel it intuitively, while others simply experience a masterful abstract composition. The design philosophy provides the aesthetic language. The deduced topic provides the soul - the quiet conceptual DNA woven invisibly into form, color, and composition.\n\nThis is **VERY IMPORTANT**: The reference must be refined so it enhances the work's depth without announcing itself. Think like a jazz musician quoting another song - only those who know will catch it, but everyone appreciates the music.\n\n---\n\n## CANVAS CREATION\n\nWith both the philosophy and the conceptual framework established, express it on a canvas. Take a moment to gather thoughts and clear the mind. Use the design philosophy created and the instructions below to craft a masterpiece, embodying all aspects of the philosophy with expert craftsmanship.\n\n**IMPORTANT**: For any type of content, even if the user requests something for a movie/game/book, the approach should still be sophisticated. Never lose sight of the idea that this should be art, not something that's cartoony or amateur.\n\nTo create museum or magazine quality work, use the design philosophy as the foundation. Create one single page, highly visual, design-forward PDF or PNG output (unless asked for more pages). Generally use repeating patterns and perfect shapes. Treat the abstract philosophical design as if it were a scientific bible, borrowing the visual language of systematic observation—dense accumulation of marks, repeated elements, or layered patterns that build meaning through patient repetition and reward sustained viewing. Add sparse, clinical typography and systematic reference markers that suggest this could be a diagram from an imaginary discipline, treating the invisible subject with the same reverence typically reserved for documenting observable phenomena. Anchor the piece with simple phrase(s) or details positioned subtly, using a limited color palette that feels intentional and cohesive. Embrace the paradox of using analytical visual language to express ideas about human experience: the result should feel like an artifact that proves something ephemeral can be studied, mapped, and understood through careful attention. This is true art. \n\n**Text as a contextual element**: Text is always minimal and visual-first, but let context guide whether that means whisper-quiet labels or bold typographic gestures. A punk venue poster might have larger, more aggressive type than a minimalist ceramics studio identity. Most of the time, font should be thin. All use of fonts must be design-forward and prioritize visual communication. Regardless of text scale, nothing falls off the page and nothing overlaps. Every element must be contained within the canvas boundaries with proper margins. Check carefully that all text, graphics, and visual elements have breathing room and clear separation. This is non-negotiable for professional execution. **IMPORTANT: Use different fonts if writing text. Search the `./canvas-fonts` directory. Regardless of approach, sophistication is non-negotiable.**\n\nDownload and use whatever fonts are needed to make this a reality. Get creative by making the typography actually part of the art itself -- if the art is abstract, bring the font onto the canvas, not typeset digitally.\n\nTo push boundaries, follow design instinct/intuition while using the philosophy as a guiding principle. Embrace ultimate design freedom and choice. Push aesthetics and design to the frontier. \n\n**CRITICAL**: To achieve human-crafted quality (not AI-generated), create work that looks like it took countless hours. Make it appear as though someone at the absolute top of their field labored over every detail with painstaking care. Ensure the composition, spacing, color choices, typography - everything screams expert-level craftsmanship. Double-check that nothing overlaps, formatting is flawless, every detail perfect. Create something that could be shown to people to prove expertise and rank as undeniably impressive.\n\nOutput the final result as a single, downloadable .pdf or .png file, alongside the design philosophy used as a .md file.\n\n---\n\n## FINAL STEP\n\n**IMPORTANT**: The user ALREADY said \"It isn't perfect enough. It must be pristine, a masterpiece if craftsmanship, as if it were about to be displayed in a museum.\"\n\n**CRITICAL**: To refine the work, avoid adding more graphics; instead refine what has been created and make it extremely crisp, respecting the design philosophy and the principles of minimalism entirely. Rather than adding a fun filter or refactoring a font, consider how to make the existing composition more cohesive with the art. If the instinct is to call a new function or draw a new shape, STOP and instead ask: \"How can I make what's already here more of a piece of art?\"\n\nTake a second pass. Go back to the code and refine/polish further to make this a philosophically designed masterpiece.\n\n## MULTI-PAGE OPTION\n\nTo create additional pages when requested, create more creative pages along the same lines as the design philosophy but distinctly different as well. Bundle those pages in the same .pdf or many .pngs. Treat the first page as just a single page in a whole coffee table book waiting to be filled. Make the next pages unique twists and memories of the original. Have them almost tell a story in a very tasteful way. Exercise full creative freedom.",
+      "bodyMd": "These are instructions for creating design philosophies - aesthetic movements that are then EXPRESSED VISUALLY. Output only .md files, .pdf files, and .png files.\n\nComplete this in two steps:\n1. Design Philosophy Creation (.md file)\n2. Express by creating it on a canvas (.pdf file or .png file)\n\nFirst, undertake this task:\n\n## DESIGN PHILOSOPHY CREATION\n\nTo begin, create a VISUAL PHILOSOPHY (not layouts or templates) that will be interpreted through:\n- Form, space, color, composition\n- Images, graphics, shapes, patterns\n- Minimal text as visual accent\n\n### THE CRITICAL UNDERSTANDING\n- What is received: Some subtle input or instructions by the user that should be taken into account, but used as a foundation; it should not constrain creative freedom.\n- What is created: A design philosophy/aesthetic movement.\n- What happens next: Then, the same version receives the philosophy and EXPRESSES IT VISUALLY - creating artifacts that are 90% visual design, 10% essential text.\n\nConsider this approach:\n- Write a manifesto for an art movement\n- The next phase involves making the artwork\n\nThe philosophy must emphasize: Visual expression. Spatial communication. Artistic interpretation. Minimal words.\n\n### HOW TO GENERATE A VISUAL PHILOSOPHY\n\n**Name the movement** (1-2 words): \"Brutalist Joy\" / \"Chromatic Silence\" / \"Metabolist Dreams\"\n\n**Articulate the philosophy** (4-6 paragraphs - concise but complete):\n\nTo capture the VISUAL essence, express how the philosophy manifests through:\n- Space and form\n- Color and material\n- Scale and rhythm\n- Composition and balance\n- Visual hierarchy\n\n**CRITICAL GUIDELINES:**\n- **Avoid redundancy**: Each design aspect should be mentioned once. Avoid repeating points about color theory, spatial relationships, or typographic principles unless adding new depth.\n- **Emphasize craftsmanship REPEATEDLY**: The philosophy MUST stress multiple times that the final work should appear as though it took countless hours to create, was labored over with care, and comes from someone at the absolute top of their field. This framing is essential - repeat phrases like \"meticulously crafted,\" \"the product of deep expertise,\" \"painstaking attention,\" \"master-level execution.\"\n- **Leave creative space**: Remain specific about the aesthetic direction, but concise enough that the next Claude has room to make interpretive choices also at a extremely high level of craftmanship.\n\nThe philosophy must guide the next version to express ideas VISUALLY, not through text. Information lives in design, not paragraphs.\n\n### PHILOSOPHY EXAMPLES\n\n**\"Concrete Poetry\"**\nPhilosophy: Communication through monumental form and bold geometry.\nVisual expression: Massive color blocks, sculptural typography (huge single words, tiny labels), Brutalist spatial divisions, Polish poster energy meets Le Corbusier. Ideas expressed through visual weight and spatial tension, not explanation. Text as rare, powerful gesture - never paragraphs, only essential words integrated into the visual architecture. Every element placed with the precision of a master craftsman.\n\n**\"Chromatic Language\"**\nPhilosophy: Color as the primary information system.\nVisual expression: Geometric precision where color zones create meaning. Typography minimal - small sans-serif labels letting chromatic fields communicate. Think Josef Albers' interaction meets data visualization. Information encoded spatially and chromatically. Words only to anchor what color already shows. The result of painstaking chromatic calibration.\n\n**\"Analog Meditation\"**\nPhilosophy: Quiet visual contemplation through texture and breathing room.\nVisual expression: Paper grain, ink bleeds, vast negative space. Photography and illustration dominate. Typography whispered (small, restrained, serving the visual). Japanese photobook aesthetic. Images breathe across pages. Text appears sparingly - short phrases, never explanatory blocks. Each composition balanced with the care of a meditation practice.\n\n**\"Organic Systems\"**\nPhilosophy: Natural clustering and modular growth patterns.\nVisual expression: Rounded forms, organic arrangements, color from nature through architecture. Information shown through visual diagrams, spatial relationships, iconography. Text only for key labels floating in space. The composition tells the story through expert spatial orchestration.\n\n**\"Geometric Silence\"**\nPhilosophy: Pure order and restraint.\nVisual expression: Grid-based precision, bold photography or stark graphics, dramatic negative space. Typography precise but minimal - small essential text, large quiet zones. Swiss formalism meets Brutalist material honesty. Structure communicates, not words. Every alignment the work of countless refinements.\n\n*These are condensed examples. The actual design philosophy should be 4-6 substantial paragraphs.*\n\n### ESSENTIAL PRINCIPLES\n- **VISUAL PHILOSOPHY**: Create an aesthetic worldview to be expressed through design\n- **MINIMAL TEXT**: Always emphasize that text is sparse, essential-only, integrated as visual element - never lengthy\n- **SPATIAL EXPRESSION**: Ideas communicate through space, form, color, composition - not paragraphs\n- **ARTISTIC FREEDOM**: The next Claude interprets the philosophy visually - provide creative room\n- **PURE DESIGN**: This is about making ART OBJECTS, not documents with decoration\n- **EXPERT CRAFTSMANSHIP**: Repeatedly emphasize the final work must look meticulously crafted, labored over with care, the product of countless hours by someone at the top of their field\n\n**The design philosophy should be 4-6 paragraphs long.** Fill it with poetic design philosophy that brings together the core vision. Avoid repeating the same points. Keep the design philosophy generic without mentioning the intention of the art, as if it can be used wherever. Output the design philosophy as a .md file.\n\n---\n\n## DEDUCING THE SUBTLE REFERENCE\n\n**CRITICAL STEP**: Before creating the canvas, identify the subtle conceptual thread from the original request.\n\n**THE ESSENTIAL PRINCIPLE**:\nThe topic is a **subtle, niche reference embedded within the art itself** - not always literal, always sophisticated. Someone familiar with the subject should feel it intuitively, while others simply experience a masterful abstract composition. The design philosophy provides the aesthetic language. The deduced topic provides the soul - the quiet conceptual DNA woven invisibly into form, color, and composition.\n\nThis is **VERY IMPORTANT**: The reference must be refined so it enhances the work's depth without announcing itself. Think like a jazz musician quoting another song - only those who know will catch it, but everyone appreciates the music.\n\n---\n\n## CANVAS CREATION\n\nWith both the philosophy and the conceptual framework established, express it on a canvas. Take a moment to gather thoughts and clear the mind. Use the design philosophy created and the instructions below to craft a masterpiece, embodying all aspects of the philosophy with expert craftsmanship.\n\n**IMPORTANT**: For any type of content, even if the user requests something for a movie/game/book, the approach should still be sophisticated. Never lose sight of the idea that this should be art, not something that's cartoony or amateur.\n\nTo create museum or magazine quality work, use the design philosophy as the foundation. Create one single page, highly visual, design-forward PDF or PNG output (unless asked for more pages). Generally use repeating patterns and perfect shapes. Treat the abstract philosophical design as if it were a scientific bible, borrowing the visual language of systematic observation—dense accumulation of marks, repeated elements, or layered patterns that build meaning through patient repetition and reward sustained viewing. Add sparse, clinical typography and systematic reference markers that suggest this could be a diagram from an imaginary discipline, treating the invisible subject with the same reverence typically reserved for documenting observable phenomena. Anchor the piece with simple phrase(s) or details positioned subtly, using a limited color palette that feels intentional and cohesive. Embrace the paradox of using analytical visual language to express ideas about human experience: the result should feel like an artifact that proves something ephemeral can be studied, mapped, and understood through careful attention. This is true art. \n\n**Text as a contextual element**: Text is always minimal and visual-first, but let context guide whether that means whisper-quiet labels or bold typographic gestures. A punk venue poster might have larger, more aggressive type than a minimalist ceramics studio identity. Most of the time, font should be thin. All use of fonts must be design-forward and prioritize visual communication. Regardless of text scale, nothing falls off the page and nothing overlaps. Every element must be contained within the canvas boundaries with proper margins. Check carefully that all text, graphics, and visual elements have breathing room and clear separation. This is non-negotiable for professional execution. **IMPORTANT: Use different fonts if writing text. Search the `./canvas-fonts` directory. Regardless of approach, sophistication is non-negotiable.**\n\nDownload and use whatever fonts are needed to make this a reality. Get creative by making the typography actually part of the art itself -- if the art is abstract, bring the font onto the canvas, not typeset digitally.\n\nTo push boundaries, follow design instinct/intuition while using the philosophy as a guiding principle. Embrace ultimate design freedom and choice. Push aesthetics and design to the frontier. \n\n**CRITICAL**: To achieve human-crafted quality (not AI-generated), create work that looks like it took countless hours. Make it appear as though someone at the absolute top of their field labored over every detail with painstaking care. Ensure the composition, spacing, color choices, typography - everything screams expert-level craftsmanship. Double-check that nothing overlaps, formatting is flawless, every detail perfect. Create something that could be shown to people to prove expertise and rank as undeniably impressive.\n\nOutput the final result as a single, downloadable .pdf or .png file, alongside the design philosophy used as a .md file.\n\n---\n\n## FINAL STEP\n\n**IMPORTANT**: The user ALREADY said \"It isn't perfect enough. It must be pristine, a masterpiece if craftsmanship, as if it were about to be displayed in a museum.\"\n\n**CRITICAL**: To refine the work, avoid adding more graphics; instead refine what has been created and make it extremely crisp, respecting the design philosophy and the principles of minimalism entirely. Rather than adding a fun filter or refactoring a font, consider how to make the existing composition more cohesive with the art. If the instinct is to call a new function or draw a new shape, STOP and instead ask: \"How can I make what's already here more of a piece of art?\"\n\nTake a second pass. Go back to the code and refine/polish further to make this a philosophically designed masterpiece.\n\n## MULTI-PAGE OPTION\n\nTo create additional pages when requested, create more creative pages along the same lines as the design philosophy but distinctly different as well. Bundle those pages in the same .pdf or many .pngs. Treat the first page as just a single page in a whole coffee table book waiting to be filled. Make the next pages unique twists and memories of the original. Have them almost tell a story in a very tasteful way. Exercise full creative freedom."
+    },
+    {
+      "slug": "character-repetition-filter",
+      "name": "text_key",
+      "dir": "workspace/skills/character_repetition_filter",
+      "path": "workspace/skills/character_repetition_filter/SKILL.md",
+      "desc": "过滤后的JSON文件，包含字符重复比例在指定范围内的样本",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "pip"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/cas-bigdatalab/piflow.git",
+        "copy": "cp -r workspace/skills/character_repetition_filter ~/.claude/skills/character-repetition-filter",
+        "raw": "https://raw.githubusercontent.com/cas-bigdatalab/piflow/ad8d0108a54a4257307d4946dc9250e26f24c63f/workspace/skills/character_repetition_filter/SKILL.md",
+        "saveAs": "~/.claude/skills/character-repetition-filter/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:ed5f586ac49c50ed66381a58d1a15962ad78bd07c8fc0d61b95fdc1e1e407291",
+      "bytes": 4177,
+      "wordCount": 275,
+      "repoLicense": "",
+      "commit": "ad8d0108a54a4257307d4946dc9250e26f24c63f",
+      "branch": "master",
+      "body": "---\nname: character_repetition_filter\ndescription: |\n  字符重复比例过滤器。过滤文本中字符级n-gram重复比例不在指定范围内的样本。\n  当用户提到字符重复、重复比例过滤、文本重复过滤、清理重复内容等需求时使用此skill。\n  即使用户没有明确说出\"字符重复\"，只要任务涉及根据文本中字符重复的程度来筛选数据，\n  就应该使用此skill。\n\nname_zh: 字符重复比例过滤器算子\ninput_params:\n  - name: input\n    type: string\n    required: true\n    description: 输入JSON文件路径\n\n  - name: output\n    type: string\n    required: true\n    description: 输出JSON文件路径\n\n  - name: rep_len\n    type: int\n    required: false\n    default: 10\n    description: 字符级n-gram重复长度\n\n  - name: min_ratio\n    type: float\n    required: false\n    default: 0.0\n    description: 最小重复比例\n\n  - name: max_ratio\n    type: float\n    required: false\n    default: 0.5\n    description: 最大重复比例\n\n  - name: text_key\n    type: string\n    required: false\n    default: text\n    description: 文本字段的键名\n\noutput_params:\n  - name: output\n    type: json_file\n    description: 过滤后的JSON文件，包含字符重复比例在指定范围内的样本\ntag: 数据筛选\npublisher: COMMUNITY\n---\n\n# Character Repetition Filter 字符重复比例过滤 Skill\n\n## 功能概述\n\n本skill根据文本中字符级n-gram的重复比例进行过滤，只保留重复比例在指定范围内的样本。\n常用于过滤过度重复的文本、清理模板生成的低质量文本等场景。\n\n## 触发条件\n\n当用户请求以下任务时，应使用此skill：\n- 字符重复过滤\n- 重复比例筛选\n- 文本重复过滤\n- 清理重复内容\n- 过滤模板文本\n- 检测重复文本\n\n## 核心参数说明\n\n### 必需参数\n| 参数 | 说明 |\n|------|------|\n| `--input` | 输入JSON文件路径 |\n| `--output` | 输出JSON文件路径 |\n\n### 可选参数\n| 参数 | 说明 | 默认值 |\n|------|------|--------|\n| `--rep_len` | 字符级n-gram重复长度 | `10` |\n| `--min_ratio` | 最小重复比例 | `0.0` |\n| `--max_ratio` | 最大重复比例 | `0.5` |\n| `--text_key` | 文本字段的键名 | `text` |\n\n## 输入文件格式\n\n```json\n[\n  {\"text\": \"正常文本内容\"},\n  {\"text\": \"过度重复的文本aaaaaaa...\"},\n  {\"text\": \"另一段正常文本\"}\n]\n```\n\n## 使用方法\n\n### 默认参数过滤（rep_len=10, min_ratio=0.0, max_ratio=0.5）\n```bash\npython scripts/run_character_repetition_filter.py \\\n  --input ./input.json \\\n  --output ./output.json\n```\n\n### 自定义重复比例范围\n```bash\npython scripts/run_character_repetition_filter.py \\\n  --input ./input.json \\\n  --output ./output.json \\\n  --min_ratio 0.0 \\\n  --max_ratio 0.4\n```\n\n### 自定义n-gram长度\n```bash\npython scripts/run_character_repetition_filter.py \\\n  --input ./input.json \\\n  --output ./output.json \\\n  --rep_len 5\n```\n\n## 过滤示例\n\n| 文本 | 重复比例 | 过滤结果 (0.0-0.4) |\n|------|----------|---------------------|\n| `Today is Sund Sund Sund Sund Sund Sunda...` | 高 | 过滤 |\n| `a v s e c s f e f g a a a a a a a a a a` | 高 | 过滤 |\n| `，。、„\"\"«»１»...` | 低 | 保留 |\n| `中文也是一个字算一个长度` | 低 | 保留 |\n\n## 输出示例\n\n**命令行输出：**\n```\n[OK] Character repetition filtering completed!\n   Rep length: 10\n   Min ratio: 0.0\n   Max ratio: 0.4\n   Original documents: 4\n   Filtered documents: 2\n   Removed documents: 2\n   Input file: ./input.json\n   Output file: ./output.json\n```\n\n**输出JSON格式：**\n```json\n[\n  {\"text\": \"过滤后保留的文本1\"},\n  {\"text\": \"过滤后保留的文本2\"}\n]\n```\n\n## 环境要求\n\n**安装依赖：**\n本SKILL使用依赖 data_juicer，请在调用前安装好python环境并安装data_juicer：\n```bash\npip install py-data-juicer\n```\n\n## 注意事项\n\n1. **重复比例计算**：基于字符级n-gram的频率分布计算\n2. **默认值**：保留重复比例在0.0-0.5之间的样本\n3. **过滤逻辑**：只保留重复比例在 [min_ratio, max_ratio] 范围内的样本\n4. **适用场景**：清理模板文本、过滤重复内容、检测低质量文本\n",
+      "bodyMd": "# Character Repetition Filter 字符重复比例过滤 Skill\n\n## 功能概述\n\n本skill根据文本中字符级n-gram的重复比例进行过滤，只保留重复比例在指定范围内的样本。\n常用于过滤过度重复的文本、清理模板生成的低质量文本等场景。\n\n## 触发条件\n\n当用户请求以下任务时，应使用此skill：\n- 字符重复过滤\n- 重复比例筛选\n- 文本重复过滤\n- 清理重复内容\n- 过滤模板文本\n- 检测重复文本\n\n## 核心参数说明\n\n### 必需参数\n| 参数 | 说明 |\n|------|------|\n| `--input` | 输入JSON文件路径 |\n| `--output` | 输出JSON文件路径 |\n\n### 可选参数\n| 参数 | 说明 | 默认值 |\n|------|------|--------|\n| `--rep_len` | 字符级n-gram重复长度 | `10` |\n| `--min_ratio` | 最小重复比例 | `0.0` |\n| `--max_ratio` | 最大重复比例 | `0.5` |\n| `--text_key` | 文本字段的键名 | `text` |\n\n## 输入文件格式\n\n```json\n[\n  {\"text\": \"正常文本内容\"},\n  {\"text\": \"过度重复的文本aaaaaaa...\"},\n  {\"text\": \"另一段正常文本\"}\n]\n```\n\n## 使用方法\n\n### 默认参数过滤（rep_len=10, min_ratio=0.0, max_ratio=0.5）\n```bash\npython scripts/run_character_repetition_filter.py \\\n  --input ./input.json \\\n  --output ./output.json\n```\n\n### 自定义重复比例范围\n```bash\npython scripts/run_character_repetition_filter.py \\\n  --input ./input.json \\\n  --output ./output.json \\\n  --min_ratio 0.0 \\\n  --max_ratio 0.4\n```\n\n### 自定义n-gram长度\n```bash\npython scripts/run_character_repetition_filter.py \\\n  --input ./input.json \\\n  --output ./output.json \\\n  --rep_len 5\n```\n\n## 过滤示例\n\n| 文本 | 重复比例 | 过滤结果 (0.0-0.4) |\n|------|----------|---------------------|\n| `Today is Sund Sund Sund Sund Sund Sunda...` | 高 | 过滤 |\n| `a v s e c s f e f g a a a a a a a a a a` | 高 | 过滤 |\n| `，。、„\"\"«»１»...` | 低 | 保留 |\n| `中文也是一个字算一个长度` | 低 | 保留 |\n\n## 输出示例\n\n**命令行输出：**\n```\n[OK] Character repetition filtering completed!\n   Rep length: 10\n   Min ratio: 0.0\n   Max ratio: 0.4\n   Original documents: 4\n   Filtered documents: 2\n   Removed documents: 2\n   Input file: ./input.json\n   Output file: ./output.json\n```\n\n**输出JSON格式：**\n```json\n[\n  {\"text\": \"过滤后保留的文本1\"},\n  {\"text\": \"过滤后保留的文本2\"}\n]\n```\n\n## 环境要求\n\n**安装依赖：**\n本SKILL使用依赖 data_juicer，请在调用前安装好python环境并安装data_juicer：\n```bash\npip install py-data-juicer\n```\n\n## 注意事项\n\n1. **重复比例计算**：基于字符级n-gram的频率分布计算\n2. **默认值**：保留重复比例在0.0-0.5之间的样本\n3. **过滤逻辑**：只保留重复比例在 [min_ratio, max_ratio] 范围内的样本\n4. **适用场景**：清理模板文本、过滤重复内容、检测低质量文本\n"
+    },
+    {
+      "slug": "chemdb-search",
+      "name": "page_size",
+      "dir": "workspace/skills/chemdb_search",
+      "path": "workspace/skills/chemdb_search/SKILL.md",
+      "desc": "化学物质详细信息JSON，包含化学物质列表、分子结构（SVG）等",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/cas-bigdatalab/piflow.git",
+        "copy": "cp -r workspace/skills/chemdb_search ~/.claude/skills/chemdb-search",
+        "raw": "https://raw.githubusercontent.com/cas-bigdatalab/piflow/ad8d0108a54a4257307d4946dc9250e26f24c63f/workspace/skills/chemdb_search/SKILL.md",
+        "saveAs": "~/.claude/skills/chemdb-search/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:853a297c73eafc89977466895d7fef58a1db9d0473aa4b7f9df8cc9251ae77ff",
+      "bytes": 5889,
+      "wordCount": 302,
+      "repoLicense": "",
+      "commit": "ad8d0108a54a4257307d4946dc9250e26f24c63f",
+      "branch": "master",
+      "body": "---\nname: chemdb_search\ndescription: 用于检索化学物质详细信息的技能。当用户希望检索化学物质详细信息、查看化学物质详细信息、检索化学物质基础数据库等情况时触发。该技能通过输入化学分子式（必要参数）以及分页（可选参数）、分页大小（可选参数）调用外部化学物质基础数据库搜索服务，并按字段含义格式化展示查询结果以及SVG化学分子式结构。\ncompatibility:\n  - python\n  - requests\n\nname_zh: 用于检索化学物质详细信息的技能算子\ninput_params:\n  - name: text\n    type: string\n    required: true\n    description: 化学分子式（如 C6H6、C12H12）\n\n  - name: page\n    type: int\n    required: false\n    default: 1\n    description: 分页页码（从1开始）\n\n  - name: page_size\n    type: int\n    required: false\n    default: 10\n    description: 每页返回的化学物质数量\n\noutput_params:\n  - name: search_result\n    type: json_file\n    description: 化学物质详细信息JSON，包含化学物质列表、分子结构（SVG）等\ntag: 科学计算\npublisher: COMMUNITY\n---\n\n# chemdb_search 技能\n\n## 功能说明\n\n该技能用于调用化学物质基础数据库搜索服务，根据用户输入的化学分子式检索并返回对应的化学物质详细信息，展示时按json字段含义格式化展示并将`image`字段的 SVG 数据可直接渲染为分子结构示意图，便于直观查看物质结构。\n\n## 触发条件\n\n当用户希望：\n- 检索化学物质详细信息\n- 查看化学物质详细信息\n- 检索化学物质基础数据库\n- 查询特定化学分子式的物质信息\n- 获取化学物质的详细属性\n\n## 调用服务说明\n\n### 化学物质基础数据库搜索服务\n\n该接口来自 **化学物质基础数据库（[chemdb.csdb.cn](https://chemdb.csdb.cn)）**，核心功能是**根据输入的化学分子式（如 C6H6、C12H12），检索并返回对应的化学物质详细信息**，支持分页查询。\n\n### 接口核心信息\n\n#### 1. 基础配置\n\n- 服务名称：化学物质分子式检索服务\n- 接口地址：`http://www.chemdb.csdb.cn/chemdb_backend/search/text_search`\n- 请求方式：GET\n- 响应状态：成功返回 200，message 为 \"success\"\n\n#### 2. 请求参数（URL 参数）\n\n| 参数名    | 说明                         | 示例值 | 必填 |\n| :-------- | :--------------------------- | :----- | :--- |\n| text      | 检索关键词（需为化学分子式） | C6H6   | 是   |\n| page      | 分页页码（从 1 开始）        | 1      | 否   |\n| page_size | 每页返回的化学物质数量       | 10     | 否   |\n\n#### 3. 响应数据结构（核心字段说明）\n\n响应为 JSON 格式，核心包含`data`（化学物质列表）和分页相关字段：\n\n| 一级字段 | 说明                           |\n| :------- | :----------------------------- |\n| data     | 化学物质详细信息列表（数组）   |\n| page_all | 总页数                         |\n| total    | 匹配的化学物质总数量           |\n| code     | 响应状态码（200 = 成功）       |\n| message  | 响应信息（成功返回 \"success\"） |\n\n##### `data`数组中单个化学物质的关键字段\n\n| 字段名     | 说明                                 | 示例值                                 |\n| :--------- | :----------------------------------- | :------------------------------------- |\n| Formula    | 化学分子式（与检索关键词一致）       | C6H6                                   |\n| MolWeight  | 分子量                               | 78.11184                               |\n| Alias_en   | 英文别名                             | 1,4-Hexadiyne                          |\n| CAS        | CAS 编号（化学物质唯一标识）         | 10420-91-4                             |\n| SMILES     | 简化分子线性输入规范（分子结构编码） | C#CCC#CC                               |\n| IUPAC_Name | IUPAC 标准命名                       | hexa-1,4-diyne                         |\n| InChI      | 国际化学标识符（分子结构唯一标识）   | InChI=1S/C6H6/c1-3-5-6-4-2/h1H,5H2,2H3 |\n| InChiKey   | InChI 的哈希值（便于检索）           | NJXXWBJAOFKNIR-UHFFFAOYSA-N            |\n| image      | 分子结构示意图（SVG 格式）           | 包含 SVG 标签的矢量图数据              |\n\n## 使用方法\n\n1. 调用 `scripts/chemdb_search.py` 脚本\n2. 提供必要参数 `text`（化学分子式）\n3. 可选择提供参数 `page`（分页页码）和 `page_size`（每页大小）\n4. 脚本将返回接口的完整 JSON 响应\n\n## 输出格式\n\n按查询结果json的每一条字段的含义属性格式化展示查询结果，并将`image`字段的 SVG 数据可直接渲染为分子结构示意图，便于直观查看物质结构。\n\n## 补充说明\n\n1. 检索范围：仅支持**化学分子式**检索（如 C6H6、C12H12），输入其他类型关键词可能无匹配结果；\n2. 数据完整性：返回的化学物质信息涵盖分子结构、命名、标识、分子量等核心属性，满足化学研究、物质识别等场景需求；\n3. 分页机制：通过`page`和`page_size`控制返回数量，示例中检索 C6H6 共匹配 1244 条结果，分 125 页展示；\n4. 分子结构可视化：`image`字段的 SVG 数据可直接渲染为分子结构示意图，便于直观查看物质结构。\n\n## 示例\n\n### 示例 1：检索 C6H6 的化学物质信息\n\n```bash\npython scripts/chemdb_search.py --text C6H6\n```\n\n### 示例 2：检索 C12H12 的化学物质信息，指定分页参数\n\n```bash\npython scripts/chemdb_search.py --text C12H12 --page 2 --page_size 20\n```\n\n## 错误处理\n\n- 如果未提供必要参数 `text`，脚本将提示错误并退出\n- 如果接口调用失败，脚本将返回错误信息\n- 如果网络连接失败，脚本将提示网络错误\n",
+      "bodyMd": "# chemdb_search 技能\n\n## 功能说明\n\n该技能用于调用化学物质基础数据库搜索服务，根据用户输入的化学分子式检索并返回对应的化学物质详细信息，展示时按json字段含义格式化展示并将`image`字段的 SVG 数据可直接渲染为分子结构示意图，便于直观查看物质结构。\n\n## 触发条件\n\n当用户希望：\n- 检索化学物质详细信息\n- 查看化学物质详细信息\n- 检索化学物质基础数据库\n- 查询特定化学分子式的物质信息\n- 获取化学物质的详细属性\n\n## 调用服务说明\n\n### 化学物质基础数据库搜索服务\n\n该接口来自 **化学物质基础数据库（[chemdb.csdb.cn](https://chemdb.csdb.cn)）**，核心功能是**根据输入的化学分子式（如 C6H6、C12H12），检索并返回对应的化学物质详细信息**，支持分页查询。\n\n### 接口核心信息\n\n#### 1. 基础配置\n\n- 服务名称：化学物质分子式检索服务\n- 接口地址：`http://www.chemdb.csdb.cn/chemdb_backend/search/text_search`\n- 请求方式：GET\n- 响应状态：成功返回 200，message 为 \"success\"\n\n#### 2. 请求参数（URL 参数）\n\n| 参数名    | 说明                         | 示例值 | 必填 |\n| :-------- | :--------------------------- | :----- | :--- |\n| text      | 检索关键词（需为化学分子式） | C6H6   | 是   |\n| page      | 分页页码（从 1 开始）        | 1      | 否   |\n| page_size | 每页返回的化学物质数量       | 10     | 否   |\n\n#### 3. 响应数据结构（核心字段说明）\n\n响应为 JSON 格式，核心包含`data`（化学物质列表）和分页相关字段：\n\n| 一级字段 | 说明                           |\n| :------- | :----------------------------- |\n| data     | 化学物质详细信息列表（数组）   |\n| page_all | 总页数                         |\n| total    | 匹配的化学物质总数量           |\n| code     | 响应状态码（200 = 成功）       |\n| message  | 响应信息（成功返回 \"success\"） |\n\n##### `data`数组中单个化学物质的关键字段\n\n| 字段名     | 说明                                 | 示例值                                 |\n| :--------- | :----------------------------------- | :------------------------------------- |\n| Formula    | 化学分子式（与检索关键词一致）       | C6H6                                   |\n| MolWeight  | 分子量                               | 78.11184                               |\n| Alias_en   | 英文别名                             | 1,4-Hexadiyne                          |\n| CAS        | CAS 编号（化学物质唯一标识）         | 10420-91-4                             |\n| SMILES     | 简化分子线性输入规范（分子结构编码） | C#CCC#CC                               |\n| IUPAC_Name | IUPAC 标准命名                       | hexa-1,4-diyne                         |\n| InChI      | 国际化学标识符（分子结构唯一标识）   | InChI=1S/C6H6/c1-3-5-6-4-2/h1H,5H2,2H3 |\n| InChiKey   | InChI 的哈希值（便于检索）           | NJXXWBJAOFKNIR-UHFFFAOYSA-N            |\n| image      | 分子结构示意图（SVG 格式）           | 包含 SVG 标签的矢量图数据              |\n\n## 使用方法\n\n1. 调用 `scripts/chemdb_search.py` 脚本\n2. 提供必要参数 `text`（化学分子式）\n3. 可选择提供参数 `page`（分页页码）和 `page_size`（每页大小）\n4. 脚本将返回接口的完整 JSON 响应\n\n## 输出格式\n\n按查询结果json的每一条字段的含义属性格式化展示查询结果，并将`image`字段的 SVG 数据可直接渲染为分子结构示意图，便于直观查看物质结构。\n\n## 补充说明\n\n1. 检索范围：仅支持**化学分子式**检索（如 C6H6、C12H12），输入其他类型关键词可能无匹配结果；\n2. 数据完整性：返回的化学物质信息涵盖分子结构、命名、标识、分子量等核心属性，满足化学研究、物质识别等场景需求；\n3. 分页机制：通过`page`和`page_size`控制返回数量，示例中检索 C6H6 共匹配 1244 条结果，分 125 页展示；\n4. 分子结构可视化：`image`字段的 SVG 数据可直接渲染为分子结构示意图，便于直观查看物质结构。\n\n## 示例\n\n### 示例 1：检索 C6H6 的化学物质信息\n\n```bash\npython scripts/chemdb_search.py --text C6H6\n```\n\n### 示例 2：检索 C12H12 的化学物质信息，指定分页参数\n\n```bash\npython scripts/chemdb_search.py --text C12H12 --page 2 --page_size 20\n```\n\n## 错误处理\n\n- 如果未提供必要参数 `text`，脚本将提示错误并退出\n- 如果接口调用失败，脚本将返回错误信息\n- 如果网络连接失败，脚本将提示网络错误\n"
+    },
+    {
+      "slug": "chinese-convert-mapper",
+      "name": "mode",
+      "dir": "workspace/skills/chinese_convert_mapper",
+      "path": "workspace/skills/chinese_convert_mapper/SKILL.md",
+      "desc": "转换后的JSON文件，包含转换后的text字段",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "pip",
+          "convert"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/cas-bigdatalab/piflow.git",
+        "copy": "cp -r workspace/skills/chinese_convert_mapper ~/.claude/skills/chinese-convert-mapper",
+        "raw": "https://raw.githubusercontent.com/cas-bigdatalab/piflow/ad8d0108a54a4257307d4946dc9250e26f24c63f/workspace/skills/chinese_convert_mapper/SKILL.md",
+        "saveAs": "~/.claude/skills/chinese-convert-mapper/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:4172ac5c7a43bbbbbea253bef0a8f259d0f5ee4f134394870e9b3ded7a240c3a",
+      "bytes": 3789,
+      "wordCount": 267,
+      "repoLicense": "",
+      "commit": "ad8d0108a54a4257307d4946dc9250e26f24c63f",
+      "branch": "master",
+      "body": "---\nname: chinese_convert_mapper\ndescription: |\n  在繁体中文、简体中文和日语汉字之间转换中文。当用户提到中文繁简转换、中文转换、简体转繁体、繁体转简体、中日文转换等需求时使用此skill。\n  即使用户没有明确说出\"转换\"，只要任务涉及中文繁简转换或中日文转换，就应该使用此skill。\n\nname_zh: 在繁体中文、简体中文和日语汉字之间转换中文算子\ninput_params:\n  - name: input_path\n    type: string\n    required: true\n    description: 输入JSON文件路径\n\n  - name: output_path\n    type: string\n    required: true\n    description: 输出JSON文件路径\n\n  - name: mode\n    type: string\n    required: false\n    default: s2t\n    description: 转换模式，如 s2t、t2s、s2tw、t2jp 等\n\noutput_params:\n  - name: output_path\n    type: json_file\n    description: 转换后的JSON文件，包含转换后的text字段\ntag: 数据转换\npublisher: COMMUNITY\n---\n\n# Chinese Convert Mapper\n\n在繁体中文、简体中文和日语汉字之间转换中文。\n\n本SKILL使用依赖data_juicer，请在调用前安装好python环境并安装data_juicer，你可用同以下指令进行安装：\n```\npip install py-data-juicer\n```\n\n## 核心参数\n\n| 参数 | 类型 | 必填 | 默认值 | 说明 |\n|------|------|------|--------|------|\n| input_path | string | 是 | - | 输入JSON文件路径 |\n| output_path | string | 是 | - | 输出JSON文件路径 |\n| mode | string | 否 | s2t | 转换模式 |\n\n### 支持的转换模式\n\n| 模式 | 说明 |\n|------|------|\n| s2t | 简体中文 → 繁体中文 |\n| t2s | 繁体中文 → 简体中文 |\n| s2tw | 简体中文 → 繁体中文（台湾标准） |\n| tw2s | 繁体中文（台湾标准）→ 简体中文 |\n| s2hk | 简体中文 → 繁体中文（香港变体） |\n| hk2s | 繁体中文（香港变体）→ 简体中文 |\n| s2twp | 简体中文 → 繁体中文（台湾习惯用语） |\n| tw2sp | 繁体中文（台湾习惯用语）→ 简体中文 |\n| t2tw | 繁体中文 → 繁体中文（台湾标准） |\n| tw2t | 繁体中文（台湾标准）→ 繁体中文 |\n| hk2t | 繁体中文（香港变体）→ 繁体中文 |\n| t2hk | 繁体中文 → 繁体中文（香港变体） |\n| t2jp | 繁体中文（传统字形）→ 日语新字体 |\n| jp2t | 日语新字体 → 繁体中文（传统字形） |\n\n## 使用方法\n\n```bash\npython scripts/run_chinese_convert_mapper.py --input_path <input_path> --output_path <output_path> [--mode <mode>]\n```\n\n## 实现原理\n\n参照测试代码 test_chinese_convert_mapper.py 中的 `_run_chinese_convert` 函数：\n\n```python\n# 1. 初始化算子\nop = ChineseConvertMapper(mode='s2t')\n\n# 2. 将数据转为Dataset，使用 op.run(dataset) 处理\ndataset = Dataset.from_list(samples)\nresult_dataset = op.run(dataset)\n```\n\n## 输入输出格式\n\n### 输入格式 (JSON数组)\n\n```json\n[\n  {\"text\": \"这是几个简体字\"},\n  {\"text\": \"這是幾個繁體字\"}\n]\n```\n\n### 输出格式 (JSON数组)\n\n```json\n[\n  {\"text\": \"這是幾個簡體字\"},\n  {\"text\": \"這是幾個繁體字\"}\n]\n```\n\n## 示例\n\n### 示例1：简体转繁体（默认）\n\n```bash\npython scripts/run_chinese_convert_mapper.py --input_path example_input.json --output_path output.json\n```\n\n### 示例2：繁体转简体\n\n```bash\npython scripts/run_chinese_convert_mapper.py --input_path example_input.json --output_path output.json --mode t2s\n```\n\n### 示例3：简体转台湾繁体\n\n```bash\npython scripts/run_chinese_convert_mapper.py --input_path example_input.json --output_path output.json --mode s2tw\n```\n\n## 注意事项\n\n- 默认模式为 s2t（简体转繁体）\n- 转换只影响 text 字段，其他字段保持不变\n- 不在转换范围内的字符（如数字、英文、标点符号）保持原样\n",
+      "bodyMd": "# Chinese Convert Mapper\n\n在繁体中文、简体中文和日语汉字之间转换中文。\n\n本SKILL使用依赖data_juicer，请在调用前安装好python环境并安装data_juicer，你可用同以下指令进行安装：\n```\npip install py-data-juicer\n```\n\n## 核心参数\n\n| 参数 | 类型 | 必填 | 默认值 | 说明 |\n|------|------|------|--------|------|\n| input_path | string | 是 | - | 输入JSON文件路径 |\n| output_path | string | 是 | - | 输出JSON文件路径 |\n| mode | string | 否 | s2t | 转换模式 |\n\n### 支持的转换模式\n\n| 模式 | 说明 |\n|------|------|\n| s2t | 简体中文 → 繁体中文 |\n| t2s | 繁体中文 → 简体中文 |\n| s2tw | 简体中文 → 繁体中文（台湾标准） |\n| tw2s | 繁体中文（台湾标准）→ 简体中文 |\n| s2hk | 简体中文 → 繁体中文（香港变体） |\n| hk2s | 繁体中文（香港变体）→ 简体中文 |\n| s2twp | 简体中文 → 繁体中文（台湾习惯用语） |\n| tw2sp | 繁体中文（台湾习惯用语）→ 简体中文 |\n| t2tw | 繁体中文 → 繁体中文（台湾标准） |\n| tw2t | 繁体中文（台湾标准）→ 繁体中文 |\n| hk2t | 繁体中文（香港变体）→ 繁体中文 |\n| t2hk | 繁体中文 → 繁体中文（香港变体） |\n| t2jp | 繁体中文（传统字形）→ 日语新字体 |\n| jp2t | 日语新字体 → 繁体中文（传统字形） |\n\n## 使用方法\n\n```bash\npython scripts/run_chinese_convert_mapper.py --input_path <input_path> --output_path <output_path> [--mode <mode>]\n```\n\n## 实现原理\n\n参照测试代码 test_chinese_convert_mapper.py 中的 `_run_chinese_convert` 函数：\n\n```python\n# 1. 初始化算子\nop = ChineseConvertMapper(mode='s2t')\n\n# 2. 将数据转为Dataset，使用 op.run(dataset) 处理\ndataset = Dataset.from_list(samples)\nresult_dataset = op.run(dataset)\n```\n\n## 输入输出格式\n\n### 输入格式 (JSON数组)\n\n```json\n[\n  {\"text\": \"这是几个简体字\"},\n  {\"text\": \"這是幾個繁體字\"}\n]\n```\n\n### 输出格式 (JSON数组)\n\n```json\n[\n  {\"text\": \"這是幾個簡體字\"},\n  {\"text\": \"這是幾個繁體字\"}\n]\n```\n\n## 示例\n\n### 示例1：简体转繁体（默认）\n\n```bash\npython scripts/run_chinese_convert_mapper.py --input_path example_input.json --output_path output.json\n```\n\n### 示例2：繁体转简体\n\n```bash\npython scripts/run_chinese_convert_mapper.py --input_path example_input.json --output_path output.json --mode t2s\n```\n\n### 示例3：简体转台湾繁体\n\n```bash\npython scripts/run_chinese_convert_mapper.py --input_path example_input.json --output_path output.json --mode s2tw\n```\n\n## 注意事项\n\n- 默认模式为 s2t（简体转繁体）\n- 转换只影响 text 字段，其他字段保持不变\n- 不在转换范围内的字符（如数字、英文、标点符号）保持原样\n"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "repo": "assafkip/research-mode",
+  "commit": "fbf5e50f672012ad2bbaddf30a6440a9528a6aed",
+  "branch": "main",
+  "fetchedAt": "2026-10-13T04:50:07.682Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "research-mode",
+      "name": "research-mode",
+      "dir": "",
+      "path": "SKILL.md",
+      "desc": "Anti-hallucination research mode. Toggle on to enforce citation requirements, source grounding, and \"I don't know\" behavior. Toggle off for creative work.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "go"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/assafkip/research-mode.git",
+        "copy": "",
+        "raw": "https://raw.githubusercontent.com/assafkip/research-mode/fbf5e50f672012ad2bbaddf30a6440a9528a6aed/SKILL.md",
+        "saveAs": "~/.claude/skills/research-mode/SKILL.md",
+        "marketplace": "/plugin marketplace add assafkip/research-mode"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:d1a78a36aeecb51b7fb55242796dc750cfe68d8dbbd7abff8b049283749fa7af",
+      "bytes": 3368,
+      "wordCount": 516,
+      "repoLicense": "",
+      "commit": "fbf5e50f672012ad2bbaddf30a6440a9528a6aed",
+      "branch": "main",
+      "body": "---\nname: research-mode\ndescription: Anti-hallucination research mode. Toggle on to enforce citation requirements, source grounding, and \"I don't know\" behavior. Toggle off for creative work.\n---\n\n# Research Mode\n\nActivates anti-hallucination constraints based on Anthropic's documentation. Stay in this mode until the user says to exit.\n\nSource: [Anthropic - Reduce Hallucinations](https://docs.anthropic.com/en/docs/test-and-evaluate/strengthen-guardrails/reduce-hallucinations)\n\n## Constraints (ALL active simultaneously)\n\n### 1. Say \"I don't know\"\nIf you don't have a credible source for a claim, say so. Don't guess. Don't infer. \"I don't have data on this\" is always a valid answer.\n\n### 2. Verify with citations\nEvery recommendation, claim, or piece of advice must cite a specific source:\n- A file in the current project\n- An external source found via web search (with URL)\n- A named expert, paper, or researcher\n- Official documentation\n\nIf you generate a claim and cannot find a supporting source, retract it. Do not present it.\n\n### 3. Direct quotes for factual grounding\nWhen working from documents, extract the actual text first before analyzing. Ground your response in word-for-word quotes, not paraphrased summaries. Reference the quote when making your point.\n\n## Source lookup order (ENFORCED -- follow this cascade)\n\nCheck sources in this order. Stop at the first level that answers the question.\n\n**Level 1 -- Local files (zero cost):**\nUse Grep and Read to search the current project. Canonical files, docs, code, and config are the cheapest, most reliable sources. If the claim is about this project, local files ARE the citation.\n\n**Level 2 -- WebSearch snippets only (low cost):**\nRun WebSearch. The result snippets usually contain the key fact. Cite as: \"According to [Source Name] ([URL]): [snippet text]\". DO NOT call WebFetch unless the snippet is ambiguous or incomplete.\n\n**Level 3 -- WebFetch for direct quotes (high cost, use sparingly):**\nOnly fetch full pages when:\n- The snippet is ambiguous and you need the surrounding context\n- The user explicitly asked for direct quotes or full text\n- You need to verify a specific number, date, or technical detail the snippet doesn't include\n\n**Level 4 -- Scholar Gateway (for academic claims):**\nFor academic papers or research findings, use Scholar Gateway MCP if available. Structured results, no page scraping.\n\n### Token budget\n- Maximum 5 WebSearch calls per research question\n- Maximum 3 WebFetch calls per research question\n- If you hit the limit: summarize what you found, list what remains unverified, and ask the user if they want to go deeper\n- Parallel searches are fine. Serial retry loops are not.\n\n### What counts as \"cited\"\n- Local file path + line number = cited\n- WebSearch snippet + URL = cited\n- Named paper/author + year = cited (mark `{{VERIFY_URL}}` if no link)\n- \"I recall from training data\" = NOT cited. Say \"I believe X but cannot cite a specific source.\"\n\n## What this mode is NOT\n- It is NOT the default. Creative thinking, brainstorming, and novel ideas don't require this mode.\n- It does NOT mean \"be slow.\" Research efficiently. Use tools in parallel.\n- It does NOT mean \"only use existing ideas.\" You can synthesize across sources to reach new conclusions, but the inputs must be grounded.\n\n## How to exit\nSay \"exit research mode\" or switch to any other task.\n",
+      "bodyMd": "# Research Mode\n\nActivates anti-hallucination constraints based on Anthropic's documentation. Stay in this mode until the user says to exit.\n\nSource: [Anthropic - Reduce Hallucinations](https://docs.anthropic.com/en/docs/test-and-evaluate/strengthen-guardrails/reduce-hallucinations)\n\n## Constraints (ALL active simultaneously)\n\n### 1. Say \"I don't know\"\nIf you don't have a credible source for a claim, say so. Don't guess. Don't infer. \"I don't have data on this\" is always a valid answer.\n\n### 2. Verify with citations\nEvery recommendation, claim, or piece of advice must cite a specific source:\n- A file in the current project\n- An external source found via web search (with URL)\n- A named expert, paper, or researcher\n- Official documentation\n\nIf you generate a claim and cannot find a supporting source, retract it. Do not present it.\n\n### 3. Direct quotes for factual grounding\nWhen working from documents, extract the actual text first before analyzing. Ground your response in word-for-word quotes, not paraphrased summaries. Reference the quote when making your point.\n\n## Source lookup order (ENFORCED -- follow this cascade)\n\nCheck sources in this order. Stop at the first level that answers the question.\n\n**Level 1 -- Local files (zero cost):**\nUse Grep and Read to search the current project. Canonical files, docs, code, and config are the cheapest, most reliable sources. If the claim is about this project, local files ARE the citation.\n\n**Level 2 -- WebSearch snippets only (low cost):**\nRun WebSearch. The result snippets usually contain the key fact. Cite as: \"According to [Source Name] ([URL]): [snippet text]\". DO NOT call WebFetch unless the snippet is ambiguous or incomplete.\n\n**Level 3 -- WebFetch for direct quotes (high cost, use sparingly):**\nOnly fetch full pages when:\n- The snippet is ambiguous and you need the surrounding context\n- The user explicitly asked for direct quotes or full text\n- You need to verify a specific number, date, or technical detail the snippet doesn't include\n\n**Level 4 -- Scholar Gateway (for academic claims):**\nFor academic papers or research findings, use Scholar Gateway MCP if available. Structured results, no page scraping.\n\n### Token budget\n- Maximum 5 WebSearch calls per research question\n- Maximum 3 WebFetch calls per research question\n- If you hit the limit: summarize what you found, list what remains unverified, and ask the user if they want to go deeper\n- Parallel searches are fine. Serial retry loops are not.\n\n### What counts as \"cited\"\n- Local file path + line number = cited\n- WebSearch snippet + URL = cited\n- Named paper/author + year = cited (mark `{{VERIFY_URL}}` if no link)\n- \"I recall from training data\" = NOT cited. Say \"I believe X but cannot cite a specific source.\"\n\n## What this mode is NOT\n- It is NOT the default. Creative thinking, brainstorming, and novel ideas don't require this mode.\n- It does NOT mean \"be slow.\" Research efficiently. Use tools in parallel.\n- It does NOT mean \"only use existing ideas.\" You can synthesize across sources to reach new conclusions, but the inputs must be grounded.\n\n## How to exit\nSay \"exit research mode\" or switch to any other task.\n"
+    }
+  ]
+}

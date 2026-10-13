@@ -1,0 +1,269 @@
+{
+  "repo": "microprediction/precise",
+  "commit": "2a193c0ca82f2ac43dbb29ced8d4c99be1b7505d",
+  "branch": "main",
+  "fetchedAt": "2026-10-13T04:49:23.263Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "assess-covariance-method",
+      "name": "assess-covariance-method",
+      "dir": ".claude/skills/assess-covariance-method",
+      "path": ".claude/skills/assess-covariance-method/SKILL.md",
+      "desc": "Rigorously and honestly assess a NEW or proposed covariance / correlation / precision estimator, or a new covariance scoring rule, using precise. Use when someone proposes, asks to evaluate, or wants to compare a covariance methodology. Covers implementing it to the contract, conformance, benchmarking against the registry, out-of-sample validation, and statistically defensible inference.",
+      "descZh": "",
+      "triggers": [
+        "someone proposes",
+        "asks to evaluate"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "pip",
+          "go"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/microprediction/precise.git",
+        "copy": "cp -r .claude/skills/assess-covariance-method ~/.claude/skills/assess-covariance-method",
+        "raw": "https://raw.githubusercontent.com/microprediction/precise/2a193c0ca82f2ac43dbb29ced8d4c99be1b7505d/.claude/skills/assess-covariance-method/SKILL.md",
+        "saveAs": "~/.claude/skills/assess-covariance-method/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:516081facb0e2298bd1a6c7758fb94c649274b6e44d90279c572dafb405eb717",
+      "bytes": 7011,
+      "wordCount": 881,
+      "repoLicense": "MIT",
+      "commit": "2a193c0ca82f2ac43dbb29ced8d4c99be1b7505d",
+      "branch": "main",
+      "body": "---\nname: assess-covariance-method\ndescription: Rigorously and honestly assess a NEW or proposed covariance / correlation / precision estimator, or a new covariance scoring rule, using precise. Use when someone proposes, asks to evaluate, or wants to compare a covariance methodology. Covers implementing it to the contract, conformance, benchmarking against the registry, out-of-sample validation, and statistically defensible inference.\n---\n\n# Assess a new covariance/correlation methodology\n\nA protocol for turning \"here's a covariance idea\" into a defensible verdict. Work the steps in order;\nstop early only if a step fails. Install: `pip install precise[research]` (the `research/` scripts use\nscikit-learn and `randomcov`).\n\n## 0. Classify the method first\n\n- **Estimator** (produces a matrix) vs **assessor** (scores a matrix)? Different paths below.\n- **Online** (updatable per observation) or **batch**? precise is an online library; a batch method can\n  still be wrapped, but say so.\n- Does it target the **covariance**, **correlation**, or **precision**? It must expose, or be convertible\n  to, `covariance_`.\n- Does evaluating it **need the ground-truth** covariance (simulation only) or work on real data?\n\n## 1. Implement it to the contract\n\nSubclass `BaseOnlineCovariance`. The cheapest correct route: **copy the simplest existing estimator and\nmodify it** — read `precise/empirical.py` (and `precise/base.py` for the exact hook signatures, typically\n`_init_state` / `_update_state` / `_state_to_cov` / `_state_to_mean`). The base class owns `partial_fit`,\n`fit`, and the derived attributes; the subclass only supplies the state update and the map to a covariance.\nRegister it in `precise/registry.py` so `all_estimators()` includes it.\n\nA scoring rule instead? Implement an `Assessor` (see `precise/assessment/`), set `needs_data` /\n`needs_truth`, and follow the **higher = better** convention.\n\n## 2. Conformance — non-negotiable\n\nRun the conformance suite (`tests/test_estimators.py` parametrizes over `all_estimators()`), or check the\ninvariants directly:\n\n- `covariance_` is symmetric and PSD (eigenvalues ≥ 0);\n- `correlation_` has unit diagonal; `precision_ @ covariance_ ≈ I` when well-conditioned;\n- streaming rows via `partial_fit` equals `fit(X)` for non-windowed estimators;\n- `set_state(get_state())` round-trips;\n- it runs on the numpy-only install (no hidden heavy deps).\n\nIf it fails any of these, fix the implementation before any benchmarking — numbers from a non-conformant\nestimator are meaningless.\n\n## 3. Pick the right judge BEFORE looking at results\n\nThis is where most covariance evaluations go wrong. **In high dimensions (`p` comparable to `n`), do not\nrank estimators by the held-out Gaussian likelihood** — it is dominated by unidentifiable small eigenvalues\nand ranks estimators below chance. Use the assessor panel and choose by regime (see the\n**score-covariance-estimate** skill): `BlockPseudoLikelihood` / `SchurLikelihood` / `VariogramScore` /\n`GMVVariance` in high-d; `LogLikelihood` only when low-d and well-conditioned; a QLIKE/Bregman-consistent\nloss (not RMSE) when the target is a noisy variance proxy. To choose defensibly, measure the **statistical\npower** of candidate judges — the probability they reproduce a known quality ordering — with\n`research/metric_power.py`.\n\n## 4. Benchmark against the registry\n\n`research/bakeoff.py` runs every estimator over discriminating scenarios and scores them with\n`all_assessors()`. Add the new estimator and compare. Report **relative error vs a naive / shrinkage\nbaseline within each scenario, then averaged** (RMSE is scale-sensitive and can be won by doing well only\nin high-volatility regimes). Always include a `0`/historical-mean baseline for returns-like targets.\n\n## 5. Sweep the data-generating process — results are ensemble-sensitive\n\nA win on one generator need not transfer. Generate ground truth across several ensembles (LKJ, Wishart,\nfactor/spiked, Toeplitz/AR, equicorrelation) with `randomcov` plus plain numpy, sample from each, and\n**report per-ensemble, not just pooled**. A single ensemble can manufacture or hide any effect.\n\n## 6. Out-of-sample and real data; be honest about selectors\n\n- Out-of-sample on synthetic ensembles: `research/oos.py`. On real equity data: `research/oos_equity.py`\n  (bundled Ken French returns, no key needed).\n- If the method is a **recommender / selector** (chooses among estimators), evaluate it\n  **leave-one-generative-family-out** (`leave_one_family_out_trained` in `research/oos.py`), not\n  leave-one-sample-out — selectors generalize across samples far more easily than across novel structure,\n  and the difference is exactly where they fail.\n- **Report nulls.** If it ties or loses, say so plainly with the number; a method that \"matches the best\n  fixed estimator and avoids catastrophe\" is a real but smaller claim than \"beats it.\"\n\n## 7. Inference done right\n\nPairwise significance is the easiest thing to get wrong. The loss differentials are almost always\n**dependent**: overlapping forecast horizons, rolling/trailing targets, repeated expanding-window splits,\ncross-asset correlation, and many pairwise comparisons. Consequently:\n\n- A naive Diebold–Mariano statistic, or standard-error bars computed as if splits were independent,\n  **overstates significance**. Treat such bars as descriptive, not as confidence intervals.\n- Use a **block bootstrap over dates (and clustering over correlated assets)**, or the **Model Confidence\n  Set** (Hansen, Lunde & Nason 2011), which handles dependence and multiplicity together — preferable to a\n  wall of pairwise stars.\n- State one- vs two-sided, and any multiple-comparison treatment.\n- Watch the **trailing-vs-forward target trap**: if the \"target\" is a rolling window that overlaps already\n  observed data (e.g. next value of a 7-day trailing std), the task is partly mechanical and apparent\n  forecastability is an artifact. Define targets so the forecast origin uses only past information.\n\n## 8. Honest reporting checklist\n\n- State exactly what was estimated and scored, and which assessor (and why, given the dimension).\n- Give effect sizes and relative errors, not just p-values.\n- Report per-ensemble and on real data; note where the method loses.\n- Don't read point-error gains as economic/trading signals.\n- Ship the code and tests so the numbers are reproducible (this repo's `research/` scripts are the model:\n  each headline number has a runnable script and a guarding test).\n\n## Reference\n\n- Estimator contract: `precise/base.py`, `precise/empirical.py`; registry: `precise/registry.py`.\n- Assessors: `precise/assessment/`; panel via `all_assessors()`.\n- Experiments: `research/bakeoff.py`, `research/metric_power.py`, `research/oos.py`,\n  `research/oos_equity.py`; Schur-likelihood theory: `research/schur_*.py`.\n- Background on why the high-dimensional likelihood fails and what to use instead:\n  <https://precise.microprediction.org/papers/schur-likelihood/>.\n",
+      "bodyMd": "# Assess a new covariance/correlation methodology\n\nA protocol for turning \"here's a covariance idea\" into a defensible verdict. Work the steps in order;\nstop early only if a step fails. Install: `pip install precise[research]` (the `research/` scripts use\nscikit-learn and `randomcov`).\n\n## 0. Classify the method first\n\n- **Estimator** (produces a matrix) vs **assessor** (scores a matrix)? Different paths below.\n- **Online** (updatable per observation) or **batch**? precise is an online library; a batch method can\n  still be wrapped, but say so.\n- Does it target the **covariance**, **correlation**, or **precision**? It must expose, or be convertible\n  to, `covariance_`.\n- Does evaluating it **need the ground-truth** covariance (simulation only) or work on real data?\n\n## 1. Implement it to the contract\n\nSubclass `BaseOnlineCovariance`. The cheapest correct route: **copy the simplest existing estimator and\nmodify it** — read `precise/empirical.py` (and `precise/base.py` for the exact hook signatures, typically\n`_init_state` / `_update_state` / `_state_to_cov` / `_state_to_mean`). The base class owns `partial_fit`,\n`fit`, and the derived attributes; the subclass only supplies the state update and the map to a covariance.\nRegister it in `precise/registry.py` so `all_estimators()` includes it.\n\nA scoring rule instead? Implement an `Assessor` (see `precise/assessment/`), set `needs_data` /\n`needs_truth`, and follow the **higher = better** convention.\n\n## 2. Conformance — non-negotiable\n\nRun the conformance suite (`tests/test_estimators.py` parametrizes over `all_estimators()`), or check the\ninvariants directly:\n\n- `covariance_` is symmetric and PSD (eigenvalues ≥ 0);\n- `correlation_` has unit diagonal; `precision_ @ covariance_ ≈ I` when well-conditioned;\n- streaming rows via `partial_fit` equals `fit(X)` for non-windowed estimators;\n- `set_state(get_state())` round-trips;\n- it runs on the numpy-only install (no hidden heavy deps).\n\nIf it fails any of these, fix the implementation before any benchmarking — numbers from a non-conformant\nestimator are meaningless.\n\n## 3. Pick the right judge BEFORE looking at results\n\nThis is where most covariance evaluations go wrong. **In high dimensions (`p` comparable to `n`), do not\nrank estimators by the held-out Gaussian likelihood** — it is dominated by unidentifiable small eigenvalues\nand ranks estimators below chance. Use the assessor panel and choose by regime (see the\n**score-covariance-estimate** skill): `BlockPseudoLikelihood` / `SchurLikelihood` / `VariogramScore` /\n`GMVVariance` in high-d; `LogLikelihood` only when low-d and well-conditioned; a QLIKE/Bregman-consistent\nloss (not RMSE) when the target is a noisy variance proxy. To choose defensibly, measure the **statistical\npower** of candidate judges — the probability they reproduce a known quality ordering — with\n`research/metric_power.py`.\n\n## 4. Benchmark against the registry\n\n`research/bakeoff.py` runs every estimator over discriminating scenarios and scores them with\n`all_assessors()`. Add the new estimator and compare. Report **relative error vs a naive / shrinkage\nbaseline within each scenario, then averaged** (RMSE is scale-sensitive and can be won by doing well only\nin high-volatility regimes). Always include a `0`/historical-mean baseline for returns-like targets.\n\n## 5. Sweep the data-generating process — results are ensemble-sensitive\n\nA win on one generator need not transfer. Generate ground truth across several ensembles (LKJ, Wishart,\nfactor/spiked, Toeplitz/AR, equicorrelation) with `randomcov` plus plain numpy, sample from each, and\n**report per-ensemble, not just pooled**. A single ensemble can manufacture or hide any effect.\n\n## 6. Out-of-sample and real data; be honest about selectors\n\n- Out-of-sample on synthetic ensembles: `research/oos.py`. On real equity data: `research/oos_equity.py`\n  (bundled Ken French returns, no key needed).\n- If the method is a **recommender / selector** (chooses among estimators), evaluate it\n  **leave-one-generative-family-out** (`leave_one_family_out_trained` in `research/oos.py`), not\n  leave-one-sample-out — selectors generalize across samples far more easily than across novel structure,\n  and the difference is exactly where they fail.\n- **Report nulls.** If it ties or loses, say so plainly with the number; a method that \"matches the best\n  fixed estimator and avoids catastrophe\" is a real but smaller claim than \"beats it.\"\n\n## 7. Inference done right\n\nPairwise significance is the easiest thing to get wrong. The loss differentials are almost always\n**dependent**: overlapping forecast horizons, rolling/trailing targets, repeated expanding-window splits,\ncross-asset correlation, and many pairwise comparisons. Consequently:\n\n- A naive Diebold–Mariano statistic, or standard-error bars computed as if splits were independent,\n  **overstates significance**. Treat such bars as descriptive, not as confidence intervals.\n- Use a **block bootstrap over dates (and clustering over correlated assets)**, or the **Model Confidence\n  Set** (Hansen, Lunde & Nason 2011), which handles dependence and multiplicity together — preferable to a\n  wall of pairwise stars.\n- State one- vs two-sided, and any multiple-comparison treatment.\n- Watch the **trailing-vs-forward target trap**: if the \"target\" is a rolling window that overlaps already\n  observed data (e.g. next value of a 7-day trailing std), the task is partly mechanical and apparent\n  forecastability is an artifact. Define targets so the forecast origin uses only past information.\n\n## 8. Honest reporting checklist\n\n- State exactly what was estimated and scored, and which assessor (and why, given the dimension).\n- Give effect sizes and relative errors, not just p-values.\n- Report per-ensemble and on real data; note where the method loses.\n- Don't read point-error gains as economic/trading signals.\n- Ship the code and tests so the numbers are reproducible (this repo's `research/` scripts are the model:\n  each headline number has a runnable script and a guarding test).\n\n## Reference\n\n- Estimator contract: `precise/base.py`, `precise/empirical.py`; registry: `precise/registry.py`.\n- Assessors: `precise/assessment/`; panel via `all_assessors()`.\n- Experiments: `research/bakeoff.py`, `research/metric_power.py`, `research/oos.py`,\n  `research/oos_equity.py`; Schur-likelihood theory: `research/schur_*.py`.\n- Background on why the high-dimensional likelihood fails and what to use instead:\n  <https://precise.microprediction.org/papers/schur-likelihood/>.\n"
+    },
+    {
+      "slug": "choose-covariance-estimator",
+      "name": "choose-covariance-estimator",
+      "dir": ".claude/skills/choose-covariance-estimator",
+      "path": ".claude/skills/choose-covariance-estimator/SKILL.md",
+      "desc": "Pick which precise covariance estimator to use for a given dataset. Use when you have data X and are unsure which estimator fits its dimension, conditioning, or tail behavior. Wraps precise.suggest() and covariance_features().",
+      "descZh": "",
+      "triggers": [
+        "conditioning",
+        "tail b"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/microprediction/precise.git",
+        "copy": "cp -r .claude/skills/choose-covariance-estimator ~/.claude/skills/choose-covariance-estimator",
+        "raw": "https://raw.githubusercontent.com/microprediction/precise/2a193c0ca82f2ac43dbb29ced8d4c99be1b7505d/.claude/skills/choose-covariance-estimator/SKILL.md",
+        "saveAs": "~/.claude/skills/choose-covariance-estimator/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:86073203da24202926a8892eb00608974dccad4d94dc92cd958c901776be633a",
+      "bytes": 1932,
+      "wordCount": 220,
+      "repoLicense": "MIT",
+      "commit": "2a193c0ca82f2ac43dbb29ced8d4c99be1b7505d",
+      "branch": "main",
+      "body": "---\nname: choose-covariance-estimator\ndescription: Pick which precise covariance estimator to use for a given dataset. Use when you have data X and are unsure which estimator fits its dimension, conditioning, or tail behavior. Wraps precise.suggest() and covariance_features().\n---\n\n# Choose a covariance estimator for your data\n\nNo estimator wins everywhere, so `precise` recommends one from observable, truth-free features.\n\n```python\nfrom precise import suggest, covariance_features\n\nsuggest(X, top=3)        # -> list of estimator CLASSES, best first\ncovariance_features(X)   # -> dict of the features behind the choice\n```\n\n`X` is 2-D (rows = observations, columns = variables). Then:\n\n```python\nEst = suggest(X, top=1)[0]\nest = Est()\nest.fit(X)               # or stream rows with partial_fit\ncov = est.covariance_\n```\n\n## What it keys on\n\n`covariance_features(X)` returns `p`, `n`, `p_over_n`, `effective_rank`, `sphericity`,\n`condition_number`, `mean_abs_offdiag_corr`, `avg_excess_kurtosis` — all computed from the sample, none\nrequiring the unknown truth. Internally `suggest` uses a frozen, numpy-only decision tree; broadly it\nroutes high `p/n` or ill-conditioned data to shrinkage/factor estimators and heavy-tailed data to robust\nones.\n\n## Guardrail (important)\n\n`suggest` is a heuristic trained on synthetic regimes. In leave-one-generative-family-out tests it does\n**not** reliably beat the single best fixed estimator on a *wholly novel* data-generating family — it\ngeneralizes across samples within familiar regimes, not to arbitrarily new structure. So:\n\n- Treat its output as a strong shortlist, not an oracle.\n- If the decision matters, **verify** the shortlist out-of-sample on your own data with the\n  **score-covariance-estimate** skill, rather than trusting the recommendation blind.\n- A well-conditioned shrinkage estimator (`LedoitWolfCovariance` / `OASCovariance`) is a safe default\n  when in doubt.\n",
+      "bodyMd": "# Choose a covariance estimator for your data\n\nNo estimator wins everywhere, so `precise` recommends one from observable, truth-free features.\n\n```python\nfrom precise import suggest, covariance_features\n\nsuggest(X, top=3)        # -> list of estimator CLASSES, best first\ncovariance_features(X)   # -> dict of the features behind the choice\n```\n\n`X` is 2-D (rows = observations, columns = variables). Then:\n\n```python\nEst = suggest(X, top=1)[0]\nest = Est()\nest.fit(X)               # or stream rows with partial_fit\ncov = est.covariance_\n```\n\n## What it keys on\n\n`covariance_features(X)` returns `p`, `n`, `p_over_n`, `effective_rank`, `sphericity`,\n`condition_number`, `mean_abs_offdiag_corr`, `avg_excess_kurtosis` — all computed from the sample, none\nrequiring the unknown truth. Internally `suggest` uses a frozen, numpy-only decision tree; broadly it\nroutes high `p/n` or ill-conditioned data to shrinkage/factor estimators and heavy-tailed data to robust\nones.\n\n## Guardrail (important)\n\n`suggest` is a heuristic trained on synthetic regimes. In leave-one-generative-family-out tests it does\n**not** reliably beat the single best fixed estimator on a *wholly novel* data-generating family — it\ngeneralizes across samples within familiar regimes, not to arbitrarily new structure. So:\n\n- Treat its output as a strong shortlist, not an oracle.\n- If the decision matters, **verify** the shortlist out-of-sample on your own data with the\n  **score-covariance-estimate** skill, rather than trusting the recommendation blind.\n- A well-conditioned shrinkage estimator (`LedoitWolfCovariance` / `OASCovariance`) is a safe default\n  when in doubt.\n"
+    },
+    {
+      "slug": "estimate-online-covariance",
+      "name": "estimate-online-covariance",
+      "dir": ".claude/skills/estimate-online-covariance",
+      "path": ".claude/skills/estimate-online-covariance/SKILL.md",
+      "desc": "Estimate a covariance / correlation / precision matrix incrementally with precise. Use when data arrives as a stream and you want the matrix updated per observation, or when you want an online (partial_fit) drop-in for sklearn.covariance, which is batch-only.",
+      "descZh": "",
+      "triggers": [
+        "when you want"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "pip"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/microprediction/precise.git",
+        "copy": "cp -r .claude/skills/estimate-online-covariance ~/.claude/skills/estimate-online-covariance",
+        "raw": "https://raw.githubusercontent.com/microprediction/precise/2a193c0ca82f2ac43dbb29ced8d4c99be1b7505d/.claude/skills/estimate-online-covariance/SKILL.md",
+        "saveAs": "~/.claude/skills/estimate-online-covariance/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:c6407101865ff0a5907ff13357ef2ea5aeb1179fa901a3a6b397bc174d8e0f4b",
+      "bytes": 2142,
+      "wordCount": 221,
+      "repoLicense": "MIT",
+      "commit": "2a193c0ca82f2ac43dbb29ced8d4c99be1b7505d",
+      "branch": "main",
+      "body": "---\nname: estimate-online-covariance\ndescription: Estimate a covariance / correlation / precision matrix incrementally with precise. Use when data arrives as a stream and you want the matrix updated per observation, or when you want an online (partial_fit) drop-in for sklearn.covariance, which is batch-only.\n---\n\n# Estimate online covariance with precise\n\n`precise` provides sklearn-style estimators with a single `partial_fit` contract. Pure numpy.\n\n```bash\npip install precise\n```\n\n## The pattern\n\n```python\nimport numpy as np\nfrom precise import EwaCovariance        # exponentially weighted; recency-biased\n\nest = EwaCovariance(r=0.05)              # r in (0,1]; larger = faster forgetting\nfor y in stream:                         # y is a 1-D array (one observation)\n    est.partial_fit(y)\n\nest.covariance_     # (d, d) ndarray, symmetric and PSD by construction\nest.correlation_    # unit-diagonal correlation\nest.precision_      # inverse covariance (when well-conditioned)\nest.location_       # running mean\nest.n_samples_      # observations seen\n```\n\n`fit(X)` is the batch drop-in (`X` is 2-D, rows = observations); it resets then replays rows, so\nit matches `sklearn.covariance`'s call shape.\n\n## Choosing the class\n\n`all_estimators()` lists every estimator; `estimator_from_name(\"LedoitWolfCovariance\")` looks one up.\nSensible defaults by situation:\n\n- general / recency-weighted: `EwaCovariance(r=...)`\n- many variables relative to samples (p/n large) or ill-conditioned: `LedoitWolfCovariance`, `OASCovariance`, `ShrunkCovariance`, `FactorCovariance`\n- heavy tails / outliers: `HuberCovariance`, `TylerCovariance`\n- regime changes: `AdaptiveEwaCovariance`, `DCCCovariance`\n- you don't know: use the **choose-covariance-estimator** skill (`suggest(X)`).\n\n## Notes\n\n- All estimators are truly online — constant work per observation, no growing buffers.\n- State is a JSON-able dict: `est.get_state()` / `est.set_state(s)` for mid-stream checkpointing.\n- `covariance_` is always symmetric PSD; don't hand-symmetrize or clip it yourself.\n- Named series with a changing universe? Use the **keyed-dynamic-universe** skill instead.\n",
+      "bodyMd": "# Estimate online covariance with precise\n\n`precise` provides sklearn-style estimators with a single `partial_fit` contract. Pure numpy.\n\n```bash\npip install precise\n```\n\n## The pattern\n\n```python\nimport numpy as np\nfrom precise import EwaCovariance        # exponentially weighted; recency-biased\n\nest = EwaCovariance(r=0.05)              # r in (0,1]; larger = faster forgetting\nfor y in stream:                         # y is a 1-D array (one observation)\n    est.partial_fit(y)\n\nest.covariance_     # (d, d) ndarray, symmetric and PSD by construction\nest.correlation_    # unit-diagonal correlation\nest.precision_      # inverse covariance (when well-conditioned)\nest.location_       # running mean\nest.n_samples_      # observations seen\n```\n\n`fit(X)` is the batch drop-in (`X` is 2-D, rows = observations); it resets then replays rows, so\nit matches `sklearn.covariance`'s call shape.\n\n## Choosing the class\n\n`all_estimators()` lists every estimator; `estimator_from_name(\"LedoitWolfCovariance\")` looks one up.\nSensible defaults by situation:\n\n- general / recency-weighted: `EwaCovariance(r=...)`\n- many variables relative to samples (p/n large) or ill-conditioned: `LedoitWolfCovariance`, `OASCovariance`, `ShrunkCovariance`, `FactorCovariance`\n- heavy tails / outliers: `HuberCovariance`, `TylerCovariance`\n- regime changes: `AdaptiveEwaCovariance`, `DCCCovariance`\n- you don't know: use the **choose-covariance-estimator** skill (`suggest(X)`).\n\n## Notes\n\n- All estimators are truly online — constant work per observation, no growing buffers.\n- State is a JSON-able dict: `est.get_state()` / `est.set_state(s)` for mid-stream checkpointing.\n- `covariance_` is always symmetric PSD; don't hand-symmetrize or clip it yourself.\n- Named series with a changing universe? Use the **keyed-dynamic-universe** skill instead.\n"
+    },
+    {
+      "slug": "keyed-dynamic-universe",
+      "name": "keyed-dynamic-universe",
+      "dir": ".claude/skills/keyed-dynamic-universe",
+      "path": ".claude/skills/keyed-dynamic-universe/SKILL.md",
+      "desc": "Maintain an online covariance over named series whose set changes over time (e.g. assets entering and leaving). Use when observations arrive as dicts keyed by name rather than fixed-length vectors. Wraps precise's keyed / FixedUniverse / DynamicUniverse adapters.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "pip"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/microprediction/precise.git",
+        "copy": "cp -r .claude/skills/keyed-dynamic-universe ~/.claude/skills/keyed-dynamic-universe",
+        "raw": "https://raw.githubusercontent.com/microprediction/precise/2a193c0ca82f2ac43dbb29ced8d4c99be1b7505d/.claude/skills/keyed-dynamic-universe/SKILL.md",
+        "saveAs": "~/.claude/skills/keyed-dynamic-universe/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:b705e4afbfd0dca10c10743fcfa216418b241d3b4ddd4b80fde126e6885a1b18",
+      "bytes": 2024,
+      "wordCount": 218,
+      "repoLicense": "MIT",
+      "commit": "2a193c0ca82f2ac43dbb29ced8d4c99be1b7505d",
+      "branch": "main",
+      "body": "---\nname: keyed-dynamic-universe\ndescription: Maintain an online covariance over named series whose set changes over time (e.g. assets entering and leaving). Use when observations arrive as dicts keyed by name rather than fixed-length vectors. Wraps precise's keyed / FixedUniverse / DynamicUniverse adapters.\n---\n\n# Keyed covariance over a changing universe\n\nIn streaming/finance settings observations are dicts keyed by name, and the set of names changes. `keyed`\ndecorates *any* positional estimator to consume keyed dicts and emit keyed output.\n\n```bash\npip install precise            # add [pandas] for to_frame()\n```\n\n```python\nfrom precise import keyed, EwaCovariance\n\nest = keyed(EwaCovariance(r=0.05), dynamic=True)     # universe may change over time\nest.partial_fit({\"BTC\": 0.01, \"ETH\": -0.02})         # river-style: also .update / .learn_one\nest.partial_fit({\"ETH\": 0.00, \"SOL\": 0.03})          # BTC drops out, SOL enters\n\nest.covariance_[\"ETH\"][\"SOL\"]                         # dict-of-dicts over the live universe\nest.to_frame()                                        # pandas DataFrame  (needs [pandas])\n```\n\n## Fixed vs dynamic\n\n- `keyed(est)` / `dynamic=False` → **FixedUniverse**: one wrapped estimator; missing keys are imputed.\n  Use when the set of names is stable and you just want dict ergonomics.\n- `keyed(est, dynamic=True)` → **DynamicUniverse**: tracks multiple live key-sets with staleness /\n  longevity eviction and assembles a pairwise matrix. Use when names genuinely enter and leave.\n\n## Notes\n\n- The adapter adds **no covariance math of its own** — it wraps the positional estimator, so any estimator\n  from the **estimate-online-covariance** skill works inside it (`LedoitWolfCovariance`, `HuberCovariance`,\n  …).\n- The assembled matrix is projected to the nearest PSD; expect small adjustments when the live universe\n  changes.\n- To score/compare keyed estimators, extract the dense `covariance_` (e.g. via `to_frame().values`) and use\n  the **score-covariance-estimate** skill.\n",
+      "bodyMd": "# Keyed covariance over a changing universe\n\nIn streaming/finance settings observations are dicts keyed by name, and the set of names changes. `keyed`\ndecorates *any* positional estimator to consume keyed dicts and emit keyed output.\n\n```bash\npip install precise            # add [pandas] for to_frame()\n```\n\n```python\nfrom precise import keyed, EwaCovariance\n\nest = keyed(EwaCovariance(r=0.05), dynamic=True)     # universe may change over time\nest.partial_fit({\"BTC\": 0.01, \"ETH\": -0.02})         # river-style: also .update / .learn_one\nest.partial_fit({\"ETH\": 0.00, \"SOL\": 0.03})          # BTC drops out, SOL enters\n\nest.covariance_[\"ETH\"][\"SOL\"]                         # dict-of-dicts over the live universe\nest.to_frame()                                        # pandas DataFrame  (needs [pandas])\n```\n\n## Fixed vs dynamic\n\n- `keyed(est)` / `dynamic=False` → **FixedUniverse**: one wrapped estimator; missing keys are imputed.\n  Use when the set of names is stable and you just want dict ergonomics.\n- `keyed(est, dynamic=True)` → **DynamicUniverse**: tracks multiple live key-sets with staleness /\n  longevity eviction and assembles a pairwise matrix. Use when names genuinely enter and leave.\n\n## Notes\n\n- The adapter adds **no covariance math of its own** — it wraps the positional estimator, so any estimator\n  from the **estimate-online-covariance** skill works inside it (`LedoitWolfCovariance`, `HuberCovariance`,\n  …).\n- The assembled matrix is projected to the nearest PSD; expect small adjustments when the live universe\n  changes.\n- To score/compare keyed estimators, extract the dense `covariance_` (e.g. via `to_frame().values`) and use\n  the **score-covariance-estimate** skill.\n"
+    },
+    {
+      "slug": "score-covariance-estimate",
+      "name": "score-covariance-estimate",
+      "dir": ".claude/skills/score-covariance-estimate",
+      "path": ".claude/skills/score-covariance-estimate/SKILL.md",
+      "desc": "Score and compare covariance estimates with precise's assessor panel. Use when you need to judge an estimate out-of-sample or rank competing estimators — and especially in high dimensions, where the plain held-out likelihood is misleading.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/microprediction/precise.git",
+        "copy": "cp -r .claude/skills/score-covariance-estimate ~/.claude/skills/score-covariance-estimate",
+        "raw": "https://raw.githubusercontent.com/microprediction/precise/2a193c0ca82f2ac43dbb29ced8d4c99be1b7505d/.claude/skills/score-covariance-estimate/SKILL.md",
+        "saveAs": "~/.claude/skills/score-covariance-estimate/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:a67640470fe717306c7b5c762d2dc04fc41ad7a79c622528bdce1aacb3a8d34b",
+      "bytes": 2567,
+      "wordCount": 316,
+      "repoLicense": "MIT",
+      "commit": "2a193c0ca82f2ac43dbb29ced8d4c99be1b7505d",
+      "branch": "main",
+      "body": "---\nname: score-covariance-estimate\ndescription: Score and compare covariance estimates with precise's assessor panel. Use when you need to judge an estimate out-of-sample or rank competing estimators — and especially in high dimensions, where the plain held-out likelihood is misleading.\n---\n\n# Score / rank covariance estimates\n\n```python\nfrom precise import all_assessors, assessor_from_name\n\nfor A in all_assessors():\n    s = A().score(cov, X_test=X_test, true_cov=Sigma_true)   # higher = better\n```\n\n- `cov` is the estimate to judge; `X_test` is held-out data (rows = observations); `true_cov` is the\n  population covariance (only available in simulation).\n- Each assessor exposes `needs_data` and `needs_truth`; pass what it needs. Truth-free assessors work on\n  real data, truth-requiring ones (e.g. `FrobeniusToTruth`) only in simulation.\n- All assessors follow **higher = better**, so you can rank or argmax directly.\n\n## The one rule that matters in high dimensions\n\n**Do not rank estimators by the held-out Gaussian log-likelihood when `p` is comparable to `n`.** The\nlikelihood is dominated by the smallest, unidentifiable eigenvalues of the estimate; empirically it ranks\nestimators *below chance* in that regime. Instead use inversion-free or block judges:\n\n| Regime / goal | Use |\n|---|---|\n| low dimension, well-conditioned | `LogLikelihood` (it is optimal here) |\n| high dimension (`p/n` near 1 or larger) | `BlockPseudoLikelihood`, `SchurLikelihood`, `VariogramScore`, `FrobeniusToTruth` (sim only) |\n| economic / portfolio relevance | `GMVVariance` (out-of-sample minimum-variance variance) |\n| forecasting a **variance** from a noisy proxy | a QLIKE / Bregman-consistent loss, **not** RMSE on the proxy — RMSE on a noisy variance proxy can rank inconsistently |\n\n`SchurLikelihood(gamma=...)` is a tunable bridge: `gamma=1` is the full likelihood (fragile in high-d),\n`gamma=0` the robust block-diagonal one, interior values better-conditioned than either.\n\n## Don't over-read the numbers\n\n- Rankings are **ensemble-sensitive**: a result on one data-generating process need not transfer. If the\n  conclusion matters, sweep several generators and report per-regime (see the\n  **assess-covariance-method** skill).\n- A lower point error (RMSE) is not a tradable or actionable signal by itself.\n- If you attach significance to a ranking, the loss differentials are usually dependent (overlapping\n  windows, correlated assets); naive standard errors overstate significance — see the inference section of\n  the **assess-covariance-method** skill.\n",
+      "bodyMd": "# Score / rank covariance estimates\n\n```python\nfrom precise import all_assessors, assessor_from_name\n\nfor A in all_assessors():\n    s = A().score(cov, X_test=X_test, true_cov=Sigma_true)   # higher = better\n```\n\n- `cov` is the estimate to judge; `X_test` is held-out data (rows = observations); `true_cov` is the\n  population covariance (only available in simulation).\n- Each assessor exposes `needs_data` and `needs_truth`; pass what it needs. Truth-free assessors work on\n  real data, truth-requiring ones (e.g. `FrobeniusToTruth`) only in simulation.\n- All assessors follow **higher = better**, so you can rank or argmax directly.\n\n## The one rule that matters in high dimensions\n\n**Do not rank estimators by the held-out Gaussian log-likelihood when `p` is comparable to `n`.** The\nlikelihood is dominated by the smallest, unidentifiable eigenvalues of the estimate; empirically it ranks\nestimators *below chance* in that regime. Instead use inversion-free or block judges:\n\n| Regime / goal | Use |\n|---|---|\n| low dimension, well-conditioned | `LogLikelihood` (it is optimal here) |\n| high dimension (`p/n` near 1 or larger) | `BlockPseudoLikelihood`, `SchurLikelihood`, `VariogramScore`, `FrobeniusToTruth` (sim only) |\n| economic / portfolio relevance | `GMVVariance` (out-of-sample minimum-variance variance) |\n| forecasting a **variance** from a noisy proxy | a QLIKE / Bregman-consistent loss, **not** RMSE on the proxy — RMSE on a noisy variance proxy can rank inconsistently |\n\n`SchurLikelihood(gamma=...)` is a tunable bridge: `gamma=1` is the full likelihood (fragile in high-d),\n`gamma=0` the robust block-diagonal one, interior values better-conditioned than either.\n\n## Don't over-read the numbers\n\n- Rankings are **ensemble-sensitive**: a result on one data-generating process need not transfer. If the\n  conclusion matters, sweep several generators and report per-regime (see the\n  **assess-covariance-method** skill).\n- A lower point error (RMSE) is not a tradable or actionable signal by itself.\n- If you attach significance to a ranking, the loss differentials are usually dependent (overlapping\n  windows, correlated assets); naive standard errors overstate significance — see the inference section of\n  the **assess-covariance-method** skill.\n"
+    },
+    {
+      "slug": "precise",
+      "name": "precise",
+      "dir": "",
+      "path": "SKILL.md",
+      "desc": "Online (incremental) covariance, correlation, and precision estimation in Python — the streaming complement to sklearn.covariance. Use when code needs a covariance/correlation matrix updated per observation, recomputes np.cov/np.corrcoef in a rolling loop, must judge or compare covariance estimates, or proposes a new covariance methodology. Points to task-specific skills.",
+      "descZh": "",
+      "triggers": [
+        "recomputes np"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "python",
+          "pip"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/microprediction/precise.git",
+        "copy": "",
+        "raw": "https://raw.githubusercontent.com/microprediction/precise/2a193c0ca82f2ac43dbb29ced8d4c99be1b7505d/SKILL.md",
+        "saveAs": "~/.claude/skills/precise/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:d58e8d2d9f3477f354b7f9c92d0520014bb51e2d4ab279f8b00e61ce2e25680b",
+      "bytes": 3152,
+      "wordCount": 286,
+      "repoLicense": "MIT",
+      "commit": "2a193c0ca82f2ac43dbb29ced8d4c99be1b7505d",
+      "branch": "main",
+      "body": "---\nname: precise\ndescription: Online (incremental) covariance, correlation, and precision estimation in Python — the streaming complement to sklearn.covariance. Use when code needs a covariance/correlation matrix updated per observation, recomputes np.cov/np.corrcoef in a rolling loop, must judge or compare covariance estimates, or proposes a new covariance methodology. Points to task-specific skills.\n---\n\n# precise\n\n[`precise`](https://github.com/microprediction/precise) is a small, numpy-only library of **online\n(incremental) covariance and correlation estimators** behind one sklearn-style `partial_fit` contract —\nplus a panel of assessors for scoring an estimate and a recommender for choosing one. It is the streaming\ncomplement to `sklearn.covariance`, whose estimators are batch-only.\n\n```bash\npip install precise\n```\n\n```python\nfrom precise import EwaCovariance\nest = EwaCovariance(r=0.05)\nfor y in stream:            # y is one observation (1-D)\n    est.partial_fit(y)\nest.covariance_             # symmetric PSD; also .correlation_ / .precision_ / .location_\n```\n\n## Reach for precise when you see\n\n- a covariance/correlation matrix being **recomputed in a rolling loop** (`np.cov` / `np.corrcoef`,\n  `pandas .rolling().cov()`) — that is O(window) per step; precise updates in O(1)–O(d²);\n- a need for `partial_fit` covariance where `sklearn.covariance` only offers batch `fit`;\n- streaming data **keyed by name** with a universe that changes over time (assets entering/leaving);\n- shrinkage / robust / factor covariance wanted online (Ledoit–Wolf, OAS, Huber, Tyler, factor models);\n- someone **judging or comparing** covariance estimates, or **proposing a new** covariance method.\n\n## Task-specific skills\n\nFetch the relevant one for copy-pasteable code and guardrails:\n\n- **Estimate online** — <https://github.com/microprediction/precise/blob/main/.claude/skills/estimate-online-covariance/SKILL.md>\n- **Choose an estimator for your data** — <https://github.com/microprediction/precise/blob/main/.claude/skills/choose-covariance-estimator/SKILL.md>\n- **Score / compare estimates** (and the high-dimensional pitfalls) — <https://github.com/microprediction/precise/blob/main/.claude/skills/score-covariance-estimate/SKILL.md>\n- **Keyed / dynamic universe** (names that enter and leave) — <https://github.com/microprediction/precise/blob/main/.claude/skills/keyed-dynamic-universe/SKILL.md>\n- **Assess a new methodology** (rigorous, honest protocol) — <https://github.com/microprediction/precise/blob/main/.claude/skills/assess-covariance-method/SKILL.md>\n\n## One guardrail worth knowing up front\n\nIn high dimensions (variables comparable to observations), **do not rank covariance estimates by the\nheld-out Gaussian log-likelihood** — it is dominated by unidentifiable small eigenvalues and ranks below\nchance. Use inversion-free / block judges instead (see the scoring skill). Background:\n<https://precise.microprediction.org/papers/schur-likelihood/>.\n\n## Reference\n\nDocs <https://precise.microprediction.org> · PyPI <https://pypi.org/project/precise/> ·\nRepo <https://github.com/microprediction/precise>.\n",
+      "bodyMd": "# precise\n\n[`precise`](https://github.com/microprediction/precise) is a small, numpy-only library of **online\n(incremental) covariance and correlation estimators** behind one sklearn-style `partial_fit` contract —\nplus a panel of assessors for scoring an estimate and a recommender for choosing one. It is the streaming\ncomplement to `sklearn.covariance`, whose estimators are batch-only.\n\n```bash\npip install precise\n```\n\n```python\nfrom precise import EwaCovariance\nest = EwaCovariance(r=0.05)\nfor y in stream:            # y is one observation (1-D)\n    est.partial_fit(y)\nest.covariance_             # symmetric PSD; also .correlation_ / .precision_ / .location_\n```\n\n## Reach for precise when you see\n\n- a covariance/correlation matrix being **recomputed in a rolling loop** (`np.cov` / `np.corrcoef`,\n  `pandas .rolling().cov()`) — that is O(window) per step; precise updates in O(1)–O(d²);\n- a need for `partial_fit` covariance where `sklearn.covariance` only offers batch `fit`;\n- streaming data **keyed by name** with a universe that changes over time (assets entering/leaving);\n- shrinkage / robust / factor covariance wanted online (Ledoit–Wolf, OAS, Huber, Tyler, factor models);\n- someone **judging or comparing** covariance estimates, or **proposing a new** covariance method.\n\n## Task-specific skills\n\nFetch the relevant one for copy-pasteable code and guardrails:\n\n- **Estimate online** — <https://github.com/microprediction/precise/blob/main/.claude/skills/estimate-online-covariance/SKILL.md>\n- **Choose an estimator for your data** — <https://github.com/microprediction/precise/blob/main/.claude/skills/choose-covariance-estimator/SKILL.md>\n- **Score / compare estimates** (and the high-dimensional pitfalls) — <https://github.com/microprediction/precise/blob/main/.claude/skills/score-covariance-estimate/SKILL.md>\n- **Keyed / dynamic universe** (names that enter and leave) — <https://github.com/microprediction/precise/blob/main/.claude/skills/keyed-dynamic-universe/SKILL.md>\n- **Assess a new methodology** (rigorous, honest protocol) — <https://github.com/microprediction/precise/blob/main/.claude/skills/assess-covariance-method/SKILL.md>\n\n## One guardrail worth knowing up front\n\nIn high dimensions (variables comparable to observations), **do not rank covariance estimates by the\nheld-out Gaussian log-likelihood** — it is dominated by unidentifiable small eigenvalues and ranks below\nchance. Use inversion-free / block judges instead (see the scoring skill). Background:\n<https://precise.microprediction.org/papers/schur-likelihood/>.\n\n## Reference\n\nDocs <https://precise.microprediction.org> · PyPI <https://pypi.org/project/precise/> ·\nRepo <https://github.com/microprediction/precise>.\n"
+    }
+  ]
+}

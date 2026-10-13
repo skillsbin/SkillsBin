@@ -1,0 +1,52 @@
+{
+  "repo": "bzd6661/wechat-article-for-ai",
+  "commit": "69de9e413cca3fe6b770c40a4dec204afd5b2b3c",
+  "branch": "master",
+  "fetchedAt": "2026-10-13T04:50:29.507Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "wechat-to-md",
+      "name": "wechat-to-md",
+      "dir": "",
+      "path": "SKILL.md",
+      "desc": "Convert WeChat Official Account (微信公众号) articles to clean Markdown files with locally downloaded images.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "python",
+          "pip",
+          "convert"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/bzd6661/wechat-article-for-ai.git",
+        "copy": "",
+        "raw": "https://raw.githubusercontent.com/bzd6661/wechat-article-for-ai/69de9e413cca3fe6b770c40a4dec204afd5b2b3c/SKILL.md",
+        "saveAs": "~/.claude/skills/wechat-to-md/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:b652b6acfbe199f0cb65e67ea7e1120f30e17607027ac9c98072f2487906e655",
+      "bytes": 2628,
+      "wordCount": 347,
+      "repoLicense": "",
+      "commit": "69de9e413cca3fe6b770c40a4dec204afd5b2b3c",
+      "branch": "master",
+      "body": "---\nname: wechat-to-md\ndescription: Convert WeChat Official Account (微信公众号) articles to clean Markdown files with locally downloaded images.\n---\n\n# WeChat Article to Markdown Converter\n\n## What this tool does\n\nConverts WeChat public account articles into clean Markdown files with:\n- YAML frontmatter (title, author, date, source URL)\n- Locally downloaded images\n- Preserved code blocks with language detection\n- Audio/video reference extraction\n- Clean formatting (no WeChat UI noise)\n\n## Prerequisites\n\n- Python 3.10+\n- Install dependencies: `pip install -r requirements.txt`\n- Camoufox browser will be auto-downloaded on first run\n\n## Usage\n\n### CLI (single article)\n\n```bash\npython main.py \"https://mp.weixin.qq.com/s/ARTICLE_ID\"\n```\n\n### CLI (batch from file)\n\n```bash\npython main.py -f urls.txt -o ./output -v\n```\n\n### CLI Options\n\n| Flag | Description |\n|------|-------------|\n| `-f FILE` | Text file with URLs (one per line) |\n| `-o DIR` | Output directory (default: ./output) |\n| `-c N` | Image download concurrency (default: 5) |\n| `--no-images` | Skip image download, keep remote URLs |\n| `--no-headless` | Show browser (for solving CAPTCHAs) |\n| `--force` | Overwrite existing output |\n| `--no-frontmatter` | Use blockquote metadata instead of YAML |\n| `-v` | Verbose/debug logging |\n\n### MCP Server\n\nRun as an MCP server for AI tool integration:\n\n```bash\npython mcp_server.py\n```\n\nExposes two tools:\n- `convert_article(url, output_dir, download_images, concurrency, use_frontmatter)` — Convert a single article\n- `batch_convert(urls, output_dir, download_images, concurrency)` — Convert multiple articles\n\n### MCP Configuration (for claude_desktop_config.json or similar)\n\n```json\n{\n  \"mcpServers\": {\n    \"wechat-to-md\": {\n      \"command\": \"python\",\n      \"args\": [\"mcp_server.py\"],\n      \"cwd\": \"<path-to-this-project>\"\n    }\n  }\n}\n```\n\n## Output Structure\n\n```\noutput/\n  <article-title>/\n    <article-title>.md    # Markdown file with YAML frontmatter\n    images/\n      img_001.png\n      img_002.jpg\n      ...\n```\n\n## Common Issues\n\n- **CAPTCHA/verification page**: Run with `--no-headless` to manually solve the CAPTCHA in the browser window, then retry.\n- **Empty content**: WeChat may rate-limit requests. Wait a few minutes and try again.\n- **Image download failures**: Failed images keep their remote URLs in the markdown. Re-run with `--force` to retry.\n\n## Limitations\n\n- Only supports articles from `mp.weixin.qq.com`\n- Requires a working internet connection and the ability to run a headless browser\n- WeChat may block automated access; Camoufox helps evade detection but is not guaranteed\n",
+      "bodyMd": "# WeChat Article to Markdown Converter\n\n## What this tool does\n\nConverts WeChat public account articles into clean Markdown files with:\n- YAML frontmatter (title, author, date, source URL)\n- Locally downloaded images\n- Preserved code blocks with language detection\n- Audio/video reference extraction\n- Clean formatting (no WeChat UI noise)\n\n## Prerequisites\n\n- Python 3.10+\n- Install dependencies: `pip install -r requirements.txt`\n- Camoufox browser will be auto-downloaded on first run\n\n## Usage\n\n### CLI (single article)\n\n```bash\npython main.py \"https://mp.weixin.qq.com/s/ARTICLE_ID\"\n```\n\n### CLI (batch from file)\n\n```bash\npython main.py -f urls.txt -o ./output -v\n```\n\n### CLI Options\n\n| Flag | Description |\n|------|-------------|\n| `-f FILE` | Text file with URLs (one per line) |\n| `-o DIR` | Output directory (default: ./output) |\n| `-c N` | Image download concurrency (default: 5) |\n| `--no-images` | Skip image download, keep remote URLs |\n| `--no-headless` | Show browser (for solving CAPTCHAs) |\n| `--force` | Overwrite existing output |\n| `--no-frontmatter` | Use blockquote metadata instead of YAML |\n| `-v` | Verbose/debug logging |\n\n### MCP Server\n\nRun as an MCP server for AI tool integration:\n\n```bash\npython mcp_server.py\n```\n\nExposes two tools:\n- `convert_article(url, output_dir, download_images, concurrency, use_frontmatter)` — Convert a single article\n- `batch_convert(urls, output_dir, download_images, concurrency)` — Convert multiple articles\n\n### MCP Configuration (for claude_desktop_config.json or similar)\n\n```json\n{\n  \"mcpServers\": {\n    \"wechat-to-md\": {\n      \"command\": \"python\",\n      \"args\": [\"mcp_server.py\"],\n      \"cwd\": \"<path-to-this-project>\"\n    }\n  }\n}\n```\n\n## Output Structure\n\n```\noutput/\n  <article-title>/\n    <article-title>.md    # Markdown file with YAML frontmatter\n    images/\n      img_001.png\n      img_002.jpg\n      ...\n```\n\n## Common Issues\n\n- **CAPTCHA/verification page**: Run with `--no-headless` to manually solve the CAPTCHA in the browser window, then retry.\n- **Empty content**: WeChat may rate-limit requests. Wait a few minutes and try again.\n- **Image download failures**: Failed images keep their remote URLs in the markdown. Re-run with `--force` to retry.\n\n## Limitations\n\n- Only supports articles from `mp.weixin.qq.com`\n- Requires a working internet connection and the ability to run a headless browser\n- WeChat may block automated access; Camoufox helps evade detection but is not guaranteed\n"
+    }
+  ]
+}

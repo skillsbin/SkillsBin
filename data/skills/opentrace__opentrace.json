@@ -1,0 +1,99 @@
+{
+  "repo": "opentrace/opentrace",
+  "commit": "4f448b3f3204d01c3e6f32f03d19d61f39c7808d",
+  "branch": "main",
+  "fetchedAt": "2026-10-13T04:50:24.160Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "explore-code",
+      "name": "explore-code",
+      "dir": "plugins/claude-code/skills/explore-code",
+      "path": "plugins/claude-code/skills/explore-code/SKILL.md",
+      "desc": "Explore code structure, architecture, files, directories, and component relationships using the OpenTrace knowledge graph. Use this skill for ANY question about the codebase that the graph might answer — including browsing, searching, and understanding code organization. Triggers on: - Structure: \"how does X work\", \"what calls X\", \"show me the architecture\", \"where is X defined\" - Browsing: \"what's in X\", \"show me X\", \"look at X\", \"list the files in X\", \"what directories are there\" - Discovery: \"find X\", \"what examples exist\", \"what services/classes/files are there\" - Exploration: \"walk me through X\", \"give me an overview\", \"help me understand X\" - General: any question about repo structure, code organization, or component relationships",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [
+        "mcp__opentrace_oss__search_graph, mcp__opentrace_oss__get_node, mcp__opentrace_oss__traverse_graph, mcp__opentrace_oss__list_nodes, mcp__opentrace_oss__get_stats, Read, Grep, Glob"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "node"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/opentrace/opentrace.git",
+        "copy": "cp -r plugins/claude-code/skills/explore-code ~/.claude/skills/explore-code",
+        "raw": "https://raw.githubusercontent.com/opentrace/opentrace/4f448b3f3204d01c3e6f32f03d19d61f39c7808d/plugins/claude-code/skills/explore-code/SKILL.md",
+        "saveAs": "~/.claude/skills/explore-code/SKILL.md",
+        "marketplace": "/plugin marketplace add opentrace/opentrace"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:6acc8f5d49d26eaaadd2e5bd86311598e55295e9e9011e3b573563a3baaaf7b3",
+      "bytes": 2838,
+      "wordCount": 273,
+      "repoLicense": "Apache-2.0",
+      "commit": "4f448b3f3204d01c3e6f32f03d19d61f39c7808d",
+      "branch": "main",
+      "body": "---\nname: explore-code\ndescription: |\n  Explore code structure, architecture, files, directories, and component relationships using\n  the OpenTrace knowledge graph. Use this skill for ANY question about the codebase that the\n  graph might answer — including browsing, searching, and understanding code organization.\n\n  Triggers on:\n  - Structure: \"how does X work\", \"what calls X\", \"show me the architecture\", \"where is X defined\"\n  - Browsing: \"what's in X\", \"show me X\", \"look at X\", \"list the files in X\", \"what directories are there\"\n  - Discovery: \"find X\", \"what examples exist\", \"what services/classes/files are there\"\n  - Exploration: \"walk me through X\", \"give me an overview\", \"help me understand X\"\n  - General: any question about repo structure, code organization, or component relationships\nallowed-tools: mcp__opentrace_oss__search_graph, mcp__opentrace_oss__get_node, mcp__opentrace_oss__traverse_graph, mcp__opentrace_oss__list_nodes, mcp__opentrace_oss__get_stats, Read, Grep, Glob\n---\n\nThe user wants to explore or understand something about the codebase. Use the OpenTrace knowledge graph to answer their question.\n\n## Query\n$ARGUMENTS\n\n## Instructions\n\nUse the OpenTrace MCP tools to investigate. Follow this approach:\n\n1. **Orient** — Call `get_stats` to see what's indexed (node types and counts). This tells you what's available in the graph.\n\n2. **Search** — Use `search_graph` to find nodes matching the user's query. Use `nodeTypes` to filter when appropriate:\n   - Architecture questions → \"Service,Repository\"\n   - Code questions → \"Class,Function,Module\"\n   - File/directory browsing → \"File,Directory\"\n   - Data questions → \"Database,DBTable\"\n   - Infrastructure → \"Deployment,Cluster,Namespace\"\n   - Unsure → omit `nodeTypes` to search everything\n\n3. **Inspect** — Use `get_node` on the best matches to see full details and neighbors.\n\n4. **Trace** — Use `traverse_graph` to follow relationships:\n   - \"What calls X?\" → `direction: incoming`\n   - \"What does X depend on?\" → `direction: outgoing`\n   - \"What's in X?\" → `direction: outgoing` (CONTAINS relationships)\n   - \"How are X and Y connected?\" → traverse from both and find common nodes\n\n5. **List** — Use `list_nodes` when the user wants to see all items of a type (e.g. all services, all files in a directory).\n\n6. **Read source** — If nodes have a `path` property and the user needs code details, use `Read` to show the source.\n\n## Response Guidelines\n\n- Lead with a clear, concise answer before showing supporting details\n- Show relationships as paths: `ServiceA --CALLS--> ServiceB --READS--> DatabaseC`\n- Group related information (structure, dependencies, consumers)\n- Offer to drill deeper if the graph reveals more to explore\n- If the graph doesn't have the data, say so and fall back to `Glob`/`Grep`/`Read`\n",
+      "bodyMd": "The user wants to explore or understand something about the codebase. Use the OpenTrace knowledge graph to answer their question.\n\n## Query\n$ARGUMENTS\n\n## Instructions\n\nUse the OpenTrace MCP tools to investigate. Follow this approach:\n\n1. **Orient** — Call `get_stats` to see what's indexed (node types and counts). This tells you what's available in the graph.\n\n2. **Search** — Use `search_graph` to find nodes matching the user's query. Use `nodeTypes` to filter when appropriate:\n   - Architecture questions → \"Service,Repository\"\n   - Code questions → \"Class,Function,Module\"\n   - File/directory browsing → \"File,Directory\"\n   - Data questions → \"Database,DBTable\"\n   - Infrastructure → \"Deployment,Cluster,Namespace\"\n   - Unsure → omit `nodeTypes` to search everything\n\n3. **Inspect** — Use `get_node` on the best matches to see full details and neighbors.\n\n4. **Trace** — Use `traverse_graph` to follow relationships:\n   - \"What calls X?\" → `direction: incoming`\n   - \"What does X depend on?\" → `direction: outgoing`\n   - \"What's in X?\" → `direction: outgoing` (CONTAINS relationships)\n   - \"How are X and Y connected?\" → traverse from both and find common nodes\n\n5. **List** — Use `list_nodes` when the user wants to see all items of a type (e.g. all services, all files in a directory).\n\n6. **Read source** — If nodes have a `path` property and the user needs code details, use `Read` to show the source.\n\n## Response Guidelines\n\n- Lead with a clear, concise answer before showing supporting details\n- Show relationships as paths: `ServiceA --CALLS--> ServiceB --READS--> DatabaseC`\n- Group related information (structure, dependencies, consumers)\n- Offer to drill deeper if the graph reveals more to explore\n- If the graph doesn't have the data, say so and fall back to `Glob`/`Grep`/`Read`\n"
+    },
+    {
+      "slug": "graph",
+      "name": "graph",
+      "dir": "plugins/claude-code/skills/graph",
+      "path": "plugins/claude-code/skills/graph/SKILL.md",
+      "desc": "Run the full OpenTrace knowledge-graph pipeline over a folder or repo — index, clustering, highlight surfacing, and the markdown / graphml / Obsidian exporters. Use this skill when the user wants more than the bare structural index: when they ask for clusters, highlights, or a navigable artifact to hand to another tool. Triggers on: - \"build the knowledge graph\", \"make a graph of this folder\", \"graph this\" - \"what is this codebase about\", \"give me a map of this project\", \"what's connected to what\" - \"find the clusters\", \"cluster the graph\", \"what are the architectural hubs?\" - any time a user mentions clustering, god nodes, or bridges - when `.opentrace/index.db` is already present in the working directory, an indexed graph exists — prefer answering from it over re-deriving answers from raw files",
+      "descZh": "",
+      "triggers": [
+        "highlights"
+      ],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [
+        "Bash, Read, Write, Agent, mcp__opentrace_oss__search_graph, mcp__opentrace_oss__get_node, mcp__opentrace_oss__traverse_graph, mcp__opentrace_oss__list_nodes, mcp__opentrace_oss__get_stats"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/opentrace/opentrace.git",
+        "copy": "cp -r plugins/claude-code/skills/graph ~/.claude/skills/graph",
+        "raw": "https://raw.githubusercontent.com/opentrace/opentrace/4f448b3f3204d01c3e6f32f03d19d61f39c7808d/plugins/claude-code/skills/graph/SKILL.md",
+        "saveAs": "~/.claude/skills/graph/SKILL.md",
+        "marketplace": "/plugin marketplace add opentrace/opentrace"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:c35e02e34fee0cee4a9deadf49000f048a61fb6a5aa17ea65040eff6b96bf9d3",
+      "bytes": 2989,
+      "wordCount": 310,
+      "repoLicense": "Apache-2.0",
+      "commit": "4f448b3f3204d01c3e6f32f03d19d61f39c7808d",
+      "branch": "main",
+      "body": "---\nname: graph\ndescription: |\n  Run the full OpenTrace knowledge-graph pipeline over a folder or repo — index,\n  clustering, highlight surfacing, and the markdown / graphml / Obsidian\n  exporters. Use this skill when the user wants more than the bare structural\n  index: when they ask for clusters, highlights, or a navigable artifact to\n  hand to another tool.\n\n  Triggers on:\n  - \"build the knowledge graph\", \"make a graph of this folder\", \"graph this\"\n  - \"what is this codebase about\", \"give me a map of this project\", \"what's connected\n    to what\"\n  - \"find the clusters\", \"cluster the graph\", \"what are the architectural hubs?\"\n  - any time a user mentions clustering, god nodes, or bridges\n  - when `.opentrace/index.db` is already present in the working directory,\n    an indexed graph exists — prefer answering from it over re-deriving\n    answers from raw files\nallowed-tools: Bash, Read, Write, Agent, mcp__opentrace_oss__search_graph, mcp__opentrace_oss__get_node, mcp__opentrace_oss__traverse_graph, mcp__opentrace_oss__list_nodes, mcp__opentrace_oss__get_stats\n---\n\nThe user wants to build, refresh, or explore the OpenTrace knowledge graph.\nThis skill is the on-ramp — point at the right slash command and run it.\n\n## Request\n$ARGUMENTS\n\n## Routing\n\nMatch the user's intent to one of the commands below. When in doubt, default to\n`/build` for build / refresh and `/interrogate` for question-answering.\n\n| Intent | Command |\n|---|---|\n| Build the graph from scratch on a folder or GitHub URL | `/build [path or url]` |\n| Index only (no clustering / analysis) | `/index [path]` |\n| Re-run clustering | `/cluster` |\n| Surface god nodes, bridges, suggested questions | `/analyze` |\n| Quick exploration of a named component | `/explore <name>` |\n| Read-only Q&A over the graph | `/interrogate \"<question>\"` |\n| Shortest path between two graph nodes | `/path <A> <B>` |\n| Obsidian vault export | `/export-obsidian` |\n| Browsable markdown report | `/export-report` |\n| GraphML for Gephi / yEd | `/export-graphml` |\n| Counts of indexed nodes by type | `/graph-status` |\n\nIf the user asked a question the graph could answer directly (e.g. \"what's\nconnected to AuthMiddleware?\") and `.opentrace/index.db` exists, run\n`/interrogate` yourself rather than asking the user which command to use.\n\n## When the graph does not exist yet\n\nIf `.opentrace/index.db` is missing and the user is asking a graph-flavoured\nquestion, offer to run `/build` first, then answer against the freshly built\ngraph.\n\n## Conventions\n\n- Only `CALLS` edges carry a `confidence` value — a float from the call\n  resolver (1.0 for an exact in-scope match, lower for cross-file and\n  heuristic ones). No other edge type has one, so don't report a confidence\n  for edges that don't carry it.\n- After any build, the OpenTrace MCP tools (`search_graph`, `get_node`,\n  `traverse_graph`, `list_nodes`, `get_stats`) read the same `.opentrace/index.db`\n  the slash commands wrote to. There is one graph, not two.\n",
+      "bodyMd": "The user wants to build, refresh, or explore the OpenTrace knowledge graph.\nThis skill is the on-ramp — point at the right slash command and run it.\n\n## Request\n$ARGUMENTS\n\n## Routing\n\nMatch the user's intent to one of the commands below. When in doubt, default to\n`/build` for build / refresh and `/interrogate` for question-answering.\n\n| Intent | Command |\n|---|---|\n| Build the graph from scratch on a folder or GitHub URL | `/build [path or url]` |\n| Index only (no clustering / analysis) | `/index [path]` |\n| Re-run clustering | `/cluster` |\n| Surface god nodes, bridges, suggested questions | `/analyze` |\n| Quick exploration of a named component | `/explore <name>` |\n| Read-only Q&A over the graph | `/interrogate \"<question>\"` |\n| Shortest path between two graph nodes | `/path <A> <B>` |\n| Obsidian vault export | `/export-obsidian` |\n| Browsable markdown report | `/export-report` |\n| GraphML for Gephi / yEd | `/export-graphml` |\n| Counts of indexed nodes by type | `/graph-status` |\n\nIf the user asked a question the graph could answer directly (e.g. \"what's\nconnected to AuthMiddleware?\") and `.opentrace/index.db` exists, run\n`/interrogate` yourself rather than asking the user which command to use.\n\n## When the graph does not exist yet\n\nIf `.opentrace/index.db` is missing and the user is asking a graph-flavoured\nquestion, offer to run `/build` first, then answer against the freshly built\ngraph.\n\n## Conventions\n\n- Only `CALLS` edges carry a `confidence` value — a float from the call\n  resolver (1.0 for an exact in-scope match, lower for cross-file and\n  heuristic ones). No other edge type has one, so don't report a confidence\n  for edges that don't carry it.\n- After any build, the OpenTrace MCP tools (`search_graph`, `get_node`,\n  `traverse_graph`, `list_nodes`, `get_stats`) read the same `.opentrace/index.db`\n  the slash commands wrote to. There is one graph, not two.\n"
+    }
+  ]
+}

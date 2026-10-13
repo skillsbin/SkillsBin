@@ -1,0 +1,227 @@
+{
+  "repo": "alicankiraz1/SentinelXPrime",
+  "commit": "109a86e1fc599cccd4eac40f3976a4b6fceea0a6",
+  "branch": "main",
+  "fetchedAt": "2026-10-13T04:51:36.821Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "sentinelx-plan-gap",
+      "name": "sentinelx-plan-gap",
+      "dir": "skills/sentinelx-plan-gap",
+      "path": "skills/sentinelx-plan-gap/SKILL.md",
+      "desc": "Use when defining plans, specs, or task breakdowns for web application work that may be missing security requirements",
+      "descZh": "",
+      "triggers": [
+        "defining plans",
+        "specs"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/alicankiraz1/SentinelXPrime.git",
+        "copy": "cp -r skills/sentinelx-plan-gap ~/.claude/skills/sentinelx-plan-gap",
+        "raw": "https://raw.githubusercontent.com/alicankiraz1/SentinelXPrime/109a86e1fc599cccd4eac40f3976a4b6fceea0a6/skills/sentinelx-plan-gap/SKILL.md",
+        "saveAs": "~/.claude/skills/sentinelx-plan-gap/SKILL.md",
+        "marketplace": "/plugin marketplace add alicankiraz1/SentinelXPrime"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:816a4c3b8dcaa3628f39a16d4cd77bb6a7e873b0b3a4b084fe266d582e6c9721",
+      "bytes": 1279,
+      "wordCount": 160,
+      "repoLicense": "MIT",
+      "commit": "109a86e1fc599cccd4eac40f3976a4b6fceea0a6",
+      "branch": "main",
+      "body": "---\nname: sentinelx-plan-gap\ndescription: Use when defining plans, specs, or task breakdowns for web application work that may be missing security requirements\n---\n\n# Security Plan Gap\n\n## Overview\nFind missing security requirements before code exists. This skill turns design omissions into actionable plan additions.\n\n## When to Use\n- writing a feature plan or architecture\n- reviewing a spec before implementation starts\n- breaking work into tasks that may cross trust boundaries or handle sensitive data\n\n## Workflow\n1. Read the current plan, spec, or task breakdown.\n2. Load `references/plan-gap-checklist.md`.\n3. Load `../shared/common-web-threats.md`, `../shared/finding-schema.md`, and the relevant stack profile if known.\n4. Produce a gap report with missing controls, risk scenarios, and suggested plan additions.\n5. End with a closing coverage note using the shared headings: Reviewed / Not reviewed / Assumptions / Tools run.\n\n## Guardrails\n- Treat missing requirements as gaps, not confirmed vulnerabilities.\n- Prefer concise, actionable additions over generic best-practice lists.\n- Lower confidence when the stack or architecture is only partly defined.\n- Treat this skill as the default planning-stage review pass when `sentinelx-prime` invokes it automatically.\n",
+      "bodyMd": "# Security Plan Gap\n\n## Overview\nFind missing security requirements before code exists. This skill turns design omissions into actionable plan additions.\n\n## When to Use\n- writing a feature plan or architecture\n- reviewing a spec before implementation starts\n- breaking work into tasks that may cross trust boundaries or handle sensitive data\n\n## Workflow\n1. Read the current plan, spec, or task breakdown.\n2. Load `references/plan-gap-checklist.md`.\n3. Load `../shared/common-web-threats.md`, `../shared/finding-schema.md`, and the relevant stack profile if known.\n4. Produce a gap report with missing controls, risk scenarios, and suggested plan additions.\n5. End with a closing coverage note using the shared headings: Reviewed / Not reviewed / Assumptions / Tools run.\n\n## Guardrails\n- Treat missing requirements as gaps, not confirmed vulnerabilities.\n- Prefer concise, actionable additions over generic best-practice lists.\n- Lower confidence when the stack or architecture is only partly defined.\n- Treat this skill as the default planning-stage review pass when `sentinelx-prime` invokes it automatically.\n"
+    },
+    {
+      "slug": "sentinelx-prime",
+      "name": "sentinelx-prime",
+      "dir": "skills/sentinelx-prime",
+      "path": "skills/sentinelx-prime/SKILL.md",
+      "desc": "Use when a repository wants stage-aware cybersecurity guidance during planning, risky implementation changes across authentication, authorization, tokens, secrets, middleware, outbound requests, file handling, CI, deployment, and other trust boundaries, post-implementation review, or pre-release hardening; do not trigger for doc-only, naming-only, formatting-only, or UI-only changes that do not affect a trust boundary",
+      "descZh": "",
+      "triggers": [
+        "risky implementatio"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/alicankiraz1/SentinelXPrime.git",
+        "copy": "cp -r skills/sentinelx-prime ~/.claude/skills/sentinelx-prime",
+        "raw": "https://raw.githubusercontent.com/alicankiraz1/SentinelXPrime/109a86e1fc599cccd4eac40f3976a4b6fceea0a6/skills/sentinelx-prime/SKILL.md",
+        "saveAs": "~/.claude/skills/sentinelx-prime/SKILL.md",
+        "marketplace": "/plugin marketplace add alicankiraz1/SentinelXPrime"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:fcf968c20076e89ae05df2facddf240898c20fa40692397fd7626567d913014b",
+      "bytes": 4082,
+      "wordCount": 489,
+      "repoLicense": "MIT",
+      "commit": "109a86e1fc599cccd4eac40f3976a4b6fceea0a6",
+      "branch": "main",
+      "body": "---\nname: sentinelx-prime\ndescription: Use when a repository wants stage-aware cybersecurity guidance during planning, risky implementation changes across authentication, authorization, tokens, secrets, middleware, outbound requests, file handling, CI, deployment, and other trust boundaries, post-implementation review, or pre-release hardening; do not trigger for doc-only, naming-only, formatting-only, or UI-only changes that do not affect a trust boundary\n---\n\n# SentinelXPrime\n\n## Overview\nThin orchestrator for stage-aware security guidance. It chooses the right security skill for the current project stage and keeps outputs consistent.\n\n## When to Use\n- planning a feature, architecture, or task breakdown\n- changing authentication, authorization, tokens, secrets, middleware, outbound requests, file handling, CI, deployment, or another trust boundary\n- finishing implementation and deciding whether to run a security review\n- preparing release, handoff, or hardening checks\n\n## When Not to Use\n- doc-only changes\n- naming-only refactors\n- formatting-only edits\n- UI-only changes that do not affect a trust boundary\n\n## Workflow\n1. Read `references/context-resolution.md`, `references/activation-rules.md`, `references/interaction-model.md`, `references/risky-change-signals.md`, `references/notification-policy.md`, `references/lifecycle-persistence.md`, and `references/active-analysis.md`.\n2. Classify the stage as `plan`, `review`, `test-rig`, or `uncertain`, and classify whether the current work crosses a risky-change threshold.\n3. Resolve repo-local checkpoint guidance through `references/context-resolution.md` rather than assuming a relative `../../AGENTS.md` path.\n4. For `plan`, invoke `../sentinelx-plan-gap/SKILL.md` automatically.\n5. For risky implementation work, ask once whether the user wants a read-only active analysis pass for the current scope. If they accept, collect scoped evidence through `references/active-analysis.md`. If git-backed discovery is unavailable but shell reads still work for files already visible in context or explicitly named by the user, use a limited current-source fallback and note the limitation in assumptions. If they decline or shell/file evidence is unavailable, stay description-based and note the limitation in assumptions.\n6. For risky implementation work, run a low-noise scoped risky-change review pass using `references/risky-change-review-pass-template.md` with an enriched context pack when active analysis was allowed and available.\n7. If a risky-change review pass returns no material concern, do not create a separate interruption.\n8. For `review`, ask once before invoking `../sentinelx-review-gate/SKILL.md`. If the user accepts, treat that acceptance as consent for read-only active analysis within the current review scope.\n9. For `test-rig`, ask once before invoking `../sentinelx-test-rig/SKILL.md`.\n10. Normalize findings using `../shared/finding-schema.md`.\n11. End substantial outputs with a coverage note.\n\n## Stage Fallback\n- If the stage is `uncertain`, stay advisory, do not trigger a risky-change review pass, do not imply a full review occurred, and wait for stronger stage evidence or explicit user intent.\n\n## Guardrails\n- Never claim the project is secure.\n- Never run tools or mutate files without explicit user consent.\n- Treat read-only active analysis as tool execution that still requires explicit user consent.\n- If the stack is unclear, load `../shared/common-web-threats.md` and say the stack is uncertain.\n- Do not repeat the same offer after a clear refusal in the same stage.\n- Do not imply that a child agent was spawned unless the user explicitly asked for delegation and the active environment actually supports that flow.\n- Never send the full session history when a narrow scoped context pack is sufficient for the risky-change review pass.\n- Risky-change review passes must remain advisory-only unless the user explicitly asks for stronger gating.\n- If repo-local checkpoint policy is missing, do not imply that later-stage security offers are guaranteed automatically.\n",
+      "bodyMd": "# SentinelXPrime\n\n## Overview\nThin orchestrator for stage-aware security guidance. It chooses the right security skill for the current project stage and keeps outputs consistent.\n\n## When to Use\n- planning a feature, architecture, or task breakdown\n- changing authentication, authorization, tokens, secrets, middleware, outbound requests, file handling, CI, deployment, or another trust boundary\n- finishing implementation and deciding whether to run a security review\n- preparing release, handoff, or hardening checks\n\n## When Not to Use\n- doc-only changes\n- naming-only refactors\n- formatting-only edits\n- UI-only changes that do not affect a trust boundary\n\n## Workflow\n1. Read `references/context-resolution.md`, `references/activation-rules.md`, `references/interaction-model.md`, `references/risky-change-signals.md`, `references/notification-policy.md`, `references/lifecycle-persistence.md`, and `references/active-analysis.md`.\n2. Classify the stage as `plan`, `review`, `test-rig`, or `uncertain`, and classify whether the current work crosses a risky-change threshold.\n3. Resolve repo-local checkpoint guidance through `references/context-resolution.md` rather than assuming a relative `../../AGENTS.md` path.\n4. For `plan`, invoke `../sentinelx-plan-gap/SKILL.md` automatically.\n5. For risky implementation work, ask once whether the user wants a read-only active analysis pass for the current scope. If they accept, collect scoped evidence through `references/active-analysis.md`. If git-backed discovery is unavailable but shell reads still work for files already visible in context or explicitly named by the user, use a limited current-source fallback and note the limitation in assumptions. If they decline or shell/file evidence is unavailable, stay description-based and note the limitation in assumptions.\n6. For risky implementation work, run a low-noise scoped risky-change review pass using `references/risky-change-review-pass-template.md` with an enriched context pack when active analysis was allowed and available.\n7. If a risky-change review pass returns no material concern, do not create a separate interruption.\n8. For `review`, ask once before invoking `../sentinelx-review-gate/SKILL.md`. If the user accepts, treat that acceptance as consent for read-only active analysis within the current review scope.\n9. For `test-rig`, ask once before invoking `../sentinelx-test-rig/SKILL.md`.\n10. Normalize findings using `../shared/finding-schema.md`.\n11. End substantial outputs with a coverage note.\n\n## Stage Fallback\n- If the stage is `uncertain`, stay advisory, do not trigger a risky-change review pass, do not imply a full review occurred, and wait for stronger stage evidence or explicit user intent.\n\n## Guardrails\n- Never claim the project is secure.\n- Never run tools or mutate files without explicit user consent.\n- Treat read-only active analysis as tool execution that still requires explicit user consent.\n- If the stack is unclear, load `../shared/common-web-threats.md` and say the stack is uncertain.\n- Do not repeat the same offer after a clear refusal in the same stage.\n- Do not imply that a child agent was spawned unless the user explicitly asked for delegation and the active environment actually supports that flow.\n- Never send the full session history when a narrow scoped context pack is sufficient for the risky-change review pass.\n- Risky-change review passes must remain advisory-only unless the user explicitly asks for stronger gating.\n- If repo-local checkpoint policy is missing, do not imply that later-stage security offers are guaranteed automatically.\n"
+    },
+    {
+      "slug": "sentinelx-review-gate",
+      "name": "sentinelx-review-gate",
+      "dir": "skills/sentinelx-review-gate",
+      "path": "skills/sentinelx-review-gate/SKILL.md",
+      "desc": "Use when implementation is complete or review is requested and the user may want a focused security review of the changed code",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/alicankiraz1/SentinelXPrime.git",
+        "copy": "cp -r skills/sentinelx-review-gate ~/.claude/skills/sentinelx-review-gate",
+        "raw": "https://raw.githubusercontent.com/alicankiraz1/SentinelXPrime/109a86e1fc599cccd4eac40f3976a4b6fceea0a6/skills/sentinelx-review-gate/SKILL.md",
+        "saveAs": "~/.claude/skills/sentinelx-review-gate/SKILL.md",
+        "marketplace": "/plugin marketplace add alicankiraz1/SentinelXPrime"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:760cf9055a100c18346a24c83f8d8223fdc3cdb6bdc47f6468536e234e95b503",
+      "bytes": 2289,
+      "wordCount": 310,
+      "repoLicense": "MIT",
+      "commit": "109a86e1fc599cccd4eac40f3976a4b6fceea0a6",
+      "branch": "main",
+      "body": "---\nname: sentinelx-review-gate\ndescription: Use when implementation is complete or review is requested and the user may want a focused security review of the changed code\n---\n\n# Security Review Gate\n\n## Overview\nRun an advisory-only security review after implementation. This skill reports findings but does not block progress by default.\n\n## When to Use\n- the user says the code is done or ready for review\n- a feature was just implemented and needs a security pass\n- a delivery or release checkpoint is approaching and source-level review would help\n\n## Workflow\n1. Ask once whether the user wants a focused security review, following `../sentinelx-prime/references/interaction-model.md` for language behavior when available.\n2. If the user declines, stop and do not repeat the same offer in the same stage.\n3. If the user accepts, treat that acceptance as consent for read-only active analysis within the current review scope and load `references/review-categories.md`.\n4. If git and shell access are available, inspect changed code within the current repo-local scope using `../sentinelx-prime/references/active-analysis.md`. If git-backed active analysis is unavailable but shell reads still work, you may inspect files already visible in context or explicitly named by the user as a limited current-source fallback. If shell access is unavailable, stay description-based and note the fallback in assumptions.\n5. Load `../shared/common-web-threats.md`, `../shared/finding-schema.md`, and a stack profile when relevant.\n6. Report findings using the required fields from `../shared/finding-schema.md`. Include `evidence_source` whenever code, diff, heuristic, or description evidence materially affected the conclusion.\n7. End with a closing coverage note using the shared headings: Reviewed / Not reviewed / Assumptions / Tools run.\n\n## Guardrails\n- Do not block the user's progress automatically.\n- Do not call heuristic review output a scan result unless a real tool was run.\n- Do not equate no findings with security completeness.\n- Do not describe limited current-source fallback as diff-grounded active analysis.\n- Do not inspect code outside the accepted review scope just because it shares security-related keywords.\n- Do not hardcode a fixed English ask prompt in this skill.\n",
+      "bodyMd": "# Security Review Gate\n\n## Overview\nRun an advisory-only security review after implementation. This skill reports findings but does not block progress by default.\n\n## When to Use\n- the user says the code is done or ready for review\n- a feature was just implemented and needs a security pass\n- a delivery or release checkpoint is approaching and source-level review would help\n\n## Workflow\n1. Ask once whether the user wants a focused security review, following `../sentinelx-prime/references/interaction-model.md` for language behavior when available.\n2. If the user declines, stop and do not repeat the same offer in the same stage.\n3. If the user accepts, treat that acceptance as consent for read-only active analysis within the current review scope and load `references/review-categories.md`.\n4. If git and shell access are available, inspect changed code within the current repo-local scope using `../sentinelx-prime/references/active-analysis.md`. If git-backed active analysis is unavailable but shell reads still work, you may inspect files already visible in context or explicitly named by the user as a limited current-source fallback. If shell access is unavailable, stay description-based and note the fallback in assumptions.\n5. Load `../shared/common-web-threats.md`, `../shared/finding-schema.md`, and a stack profile when relevant.\n6. Report findings using the required fields from `../shared/finding-schema.md`. Include `evidence_source` whenever code, diff, heuristic, or description evidence materially affected the conclusion.\n7. End with a closing coverage note using the shared headings: Reviewed / Not reviewed / Assumptions / Tools run.\n\n## Guardrails\n- Do not block the user's progress automatically.\n- Do not call heuristic review output a scan result unless a real tool was run.\n- Do not equate no findings with security completeness.\n- Do not describe limited current-source fallback as diff-grounded active analysis.\n- Do not inspect code outside the accepted review scope just because it shares security-related keywords.\n- Do not hardcode a fixed English ask prompt in this skill.\n"
+    },
+    {
+      "slug": "sentinelx-test-rig",
+      "name": "sentinelx-test-rig",
+      "dir": "skills/sentinelx-test-rig",
+      "path": "skills/sentinelx-test-rig/SKILL.md",
+      "desc": "Use when a feature or project is nearing handoff or release and the user may want a stack-aware security check plan without automatic setup",
+      "descZh": "",
+      "triggers": [
+        "a feature"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/alicankiraz1/SentinelXPrime.git",
+        "copy": "cp -r skills/sentinelx-test-rig ~/.claude/skills/sentinelx-test-rig",
+        "raw": "https://raw.githubusercontent.com/alicankiraz1/SentinelXPrime/109a86e1fc599cccd4eac40f3976a4b6fceea0a6/skills/sentinelx-test-rig/SKILL.md",
+        "saveAs": "~/.claude/skills/sentinelx-test-rig/SKILL.md",
+        "marketplace": "/plugin marketplace add alicankiraz1/SentinelXPrime"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:702d9cca110f84165fe74de00aa2d3400f14bae213fab0b3d4a3561b997fab3c",
+      "bytes": 1492,
+      "wordCount": 195,
+      "repoLicense": "MIT",
+      "commit": "109a86e1fc599cccd4eac40f3976a4b6fceea0a6",
+      "branch": "main",
+      "body": "---\nname: sentinelx-test-rig\ndescription: Use when a feature or project is nearing handoff or release and the user may want a stack-aware security check plan without automatic setup\n---\n\n# Security Test Rig\n\n## Overview\nOffer a recommendation-only security check plan after implementation. This skill helps users set up the next validation step without silently provisioning anything.\n\n## When to Use\n- a feature or project is approaching release or handoff\n- the user wants a lightweight hardening or validation pass\n- the next useful step is tool selection rather than source review\n\n## Workflow\n1. Ask once whether the user wants a stack-aware security check plan, following `../sentinelx-prime/references/interaction-model.md` for language behavior when available.\n2. If the user declines, stop and do not repeat the same offer in the same stage.\n3. If the user accepts, load `references/tool-selection.md` and `references/sample-commands.md`.\n4. Recommend tools, commands, and checklist items based on the stack.\n5. End the recommendation with a closing coverage note using the shared headings: Reviewed / Not reviewed / Assumptions / Tools run.\n6. State clearly that no environment was provisioned and no tooling was installed automatically.\n\n## Guardrails\n- Recommendation-only in v1.\n- No installation, config mutation, CI wiring, or environment provisioning.\n- Avoid presenting optional tools as mandatory without context.\n- Do not hardcode a fixed English ask prompt in this skill.\n",
+      "bodyMd": "# Security Test Rig\n\n## Overview\nOffer a recommendation-only security check plan after implementation. This skill helps users set up the next validation step without silently provisioning anything.\n\n## When to Use\n- a feature or project is approaching release or handoff\n- the user wants a lightweight hardening or validation pass\n- the next useful step is tool selection rather than source review\n\n## Workflow\n1. Ask once whether the user wants a stack-aware security check plan, following `../sentinelx-prime/references/interaction-model.md` for language behavior when available.\n2. If the user declines, stop and do not repeat the same offer in the same stage.\n3. If the user accepts, load `references/tool-selection.md` and `references/sample-commands.md`.\n4. Recommend tools, commands, and checklist items based on the stack.\n5. End the recommendation with a closing coverage note using the shared headings: Reviewed / Not reviewed / Assumptions / Tools run.\n6. State clearly that no environment was provisioned and no tooling was installed automatically.\n\n## Guardrails\n- Recommendation-only in v1.\n- No installation, config mutation, CI wiring, or environment provisioning.\n- Avoid presenting optional tools as mandatory without context.\n- Do not hardcode a fixed English ask prompt in this skill.\n"
+    },
+    {
+      "slug": "using-sentinelx",
+      "name": "using-sentinelx",
+      "dir": "skills/using-sentinelx",
+      "path": "skills/using-sentinelx/SKILL.md",
+      "desc": "Use when a session needs quick orientation to SentinelXPrime stages, checkpoints, guardrails, and the right SentinelXPrime skill to invoke",
+      "descZh": "",
+      "triggers": [
+        "checkpoints",
+        "guardrails",
+        "and t"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/alicankiraz1/SentinelXPrime.git",
+        "copy": "cp -r skills/using-sentinelx ~/.claude/skills/using-sentinelx",
+        "raw": "https://raw.githubusercontent.com/alicankiraz1/SentinelXPrime/109a86e1fc599cccd4eac40f3976a4b6fceea0a6/skills/using-sentinelx/SKILL.md",
+        "saveAs": "~/.claude/skills/using-sentinelx/SKILL.md",
+        "marketplace": "/plugin marketplace add alicankiraz1/SentinelXPrime"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:5a972e880a18cc798a7512a7d0478140835469ce9e5fecf7bdc1f490ff6372ff",
+      "bytes": 1818,
+      "wordCount": 230,
+      "repoLicense": "MIT",
+      "commit": "109a86e1fc599cccd4eac40f3976a4b6fceea0a6",
+      "branch": "main",
+      "body": "---\nname: using-sentinelx\ndescription: Use when a session needs quick orientation to SentinelXPrime stages, checkpoints, guardrails, and the right SentinelXPrime skill to invoke\n---\n\n# Using SentinelXPrime\n\n## Overview\nSentinelXPrime is a stage-aware security skill suite. Use it to add lightweight, advisory-first security structure without pretending to certify security.\n\n## Skill Map\n- `sentinelx-prime`: route the current conversation to the right security stage\n- `sentinelx-plan-gap`: planning-stage security gap analysis\n- `sentinelx-review-gate`: opt-in post-implementation security review\n- `sentinelx-test-rig`: opt-in security test/check planning before release\n\n## Operating Rules\n- Keep the suite advisory-first unless the user explicitly asks for stronger gating.\n- Do not claim the repository is secure, fully reviewed, or production-ready.\n- Do not repeat the same review or test-rig offer after the user declines it in the current stage.\n- Treat authentication, authorization, tokens, secrets, middleware, outbound requests, file handling, CI, deployment, and other trust-boundary work as the risky implementation threshold.\n- Separate reviewed areas, unreviewed areas, assumptions, and tools run in substantial outputs.\n\n## Bootstrap\n- Use this skill to remind the assistant that SentinelXPrime exists in the current session.\n- When the stage is already clear, prefer the more specific SentinelXPrime skill instead of repeating this bootstrap.\n\n## Stage Hints\n- If the code is done and the next question is whether the implementation is safe enough, prefer `sentinelx-review-gate`.\n- If the work is moving into release, handoff, or hardening checks, prefer `sentinelx-test-rig`.\n- If stage evidence is weak or contradictory, stay advisory and let `sentinelx-prime` classify the work as `uncertain`.\n",
+      "bodyMd": "# Using SentinelXPrime\n\n## Overview\nSentinelXPrime is a stage-aware security skill suite. Use it to add lightweight, advisory-first security structure without pretending to certify security.\n\n## Skill Map\n- `sentinelx-prime`: route the current conversation to the right security stage\n- `sentinelx-plan-gap`: planning-stage security gap analysis\n- `sentinelx-review-gate`: opt-in post-implementation security review\n- `sentinelx-test-rig`: opt-in security test/check planning before release\n\n## Operating Rules\n- Keep the suite advisory-first unless the user explicitly asks for stronger gating.\n- Do not claim the repository is secure, fully reviewed, or production-ready.\n- Do not repeat the same review or test-rig offer after the user declines it in the current stage.\n- Treat authentication, authorization, tokens, secrets, middleware, outbound requests, file handling, CI, deployment, and other trust-boundary work as the risky implementation threshold.\n- Separate reviewed areas, unreviewed areas, assumptions, and tools run in substantial outputs.\n\n## Bootstrap\n- Use this skill to remind the assistant that SentinelXPrime exists in the current session.\n- When the stage is already clear, prefer the more specific SentinelXPrime skill instead of repeating this bootstrap.\n\n## Stage Hints\n- If the code is done and the next question is whether the implementation is safe enough, prefer `sentinelx-review-gate`.\n- If the work is moving into release, handoff, or hardening checks, prefer `sentinelx-test-rig`.\n- If stage evidence is weak or contradictory, stay advisory and let `sentinelx-prime` classify the work as `uncertain`.\n"
+    }
+  ]
+}

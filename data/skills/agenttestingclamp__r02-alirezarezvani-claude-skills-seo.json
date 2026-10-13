@@ -1,0 +1,48 @@
+{
+  "repo": "AgentTestingClamp/r02-alirezarezvani-claude-skills-seo",
+  "commit": "09a31a051434968f2082d7c070986369bc7826dd",
+  "branch": "main",
+  "fetchedAt": "2026-10-13T04:51:22.820Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "r00-alirezarezvani-claude-skills-seo",
+      "name": "r00-alirezarezvani-claude-skills--seo",
+      "dir": "",
+      "path": "SKILL.md",
+      "desc": "📈 SEO & Content Marketing skill suite derived from alirezarezvani/claude-skills. Keyword research, content audits, SERP analysis, technical SEO and content strategy. Provides 10 specialised commands for seo, content, marketing workflows.",
+      "descZh": "",
+      "triggers": [],
+      "version": "1.0.0",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/AgentTestingClamp/r02-alirezarezvani-claude-skills-seo.git",
+        "copy": "",
+        "raw": "https://raw.githubusercontent.com/AgentTestingClamp/r02-alirezarezvani-claude-skills-seo/09a31a051434968f2082d7c070986369bc7826dd/SKILL.md",
+        "saveAs": "~/.claude/skills/r00-alirezarezvani-claude-skills-seo/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:5b400e60cf0cc9411ae65b2f8654a76f90bf1873b7accd7ecc662b4d8eac5e00",
+      "bytes": 3058,
+      "wordCount": 346,
+      "repoLicense": "",
+      "commit": "09a31a051434968f2082d7c070986369bc7826dd",
+      "branch": "main",
+      "body": "---\nname: \"r00-alirezarezvani-claude-skills--seo\"\ndescription: >\n  📈 SEO & Content Marketing skill suite derived from alirezarezvani/claude-skills.\n  Keyword research, content audits, SERP analysis, technical SEO and content strategy.\n  Provides 10 specialised commands for seo, content, marketing workflows.\nversion: \"1.0.0\"\ndomain: seo\ntags: [\"seo\", \"content\", \"marketing\", \"serp\", \"keywords\"]\nsource: \"https://github.com/alirezarezvani/claude-skills\"\nlicense: MIT\n---\n\n# 📈 SEO & Content Marketing Skill Suite\n\n> Derived from **alirezarezvani/claude-skills** · Focus: _235 skills across engineering, marketing, C-level, finance_\n\n## Overview\n\nThis skill provides 10 production-ready commands tailored for\n**SEO & Content Marketing** workflows. All commands follow a consistent\ninteraction pattern with structured output, progress tracking and\nactionable recommendations.\n\n## Available Commands\n\n- `/keyword-research` — Deep keyword clustering and opportunity scoring with SERP intent mapping\n- `/content-audit` — Full-site content quality score, duplication check and cannibalization report\n- `/technical-seo` — Crawl budget, Core Web Vitals, schema markup and indexability audit\n- `/competitor-gap` — Backlink gap, topic gap and featured-snippet opportunity analysis\n- `/content-brief` — AI-generated SEO content brief with outline, NLP terms and word count targets\n- `/serp-monitor` — Daily rank tracking report with volatility alerts and CTR optimisation tips\n- `/link-prospecting` — Quality backlink prospect list with DA/DR filters and outreach templates\n- `/page-speed-seo` — Render-blocking, LCP, CLS, FID diagnosis mapped to ranking impact\n- `/local-seo` — NAP consistency, Google Business Profile optimisation and local citation audit\n- `/content-calendar` — Data-driven editorial calendar built from search demand and seasonality\n\n## Interaction Pattern\n\nEvery command follows this structured response format:\n\n```\n1. CONTEXT CHECK   — Verify inputs and confirm scope with user\n2. ANALYSIS        — Deep analysis with live progress display\n3. FINDINGS TABLE  — Structured results with severity / priority\n4. RECOMMENDATIONS — Prioritised action list (quick wins first)\n5. NEXT STEPS      — Suggested follow-up commands\n```\n\n## UI Conventions\n\n| Symbol | Meaning              |\n|--------|----------------------|\n| ✓      | Passed / complete    |\n| ✗      | Failed / critical    |\n| ⚠      | Warning / review     |\n| ⟳      | In progress          |\n| ░      | Pending              |\n| 🔴     | Critical severity    |\n| 🟠     | High severity        |\n| 🟡     | Medium severity      |\n| 🟢     | Low / informational  |\n\nProgress bars use block characters:\n`[████████░░] 80%`\n\n## Quick Start\n\n```bash\n# Install this skill\ncp -r . ~/.claude/skills/r00-alirezarezvani-claude-skills--seo/\n\n# In Claude Code\n/read ~/.claude/skills/r00-alirezarezvani-claude-skills--seo/SKILL.md\n```\n\nThen simply describe your task and Claude will route to the\nappropriate command automatically.\n",
+      "bodyMd": "# 📈 SEO & Content Marketing Skill Suite\n\n> Derived from **alirezarezvani/claude-skills** · Focus: _235 skills across engineering, marketing, C-level, finance_\n\n## Overview\n\nThis skill provides 10 production-ready commands tailored for\n**SEO & Content Marketing** workflows. All commands follow a consistent\ninteraction pattern with structured output, progress tracking and\nactionable recommendations.\n\n## Available Commands\n\n- `/keyword-research` — Deep keyword clustering and opportunity scoring with SERP intent mapping\n- `/content-audit` — Full-site content quality score, duplication check and cannibalization report\n- `/technical-seo` — Crawl budget, Core Web Vitals, schema markup and indexability audit\n- `/competitor-gap` — Backlink gap, topic gap and featured-snippet opportunity analysis\n- `/content-brief` — AI-generated SEO content brief with outline, NLP terms and word count targets\n- `/serp-monitor` — Daily rank tracking report with volatility alerts and CTR optimisation tips\n- `/link-prospecting` — Quality backlink prospect list with DA/DR filters and outreach templates\n- `/page-speed-seo` — Render-blocking, LCP, CLS, FID diagnosis mapped to ranking impact\n- `/local-seo` — NAP consistency, Google Business Profile optimisation and local citation audit\n- `/content-calendar` — Data-driven editorial calendar built from search demand and seasonality\n\n## Interaction Pattern\n\nEvery command follows this structured response format:\n\n```\n1. CONTEXT CHECK   — Verify inputs and confirm scope with user\n2. ANALYSIS        — Deep analysis with live progress display\n3. FINDINGS TABLE  — Structured results with severity / priority\n4. RECOMMENDATIONS — Prioritised action list (quick wins first)\n5. NEXT STEPS      — Suggested follow-up commands\n```\n\n## UI Conventions\n\n| Symbol | Meaning              |\n|--------|----------------------|\n| ✓      | Passed / complete    |\n| ✗      | Failed / critical    |\n| ⚠      | Warning / review     |\n| ⟳      | In progress          |\n| ░      | Pending              |\n| 🔴     | Critical severity    |\n| 🟠     | High severity        |\n| 🟡     | Medium severity      |\n| 🟢     | Low / informational  |\n\nProgress bars use block characters:\n`[████████░░] 80%`\n\n## Quick Start\n\n```bash\n# Install this skill\ncp -r . ~/.claude/skills/r00-alirezarezvani-claude-skills--seo/\n\n# In Claude Code\n/read ~/.claude/skills/r00-alirezarezvani-claude-skills--seo/SKILL.md\n```\n\nThen simply describe your task and Claude will route to the\nappropriate command automatically.\n"
+    }
+  ]
+}

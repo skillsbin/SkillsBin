@@ -1,0 +1,54 @@
+{
+  "repo": "Sunwood-ai-labs/SourceSage",
+  "commit": "c10b14234239de6248a0347bf9051507e8b2eb2a",
+  "branch": "main",
+  "fetchedAt": "2026-10-13T04:50:47.939Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "sourcesage-cli",
+      "name": "sourcesage-cli",
+      "dir": "",
+      "path": "SKILL.md",
+      "desc": "Generate AI-friendly repository documentation with the SourceSage CLI. Use when Codex needs to run `sage` or `sourcesage` to create `.SourceSageAssets/Repository_summary.md`, analyze the current repository or another local repository, switch the output language between English and Japanese, use `--lite` to keep the summary small, change the output directory, or optionally create a deprecated tag-diff release report with `--diff`.",
+      "descZh": "",
+      "triggers": [
+        "`sourcesage` to create `"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git",
+          "uv",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Sunwood-ai-labs/SourceSage.git",
+        "copy": "",
+        "raw": "https://raw.githubusercontent.com/Sunwood-ai-labs/SourceSage/c10b14234239de6248a0347bf9051507e8b2eb2a/SKILL.md",
+        "saveAs": "~/.claude/skills/sourcesage-cli/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:3c48c3dd5e8421068735b0f1c7f6744c03c586e5042b46ddcabccba1785c186d",
+      "bytes": 4014,
+      "wordCount": 525,
+      "repoLicense": "MIT",
+      "commit": "c10b14234239de6248a0347bf9051507e8b2eb2a",
+      "branch": "main",
+      "body": "---\nname: sourcesage-cli\ndescription: Generate AI-friendly repository documentation with the SourceSage CLI. Use when Codex needs to run `sage` or `sourcesage` to create `.SourceSageAssets/Repository_summary.md`, analyze the current repository or another local repository, switch the output language between English and Japanese, use `--lite` to keep the summary small, change the output directory, or optionally create a deprecated tag-diff release report with `--diff`.\n---\n\n# SourceSage CLI\n\n## Overview\n\nUse the SourceSage CLI from this repository checkout to generate repository summaries for the current repo or another local repo.\n\nPrefer the local checkout over assuming `sourcesage` is globally installed. In this repository layout, the SourceSage tool root is the directory that contains this `SKILL.md`.\n\n## Workflow\n\n1. Resolve the SourceSage tool root and the target repository.\n   - If the user did not specify another repo, analyze the current workspace.\n   - If the current workspace is not the SourceSage repo, run SourceSage from its own checkout with `uv run --directory <sourcesage-root> sage ...`.\n\n2. Pick the smallest command that satisfies the request.\n   - Current repo summary: `uv run sage`\n   - Current repo summary in lite mode: `uv run sage --lite`\n   - Current repo summary in Japanese: `uv run sage -l ja`\n   - Another repo with default output inside that repo: `uv run --directory <sourcesage-root> sage --repo \"<target-repo>\"`\n   - Another repo in lite mode: `uv run --directory <sourcesage-root> sage --repo \"<target-repo>\" --lite`\n   - Another repo with explicit output directory: `uv run --directory <sourcesage-root> sage --repo \"<target-repo>\" -o \"<output-dir>\"`\n   - Deprecated diff report: `uv run --directory <sourcesage-root> sage --repo \"<target-repo>\" --diff`\n\n3. Verify the generated artifacts after every run.\n   - Repository summary: `<output-dir>/.SourceSageAssets/Repository_summary.md`\n   - Deprecated diff report: `<output-dir>/.SourceSageAssets/RELEASE_REPORT/Report_<latest-tag>.md`\n   - Open the generated markdown and summarize the important results instead of only reporting that the command ran.\n   - In `--lite` mode, confirm the summary keeps the tree, Git info, statistics, and root README files while omitting the `## File Contents` section.\n\n4. Report side effects and command mismatches.\n   - Expect SourceSage to create `<repo>/.SourceSageignore` if it does not exist.\n   - Treat `--ignore-file` as the supported ignore override.\n   - Do not rely on `--use-ignore` unless the CLI is updated and re-verified, because the current CLI does not expose that flag.\n\n## Command Notes\n\n- Prefer `uv run sage` inside the SourceSage repo because `pyproject.toml` defines both `sage` and `sourcesage` entry points.\n- Prefer `uv run --directory <sourcesage-root> sage ...` outside the SourceSage repo so the command uses this checkout without requiring a global install.\n- Fall back to `sourcesage` or `sage` directly only when the package is already installed and `uv` is unavailable.\n- Use `-l ja` or `-l en` for output language.\n- Use `--lite` for first-pass exploration when ignore rules are not tuned yet or when full file excerpts would make the summary too large.\n- Use `-o` when the user wants artifacts outside the repo root.\n- Use `--repo` to analyze another repository from this checkout.\n\n## Validation\n\n- Run the chosen command instead of only describing it.\n- Confirm that the expected markdown file exists.\n- Read the generated output and report the path plus a short summary of what was produced.\n- Re-run the exact command after changing any execution instructions or docs that mention it.\n\n## Avoid\n\n- Do not assume README examples are authoritative when they differ from `sourcesage/cli.py`.\n- Do not overwrite existing artifacts silently when the user asked for a specific destination and it already contains results.\n- Do not describe SourceSage usage from memory when you can inspect `pyproject.toml` and `sourcesage/cli.py` in this repo.\n",
+      "bodyMd": "# SourceSage CLI\n\n## Overview\n\nUse the SourceSage CLI from this repository checkout to generate repository summaries for the current repo or another local repo.\n\nPrefer the local checkout over assuming `sourcesage` is globally installed. In this repository layout, the SourceSage tool root is the directory that contains this `SKILL.md`.\n\n## Workflow\n\n1. Resolve the SourceSage tool root and the target repository.\n   - If the user did not specify another repo, analyze the current workspace.\n   - If the current workspace is not the SourceSage repo, run SourceSage from its own checkout with `uv run --directory <sourcesage-root> sage ...`.\n\n2. Pick the smallest command that satisfies the request.\n   - Current repo summary: `uv run sage`\n   - Current repo summary in lite mode: `uv run sage --lite`\n   - Current repo summary in Japanese: `uv run sage -l ja`\n   - Another repo with default output inside that repo: `uv run --directory <sourcesage-root> sage --repo \"<target-repo>\"`\n   - Another repo in lite mode: `uv run --directory <sourcesage-root> sage --repo \"<target-repo>\" --lite`\n   - Another repo with explicit output directory: `uv run --directory <sourcesage-root> sage --repo \"<target-repo>\" -o \"<output-dir>\"`\n   - Deprecated diff report: `uv run --directory <sourcesage-root> sage --repo \"<target-repo>\" --diff`\n\n3. Verify the generated artifacts after every run.\n   - Repository summary: `<output-dir>/.SourceSageAssets/Repository_summary.md`\n   - Deprecated diff report: `<output-dir>/.SourceSageAssets/RELEASE_REPORT/Report_<latest-tag>.md`\n   - Open the generated markdown and summarize the important results instead of only reporting that the command ran.\n   - In `--lite` mode, confirm the summary keeps the tree, Git info, statistics, and root README files while omitting the `## File Contents` section.\n\n4. Report side effects and command mismatches.\n   - Expect SourceSage to create `<repo>/.SourceSageignore` if it does not exist.\n   - Treat `--ignore-file` as the supported ignore override.\n   - Do not rely on `--use-ignore` unless the CLI is updated and re-verified, because the current CLI does not expose that flag.\n\n## Command Notes\n\n- Prefer `uv run sage` inside the SourceSage repo because `pyproject.toml` defines both `sage` and `sourcesage` entry points.\n- Prefer `uv run --directory <sourcesage-root> sage ...` outside the SourceSage repo so the command uses this checkout without requiring a global install.\n- Fall back to `sourcesage` or `sage` directly only when the package is already installed and `uv` is unavailable.\n- Use `-l ja` or `-l en` for output language.\n- Use `--lite` for first-pass exploration when ignore rules are not tuned yet or when full file excerpts would make the summary too large.\n- Use `-o` when the user wants artifacts outside the repo root.\n- Use `--repo` to analyze another repository from this checkout.\n\n## Validation\n\n- Run the chosen command instead of only describing it.\n- Confirm that the expected markdown file exists.\n- Read the generated output and report the path plus a short summary of what was produced.\n- Re-run the exact command after changing any execution instructions or docs that mention it.\n\n## Avoid\n\n- Do not assume README examples are authoritative when they differ from `sourcesage/cli.py`.\n- Do not overwrite existing artifacts silently when the user asked for a specific destination and it already contains results.\n- Do not describe SourceSage usage from memory when you can inspect `pyproject.toml` and `sourcesage/cli.py` in this repo.\n"
+    }
+  ]
+}

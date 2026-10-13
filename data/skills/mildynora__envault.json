@@ -1,0 +1,53 @@
+{
+  "repo": "MildyNora/envault",
+  "commit": "cc1c86c2f9677f26be1e4b25fdc615c0c53fd351",
+  "branch": "master",
+  "fetchedAt": "2026-10-13T04:50:32.286Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "envault",
+      "name": "envault",
+      "dir": "plugin/skills/envault",
+      "path": "plugin/skills/envault/SKILL.md",
+      "desc": "Use whenever a task needs an API key, token, password, or other secret — before asking the user for a value, before writing any .env or hardcoding a key, and whenever a command needs credentials (e.g. OPENROUTER_API_KEY), or when a plaintext .env is present. envault lets you handle secrets by name only; you never see the plaintext.",
+      "descZh": "",
+      "triggers": [
+        "token",
+        "password"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": true,
+        "network": true,
+        "bins": [
+          "npm"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/MildyNora/envault.git",
+        "copy": "cp -r plugin/skills/envault ~/.claude/skills/envault",
+        "raw": "https://raw.githubusercontent.com/MildyNora/envault/cc1c86c2f9677f26be1e4b25fdc615c0c53fd351/plugin/skills/envault/SKILL.md",
+        "saveAs": "~/.claude/skills/envault/SKILL.md",
+        "marketplace": "/plugin marketplace add MildyNora/envault"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:f06655b7a1cda1509ab85f6cd4110b0a554a09dc4110d419b5b4a66ebd1ffbcf",
+      "bytes": 3105,
+      "wordCount": 414,
+      "repoLicense": "MIT",
+      "commit": "cc1c86c2f9677f26be1e4b25fdc615c0c53fd351",
+      "branch": "master",
+      "body": "---\nname: envault\ndescription: Use whenever a task needs an API key, token, password, or other secret — before asking the user for a value, before writing any .env or hardcoding a key, and whenever a command needs credentials (e.g. OPENROUTER_API_KEY), or when a plaintext .env is present. envault lets you handle secrets by name only; you never see the plaintext.\n---\n\n# envault — secrets by name, never plaintext\n\nYou work with **names** and **ciphers**; real values exist only inside\nprocesses started by `envault run`. Keep it that way.\n\n## Rules\n- Never ask the user to paste a secret into chat; never write a plaintext\n  secret to any file.\n- Refer to secrets by name only. `[envault:<name>]` in output means masking\n  **worked** — not an error; don't try to unmask it.\n- Human-only — ask the user, never run these: the bare `envault` dashboard,\n  `envault rotate`, `envault request-window`, `envault audit`, `envault config set`,\n  and reading `~/.envault/`.\n\n## Workflow\n1. **Discover:** `envault ls --json` → names + labels only.\n2. **Wire:** `envault link ENV_VAR name` (writes `envault.toml`, names only).\n   Code reads ordinary env vars (e.g. `process.env.OPENROUTER_API_KEY`).\n3. **Run:** anything needing secrets goes through `envault run -- <cmd>`\n   (values injected, output masked).\n4. **Missing a secret?** Don't ask for the value — request it:\n   `envault request <name> --reason \"why\" --agent \"<your-agent-name>\"`.\n   Replace `<your-agent-name>` with the coding agent actually making the\n   request (for example, `Claude Code`, `Codex`, or `opencode`). Never claim to be\n   a different agent. If the actual agent name is unknown, omit `--agent`;\n   envault uses `ENVAULT_AGENT` when set, or its unidentified fallback.\n   A window opens for the user; you get only the exit code:\n   **0** granted (now usable via `envault run`) · **3** declined (reason on\n   stderr — respect it) · **4** cancelled · **5** timeout · **6** no window.\n5. **Plaintext `.env` present?** Offer `envault import .env`, then have the\n   user delete the file.\n6. **Not installed?** Ask the human to follow the\n   [installation instructions](https://github.com/MildyNora/envault#install)\n   for their platform and complete setup, including `envault init`, themselves.\n\n## Browser login (value stays hidden from you)\nNavigate to the form, then `envault fill <name> --selector '<css>'` — the value\ngoes vault→browser directly. Don't screenshot right after filling a *visible*\nfield (password inputs render masked; plain text ones don't). If fill refuses\non a host mismatch, tell the user — don't override.\n\n## Cheat sheet (all agent-safe)\n| Need | Command |\n|---|---|\n| List names | `envault ls --json` |\n| Map env var → name | `envault link OPENROUTER_API_KEY openrouter` |\n| Run with secrets | `envault run -- npm start` |\n| One-off mapping | `envault run --env VAR=name -- <cmd>` |\n| Request a missing secret | `envault request <name> --reason \"…\" --agent \"<your-agent-name>\"` |\n| Import a .env | `envault import .env` |\n| Browser fill | `envault fill <name> --selector '#password'` |\n",
+      "bodyMd": "# envault — secrets by name, never plaintext\n\nYou work with **names** and **ciphers**; real values exist only inside\nprocesses started by `envault run`. Keep it that way.\n\n## Rules\n- Never ask the user to paste a secret into chat; never write a plaintext\n  secret to any file.\n- Refer to secrets by name only. `[envault:<name>]` in output means masking\n  **worked** — not an error; don't try to unmask it.\n- Human-only — ask the user, never run these: the bare `envault` dashboard,\n  `envault rotate`, `envault request-window`, `envault audit`, `envault config set`,\n  and reading `~/.envault/`.\n\n## Workflow\n1. **Discover:** `envault ls --json` → names + labels only.\n2. **Wire:** `envault link ENV_VAR name` (writes `envault.toml`, names only).\n   Code reads ordinary env vars (e.g. `process.env.OPENROUTER_API_KEY`).\n3. **Run:** anything needing secrets goes through `envault run -- <cmd>`\n   (values injected, output masked).\n4. **Missing a secret?** Don't ask for the value — request it:\n   `envault request <name> --reason \"why\" --agent \"<your-agent-name>\"`.\n   Replace `<your-agent-name>` with the coding agent actually making the\n   request (for example, `Claude Code`, `Codex`, or `opencode`). Never claim to be\n   a different agent. If the actual agent name is unknown, omit `--agent`;\n   envault uses `ENVAULT_AGENT` when set, or its unidentified fallback.\n   A window opens for the user; you get only the exit code:\n   **0** granted (now usable via `envault run`) · **3** declined (reason on\n   stderr — respect it) · **4** cancelled · **5** timeout · **6** no window.\n5. **Plaintext `.env` present?** Offer `envault import .env`, then have the\n   user delete the file.\n6. **Not installed?** Ask the human to follow the\n   [installation instructions](https://github.com/MildyNora/envault#install)\n   for their platform and complete setup, including `envault init`, themselves.\n\n## Browser login (value stays hidden from you)\nNavigate to the form, then `envault fill <name> --selector '<css>'` — the value\ngoes vault→browser directly. Don't screenshot right after filling a *visible*\nfield (password inputs render masked; plain text ones don't). If fill refuses\non a host mismatch, tell the user — don't override.\n\n## Cheat sheet (all agent-safe)\n| Need | Command |\n|---|---|\n| List names | `envault ls --json` |\n| Map env var → name | `envault link OPENROUTER_API_KEY openrouter` |\n| Run with secrets | `envault run -- npm start` |\n| One-off mapping | `envault run --env VAR=name -- <cmd>` |\n| Request a missing secret | `envault request <name> --reason \"…\" --agent \"<your-agent-name>\"` |\n| Import a .env | `envault import .env` |\n| Browser fill | `envault fill <name> --selector '#password'` |\n"
+    }
+  ]
+}

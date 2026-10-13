@@ -1,0 +1,50 @@
+{
+  "repo": "willseltzer/claude-handoff",
+  "commit": "d9e14134360d92492b30e6dea0aeb5ebdc022a59",
+  "branch": "main",
+  "fetchedAt": "2026-10-13T04:50:11.955Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "handoff",
+      "name": "handoff",
+      "dir": "skills/handoff",
+      "path": "skills/handoff/SKILL.md",
+      "desc": "Manages context transfer between AI coding sessions. Activates when HANDOFF.md exists, when user mentions handoff/resume, or when ending significant work.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "go"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/willseltzer/claude-handoff.git",
+        "copy": "cp -r skills/handoff ~/.claude/skills/handoff",
+        "raw": "https://raw.githubusercontent.com/willseltzer/claude-handoff/d9e14134360d92492b30e6dea0aeb5ebdc022a59/skills/handoff/SKILL.md",
+        "saveAs": "~/.claude/skills/handoff/SKILL.md",
+        "marketplace": "/plugin marketplace add willseltzer/claude-handoff"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:7fabd74b7366e13e3639f97056c82ed6763b660d7cc4c82db07b45d54b678685",
+      "bytes": 1381,
+      "wordCount": 188,
+      "repoLicense": "MIT",
+      "commit": "d9e14134360d92492b30e6dea0aeb5ebdc022a59",
+      "branch": "main",
+      "body": "---\nname: handoff\ndescription: Manages context transfer between AI coding sessions. Activates when HANDOFF.md exists, when user mentions handoff/resume, or when ending significant work.\n---\n\n# Handoff Detection\n\n## On Session Start\n\nCheck if `HANDOFF.md` exists in the working directory. If found:\n\n1. Read it silently\n2. Tell the user: \"Found a handoff from a previous session: [title]. [1-sentence goal]. Resume from here?\"\n3. If they agree, follow `/handoff:resume` flow\n\n## Trigger Words\n\nActivate when user says: \"handoff\", \"hand off\", \"pass this to\", \"continue later\", \"pick up where\", \"transfer context\", \"save state\", \"resume\", \"take over\"\n\n## Creating vs Resuming\n\n- User wants to **create**: They're wrapping up or switching agents → use `/handoff:create`\n- User wants to **resume**: They're starting fresh with existing handoff → use `/handoff:resume`\n\n## Proactive Suggestions\n\nConsider suggesting a handoff when:\n- User says \"I need to go\" or \"let's stop here\"\n- A significant milestone is reached\n- You've been working for a long time with lots of context\n\nSay: \"Want me to create a handoff so you (or another agent) can continue later?\"\n\n## Commands\n\n| Command | Use When |\n|---------|----------|\n| `/handoff:create` | Full handoff with all context |\n| `/handoff:quick` | Minimal handoff, just essentials |\n| `/handoff:resume` | Continue from existing handoff |\n",
+      "bodyMd": "# Handoff Detection\n\n## On Session Start\n\nCheck if `HANDOFF.md` exists in the working directory. If found:\n\n1. Read it silently\n2. Tell the user: \"Found a handoff from a previous session: [title]. [1-sentence goal]. Resume from here?\"\n3. If they agree, follow `/handoff:resume` flow\n\n## Trigger Words\n\nActivate when user says: \"handoff\", \"hand off\", \"pass this to\", \"continue later\", \"pick up where\", \"transfer context\", \"save state\", \"resume\", \"take over\"\n\n## Creating vs Resuming\n\n- User wants to **create**: They're wrapping up or switching agents → use `/handoff:create`\n- User wants to **resume**: They're starting fresh with existing handoff → use `/handoff:resume`\n\n## Proactive Suggestions\n\nConsider suggesting a handoff when:\n- User says \"I need to go\" or \"let's stop here\"\n- A significant milestone is reached\n- You've been working for a long time with lots of context\n\nSay: \"Want me to create a handoff so you (or another agent) can continue later?\"\n\n## Commands\n\n| Command | Use When |\n|---------|----------|\n| `/handoff:create` | Full handoff with all context |\n| `/handoff:quick` | Minimal handoff, just essentials |\n| `/handoff:resume` | Continue from existing handoff |\n"
+    }
+  ]
+}

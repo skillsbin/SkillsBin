@@ -1,0 +1,177 @@
+{
+  "repo": "suntay44/buildable-plugin-skills",
+  "commit": "bc7f38cca6fe622299f926e16a057781b30a29ad",
+  "branch": "main",
+  "fetchedAt": "2026-10-13T04:51:08.597Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "mobile-builder",
+      "name": "buildable-mobile-builder",
+      "dir": "skills/mobile-builder",
+      "path": "skills/mobile-builder/SKILL.md",
+      "desc": "Generate or adapt a local-first Buildable mobile prototype from an app spec, archetype, UI pattern, design playbook, or mobile golden template. Use for Buildable Expo/React Native implementation; do not use for ordinary mobile debugging or unrelated React Native edits.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/suntay44/buildable-plugin-skills.git",
+        "copy": "cp -r skills/mobile-builder ~/.claude/skills/mobile-builder",
+        "raw": "https://raw.githubusercontent.com/suntay44/buildable-plugin-skills/bc7f38cca6fe622299f926e16a057781b30a29ad/skills/mobile-builder/SKILL.md",
+        "saveAs": "~/.claude/skills/mobile-builder/SKILL.md",
+        "marketplace": "/plugin marketplace add suntay44/buildable-plugin-skills"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:9ad81f24028b94b08fbe049c0c7863018e2138c99ead2c0fb9132318f563a928",
+      "bytes": 2842,
+      "wordCount": 370,
+      "repoLicense": "MIT",
+      "commit": "bc7f38cca6fe622299f926e16a057781b30a29ad",
+      "branch": "main",
+      "body": "---\nname: buildable-mobile-builder\ndescription: Generate or adapt a local-first Buildable mobile prototype from an app spec, archetype, UI pattern, design playbook, or mobile golden template. Use for Buildable Expo/React Native implementation; do not use for ordinary mobile debugging or unrelated React Native edits.\n---\n\n# Buildable Mobile Builder Skill\n\nUse this skill to generate or adapt local mobile prototypes.\n\nResolve all referenced paths from the Buildable plugin or repository root.\n\n## Reference Loading Contract\n\nMandatory order:\n\n1. Read `.buildable/phase-plan.toon` first when present. It is a summary: retrieve omitted details (such as full design rules or expected files) from the authoritative `.buildable/phase-plan.json` as needed. Without a saved plan, read `buildable-app-spec.json`. Reuse the plan for unchanged requirements rather than re-planning or reading all formats.\n2. Load only `appSpec.references`.\n3. Load current project files only as needed for the requested change.\n4. Do not load web templates or unrelated mobile archetypes.\n5. Load starter source only for the selected template and only when generating or editing it.\n\n## Default Stack\n\n- Expo\n- React Native\n- TypeScript\n- NativeWind\n- Expo Router when appropriate\n- local/mock data\n\n## Workflow\n\n1. Read the saved plan/app spec from the planner handoff.\n2. Check `appSpec.planAudit.checks` before editing; treat blocked/failed checks as gates, not suggestions.\n3. If `questionsNeeded` is true, ask the user before generating.\n4. Apply `appSpec.designSystem` for visual tone, density, palette intent, touch layout rules, component rules, accessibility, and anti-patterns.\n5. Apply `appSpec.blocks` as reusable micro-template guidance. Selected block docs are references to adapt to the current entity/design system, not generic code to paste blindly.\n6. If `appSpec.auth.requested` is true, implement the local/mock auth shape first and keep any named provider behind the auth seam.\n7. Load only the references listed in the app spec.\n8. If the template is `generic-app`, use the selected archetype reference to shape screens and entities instead of loading unrelated mobile templates.\n9. Generate touch-first screens and local state.\n10. Validate navigation, touch targets, and state coverage.\n11. Run `buildable review` from the selected app workspace when the CLI is available.\n\n## Build Order\n\n1. Create typed entities and local sample data.\n2. Build the first mobile screen around the main daily workflow.\n3. Add navigation only when the screen graph requires it.\n4. Add empty, completed, validation, and confirmation states as appropriate.\n5. Review against the selected mobile quality rubric.\n\n## Guardrails\n\n- Do not add accounts, push notifications, external APIs, or backend services unless requested.\n- Keep the mobile app runnable locally.\n",
+      "bodyMd": "# Buildable Mobile Builder Skill\n\nUse this skill to generate or adapt local mobile prototypes.\n\nResolve all referenced paths from the Buildable plugin or repository root.\n\n## Reference Loading Contract\n\nMandatory order:\n\n1. Read `.buildable/phase-plan.toon` first when present. It is a summary: retrieve omitted details (such as full design rules or expected files) from the authoritative `.buildable/phase-plan.json` as needed. Without a saved plan, read `buildable-app-spec.json`. Reuse the plan for unchanged requirements rather than re-planning or reading all formats.\n2. Load only `appSpec.references`.\n3. Load current project files only as needed for the requested change.\n4. Do not load web templates or unrelated mobile archetypes.\n5. Load starter source only for the selected template and only when generating or editing it.\n\n## Default Stack\n\n- Expo\n- React Native\n- TypeScript\n- NativeWind\n- Expo Router when appropriate\n- local/mock data\n\n## Workflow\n\n1. Read the saved plan/app spec from the planner handoff.\n2. Check `appSpec.planAudit.checks` before editing; treat blocked/failed checks as gates, not suggestions.\n3. If `questionsNeeded` is true, ask the user before generating.\n4. Apply `appSpec.designSystem` for visual tone, density, palette intent, touch layout rules, component rules, accessibility, and anti-patterns.\n5. Apply `appSpec.blocks` as reusable micro-template guidance. Selected block docs are references to adapt to the current entity/design system, not generic code to paste blindly.\n6. If `appSpec.auth.requested` is true, implement the local/mock auth shape first and keep any named provider behind the auth seam.\n7. Load only the references listed in the app spec.\n8. If the template is `generic-app`, use the selected archetype reference to shape screens and entities instead of loading unrelated mobile templates.\n9. Generate touch-first screens and local state.\n10. Validate navigation, touch targets, and state coverage.\n11. Run `buildable review` from the selected app workspace when the CLI is available.\n\n## Build Order\n\n1. Create typed entities and local sample data.\n2. Build the first mobile screen around the main daily workflow.\n3. Add navigation only when the screen graph requires it.\n4. Add empty, completed, validation, and confirmation states as appropriate.\n5. Review against the selected mobile quality rubric.\n\n## Guardrails\n\n- Do not add accounts, push notifications, external APIs, or backend services unless requested.\n- Keep the mobile app runnable locally.\n"
+    },
+    {
+      "slug": "planner",
+      "name": "buildable-planner",
+      "dir": "skills/planner",
+      "path": "skills/planner/SKILL.md",
+      "desc": "Plan or classify a Buildable app idea into an archetype, ask-vs-build decision, phase plan, references, mock-data guidance, and local-first app spec. Use for Buildable product planning and ambiguous app-build requests; do not use for ordinary coding, debugging, or generic project planning.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/suntay44/buildable-plugin-skills.git",
+        "copy": "cp -r skills/planner ~/.claude/skills/planner",
+        "raw": "https://raw.githubusercontent.com/suntay44/buildable-plugin-skills/bc7f38cca6fe622299f926e16a057781b30a29ad/skills/planner/SKILL.md",
+        "saveAs": "~/.claude/skills/planner/SKILL.md",
+        "marketplace": "/plugin marketplace add suntay44/buildable-plugin-skills"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:6eb7dccde05f3ffc5352690b97a9a24fa79354363f559c53761dedf6dd13c9f0",
+      "bytes": 4473,
+      "wordCount": 541,
+      "repoLicense": "MIT",
+      "commit": "bc7f38cca6fe622299f926e16a057781b30a29ad",
+      "branch": "main",
+      "body": "---\nname: buildable-planner\ndescription: Plan or classify a Buildable app idea into an archetype, ask-vs-build decision, phase plan, references, mock-data guidance, and local-first app spec. Use for Buildable product planning and ambiguous app-build requests; do not use for ordinary coding, debugging, or generic project planning.\n---\n\n# Buildable Planner Skill\n\nProduce a local-first app spec and phase plan from the user's prompt, explicit reference files, and relevant existing-project context. Resolve bundled paths from the Buildable plugin or repository root.\n\n## CLI Workflow\n\n1. Run `buildable plan \"<prompt>\" --compact`. This retains the structured spec and phases while omitting the duplicate Markdown render; full `.buildable/phase-plan.json`, `.md`, and compact `.toon` files are still saved. Use `--no-write` only for terminal-only inspection. For MCP, use `buildable_plan` with its compact default.\n2. Pass explicit user files with `--file <path>`, `--reference <path>`, or `--screenshot <path>`; inspect `appSpec.referenceInputs` without pasting file contents into the prompt. For requested auth use `--with-auth`; record a named provider with `--with-auth-provider <provider>`. Keep auth local/mock behind a seam unless a provider is named.\n3. Use the returned classification, `appSpec`, and `phasePlan` as the planning result. Do not repeat classification or reopen registries/policies already applied by the CLI. Load only needed files from `appSpec.references`; load selected starter source only when generating or editing it. Never scan whole knowledge/template directories or unselected templates.\n4. Check `appSpec.planAudit` gates and ask blocking `appSpec.questions` when `questionsNeeded` is true before design or generation. Otherwise ask at most one or two `promptRefinement.optionalQuestions` only when the answer materially changes the plan; use defaults when the user wants to proceed.\n5. Summarize the plan once using the output guidance below. Keep implementation within the user's request; a planning-only request does not start app code. The included design system is sufficient to proceed; run `buildable design` only when a deeper UI/UX brief is useful.\n\n## CLI-Unavailable Fallback\n\nOnly when the CLI is unavailable, build the spec manually:\n\n- Match `core/archetype-registry.json` tags, then apply `core/ask-vs-build-policy.md` and `core/activation-policy.md`. Use `knowledge/INDEX.md` and `templates/INDEX.md` only for discovery.\n- Load the selected archetype, matching data-model/screen-graph files when present, and the best target-specific template spec. Preserve runnable versus plan-only status.\n- Select design guidance from `core/design-system-registry.json` and compatible micro-blocks from `blocks/registry.json`; include only selected references.\n- Follow `core/app-spec-schema.md`: include realistic `mockData` and state coverage, explicit `referenceInputs`, `promptRefinement` assumptions/questions/defaults, `planAudit` gates, and requested auth/persistence seams. Keep data local/mock and state non-goals explicitly.\n- Include clarify, plan, mock-data, design, build, and review phases with blockers and completion criteria tied to the selected screens, features, and acceptance criteria.\n\n## Output And Handoff\n\nGive a short decision summary: app direction, target/stack, screens and key behavior, non-goals, design/mock-data approach, blockers or important assumptions, and the next actionable phase. Link the saved plan instead of repeating the full app spec, audit checks, reference list, and phase plan in chat; expand those details when requested. On revisions, retain the accepted direction and constraints, update the saved plan, and summarize what changed.\n\nFor planning-only requests, end with one satisfaction checkpoint: revise in Buildable Planner if needed, or continue with Buildable Web Builder/Mobile Builder for the selected target. If the user already asked to build and there are no blockers, continue to that builder without another approval checkpoint.\n\nThe builder should read `.buildable/phase-plan.toon` first for compact context, then retrieve omitted details from `.buildable/phase-plan.json` as needed (for example, full design rules or expected files). TOON is a summary; JSON remains the source of truth. Reuse the saved plan rather than re-planning unchanged requirements, and load only selected `appSpec.references`, explicit user reference inputs, and necessary starter/project source.\n",
+      "bodyMd": "# Buildable Planner Skill\n\nProduce a local-first app spec and phase plan from the user's prompt, explicit reference files, and relevant existing-project context. Resolve bundled paths from the Buildable plugin or repository root.\n\n## CLI Workflow\n\n1. Run `buildable plan \"<prompt>\" --compact`. This retains the structured spec and phases while omitting the duplicate Markdown render; full `.buildable/phase-plan.json`, `.md`, and compact `.toon` files are still saved. Use `--no-write` only for terminal-only inspection. For MCP, use `buildable_plan` with its compact default.\n2. Pass explicit user files with `--file <path>`, `--reference <path>`, or `--screenshot <path>`; inspect `appSpec.referenceInputs` without pasting file contents into the prompt. For requested auth use `--with-auth`; record a named provider with `--with-auth-provider <provider>`. Keep auth local/mock behind a seam unless a provider is named.\n3. Use the returned classification, `appSpec`, and `phasePlan` as the planning result. Do not repeat classification or reopen registries/policies already applied by the CLI. Load only needed files from `appSpec.references`; load selected starter source only when generating or editing it. Never scan whole knowledge/template directories or unselected templates.\n4. Check `appSpec.planAudit` gates and ask blocking `appSpec.questions` when `questionsNeeded` is true before design or generation. Otherwise ask at most one or two `promptRefinement.optionalQuestions` only when the answer materially changes the plan; use defaults when the user wants to proceed.\n5. Summarize the plan once using the output guidance below. Keep implementation within the user's request; a planning-only request does not start app code. The included design system is sufficient to proceed; run `buildable design` only when a deeper UI/UX brief is useful.\n\n## CLI-Unavailable Fallback\n\nOnly when the CLI is unavailable, build the spec manually:\n\n- Match `core/archetype-registry.json` tags, then apply `core/ask-vs-build-policy.md` and `core/activation-policy.md`. Use `knowledge/INDEX.md` and `templates/INDEX.md` only for discovery.\n- Load the selected archetype, matching data-model/screen-graph files when present, and the best target-specific template spec. Preserve runnable versus plan-only status.\n- Select design guidance from `core/design-system-registry.json` and compatible micro-blocks from `blocks/registry.json`; include only selected references.\n- Follow `core/app-spec-schema.md`: include realistic `mockData` and state coverage, explicit `referenceInputs`, `promptRefinement` assumptions/questions/defaults, `planAudit` gates, and requested auth/persistence seams. Keep data local/mock and state non-goals explicitly.\n- Include clarify, plan, mock-data, design, build, and review phases with blockers and completion criteria tied to the selected screens, features, and acceptance criteria.\n\n## Output And Handoff\n\nGive a short decision summary: app direction, target/stack, screens and key behavior, non-goals, design/mock-data approach, blockers or important assumptions, and the next actionable phase. Link the saved plan instead of repeating the full app spec, audit checks, reference list, and phase plan in chat; expand those details when requested. On revisions, retain the accepted direction and constraints, update the saved plan, and summarize what changed.\n\nFor planning-only requests, end with one satisfaction checkpoint: revise in Buildable Planner if needed, or continue with Buildable Web Builder/Mobile Builder for the selected target. If the user already asked to build and there are no blockers, continue to that builder without another approval checkpoint.\n\nThe builder should read `.buildable/phase-plan.toon` first for compact context, then retrieve omitted details from `.buildable/phase-plan.json` as needed (for example, full design rules or expected files). TOON is a summary; JSON remains the source of truth. Reuse the saved plan rather than re-planning unchanged requirements, and load only selected `appSpec.references`, explicit user reference inputs, and necessary starter/project source.\n"
+    },
+    {
+      "slug": "reviewer",
+      "name": "buildable-reviewer",
+      "dir": "skills/reviewer",
+      "path": "skills/reviewer/SKILL.md",
+      "desc": "Review a Buildable prototype against its app spec and quality rubric for build correctness, workflow completeness, state coverage, accessibility, responsiveness, and local-first discipline. Do not use for ordinary code review, pull-request review, or unrelated repository audits.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/suntay44/buildable-plugin-skills.git",
+        "copy": "cp -r skills/reviewer ~/.claude/skills/reviewer",
+        "raw": "https://raw.githubusercontent.com/suntay44/buildable-plugin-skills/bc7f38cca6fe622299f926e16a057781b30a29ad/skills/reviewer/SKILL.md",
+        "saveAs": "~/.claude/skills/reviewer/SKILL.md",
+        "marketplace": "/plugin marketplace add suntay44/buildable-plugin-skills"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:04a96232c668639f4324a2e867aa7859479bdb256bfae40b323e778ebbbdd9ce",
+      "bytes": 2240,
+      "wordCount": 292,
+      "repoLicense": "MIT",
+      "commit": "bc7f38cca6fe622299f926e16a057781b30a29ad",
+      "branch": "main",
+      "body": "---\nname: buildable-reviewer\ndescription: Review a Buildable prototype against its app spec and quality rubric for build correctness, workflow completeness, state coverage, accessibility, responsiveness, and local-first discipline. Do not use for ordinary code review, pull-request review, or unrelated repository audits.\n---\n\n# Buildable Reviewer Skill\n\nUse this skill to review generated prototypes against the app spec and quality rubric.\n\nResolve all referenced paths from the Buildable plugin or repository root.\n\n`buildable review` is a static/local quality gate. Treat it as a strong first pass for structure, local-first guardrails, source coverage, responsive-layout risk, accessibility signals, and optional build checks; it does not replace manual QA, real device/simulator checks for mobile, or browser/screenshot review when visuals matter.\n\n## Reference Loading Contract\n\nMandatory order:\n\n1. Run `buildable review` from the selected app workspace when available. Pass a path only when reviewing a different folder.\n2. Load the app spec and selected rubric.\n3. Load only files related to reported issues.\n4. Do not load all templates.\n5. Do not load unrelated archetypes or starter source.\n\n## Workflow\n\n1. Run `buildable review` when the CLI is available. Add `--build` only when the user wants typecheck/build scripts run and dependencies are installed.\n2. Read the app spec and selected quality rubric.\n3. Run available build, typecheck, lint, or test commands (or rely on `review --build`).\n4. Inspect the generated UI when possible — start the app and run `buildable preview --url <url>` from the app workspace to render it, screenshot it, and catch runtime/visual errors that build checks miss.\n5. Check required interactions, state coverage, responsive behavior, and accessibility.\n6. Produce a focused fix list.\n7. Apply fixes when operating as the active coding agent.\n\n## Review Priorities\n\n- build correctness\n- primary workflow\n- missing interactions\n- empty/loading/error states\n- mobile and desktop layout\n- accessible form controls\n- unnecessary backend or hosted features\n\n## Output Format\n\nLead with blocking issues, then polish issues, then checks run. If no issues remain, say so and note residual risks.\n",
+      "bodyMd": "# Buildable Reviewer Skill\n\nUse this skill to review generated prototypes against the app spec and quality rubric.\n\nResolve all referenced paths from the Buildable plugin or repository root.\n\n`buildable review` is a static/local quality gate. Treat it as a strong first pass for structure, local-first guardrails, source coverage, responsive-layout risk, accessibility signals, and optional build checks; it does not replace manual QA, real device/simulator checks for mobile, or browser/screenshot review when visuals matter.\n\n## Reference Loading Contract\n\nMandatory order:\n\n1. Run `buildable review` from the selected app workspace when available. Pass a path only when reviewing a different folder.\n2. Load the app spec and selected rubric.\n3. Load only files related to reported issues.\n4. Do not load all templates.\n5. Do not load unrelated archetypes or starter source.\n\n## Workflow\n\n1. Run `buildable review` when the CLI is available. Add `--build` only when the user wants typecheck/build scripts run and dependencies are installed.\n2. Read the app spec and selected quality rubric.\n3. Run available build, typecheck, lint, or test commands (or rely on `review --build`).\n4. Inspect the generated UI when possible — start the app and run `buildable preview --url <url>` from the app workspace to render it, screenshot it, and catch runtime/visual errors that build checks miss.\n5. Check required interactions, state coverage, responsive behavior, and accessibility.\n6. Produce a focused fix list.\n7. Apply fixes when operating as the active coding agent.\n\n## Review Priorities\n\n- build correctness\n- primary workflow\n- missing interactions\n- empty/loading/error states\n- mobile and desktop layout\n- accessible form controls\n- unnecessary backend or hosted features\n\n## Output Format\n\nLead with blocking issues, then polish issues, then checks run. If no issues remain, say so and note residual risks.\n"
+    },
+    {
+      "slug": "web-builder",
+      "name": "buildable-web-builder",
+      "dir": "skills/web-builder",
+      "path": "skills/web-builder/SKILL.md",
+      "desc": "Generate or adapt a local-first Buildable web prototype from an app spec, archetype, UI pattern, design playbook, or golden template. Use for Buildable web/Next.js implementation; do not use for ordinary frontend debugging or unrelated website edits.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/suntay44/buildable-plugin-skills.git",
+        "copy": "cp -r skills/web-builder ~/.claude/skills/web-builder",
+        "raw": "https://raw.githubusercontent.com/suntay44/buildable-plugin-skills/bc7f38cca6fe622299f926e16a057781b30a29ad/skills/web-builder/SKILL.md",
+        "saveAs": "~/.claude/skills/web-builder/SKILL.md",
+        "marketplace": "/plugin marketplace add suntay44/buildable-plugin-skills"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:15efddfbe65ec4212698c2405010342791be389a34f1fceab49d06ccc1120aa9",
+      "bytes": 2945,
+      "wordCount": 388,
+      "repoLicense": "MIT",
+      "commit": "bc7f38cca6fe622299f926e16a057781b30a29ad",
+      "branch": "main",
+      "body": "---\nname: buildable-web-builder\ndescription: Generate or adapt a local-first Buildable web prototype from an app spec, archetype, UI pattern, design playbook, or golden template. Use for Buildable web/Next.js implementation; do not use for ordinary frontend debugging or unrelated website edits.\n---\n\n# Buildable Web Builder Skill\n\nUse this skill to generate or adapt local web prototypes.\n\nResolve all referenced paths from the Buildable plugin or repository root.\n\n## Reference Loading Contract\n\nMandatory order:\n\n1. Read `.buildable/phase-plan.toon` first when present. It is a summary: retrieve omitted details (such as full design rules or expected files) from the authoritative `.buildable/phase-plan.json` as needed. Without a saved plan, read `buildable-app-spec.json`. Reuse the plan for unchanged requirements rather than re-planning or reading all formats.\n2. Load only `appSpec.references`.\n3. Load current project files only as needed for the requested change.\n4. Do not load all templates.\n5. Load starter source only for the selected template and only when generating or editing it.\n\n## Default Stack\n\n- Next.js\n- TypeScript\n- Tailwind CSS\n- shadcn-style component patterns\n- local/mock data\n\n## Workflow\n\n1. Read the saved plan/app spec from the planner handoff.\n2. Check `appSpec.planAudit.checks` before editing; treat blocked/failed checks as gates, not suggestions.\n3. If `questionsNeeded` is true, ask the user before generating.\n4. For fresh starts, prefer `buildable generate \"<prompt>\"` when a runnable template exists. Add `--out <dir>` only when the user requested a specific folder.\n5. Apply `appSpec.designSystem` for visual tone, density, palette intent, layout rules, component rules, accessibility, and anti-patterns.\n6. Apply `appSpec.blocks` as reusable micro-template guidance. Selected block docs are references to adapt to the current entity/design system, not generic code to paste blindly.\n7. If `appSpec.auth.requested` is true, implement the local/mock auth shape first and keep any named provider behind the auth seam.\n8. Load only the references listed in the app spec.\n9. If the template is `generic-app`, use the selected archetype reference to shape screens and entities instead of loading unrelated templates.\n10. Inspect the local project if generating inside an existing app.\n11. Generate or adapt a complete first-screen prototype.\n12. Keep data local unless the spec explicitly requires otherwise.\n13. Run build/typecheck/lint checks when available.\n\n## Build Order\n\n1. Create typed entities and sample data.\n2. Build the primary screen and state operations.\n3. Add empty, filtered, and edited states.\n4. Apply responsive layout rules.\n5. Review against the selected quality rubric.\n\n## Guardrails\n\n- Do not add auth, accounts, billing, cloud previews, managed databases, telemetry, or deployment.\n- Do not create marketing landing pages for app requests.\n- Do not leave generic placeholder UI.\n",
+      "bodyMd": "# Buildable Web Builder Skill\n\nUse this skill to generate or adapt local web prototypes.\n\nResolve all referenced paths from the Buildable plugin or repository root.\n\n## Reference Loading Contract\n\nMandatory order:\n\n1. Read `.buildable/phase-plan.toon` first when present. It is a summary: retrieve omitted details (such as full design rules or expected files) from the authoritative `.buildable/phase-plan.json` as needed. Without a saved plan, read `buildable-app-spec.json`. Reuse the plan for unchanged requirements rather than re-planning or reading all formats.\n2. Load only `appSpec.references`.\n3. Load current project files only as needed for the requested change.\n4. Do not load all templates.\n5. Load starter source only for the selected template and only when generating or editing it.\n\n## Default Stack\n\n- Next.js\n- TypeScript\n- Tailwind CSS\n- shadcn-style component patterns\n- local/mock data\n\n## Workflow\n\n1. Read the saved plan/app spec from the planner handoff.\n2. Check `appSpec.planAudit.checks` before editing; treat blocked/failed checks as gates, not suggestions.\n3. If `questionsNeeded` is true, ask the user before generating.\n4. For fresh starts, prefer `buildable generate \"<prompt>\"` when a runnable template exists. Add `--out <dir>` only when the user requested a specific folder.\n5. Apply `appSpec.designSystem` for visual tone, density, palette intent, layout rules, component rules, accessibility, and anti-patterns.\n6. Apply `appSpec.blocks` as reusable micro-template guidance. Selected block docs are references to adapt to the current entity/design system, not generic code to paste blindly.\n7. If `appSpec.auth.requested` is true, implement the local/mock auth shape first and keep any named provider behind the auth seam.\n8. Load only the references listed in the app spec.\n9. If the template is `generic-app`, use the selected archetype reference to shape screens and entities instead of loading unrelated templates.\n10. Inspect the local project if generating inside an existing app.\n11. Generate or adapt a complete first-screen prototype.\n12. Keep data local unless the spec explicitly requires otherwise.\n13. Run build/typecheck/lint checks when available.\n\n## Build Order\n\n1. Create typed entities and sample data.\n2. Build the primary screen and state operations.\n3. Add empty, filtered, and edited states.\n4. Apply responsive layout rules.\n5. Review against the selected quality rubric.\n\n## Guardrails\n\n- Do not add auth, accounts, billing, cloud previews, managed databases, telemetry, or deployment.\n- Do not create marketing landing pages for app requests.\n- Do not leave generic placeholder UI.\n"
+    }
+  ]
+}

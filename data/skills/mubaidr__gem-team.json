@@ -1,0 +1,55 @@
+{
+  "repo": "mubaidr/gem-team",
+  "commit": "af7aac71071c77f50690cad769047e74ee5f607a",
+  "branch": "main",
+  "fetchedAt": "2026-10-13T04:49:48.495Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "gem-devops-guidelines",
+      "name": "gem-devops-guidelines",
+      "dir": ".apm/skills/gem-devops-guidelines",
+      "path": ".apm/skills/gem-devops-guidelines/SKILL.md",
+      "desc": "Design or review infrastructure, deployment, CI/CD, Docker, Kubernetes, health checks, rollback, feature flags, production readiness, and mobile release workflows. Use for DevOps, platform, container, pipeline, or release tasks.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git",
+          "node",
+          "docker",
+          "kubectl"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/mubaidr/gem-team.git",
+        "copy": "cp -r .apm/skills/gem-devops-guidelines ~/.claude/skills/gem-devops-guidelines",
+        "raw": "https://raw.githubusercontent.com/mubaidr/gem-team/af7aac71071c77f50690cad769047e74ee5f607a/.apm/skills/gem-devops-guidelines/SKILL.md",
+        "saveAs": "~/.claude/skills/gem-devops-guidelines/SKILL.md",
+        "marketplace": "/plugin marketplace add mubaidr/gem-team"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:6eff334e111eb7ad23e569440c0a2d814da2cdfa0855b57f4520279a27d4c346",
+      "bytes": 2972,
+      "wordCount": 356,
+      "repoLicense": "Apache-2.0",
+      "commit": "af7aac71071c77f50690cad769047e74ee5f607a",
+      "branch": "main",
+      "body": "---\nname: gem-devops-guidelines\ndescription: Design or review infrastructure, deployment, CI/CD, Docker, Kubernetes, health checks, rollback, feature flags, production readiness, and mobile release workflows. Use for DevOps, platform, container, pipeline, or release tasks.\n---\n\n# DevOps Guidelines\n\nApply only sections relevant to workload/provider/environment/acceptance criteria. Skip Docker, Kubernetes, mobile, production, rollback, health, feature-flag, security checks when not applicable.\n\n## Deployment strategy\n\n- Rolling (default): gradual, zero-downtime replacement.\n- Blue-green: duplicate environments, atomic cutover, instant rollback, 2× infra.\n- Canary: route small % first; requires traffic splitting.\n\n## Docker\n\n- Pin base-image tags (`node:22-alpine`); NEVER `:latest`.\n- Multi-stage builds + non-root user. Copy deps first for caching.\n- `.dockerignore`: `node_modules`, `.git`, tests. Define `HEALTHCHECK` + resource limits.\n\n## Kubernetes\n\nConfigure startup, readiness, liveness probes with workload-appropriate initial delays/thresholds.\n\n## CI/CD\n\n- PR: lint -> typecheck -> unit -> integration -> preview.\n- Main: build -> staging -> smoke -> production.\n\n## Health and shutdown\n\n- Simple: `GET /health` -> `{ \"status\": \"ok\" }`.\n- Detailed: dependencies, uptime, version.\n- Services MUST expose meaningful health + gracefully handle `SIGTERM` when workload requires it.\n\n## Configuration\n\nUse environment variables (Twelve-Factor), separated by environment. Validate at startup + fail fast. NEVER commit secrets or hard-code `NODE_ENV=production`.\n\n## Rollback\n\n- Kubernetes: `kubectl rollout undo`.\n- Vercel: `vercel rollback`.\n- Docker: redeploy previous pinned image.\n\n## Feature Flags\n\n- Lifecycle: create -> enable -> 5% -> 25% -> 50% -> 100% -> remove flag + dead code.\n- Every flag MUST have owner, expiration, rollback trigger. Remove within two weeks.\n\n## Checklists\n\n- Pre-deploy: passing tests, code review, env vars, migrations, rollback plan.\n- Post-deploy: healthy, monitored, old pods terminated, outcome documented.\n- Production: passing tests; no hardcoded secrets; JSON logs; meaningful health; pinned versions; validated env vars; resource limits; TLS; CVE scan; CORS; rate limiting; CSP/HSTS/X-Frame-Options; tested rollback; runbook; on-call.\n- Apply security/CVE checks to executable or security-sensitive workloads.\n\n## Mobile Deployment\n\n- EAS: `eas build:configure`; `eas build -p ios|android --profile preview`; `eas update --branch production`; `--auto-submit`.\n- Fastlane: iOS `match`/`cert`/`sigh`/`pilot`; Android Gradle/`supply`.\n- Credentials in env/secret storage, never Git. Automate iOS signing with `fastlane match`; use `keytool` + Google Play App Signing for Android.\n- TestFlight: internal instant; external 90 days/100 testers. Google Play: internal/beta/production. Expect 1–7 days review.\n- Rollback: EAS `eas update:rollback`; native release -> revert build; store release -> reduce phased rollout.\n",
+      "bodyMd": "# DevOps Guidelines\n\nApply only sections relevant to workload/provider/environment/acceptance criteria. Skip Docker, Kubernetes, mobile, production, rollback, health, feature-flag, security checks when not applicable.\n\n## Deployment strategy\n\n- Rolling (default): gradual, zero-downtime replacement.\n- Blue-green: duplicate environments, atomic cutover, instant rollback, 2× infra.\n- Canary: route small % first; requires traffic splitting.\n\n## Docker\n\n- Pin base-image tags (`node:22-alpine`); NEVER `:latest`.\n- Multi-stage builds + non-root user. Copy deps first for caching.\n- `.dockerignore`: `node_modules`, `.git`, tests. Define `HEALTHCHECK` + resource limits.\n\n## Kubernetes\n\nConfigure startup, readiness, liveness probes with workload-appropriate initial delays/thresholds.\n\n## CI/CD\n\n- PR: lint -> typecheck -> unit -> integration -> preview.\n- Main: build -> staging -> smoke -> production.\n\n## Health and shutdown\n\n- Simple: `GET /health` -> `{ \"status\": \"ok\" }`.\n- Detailed: dependencies, uptime, version.\n- Services MUST expose meaningful health + gracefully handle `SIGTERM` when workload requires it.\n\n## Configuration\n\nUse environment variables (Twelve-Factor), separated by environment. Validate at startup + fail fast. NEVER commit secrets or hard-code `NODE_ENV=production`.\n\n## Rollback\n\n- Kubernetes: `kubectl rollout undo`.\n- Vercel: `vercel rollback`.\n- Docker: redeploy previous pinned image.\n\n## Feature Flags\n\n- Lifecycle: create -> enable -> 5% -> 25% -> 50% -> 100% -> remove flag + dead code.\n- Every flag MUST have owner, expiration, rollback trigger. Remove within two weeks.\n\n## Checklists\n\n- Pre-deploy: passing tests, code review, env vars, migrations, rollback plan.\n- Post-deploy: healthy, monitored, old pods terminated, outcome documented.\n- Production: passing tests; no hardcoded secrets; JSON logs; meaningful health; pinned versions; validated env vars; resource limits; TLS; CVE scan; CORS; rate limiting; CSP/HSTS/X-Frame-Options; tested rollback; runbook; on-call.\n- Apply security/CVE checks to executable or security-sensitive workloads.\n\n## Mobile Deployment\n\n- EAS: `eas build:configure`; `eas build -p ios|android --profile preview`; `eas update --branch production`; `--auto-submit`.\n- Fastlane: iOS `match`/`cert`/`sigh`/`pilot`; Android Gradle/`supply`.\n- Credentials in env/secret storage, never Git. Automate iOS signing with `fastlane match`; use `keytool` + Google Play App Signing for Android.\n- TestFlight: internal instant; external 90 days/100 testers. Google Play: internal/beta/production. Expect 1–7 days review.\n- Rollback: EAS `eas update:rollback`; native release -> revert build; store release -> reduce phased rollout.\n"
+    }
+  ]
+}

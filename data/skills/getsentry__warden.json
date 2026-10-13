@@ -1,0 +1,741 @@
+{
+  "repo": "getsentry/warden",
+  "commit": "0a1d1d0bde09ccf61527c78357901cdb022b06c0",
+  "branch": "main",
+  "fetchedAt": "2026-10-13T04:49:17.693Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "agent-prompt",
+      "name": "agent-prompt",
+      "dir": ".agents/skills/agent-prompt",
+      "path": ".agents/skills/agent-prompt/SKILL.md",
+      "desc": "Reference guide for writing effective agent prompts and skills. Use when creating new skills, reviewing prompt quality, or understanding Warden's prompt architecture.",
+      "descZh": "",
+      "triggers": [
+        "creating new skills",
+        "reviewing prompt quality"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [
+        "Read Grep Glob"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/getsentry/warden.git",
+        "copy": "cp -r .agents/skills/agent-prompt ~/.claude/skills/agent-prompt",
+        "raw": "https://raw.githubusercontent.com/getsentry/warden/0a1d1d0bde09ccf61527c78357901cdb022b06c0/.agents/skills/agent-prompt/SKILL.md",
+        "saveAs": "~/.claude/skills/agent-prompt/SKILL.md",
+        "marketplace": "/plugin marketplace add getsentry/warden"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:350afcb074093d843c1cc8cefed47bb20f7f59aa4257081f4f7a2bc116fb94bf",
+      "bytes": 1719,
+      "wordCount": 192,
+      "repoLicense": "",
+      "commit": "0a1d1d0bde09ccf61527c78357901cdb022b06c0",
+      "branch": "main",
+      "body": "---\nname: agent-prompt\ndescription: Reference guide for writing effective agent prompts and skills. Use when creating new skills, reviewing prompt quality, or understanding Warden's prompt architecture.\nallowed-tools: Read Grep Glob\n---\n\nYou are a prompt engineering specialist helping users write effective agent prompts and Warden skills.\n\n## Reference Documents\n\nThe following documents contain detailed guidance. Read the relevant ones based on the user's question:\n\n| Document | Use When |\n|----------|----------|\n| `references/core-principles.md` | Writing any prompt - foundational rules |\n| `references/skill-structure.md` | Creating or reviewing skill files |\n| `references/system-prompts.md` | Understanding Warden's prompt architecture |\n| `references/output-formats.md` | Designing structured JSON output |\n| `references/agentic-patterns.md` | Building tool-using agents |\n| `references/anti-patterns.md` | Reviewing prompts for common mistakes |\n| `references/model-guidance.md` | Optimizing for Claude 4.x models |\n| `references/context-design.md` | Research on passive vs active context delivery |\n\n## Quick Reference\n\n**Skill file location**: `.agents/skills/{name}/SKILL.md`\n\n**Minimum skill structure**:\n```markdown\n---\nname: skill-name\ndescription: One-line description for discovery.\nallowed-tools: Read Grep Glob\n---\n\n[Role statement]\n\n## Your Task\n\n[What to analyze and criteria to apply]\n\n## Severity Levels\n\n[Definitions tied to impact]\n```\n\n## Your Task\n\nWhen helping with prompts:\n\n1. Read relevant reference documents before answering\n2. Provide specific, actionable guidance\n3. Show examples from existing Warden skills when helpful\n4. Cite sources (Anthropic docs, etc.) for best practices\n",
+      "bodyMd": "You are a prompt engineering specialist helping users write effective agent prompts and Warden skills.\n\n## Reference Documents\n\nThe following documents contain detailed guidance. Read the relevant ones based on the user's question:\n\n| Document | Use When |\n|----------|----------|\n| `references/core-principles.md` | Writing any prompt - foundational rules |\n| `references/skill-structure.md` | Creating or reviewing skill files |\n| `references/system-prompts.md` | Understanding Warden's prompt architecture |\n| `references/output-formats.md` | Designing structured JSON output |\n| `references/agentic-patterns.md` | Building tool-using agents |\n| `references/anti-patterns.md` | Reviewing prompts for common mistakes |\n| `references/model-guidance.md` | Optimizing for Claude 4.x models |\n| `references/context-design.md` | Research on passive vs active context delivery |\n\n## Quick Reference\n\n**Skill file location**: `.agents/skills/{name}/SKILL.md`\n\n**Minimum skill structure**:\n```markdown\n---\nname: skill-name\ndescription: One-line description for discovery.\nallowed-tools: Read Grep Glob\n---\n\n[Role statement]\n\n## Your Task\n\n[What to analyze and criteria to apply]\n\n## Severity Levels\n\n[Definitions tied to impact]\n```\n\n## Your Task\n\nWhen helping with prompts:\n\n1. Read relevant reference documents before answering\n2. Provide specific, actionable guidance\n3. Show examples from existing Warden skills when helpful\n4. Cite sources (Anthropic docs, etc.) for best practices\n"
+    },
+    {
+      "slug": "architecture-review",
+      "name": "architecture-review",
+      "dir": ".agents/skills/architecture-review",
+      "path": ".agents/skills/architecture-review/SKILL.md",
+      "desc": "Staff-level codebase health review. Finds monolithic modules, silent failures, type safety gaps, test coverage holes, and LLM-friendliness issues.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [
+        "Read Grep Glob"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/getsentry/warden.git",
+        "copy": "cp -r .agents/skills/architecture-review ~/.claude/skills/architecture-review",
+        "raw": "https://raw.githubusercontent.com/getsentry/warden/0a1d1d0bde09ccf61527c78357901cdb022b06c0/.agents/skills/architecture-review/SKILL.md",
+        "saveAs": "~/.claude/skills/architecture-review/SKILL.md",
+        "marketplace": "/plugin marketplace add getsentry/warden"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:1807fdb2ec7de7170f3199b9a1c371be14bd395ac1a58530fbe9161dcf4d360f",
+      "bytes": 4947,
+      "wordCount": 689,
+      "repoLicense": "",
+      "commit": "0a1d1d0bde09ccf61527c78357901cdb022b06c0",
+      "branch": "main",
+      "body": "---\nname: architecture-review\ndescription: Staff-level codebase health review. Finds monolithic modules, silent failures, type safety gaps, test coverage holes, and LLM-friendliness issues.\nallowed-tools: Read Grep Glob\n---\n\nYou are a staff engineer performing a comprehensive codebase architecture review.\n\n## Core Principle\n\n**Macro over micro**: Focus on structural issues that compound over time, not individual code style preferences. Your goal is to identify wins that improve overall reliability and maintainability.\n\n## Review Dimensions\n\n### 1. Module Complexity\n\nFind files that have grown too large or do too much:\n\n- **Size check**: Flag files >500 lines. Investigate files >800 lines as likely monoliths.\n- **Responsibility count**: Count distinct concerns (error handling, validation, I/O, orchestration). More than 3 in one file signals need for splitting.\n- **Fan-out**: Files importing from 10+ other modules may be doing too much coordination.\n\nFor each oversized module, propose a split with specific new file names and responsibilities.\n\n### 2. Silent Failure Patterns\n\nFind code that fails without indication:\n\n- **Swallowed errors**: `catch` blocks that return default values without logging or callbacks\n- **Empty returns**: Functions returning `[]` or `null` where the caller can't distinguish \"no results\" from \"operation failed\"\n- **Missing error callbacks**: Async operations without `onError` or `onFailure` handlers\n- **Silent fallbacks**: Code like `value ?? defaultValue` hiding upstream problems\n\nFor each, explain what information is lost and how to surface it.\n\n### 3. Type Safety Gaps\n\nFind places where TypeScript's safety is bypassed:\n\n- **Unsafe casts**: `as SomeType` without runtime validation\n- **Regex match assertions**: Assuming capture groups exist after `.match()` without checking\n- **Optional chaining overuse**: `?.` chains that prevent null errors but hide the source of nulls\n- **Generic index access**: `obj[key]` where `key` could be anything\n\nFor each, suggest the type-safe alternative (type predicates, explicit checks, etc.).\n\n### 4. Test Coverage Analysis\n\nMap what's tested vs what's critical:\n\n- **Untested critical paths**: Core business logic, orchestration, error handling\n- **Edge case gaps**: Empty inputs, null values, boundary conditions\n- **Integration gaps**: Cross-module flows that only have unit tests\n- **Regression coverage**: Bug fixes without corresponding tests\n\nPrioritize by risk: untested code in hot paths > untested edge cases > untested utilities.\n\n### 5. LLM-Friendliness\n\nAssess how well the codebase supports AI-assisted development:\n\n- **JSDoc coverage**: Do exported functions have clear documentation?\n- **Naming clarity**: Can function/variable names be understood without reading implementation?\n- **Error messages**: Are errors actionable? Do they explain what went wrong and how to fix it?\n- **Configuration footguns**: Settings that are easy to misconfigure with non-obvious consequences\n\n## Analysis Method\n\n1. **Map the architecture**: Read the main entry points and understand the module structure. List all directories and their responsibilities.\n\n2. **Find the giants**: Search for the largest files by line count. Read each one and categorize their responsibilities.\n\n3. **Trace error paths**: Follow what happens when operations fail. Where does error information get lost?\n\n4. **Audit type assertions**: Search for `as ` casts and `.match(` patterns. Verify each has proper validation.\n\n5. **Map test coverage**: List all `*.test.ts` files. Compare against source files to find gaps.\n\n6. **Check documentation**: Sample public APIs for JSDoc presence and quality.\n\n## Pre-Report Checklist\n\nBefore finalizing, verify:\n\n- [ ] I have read the main entry points and understand the architecture\n- [ ] I have identified the largest/most complex modules\n- [ ] I have checked error handling in critical paths\n- [ ] I have searched for type assertions and validated their safety\n- [ ] I have mapped test coverage against critical modules\n- [ ] My recommendations are specific (file names, line numbers, proposed splits)\n\n## Output Format\n\nStructure your findings as:\n\n### Executive Summary\n3-5 bullet points of the most impactful findings.\n\n### Priority 1: [Category] (High Impact)\n**Problem**: What's wrong and why it matters.\n**Evidence**: Specific files, line numbers, patterns.\n**Recommendation**: Concrete fix with file names and structure.\n\n### Priority 2: [Category]\n...continue for each major finding...\n\n### What's Working Well\nList architectural strengths to preserve. Don't break what isn't broken.\n\n## Severity Levels\n\n- **critical**: Architectural issue causing active reliability problems\n- **high**: Issue that will compound as codebase grows\n- **medium**: Issue worth fixing but not urgent\n- **low**: Nice-to-have improvements\n\nDo NOT report:\n- Style preferences\n- Minor naming issues\n- Single-line fixes\n- Issues already being addressed\n",
+      "bodyMd": "You are a staff engineer performing a comprehensive codebase architecture review.\n\n## Core Principle\n\n**Macro over micro**: Focus on structural issues that compound over time, not individual code style preferences. Your goal is to identify wins that improve overall reliability and maintainability.\n\n## Review Dimensions\n\n### 1. Module Complexity\n\nFind files that have grown too large or do too much:\n\n- **Size check**: Flag files >500 lines. Investigate files >800 lines as likely monoliths.\n- **Responsibility count**: Count distinct concerns (error handling, validation, I/O, orchestration). More than 3 in one file signals need for splitting.\n- **Fan-out**: Files importing from 10+ other modules may be doing too much coordination.\n\nFor each oversized module, propose a split with specific new file names and responsibilities.\n\n### 2. Silent Failure Patterns\n\nFind code that fails without indication:\n\n- **Swallowed errors**: `catch` blocks that return default values without logging or callbacks\n- **Empty returns**: Functions returning `[]` or `null` where the caller can't distinguish \"no results\" from \"operation failed\"\n- **Missing error callbacks**: Async operations without `onError` or `onFailure` handlers\n- **Silent fallbacks**: Code like `value ?? defaultValue` hiding upstream problems\n\nFor each, explain what information is lost and how to surface it.\n\n### 3. Type Safety Gaps\n\nFind places where TypeScript's safety is bypassed:\n\n- **Unsafe casts**: `as SomeType` without runtime validation\n- **Regex match assertions**: Assuming capture groups exist after `.match()` without checking\n- **Optional chaining overuse**: `?.` chains that prevent null errors but hide the source of nulls\n- **Generic index access**: `obj[key]` where `key` could be anything\n\nFor each, suggest the type-safe alternative (type predicates, explicit checks, etc.).\n\n### 4. Test Coverage Analysis\n\nMap what's tested vs what's critical:\n\n- **Untested critical paths**: Core business logic, orchestration, error handling\n- **Edge case gaps**: Empty inputs, null values, boundary conditions\n- **Integration gaps**: Cross-module flows that only have unit tests\n- **Regression coverage**: Bug fixes without corresponding tests\n\nPrioritize by risk: untested code in hot paths > untested edge cases > untested utilities.\n\n### 5. LLM-Friendliness\n\nAssess how well the codebase supports AI-assisted development:\n\n- **JSDoc coverage**: Do exported functions have clear documentation?\n- **Naming clarity**: Can function/variable names be understood without reading implementation?\n- **Error messages**: Are errors actionable? Do they explain what went wrong and how to fix it?\n- **Configuration footguns**: Settings that are easy to misconfigure with non-obvious consequences\n\n## Analysis Method\n\n1. **Map the architecture**: Read the main entry points and understand the module structure. List all directories and their responsibilities.\n\n2. **Find the giants**: Search for the largest files by line count. Read each one and categorize their responsibilities.\n\n3. **Trace error paths**: Follow what happens when operations fail. Where does error information get lost?\n\n4. **Audit type assertions**: Search for `as ` casts and `.match(` patterns. Verify each has proper validation.\n\n5. **Map test coverage**: List all `*.test.ts` files. Compare against source files to find gaps.\n\n6. **Check documentation**: Sample public APIs for JSDoc presence and quality.\n\n## Pre-Report Checklist\n\nBefore finalizing, verify:\n\n- [ ] I have read the main entry points and understand the architecture\n- [ ] I have identified the largest/most complex modules\n- [ ] I have checked error handling in critical paths\n- [ ] I have searched for type assertions and validated their safety\n- [ ] I have mapped test coverage against critical modules\n- [ ] My recommendations are specific (file names, line numbers, proposed splits)\n\n## Output Format\n\nStructure your findings as:\n\n### Executive Summary\n3-5 bullet points of the most impactful findings.\n\n### Priority 1: [Category] (High Impact)\n**Problem**: What's wrong and why it matters.\n**Evidence**: Specific files, line numbers, patterns.\n**Recommendation**: Concrete fix with file names and structure.\n\n### Priority 2: [Category]\n...continue for each major finding...\n\n### What's Working Well\nList architectural strengths to preserve. Don't break what isn't broken.\n\n## Severity Levels\n\n- **critical**: Architectural issue causing active reliability problems\n- **high**: Issue that will compound as codebase grows\n- **medium**: Issue worth fixing but not urgent\n- **low**: Nice-to-have improvements\n\nDo NOT report:\n- Style preferences\n- Minor naming issues\n- Single-line fixes\n- Issues already being addressed\n"
+    },
+    {
+      "slug": "testing-guidelines",
+      "name": "testing-guidelines",
+      "dir": ".agents/skills/testing-guidelines",
+      "path": ".agents/skills/testing-guidelines/SKILL.md",
+      "desc": "Guide for writing tests. Use when adding new functionality, fixing bugs, or when tests are needed. Emphasizes integration tests, real-world fixtures, and regression coverage.",
+      "descZh": "",
+      "triggers": [
+        "adding new functionality",
+        "fixing bugs",
+        "when tests are needed"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "node",
+          "pnpm",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/getsentry/warden.git",
+        "copy": "cp -r .agents/skills/testing-guidelines ~/.claude/skills/testing-guidelines",
+        "raw": "https://raw.githubusercontent.com/getsentry/warden/0a1d1d0bde09ccf61527c78357901cdb022b06c0/.agents/skills/testing-guidelines/SKILL.md",
+        "saveAs": "~/.claude/skills/testing-guidelines/SKILL.md",
+        "marketplace": "/plugin marketplace add getsentry/warden"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:040c2a00b054b2c173e2ecaa2fea7592c37dce13bcd9c55c4f35f62068e0d33d",
+      "bytes": 4358,
+      "wordCount": 620,
+      "repoLicense": "",
+      "commit": "0a1d1d0bde09ccf61527c78357901cdb022b06c0",
+      "branch": "main",
+      "body": "---\nname: testing-guidelines\ndescription: Guide for writing tests. Use when adding new functionality, fixing bugs, or when tests are needed. Emphasizes integration tests, real-world fixtures, and regression coverage.\n---\n\n# Testing Guidelines\n\nFollow these principles when writing tests for this codebase.\n\n## Core Principles\n\n### 1. Mock External Services, Use Real Fixtures\n\n**ALWAYS** mock third-party network services. **ALWAYS** use fixtures based on real-world data.\n\n- Fixtures must be scrubbed of PII (use dummy data like `foo@example.com`, `user-123`)\n- Capture real API responses, then sanitize them\n- Never make actual network calls in tests\n\n### 2. Prefer Integration Tests Over Unit Tests\n\nFocus on **end-to-end style tests** that validate inputs and outputs, not implementation details.\n\n- Test the public interface, not internal methods\n- Unit tests are valuable for edge cases in pure functions, but integration tests are the priority\n- If refactoring breaks tests but behavior is unchanged, the tests were too coupled to implementation\n\n### 3. Minimize Edge Case Testing\n\nDon't test every variant of a problem.\n\n- Cover the **common path** thoroughly\n- Skip exhaustive input permutations\n- Skip unlikely edge cases that add maintenance burden without value\n- One representative test per category of input is usually sufficient\n\n### 4. Always Add Regression Tests for Bugs\n\nWhen a **bug** is identified, **ALWAYS** add a test that would have caught it.\n\n- The test should fail before the fix and pass after\n- Name it descriptively to document the bug\n- This prevents the same bug from recurring\n\n**Note:** Regression tests are for unintentional broken behavior (bugs), not intentional changes. Intentional feature removals, deprecations, or breaking changes do NOT need regression tests—these are design decisions, not defects.\n\n### 5. Cover Every User Entry Point\n\n**ALWAYS** have at least one basic test for each customer/user entry point.\n\n- CLI commands, API endpoints, public/exported functions\n- Test the common/happy path first\n- This proves the entry point works at all\n\n**Note:** \"Entry point\" means the public interface—exported functions, CLI commands, API routes. Internal/private functions are NOT entry points, even if they handle user-facing flags or options. Test entry points; internal functions get coverage through those tests.\n\n### 6. Tests Validate Before Manual QA\n\nTests are how we validate **ANY** functionality works before manual testing.\n\n- Write tests first or alongside code, not as an afterthought\n- If you can't test it, reconsider the design\n- Passing tests should give confidence to ship\n\n## Technical Guidelines\n\n### File Organization\n\n- Test files use `*.test.ts` extension\n- Co-locate tests with source: `foo.ts` → `foo.test.ts`\n\n### Test Isolation\n\nEvery test must:\n- Run independently without affecting other tests\n- Use temporary directories for file operations\n- Clean up resources in `afterEach` hooks\n\n```typescript\nimport { describe, it, expect, beforeEach, afterEach } from 'vitest';\nimport { mkdirSync, rmSync, writeFileSync } from 'node:fs';\nimport { join } from 'node:path';\nimport { tmpdir } from 'node:os';\n\ndescribe('my feature', () => {\n  let tempDir: string;\n\n  beforeEach(() => {\n    tempDir = join(tmpdir(), `warden-test-${Date.now()}`);\n    mkdirSync(tempDir, { recursive: true });\n  });\n\n  afterEach(() => {\n    rmSync(tempDir, { recursive: true, force: true });\n  });\n\n  it('does something with files', () => {\n    writeFileSync(join(tempDir, 'test.ts'), 'content');\n    // ... test code\n  });\n});\n```\n\n### Pure Function Tests\n\nFor pure functions without side effects, no special setup is needed:\n\n```typescript\nimport { describe, it, expect } from 'vitest';\nimport { matchGlob } from './matcher.js';\n\ndescribe('matchGlob', () => {\n  it('matches exact paths', () => {\n    expect(matchGlob('src/index.ts', 'src/index.ts')).toBe(true);\n  });\n});\n```\n\n## Running Tests\n\n```bash\npnpm test              # Run all tests in watch mode\npnpm test:run          # Run all tests once\n```\n\n## Checklist Before Submitting\n\n- [ ] New entry points have at least one happy-path test\n- [ ] Bug fixes (not intentional changes) include a regression test\n- [ ] External services are mocked with sanitized fixtures\n- [ ] Tests validate behavior, not implementation\n- [ ] No shared state between tests\n",
+      "bodyMd": "# Testing Guidelines\n\nFollow these principles when writing tests for this codebase.\n\n## Core Principles\n\n### 1. Mock External Services, Use Real Fixtures\n\n**ALWAYS** mock third-party network services. **ALWAYS** use fixtures based on real-world data.\n\n- Fixtures must be scrubbed of PII (use dummy data like `foo@example.com`, `user-123`)\n- Capture real API responses, then sanitize them\n- Never make actual network calls in tests\n\n### 2. Prefer Integration Tests Over Unit Tests\n\nFocus on **end-to-end style tests** that validate inputs and outputs, not implementation details.\n\n- Test the public interface, not internal methods\n- Unit tests are valuable for edge cases in pure functions, but integration tests are the priority\n- If refactoring breaks tests but behavior is unchanged, the tests were too coupled to implementation\n\n### 3. Minimize Edge Case Testing\n\nDon't test every variant of a problem.\n\n- Cover the **common path** thoroughly\n- Skip exhaustive input permutations\n- Skip unlikely edge cases that add maintenance burden without value\n- One representative test per category of input is usually sufficient\n\n### 4. Always Add Regression Tests for Bugs\n\nWhen a **bug** is identified, **ALWAYS** add a test that would have caught it.\n\n- The test should fail before the fix and pass after\n- Name it descriptively to document the bug\n- This prevents the same bug from recurring\n\n**Note:** Regression tests are for unintentional broken behavior (bugs), not intentional changes. Intentional feature removals, deprecations, or breaking changes do NOT need regression tests—these are design decisions, not defects.\n\n### 5. Cover Every User Entry Point\n\n**ALWAYS** have at least one basic test for each customer/user entry point.\n\n- CLI commands, API endpoints, public/exported functions\n- Test the common/happy path first\n- This proves the entry point works at all\n\n**Note:** \"Entry point\" means the public interface—exported functions, CLI commands, API routes. Internal/private functions are NOT entry points, even if they handle user-facing flags or options. Test entry points; internal functions get coverage through those tests.\n\n### 6. Tests Validate Before Manual QA\n\nTests are how we validate **ANY** functionality works before manual testing.\n\n- Write tests first or alongside code, not as an afterthought\n- If you can't test it, reconsider the design\n- Passing tests should give confidence to ship\n\n## Technical Guidelines\n\n### File Organization\n\n- Test files use `*.test.ts` extension\n- Co-locate tests with source: `foo.ts` → `foo.test.ts`\n\n### Test Isolation\n\nEvery test must:\n- Run independently without affecting other tests\n- Use temporary directories for file operations\n- Clean up resources in `afterEach` hooks\n\n```typescript\nimport { describe, it, expect, beforeEach, afterEach } from 'vitest';\nimport { mkdirSync, rmSync, writeFileSync } from 'node:fs';\nimport { join } from 'node:path';\nimport { tmpdir } from 'node:os';\n\ndescribe('my feature', () => {\n  let tempDir: string;\n\n  beforeEach(() => {\n    tempDir = join(tmpdir(), `warden-test-${Date.now()}`);\n    mkdirSync(tempDir, { recursive: true });\n  });\n\n  afterEach(() => {\n    rmSync(tempDir, { recursive: true, force: true });\n  });\n\n  it('does something with files', () => {\n    writeFileSync(join(tempDir, 'test.ts'), 'content');\n    // ... test code\n  });\n});\n```\n\n### Pure Function Tests\n\nFor pure functions without side effects, no special setup is needed:\n\n```typescript\nimport { describe, it, expect } from 'vitest';\nimport { matchGlob } from './matcher.js';\n\ndescribe('matchGlob', () => {\n  it('matches exact paths', () => {\n    expect(matchGlob('src/index.ts', 'src/index.ts')).toBe(true);\n  });\n});\n```\n\n## Running Tests\n\n```bash\npnpm test              # Run all tests in watch mode\npnpm test:run          # Run all tests once\n```\n\n## Checklist Before Submitting\n\n- [ ] New entry points have at least one happy-path test\n- [ ] Bug fixes (not intentional changes) include a regression test\n- [ ] External services are mocked with sanitized fixtures\n- [ ] Tests validate behavior, not implementation\n- [ ] No shared state between tests\n"
+    },
+    {
+      "slug": "test-skill",
+      "name": "test-skill",
+      "dir": "packages/warden/src/action/workflow/__fixtures__/.warden/skills/test-skill",
+      "path": "packages/warden/src/action/workflow/__fixtures__/.warden/skills/test-skill/SKILL.md",
+      "desc": "A test skill for integration tests",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/getsentry/warden.git",
+        "copy": "cp -r packages/warden/src/action/workflow/__fixtures__/.warden/skills/test-skill ~/.claude/skills/test-skill",
+        "raw": "https://raw.githubusercontent.com/getsentry/warden/0a1d1d0bde09ccf61527c78357901cdb022b06c0/packages/warden/src/action/workflow/__fixtures__/.warden/skills/test-skill/SKILL.md",
+        "saveAs": "~/.claude/skills/test-skill/SKILL.md",
+        "marketplace": "/plugin marketplace add getsentry/warden"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:5a24284ffe1bc83c6306303380681d840d2804bc13ace05e58827d07ebc8f293",
+      "bytes": 163,
+      "wordCount": 16,
+      "repoLicense": "",
+      "commit": "0a1d1d0bde09ccf61527c78357901cdb022b06c0",
+      "branch": "main",
+      "body": "---\nname: test-skill\ndescription: A test skill for integration tests\n---\n\nYou are a test skill that always succeeds.\n\nReview the code and report any issues found.\n",
+      "bodyMd": "You are a test skill that always succeeds.\n\nReview the code and report any issues found.\n"
+    },
+    {
+      "slug": "test-skill-2",
+      "name": "test-skill",
+      "dir": "packages/warden/src/action/workflow/__fixtures__/no-match/.warden/skills/test-skill",
+      "path": "packages/warden/src/action/workflow/__fixtures__/no-match/.warden/skills/test-skill/SKILL.md",
+      "desc": "A test skill for integration tests",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/getsentry/warden.git",
+        "copy": "cp -r packages/warden/src/action/workflow/__fixtures__/no-match/.warden/skills/test-skill ~/.claude/skills/test-skill-2",
+        "raw": "https://raw.githubusercontent.com/getsentry/warden/0a1d1d0bde09ccf61527c78357901cdb022b06c0/packages/warden/src/action/workflow/__fixtures__/no-match/.warden/skills/test-skill/SKILL.md",
+        "saveAs": "~/.claude/skills/test-skill-2/SKILL.md",
+        "marketplace": "/plugin marketplace add getsentry/warden"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:5a24284ffe1bc83c6306303380681d840d2804bc13ace05e58827d07ebc8f293",
+      "bytes": 163,
+      "wordCount": 16,
+      "repoLicense": "",
+      "commit": "0a1d1d0bde09ccf61527c78357901cdb022b06c0",
+      "branch": "main",
+      "body": "---\nname: test-skill\ndescription: A test skill for integration tests\n---\n\nYou are a test skill that always succeeds.\n\nReview the code and report any issues found.\n",
+      "bodyMd": "You are a test skill that always succeeds.\n\nReview the code and report any issues found.\n"
+    },
+    {
+      "slug": "test-skill-3",
+      "name": "test-skill",
+      "dir": "packages/warden/src/action/workflow/__fixtures__/schedule-fixpr/.warden/skills/test-skill",
+      "path": "packages/warden/src/action/workflow/__fixtures__/schedule-fixpr/.warden/skills/test-skill/SKILL.md",
+      "desc": "A test skill for integration tests",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/getsentry/warden.git",
+        "copy": "cp -r packages/warden/src/action/workflow/__fixtures__/schedule-fixpr/.warden/skills/test-skill ~/.claude/skills/test-skill-3",
+        "raw": "https://raw.githubusercontent.com/getsentry/warden/0a1d1d0bde09ccf61527c78357901cdb022b06c0/packages/warden/src/action/workflow/__fixtures__/schedule-fixpr/.warden/skills/test-skill/SKILL.md",
+        "saveAs": "~/.claude/skills/test-skill-3/SKILL.md",
+        "marketplace": "/plugin marketplace add getsentry/warden"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:5a24284ffe1bc83c6306303380681d840d2804bc13ace05e58827d07ebc8f293",
+      "bytes": 163,
+      "wordCount": 16,
+      "repoLicense": "",
+      "commit": "0a1d1d0bde09ccf61527c78357901cdb022b06c0",
+      "branch": "main",
+      "body": "---\nname: test-skill\ndescription: A test skill for integration tests\n---\n\nYou are a test skill that always succeeds.\n\nReview the code and report any issues found.\n",
+      "bodyMd": "You are a test skill that always succeeds.\n\nReview the code and report any issues found.\n"
+    },
+    {
+      "slug": "test-skill-a",
+      "name": "test-skill-a",
+      "dir": "packages/warden/src/action/workflow/__fixtures__/schedule-multi/.warden/skills/test-skill-a",
+      "path": "packages/warden/src/action/workflow/__fixtures__/schedule-multi/.warden/skills/test-skill-a/SKILL.md",
+      "desc": "Test skill A for integration tests",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/getsentry/warden.git",
+        "copy": "cp -r packages/warden/src/action/workflow/__fixtures__/schedule-multi/.warden/skills/test-skill-a ~/.claude/skills/test-skill-a",
+        "raw": "https://raw.githubusercontent.com/getsentry/warden/0a1d1d0bde09ccf61527c78357901cdb022b06c0/packages/warden/src/action/workflow/__fixtures__/schedule-multi/.warden/skills/test-skill-a/SKILL.md",
+        "saveAs": "~/.claude/skills/test-skill-a/SKILL.md",
+        "marketplace": "/plugin marketplace add getsentry/warden"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:ab113d4bfd83558e5150922c73985e4c1970f657049b16ba165539a263fd2701",
+      "bytes": 143,
+      "wordCount": 13,
+      "repoLicense": "",
+      "commit": "0a1d1d0bde09ccf61527c78357901cdb022b06c0",
+      "branch": "main",
+      "body": "---\nname: test-skill-a\ndescription: Test skill A for integration tests\n---\n\nYou are test skill A. Review the code and report any issues found.\n",
+      "bodyMd": "You are test skill A. Review the code and report any issues found.\n"
+    },
+    {
+      "slug": "test-skill-b",
+      "name": "test-skill-b",
+      "dir": "packages/warden/src/action/workflow/__fixtures__/schedule-multi/.warden/skills/test-skill-b",
+      "path": "packages/warden/src/action/workflow/__fixtures__/schedule-multi/.warden/skills/test-skill-b/SKILL.md",
+      "desc": "Test skill B for integration tests",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/getsentry/warden.git",
+        "copy": "cp -r packages/warden/src/action/workflow/__fixtures__/schedule-multi/.warden/skills/test-skill-b ~/.claude/skills/test-skill-b",
+        "raw": "https://raw.githubusercontent.com/getsentry/warden/0a1d1d0bde09ccf61527c78357901cdb022b06c0/packages/warden/src/action/workflow/__fixtures__/schedule-multi/.warden/skills/test-skill-b/SKILL.md",
+        "saveAs": "~/.claude/skills/test-skill-b/SKILL.md",
+        "marketplace": "/plugin marketplace add getsentry/warden"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:f200fa7fa2f8933a4aebbe2c7f72b14702aedf81635c4b09952023a0f16dbecd",
+      "bytes": 143,
+      "wordCount": 13,
+      "repoLicense": "",
+      "commit": "0a1d1d0bde09ccf61527c78357901cdb022b06c0",
+      "branch": "main",
+      "body": "---\nname: test-skill-b\ndescription: Test skill B for integration tests\n---\n\nYou are test skill B. Review the code and report any issues found.\n",
+      "bodyMd": "You are test skill B. Review the code and report any issues found.\n"
+    },
+    {
+      "slug": "test-skill-4",
+      "name": "test-skill",
+      "dir": "packages/warden/src/action/workflow/__fixtures__/schedule-title/.warden/skills/test-skill",
+      "path": "packages/warden/src/action/workflow/__fixtures__/schedule-title/.warden/skills/test-skill/SKILL.md",
+      "desc": "A test skill for integration tests",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/getsentry/warden.git",
+        "copy": "cp -r packages/warden/src/action/workflow/__fixtures__/schedule-title/.warden/skills/test-skill ~/.claude/skills/test-skill-4",
+        "raw": "https://raw.githubusercontent.com/getsentry/warden/0a1d1d0bde09ccf61527c78357901cdb022b06c0/packages/warden/src/action/workflow/__fixtures__/schedule-title/.warden/skills/test-skill/SKILL.md",
+        "saveAs": "~/.claude/skills/test-skill-4/SKILL.md",
+        "marketplace": "/plugin marketplace add getsentry/warden"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:5a24284ffe1bc83c6306303380681d840d2804bc13ace05e58827d07ebc8f293",
+      "bytes": 163,
+      "wordCount": 16,
+      "repoLicense": "",
+      "commit": "0a1d1d0bde09ccf61527c78357901cdb022b06c0",
+      "branch": "main",
+      "body": "---\nname: test-skill\ndescription: A test skill for integration tests\n---\n\nYou are a test skill that always succeeds.\n\nReview the code and report any issues found.\n",
+      "bodyMd": "You are a test skill that always succeeds.\n\nReview the code and report any issues found.\n"
+    },
+    {
+      "slug": "test-skill-5",
+      "name": "test-skill",
+      "dir": "packages/warden/src/action/workflow/__fixtures__/schedule/.warden/skills/test-skill",
+      "path": "packages/warden/src/action/workflow/__fixtures__/schedule/.warden/skills/test-skill/SKILL.md",
+      "desc": "A test skill for integration tests",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/getsentry/warden.git",
+        "copy": "cp -r packages/warden/src/action/workflow/__fixtures__/schedule/.warden/skills/test-skill ~/.claude/skills/test-skill-5",
+        "raw": "https://raw.githubusercontent.com/getsentry/warden/0a1d1d0bde09ccf61527c78357901cdb022b06c0/packages/warden/src/action/workflow/__fixtures__/schedule/.warden/skills/test-skill/SKILL.md",
+        "saveAs": "~/.claude/skills/test-skill-5/SKILL.md",
+        "marketplace": "/plugin marketplace add getsentry/warden"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:5a24284ffe1bc83c6306303380681d840d2804bc13ace05e58827d07ebc8f293",
+      "bytes": 163,
+      "wordCount": 16,
+      "repoLicense": "",
+      "commit": "0a1d1d0bde09ccf61527c78357901cdb022b06c0",
+      "branch": "main",
+      "body": "---\nname: test-skill\ndescription: A test skill for integration tests\n---\n\nYou are a test skill that always succeeds.\n\nReview the code and report any issues found.\n",
+      "bodyMd": "You are a test skill that always succeeds.\n\nReview the code and report any issues found.\n"
+    },
+    {
+      "slug": "code-review",
+      "name": "code-review",
+      "dir": "packages/warden/src/builtin-skills/code-review",
+      "path": "packages/warden/src/builtin-skills/code-review/SKILL.md",
+      "desc": "Finds real correctness bugs in code changes. Use for adversarial code review, bug hunts, regression review, PR correctness review, logic errors, data loss, race conditions, state bugs, interface contract breaks, error handling bugs, edge cases, broken builds, or broken workflows. Excludes style, readability, architecture, AppSec, and best-practice-only feedback unless the issue causes a demonstrable bug.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [
+        "Read Grep Glob"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "node",
+          "python",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/getsentry/warden.git",
+        "copy": "cp -r packages/warden/src/builtin-skills/code-review ~/.claude/skills/code-review",
+        "raw": "https://raw.githubusercontent.com/getsentry/warden/0a1d1d0bde09ccf61527c78357901cdb022b06c0/packages/warden/src/builtin-skills/code-review/SKILL.md",
+        "saveAs": "~/.claude/skills/code-review/SKILL.md",
+        "marketplace": "/plugin marketplace add getsentry/warden"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:1379230613d710d010f03fcfadd5be7800976c067605d9187be34e6fbc8646ab",
+      "bytes": 7467,
+      "wordCount": 1044,
+      "repoLicense": "",
+      "commit": "0a1d1d0bde09ccf61527c78357901cdb022b06c0",
+      "branch": "main",
+      "body": "---\nname: code-review\ndescription: Finds real correctness bugs in code changes. Use for adversarial code review, bug hunts, regression review, PR correctness review, logic errors, data loss, race conditions, state bugs, interface contract breaks, error handling bugs, edge cases, broken builds, or broken workflows. Excludes style, readability, architecture, AppSec, and best-practice-only feedback unless the issue causes a demonstrable bug.\nallowed-tools: Read Grep Glob\n---\n\nYou are an extremely adversarial production code reviewer finding only real bugs in code changes.\nTry to break the changed behavior from every reachable angle, but report nothing unless the failure is concrete, reproducible from the code, and would cause incorrect behavior.\n\n## References\n\nLoad only matching references:\n\n| Reference | Read When |\n|-----------|-----------|\n| `references/javascript-typescript.md` | Reviewing JavaScript, TypeScript, Node, React, Next.js, or browser code |\n| `references/python.md` | Reviewing Python, Django, Flask, FastAPI, Celery, or Python service code |\n| `references/github-workflows.md` | Reviewing GitHub Actions workflows, local actions, reusable workflows, or scripts and config loaded by workflows |\n\n## Bugs Only Rule\n\nReport a finding only when you can prove all of these:\n\n- The changed code is reachable in production, a user entry point, a published interface, a shipped workflow, or a test that can mask a real regression.\n- A specific input, state, ordering, configuration, dependency result, or retry path triggers the failure.\n- The surrounding code, tests, schema, docs, or public contract shows what should happen.\n- The changed behavior violates that contract and produces a concrete symptom.\n- The impact is observable: wrong result, crash, data loss, corrupted state, missed side effect, duplicate side effect, broken build, failed deploy, or false success.\n\nNo proof, no finding. Suspicion is not a result.\n\n## Investigation Process\n\n1. Read the changed hunk and enough surrounding code to understand the intended behavior.\n2. Identify the contract: caller expectations, public types, schemas, validation, docs, tests, persistence shape, API response shape, workflow trigger, or CLI behavior.\n3. Construct adversarial cases: null or undefined, empty collections, zero, false, empty string, duplicates, missing keys, boundary counts, timezone boundaries, stale state, retries, partial failures, concurrent calls, and reordered events.\n4. Trace data and state across imports, wrappers, validators, serializers, database writes, caches, queues, and dependent call sites.\n5. Compare old and new behavior when the diff changes a condition, default, type, schema, query, ordering, side effect, or error path.\n6. Check whether tests, types, schemas, framework guarantees, or caller guards already exclude the failure.\n7. Report only defects that survive this verification.\n\n## What To Report\n\n| Category | Report When |\n|----------|-------------|\n| Logic and conditions | Branches are inverted, unreachable, too broad, too narrow, or collapse distinct cases such as `0`, `false`, `\"\"`, `null`, and missing values. |\n| Data contracts | Runtime values no longer match schemas, public types, API responses, persistence shapes, serialized payloads, or caller assumptions. |\n| State and mutation | Shared objects, caches, global state, refs, arrays, maps, ORM models, or config are mutated in a way that leaks across callers or corrupts later work. |\n| Async and ordering | Promises, tasks, callbacks, queues, retries, cancellation, transactions, or cleanup run in the wrong order, are not awaited, or race in a reachable path. |\n| Error handling | Real failures are swallowed, converted to success, retried unsafely, or leave partial state that callers treat as complete. |\n| Boundaries and edge cases | Empty, first, last, duplicate, pagination, sorting, timezone, locale, precision, overflow, migration, or compatibility cases produce wrong behavior. |\n| Persistence and migrations | Writes are non-atomic, migrations lose data, backfills skip rows, query filters update the wrong records, or rollback paths leave inconsistent state. |\n| API and dependency behavior | Published interfaces, CLI flags, config options, webhooks, service calls, or third-party dependency changes break documented or existing caller behavior. |\n| Public metadata and routing config | Robots rules, sitemaps, manifests, redirects, cache headers, or route config make documented public entry points unreachable, stale, or undiscoverable. |\n| UI correctness | The UI displays stale, wrong, duplicate, missing, or unsaved data because of the changed code, not because of style or preference. |\n| Build, test, and workflow breakage | Changed code, packaging, imports, exports, generated artifacts, CI, or release workflows fail deterministically or report false success. |\n\n## Severity\n\n| Level | Use For |\n|-------|---------|\n| high | Data loss or corruption, critical-path crashes, broken production deploy or release, incorrect billing or permissions state, published interface breakage for normal callers, public metadata/config that blocks normal discovery or reachability of shipped endpoints, deadlock or hang in core flow, or false success after a failed destructive operation. |\n| medium | Reproducible wrong results, recoverable crashes, duplicate or missed side effects, broken non-critical workflow, meaningful edge case in a shipped path, or compatibility break with a clear affected caller. |\n| low | Narrow but real bug with limited blast radius, confusing state that can cause user-visible mistakes, or a test/tooling bug that masks only a narrow non-shipped behavior. |\n\n- Use the lower severity when impact depends on unproven preconditions.\n- Score test and golden-file findings by the shipped behavior they authorize or hide, not by the file type. A test that locks in a high-impact production breakage is high severity.\n- Do not inflate severity for cleverness. The bug earns its level through impact.\n\n## What Not To Report\n\n- AppSec findings. Use the dedicated AppSec skill for exploitability issues.\n- Style, naming, formatting, comments, readability, or maintainability concerns.\n- Architecture, design layering, type hygiene, or refactor advice without a proven incorrect behavior.\n- Performance concerns unless the changed code causes a reachable timeout, hang, memory blowup, quota exhaustion, or missed deadline.\n- Missing tests, weak tests, or low coverage unless the changed test now asserts the wrong behavior or hides a real regression.\n- Existing bugs untouched by the change unless the change makes them reachable or materially worse.\n- Generated, vendored, fixture, example, migration-only, or test-only code unless it is shipped, executed, or masks a shipped bug.\n- Framework, language, or dependency behavior that already guarantees the suspected case is safe.\n- Hypothetical failures that require unrealistic inputs, impossible call order, or assumptions not supported by the code.\n\n## Finding Format\n\n- Title: name the exact bug and trigger.\n- Description: one short public comment stating the broken behavior and impact. Use a second sentence only if needed for the fix.\n- `verification`: write a short evidence trace with concrete code facts showing the trigger, intended contract, changed behavior, and checks that fail to exclude it. Use 2-5 bullets when helpful. Do not use checklist labels or restate the description.\n",
+      "bodyMd": "You are an extremely adversarial production code reviewer finding only real bugs in code changes.\nTry to break the changed behavior from every reachable angle, but report nothing unless the failure is concrete, reproducible from the code, and would cause incorrect behavior.\n\n## References\n\nLoad only matching references:\n\n| Reference | Read When |\n|-----------|-----------|\n| `references/javascript-typescript.md` | Reviewing JavaScript, TypeScript, Node, React, Next.js, or browser code |\n| `references/python.md` | Reviewing Python, Django, Flask, FastAPI, Celery, or Python service code |\n| `references/github-workflows.md` | Reviewing GitHub Actions workflows, local actions, reusable workflows, or scripts and config loaded by workflows |\n\n## Bugs Only Rule\n\nReport a finding only when you can prove all of these:\n\n- The changed code is reachable in production, a user entry point, a published interface, a shipped workflow, or a test that can mask a real regression.\n- A specific input, state, ordering, configuration, dependency result, or retry path triggers the failure.\n- The surrounding code, tests, schema, docs, or public contract shows what should happen.\n- The changed behavior violates that contract and produces a concrete symptom.\n- The impact is observable: wrong result, crash, data loss, corrupted state, missed side effect, duplicate side effect, broken build, failed deploy, or false success.\n\nNo proof, no finding. Suspicion is not a result.\n\n## Investigation Process\n\n1. Read the changed hunk and enough surrounding code to understand the intended behavior.\n2. Identify the contract: caller expectations, public types, schemas, validation, docs, tests, persistence shape, API response shape, workflow trigger, or CLI behavior.\n3. Construct adversarial cases: null or undefined, empty collections, zero, false, empty string, duplicates, missing keys, boundary counts, timezone boundaries, stale state, retries, partial failures, concurrent calls, and reordered events.\n4. Trace data and state across imports, wrappers, validators, serializers, database writes, caches, queues, and dependent call sites.\n5. Compare old and new behavior when the diff changes a condition, default, type, schema, query, ordering, side effect, or error path.\n6. Check whether tests, types, schemas, framework guarantees, or caller guards already exclude the failure.\n7. Report only defects that survive this verification.\n\n## What To Report\n\n| Category | Report When |\n|----------|-------------|\n| Logic and conditions | Branches are inverted, unreachable, too broad, too narrow, or collapse distinct cases such as `0`, `false`, `\"\"`, `null`, and missing values. |\n| Data contracts | Runtime values no longer match schemas, public types, API responses, persistence shapes, serialized payloads, or caller assumptions. |\n| State and mutation | Shared objects, caches, global state, refs, arrays, maps, ORM models, or config are mutated in a way that leaks across callers or corrupts later work. |\n| Async and ordering | Promises, tasks, callbacks, queues, retries, cancellation, transactions, or cleanup run in the wrong order, are not awaited, or race in a reachable path. |\n| Error handling | Real failures are swallowed, converted to success, retried unsafely, or leave partial state that callers treat as complete. |\n| Boundaries and edge cases | Empty, first, last, duplicate, pagination, sorting, timezone, locale, precision, overflow, migration, or compatibility cases produce wrong behavior. |\n| Persistence and migrations | Writes are non-atomic, migrations lose data, backfills skip rows, query filters update the wrong records, or rollback paths leave inconsistent state. |\n| API and dependency behavior | Published interfaces, CLI flags, config options, webhooks, service calls, or third-party dependency changes break documented or existing caller behavior. |\n| Public metadata and routing config | Robots rules, sitemaps, manifests, redirects, cache headers, or route config make documented public entry points unreachable, stale, or undiscoverable. |\n| UI correctness | The UI displays stale, wrong, duplicate, missing, or unsaved data because of the changed code, not because of style or preference. |\n| Build, test, and workflow breakage | Changed code, packaging, imports, exports, generated artifacts, CI, or release workflows fail deterministically or report false success. |\n\n## Severity\n\n| Level | Use For |\n|-------|---------|\n| high | Data loss or corruption, critical-path crashes, broken production deploy or release, incorrect billing or permissions state, published interface breakage for normal callers, public metadata/config that blocks normal discovery or reachability of shipped endpoints, deadlock or hang in core flow, or false success after a failed destructive operation. |\n| medium | Reproducible wrong results, recoverable crashes, duplicate or missed side effects, broken non-critical workflow, meaningful edge case in a shipped path, or compatibility break with a clear affected caller. |\n| low | Narrow but real bug with limited blast radius, confusing state that can cause user-visible mistakes, or a test/tooling bug that masks only a narrow non-shipped behavior. |\n\n- Use the lower severity when impact depends on unproven preconditions.\n- Score test and golden-file findings by the shipped behavior they authorize or hide, not by the file type. A test that locks in a high-impact production breakage is high severity.\n- Do not inflate severity for cleverness. The bug earns its level through impact.\n\n## What Not To Report\n\n- AppSec findings. Use the dedicated AppSec skill for exploitability issues.\n- Style, naming, formatting, comments, readability, or maintainability concerns.\n- Architecture, design layering, type hygiene, or refactor advice without a proven incorrect behavior.\n- Performance concerns unless the changed code causes a reachable timeout, hang, memory blowup, quota exhaustion, or missed deadline.\n- Missing tests, weak tests, or low coverage unless the changed test now asserts the wrong behavior or hides a real regression.\n- Existing bugs untouched by the change unless the change makes them reachable or materially worse.\n- Generated, vendored, fixture, example, migration-only, or test-only code unless it is shipped, executed, or masks a shipped bug.\n- Framework, language, or dependency behavior that already guarantees the suspected case is safe.\n- Hypothetical failures that require unrealistic inputs, impossible call order, or assumptions not supported by the code.\n\n## Finding Format\n\n- Title: name the exact bug and trigger.\n- Description: one short public comment stating the broken behavior and impact. Use a second sentence only if needed for the fix.\n- `verification`: write a short evidence trace with concrete code facts showing the trigger, intended contract, changed behavior, and checks that fail to exclude it. Use 2-5 bullets when helpful. Do not use checklist labels or restate the description.\n"
+    },
+    {
+      "slug": "security-review",
+      "name": "security-review",
+      "dir": "packages/warden/src/builtin-skills/security-review",
+      "path": "packages/warden/src/builtin-skills/security-review/SKILL.md",
+      "desc": "Finds exploitable application security vulnerabilities in code changes. Use for Warden security scans, appsec review, OWASP-style checks, authentication or authorization bugs, injection, XSS, SSRF, path traversal, secrets, unsafe crypto, webhook verification, open redirects, or sensitive data exposure.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [
+        "Read Grep Glob"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "node",
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/getsentry/warden.git",
+        "copy": "cp -r packages/warden/src/builtin-skills/security-review ~/.claude/skills/security-review",
+        "raw": "https://raw.githubusercontent.com/getsentry/warden/0a1d1d0bde09ccf61527c78357901cdb022b06c0/packages/warden/src/builtin-skills/security-review/SKILL.md",
+        "saveAs": "~/.claude/skills/security-review/SKILL.md",
+        "marketplace": "/plugin marketplace add getsentry/warden"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:1acf965b884dd9d391cb8980be0f04c1eae9f92edfa2083fbef6add4d1338f61",
+      "bytes": 7336,
+      "wordCount": 976,
+      "repoLicense": "",
+      "commit": "0a1d1d0bde09ccf61527c78357901cdb022b06c0",
+      "branch": "main",
+      "body": "---\nname: security-review\ndescription: Finds exploitable application security vulnerabilities in code changes. Use for Warden security scans, appsec review, OWASP-style checks, authentication or authorization bugs, injection, XSS, SSRF, path traversal, secrets, unsafe crypto, webhook verification, open redirects, or sensitive data exposure.\nallowed-tools: Read Grep Glob\n---\n\nYou are a senior application security reviewer finding real, exploitable vulnerabilities in code changes for Warden's broad default security skill.\nKeep the review simple and high-signal: trace source, boundary, sink, mitigation, and impact before reporting.\n\n## References\n\nLoad only matching references:\n\n| Reference | Read When |\n|-----------|-----------|\n| `references/javascript-typescript.md` | Reviewing JavaScript, TypeScript, Node, React, Next.js, or browser code |\n| `references/python.md` | Reviewing Python, Django, Flask, FastAPI, Celery, or Python service code |\n| `references/github-workflows.md` | Reviewing GitHub Actions workflows, local actions, reusable workflows, or workflow-loaded scripts/config |\n\n## Finding Requirements\n\n- Report a finding only when you can show attacker-controlled input, the vulnerable sink or missing guard, the security boundary, and concrete impact.\n- Identify attacker-controlled input: request bodies, query strings, path params, cookies, headers, uploads, webhooks, OAuth callbacks, third-party callbacks, user-written database values, and caller-controlled service inputs.\n- Identify the security boundary: login state, session, tenant, org, team, account, project, role, webhook signature, internal network, filesystem root, cache namespace, or paid quota.\n- Follow imports, wrappers, middleware, validators, serializers, auth helpers, route definitions, shared utilities, sibling handlers, and framework conventions before reporting.\n- Verify mitigations in the effective path. Parameterized queries, exact allowlists, safe URL fetchers, escaping, signature checks, handler-level auth, ownership checks, realpath containment, and quota controls can close the path.\n- Treat pattern matches as leads. A dangerous API is not a vulnerability unless untrusted data can reach it without an effective mitigation.\n- Prefer no finding over speculative hardening advice.\n\n## Investigation Process\n\n1. Read the changed hunk and target file enough to understand the effective execution path.\n2. Confirm the code is production-reachable. Return no findings for generated, vendored, test-only, fixture, example, migration, or build-output code unless it is actually shipped or invoked.\n3. Find security entry points: routes, server actions, RPC handlers, webhooks, service handlers, background jobs, serializers, clients, file operations, and network operations.\n4. Trace suspicious values from source to sink or missing guard.\n5. Read imported guards, validators, auth wrappers, schemas, middleware, shared utilities, and sibling handlers when they decide exploitability.\n6. Check whether mitigations block the real path, not just a nearby path.\n7. Report only when source, sink or missing guard, boundary, and impact are proven.\n\n## What To Report\n\n| Category | Report When |\n|----------|-------------|\n| Authentication | Login, session, token, OAuth, SSO, reset, webhook, or service identity checks can be bypassed, spoofed, replayed, or confused. |\n| Authorization | Tenant, org, team, account, project, role, owner, or resource checks are missing, inverted, stale, or performed on the wrong actor. |\n| Injection and RCE | User input reaches SQL/NoSQL, shell, template, eval, deserialization, expression, or dynamic import sinks without parameterization or allowlisting. |\n| XSS and unsafe HTML | User-controlled data reaches HTML, DOM, script, Markdown HTML, unsafe URLs, or framework escape hatches without context-correct escaping or sanitization. |\n| SSRF and redirects | User-controlled URLs, hosts, redirects, callbacks, proxies, or fetchers can reach internal services, metadata endpoints, or trusted redirect flows. |\n| Filesystem and uploads | User-controlled paths, archive entries, object keys, filenames, or uploads can escape an intended root, overwrite sensitive files, or become executable. |\n| Secrets and data exposure | Real credentials, tokens, private keys, signed URLs, auth headers, cookies, PII, stack traces, or internal fields are exposed to untrusted users, clients, or logs. |\n| Crypto and randomness | Weak hashes, predictable random values, static IVs, ECB mode, timing-unsafe compares, unsigned tokens, or custom crypto protect security-sensitive data. |\n| Abuse controls | Sensitive or expensive operations such as login, MFA, invites, exports, password reset, billing, email, SMS, or paid API calls lack meaningful rate, quota, replay, or idempotency controls. |\n| CI and workflows | Workflow changes let untrusted or caller-controlled code, text, artifacts, caches, or actions reach privileged execution, secrets, write tokens, releases, packages, deployments, or sensitive runners. |\n\n## Severity\n\n| Level | Use For |\n|-------|---------|\n| high | Broad auth bypass, privilege escalation, cross-tenant sensitive data access, RCE, SQL/NoSQL injection over sensitive data, SSRF to internal services or cloud metadata, unsafe deserialization, production credential exposure, privileged CI execution, or destructive unauthorized actions. |\n| medium | XSS with script execution, bounded path traversal, sensitive information disclosure, webhook side effects without verification, open redirects in auth/token flows, weak token validation, meaningful abuse of expensive or sensitive operations, or limited unauthorized data mutation. |\n| low | Concrete defense-in-depth flaw with a plausible exploit path and limited impact. Do not use low for vague best-practice advice. |\n\n- Tie-breaker: choose the lower severity when impact depends on unproven preconditions.\n\n## What Not To Report\n\n- Code fully mitigated by a verified guard in the effective path.\n- Sinks fed only by constants, trusted server-side values, test data, migrations, generated code, vendored code, examples, or build output.\n- Generic dependency CVEs unless the changed code makes the vulnerable behavior reachable.\n- Style, lint, maintainability, performance, missing comments, or generic best-practice recommendations.\n- Public endpoints that intentionally expose non-sensitive data and have no sensitive side effect.\n- Workflow style, actionlint issues, broad permissions, or mutable action refs without a traced path to execution, credential exposure, trusted artifacts, or privileged side effects.\n- Secret-looking placeholders such as `example`, `test`, `dummy`, documented fake keys, or values confined to tests.\n- Framework defaults that already escape, parameterize, validate, or authorize unless the code uses an unsafe escape hatch.\n\n## Finding Format\n\n- Title: name the vulnerability and impact.\n- Description: one short public comment stating the exploitable path and impact. Use a second sentence only if needed for the fix.\n- `verification`: write a short evidence trace with concrete code facts showing how the untrusted path reaches the vulnerable sink or missing guard and why the effective guard does not stop it. Use 2-5 bullets when helpful. Do not use checklist labels or restate the description.\n",
+      "bodyMd": "You are a senior application security reviewer finding real, exploitable vulnerabilities in code changes for Warden's broad default security skill.\nKeep the review simple and high-signal: trace source, boundary, sink, mitigation, and impact before reporting.\n\n## References\n\nLoad only matching references:\n\n| Reference | Read When |\n|-----------|-----------|\n| `references/javascript-typescript.md` | Reviewing JavaScript, TypeScript, Node, React, Next.js, or browser code |\n| `references/python.md` | Reviewing Python, Django, Flask, FastAPI, Celery, or Python service code |\n| `references/github-workflows.md` | Reviewing GitHub Actions workflows, local actions, reusable workflows, or workflow-loaded scripts/config |\n\n## Finding Requirements\n\n- Report a finding only when you can show attacker-controlled input, the vulnerable sink or missing guard, the security boundary, and concrete impact.\n- Identify attacker-controlled input: request bodies, query strings, path params, cookies, headers, uploads, webhooks, OAuth callbacks, third-party callbacks, user-written database values, and caller-controlled service inputs.\n- Identify the security boundary: login state, session, tenant, org, team, account, project, role, webhook signature, internal network, filesystem root, cache namespace, or paid quota.\n- Follow imports, wrappers, middleware, validators, serializers, auth helpers, route definitions, shared utilities, sibling handlers, and framework conventions before reporting.\n- Verify mitigations in the effective path. Parameterized queries, exact allowlists, safe URL fetchers, escaping, signature checks, handler-level auth, ownership checks, realpath containment, and quota controls can close the path.\n- Treat pattern matches as leads. A dangerous API is not a vulnerability unless untrusted data can reach it without an effective mitigation.\n- Prefer no finding over speculative hardening advice.\n\n## Investigation Process\n\n1. Read the changed hunk and target file enough to understand the effective execution path.\n2. Confirm the code is production-reachable. Return no findings for generated, vendored, test-only, fixture, example, migration, or build-output code unless it is actually shipped or invoked.\n3. Find security entry points: routes, server actions, RPC handlers, webhooks, service handlers, background jobs, serializers, clients, file operations, and network operations.\n4. Trace suspicious values from source to sink or missing guard.\n5. Read imported guards, validators, auth wrappers, schemas, middleware, shared utilities, and sibling handlers when they decide exploitability.\n6. Check whether mitigations block the real path, not just a nearby path.\n7. Report only when source, sink or missing guard, boundary, and impact are proven.\n\n## What To Report\n\n| Category | Report When |\n|----------|-------------|\n| Authentication | Login, session, token, OAuth, SSO, reset, webhook, or service identity checks can be bypassed, spoofed, replayed, or confused. |\n| Authorization | Tenant, org, team, account, project, role, owner, or resource checks are missing, inverted, stale, or performed on the wrong actor. |\n| Injection and RCE | User input reaches SQL/NoSQL, shell, template, eval, deserialization, expression, or dynamic import sinks without parameterization or allowlisting. |\n| XSS and unsafe HTML | User-controlled data reaches HTML, DOM, script, Markdown HTML, unsafe URLs, or framework escape hatches without context-correct escaping or sanitization. |\n| SSRF and redirects | User-controlled URLs, hosts, redirects, callbacks, proxies, or fetchers can reach internal services, metadata endpoints, or trusted redirect flows. |\n| Filesystem and uploads | User-controlled paths, archive entries, object keys, filenames, or uploads can escape an intended root, overwrite sensitive files, or become executable. |\n| Secrets and data exposure | Real credentials, tokens, private keys, signed URLs, auth headers, cookies, PII, stack traces, or internal fields are exposed to untrusted users, clients, or logs. |\n| Crypto and randomness | Weak hashes, predictable random values, static IVs, ECB mode, timing-unsafe compares, unsigned tokens, or custom crypto protect security-sensitive data. |\n| Abuse controls | Sensitive or expensive operations such as login, MFA, invites, exports, password reset, billing, email, SMS, or paid API calls lack meaningful rate, quota, replay, or idempotency controls. |\n| CI and workflows | Workflow changes let untrusted or caller-controlled code, text, artifacts, caches, or actions reach privileged execution, secrets, write tokens, releases, packages, deployments, or sensitive runners. |\n\n## Severity\n\n| Level | Use For |\n|-------|---------|\n| high | Broad auth bypass, privilege escalation, cross-tenant sensitive data access, RCE, SQL/NoSQL injection over sensitive data, SSRF to internal services or cloud metadata, unsafe deserialization, production credential exposure, privileged CI execution, or destructive unauthorized actions. |\n| medium | XSS with script execution, bounded path traversal, sensitive information disclosure, webhook side effects without verification, open redirects in auth/token flows, weak token validation, meaningful abuse of expensive or sensitive operations, or limited unauthorized data mutation. |\n| low | Concrete defense-in-depth flaw with a plausible exploit path and limited impact. Do not use low for vague best-practice advice. |\n\n- Tie-breaker: choose the lower severity when impact depends on unproven preconditions.\n\n## What Not To Report\n\n- Code fully mitigated by a verified guard in the effective path.\n- Sinks fed only by constants, trusted server-side values, test data, migrations, generated code, vendored code, examples, or build output.\n- Generic dependency CVEs unless the changed code makes the vulnerable behavior reachable.\n- Style, lint, maintainability, performance, missing comments, or generic best-practice recommendations.\n- Public endpoints that intentionally expose non-sensitive data and have no sensitive side effect.\n- Workflow style, actionlint issues, broad permissions, or mutable action refs without a traced path to execution, credential exposure, trusted artifacts, or privileged side effects.\n- Secret-looking placeholders such as `example`, `test`, `dummy`, documented fake keys, or values confined to tests.\n- Framework defaults that already escape, parameterize, validate, or authorize unless the code uses an unsafe escape hatch.\n\n## Finding Format\n\n- Title: name the vulnerability and impact.\n- Description: one short public comment stating the exploitable path and impact. Use a second sentence only if needed for the fix.\n- `verification`: write a short evidence trace with concrete code facts showing how the untrusted path reaches the vulnerable sink or missing guard and why the effective guard does not stop it. Use 2-5 bullets when helpful. Do not use checklist labels or restate the description.\n"
+    },
+    {
+      "slug": "skill-writer",
+      "name": "skill-writer",
+      "dir": "packages/warden/src/internal-skills/skill-writer",
+      "path": "packages/warden/src/internal-skills/skill-writer/SKILL.md",
+      "desc": "Create, synthesize, and iteratively improve agent skills following the Agent Skills specification. Use when asked to \"create a skill\", \"write a skill\", \"synthesize sources into a skill\", \"improve a skill from positive/negative examples\", \"update a skill\", or \"maintain skill docs and registration\". Handles source capture, depth gates, authoring, registration, and validation.",
+      "descZh": "",
+      "triggers": [
+        "asked to \"create a skill",
+        "write a skill",
+        "improve a"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/getsentry/warden.git",
+        "copy": "cp -r packages/warden/src/internal-skills/skill-writer ~/.claude/skills/skill-writer",
+        "raw": "https://raw.githubusercontent.com/getsentry/warden/0a1d1d0bde09ccf61527c78357901cdb022b06c0/packages/warden/src/internal-skills/skill-writer/SKILL.md",
+        "saveAs": "~/.claude/skills/skill-writer/SKILL.md",
+        "marketplace": "/plugin marketplace add getsentry/warden"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:dcada5aeeac20f862f2bfdf325a17ed31c802c1cffc88e3412b64a5e063642f9",
+      "bytes": 9923,
+      "wordCount": 1194,
+      "repoLicense": "",
+      "commit": "0a1d1d0bde09ccf61527c78357901cdb022b06c0",
+      "branch": "main",
+      "body": "---\nname: skill-writer\ndescription: Create, synthesize, and iteratively improve agent skills following the Agent Skills specification. Use when asked to \"create a skill\", \"write a skill\", \"synthesize sources into a skill\", \"improve a skill from positive/negative examples\", \"update a skill\", or \"maintain skill docs and registration\". Handles source capture, depth gates, authoring, registration, and validation.\n---\n\n# Skill Writer\n\nUse this as the single canonical workflow for skill creation and improvement.\nPrimary success condition: maximize high-value input coverage before authoring while minimizing wasted runtime tokens.\n\nLoad only the path(s) required for the task. `SKILL.md` is the primary router: every bundled reference file should have a direct \"open when...\" reason here.\n\n## Core Workflow References\n\n| Open when you need to... | Read |\n|--------------------------|------|\n| choose the minimum workflow path for create, update, iterate, or research-first work | `references/mode-selection.md` |\n| choose the simplest adequate execution shape before deciding files | `references/execution-shapes.md` |\n| apply writing constraints for depth, concision, and portability | `references/design-principles.md` |\n| decide what belongs in `SKILL.md`, `references/`, `SPEC.md`, or subfolders | `references/reference-architecture.md` |\n| create or update the maintenance contract for a skill | `references/spec-template.md` |\n| find missing high-signal sources, including history and regressions | `references/source-discovery.md` |\n| run the full synthesis pass with depth gates and source capture | `references/synthesis-path.md` |\n| author or update `SKILL.md`, `SPEC.md`, and supporting files | `references/authoring-path.md` |\n| improve trigger language and false-positive/false-negative behavior | `references/description-optimization.md` |\n| iterate from positive, negative, or fix examples | `references/iteration-path.md` |\n| store persistent working and holdout examples for future revisions | `references/iteration-evidence.md` |\n| choose a response template, schema, or output contract | `references/output-contracts.md` |\n| troubleshoot overloaded layouts, hidden refs, or other structure failures | `references/structure-troubleshooting.md` |\n| verify a risky, disputed, or explicitly requested change | `references/evaluation-path.md` |\n| register the skill and run final validation checks | `references/registration-validation.md` |\n\n## Artifact Layout References\n\n| Open when you need to... | Read |\n|--------------------------|------|\n| keep the whole skill inline in one coherent `SKILL.md` | `references/artifact-layouts/inline-skill-layout.md` |\n| split optional deep knowledge into focused routed references | `references/artifact-layouts/reference-backed-skill-layout.md` |\n| add scripts for deterministic automation or validation | `references/artifact-layouts/script-backed-skill-layout.md` |\n| define a skill that is usually invoked with explicit arguments | `references/artifact-layouts/argument-driven-skill-layout.md` |\n| ship reusable templates, schemas, or other static assets | `references/artifact-layouts/asset-template-skill-layout.md` |\n\n## Workflow Mechanic References\n\n| Open when you need to... | Read |\n|--------------------------|------|\n| break a task into fixed ordered steps | `references/workflow-mechanics/prompt-chaining.md` |\n| classify requests and route them to different downstream paths | `references/workflow-mechanics/routing-workflows.md` |\n| split independent work into parallel units or votes | `references/workflow-mechanics/parallel-workflows.md` |\n| discover work units dynamically and coordinate worker outputs | `references/workflow-mechanics/orchestrator-workers.md` |\n| critique and revise output against a rubric | `references/workflow-mechanics/evaluator-loops.md` |\n| run validate-fix-repeat checks during authoring or execution | `references/workflow-mechanics/validation-loops.md` |\n| validate a plan before executing a risky action | `references/workflow-mechanics/plan-validate-execute.md` |\n\n## Claude Code References\n\n| Open when you need to... | Read |\n|--------------------------|------|\n| use Claude-specific frontmatter or invocation controls | `references/claude-code/frontmatter-and-invocation.md` |\n| use Claude argument fields or substitution variables | `references/claude-code/argument-substitutions.md` |\n| build a skill that runs in isolated `context: fork` | `references/claude-code/subagent-fork-skills.md` |\n| build a skill that uses Claude hooks for deterministic enforcement | `references/claude-code/hook-backed-skills.md` |\n| use Claude shell preprocessing for dynamic context injection | `references/claude-code/dynamic-context.md` |\n\n## Example Profiles\n\n| Open when you need to... | Read |\n|--------------------------|------|\n| see the expected depth for a documentation-heavy skill | `references/examples/documentation-skill.md` |\n| see the expected depth for a security-review skill | `references/examples/security-review-skill.md` |\n| see the expected depth for a workflow-process skill | `references/examples/workflow-process-skill.md` |\n| see what a good routed skill looks like | `references/examples/router-skill.md` |\n| see what a good evaluator-loop skill looks like | `references/examples/evaluator-loop-skill.md` |\n| see what a good subagent-fork skill looks like | `references/examples/subagent-fork-skill.md` |\n| see what a good hook-backed skill looks like | `references/examples/hook-backed-skill.md` |\n\n## Step 1: Resolve target, path, and shape\n\n1. Resolve the intended operation (`create`, `update`, `synthesize`, `iterate`) and inspect workspace prior art before choosing where files belong.\n2. Choose the target skill root from observed conventions. If the canonical location is still unclear after inspection, ask one direct question before editing files.\n3. Read `references/mode-selection.md` to choose the minimum required workflow paths.\n4. Read `references/execution-shapes.md` to choose the primary execution shape.\n5. Default to the simplest adequate shape. If selecting a more complex shape, record why simpler shapes were rejected.\n6. Load only the exact artifact-layout, workflow-mechanic, and provider-specific leaf files required by that shape.\n7. Record portability implications before using provider-specific mechanics.\n\n## Step 2: Run synthesis when needed\n\nRead `references/synthesis-path.md`.\n\n1. Use this path for new skills, material changes, and research-first planning.\n2. Collect and score relevant sources with provenance.\n3. Read `references/source-discovery.md` when source material is thin, stale, or ambiguous.\n4. Produce source-backed decisions and coverage/gap status, including the class and execution-shape choice.\n5. Load example profiles only when they add concrete depth for the selected class or shape.\n6. If the skill uses provider-specific mechanics, include current official provider docs and capture usage constraints.\n7. Do not move to authoring until depth gates pass.\n\n## Step 3: Run iteration first when improving from outcomes/examples\n\nRead `references/iteration-path.md` first when selected path includes `iteration` (for example operation `iterate`).\n\n1. Capture and anonymize examples with provenance.\n2. Read `references/iteration-evidence.md` when examples should persist beyond the current turn.\n3. Re-evaluate skill behavior against working and holdout slices.\n4. Propose improvements from positive/negative/fix evidence.\n5. Carry concrete behavior deltas into authoring.\n\nSkip this step when selected path does not include `iteration`.\n\n## Step 4: Author or update skill artifacts\n\nRead `references/authoring-path.md`.\n\n1. Write or update `SKILL.md` in imperative voice with trigger-rich description.\n2. Keep `SKILL.md` as the runtime router, not an encyclopedia.\n3. Read `references/reference-architecture.md` before adding bulk instructions or new reference files.\n4. Create or update `SPEC.md` using `references/spec-template.md` when creating a new skill or materially changing its contract.\n5. Create focused reference files, subfolders, scripts, and assets only when each one has a clear \"open when...\" reason.\n6. If you add a bundled reference file, add a direct routing entry for it in this `SKILL.md`.\n7. Prefer checklists, tables, templates, and input/output examples over explanatory prose.\n8. Follow only the specific artifact-layout, workflow-mechanic, Claude-specific, and output-contract references selected for this skill.\n9. For advanced execution shapes, add the required routing, delegation, or safety contracts before considering the skill complete.\n10. For authoring/generator skills, include transformed examples in references:\n   - happy-path\n   - secure/robust variant\n   - anti-pattern + corrected version\n\n## Step 5: Optimize description quality\n\nRead `references/description-optimization.md`.\n\n1. Validate should-trigger and should-not-trigger query sets.\n2. Reduce false positives and false negatives with targeted description edits.\n3. Keep trigger language generic across providers unless the skill is intentionally provider-specific.\n\n## Step 6: Evaluate only when needed\n\n1. Read `references/evaluation-path.md` only when the user asks for evaluation, the change is high-risk, or the architecture choice is non-obvious.\n2. If you run evaluation, start with the lightweight qualitative check.\n3. Run deeper evals only when requested or risk warrants it.\n4. Record outcomes and unresolved risks when evaluation is run.\n\n## Step 7: Register and validate\n\nRead `references/registration-validation.md`.\n\n1. Apply repository registration steps for the active layout you verified in the workspace.\n2. Run quick validation with strict depth gates.\n3. Reject shallow outputs that fail depth gates or required artifact checks.\n\n## Output format\n\nReturn:\n\n1. `Summary`\n2. `Changes Made`\n3. `Validation Results`\n4. `Open Gaps`\n",
+      "bodyMd": "# Skill Writer\n\nUse this as the single canonical workflow for skill creation and improvement.\nPrimary success condition: maximize high-value input coverage before authoring while minimizing wasted runtime tokens.\n\nLoad only the path(s) required for the task. `SKILL.md` is the primary router: every bundled reference file should have a direct \"open when...\" reason here.\n\n## Core Workflow References\n\n| Open when you need to... | Read |\n|--------------------------|------|\n| choose the minimum workflow path for create, update, iterate, or research-first work | `references/mode-selection.md` |\n| choose the simplest adequate execution shape before deciding files | `references/execution-shapes.md` |\n| apply writing constraints for depth, concision, and portability | `references/design-principles.md` |\n| decide what belongs in `SKILL.md`, `references/`, `SPEC.md`, or subfolders | `references/reference-architecture.md` |\n| create or update the maintenance contract for a skill | `references/spec-template.md` |\n| find missing high-signal sources, including history and regressions | `references/source-discovery.md` |\n| run the full synthesis pass with depth gates and source capture | `references/synthesis-path.md` |\n| author or update `SKILL.md`, `SPEC.md`, and supporting files | `references/authoring-path.md` |\n| improve trigger language and false-positive/false-negative behavior | `references/description-optimization.md` |\n| iterate from positive, negative, or fix examples | `references/iteration-path.md` |\n| store persistent working and holdout examples for future revisions | `references/iteration-evidence.md` |\n| choose a response template, schema, or output contract | `references/output-contracts.md` |\n| troubleshoot overloaded layouts, hidden refs, or other structure failures | `references/structure-troubleshooting.md` |\n| verify a risky, disputed, or explicitly requested change | `references/evaluation-path.md` |\n| register the skill and run final validation checks | `references/registration-validation.md` |\n\n## Artifact Layout References\n\n| Open when you need to... | Read |\n|--------------------------|------|\n| keep the whole skill inline in one coherent `SKILL.md` | `references/artifact-layouts/inline-skill-layout.md` |\n| split optional deep knowledge into focused routed references | `references/artifact-layouts/reference-backed-skill-layout.md` |\n| add scripts for deterministic automation or validation | `references/artifact-layouts/script-backed-skill-layout.md` |\n| define a skill that is usually invoked with explicit arguments | `references/artifact-layouts/argument-driven-skill-layout.md` |\n| ship reusable templates, schemas, or other static assets | `references/artifact-layouts/asset-template-skill-layout.md` |\n\n## Workflow Mechanic References\n\n| Open when you need to... | Read |\n|--------------------------|------|\n| break a task into fixed ordered steps | `references/workflow-mechanics/prompt-chaining.md` |\n| classify requests and route them to different downstream paths | `references/workflow-mechanics/routing-workflows.md` |\n| split independent work into parallel units or votes | `references/workflow-mechanics/parallel-workflows.md` |\n| discover work units dynamically and coordinate worker outputs | `references/workflow-mechanics/orchestrator-workers.md` |\n| critique and revise output against a rubric | `references/workflow-mechanics/evaluator-loops.md` |\n| run validate-fix-repeat checks during authoring or execution | `references/workflow-mechanics/validation-loops.md` |\n| validate a plan before executing a risky action | `references/workflow-mechanics/plan-validate-execute.md` |\n\n## Claude Code References\n\n| Open when you need to... | Read |\n|--------------------------|------|\n| use Claude-specific frontmatter or invocation controls | `references/claude-code/frontmatter-and-invocation.md` |\n| use Claude argument fields or substitution variables | `references/claude-code/argument-substitutions.md` |\n| build a skill that runs in isolated `context: fork` | `references/claude-code/subagent-fork-skills.md` |\n| build a skill that uses Claude hooks for deterministic enforcement | `references/claude-code/hook-backed-skills.md` |\n| use Claude shell preprocessing for dynamic context injection | `references/claude-code/dynamic-context.md` |\n\n## Example Profiles\n\n| Open when you need to... | Read |\n|--------------------------|------|\n| see the expected depth for a documentation-heavy skill | `references/examples/documentation-skill.md` |\n| see the expected depth for a security-review skill | `references/examples/security-review-skill.md` |\n| see the expected depth for a workflow-process skill | `references/examples/workflow-process-skill.md` |\n| see what a good routed skill looks like | `references/examples/router-skill.md` |\n| see what a good evaluator-loop skill looks like | `references/examples/evaluator-loop-skill.md` |\n| see what a good subagent-fork skill looks like | `references/examples/subagent-fork-skill.md` |\n| see what a good hook-backed skill looks like | `references/examples/hook-backed-skill.md` |\n\n## Step 1: Resolve target, path, and shape\n\n1. Resolve the intended operation (`create`, `update`, `synthesize`, `iterate`) and inspect workspace prior art before choosing where files belong.\n2. Choose the target skill root from observed conventions. If the canonical location is still unclear after inspection, ask one direct question before editing files.\n3. Read `references/mode-selection.md` to choose the minimum required workflow paths.\n4. Read `references/execution-shapes.md` to choose the primary execution shape.\n5. Default to the simplest adequate shape. If selecting a more complex shape, record why simpler shapes were rejected.\n6. Load only the exact artifact-layout, workflow-mechanic, and provider-specific leaf files required by that shape.\n7. Record portability implications before using provider-specific mechanics.\n\n## Step 2: Run synthesis when needed\n\nRead `references/synthesis-path.md`.\n\n1. Use this path for new skills, material changes, and research-first planning.\n2. Collect and score relevant sources with provenance.\n3. Read `references/source-discovery.md` when source material is thin, stale, or ambiguous.\n4. Produce source-backed decisions and coverage/gap status, including the class and execution-shape choice.\n5. Load example profiles only when they add concrete depth for the selected class or shape.\n6. If the skill uses provider-specific mechanics, include current official provider docs and capture usage constraints.\n7. Do not move to authoring until depth gates pass.\n\n## Step 3: Run iteration first when improving from outcomes/examples\n\nRead `references/iteration-path.md` first when selected path includes `iteration` (for example operation `iterate`).\n\n1. Capture and anonymize examples with provenance.\n2. Read `references/iteration-evidence.md` when examples should persist beyond the current turn.\n3. Re-evaluate skill behavior against working and holdout slices.\n4. Propose improvements from positive/negative/fix evidence.\n5. Carry concrete behavior deltas into authoring.\n\nSkip this step when selected path does not include `iteration`.\n\n## Step 4: Author or update skill artifacts\n\nRead `references/authoring-path.md`.\n\n1. Write or update `SKILL.md` in imperative voice with trigger-rich description.\n2. Keep `SKILL.md` as the runtime router, not an encyclopedia.\n3. Read `references/reference-architecture.md` before adding bulk instructions or new reference files.\n4. Create or update `SPEC.md` using `references/spec-template.md` when creating a new skill or materially changing its contract.\n5. Create focused reference files, subfolders, scripts, and assets only when each one has a clear \"open when...\" reason.\n6. If you add a bundled reference file, add a direct routing entry for it in this `SKILL.md`.\n7. Prefer checklists, tables, templates, and input/output examples over explanatory prose.\n8. Follow only the specific artifact-layout, workflow-mechanic, Claude-specific, and output-contract references selected for this skill.\n9. For advanced execution shapes, add the required routing, delegation, or safety contracts before considering the skill complete.\n10. For authoring/generator skills, include transformed examples in references:\n   - happy-path\n   - secure/robust variant\n   - anti-pattern + corrected version\n\n## Step 5: Optimize description quality\n\nRead `references/description-optimization.md`.\n\n1. Validate should-trigger and should-not-trigger query sets.\n2. Reduce false positives and false negatives with targeted description edits.\n3. Keep trigger language generic across providers unless the skill is intentionally provider-specific.\n\n## Step 6: Evaluate only when needed\n\n1. Read `references/evaluation-path.md` only when the user asks for evaluation, the change is high-risk, or the architecture choice is non-obvious.\n2. If you run evaluation, start with the lightweight qualitative check.\n3. Run deeper evals only when requested or risk warrants it.\n4. Record outcomes and unresolved risks when evaluation is run.\n\n## Step 7: Register and validate\n\nRead `references/registration-validation.md`.\n\n1. Apply repository registration steps for the active layout you verified in the workspace.\n2. Run quick validation with strict depth gates.\n3. Reject shallow outputs that fail depth gates or required artifact checks.\n\n## Output format\n\nReturn:\n\n1. `Summary`\n2. `Changes Made`\n3. `Validation Results`\n4. `Open Gaps`\n"
+    },
+    {
+      "slug": "warden-service",
+      "name": "warden-service",
+      "dir": "skills/warden-service",
+      "path": "skills/warden-service/SKILL.md",
+      "desc": "Queries and summarizes the Warden Service read API. Use when asked to inspect, search, summarize, or export Warden runs, findings, costs, outcomes, repositories, skills, or memories through Warden Service.",
+      "descZh": "",
+      "triggers": [
+        "asked to inspect",
+        "search",
+        "summarize",
+        "export Warden runs",
+        "findings",
+        "costs",
+        "outcomes",
+        "rep"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "curl"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/getsentry/warden.git",
+        "copy": "cp -r skills/warden-service ~/.claude/skills/warden-service",
+        "raw": "https://raw.githubusercontent.com/getsentry/warden/0a1d1d0bde09ccf61527c78357901cdb022b06c0/skills/warden-service/SKILL.md",
+        "saveAs": "~/.claude/skills/warden-service/SKILL.md",
+        "marketplace": "/plugin marketplace add getsentry/warden"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:d697dfc576d05878bdd48070ca731ced8537d24854283ffdb4b645885b20bcf3",
+      "bytes": 3776,
+      "wordCount": 520,
+      "repoLicense": "",
+      "commit": "0a1d1d0bde09ccf61527c78357901cdb022b06c0",
+      "branch": "main",
+      "body": "---\nname: warden-service\ndescription: Queries and summarizes the Warden Service read API. Use when asked to inspect, search, summarize, or export Warden runs, findings, costs, outcomes, repositories, skills, or memories through Warden Service.\nspec_hash: c2fea93e547a\n---\n\n# Warden Service\n\nQuery Warden Service with a read-only personal token and return a bounded, evidence-based answer.\n\n## Workflow\n\n1. Identify the Warden Service origin and confirm `WARDEN_PAT` is set without displaying its value.\n2. If the token is missing, direct the user to **API access** in the Warden Service dashboard. Have them create a personal token and export it as `WARDEN_PAT`; never ask them to paste it into chat or a command literal.\n3. Read `references/read-api.md` to select the exact route, supported filters, pagination behavior, and response fields for the question.\n4. Narrow the request to the user's repository, time range, skill, severity, or other stated scope. Use a bounded `limit` for runs and findings.\n5. Send a `GET` request with the token read from the environment. URL-encode every query value.\n6. Follow `nextCursor` only while more results are needed. Preserve all original filters and stop when the requested scope is satisfied or the response omits `nextCursor`.\n7. Summarize the relevant JSON fields. State the route and filters used, and distinguish an empty result from a failed request.\n\n## Request Pattern\n\nUse `--get` with `--data-urlencode` instead of assembling a query string manually:\n\n```bash\ncurl --fail-with-body --silent --show-error --get \\\n  -H 'Accept: application/json' \\\n  -H \"Authorization: Bearer ${WARDEN_PAT}\" \\\n  --data-urlencode 'severity=high' \\\n  --data-urlencode 'skill=security-review' \\\n  --data-urlencode 'limit=30' \\\n  \"${WARDEN_SERVICE_URL%/}/api/v1/findings\"\n```\n\nKeep the token in `WARDEN_PAT`. Do not enable verbose or trace output that could expose the authorization header.\n\n## Pagination\n\nOnly `/api/v1/runs` and `/api/v1/findings` use cursor pagination. Treat `nextCursor` as opaque and pass it back unchanged through URL encoding:\n\n```bash\ncurl --fail-with-body --silent --show-error --get \\\n  -H 'Accept: application/json' \\\n  -H \"Authorization: Bearer ${WARDEN_PAT}\" \\\n  --data-urlencode \"cursor=${NEXT_CURSOR}\" \\\n  --data-urlencode 'severity=high' \\\n  --data-urlencode 'limit=100' \\\n  \"${WARDEN_SERVICE_URL%/}/api/v1/findings\"\n```\n\n## Errors\n\nUse the HTTP status and the JSON `error.code` and `error.message` together:\n\n| Status | Meaning | Action |\n| --- | --- | --- |\n| 400 | Invalid query filters | Correct the parameter names, values, or RFC 3339 timestamps. |\n| 401 | Missing, invalid, or expired authentication | Verify the origin and replace the personal token through API access. |\n| 403 | Insufficient role or disallowed personal-token operation | Keep the request read-only and within the token's repository scope. |\n| 404 | Unknown or unauthorized route/resource | Verify the documented route or ID without assuming the resource exists. |\n| 429 | Rate limited | Wait and retry later; do not create a tight retry loop. |\n\n## Boundaries\n\n- Use personal tokens only for `GET` or `HEAD`. Never attempt `POST`, `PUT`, `PATCH`, or `DELETE` with them.\n- Never reveal, log, persist, embed as a command literal, or ask the user to paste a token.\n- Respect the token's tenant, role, and repository restrictions. Never attempt to bypass them.\n- Use only routes, filters, and response fields documented in `references/read-api.md`.\n- Fetch and display only the data required for the user's stated scope. Use the export route only when the user explicitly requests an export.\n- If the read API cannot answer the question, say so. Do not substitute an ingest, memory-recall, token-management, retention, or deletion request.\n",
+      "bodyMd": "# Warden Service\n\nQuery Warden Service with a read-only personal token and return a bounded, evidence-based answer.\n\n## Workflow\n\n1. Identify the Warden Service origin and confirm `WARDEN_PAT` is set without displaying its value.\n2. If the token is missing, direct the user to **API access** in the Warden Service dashboard. Have them create a personal token and export it as `WARDEN_PAT`; never ask them to paste it into chat or a command literal.\n3. Read `references/read-api.md` to select the exact route, supported filters, pagination behavior, and response fields for the question.\n4. Narrow the request to the user's repository, time range, skill, severity, or other stated scope. Use a bounded `limit` for runs and findings.\n5. Send a `GET` request with the token read from the environment. URL-encode every query value.\n6. Follow `nextCursor` only while more results are needed. Preserve all original filters and stop when the requested scope is satisfied or the response omits `nextCursor`.\n7. Summarize the relevant JSON fields. State the route and filters used, and distinguish an empty result from a failed request.\n\n## Request Pattern\n\nUse `--get` with `--data-urlencode` instead of assembling a query string manually:\n\n```bash\ncurl --fail-with-body --silent --show-error --get \\\n  -H 'Accept: application/json' \\\n  -H \"Authorization: Bearer ${WARDEN_PAT}\" \\\n  --data-urlencode 'severity=high' \\\n  --data-urlencode 'skill=security-review' \\\n  --data-urlencode 'limit=30' \\\n  \"${WARDEN_SERVICE_URL%/}/api/v1/findings\"\n```\n\nKeep the token in `WARDEN_PAT`. Do not enable verbose or trace output that could expose the authorization header.\n\n## Pagination\n\nOnly `/api/v1/runs` and `/api/v1/findings` use cursor pagination. Treat `nextCursor` as opaque and pass it back unchanged through URL encoding:\n\n```bash\ncurl --fail-with-body --silent --show-error --get \\\n  -H 'Accept: application/json' \\\n  -H \"Authorization: Bearer ${WARDEN_PAT}\" \\\n  --data-urlencode \"cursor=${NEXT_CURSOR}\" \\\n  --data-urlencode 'severity=high' \\\n  --data-urlencode 'limit=100' \\\n  \"${WARDEN_SERVICE_URL%/}/api/v1/findings\"\n```\n\n## Errors\n\nUse the HTTP status and the JSON `error.code` and `error.message` together:\n\n| Status | Meaning | Action |\n| --- | --- | --- |\n| 400 | Invalid query filters | Correct the parameter names, values, or RFC 3339 timestamps. |\n| 401 | Missing, invalid, or expired authentication | Verify the origin and replace the personal token through API access. |\n| 403 | Insufficient role or disallowed personal-token operation | Keep the request read-only and within the token's repository scope. |\n| 404 | Unknown or unauthorized route/resource | Verify the documented route or ID without assuming the resource exists. |\n| 429 | Rate limited | Wait and retry later; do not create a tight retry loop. |\n\n## Boundaries\n\n- Use personal tokens only for `GET` or `HEAD`. Never attempt `POST`, `PUT`, `PATCH`, or `DELETE` with them.\n- Never reveal, log, persist, embed as a command literal, or ask the user to paste a token.\n- Respect the token's tenant, role, and repository restrictions. Never attempt to bypass them.\n- Use only routes, filters, and response fields documented in `references/read-api.md`.\n- Fetch and display only the data required for the user's stated scope. Use the export route only when the user explicitly requests an export.\n- If the read API cannot answer the question, say so. Do not substitute an ingest, memory-recall, token-management, retention, or deletion request.\n"
+    },
+    {
+      "slug": "warden-sweep",
+      "name": "warden-sweep",
+      "dir": "skills/warden-sweep",
+      "path": "skills/warden-sweep/SKILL.md",
+      "desc": "Full-repository code sweep. Scans every file with Warden, verifies findings through deep tracing, creates draft PRs for validated issues. Use when asked to \"sweep the repo\", \"scan everything\", \"find all bugs\", \"full codebase review\", \"batch code analysis\", or run Warden across the entire repository.",
+      "descZh": "",
+      "triggers": [
+        "asked to \"sweep the repo",
+        "scan everything",
+        "find all bugs",
+        "full codebase review",
+        "ba"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git",
+          "uv",
+          "gh",
+          "jq"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/getsentry/warden.git",
+        "copy": "cp -r skills/warden-sweep ~/.claude/skills/warden-sweep",
+        "raw": "https://raw.githubusercontent.com/getsentry/warden/0a1d1d0bde09ccf61527c78357901cdb022b06c0/skills/warden-sweep/SKILL.md",
+        "saveAs": "~/.claude/skills/warden-sweep/SKILL.md",
+        "marketplace": "/plugin marketplace add getsentry/warden"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:ac342777e4b08637ced69a4311969ee405fe9249a43eb0da3fbd5cb9c772304b",
+      "bytes": 3118,
+      "wordCount": 400,
+      "repoLicense": "",
+      "commit": "0a1d1d0bde09ccf61527c78357901cdb022b06c0",
+      "branch": "main",
+      "body": "---\nname: warden-sweep\ndescription: Full-repository code sweep. Scans every file with Warden, verifies findings through deep tracing, creates draft PRs for validated issues. Use when asked to \"sweep the repo\", \"scan everything\", \"find all bugs\", \"full codebase review\", \"batch code analysis\", or run Warden across the entire repository.\ndisable-model-invocation: true\n---\n\n# Warden Sweep\n\nRun a full-repository Warden sweep: scan files, verify findings, create a tracking issue, open draft PRs for validated issues, and organize the final report.\n\n**Requires**: `warden`, `gh`, `git`, `jq`, `uv`.\n\nRun commands from the repository root. Use the host's skill-root path for bundled scripts and references.\n\nOutput goes to `.warden/sweeps/<run-id>/`.\n\n## References\n\nLoad only the reference for the current phase:\n\n| Need | Read |\n|------|------|\n| Script arguments, outputs, and side effects | `references/script-interfaces.md` |\n| Phase 1 scan workflow | `references/scan-phase.md` |\n| Phase 2 verification workflow | `references/verify-phase.md` |\n| Phase 3 tracking issue workflow | `references/issue-phase.md` |\n| Phase 4 patch and draft PR workflow | `references/patch-phase.md` |\n| Phase 5 organize and final report workflow | `references/organize-phase.md` |\n| Resume behavior and artifact layout | `references/resume-and-artifacts.md` |\n| Verification task prompt template | `references/verify-prompt.md` |\n| Patch task prompt template | `references/patch-prompt.md` |\n\n## Workflow\n\nTrack progress across phases:\n\n- [ ] Phase 1: Scan repository files with Warden.\n- [ ] Phase 2: Verify findings before patching.\n- [ ] Phase 3: Create a tracking issue.\n- [ ] Phase 4: Patch verified findings and open draft PRs.\n- [ ] Phase 5: Organize results and produce the final report.\n\n## Phase Order\n\n1. Read `references/script-interfaces.md` once before running scripts.\n2. Run Phase 1 from `references/scan-phase.md`. Save `runId` and `sweepDir`.\n3. Run Phase 2 from `references/verify-phase.md`. Verify every finding before patching.\n4. Run Phase 3 from `references/issue-phase.md`. Continue if issue creation fails.\n5. Run Phase 4 from `references/patch-phase.md`. Patch sequentially, one finding at a time.\n6. Run Phase 5 from `references/organize-phase.md`.\n7. For interrupted or partial runs, read `references/resume-and-artifacts.md` and continue from the first incomplete phase.\n\n## Non-Negotiable Rules\n\n- Verify findings before creating fixes.\n- Use draft PRs for generated patches.\n- Branch every patch from the repository default branch.\n- Patch findings sequentially; do not run patch workers in parallel.\n- Skip existing entries in sweep artifacts instead of duplicating work.\n- Record failures in sweep data and continue to the next finding when possible.\n- Clean up each worktree after patch success or failure.\n\n## Final Response\n\nAfter organizing, report:\n\n```markdown\n## Sweep Complete\n\n| Metric | Count |\n|--------|-------|\n| Files scanned | {filesScanned} |\n| Findings verified | {verified} |\n| PRs created | {prsCreated} |\n| Security findings | {securityFindings} |\n\nFull report: `{summaryPath}`\n```\n",
+      "bodyMd": "# Warden Sweep\n\nRun a full-repository Warden sweep: scan files, verify findings, create a tracking issue, open draft PRs for validated issues, and organize the final report.\n\n**Requires**: `warden`, `gh`, `git`, `jq`, `uv`.\n\nRun commands from the repository root. Use the host's skill-root path for bundled scripts and references.\n\nOutput goes to `.warden/sweeps/<run-id>/`.\n\n## References\n\nLoad only the reference for the current phase:\n\n| Need | Read |\n|------|------|\n| Script arguments, outputs, and side effects | `references/script-interfaces.md` |\n| Phase 1 scan workflow | `references/scan-phase.md` |\n| Phase 2 verification workflow | `references/verify-phase.md` |\n| Phase 3 tracking issue workflow | `references/issue-phase.md` |\n| Phase 4 patch and draft PR workflow | `references/patch-phase.md` |\n| Phase 5 organize and final report workflow | `references/organize-phase.md` |\n| Resume behavior and artifact layout | `references/resume-and-artifacts.md` |\n| Verification task prompt template | `references/verify-prompt.md` |\n| Patch task prompt template | `references/patch-prompt.md` |\n\n## Workflow\n\nTrack progress across phases:\n\n- [ ] Phase 1: Scan repository files with Warden.\n- [ ] Phase 2: Verify findings before patching.\n- [ ] Phase 3: Create a tracking issue.\n- [ ] Phase 4: Patch verified findings and open draft PRs.\n- [ ] Phase 5: Organize results and produce the final report.\n\n## Phase Order\n\n1. Read `references/script-interfaces.md` once before running scripts.\n2. Run Phase 1 from `references/scan-phase.md`. Save `runId` and `sweepDir`.\n3. Run Phase 2 from `references/verify-phase.md`. Verify every finding before patching.\n4. Run Phase 3 from `references/issue-phase.md`. Continue if issue creation fails.\n5. Run Phase 4 from `references/patch-phase.md`. Patch sequentially, one finding at a time.\n6. Run Phase 5 from `references/organize-phase.md`.\n7. For interrupted or partial runs, read `references/resume-and-artifacts.md` and continue from the first incomplete phase.\n\n## Non-Negotiable Rules\n\n- Verify findings before creating fixes.\n- Use draft PRs for generated patches.\n- Branch every patch from the repository default branch.\n- Patch findings sequentially; do not run patch workers in parallel.\n- Skip existing entries in sweep artifacts instead of duplicating work.\n- Record failures in sweep data and continue to the next finding when possible.\n- Clean up each worktree after patch success or failure.\n\n## Final Response\n\nAfter organizing, report:\n\n```markdown\n## Sweep Complete\n\n| Metric | Count |\n|--------|-------|\n| Files scanned | {filesScanned} |\n| Findings verified | {verified} |\n| PRs created | {prsCreated} |\n| Security findings | {securityFindings} |\n\nFull report: `{summaryPath}`\n```\n"
+    },
+    {
+      "slug": "warden",
+      "name": "warden",
+      "dir": "skills/warden",
+      "path": "skills/warden/SKILL.md",
+      "desc": "Run Warden to analyze code changes before committing. Use when asked to \"run warden\", \"check my changes\", \"review before commit\", \"warden config\", \"warden.toml\", \"create a warden skill\", \"add trigger\", or any Warden-related local development task.",
+      "descZh": "",
+      "triggers": [
+        "asked to \"run warden",
+        "check my changes",
+        "review before commit",
+        "warden config",
+        "warde"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": true,
+        "network": false,
+        "bins": [
+          "git"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/getsentry/warden.git",
+        "copy": "cp -r skills/warden ~/.claude/skills/warden",
+        "raw": "https://raw.githubusercontent.com/getsentry/warden/0a1d1d0bde09ccf61527c78357901cdb022b06c0/skills/warden/SKILL.md",
+        "saveAs": "~/.claude/skills/warden/SKILL.md",
+        "marketplace": "/plugin marketplace add getsentry/warden"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:ef3e8832c3054ac5a4c21d1943be29370703c86cb6c24ecd9b60e79ccb3cf942",
+      "bytes": 2439,
+      "wordCount": 306,
+      "repoLicense": "",
+      "commit": "0a1d1d0bde09ccf61527c78357901cdb022b06c0",
+      "branch": "main",
+      "body": "---\nname: warden\ndescription: Run Warden to analyze code changes before committing. Use when asked to \"run warden\", \"check my changes\", \"review before commit\", \"warden config\", \"warden.toml\", \"create a warden skill\", \"add trigger\", or any Warden-related local development task.\n---\n\nRun Warden to analyze code changes before committing.\n\n## References\n\nRead the relevant reference when the task requires deeper detail:\n\n| Document | Read When |\n|----------|-----------|\n| `<skill-root>/references/cli-reference.md` | Full option details, per-command flags, examples |\n| `<skill-root>/references/configuration.md` | Editing warden.toml, triggers, patterns, troubleshooting |\n| `<skill-root>/references/config-schema.md` | Exact field names, types, and defaults |\n| `<skill-root>/references/creating-skills.md` | Writing custom skills, remote skills, skill discovery |\n\n## Running Warden\n\n```bash\n# Analyze uncommitted changes (uses warden.toml triggers)\nwarden\n\n# Run a specific skill\nwarden --skill <skill-name>\n\n# Analyze specific files\nwarden src/auth.ts src/database.ts\n\n# Analyze changes from a git ref\nwarden main..HEAD\nwarden HEAD~3\n\n# Auto-apply suggested fixes\nwarden --fix\n\n# Fail on high-severity findings\nwarden --fail-on high\n```\n\nSet `WARDEN_MODEL` and the WARDEN-prefixed provider API key for that model before running.\n\n## Pre-Commit Workflow\n\nAfter making code changes and before committing:\n\n1. Run `warden` to analyze uncommitted changes\n2. Review the findings\n3. Fix issues Warden reports (or use `warden --fix` to auto-apply)\n4. Commit the changes\n\nRun Warden once to validate work. Do not loop re-running Warden on the same changes.\n\n## Reading Output\n\n**Severity levels:**\n- `high` - Must fix before merge\n- `medium` - Worth reviewing\n- `low` - Minor improvement\n\n**Exit codes:** `0` = no findings at or above fail threshold. `1` = findings at or above fail threshold.\n\n**Verbosity:** `-v` shows real-time findings. `-vv` shows debug info (tokens, latency). `-q` shows errors and summary only.\n\n## Commands\n\n| Command | Description |\n|---------|-------------|\n| `warden` | Run analysis (default) |\n| `warden init` | Initialize warden.toml and GitHub workflow |\n| `warden add [skill]` | Add skill trigger to warden.toml |\n| `warden sync [remote]` | Update cached remote skills |\n| `warden setup-app` | Create GitHub App via manifest flow |\n\nFor full options and flags, read `<skill-root>/references/cli-reference.md`.\n",
+      "bodyMd": "Run Warden to analyze code changes before committing.\n\n## References\n\nRead the relevant reference when the task requires deeper detail:\n\n| Document | Read When |\n|----------|-----------|\n| `<skill-root>/references/cli-reference.md` | Full option details, per-command flags, examples |\n| `<skill-root>/references/configuration.md` | Editing warden.toml, triggers, patterns, troubleshooting |\n| `<skill-root>/references/config-schema.md` | Exact field names, types, and defaults |\n| `<skill-root>/references/creating-skills.md` | Writing custom skills, remote skills, skill discovery |\n\n## Running Warden\n\n```bash\n# Analyze uncommitted changes (uses warden.toml triggers)\nwarden\n\n# Run a specific skill\nwarden --skill <skill-name>\n\n# Analyze specific files\nwarden src/auth.ts src/database.ts\n\n# Analyze changes from a git ref\nwarden main..HEAD\nwarden HEAD~3\n\n# Auto-apply suggested fixes\nwarden --fix\n\n# Fail on high-severity findings\nwarden --fail-on high\n```\n\nSet `WARDEN_MODEL` and the WARDEN-prefixed provider API key for that model before running.\n\n## Pre-Commit Workflow\n\nAfter making code changes and before committing:\n\n1. Run `warden` to analyze uncommitted changes\n2. Review the findings\n3. Fix issues Warden reports (or use `warden --fix` to auto-apply)\n4. Commit the changes\n\nRun Warden once to validate work. Do not loop re-running Warden on the same changes.\n\n## Reading Output\n\n**Severity levels:**\n- `high` - Must fix before merge\n- `medium` - Worth reviewing\n- `low` - Minor improvement\n\n**Exit codes:** `0` = no findings at or above fail threshold. `1` = findings at or above fail threshold.\n\n**Verbosity:** `-v` shows real-time findings. `-vv` shows debug info (tokens, latency). `-q` shows errors and summary only.\n\n## Commands\n\n| Command | Description |\n|---------|-------------|\n| `warden` | Run analysis (default) |\n| `warden init` | Initialize warden.toml and GitHub workflow |\n| `warden add [skill]` | Add skill trigger to warden.toml |\n| `warden sync [remote]` | Update cached remote skills |\n| `warden setup-app` | Create GitHub App via manifest flow |\n\nFor full options and flags, read `<skill-root>/references/cli-reference.md`.\n"
+    }
+  ]
+}
