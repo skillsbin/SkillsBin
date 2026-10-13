@@ -1,0 +1,97 @@
+{
+  "repo": "assafelovic/gpt-researcher",
+  "commit": "3582a6841fe7dc801e2a34e34ee408641aea9bce",
+  "branch": "main",
+  "fetchedAt": "2026-10-13T07:00:40.310Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "claude",
+      "name": "gpt-researcher",
+      "dir": ".claude",
+      "path": ".claude/SKILL.md",
+      "desc": "GPT Researcher is an autonomous deep research agent that conducts web and local research, producing detailed reports with citations. Use this skill when helping developers understand, extend, debug, or integrate with GPT Researcher - including adding features, understanding the architecture, working with the API, customizing research workflows, adding new retrievers, integrating MCP data sources, or troubleshooting research pipelines.",
+      "descZh": "",
+      "triggers": [
+        "extend",
+        "debug"
+      ],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "npm",
+          "python",
+          "pip",
+          "npx"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/assafelovic/gpt-researcher.git",
+        "copy": "cp -r .claude ~/.claude/skills/claude",
+        "raw": "https://raw.githubusercontent.com/assafelovic/gpt-researcher/3582a6841fe7dc801e2a34e34ee408641aea9bce/.claude/SKILL.md",
+        "saveAs": "~/.claude/skills/claude/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:641fed5a76d8b59266b0edf54eb608c6bd37bc90ddec55ea6c2ecc3c23c66cab",
+      "bytes": 7327,
+      "wordCount": 686,
+      "repoLicense": "Apache-2.0",
+      "commit": "3582a6841fe7dc801e2a34e34ee408641aea9bce",
+      "branch": "main",
+      "body": "---\nname: gpt-researcher\ndescription: GPT Researcher is an autonomous deep research agent that conducts web and local research, producing detailed reports with citations. Use this skill when helping developers understand, extend, debug, or integrate with GPT Researcher - including adding features, understanding the architecture, working with the API, customizing research workflows, adding new retrievers, integrating MCP data sources, or troubleshooting research pipelines.\n---\n\n# GPT Researcher Development Skill\n\nGPT Researcher is an LLM-based autonomous agent using a planner-executor-publisher pattern with parallelized agent work for speed and reliability.\n\n## Quick Start\n\n### Basic Python Usage\n\n```python\nfrom gpt_researcher import GPTResearcher\nimport asyncio\n\nasync def main():\n    researcher = GPTResearcher(\n        query=\"What are the latest AI developments?\",\n        report_type=\"research_report\",  # or detailed_report, deep, outline_report\n        report_source=\"web\",            # or local, hybrid\n    )\n    await researcher.conduct_research()\n    report = await researcher.write_report()\n    print(report)\n\nasyncio.run(main())\n```\n\n### Run Servers\n\n```bash\n# Backend\npython -m uvicorn backend.server.server:app --reload --port 8000\n\n# Frontend\ncd frontend/nextjs && npm install && npm run dev\n```\n\n---\n\n## Key File Locations\n\n| Need | Primary File | Key Classes |\n|------|--------------|-------------|\n| Main orchestrator | `gpt_researcher/agent.py` | `GPTResearcher` |\n| Research logic | `gpt_researcher/skills/researcher.py` | `ResearchConductor` |\n| Report writing | `gpt_researcher/skills/writer.py` | `ReportGenerator` |\n| All prompts | `gpt_researcher/prompts.py` | `PromptFamily` |\n| Configuration | `gpt_researcher/config/config.py` | `Config` |\n| Config defaults | `gpt_researcher/config/variables/default.py` | `DEFAULT_CONFIG` |\n| API server | `backend/server/app.py` | FastAPI `app` |\n| Search engines | `gpt_researcher/retrievers/` | Various retrievers |\n\n---\n\n## Architecture Overview\n\n```\nUser Query → GPTResearcher.__init__()\n                │\n                ▼\n         choose_agent() → (agent_type, role_prompt)\n                │\n                ▼\n         ResearchConductor.conduct_research()\n           ├── plan_research() → sub_queries\n           ├── For each sub_query:\n           │     └── _process_sub_query() → context\n           └── Aggregate contexts\n                │\n                ▼\n         [Optional] ImageGenerator.plan_and_generate_images()\n                │\n                ▼\n         ReportGenerator.write_report() → Markdown report\n```\n\n**For detailed architecture diagrams**: See [references/architecture.md](references/architecture.md)\n\n---\n\n## Core Patterns\n\n### Adding a New Feature (8-Step Pattern)\n\n1. **Config** → Add to `gpt_researcher/config/variables/default.py`\n2. **Provider** → Create in `gpt_researcher/llm_provider/my_feature/`\n3. **Skill** → Create in `gpt_researcher/skills/my_feature.py`\n4. **Agent** → Integrate in `gpt_researcher/agent.py`\n5. **Prompts** → Update `gpt_researcher/prompts.py`\n6. **WebSocket** → Events via `stream_output()`\n7. **Frontend** → Handle events in `useWebSocket.ts`\n8. **Docs** → Create `docs/docs/gpt-researcher/gptr/my_feature.md`\n\n**For complete feature addition guide with Image Generation case study**: See [references/adding-features.md](references/adding-features.md)\n\n### Adding a New Retriever\n\n```python\n# 1. Create: gpt_researcher/retrievers/my_retriever/my_retriever.py\nclass MyRetriever:\n    def __init__(self, query: str, headers: dict = None):\n        self.query = query\n    \n    async def search(self, max_results: int = 10) -> list[dict]:\n        # Return: [{\"title\": str, \"href\": str, \"body\": str}]\n        pass\n\n# 2. Register in gpt_researcher/actions/retriever.py\ncase \"my_retriever\":\n    from gpt_researcher.retrievers.my_retriever import MyRetriever\n    return MyRetriever\n\n# 3. Export in gpt_researcher/retrievers/__init__.py\n```\n\n**For complete retriever documentation**: See [references/retrievers.md](references/retrievers.md)\n\n---\n\n## Configuration\n\nConfig keys are **lowercased** when accessed:\n\n```python\n# In default.py: \"SMART_LLM\": \"gpt-4o\"\n# Access as: self.cfg.smart_llm  # lowercase!\n```\n\nPriority: Environment Variables → JSON Config File → Default Values\n\n**For complete configuration reference**: See [references/config-reference.md](references/config-reference.md)\n\n---\n\n## Common Integration Points\n\n### WebSocket Streaming\n\n```python\nclass WebSocketHandler:\n    async def send_json(self, data):\n        print(f\"[{data['type']}] {data.get('output', '')}\")\n\nresearcher = GPTResearcher(query=\"...\", websocket=WebSocketHandler())\n```\n\n### MCP Data Sources\n\n```python\nresearcher = GPTResearcher(\n    query=\"Open source AI projects\",\n    mcp_configs=[{\n        \"name\": \"github\",\n        \"command\": \"npx\",\n        \"args\": [\"-y\", \"@modelcontextprotocol/server-github\"],\n        \"env\": {\"GITHUB_TOKEN\": os.getenv(\"GITHUB_TOKEN\")}\n    }],\n    mcp_strategy=\"deep\",  # or \"fast\", \"disabled\"\n)\n```\n\n**For MCP integration details**: See [references/mcp.md](references/mcp.md)\n\n### Deep Research Mode\n\n```python\nresearcher = GPTResearcher(\n    query=\"Comprehensive analysis of quantum computing\",\n    report_type=\"deep\",  # Triggers recursive tree-like exploration\n)\n```\n\n**For deep research configuration**: See [references/deep-research.md](references/deep-research.md)\n\n---\n\n## Error Handling\n\nAlways use graceful degradation in skills:\n\n```python\nasync def execute(self, ...):\n    if not self.is_enabled():\n        return []  # Don't crash\n    \n    try:\n        result = await self.provider.execute(...)\n        return result\n    except Exception as e:\n        await stream_output(\"logs\", \"error\", f\"⚠️ {e}\", self.websocket)\n        return []  # Graceful degradation\n```\n\n---\n\n## Critical Gotchas\n\n| ❌ Mistake | ✅ Correct |\n|-----------|-----------|\n| `config.MY_VAR` | `config.my_var` (lowercased) |\n| Editing pip-installed package | `pip install -e .` |\n| Forgetting async/await | All research methods are async |\n| `websocket.send_json()` on None | Check `if websocket:` first |\n| Not registering retriever | Add to `retriever.py` match statement |\n\n---\n\n## Reference Documentation\n\n| Topic | File |\n|-------|------|\n| System architecture & diagrams | [references/architecture.md](references/architecture.md) |\n| Core components & signatures | [references/components.md](references/components.md) |\n| Research flow & data flow | [references/flows.md](references/flows.md) |\n| Prompt system | [references/prompts.md](references/prompts.md) |\n| Retriever system | [references/retrievers.md](references/retrievers.md) |\n| MCP integration | [references/mcp.md](references/mcp.md) |\n| Deep research mode | [references/deep-research.md](references/deep-research.md) |\n| Multi-agent system | [references/multi-agents.md](references/multi-agents.md) |\n| Adding features guide | [references/adding-features.md](references/adding-features.md) |\n| Advanced patterns | [references/advanced-patterns.md](references/advanced-patterns.md) |\n| REST & WebSocket API | [references/api-reference.md](references/api-reference.md) |\n| Configuration variables | [references/config-reference.md](references/config-reference.md) |\n",
+      "bodyMd": "# GPT Researcher Development Skill\n\nGPT Researcher is an LLM-based autonomous agent using a planner-executor-publisher pattern with parallelized agent work for speed and reliability.\n\n## Quick Start\n\n### Basic Python Usage\n\n```python\nfrom gpt_researcher import GPTResearcher\nimport asyncio\n\nasync def main():\n    researcher = GPTResearcher(\n        query=\"What are the latest AI developments?\",\n        report_type=\"research_report\",  # or detailed_report, deep, outline_report\n        report_source=\"web\",            # or local, hybrid\n    )\n    await researcher.conduct_research()\n    report = await researcher.write_report()\n    print(report)\n\nasyncio.run(main())\n```\n\n### Run Servers\n\n```bash\n# Backend\npython -m uvicorn backend.server.server:app --reload --port 8000\n\n# Frontend\ncd frontend/nextjs && npm install && npm run dev\n```\n\n---\n\n## Key File Locations\n\n| Need | Primary File | Key Classes |\n|------|--------------|-------------|\n| Main orchestrator | `gpt_researcher/agent.py` | `GPTResearcher` |\n| Research logic | `gpt_researcher/skills/researcher.py` | `ResearchConductor` |\n| Report writing | `gpt_researcher/skills/writer.py` | `ReportGenerator` |\n| All prompts | `gpt_researcher/prompts.py` | `PromptFamily` |\n| Configuration | `gpt_researcher/config/config.py` | `Config` |\n| Config defaults | `gpt_researcher/config/variables/default.py` | `DEFAULT_CONFIG` |\n| API server | `backend/server/app.py` | FastAPI `app` |\n| Search engines | `gpt_researcher/retrievers/` | Various retrievers |\n\n---\n\n## Architecture Overview\n\n```\nUser Query → GPTResearcher.__init__()\n                │\n                ▼\n         choose_agent() → (agent_type, role_prompt)\n                │\n                ▼\n         ResearchConductor.conduct_research()\n           ├── plan_research() → sub_queries\n           ├── For each sub_query:\n           │     └── _process_sub_query() → context\n           └── Aggregate contexts\n                │\n                ▼\n         [Optional] ImageGenerator.plan_and_generate_images()\n                │\n                ▼\n         ReportGenerator.write_report() → Markdown report\n```\n\n**For detailed architecture diagrams**: See [references/architecture.md](references/architecture.md)\n\n---\n\n## Core Patterns\n\n### Adding a New Feature (8-Step Pattern)\n\n1. **Config** → Add to `gpt_researcher/config/variables/default.py`\n2. **Provider** → Create in `gpt_researcher/llm_provider/my_feature/`\n3. **Skill** → Create in `gpt_researcher/skills/my_feature.py`\n4. **Agent** → Integrate in `gpt_researcher/agent.py`\n5. **Prompts** → Update `gpt_researcher/prompts.py`\n6. **WebSocket** → Events via `stream_output()`\n7. **Frontend** → Handle events in `useWebSocket.ts`\n8. **Docs** → Create `docs/docs/gpt-researcher/gptr/my_feature.md`\n\n**For complete feature addition guide with Image Generation case study**: See [references/adding-features.md](references/adding-features.md)\n\n### Adding a New Retriever\n\n```python\n# 1. Create: gpt_researcher/retrievers/my_retriever/my_retriever.py\nclass MyRetriever:\n    def __init__(self, query: str, headers: dict = None):\n        self.query = query\n    \n    async def search(self, max_results: int = 10) -> list[dict]:\n        # Return: [{\"title\": str, \"href\": str, \"body\": str}]\n        pass\n\n# 2. Register in gpt_researcher/actions/retriever.py\ncase \"my_retriever\":\n    from gpt_researcher.retrievers.my_retriever import MyRetriever\n    return MyRetriever\n\n# 3. Export in gpt_researcher/retrievers/__init__.py\n```\n\n**For complete retriever documentation**: See [references/retrievers.md](references/retrievers.md)\n\n---\n\n## Configuration\n\nConfig keys are **lowercased** when accessed:\n\n```python\n# In default.py: \"SMART_LLM\": \"gpt-4o\"\n# Access as: self.cfg.smart_llm  # lowercase!\n```\n\nPriority: Environment Variables → JSON Config File → Default Values\n\n**For complete configuration reference**: See [references/config-reference.md](references/config-reference.md)\n\n---\n\n## Common Integration Points\n\n### WebSocket Streaming\n\n```python\nclass WebSocketHandler:\n    async def send_json(self, data):\n        print(f\"[{data['type']}] {data.get('output', '')}\")\n\nresearcher = GPTResearcher(query=\"...\", websocket=WebSocketHandler())\n```\n\n### MCP Data Sources\n\n```python\nresearcher = GPTResearcher(\n    query=\"Open source AI projects\",\n    mcp_configs=[{\n        \"name\": \"github\",\n        \"command\": \"npx\",\n        \"args\": [\"-y\", \"@modelcontextprotocol/server-github\"],\n        \"env\": {\"GITHUB_TOKEN\": os.getenv(\"GITHUB_TOKEN\")}\n    }],\n    mcp_strategy=\"deep\",  # or \"fast\", \"disabled\"\n)\n```\n\n**For MCP integration details**: See [references/mcp.md](references/mcp.md)\n\n### Deep Research Mode\n\n```python\nresearcher = GPTResearcher(\n    query=\"Comprehensive analysis of quantum computing\",\n    report_type=\"deep\",  # Triggers recursive tree-like exploration\n)\n```\n\n**For deep research configuration**: See [references/deep-research.md](references/deep-research.md)\n\n---\n\n## Error Handling\n\nAlways use graceful degradation in skills:\n\n```python\nasync def execute(self, ...):\n    if not self.is_enabled():\n        return []  # Don't crash\n    \n    try:\n        result = await self.provider.execute(...)\n        return result\n    except Exception as e:\n        await stream_output(\"logs\", \"error\", f\"⚠️ {e}\", self.websocket)\n        return []  # Graceful degradation\n```\n\n---\n\n## Critical Gotchas\n\n| ❌ Mistake | ✅ Correct |\n|-----------|-----------|\n| `config.MY_VAR` | `config.my_var` (lowercased) |\n| Editing pip-installed package | `pip install -e .` |\n| Forgetting async/await | All research methods are async |\n| `websocket.send_json()` on None | Check `if websocket:` first |\n| Not registering retriever | Add to `retriever.py` match statement |\n\n---\n\n## Reference Documentation\n\n| Topic | File |\n|-------|------|\n| System architecture & diagrams | [references/architecture.md](references/architecture.md) |\n| Core components & signatures | [references/components.md](references/components.md) |\n| Research flow & data flow | [references/flows.md](references/flows.md) |\n| Prompt system | [references/prompts.md](references/prompts.md) |\n| Retriever system | [references/retrievers.md](references/retrievers.md) |\n| MCP integration | [references/mcp.md](references/mcp.md) |\n| Deep research mode | [references/deep-research.md](references/deep-research.md) |\n| Multi-agent system | [references/multi-agents.md](references/multi-agents.md) |\n| Adding features guide | [references/adding-features.md](references/adding-features.md) |\n| Advanced patterns | [references/advanced-patterns.md](references/advanced-patterns.md) |\n| REST & WebSocket API | [references/api-reference.md](references/api-reference.md) |\n| Configuration variables | [references/config-reference.md](references/config-reference.md) |\n"
+    },
+    {
+      "slug": "gpt-researcher",
+      "name": "gpt-researcher",
+      "dir": "skills/gpt-researcher",
+      "path": "skills/gpt-researcher/SKILL.md",
+      "desc": "Autonomous deep research from Codex via MCP",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/assafelovic/gpt-researcher.git",
+        "copy": "cp -r skills/gpt-researcher ~/.claude/skills/gpt-researcher",
+        "raw": "https://raw.githubusercontent.com/assafelovic/gpt-researcher/3582a6841fe7dc801e2a34e34ee408641aea9bce/skills/gpt-researcher/SKILL.md",
+        "saveAs": "~/.claude/skills/gpt-researcher/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:d6f8d0c19f5c898f4e80a8865da0b0c0f23950394a71f1aa52388ee1e4340d67",
+      "bytes": 317,
+      "wordCount": 33,
+      "repoLicense": "Apache-2.0",
+      "commit": "3582a6841fe7dc801e2a34e34ee408641aea9bce",
+      "branch": "main",
+      "body": "---\nname: gpt-researcher\ndescription: Autonomous deep research from Codex via MCP\n---\n\n# GPT Researcher for Codex\n\nUse GPT Researcher from Codex via MCP.\n\n## When to use\n- When you need gpt-researcher capabilities in your Codex workflow\n- See https://github.com/assafelovic/gpt-researcher for full setup instructions\n",
+      "bodyMd": "# GPT Researcher for Codex\n\nUse GPT Researcher from Codex via MCP.\n\n## When to use\n- When you need gpt-researcher capabilities in your Codex workflow\n- See https://github.com/assafelovic/gpt-researcher for full setup instructions\n"
+    }
+  ]
+}

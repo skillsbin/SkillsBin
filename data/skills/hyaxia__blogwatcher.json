@@ -1,0 +1,94 @@
+{
+  "repo": "Hyaxia/blogwatcher",
+  "commit": "58acfeb16258bd0e64d72f8f977ae8143cae5fa3",
+  "branch": "main",
+  "fetchedAt": "2026-10-13T06:57:40.260Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "blogwatcher-cli",
+      "name": "blogwatcher-cli",
+      "dir": "",
+      "path": "SKILL.md",
+      "desc": "Use when managing or interacting with favorite blogs via the BlogWatcher CLI—adding/removing blogs, scanning for new posts, listing articles, marking read/unread, or modifying related CLI behavior, scanning, storage, and tests.",
+      "descZh": "",
+      "triggers": [
+        "managing"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "python",
+          "go"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Hyaxia/blogwatcher.git",
+        "copy": "",
+        "raw": "https://raw.githubusercontent.com/Hyaxia/blogwatcher/58acfeb16258bd0e64d72f8f977ae8143cae5fa3/SKILL.md",
+        "saveAs": "~/.claude/skills/blogwatcher-cli/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:7f280a3de2cc4ac4ead518d7b5850a8503b6c990f36811a19179650b87d5b589",
+      "bytes": 2215,
+      "wordCount": 251,
+      "repoLicense": "MIT",
+      "commit": "58acfeb16258bd0e64d72f8f977ae8143cae5fa3",
+      "branch": "main",
+      "body": "---\nname: blogwatcher-cli\ndescription: Use when managing or interacting with favorite blogs via the BlogWatcher CLI—adding/removing blogs, scanning for new posts, listing articles, marking read/unread, or modifying related CLI behavior, scanning, storage, and tests.\n---\n\n# BlogWatcher CLI\n\n## Quick Orientation\n- Use the Cobra entry point in `cmd/blogwatcher/main.go` and `internal/cli/`.\n- Route business logic through `internal/controller` and persistence through `internal/storage`.\n- Use scanning pipeline packages in `internal/scanner`, `internal/rss`, and `internal/scraper`.\n- Remember the default SQLite path is `~/.blogwatcher/blogwatcher.db` (override with `BLOGWATCHER_DB`) and is created on demand.\n\n## Run Commands\n- Run locally with `go run ./cmd/blogwatcher ...`.\n- Build with `go build ./cmd/blogwatcher`.\n\n## Change Workflow\n1. Add or adjust CLI commands in `internal/cli/commands.go` (Cobra options, arguments, output formatting).\n2. Put non-trivial logic in `internal/controller` so the CLI stays thin and testable.\n3. Update storage or schema in `internal/storage/database.go` and adjust model conversion in `internal/model` if needed.\n4. Modify scanning behavior in `internal/scanner` and its helpers (`internal/rss`, `internal/scraper`).\n5. Update or add tests under `internal/` or `cmd/` for every feature change or addition.\n\n## Test Guidance\n- Run tests with `go test ./...`.\n- If you add a feature, add tests and any necessary dummy data.\n- Keep tests focused on CLI behavior, controller logic, and scraper/RSS parsing outcomes.\n\n## Output Conventions\n- Preserve user-friendly CLI output with colors and clear errors.\n- When listing posts available for reading, always include the link to each post in the output.\n- Keep error handling consistent with existing exceptions (`BlogNotFoundError`, `BlogAlreadyExistsError`, `ArticleNotFoundError`).\n\n### Example (posts available for reading)\n```text\nUnread articles (2):\n\n  [12] [new] Understanding Click Contexts\n       Blog: Real Python\n       URL: https://realpython.com/click-context/\n       Published: 2025-11-02\n\n  [13] [new] Async IO in Practice\n       Blog: Test & Code\n       URL: https://testandcode.com/async-io-in-practice/\n```\n",
+      "bodyMd": "# BlogWatcher CLI\n\n## Quick Orientation\n- Use the Cobra entry point in `cmd/blogwatcher/main.go` and `internal/cli/`.\n- Route business logic through `internal/controller` and persistence through `internal/storage`.\n- Use scanning pipeline packages in `internal/scanner`, `internal/rss`, and `internal/scraper`.\n- Remember the default SQLite path is `~/.blogwatcher/blogwatcher.db` (override with `BLOGWATCHER_DB`) and is created on demand.\n\n## Run Commands\n- Run locally with `go run ./cmd/blogwatcher ...`.\n- Build with `go build ./cmd/blogwatcher`.\n\n## Change Workflow\n1. Add or adjust CLI commands in `internal/cli/commands.go` (Cobra options, arguments, output formatting).\n2. Put non-trivial logic in `internal/controller` so the CLI stays thin and testable.\n3. Update storage or schema in `internal/storage/database.go` and adjust model conversion in `internal/model` if needed.\n4. Modify scanning behavior in `internal/scanner` and its helpers (`internal/rss`, `internal/scraper`).\n5. Update or add tests under `internal/` or `cmd/` for every feature change or addition.\n\n## Test Guidance\n- Run tests with `go test ./...`.\n- If you add a feature, add tests and any necessary dummy data.\n- Keep tests focused on CLI behavior, controller logic, and scraper/RSS parsing outcomes.\n\n## Output Conventions\n- Preserve user-friendly CLI output with colors and clear errors.\n- When listing posts available for reading, always include the link to each post in the output.\n- Keep error handling consistent with existing exceptions (`BlogNotFoundError`, `BlogAlreadyExistsError`, `ArticleNotFoundError`).\n\n### Example (posts available for reading)\n```text\nUnread articles (2):\n\n  [12] [new] Understanding Click Contexts\n       Blog: Real Python\n       URL: https://realpython.com/click-context/\n       Published: 2025-11-02\n\n  [13] [new] Async IO in Practice\n       Blog: Test & Code\n       URL: https://testandcode.com/async-io-in-practice/\n```\n"
+    },
+    {
+      "slug": "skills",
+      "name": "blogwatcher",
+      "dir": "skills",
+      "path": "skills/SKILL.md",
+      "desc": "Monitor blogs and RSS/Atom feeds for updates using the blogwatcher CLI.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "go"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Hyaxia/blogwatcher.git",
+        "copy": "cp -r skills ~/.claude/skills/skills",
+        "raw": "https://raw.githubusercontent.com/Hyaxia/blogwatcher/58acfeb16258bd0e64d72f8f977ae8143cae5fa3/skills/SKILL.md",
+        "saveAs": "~/.claude/skills/skills/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:214ea8dd45c303c98b760543f7bbdb96de234366b1841d8fa83111a140f34251",
+      "bytes": 945,
+      "wordCount": 119,
+      "repoLicense": "MIT",
+      "commit": "58acfeb16258bd0e64d72f8f977ae8143cae5fa3",
+      "branch": "main",
+      "body": "---\nname: blogwatcher\ndescription: Monitor blogs and RSS/Atom feeds for updates using the blogwatcher CLI.\n---\n\n# blogwatcher\n\nTrack blog and RSS/Atom feed updates with the `blogwatcher` CLI.\n\nInstall\n\n- Go: `go install github.com/Hyaxia/blogwatcher/cmd/blogwatcher@latest`\n\nQuick start\n\n- `blogwatcher --help`\n\nCommon commands\n\n- Add a blog: `blogwatcher add \"My Blog\" https://example.com`\n- List blogs: `blogwatcher blogs`\n- Scan for updates: `blogwatcher scan`\n- List articles: `blogwatcher articles`\n- Mark an article read: `blogwatcher read 1`\n- Mark all articles read: `blogwatcher read-all`\n- Remove a blog: `blogwatcher remove \"My Blog\"`\n\nExample output\n\n```\n$ blogwatcher blogs\nTracked blogs (1):\n\n  xkcd\n    URL: https://xkcd.com\n```\n\n```\n$ blogwatcher scan\nScanning 1 blog(s)...\n\n  xkcd\n    Source: RSS | Found: 4 | New: 4\n\nFound 4 new article(s) total!\n```\n\nNotes\n\n- Use `blogwatcher <command> --help` to discover flags and options.\n",
+      "bodyMd": "# blogwatcher\n\nTrack blog and RSS/Atom feed updates with the `blogwatcher` CLI.\n\nInstall\n\n- Go: `go install github.com/Hyaxia/blogwatcher/cmd/blogwatcher@latest`\n\nQuick start\n\n- `blogwatcher --help`\n\nCommon commands\n\n- Add a blog: `blogwatcher add \"My Blog\" https://example.com`\n- List blogs: `blogwatcher blogs`\n- Scan for updates: `blogwatcher scan`\n- List articles: `blogwatcher articles`\n- Mark an article read: `blogwatcher read 1`\n- Mark all articles read: `blogwatcher read-all`\n- Remove a blog: `blogwatcher remove \"My Blog\"`\n\nExample output\n\n```\n$ blogwatcher blogs\nTracked blogs (1):\n\n  xkcd\n    URL: https://xkcd.com\n```\n\n```\n$ blogwatcher scan\nScanning 1 blog(s)...\n\n  xkcd\n    Source: RSS | Found: 4 | New: 4\n\nFound 4 new article(s) total!\n```\n\nNotes\n\n- Use `blogwatcher <command> --help` to discover flags and options.\n"
+    }
+  ]
+}

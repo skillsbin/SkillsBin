@@ -1,0 +1,864 @@
+{
+  "repo": "runtsang/RebuttalStudio",
+  "commit": "1f81e2f0aeccd582df2f5f84dfb3c17da5189599",
+  "branch": "master",
+  "fetchedAt": "2026-10-13T06:56:50.358Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "skills",
+      "name": "skills",
+      "dir": "skills",
+      "path": "skills/SKILL.md",
+      "desc": "Multi-stage rebuttal analysis skill for RebuttalStudio. Use when organizing reviewer comments into stage-specific conference workflows, including stage1 breakdown, stage2 refinement, stage4 multi-round follow-up, and stage5 final remarks generation.",
+      "descZh": "",
+      "triggers": [
+        "including stage1 br"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "convert"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/runtsang/RebuttalStudio.git",
+        "copy": "cp -r skills ~/.claude/skills/skills",
+        "raw": "https://raw.githubusercontent.com/runtsang/RebuttalStudio/1f81e2f0aeccd582df2f5f84dfb3c17da5189599/skills/SKILL.md",
+        "saveAs": "~/.claude/skills/skills/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:6d1c2367534d9ee414476146711008fc01ff7e798af6ae028ba6bfb071efdb13",
+      "bytes": 3142,
+      "wordCount": 345,
+      "repoLicense": "",
+      "commit": "1f81e2f0aeccd582df2f5f84dfb3c17da5189599",
+      "branch": "master",
+      "body": "---\nname: skills\ndescription: Multi-stage rebuttal analysis skill for RebuttalStudio. Use when organizing reviewer comments into stage-specific conference workflows, including stage1 breakdown, stage2 refinement, stage4 multi-round follow-up, and stage5 final remarks generation.\n---\n\n# RebuttalStudio Multi-Stage Skill\n\nFollow this dispatcher structure:\n\n1. Identify stage first (`stage1`, `stage2`, `stage4`, or `stage5`).\n2. For `stage1` and `stage2`, apply the stage template first, then select conference-specific extension.\n3. Execute the conference skill instructions directly.\n\n## Available stage workflows\n\n- `stage1/template/SKILL.md`: Shared Stage 1 breakdown template. Apply before conference overrides.\n- `stage1/iclr/SKILL.md`: Convert raw reviewer feedback into a structured breakdown for rebuttal drafting.\n- `stage1/icml/SKILL.md`: Convert raw reviewer feedback into a structured breakdown for rebuttal drafting (ICML mapping).\n- `stage2/template/SKILL.md`: Shared Stage 2 refine template. Apply before conference overrides.\n- `stage2/iclr/SKILL.md`: Refine Stage2 outline drafts into reviewer-facing rebuttal prose.\n- `stage2/icml/SKILL.md`: Refine Stage2 outline drafts into reviewer-facing rebuttal prose (ICML labeling).\n- `stage4/condense/SKILL.md`: Condense Stage 3 combined discussion into reusable markdown context.\n- `stage4/refine/SKILL.md`: Refine follow-up response using condensed context + follow-up question + user draft.\n- `stage5/final-remarks/SKILL.md`: Fill Stage 5 final remarks template from all reviewers' condensed markdown context.\n\n## Available utility workflows\n\n- `polish/SKILL.md`: Polish (rephrase) a rebuttal message template for clarity and professionalism while preserving the original structure, tone, and intent.\n\n## Available stage-general utility skills\n\nThese skills apply across multiple stages and provide strategic, stylistic, and quality guidance:\n\n- `utility/stage/review-response/SKILL.md`: Comment classification (Major/Minor/Misunderstanding/Typo) and response strategy selection (Accept/Defend/Clarify/Experiment). Use when planning how to respond to any reviewer concern.\n- `utility/stage/writing-anti-ai/SKILL.md`: Remove AI-generated writing patterns from rebuttal prose. Use after Stage 2 refinement or Stage 4 follow-up when text reads formulaic or robotic.\n- `utility/stage/text-condense/SKILL.md`: Condense selected rebuttal prose into fewer words without changing meaning. Use when a paragraph is too long but the technical content should stay intact.\n- `utility/stage/rebuttal-self-review/SKILL.md`: Pre-submission quality checklist covering coverage, tone, factual accuracy, structure, and clarity. Use after Stage 3 compilation or Stage 5 final remarks.\n- `utility/stage/citation-verification/SKILL.md`: Verification workflow for any new citation added during rebuttal writing. Use when LLM-suggested references appear in Stage 2 drafts.\n\nIf a requested stage/conference does not exist, stop and ask for missing spec before inventing format.\nWhen adding a new conference for Stage 1 or Stage 2, extend the stage template and edit only conference-specific differences.\n",
+      "bodyMd": "# RebuttalStudio Multi-Stage Skill\n\nFollow this dispatcher structure:\n\n1. Identify stage first (`stage1`, `stage2`, `stage4`, or `stage5`).\n2. For `stage1` and `stage2`, apply the stage template first, then select conference-specific extension.\n3. Execute the conference skill instructions directly.\n\n## Available stage workflows\n\n- `stage1/template/SKILL.md`: Shared Stage 1 breakdown template. Apply before conference overrides.\n- `stage1/iclr/SKILL.md`: Convert raw reviewer feedback into a structured breakdown for rebuttal drafting.\n- `stage1/icml/SKILL.md`: Convert raw reviewer feedback into a structured breakdown for rebuttal drafting (ICML mapping).\n- `stage2/template/SKILL.md`: Shared Stage 2 refine template. Apply before conference overrides.\n- `stage2/iclr/SKILL.md`: Refine Stage2 outline drafts into reviewer-facing rebuttal prose.\n- `stage2/icml/SKILL.md`: Refine Stage2 outline drafts into reviewer-facing rebuttal prose (ICML labeling).\n- `stage4/condense/SKILL.md`: Condense Stage 3 combined discussion into reusable markdown context.\n- `stage4/refine/SKILL.md`: Refine follow-up response using condensed context + follow-up question + user draft.\n- `stage5/final-remarks/SKILL.md`: Fill Stage 5 final remarks template from all reviewers' condensed markdown context.\n\n## Available utility workflows\n\n- `polish/SKILL.md`: Polish (rephrase) a rebuttal message template for clarity and professionalism while preserving the original structure, tone, and intent.\n\n## Available stage-general utility skills\n\nThese skills apply across multiple stages and provide strategic, stylistic, and quality guidance:\n\n- `utility/stage/review-response/SKILL.md`: Comment classification (Major/Minor/Misunderstanding/Typo) and response strategy selection (Accept/Defend/Clarify/Experiment). Use when planning how to respond to any reviewer concern.\n- `utility/stage/writing-anti-ai/SKILL.md`: Remove AI-generated writing patterns from rebuttal prose. Use after Stage 2 refinement or Stage 4 follow-up when text reads formulaic or robotic.\n- `utility/stage/text-condense/SKILL.md`: Condense selected rebuttal prose into fewer words without changing meaning. Use when a paragraph is too long but the technical content should stay intact.\n- `utility/stage/rebuttal-self-review/SKILL.md`: Pre-submission quality checklist covering coverage, tone, factual accuracy, structure, and clarity. Use after Stage 3 compilation or Stage 5 final remarks.\n- `utility/stage/citation-verification/SKILL.md`: Verification workflow for any new citation added during rebuttal writing. Use when LLM-suggested references appear in Stage 2 drafts.\n\nIf a requested stage/conference does not exist, stop and ask for missing spec before inventing format.\nWhen adding a new conference for Stage 1 or Stage 2, extend the stage template and edit only conference-specific differences.\n"
+    },
+    {
+      "slug": "summarize",
+      "name": "document-memory-summarize",
+      "dir": "skills/document-memory/summarize",
+      "path": "skills/document-memory/summarize/SKILL.md",
+      "desc": "Summarize extracted paper text into concise Markdown memory for later Stage 2 and Stage 4 background use, with fixed section headings and no fabricated claims.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "convert"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/runtsang/RebuttalStudio.git",
+        "copy": "cp -r skills/document-memory/summarize ~/.claude/skills/summarize",
+        "raw": "https://raw.githubusercontent.com/runtsang/RebuttalStudio/1f81e2f0aeccd582df2f5f84dfb3c17da5189599/skills/document-memory/summarize/SKILL.md",
+        "saveAs": "~/.claude/skills/summarize/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:24a7ed5ca732f8daf2de07dcbc8418835bf0f1549fea39af0d2d3f0865aff8ea",
+      "bytes": 1106,
+      "wordCount": 142,
+      "repoLicense": "",
+      "commit": "1f81e2f0aeccd582df2f5f84dfb3c17da5189599",
+      "branch": "master",
+      "body": "---\nname: document-memory-summarize\ndescription: Summarize extracted paper text into concise Markdown memory for later Stage 2 and Stage 4 background use, with fixed section headings and no fabricated claims.\n---\n\n# Document Memory Summarize\n\n## Goal\nConvert extracted document text into a concise Markdown memory file that is easy to edit and reuse in later rebuttal stages.\n\n## Input\n- `document_text`: plain text extracted from `.txt`, `.md`, `.tex`, or `.pdf`.\n\n## Output\nReturn strict JSON:\n\n```json\n{ \"markdown\": \"...\" }\n```\n\n## Required Markdown headings\n- `## Contribution Overview`\n- `## Introduction`\n- `## Methods`\n- `## Logic Chain`\n- `## Experiments`\n- `## Key Conclusions`\n\n## Rules\n1. Keep the Markdown concise and scannable.\n2. Preserve the main theoretical ideas, methods, experiments, and conclusions.\n3. Ignore references, appendices, and supplementary material unless the main text clearly depends on them.\n4. Do not invent numbers, citations, experiments, or claims.\n5. If a section is weak or missing in the source, keep the heading and add a short grounded note instead of guessing.\n",
+      "bodyMd": "# Document Memory Summarize\n\n## Goal\nConvert extracted document text into a concise Markdown memory file that is easy to edit and reuse in later rebuttal stages.\n\n## Input\n- `document_text`: plain text extracted from `.txt`, `.md`, `.tex`, or `.pdf`.\n\n## Output\nReturn strict JSON:\n\n```json\n{ \"markdown\": \"...\" }\n```\n\n## Required Markdown headings\n- `## Contribution Overview`\n- `## Introduction`\n- `## Methods`\n- `## Logic Chain`\n- `## Experiments`\n- `## Key Conclusions`\n\n## Rules\n1. Keep the Markdown concise and scannable.\n2. Preserve the main theoretical ideas, methods, experiments, and conclusions.\n3. Ignore references, appendices, and supplementary material unless the main text clearly depends on them.\n4. Do not invent numbers, citations, experiments, or claims.\n5. If a section is weak or missing in the source, keep the heading and add a short grounded note instead of guessing.\n"
+    },
+    {
+      "slug": "polish",
+      "name": "template-polish",
+      "dir": "skills/polish",
+      "path": "skills/polish/SKILL.md",
+      "desc": "Polish (rephrase) a rebuttal message template for clarity and professionalism while preserving the original structure, tone, and intent.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/runtsang/RebuttalStudio.git",
+        "copy": "cp -r skills/polish ~/.claude/skills/polish",
+        "raw": "https://raw.githubusercontent.com/runtsang/RebuttalStudio/1f81e2f0aeccd582df2f5f84dfb3c17da5189599/skills/polish/SKILL.md",
+        "saveAs": "~/.claude/skills/polish/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:16a439c845b586c0f04bd084357631cb75273e8efc361775564d0deda62ea2c9",
+      "bytes": 1668,
+      "wordCount": 232,
+      "repoLicense": "",
+      "commit": "1f81e2f0aeccd582df2f5f84dfb3c17da5189599",
+      "branch": "master",
+      "body": "---\nname: template-polish\ndescription: Polish (rephrase) a rebuttal message template for clarity and professionalism while preserving the original structure, tone, and intent.\n---\n\n# Template Polish Skill\n\nRephrase a rebuttal-related message (e.g. nudge email, status update) so it reads naturally and clearly.\n\n## Core Principles\n\n1. **Preserve original structure**: Keep the same paragraph order, greeting, sign-off, and line breaks. Do not merge or split paragraphs.\n2. **Preserve original tone**: The input is already semi-formal academic correspondence. Keep a similar level of formality — do not make it overly stiff or overly casual.\n3. **Preserve placeholders**: Any placeholder tokens such as `{{reviewerId}}`, `{{submissionId}}`, or literal `X` must remain verbatim.\n4. **Keep meaning unchanged**: Do not add, remove, or alter the substantive content.\n5. **Light touch**: Only rephrase for clarity, conciseness, and naturalness. Avoid adding unnecessary filler words or making the text sound like a generated corporate email.\n\n## What to improve\n\n- Fix grammar or awkward phrasing.\n- Reduce redundancy (e.g. two sentences saying the same thing).\n- Improve word choice where a simpler or more precise word exists.\n- Smooth transitions between sentences.\n\n## What NOT to do\n\n- Do not change the greeting or sign-off style.\n- Do not rewrite from scratch.\n- Do not make it sound overly formal or \"written by AI\".\n- Do not remove any substantive point the author made.\n- Do not add new content or sentiments not present in the original.\n\n## Output format\n\nReturn **JSON only** (no markdown fences) with this schema:\n\n```json\n{\"text\": \"...polished text...\"}\n```\n",
+      "bodyMd": "# Template Polish Skill\n\nRephrase a rebuttal-related message (e.g. nudge email, status update) so it reads naturally and clearly.\n\n## Core Principles\n\n1. **Preserve original structure**: Keep the same paragraph order, greeting, sign-off, and line breaks. Do not merge or split paragraphs.\n2. **Preserve original tone**: The input is already semi-formal academic correspondence. Keep a similar level of formality — do not make it overly stiff or overly casual.\n3. **Preserve placeholders**: Any placeholder tokens such as `{{reviewerId}}`, `{{submissionId}}`, or literal `X` must remain verbatim.\n4. **Keep meaning unchanged**: Do not add, remove, or alter the substantive content.\n5. **Light touch**: Only rephrase for clarity, conciseness, and naturalness. Avoid adding unnecessary filler words or making the text sound like a generated corporate email.\n\n## What to improve\n\n- Fix grammar or awkward phrasing.\n- Reduce redundancy (e.g. two sentences saying the same thing).\n- Improve word choice where a simpler or more precise word exists.\n- Smooth transitions between sentences.\n\n## What NOT to do\n\n- Do not change the greeting or sign-off style.\n- Do not rewrite from scratch.\n- Do not make it sound overly formal or \"written by AI\".\n- Do not remove any substantive point the author made.\n- Do not add new content or sentiments not present in the original.\n\n## Output format\n\nReturn **JSON only** (no markdown fences) with this schema:\n\n```json\n{\"text\": \"...polished text...\"}\n```\n"
+    },
+    {
+      "slug": "arr",
+      "name": "stage1-arr-breakdown",
+      "dir": "skills/stage1/arr",
+      "path": "skills/stage1/arr/SKILL.md",
+      "desc": "Break down full ARR (ACL Rolling Review) reviewer responses into structured rebuttal units. Use when input contains ARR reviewer fields (Paper Summary, Strengths, Weaknesses, Comments/Suggestions) and numeric scores (Confidence, Soundness, Excitement, Overall Assessment, Reproducibility). Splits weaknesses and comments/suggestions into granular response items while preserving original wording for quoted issues.",
+      "descZh": "",
+      "triggers": [
+        "Strengths",
+        "Weaknesses",
+        "Comments/Suggest"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/runtsang/RebuttalStudio.git",
+        "copy": "cp -r skills/stage1/arr ~/.claude/skills/arr",
+        "raw": "https://raw.githubusercontent.com/runtsang/RebuttalStudio/1f81e2f0aeccd582df2f5f84dfb3c17da5189599/skills/stage1/arr/SKILL.md",
+        "saveAs": "~/.claude/skills/arr/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:7b5b032effa40a5d6a2ebb9f226bf9f080784f66196487ace295e760f8750f92",
+      "bytes": 1808,
+      "wordCount": 198,
+      "repoLicense": "",
+      "commit": "1f81e2f0aeccd582df2f5f84dfb3c17da5189599",
+      "branch": "master",
+      "body": "---\nname: stage1-arr-breakdown\ndescription: Break down full ARR (ACL Rolling Review) reviewer responses into structured rebuttal units. Use when input contains ARR reviewer fields (Paper Summary, Strengths, Weaknesses, Comments/Suggestions) and numeric scores (Confidence, Soundness, Excitement, Overall Assessment, Reproducibility). Splits weaknesses and comments/suggestions into granular response items while preserving original wording for quoted issues.\n---\n\n# Stage 1 · ARR Breakdown Skill (Template Extension)\n\nApply the shared template first:\n\n- `skills/stage1/template/SKILL.md`\n\nThen apply only the ARR-specific overrides below.\n\n## ARR overrides\n\n### Score mapping (required keys)\n\nExtract exactly these five keys (numbers only, decimals allowed):\n\n- `confidence` <- ARR `Confidence`\n- `soundness` <- ARR `Soundness`\n- `excitement` <- ARR `Excitement`\n- `assessment` <- ARR `Overall Assessment` (number before `=` sign)\n- `reproducibility` <- ARR `Reproducibility` (number before `=` sign)\n\n### Preserved section mapping\n\n- `summary` <- `Paper Summary`\n- `strength` <- `Summary Of Strengths`\n\n### Atomic issue source mapping\n\n- weakness-type source <- `Summary Of Weaknesses`\n- question-type source <- `Comments Suggestions And Typos` (label as `suggestion`)\n\n### Output header and score block\n\n- Header must be exactly: `# Stage1 ARR Breakdown`\n- `## Scores` must contain exactly the five keys above.\n\n## ARR notes\n\n- ARR scores may include decimals (e.g. `2.5`, `3.5`). Extract only the numeric part before any `=` or description text.\n- The `Ethical Concerns`, `Datasets`, `Software`, `Knowledge Of Paper`, and certification fields are irrelevant — ignore them.\n- Map `Comments Suggestions And Typos` to the `suggestion` section and split it into atomic issues just as weaknesses are split.\n",
+      "bodyMd": "# Stage 1 · ARR Breakdown Skill (Template Extension)\n\nApply the shared template first:\n\n- `skills/stage1/template/SKILL.md`\n\nThen apply only the ARR-specific overrides below.\n\n## ARR overrides\n\n### Score mapping (required keys)\n\nExtract exactly these five keys (numbers only, decimals allowed):\n\n- `confidence` <- ARR `Confidence`\n- `soundness` <- ARR `Soundness`\n- `excitement` <- ARR `Excitement`\n- `assessment` <- ARR `Overall Assessment` (number before `=` sign)\n- `reproducibility` <- ARR `Reproducibility` (number before `=` sign)\n\n### Preserved section mapping\n\n- `summary` <- `Paper Summary`\n- `strength` <- `Summary Of Strengths`\n\n### Atomic issue source mapping\n\n- weakness-type source <- `Summary Of Weaknesses`\n- question-type source <- `Comments Suggestions And Typos` (label as `suggestion`)\n\n### Output header and score block\n\n- Header must be exactly: `# Stage1 ARR Breakdown`\n- `## Scores` must contain exactly the five keys above.\n\n## ARR notes\n\n- ARR scores may include decimals (e.g. `2.5`, `3.5`). Extract only the numeric part before any `=` or description text.\n- The `Ethical Concerns`, `Datasets`, `Software`, `Knowledge Of Paper`, and certification fields are irrelevant — ignore them.\n- Map `Comments Suggestions And Typos` to the `suggestion` section and split it into atomic issues just as weaknesses are split.\n"
+    },
+    {
+      "slug": "iclr",
+      "name": "stage1-iclr-breakdown",
+      "dir": "skills/stage1/iclr",
+      "path": "skills/stage1/iclr/SKILL.md",
+      "desc": "Break down full ICLR reviewer responses into structured rebuttal units. Use when input contains reviewer summary/presentation/contribution/strength/weakness/question text and the goal is to split weaknesses/questions into granular R-style response items while preserving original wording for quoted issues.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/runtsang/RebuttalStudio.git",
+        "copy": "cp -r skills/stage1/iclr ~/.claude/skills/iclr",
+        "raw": "https://raw.githubusercontent.com/runtsang/RebuttalStudio/1f81e2f0aeccd582df2f5f84dfb3c17da5189599/skills/stage1/iclr/SKILL.md",
+        "saveAs": "~/.claude/skills/iclr/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:153d99b0dfe696ee5139f13a202b9dfc4298c52199f5efa9e5cbe37af63963ac",
+      "bytes": 1305,
+      "wordCount": 137,
+      "repoLicense": "",
+      "commit": "1f81e2f0aeccd582df2f5f84dfb3c17da5189599",
+      "branch": "master",
+      "body": "---\nname: stage1-iclr-breakdown\ndescription: Break down full ICLR reviewer responses into structured rebuttal units. Use when input contains reviewer summary/presentation/contribution/strength/weakness/question text and the goal is to split weaknesses/questions into granular R-style response items while preserving original wording for quoted issues.\n---\n\n# Stage 1 · ICLR Breakdown Skill (Template Extension)\n\nApply the shared template first:\n\n- `skills/stage1/template/SKILL.md`\n\nThen apply only the ICLR-specific overrides below.\n\n## ICLR overrides\n\n### Score mapping (required keys)\n\nExtract exactly these five keys (numbers only):\n\n- `rating` <- ICLR `rating`\n- `confidence` <- ICLR `confidence`\n- `soundness` <- ICLR `soundness`\n- `presentation` <- ICLR `presentation`\n- `contribution` <- ICLR `contribution`\n\n### Preserved section mapping\n\n- `summary` <- `summary`\n- `strength` <- `strength`\n\n### Atomic issue source mapping\n\n- weakness-type source <- `weakness`\n- question-type source <- `question`\n\n### Output header and score block\n\n- Header must be exactly: `# Stage1 ICLR Breakdown`\n- `## Scores` must contain exactly the five keys above.\n\n## ICLR note\n\nIf reviewer text mixes free-form paragraphs and bullets, keep template splitting rules unchanged and split only by independent concerns.\n",
+      "bodyMd": "# Stage 1 · ICLR Breakdown Skill (Template Extension)\n\nApply the shared template first:\n\n- `skills/stage1/template/SKILL.md`\n\nThen apply only the ICLR-specific overrides below.\n\n## ICLR overrides\n\n### Score mapping (required keys)\n\nExtract exactly these five keys (numbers only):\n\n- `rating` <- ICLR `rating`\n- `confidence` <- ICLR `confidence`\n- `soundness` <- ICLR `soundness`\n- `presentation` <- ICLR `presentation`\n- `contribution` <- ICLR `contribution`\n\n### Preserved section mapping\n\n- `summary` <- `summary`\n- `strength` <- `strength`\n\n### Atomic issue source mapping\n\n- weakness-type source <- `weakness`\n- question-type source <- `question`\n\n### Output header and score block\n\n- Header must be exactly: `# Stage1 ICLR Breakdown`\n- `## Scores` must contain exactly the five keys above.\n\n## ICLR note\n\nIf reviewer text mixes free-form paragraphs and bullets, keep template splitting rules unchanged and split only by independent concerns.\n"
+    },
+    {
+      "slug": "icml",
+      "name": "stage1-icml-breakdown",
+      "dir": "skills/stage1/icml",
+      "path": "skills/stage1/icml/SKILL.md",
+      "desc": "Break down full ICML reviewer responses into structured rebuttal units. Use when input contains reviewer summary/presentation/contribution/strength/weakness/question text and the goal is to split weaknesses/questions into granular R-style response items while preserving original wording for quoted issues.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/runtsang/RebuttalStudio.git",
+        "copy": "cp -r skills/stage1/icml ~/.claude/skills/icml",
+        "raw": "https://raw.githubusercontent.com/runtsang/RebuttalStudio/1f81e2f0aeccd582df2f5f84dfb3c17da5189599/skills/stage1/icml/SKILL.md",
+        "saveAs": "~/.claude/skills/icml/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:e9cc1c1c330a7d93176b54e230bbad7b00322e71055bef789f106d298db0462c",
+      "bytes": 1485,
+      "wordCount": 159,
+      "repoLicense": "",
+      "commit": "1f81e2f0aeccd582df2f5f84dfb3c17da5189599",
+      "branch": "master",
+      "body": "---\nname: stage1-icml-breakdown\ndescription: Break down full ICML reviewer responses into structured rebuttal units. Use when input contains reviewer summary/presentation/contribution/strength/weakness/question text and the goal is to split weaknesses/questions into granular R-style response items while preserving original wording for quoted issues.\n---\n\n# Stage 1 · ICML Breakdown Skill (Template Extension)\n\nApply the shared template first:\n\n- `skills/stage1/template/SKILL.md`\n\nThen apply only the ICML-specific overrides below.\n\n## ICML overrides\n\n### Score mapping (required keys)\n\nExtract exactly these six keys (numbers only):\n\n- `rating` <- `Overall Recommendation`\n- `confidence` <- `Confidence`\n- `soundness` <- `Soundness`\n- `presentation` <- `Presentation`\n- `significance` <- `Significance`\n- `originality` <- `Originality`\n\n### Preserved section mapping\n\n- `summary` <- `Summary`\n- `strength` <- `Limitations` (keep compatibility with shared output key naming)\n\n### Atomic issue source mapping\n\n- weakness-type source <- `Strengths And Weaknesses` (extract only concern/criticism parts)\n- question-type source <- `Key Questions For Authors`\n\n### Output header and score block\n\n- Header must be exactly: `# Stage1 ICML Breakdown`\n- `## Scores` must contain exactly the six keys above.\n\n## ICML note\n\nIf \"Strengths And Weaknesses\" mixes praise and criticism in one bullet, keep praise in preserved context and split only actionable weakness concerns into atomic issues.\n",
+      "bodyMd": "# Stage 1 · ICML Breakdown Skill (Template Extension)\n\nApply the shared template first:\n\n- `skills/stage1/template/SKILL.md`\n\nThen apply only the ICML-specific overrides below.\n\n## ICML overrides\n\n### Score mapping (required keys)\n\nExtract exactly these six keys (numbers only):\n\n- `rating` <- `Overall Recommendation`\n- `confidence` <- `Confidence`\n- `soundness` <- `Soundness`\n- `presentation` <- `Presentation`\n- `significance` <- `Significance`\n- `originality` <- `Originality`\n\n### Preserved section mapping\n\n- `summary` <- `Summary`\n- `strength` <- `Limitations` (keep compatibility with shared output key naming)\n\n### Atomic issue source mapping\n\n- weakness-type source <- `Strengths And Weaknesses` (extract only concern/criticism parts)\n- question-type source <- `Key Questions For Authors`\n\n### Output header and score block\n\n- Header must be exactly: `# Stage1 ICML Breakdown`\n- `## Scores` must contain exactly the six keys above.\n\n## ICML note\n\nIf \"Strengths And Weaknesses\" mixes praise and criticism in one bullet, keep praise in preserved context and split only actionable weakness concerns into atomic issues.\n"
+    },
+    {
+      "slug": "neurips",
+      "name": "stage1-neurips-breakdown",
+      "dir": "skills/stage1/neurips",
+      "path": "skills/stage1/neurips/SKILL.md",
+      "desc": "Break down full NeurIPS reviewer responses into structured rebuttal units. Use when input contains NeurIPS reviewer fields (Summary, Strengths and Weaknesses, Questions, Limitations) and numeric scores (Rating, Confidence, Quality, Clarity, Significance, Originality). Splits questions and limitations into granular response items while preserving original wording for quoted issues.",
+      "descZh": "",
+      "triggers": [
+        "Strengths and Weaknesses",
+        "Questions",
+        "Limi"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/runtsang/RebuttalStudio.git",
+        "copy": "cp -r skills/stage1/neurips ~/.claude/skills/neurips",
+        "raw": "https://raw.githubusercontent.com/runtsang/RebuttalStudio/1f81e2f0aeccd582df2f5f84dfb3c17da5189599/skills/stage1/neurips/SKILL.md",
+        "saveAs": "~/.claude/skills/neurips/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:f030393480832dcc728c34fa5aec7d8ca3e9a1b4d5d604c8fd204747e2768c2f",
+      "bytes": 1824,
+      "wordCount": 202,
+      "repoLicense": "",
+      "commit": "1f81e2f0aeccd582df2f5f84dfb3c17da5189599",
+      "branch": "master",
+      "body": "---\nname: stage1-neurips-breakdown\ndescription: Break down full NeurIPS reviewer responses into structured rebuttal units. Use when input contains NeurIPS reviewer fields (Summary, Strengths and Weaknesses, Questions, Limitations) and numeric scores (Rating, Confidence, Quality, Clarity, Significance, Originality). Splits questions and limitations into granular response items while preserving original wording for quoted issues.\n---\n\n# Stage 1 · NeurIPS Breakdown Skill (Template Extension)\n\nApply the shared template first:\n\n- `skills/stage1/template/SKILL.md`\n\nThen apply only the NeurIPS-specific overrides below.\n\n## NeurIPS overrides\n\n### Score mapping (required keys)\n\nExtract exactly these six keys (numbers only):\n\n- `rating` <- NeurIPS `Rating` / `Overall`\n- `confidence` <- NeurIPS `Confidence`\n- `quality` <- NeurIPS `Quality`\n- `clarity` <- NeurIPS `Clarity`\n- `significance` <- NeurIPS `Significance`\n- `originality` <- NeurIPS `Originality`\n\nScores may appear as `3: good` or `5: Accept` — extract the leading number only.\n\n### Preserved section mapping\n\n- `summary` <- `Summary`\n- `strength` <- `Strengths And Weaknesses`\n\n### Atomic issue source mapping\n\n- weakness-type source <- `Questions` (label as `weakness`)\n- question-type source <- `Limitations` (label as `question`)\n\n### Output header and score block\n\n- Header must be exactly: `# Stage1 NeurIPS Breakdown`\n- `## Scores` must contain exactly the six keys above.\n\n## NeurIPS notes\n\n- The `Limitations` field sometimes contains a standard phrase (\"The authors thoroughly discussed the limitations of their work.\") — preserve it verbatim rather than splitting into atomic issues if it is a single affirmative statement.\n- Score values may include descriptive labels after the colon (e.g. `4: excellent`) — extract only the numeric portion.\n",
+      "bodyMd": "# Stage 1 · NeurIPS Breakdown Skill (Template Extension)\n\nApply the shared template first:\n\n- `skills/stage1/template/SKILL.md`\n\nThen apply only the NeurIPS-specific overrides below.\n\n## NeurIPS overrides\n\n### Score mapping (required keys)\n\nExtract exactly these six keys (numbers only):\n\n- `rating` <- NeurIPS `Rating` / `Overall`\n- `confidence` <- NeurIPS `Confidence`\n- `quality` <- NeurIPS `Quality`\n- `clarity` <- NeurIPS `Clarity`\n- `significance` <- NeurIPS `Significance`\n- `originality` <- NeurIPS `Originality`\n\nScores may appear as `3: good` or `5: Accept` — extract the leading number only.\n\n### Preserved section mapping\n\n- `summary` <- `Summary`\n- `strength` <- `Strengths And Weaknesses`\n\n### Atomic issue source mapping\n\n- weakness-type source <- `Questions` (label as `weakness`)\n- question-type source <- `Limitations` (label as `question`)\n\n### Output header and score block\n\n- Header must be exactly: `# Stage1 NeurIPS Breakdown`\n- `## Scores` must contain exactly the six keys above.\n\n## NeurIPS notes\n\n- The `Limitations` field sometimes contains a standard phrase (\"The authors thoroughly discussed the limitations of their work.\") — preserve it verbatim rather than splitting into atomic issues if it is a single affirmative statement.\n- Score values may include descriptive labels after the colon (e.g. `4: excellent`) — extract only the numeric portion.\n"
+    },
+    {
+      "slug": "template",
+      "name": "stage1-breakdown-template",
+      "dir": "skills/stage1/template",
+      "path": "skills/stage1/template/SKILL.md",
+      "desc": "Base template for Stage1 reviewer-comment breakdown. Use when creating or extending conference-specific Stage1 skills (for example ICLR, ICML, NeurIPS, ACL) so shared extraction, splitting, and response-mapping logic stays consistent.",
+      "descZh": "",
+      "triggers": [
+        "creating",
+        "ICML",
+        "NeurIPS"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/runtsang/RebuttalStudio.git",
+        "copy": "cp -r skills/stage1/template ~/.claude/skills/template",
+        "raw": "https://raw.githubusercontent.com/runtsang/RebuttalStudio/1f81e2f0aeccd582df2f5f84dfb3c17da5189599/skills/stage1/template/SKILL.md",
+        "saveAs": "~/.claude/skills/template/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:5635e2a7c88f2560b78496d77023365aa43ce809ed841674e8295093da26feb4",
+      "bytes": 3656,
+      "wordCount": 467,
+      "repoLicense": "",
+      "commit": "1f81e2f0aeccd582df2f5f84dfb3c17da5189599",
+      "branch": "master",
+      "body": "---\nname: stage1-breakdown-template\ndescription: Base template for Stage1 reviewer-comment breakdown. Use when creating or extending conference-specific Stage1 skills (for example ICLR, ICML, NeurIPS, ACL) so shared extraction, splitting, and response-mapping logic stays consistent.\n---\n\n# Stage 1 · Breakdown Base Template\n\nUse this template as the shared core for all Stage1 conference variants.\nConference-specific files must apply this template first, then add only necessary overrides.\n\n## Shared input assumptions\n\n- Input is one reviewer's full text (OpenReview export, PDF copy, DOC/DOCX paste, etc.).\n- Review sections may appear as headings, bullets, numbered lists, or mixed prose.\n- A single bullet can contain multiple independent concerns.\n\n## Shared mandatory workflow\n\n1. **Extract conference-defined scores (numbers only)**\n   - Extract every score required by the conference extension.\n   - Keep values numeric only (for example `6`, `4`, `3`), without scale explanations.\n   - If a score is missing, leave it empty rather than inventing.\n\n2. **Preserve designated sections verbatim**\n   - Keep conference-defined preserved sections unchanged.\n   - Keep line breaks where possible.\n\n3. **Split issue-bearing sections into atomic issues**\n   - Split conference-defined weakness/question sources into issue-level items.\n   - One atomic issue should correspond to one independent concern or request.\n   - Split further if one item contains multiple asks.\n\n4. **Create response blocks (`Response1` ... `ResponseN`)**\n   - Each response block must include:\n     - `title`: generated short subtitle\n     - `source`: `weakness` or `question`\n     - `source_id`: `weaknessN` or `questionN`\n     - `quoted_issue`: exact verbatim text of the mapped atomic issue\n\n5. **Apply prefix and numbering rules**\n   - Issues from weakness-type source sections must use `weaknessN`.\n   - Issues from question-type source sections must use `questionN`.\n   - Number `weaknessN` and `questionN` independently.\n\n## Shared splitting heuristics\n\nSplit when any of these applies:\n\n- Multiple independent asks connected by \"and\", \"also\", \"in addition\", \"furthermore\".\n- Topic shift inside one bullet (for example novelty vs experiments).\n- Distinct actionable requests (for example \"clarify theorem\" and \"add baseline\").\n- Different concern types in one item (for example validity + writing quality).\n\nDo not split when sentences elaborate one single concern.\n\n## Shared output skeleton\n\nUse this structure, with conference-specific keys provided by the extension file:\n\n```markdown\n# Stage1 <CONFERENCE> Breakdown\n\n## Scores\n- <score_key_1>: <number>\n- <score_key_2>: <number>\n\n## Preserved Sections\n- summary: |\n  <verbatim text>\n- strength: |\n  <verbatim text>\n\n## Atomic Issues\n- weakness1: \"<verbatim quoted issue>\"\n- weakness2: \"<verbatim quoted issue>\"\n- question1: \"<verbatim quoted issue>\"\n\n## Responses\n### Response1\n- title: <generated subtitle>\n- source: weakness\n- source_id: weakness1\n- quoted_issue: \"<same verbatim text as weakness1>\"\n```\n\n## Shared quality checklist\n\nBefore finalizing, verify:\n\n- Preserved sections are unchanged.\n- Every atomic issue appears exactly once in `Atomic Issues`.\n- Every atomic issue maps to exactly one response block.\n- Every `quoted_issue` is verbatim.\n\n## Conference extension contract\n\nConference-specific Stage1 files must define:\n\n- Score field mapping and required score keys.\n- Preserved section mapping.\n- Weakness/question source section mapping.\n- Output header text (`# Stage1 <CONFERENCE> Breakdown`).\n\nDo not rewrite shared logic in conference files unless a true conference-specific exception exists.\n",
+      "bodyMd": "# Stage 1 · Breakdown Base Template\n\nUse this template as the shared core for all Stage1 conference variants.\nConference-specific files must apply this template first, then add only necessary overrides.\n\n## Shared input assumptions\n\n- Input is one reviewer's full text (OpenReview export, PDF copy, DOC/DOCX paste, etc.).\n- Review sections may appear as headings, bullets, numbered lists, or mixed prose.\n- A single bullet can contain multiple independent concerns.\n\n## Shared mandatory workflow\n\n1. **Extract conference-defined scores (numbers only)**\n   - Extract every score required by the conference extension.\n   - Keep values numeric only (for example `6`, `4`, `3`), without scale explanations.\n   - If a score is missing, leave it empty rather than inventing.\n\n2. **Preserve designated sections verbatim**\n   - Keep conference-defined preserved sections unchanged.\n   - Keep line breaks where possible.\n\n3. **Split issue-bearing sections into atomic issues**\n   - Split conference-defined weakness/question sources into issue-level items.\n   - One atomic issue should correspond to one independent concern or request.\n   - Split further if one item contains multiple asks.\n\n4. **Create response blocks (`Response1` ... `ResponseN`)**\n   - Each response block must include:\n     - `title`: generated short subtitle\n     - `source`: `weakness` or `question`\n     - `source_id`: `weaknessN` or `questionN`\n     - `quoted_issue`: exact verbatim text of the mapped atomic issue\n\n5. **Apply prefix and numbering rules**\n   - Issues from weakness-type source sections must use `weaknessN`.\n   - Issues from question-type source sections must use `questionN`.\n   - Number `weaknessN` and `questionN` independently.\n\n## Shared splitting heuristics\n\nSplit when any of these applies:\n\n- Multiple independent asks connected by \"and\", \"also\", \"in addition\", \"furthermore\".\n- Topic shift inside one bullet (for example novelty vs experiments).\n- Distinct actionable requests (for example \"clarify theorem\" and \"add baseline\").\n- Different concern types in one item (for example validity + writing quality).\n\nDo not split when sentences elaborate one single concern.\n\n## Shared output skeleton\n\nUse this structure, with conference-specific keys provided by the extension file:\n\n```markdown\n# Stage1 <CONFERENCE> Breakdown\n\n## Scores\n- <score_key_1>: <number>\n- <score_key_2>: <number>\n\n## Preserved Sections\n- summary: |\n  <verbatim text>\n- strength: |\n  <verbatim text>\n\n## Atomic Issues\n- weakness1: \"<verbatim quoted issue>\"\n- weakness2: \"<verbatim quoted issue>\"\n- question1: \"<verbatim quoted issue>\"\n\n## Responses\n### Response1\n- title: <generated subtitle>\n- source: weakness\n- source_id: weakness1\n- quoted_issue: \"<same verbatim text as weakness1>\"\n```\n\n## Shared quality checklist\n\nBefore finalizing, verify:\n\n- Preserved sections are unchanged.\n- Every atomic issue appears exactly once in `Atomic Issues`.\n- Every atomic issue maps to exactly one response block.\n- Every `quoted_issue` is verbatim.\n\n## Conference extension contract\n\nConference-specific Stage1 files must define:\n\n- Score field mapping and required score keys.\n- Preserved section mapping.\n- Weakness/question source section mapping.\n- Output header text (`# Stage1 <CONFERENCE> Breakdown`).\n\nDo not rewrite shared logic in conference files unless a true conference-specific exception exists.\n"
+    },
+    {
+      "slug": "arr-2",
+      "name": "stage2-arr-refine",
+      "dir": "skills/stage2/arr",
+      "path": "skills/stage2/arr/SKILL.md",
+      "desc": "Refine a Stage2 ARR (ACL Rolling Review) rebuttal draft into polished, reviewer-facing prose in the author's style; preserve factual grounding, optionally prepend a courteous opening phrase, and normalize tables/code/formulas into Markdown.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/runtsang/RebuttalStudio.git",
+        "copy": "cp -r skills/stage2/arr ~/.claude/skills/arr-2",
+        "raw": "https://raw.githubusercontent.com/runtsang/RebuttalStudio/1f81e2f0aeccd582df2f5f84dfb3c17da5189599/skills/stage2/arr/SKILL.md",
+        "saveAs": "~/.claude/skills/arr-2/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:68f6019f1891f2815d69363d63c8f36192b03ede23e830f66c8d9e3e9f795422",
+      "bytes": 1035,
+      "wordCount": 106,
+      "repoLicense": "",
+      "commit": "1f81e2f0aeccd582df2f5f84dfb3c17da5189599",
+      "branch": "master",
+      "body": "---\nname: stage2-arr-refine\ndescription: Refine a Stage2 ARR (ACL Rolling Review) rebuttal draft into polished, reviewer-facing prose in the author's style; preserve factual grounding, optionally prepend a courteous opening phrase, and normalize tables/code/formulas into Markdown.\n---\n\n# Stage 2 · ARR Refine Skill (Template Extension)\n\nApply the shared template first:\n\n- `skills/stage2/template/SKILL.md`\n\nThen apply only the ARR-specific overrides below.\n\n## ARR overrides\n\n- Preserve the same strict JSON schema and output format from the template.\n- Keep ARR naming in labels and internal references when conference name is explicitly mentioned.\n- Keep style target concise, precise, and submission-ready for an ACL/EMNLP rebuttal.\n- ARR rebuttals are typically 500–1000 words total; keep individual responses focused.\n\n## ARR note\n\nNo additional structural override is required beyond conference labeling. All writing constraints, opener rules, normalization rules, and hard constraints are inherited from the base template.\n",
+      "bodyMd": "# Stage 2 · ARR Refine Skill (Template Extension)\n\nApply the shared template first:\n\n- `skills/stage2/template/SKILL.md`\n\nThen apply only the ARR-specific overrides below.\n\n## ARR overrides\n\n- Preserve the same strict JSON schema and output format from the template.\n- Keep ARR naming in labels and internal references when conference name is explicitly mentioned.\n- Keep style target concise, precise, and submission-ready for an ACL/EMNLP rebuttal.\n- ARR rebuttals are typically 500–1000 words total; keep individual responses focused.\n\n## ARR note\n\nNo additional structural override is required beyond conference labeling. All writing constraints, opener rules, normalization rules, and hard constraints are inherited from the base template.\n"
+    },
+    {
+      "slug": "iclr-2",
+      "name": "stage2-iclr-refine",
+      "dir": "skills/stage2/iclr",
+      "path": "skills/stage2/iclr/SKILL.md",
+      "desc": "Refine a Stage2 ICLR rebuttal draft into polished, reviewer-facing prose in the author's style; preserve factual grounding, optionally prepend a courteous opening phrase, and normalize tables/code/formulas into Markdown.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/runtsang/RebuttalStudio.git",
+        "copy": "cp -r skills/stage2/iclr ~/.claude/skills/iclr-2",
+        "raw": "https://raw.githubusercontent.com/runtsang/RebuttalStudio/1f81e2f0aeccd582df2f5f84dfb3c17da5189599/skills/stage2/iclr/SKILL.md",
+        "saveAs": "~/.claude/skills/iclr-2/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:b25aec1359d94547448043c3cd937a2a93abc935d801497e10c04bd5fe88d2c4",
+      "bytes": 933,
+      "wordCount": 95,
+      "repoLicense": "",
+      "commit": "1f81e2f0aeccd582df2f5f84dfb3c17da5189599",
+      "branch": "master",
+      "body": "---\nname: stage2-iclr-refine\ndescription: Refine a Stage2 ICLR rebuttal draft into polished, reviewer-facing prose in the author's style; preserve factual grounding, optionally prepend a courteous opening phrase, and normalize tables/code/formulas into Markdown.\n---\n\n# Stage 2 · ICLR Refine Skill (Template Extension)\n\nApply the shared template first:\n\n- `skills/stage2/template/SKILL.md`\n\nThen apply only the ICLR-specific overrides below.\n\n## ICLR overrides\n\n- Preserve the same strict JSON schema and output format from the template.\n- Keep ICLR naming in labels and internal references when conference name is explicitly mentioned.\n- Keep style target concise, precise, and submission-ready for a top-tier ML rebuttal.\n\n## ICLR note\n\nNo additional structural override is required beyond conference labeling. All writing constraints, opener rules, normalization rules, and hard constraints are inherited from the base template.\n",
+      "bodyMd": "# Stage 2 · ICLR Refine Skill (Template Extension)\n\nApply the shared template first:\n\n- `skills/stage2/template/SKILL.md`\n\nThen apply only the ICLR-specific overrides below.\n\n## ICLR overrides\n\n- Preserve the same strict JSON schema and output format from the template.\n- Keep ICLR naming in labels and internal references when conference name is explicitly mentioned.\n- Keep style target concise, precise, and submission-ready for a top-tier ML rebuttal.\n\n## ICLR note\n\nNo additional structural override is required beyond conference labeling. All writing constraints, opener rules, normalization rules, and hard constraints are inherited from the base template.\n"
+    },
+    {
+      "slug": "icml-2",
+      "name": "stage2-icml-refine",
+      "dir": "skills/stage2/icml",
+      "path": "skills/stage2/icml/SKILL.md",
+      "desc": "Refine a Stage2 ICML rebuttal draft into polished, reviewer-facing prose in the author's style; preserve factual grounding, optionally prepend a courteous opening phrase, and normalize tables/code/formulas into Markdown.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/runtsang/RebuttalStudio.git",
+        "copy": "cp -r skills/stage2/icml ~/.claude/skills/icml-2",
+        "raw": "https://raw.githubusercontent.com/runtsang/RebuttalStudio/1f81e2f0aeccd582df2f5f84dfb3c17da5189599/skills/stage2/icml/SKILL.md",
+        "saveAs": "~/.claude/skills/icml-2/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:6679167b1f3127a6e38eeded1e3e67434b1d0df423ac83e2d6ecb742c240f1d3",
+      "bytes": 948,
+      "wordCount": 96,
+      "repoLicense": "",
+      "commit": "1f81e2f0aeccd582df2f5f84dfb3c17da5189599",
+      "branch": "master",
+      "body": "---\nname: stage2-icml-refine\ndescription: Refine a Stage2 ICML rebuttal draft into polished, reviewer-facing prose in the author's style; preserve factual grounding, optionally prepend a courteous opening phrase, and normalize tables/code/formulas into Markdown.\n---\n\n# Stage 2 · ICML Refine Skill (Template Extension)\n\nApply the shared template first:\n\n- `skills/stage2/template/SKILL.md`\n\nThen apply only the ICML-specific overrides below.\n\n## ICML overrides\n\n- Preserve the same strict JSON schema and output format from the template.\n- Keep ICML naming in labels and internal references when conference name is explicitly mentioned.\n- Keep style target concise, precise, and submission-ready for top-tier ML rebuttal response quality.\n\n## ICML note\n\nNo additional structural override is required beyond conference labeling. All writing constraints, opener rules, normalization rules, and hard constraints are inherited from the base template.\n",
+      "bodyMd": "# Stage 2 · ICML Refine Skill (Template Extension)\n\nApply the shared template first:\n\n- `skills/stage2/template/SKILL.md`\n\nThen apply only the ICML-specific overrides below.\n\n## ICML overrides\n\n- Preserve the same strict JSON schema and output format from the template.\n- Keep ICML naming in labels and internal references when conference name is explicitly mentioned.\n- Keep style target concise, precise, and submission-ready for top-tier ML rebuttal response quality.\n\n## ICML note\n\nNo additional structural override is required beyond conference labeling. All writing constraints, opener rules, normalization rules, and hard constraints are inherited from the base template.\n"
+    },
+    {
+      "slug": "neurips-2",
+      "name": "stage2-neurips-refine",
+      "dir": "skills/stage2/neurips",
+      "path": "skills/stage2/neurips/SKILL.md",
+      "desc": "Refine a Stage2 NeurIPS rebuttal draft into polished, reviewer-facing prose in the author's style; preserve factual grounding, optionally prepend a courteous opening phrase, and normalize tables/code/formulas into Markdown.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/runtsang/RebuttalStudio.git",
+        "copy": "cp -r skills/stage2/neurips ~/.claude/skills/neurips-2",
+        "raw": "https://raw.githubusercontent.com/runtsang/RebuttalStudio/1f81e2f0aeccd582df2f5f84dfb3c17da5189599/skills/stage2/neurips/SKILL.md",
+        "saveAs": "~/.claude/skills/neurips-2/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:03f51f971bc71550335c3bfa341b634d41f077d6446ebd000c206fcdb7248f2b",
+      "bytes": 1062,
+      "wordCount": 110,
+      "repoLicense": "",
+      "commit": "1f81e2f0aeccd582df2f5f84dfb3c17da5189599",
+      "branch": "master",
+      "body": "---\nname: stage2-neurips-refine\ndescription: Refine a Stage2 NeurIPS rebuttal draft into polished, reviewer-facing prose in the author's style; preserve factual grounding, optionally prepend a courteous opening phrase, and normalize tables/code/formulas into Markdown.\n---\n\n# Stage 2 · NeurIPS Refine Skill (Template Extension)\n\nApply the shared template first:\n\n- `skills/stage2/template/SKILL.md`\n\nThen apply only the NeurIPS-specific overrides below.\n\n## NeurIPS overrides\n\n- Preserve the same strict JSON schema and output format from the template.\n- Keep NeurIPS naming in labels and internal references when conference name is explicitly mentioned.\n- Keep style target concise, precise, and submission-ready for a top-tier ML rebuttal (NeurIPS).\n- NeurIPS rebuttals typically have a word limit; keep individual responses focused and efficient.\n\n## NeurIPS note\n\nNo additional structural override is required beyond conference labeling. All writing constraints, opener rules, normalization rules, and hard constraints are inherited from the base template.\n",
+      "bodyMd": "# Stage 2 · NeurIPS Refine Skill (Template Extension)\n\nApply the shared template first:\n\n- `skills/stage2/template/SKILL.md`\n\nThen apply only the NeurIPS-specific overrides below.\n\n## NeurIPS overrides\n\n- Preserve the same strict JSON schema and output format from the template.\n- Keep NeurIPS naming in labels and internal references when conference name is explicitly mentioned.\n- Keep style target concise, precise, and submission-ready for a top-tier ML rebuttal (NeurIPS).\n- NeurIPS rebuttals typically have a word limit; keep individual responses focused and efficient.\n\n## NeurIPS note\n\nNo additional structural override is required beyond conference labeling. All writing constraints, opener rules, normalization rules, and hard constraints are inherited from the base template.\n"
+    },
+    {
+      "slug": "template-2",
+      "name": "stage2-refine-template",
+      "dir": "skills/stage2/template",
+      "path": "skills/stage2/template/SKILL.md",
+      "desc": "Base template for Stage2 rebuttal refinement. Use when creating or extending conference-specific Stage2 skills so all venues share the same high-quality writing constraints, JSON output format, and normalization rules.",
+      "descZh": "",
+      "triggers": [
+        "creating"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/runtsang/RebuttalStudio.git",
+        "copy": "cp -r skills/stage2/template ~/.claude/skills/template-2",
+        "raw": "https://raw.githubusercontent.com/runtsang/RebuttalStudio/1f81e2f0aeccd582df2f5f84dfb3c17da5189599/skills/stage2/template/SKILL.md",
+        "saveAs": "~/.claude/skills/template-2/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:de5029509fb19a3f9c5c3039e8c66d0f9d7bb9f77b28aebe34a65f4e99bac727",
+      "bytes": 3939,
+      "wordCount": 523,
+      "repoLicense": "",
+      "commit": "1f81e2f0aeccd582df2f5f84dfb3c17da5189599",
+      "branch": "master",
+      "body": "---\nname: stage2-refine-template\ndescription: Base template for Stage2 rebuttal refinement. Use when creating or extending conference-specific Stage2 skills so all venues share the same high-quality writing constraints, JSON output format, and normalization rules.\n---\n\n# Stage 2 · Refine Base Template\n\nUse this template as the shared core for all Stage2 conference variants.\nConference-specific files must apply this template first, then add only necessary overrides.\n\n## Goal\n\nTurn a rough outline into reviewer-facing rebuttal prose that:\n\n1. Directly addresses the reviewer concern.\n2. Keeps claims factual and bounded by provided evidence.\n3. Uses concise, polite, academically confident style.\n4. Optionally starts with one courteous opener.\n\n## Input\n\n- `response_id` / `title` / `source` / `source_id` (metadata)\n- `quoted_issue` (verbatim reviewer concern)\n- `draft` or `outline` (user-provided content)\n- optional style hints (tone, length, verbosity)\n\n## Output\n\nReturn strict JSON only:\n\n```json\n{ \"draft\": \"> **Reviewer's Comment**: [quoted_issue]\\n\\n**Response**: [polished rebuttal prose]\" }\n```\n\n## Core writing rules\n\n1. **Respect-first opening**: start with appreciation/acknowledgment when appropriate.\n2. **Issue anchoring**: connect to `quoted_issue` within the first 1–2 sentences.\n3. **Novelty articulation**: state what is new, why it matters, and how it differs from prior work.\n4. **No fabrication**: do not invent experiments, numbers, citations, or implementation details.\n5. **Constructive tone**: avoid defensive language.\n6. **Concise precision**: keep paragraphs short and information-dense.\n7. **Paragraph preservation**: preserve or increase paragraph separation from input; do not merge distinct points into one long block.\n\n## Courtesy opener bank\n\nSelect exactly one opener when an opener is needed:\n\n- \"Thank you for the excellent suggestion.\"\n- \"Thank you for pointing this out.\"\n- \"Thank you for highlighting this important point about [TOPIC].\"\n- \"We appreciate the opportunity to further articulate the novelty of [METHOD/IDEA].\"\n- \"Thank you for giving us a chance to classify our contribution more accurately.\"\n\n### Opener selection guidance\n\n- Actionable improvement advice -> \"Thank you for the excellent suggestion.\"\n- Omission or ambiguity pointed out -> \"Thank you for pointing this out.\"\n- Emphasis on significance of a dimension -> \"Thank you for highlighting this important point about [TOPIC].\"\n- Originality/positioning challenge -> \"We appreciate the opportunity to further articulate the novelty of [METHOD/IDEA].\"\n\n## Markdown normalization rules\n\nIf input contains structured content, normalize in final `draft`:\n\n1. **Tables/charts -> Markdown table**\n2. **Code -> fenced code block** (with language tag if known)\n3. **Formula -> Markdown math**\n   - Inline math: `$...$`\n   - Display math: `$$...$$` on separate lines\n\n## Shared refine workflow\n\n1. Read `quoted_issue` and identify reviewer intent.\n2. Extract factual points from `draft`/`outline`; remove unsupported claims.\n3. Choose one opener from the opener bank if needed.\n4. Rewrite into coherent rebuttal prose using exact output structure:\n   - `> **Reviewer's Comment**: [quoted_issue]`\n   - blank line\n   - `**Response**: ...`\n5. Normalize table/code/formula content.\n6. Return strict JSON only.\n\n## Hard constraints\n\n- Do not alter the meaning of user-provided technical claims.\n- Do not introduce new citations unless already provided.\n- Do not over-promise without evidence.\n- Keep output ready for direct rebuttal editing.\n- The `draft` field must begin with the quoted reviewer comment line and follow the exact format.\n\n## Conference extension contract\n\nConference-specific Stage2 files may override only what is truly different:\n\n- conference naming/labeling\n- extra mandatory phrase variants (if a venue requires them)\n- venue-specific style constraints\n\nKeep all other rules inherited from this template.\n",
+      "bodyMd": "# Stage 2 · Refine Base Template\n\nUse this template as the shared core for all Stage2 conference variants.\nConference-specific files must apply this template first, then add only necessary overrides.\n\n## Goal\n\nTurn a rough outline into reviewer-facing rebuttal prose that:\n\n1. Directly addresses the reviewer concern.\n2. Keeps claims factual and bounded by provided evidence.\n3. Uses concise, polite, academically confident style.\n4. Optionally starts with one courteous opener.\n\n## Input\n\n- `response_id` / `title` / `source` / `source_id` (metadata)\n- `quoted_issue` (verbatim reviewer concern)\n- `draft` or `outline` (user-provided content)\n- optional style hints (tone, length, verbosity)\n\n## Output\n\nReturn strict JSON only:\n\n```json\n{ \"draft\": \"> **Reviewer's Comment**: [quoted_issue]\\n\\n**Response**: [polished rebuttal prose]\" }\n```\n\n## Core writing rules\n\n1. **Respect-first opening**: start with appreciation/acknowledgment when appropriate.\n2. **Issue anchoring**: connect to `quoted_issue` within the first 1–2 sentences.\n3. **Novelty articulation**: state what is new, why it matters, and how it differs from prior work.\n4. **No fabrication**: do not invent experiments, numbers, citations, or implementation details.\n5. **Constructive tone**: avoid defensive language.\n6. **Concise precision**: keep paragraphs short and information-dense.\n7. **Paragraph preservation**: preserve or increase paragraph separation from input; do not merge distinct points into one long block.\n\n## Courtesy opener bank\n\nSelect exactly one opener when an opener is needed:\n\n- \"Thank you for the excellent suggestion.\"\n- \"Thank you for pointing this out.\"\n- \"Thank you for highlighting this important point about [TOPIC].\"\n- \"We appreciate the opportunity to further articulate the novelty of [METHOD/IDEA].\"\n- \"Thank you for giving us a chance to classify our contribution more accurately.\"\n\n### Opener selection guidance\n\n- Actionable improvement advice -> \"Thank you for the excellent suggestion.\"\n- Omission or ambiguity pointed out -> \"Thank you for pointing this out.\"\n- Emphasis on significance of a dimension -> \"Thank you for highlighting this important point about [TOPIC].\"\n- Originality/positioning challenge -> \"We appreciate the opportunity to further articulate the novelty of [METHOD/IDEA].\"\n\n## Markdown normalization rules\n\nIf input contains structured content, normalize in final `draft`:\n\n1. **Tables/charts -> Markdown table**\n2. **Code -> fenced code block** (with language tag if known)\n3. **Formula -> Markdown math**\n   - Inline math: `$...$`\n   - Display math: `$$...$$` on separate lines\n\n## Shared refine workflow\n\n1. Read `quoted_issue` and identify reviewer intent.\n2. Extract factual points from `draft`/`outline`; remove unsupported claims.\n3. Choose one opener from the opener bank if needed.\n4. Rewrite into coherent rebuttal prose using exact output structure:\n   - `> **Reviewer's Comment**: [quoted_issue]`\n   - blank line\n   - `**Response**: ...`\n5. Normalize table/code/formula content.\n6. Return strict JSON only.\n\n## Hard constraints\n\n- Do not alter the meaning of user-provided technical claims.\n- Do not introduce new citations unless already provided.\n- Do not over-promise without evidence.\n- Keep output ready for direct rebuttal editing.\n- The `draft` field must begin with the quoted reviewer comment line and follow the exact format.\n\n## Conference extension contract\n\nConference-specific Stage2 files may override only what is truly different:\n\n- conference naming/labeling\n- extra mandatory phrase variants (if a venue requires them)\n- venue-specific style constraints\n\nKeep all other rules inherited from this template.\n"
+    },
+    {
+      "slug": "condense",
+      "name": "stage4-condense-context",
+      "dir": "skills/stage4/condense",
+      "path": "skills/stage4/condense/SKILL.md",
+      "desc": "Condense Stage 3 combined discussion content into compact markdown context for Stage 4 multi-round follow-up drafting.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "convert"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/runtsang/RebuttalStudio.git",
+        "copy": "cp -r skills/stage4/condense ~/.claude/skills/condense",
+        "raw": "https://raw.githubusercontent.com/runtsang/RebuttalStudio/1f81e2f0aeccd582df2f5f84dfb3c17da5189599/skills/stage4/condense/SKILL.md",
+        "saveAs": "~/.claude/skills/condense/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:e48c92ef00cab7105972d98bd3674abc3a2fa0312ed29f9f58d40dd431a4f1c2",
+      "bytes": 785,
+      "wordCount": 91,
+      "repoLicense": "",
+      "commit": "1f81e2f0aeccd582df2f5f84dfb3c17da5189599",
+      "branch": "master",
+      "body": "---\nname: stage4-condense-context\ndescription: Condense Stage 3 combined discussion content into compact markdown context for Stage 4 multi-round follow-up drafting.\n---\n\n# Stage4 Condense Context Skill\n\n## Goal\nConvert long Stage 3 \"All\" content into short reusable markdown context.\n\n## Input\n- `stage3_all_source`: full Stage 3 combined source for one reviewer.\n\n## Output\nReturn strict JSON:\n\n```json\n{ \"condensedMarkdown\": \"...\" }\n```\n\n## Required structure in `condensedMarkdown`\n- `## Key Question(s)`\n- `## Main Answer(s)`\n\n## Rules\n1. Keep wording concise and factual.\n2. Preserve key technical claims and commitments.\n3. Remove repetition and non-essential greetings.\n4. Do not invent numbers, experiments, or citations.\n5. Produce markdown ready for local file persistence.\n",
+      "bodyMd": "# Stage4 Condense Context Skill\n\n## Goal\nConvert long Stage 3 \"All\" content into short reusable markdown context.\n\n## Input\n- `stage3_all_source`: full Stage 3 combined source for one reviewer.\n\n## Output\nReturn strict JSON:\n\n```json\n{ \"condensedMarkdown\": \"...\" }\n```\n\n## Required structure in `condensedMarkdown`\n- `## Key Question(s)`\n- `## Main Answer(s)`\n\n## Rules\n1. Keep wording concise and factual.\n2. Preserve key technical claims and commitments.\n3. Remove repetition and non-essential greetings.\n4. Do not invent numbers, experiments, or citations.\n5. Produce markdown ready for local file persistence.\n"
+    },
+    {
+      "slug": "refine",
+      "name": "stage4-refine-followup",
+      "dir": "skills/stage4/refine",
+      "path": "skills/stage4/refine/SKILL.md",
+      "desc": "Refine a Stage 4 follow-up response using condensed prior discussion context, current follow-up question, and the user's draft.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/runtsang/RebuttalStudio.git",
+        "copy": "cp -r skills/stage4/refine ~/.claude/skills/refine",
+        "raw": "https://raw.githubusercontent.com/runtsang/RebuttalStudio/1f81e2f0aeccd582df2f5f84dfb3c17da5189599/skills/stage4/refine/SKILL.md",
+        "saveAs": "~/.claude/skills/refine/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:49ac8c7b2df4acc0ba0dd3c9295efbfa28693e9f12f4a00ee836a7696c9fd094",
+      "bytes": 857,
+      "wordCount": 94,
+      "repoLicense": "",
+      "commit": "1f81e2f0aeccd582df2f5f84dfb3c17da5189599",
+      "branch": "master",
+      "body": "---\nname: stage4-refine-followup\ndescription: Refine a Stage 4 follow-up response using condensed prior discussion context, current follow-up question, and the user's draft.\n---\n\n# Stage4 Refine Follow-up Skill\n\n## Goal\nGenerate a polished follow-up response for multi-round reviewer discussion.\n\n## Inputs\n- `condensed_markdown`: condensed context from Stage4 condense skill.\n- `followup_question`: current reviewer follow-up question text.\n- `draft`: user-authored draft response.\n\n## Output\nReturn strict JSON:\n\n```json\n{ \"refinedText\": \"...\" }\n```\n\n## Rules\n1. Keep claims grounded in provided context and draft.\n2. Address the follow-up question directly in the opening lines.\n3. Maintain respectful, concise academic tone.\n4. Avoid fabrication of data/citations/experiments.\n5. Preserve the core intent of user draft while improving clarity and flow.\n",
+      "bodyMd": "# Stage4 Refine Follow-up Skill\n\n## Goal\nGenerate a polished follow-up response for multi-round reviewer discussion.\n\n## Inputs\n- `condensed_markdown`: condensed context from Stage4 condense skill.\n- `followup_question`: current reviewer follow-up question text.\n- `draft`: user-authored draft response.\n\n## Output\nReturn strict JSON:\n\n```json\n{ \"refinedText\": \"...\" }\n```\n\n## Rules\n1. Keep claims grounded in provided context and draft.\n2. Address the follow-up question directly in the opening lines.\n3. Maintain respectful, concise academic tone.\n4. Avoid fabrication of data/citations/experiments.\n5. Preserve the core intent of user draft while improving clarity and flow.\n"
+    },
+    {
+      "slug": "final-remarks",
+      "name": "stage5-final-remarks",
+      "dir": "skills/stage5/final-remarks",
+      "path": "skills/stage5/final-remarks/SKILL.md",
+      "desc": "Fill a Stage5 final remarks template using condensed discussion markdown from all reviewers and optional rating changes. Use when generating final remarks after Stage3/Stage4 discussion.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/runtsang/RebuttalStudio.git",
+        "copy": "cp -r skills/stage5/final-remarks ~/.claude/skills/final-remarks",
+        "raw": "https://raw.githubusercontent.com/runtsang/RebuttalStudio/1f81e2f0aeccd582df2f5f84dfb3c17da5189599/skills/stage5/final-remarks/SKILL.md",
+        "saveAs": "~/.claude/skills/final-remarks/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:8aa6e6c7b786f19ea4ee572bc9153255c2597eebc26ebc17a626bdc746052800",
+      "bytes": 1366,
+      "wordCount": 138,
+      "repoLicense": "",
+      "commit": "1f81e2f0aeccd582df2f5f84dfb3c17da5189599",
+      "branch": "master",
+      "body": "---\nname: stage5-final-remarks\ndescription: Fill a Stage5 final remarks template using condensed discussion markdown from all reviewers and optional rating changes. Use when generating final remarks after Stage3/Stage4 discussion.\n---\n\n# Stage5 Final Remarks Skill\n\n## Goal\nGenerate a complete Stage5 final remarks markdown by filling template placeholders from multi-reviewer evidence.\n\n## Inputs\n- `template_markdown`: placeholder-based template source.\n- `reviewer_summaries`: array of reviewer records, each containing:\n  - `reviewerId`\n  - `condensedMarkdown`\n  - `originalRating` (optional)\n  - `finalRating` (optional)\n\nIf `template_markdown` is empty, use [references/run-template.md](references/run-template.md).\n\n## Output\nReturn strict JSON:\n\n```json\n{ \"filledMarkdown\": \"...\" }\n```\n\n## Rules\n1. Preserve the template structure and section order.\n2. Replace placeholders with grounded content from `reviewer_summaries` only.\n3. Keep uncertain or missing items concise; do not fabricate numbers, dates, quotes, or experiments.\n4. Keep tone respectful, concise, and rebuttal-ready.\n5. Generate `{{key_strengths_points_markdown}}` as a concise markdown bullet list with 4-5 items summarized across reviewers.\n6. Generate valid markdown table rows for `{{concern_rows_markdown}}`.\n7. When rating updates are provided, reflect only explicit score transitions.\n",
+      "bodyMd": "# Stage5 Final Remarks Skill\n\n## Goal\nGenerate a complete Stage5 final remarks markdown by filling template placeholders from multi-reviewer evidence.\n\n## Inputs\n- `template_markdown`: placeholder-based template source.\n- `reviewer_summaries`: array of reviewer records, each containing:\n  - `reviewerId`\n  - `condensedMarkdown`\n  - `originalRating` (optional)\n  - `finalRating` (optional)\n\nIf `template_markdown` is empty, use [references/run-template.md](references/run-template.md).\n\n## Output\nReturn strict JSON:\n\n```json\n{ \"filledMarkdown\": \"...\" }\n```\n\n## Rules\n1. Preserve the template structure and section order.\n2. Replace placeholders with grounded content from `reviewer_summaries` only.\n3. Keep uncertain or missing items concise; do not fabricate numbers, dates, quotes, or experiments.\n4. Keep tone respectful, concise, and rebuttal-ready.\n5. Generate `{{key_strengths_points_markdown}}` as a concise markdown bullet list with 4-5 items summarized across reviewers.\n6. Generate valid markdown table rows for `{{concern_rows_markdown}}`.\n7. When rating updates are provided, reflect only explicit score transitions.\n"
+    },
+    {
+      "slug": "citation-verification",
+      "name": "citation-verification",
+      "dir": "skills/utility/stage/citation-verification",
+      "path": "skills/utility/stage/citation-verification/SKILL.md",
+      "desc": "Verification guide for citations added during rebuttal writing. Use when Stage 2 responses introduce new references, when the Area Chair asks about a cited paper, or when any citation in the rebuttal might have been AI-generated. Prevents the serious credibility damage of fabricated references in reviewer-facing documents.",
+      "descZh": "",
+      "triggers": [],
+      "version": "1.0.0",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/runtsang/RebuttalStudio.git",
+        "copy": "cp -r skills/utility/stage/citation-verification ~/.claude/skills/citation-verification",
+        "raw": "https://raw.githubusercontent.com/runtsang/RebuttalStudio/1f81e2f0aeccd582df2f5f84dfb3c17da5189599/skills/utility/stage/citation-verification/SKILL.md",
+        "saveAs": "~/.claude/skills/citation-verification/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:0cb858c5d697dfe95a5d2d523b086e6415dbd2ead60030a787252e92ad2fa1f8",
+      "bytes": 5966,
+      "wordCount": 841,
+      "repoLicense": "",
+      "commit": "1f81e2f0aeccd582df2f5f84dfb3c17da5189599",
+      "branch": "master",
+      "body": "---\nname: citation-verification\ndescription: Verification guide for citations added during rebuttal writing. Use when Stage 2 responses introduce new references, when the Area Chair asks about a cited paper, or when any citation in the rebuttal might have been AI-generated. Prevents the serious credibility damage of fabricated references in reviewer-facing documents.\ntags: [Citation, Verification, Academic, Accuracy]\nversion: 1.0.0\nsource: Adapted from Claude Scholar (https://github.com/Galaxy-Dawn/claude-scholar), skills/citation-verification/SKILL.md.\n---\n\n# Citation Verification for Rebuttals\n\n> **RebuttalStudio Utility — Stage 2 / Stage 4**\n> Apply this skill whenever a Stage 2 draft or Stage 4 follow-up response introduces a new reference — especially when the reference was suggested by an LLM. A single fabricated citation in a rebuttal can undermine the entire response's credibility.\n\nVerification principles and workflow for citations added during the rebuttal writing process.\n\n---\n\n## Why Citations in Rebuttals Are High-Risk\n\nRebuttal citations are uniquely dangerous compared to paper citations:\n\n1. **Short turnaround**: Rebuttal period is 2–4 days. Authors write quickly under pressure.\n2. **LLM suggestions are plausible-sounding but often wrong**: AI-generated citation suggestions have an estimated **40% error rate** — wrong author, wrong year, wrong title, or entirely fabricated.\n3. **Reviewers check**: An Area Chair or reviewer who discovers a fabricated citation in a rebuttal will immediately lose confidence in the entire response.\n4. **No revision opportunity**: Unlike a paper, a submitted rebuttal cannot be revised after submission.\n\n**Core rule**: Never add a citation to a rebuttal response unless you have personally verified it exists via search.\n\n---\n\n## When to Verify\n\nVerify any citation that was:\n- Suggested by an LLM during Stage 2 drafting\n- Recalled from memory without looking it up\n- Copied from a reviewer comment (reviewers can also be wrong)\n- Added to counter a reviewer's \"missing baseline\" claim\n- Introduced to support a new claim not already cited in the paper\n\nExisting citations from the paper itself generally do not need re-verification — but do confirm the claim you are citing actually appears in that work.\n\n---\n\n## Verification Workflow\n\n### Step 1: Search\n\nUse a reliable academic search engine:\n\n```\nRecommended search order:\n1. Google Scholar (scholar.google.com)\n2. Semantic Scholar (semanticscholar.org)\n3. arXiv (arxiv.org) — for preprints\n4. ACL Anthology (aclanthology.org) — for NLP/ACL papers\n5. OpenReview (openreview.net) — for ICLR/ICML papers\n```\n\nSearch query pattern:\n```\n\"[Paper title keywords]\" [first author last name] [approximate year]\n```\n\n### Step 2: Confirm Existence\n\nVerify the paper exists by confirming:\n- [ ] Title matches (allow minor capitalization differences)\n- [ ] At least the first author matches\n- [ ] Year is within ±1 of what you recall (preprints often differ from camera-ready year)\n- [ ] Venue matches what you intend to cite (workshop ≠ main conference)\n\n### Step 3: Verify the Specific Claim\n\nWhen citing a specific finding, do not trust your memory of the paper's conclusion.\n\n- Locate the specific sentence or figure that supports your claim\n- If you cannot access the full text, cite more conservatively (\"as suggested by [author]\") or drop the citation\n- Do not paraphrase a result you have not read\n\n### Step 4: Record the Verified Reference\n\nFormat for use in rebuttal prose (no BibTeX needed in most rebuttal portals):\n\n```\n[Author et al., Year, \"Title\", Venue]\ne.g.: [Chen et al., 2023, \"LoRA: Low-Rank Adaptation of Large Language Models\", ICLR]\n```\n\n---\n\n## When You Cannot Verify\n\nIf after searching you cannot confirm the paper exists:\n\n**Option A — Drop the citation**\nIf the claim can stand without it, remove the reference.\n\n**Option B — Hedge the claim**\n\"Prior work on [topic] (e.g., [general area]) suggests…\" without citing a specific paper.\n\n**Option C — Mark for human verification**\nIf working with an LLM and you want to flag it:\n```\n[CITATION NEEDED — verify before submission: \"[paper title you were trying to cite]\"]\n```\n\n**Never** submit a rebuttal with a citation you have not verified, even if it sounds plausible.\n\n---\n\n## Rebuttal-Specific Citation Patterns\n\n### Citing Your Own Prior Work\n- Verify the venue, year, and paper number match what appears in your submission's reference list\n- Consistency with the submitted paper matters — reviewers notice discrepancies\n\n### Citing a Reviewer-Suggested Baseline\n- Reviewers sometimes suggest comparing with papers that are not directly comparable\n- Verify the suggested paper actually evaluates on your task/dataset before agreeing to compare\n- You may respond: \"We have examined [Paper], which evaluates on [different setting], making direct comparison difficult.\"\n\n### Citing to Defend Against \"Missing Related Work\"\n- Search first — the paper may genuinely exist and you missed it\n- If it exists, consider acknowledging it: \"Thank you for pointing out [Paper]; we will add a discussion in Related Work.\"\n- If it does not exist (after searching), respond diplomatically: \"We searched but could not locate this work; we would appreciate a link or full title.\"\n\n---\n\n## Quick Verification Table\n\n| Citation Source | Risk Level | Action |\n|----------------|-----------|--------|\n| LLM-suggested reference | Very high | Always verify before including |\n| Recalled from memory | Medium | Verify title and year |\n| Copied from reviewer comment | Medium | Verify existence; reviewer may be wrong |\n| Already in paper's reference list | Low | Confirm the claim is in that paper |\n| Found via search in last 24h | Low | Cross-check author/venue |\n\n---\n\n*Adapted from Claude Scholar's `citation-verification` skill for the rebuttal context. Original: https://github.com/Galaxy-Dawn/claude-scholar/blob/main/skills/citation-verification/SKILL.md*\n",
+      "bodyMd": "# Citation Verification for Rebuttals\n\n> **RebuttalStudio Utility — Stage 2 / Stage 4**\n> Apply this skill whenever a Stage 2 draft or Stage 4 follow-up response introduces a new reference — especially when the reference was suggested by an LLM. A single fabricated citation in a rebuttal can undermine the entire response's credibility.\n\nVerification principles and workflow for citations added during the rebuttal writing process.\n\n---\n\n## Why Citations in Rebuttals Are High-Risk\n\nRebuttal citations are uniquely dangerous compared to paper citations:\n\n1. **Short turnaround**: Rebuttal period is 2–4 days. Authors write quickly under pressure.\n2. **LLM suggestions are plausible-sounding but often wrong**: AI-generated citation suggestions have an estimated **40% error rate** — wrong author, wrong year, wrong title, or entirely fabricated.\n3. **Reviewers check**: An Area Chair or reviewer who discovers a fabricated citation in a rebuttal will immediately lose confidence in the entire response.\n4. **No revision opportunity**: Unlike a paper, a submitted rebuttal cannot be revised after submission.\n\n**Core rule**: Never add a citation to a rebuttal response unless you have personally verified it exists via search.\n\n---\n\n## When to Verify\n\nVerify any citation that was:\n- Suggested by an LLM during Stage 2 drafting\n- Recalled from memory without looking it up\n- Copied from a reviewer comment (reviewers can also be wrong)\n- Added to counter a reviewer's \"missing baseline\" claim\n- Introduced to support a new claim not already cited in the paper\n\nExisting citations from the paper itself generally do not need re-verification — but do confirm the claim you are citing actually appears in that work.\n\n---\n\n## Verification Workflow\n\n### Step 1: Search\n\nUse a reliable academic search engine:\n\n```\nRecommended search order:\n1. Google Scholar (scholar.google.com)\n2. Semantic Scholar (semanticscholar.org)\n3. arXiv (arxiv.org) — for preprints\n4. ACL Anthology (aclanthology.org) — for NLP/ACL papers\n5. OpenReview (openreview.net) — for ICLR/ICML papers\n```\n\nSearch query pattern:\n```\n\"[Paper title keywords]\" [first author last name] [approximate year]\n```\n\n### Step 2: Confirm Existence\n\nVerify the paper exists by confirming:\n- [ ] Title matches (allow minor capitalization differences)\n- [ ] At least the first author matches\n- [ ] Year is within ±1 of what you recall (preprints often differ from camera-ready year)\n- [ ] Venue matches what you intend to cite (workshop ≠ main conference)\n\n### Step 3: Verify the Specific Claim\n\nWhen citing a specific finding, do not trust your memory of the paper's conclusion.\n\n- Locate the specific sentence or figure that supports your claim\n- If you cannot access the full text, cite more conservatively (\"as suggested by [author]\") or drop the citation\n- Do not paraphrase a result you have not read\n\n### Step 4: Record the Verified Reference\n\nFormat for use in rebuttal prose (no BibTeX needed in most rebuttal portals):\n\n```\n[Author et al., Year, \"Title\", Venue]\ne.g.: [Chen et al., 2023, \"LoRA: Low-Rank Adaptation of Large Language Models\", ICLR]\n```\n\n---\n\n## When You Cannot Verify\n\nIf after searching you cannot confirm the paper exists:\n\n**Option A — Drop the citation**\nIf the claim can stand without it, remove the reference.\n\n**Option B — Hedge the claim**\n\"Prior work on [topic] (e.g., [general area]) suggests…\" without citing a specific paper.\n\n**Option C — Mark for human verification**\nIf working with an LLM and you want to flag it:\n```\n[CITATION NEEDED — verify before submission: \"[paper title you were trying to cite]\"]\n```\n\n**Never** submit a rebuttal with a citation you have not verified, even if it sounds plausible.\n\n---\n\n## Rebuttal-Specific Citation Patterns\n\n### Citing Your Own Prior Work\n- Verify the venue, year, and paper number match what appears in your submission's reference list\n- Consistency with the submitted paper matters — reviewers notice discrepancies\n\n### Citing a Reviewer-Suggested Baseline\n- Reviewers sometimes suggest comparing with papers that are not directly comparable\n- Verify the suggested paper actually evaluates on your task/dataset before agreeing to compare\n- You may respond: \"We have examined [Paper], which evaluates on [different setting], making direct comparison difficult.\"\n\n### Citing to Defend Against \"Missing Related Work\"\n- Search first — the paper may genuinely exist and you missed it\n- If it exists, consider acknowledging it: \"Thank you for pointing out [Paper]; we will add a discussion in Related Work.\"\n- If it does not exist (after searching), respond diplomatically: \"We searched but could not locate this work; we would appreciate a link or full title.\"\n\n---\n\n## Quick Verification Table\n\n| Citation Source | Risk Level | Action |\n|----------------|-----------|--------|\n| LLM-suggested reference | Very high | Always verify before including |\n| Recalled from memory | Medium | Verify title and year |\n| Copied from reviewer comment | Medium | Verify existence; reviewer may be wrong |\n| Already in paper's reference list | Low | Confirm the claim is in that paper |\n| Found via search in last 24h | Low | Cross-check author/venue |\n\n---\n\n*Adapted from Claude Scholar's `citation-verification` skill for the rebuttal context. Original: https://github.com/Galaxy-Dawn/claude-scholar/blob/main/skills/citation-verification/SKILL.md*\n"
+    },
+    {
+      "slug": "rebuttal-self-review",
+      "name": "rebuttal-self-review",
+      "dir": "skills/utility/stage/rebuttal-self-review",
+      "path": "skills/utility/stage/rebuttal-self-review/SKILL.md",
+      "desc": "Systematic quality check for a completed rebuttal document before submission. Use after Stage 3 document compilation or after Stage 5 final remarks writing to verify completeness, tone, factual accuracy, and structural integrity. Catches common rebuttal errors before they reach reviewers.",
+      "descZh": "",
+      "triggers": [],
+      "version": "1.0.0",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/runtsang/RebuttalStudio.git",
+        "copy": "cp -r skills/utility/stage/rebuttal-self-review ~/.claude/skills/rebuttal-self-review",
+        "raw": "https://raw.githubusercontent.com/runtsang/RebuttalStudio/1f81e2f0aeccd582df2f5f84dfb3c17da5189599/skills/utility/stage/rebuttal-self-review/SKILL.md",
+        "saveAs": "~/.claude/skills/rebuttal-self-review/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:0bec575e1b54450dba82071d5276e3440781ef72817629f43c475e438ce7cbe5",
+      "bytes": 6190,
+      "wordCount": 933,
+      "repoLicense": "",
+      "commit": "1f81e2f0aeccd582df2f5f84dfb3c17da5189599",
+      "branch": "master",
+      "body": "---\nname: rebuttal-self-review\ndescription: Systematic quality check for a completed rebuttal document before submission. Use after Stage 3 document compilation or after Stage 5 final remarks writing to verify completeness, tone, factual accuracy, and structural integrity. Catches common rebuttal errors before they reach reviewers.\ntags: [Rebuttal, Quality, Review, Pre-Submission]\nversion: 1.0.0\nsource: Adapted from Claude Scholar (https://github.com/Galaxy-Dawn/claude-scholar), skills/paper-self-review/SKILL.md.\n---\n\n# Rebuttal Self-Review\n\n> **RebuttalStudio Utility — Pre-Submission Check**\n> Run this skill after Stage 3 or Stage 5 document generation, before copying the final text into OpenReview or the submission portal. It catches structural gaps, tone issues, and factual risks that stage-specific skills may have missed.\n\nA systematic quality assurance checklist tailored for academic conference rebuttals (ICLR, ICML, NeurIPS, and similar venues).\n\n---\n\n## Overview\n\nUnlike a paper, a rebuttal has a strict deadline, tight word limits, and must directly engage with specific reviewer concerns. This review process is optimized for those constraints: fast, targeted, and submission-ready focused.\n\n**Recommended timing:**\n- After Stage 3 compilation (before first-round submission)\n- After Stage 5 final remarks (before final remarks submission)\n- After each multi-round Stage 4 response (optional but recommended)\n\n---\n\n## Review Checklist\n\n### 1. Coverage — Did You Address Everything?\n\nThe most common rebuttal failure is missing a reviewer concern.\n\n```\nCoverage Check:\n- [ ] Count the total issues in Stage 1 breakdown for each reviewer\n- [ ] Confirm each issue appears in the Stage 3 document\n- [ ] For multi-round reviewers, confirm each follow-up was answered\n- [ ] No reviewer's comment was silently dropped\n- [ ] If an issue was not addressed, a reason is stated (\"We will address this in the revision\")\n```\n\n### 2. Tone — Is It Collaborative, Not Defensive?\n\n```\nTone Check:\n- [ ] Opening of each reviewer section thanks the reviewer\n- [ ] No response uses defensive phrases (\"The reviewer is wrong\", \"This criticism is unfounded\")\n- [ ] Disagreements are framed as clarifications (\"We believe this may be due to…\")\n- [ ] Commitments are grounded (\"We will add X in Section Y\" not \"We might consider…\")\n- [ ] No sarcasm or frustration, even with persistent or unfair reviews\n```\n\n### 3. Factual Accuracy — No Fabrication\n\n```\nFactual Check:\n- [ ] All cited results match the actual paper numbers\n- [ ] No experiment is claimed that was not actually run\n- [ ] No citation is mentioned that has not been verified (see citation-verification skill)\n- [ ] \"Changes made\" pointers (section/table/figure numbers) are accurate\n- [ ] No comparison results were invented to satisfy a reviewer\n```\n\n### 4. Structure — Is It Easy to Navigate?\n\nConference rebuttals are read quickly. Structure affects perceived quality.\n\n```\nStructure Check:\n- [ ] Each reviewer has a clearly labeled section\n- [ ] Each concern has a visible label matching the Stage 1 breakdown title\n- [ ] Quoted reviewer text appears before each response (using the Stage 2 format)\n- [ ] The document reads in a logical order: per-reviewer, then per-issue\n- [ ] For Stage 5: section headers (Acknowledgments / Key Strengths / Key Concerns / Commitment) are present\n```\n\n### 5. Clarity — Would a Tired Reviewer Understand It?\n\n```\nClarity Check:\n- [ ] Each response states its conclusion in the first sentence\n- [ ] Technical claims are self-contained (no unexplained jargon for new terms)\n- [ ] Tables are labeled and readable without surrounding text\n- [ ] Formulas use consistent notation with the paper\n- [ ] No response is longer than needed (trim to the minimum convincing length)\n```\n\n### 6. Writing Quality — Does It Sound Human-Authored?\n\n```\nWriting Check:\n- [ ] No AI filler phrases (\"It is worth noting that…\", \"Furthermore…\" as opener)\n- [ ] Sentence lengths are varied\n- [ ] Claims are specific to this paper (not generic statements)\n- [ ] If in doubt, apply writing-anti-ai skill to the full document\n```\n\n---\n\n## Review Process\n\nFollow these steps for a systematic pass:\n\n**Pass 1 — Coverage scan (5 min)**\n> Count all Stage 1 atomic issues. Open the Stage 3 document. Check off each issue.\n\n**Pass 2 — Tone pass (10 min)**\n> Read only the opening sentence of each response. Does each one feel collaborative? Fix any that don't.\n\n**Pass 3 — Factual spot-check (10 min)**\n> Pick 3–5 specific claims (percentages, section numbers, citation names). Verify them against the paper.\n\n**Pass 4 — Structure skim (5 min)**\n> Can you navigate from one reviewer to another, and one issue to another, in 30 seconds? If not, improve headings.\n\n**Pass 5 — Final read-aloud (optional)**\n> Read the document aloud or use text-to-speech. Awkward phrases become obvious when heard.\n\n---\n\n## Common Rebuttal Errors\n\n| Error Type | Description | How to Fix |\n|-----------|-------------|-----------|\n| Silent skip | An issue has no response | Add even a one-sentence placeholder |\n| Over-promising | \"We will completely redesign Section 4\" | Scope it: \"We will add a clarifying paragraph to Section 4\" |\n| Unverified citation | Citing a paper you haven't confirmed exists | Apply citation-verification skill |\n| Wrong pointer | \"See Table 3\" but the data is in Table 2 | Verify all section/figure/table references |\n| Defensive pivot | Reframing the concern without addressing it | Address it directly first, then provide context |\n| Invisible result | \"We ran this experiment\" with no numbers | Include the result or say \"results will appear in the revision\" |\n\n---\n\n## After the Review\n\nOnce all checks pass:\n\n1. **For Stage 3**: Copy the compiled document to the submission portal. Respect word/character limits.\n2. **For Stage 5**: Copy the final remarks to the final remarks box.\n3. **Keep a local copy**: The project.json autosaves, but export a Markdown backup before submitting.\n\n---\n\n*Adapted from Claude Scholar's `paper-self-review` skill for the rebuttal context. Original: https://github.com/Galaxy-Dawn/claude-scholar/blob/main/skills/paper-self-review/SKILL.md*\n",
+      "bodyMd": "# Rebuttal Self-Review\n\n> **RebuttalStudio Utility — Pre-Submission Check**\n> Run this skill after Stage 3 or Stage 5 document generation, before copying the final text into OpenReview or the submission portal. It catches structural gaps, tone issues, and factual risks that stage-specific skills may have missed.\n\nA systematic quality assurance checklist tailored for academic conference rebuttals (ICLR, ICML, NeurIPS, and similar venues).\n\n---\n\n## Overview\n\nUnlike a paper, a rebuttal has a strict deadline, tight word limits, and must directly engage with specific reviewer concerns. This review process is optimized for those constraints: fast, targeted, and submission-ready focused.\n\n**Recommended timing:**\n- After Stage 3 compilation (before first-round submission)\n- After Stage 5 final remarks (before final remarks submission)\n- After each multi-round Stage 4 response (optional but recommended)\n\n---\n\n## Review Checklist\n\n### 1. Coverage — Did You Address Everything?\n\nThe most common rebuttal failure is missing a reviewer concern.\n\n```\nCoverage Check:\n- [ ] Count the total issues in Stage 1 breakdown for each reviewer\n- [ ] Confirm each issue appears in the Stage 3 document\n- [ ] For multi-round reviewers, confirm each follow-up was answered\n- [ ] No reviewer's comment was silently dropped\n- [ ] If an issue was not addressed, a reason is stated (\"We will address this in the revision\")\n```\n\n### 2. Tone — Is It Collaborative, Not Defensive?\n\n```\nTone Check:\n- [ ] Opening of each reviewer section thanks the reviewer\n- [ ] No response uses defensive phrases (\"The reviewer is wrong\", \"This criticism is unfounded\")\n- [ ] Disagreements are framed as clarifications (\"We believe this may be due to…\")\n- [ ] Commitments are grounded (\"We will add X in Section Y\" not \"We might consider…\")\n- [ ] No sarcasm or frustration, even with persistent or unfair reviews\n```\n\n### 3. Factual Accuracy — No Fabrication\n\n```\nFactual Check:\n- [ ] All cited results match the actual paper numbers\n- [ ] No experiment is claimed that was not actually run\n- [ ] No citation is mentioned that has not been verified (see citation-verification skill)\n- [ ] \"Changes made\" pointers (section/table/figure numbers) are accurate\n- [ ] No comparison results were invented to satisfy a reviewer\n```\n\n### 4. Structure — Is It Easy to Navigate?\n\nConference rebuttals are read quickly. Structure affects perceived quality.\n\n```\nStructure Check:\n- [ ] Each reviewer has a clearly labeled section\n- [ ] Each concern has a visible label matching the Stage 1 breakdown title\n- [ ] Quoted reviewer text appears before each response (using the Stage 2 format)\n- [ ] The document reads in a logical order: per-reviewer, then per-issue\n- [ ] For Stage 5: section headers (Acknowledgments / Key Strengths / Key Concerns / Commitment) are present\n```\n\n### 5. Clarity — Would a Tired Reviewer Understand It?\n\n```\nClarity Check:\n- [ ] Each response states its conclusion in the first sentence\n- [ ] Technical claims are self-contained (no unexplained jargon for new terms)\n- [ ] Tables are labeled and readable without surrounding text\n- [ ] Formulas use consistent notation with the paper\n- [ ] No response is longer than needed (trim to the minimum convincing length)\n```\n\n### 6. Writing Quality — Does It Sound Human-Authored?\n\n```\nWriting Check:\n- [ ] No AI filler phrases (\"It is worth noting that…\", \"Furthermore…\" as opener)\n- [ ] Sentence lengths are varied\n- [ ] Claims are specific to this paper (not generic statements)\n- [ ] If in doubt, apply writing-anti-ai skill to the full document\n```\n\n---\n\n## Review Process\n\nFollow these steps for a systematic pass:\n\n**Pass 1 — Coverage scan (5 min)**\n> Count all Stage 1 atomic issues. Open the Stage 3 document. Check off each issue.\n\n**Pass 2 — Tone pass (10 min)**\n> Read only the opening sentence of each response. Does each one feel collaborative? Fix any that don't.\n\n**Pass 3 — Factual spot-check (10 min)**\n> Pick 3–5 specific claims (percentages, section numbers, citation names). Verify them against the paper.\n\n**Pass 4 — Structure skim (5 min)**\n> Can you navigate from one reviewer to another, and one issue to another, in 30 seconds? If not, improve headings.\n\n**Pass 5 — Final read-aloud (optional)**\n> Read the document aloud or use text-to-speech. Awkward phrases become obvious when heard.\n\n---\n\n## Common Rebuttal Errors\n\n| Error Type | Description | How to Fix |\n|-----------|-------------|-----------|\n| Silent skip | An issue has no response | Add even a one-sentence placeholder |\n| Over-promising | \"We will completely redesign Section 4\" | Scope it: \"We will add a clarifying paragraph to Section 4\" |\n| Unverified citation | Citing a paper you haven't confirmed exists | Apply citation-verification skill |\n| Wrong pointer | \"See Table 3\" but the data is in Table 2 | Verify all section/figure/table references |\n| Defensive pivot | Reframing the concern without addressing it | Address it directly first, then provide context |\n| Invisible result | \"We ran this experiment\" with no numbers | Include the result or say \"results will appear in the revision\" |\n\n---\n\n## After the Review\n\nOnce all checks pass:\n\n1. **For Stage 3**: Copy the compiled document to the submission portal. Respect word/character limits.\n2. **For Stage 5**: Copy the final remarks to the final remarks box.\n3. **Keep a local copy**: The project.json autosaves, but export a Markdown backup before submitting.\n\n---\n\n*Adapted from Claude Scholar's `paper-self-review` skill for the rebuttal context. Original: https://github.com/Galaxy-Dawn/claude-scholar/blob/main/skills/paper-self-review/SKILL.md*\n"
+    },
+    {
+      "slug": "review-response",
+      "name": "review-response",
+      "dir": "skills/utility/stage/review-response",
+      "path": "skills/utility/stage/review-response/SKILL.md",
+      "desc": "Systematic review response strategy guide for RebuttalStudio. Use when developing response strategies for reviewer comments, deciding how to classify concerns, or choosing between Accept/Defend/Clarify/Experiment approaches at any stage of the rebuttal pipeline.",
+      "descZh": "",
+      "triggers": [],
+      "version": "1.0.0",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/runtsang/RebuttalStudio.git",
+        "copy": "cp -r skills/utility/stage/review-response ~/.claude/skills/review-response",
+        "raw": "https://raw.githubusercontent.com/runtsang/RebuttalStudio/1f81e2f0aeccd582df2f5f84dfb3c17da5189599/skills/utility/stage/review-response/SKILL.md",
+        "saveAs": "~/.claude/skills/review-response/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:58fe01b19fc16a00f70b2acdf1a8fd0de279b104fe606e21b466447258038467",
+      "bytes": 6364,
+      "wordCount": 832,
+      "repoLicense": "",
+      "commit": "1f81e2f0aeccd582df2f5f84dfb3c17da5189599",
+      "branch": "master",
+      "body": "---\nname: review-response\ndescription: Systematic review response strategy guide for RebuttalStudio. Use when developing response strategies for reviewer comments, deciding how to classify concerns, or choosing between Accept/Defend/Clarify/Experiment approaches at any stage of the rebuttal pipeline.\ntags: [Rebuttal, Strategy, Review, Academic]\nversion: 1.0.0\nsource: Adapted from Claude Scholar (https://github.com/Galaxy-Dawn/claude-scholar), skills/review-response/SKILL.md\n---\n\n# Review Response Strategy Guide\n\n> **RebuttalStudio Utility — Stage-General**\n> This skill applies across the full 5-stage rebuttal pipeline. It provides strategic guidance for classifying reviewer comments and choosing response approaches, complementing the stage-specific breakdown and refinement skills.\n\nA systematic framework for analyzing reviewer comments and developing high-quality, professionally grounded rebuttal responses.\n\n---\n\n## Comment Classification\n\nEvery reviewer comment belongs to one of four types. Identify the type before selecting a strategy.\n\n| Type | Description | Examples |\n|------|-------------|---------|\n| **Major** | Core scientific or methodological concerns that affect the paper's conclusions | \"The baseline comparison is unfair\", \"The claims are unsupported by experiments\" |\n| **Minor** | Peripheral concerns about presentation, wording, or supplementary experiments | \"Figure 3 is hard to read\", \"Missing ablation on X\" |\n| **Misunderstanding** | Reviewer has misread or misinterpreted the paper | \"The authors do not compare with Y\" (but Y is in Table 2) |\n| **Typo / Clarity** | Factual errors, grammar, or unclear exposition | \"Definition 2 appears to be incorrect\", \"Section 3 is confusing\" |\n\n---\n\n## Response Strategies\n\nAfter classification, select the appropriate response strategy:\n\n| Strategy | When to Use | Core Approach |\n|----------|-------------|---------------|\n| **Accept** | Reviewer is correct; the concern is valid | Acknowledge explicitly, describe the change made, point to location |\n| **Defend** | Reviewer's concern is based on a valid scientific disagreement | Provide evidence, cite prior work, offer additional data if available |\n| **Clarify** | Reviewer has a misunderstanding that the paper actually addresses | Quote the relevant section, explain why the concern does not apply |\n| **Experiment** | Reviewer requests additional empirical validation | Describe the experiment, provide preliminary results if possible |\n\n---\n\n## Core Principles\n\nThese apply to every response at every stage, from Stage 2 draft outlines to Stage 4 follow-up refinement:\n\n1. **Acknowledge strengths before criticism** — Thank reviewers for recognized contributions before addressing concerns. Even a brief acknowledgment improves tone.\n\n2. **Anchor to evidence** — Every claim in a response must be backed by: a paper section, a result in the supplementary, a cited prior work, or a new experiment. Do not assert without grounding.\n\n3. **Address all concerns** — An unreplied-to comment is treated by reviewers as evasion. Even a one-sentence acknowledgment is better than silence.\n\n4. **No defensive language** — Phrases like \"the reviewer is incorrect\" or \"this criticism is unfounded\" damage tone. Prefer collaborative phrasing: \"We believe this may stem from…\", \"To clarify our intent…\"\n\n5. **Completeness over brevity** — Concision matters, but do not sacrifice completeness. A reviewer who feels dismissed will lower the score.\n\n---\n\n## Success Factors (from ICLR Spotlight Paper Analysis)\n\nKey lessons distilled from analyzing accepted papers' rebuttals:\n\n### 1. Acknowledge Strengths, Respond Positively to Criticism\n- Even spotlight papers receive constructive criticism\n- Reviewers are more receptive when they feel their positive observations were noted\n- **Strategy**: Lead with appreciation, then address each concern specifically\n\n### 2. Provide Clarity and Intuitive Understanding\n- High-quality work can still have presentation gaps\n- Reviewers with different backgrounds may need extra scaffolding\n- **Strategy**: Expand explanations inline, move heavy derivations to appendix, add step-by-step walkthroughs where missing\n\n### 3. Thorough Justification of Experimental Choices\n- Reviewers may question design decisions that seem obvious to the authors\n- Alternative metrics and ablations demonstrate rigor\n- **Strategy**: Justify each major choice; offer to add ablations if feasible within the rebuttal period\n\n### 4. Address Ethics and Limitations Proactively\n- Especially important for sensitive application areas\n- Unaddressed limitations signal incomplete scholarship\n- **Strategy**: If a reviewer raises an ethical concern, respond directly with the paper's safeguards or discuss as a known limitation\n\n### 5. Emphasize Practical Value and Scalability\n- Reviewers respond well to practical impact framing\n- Show that the contribution generalizes beyond the specific setting tested\n- **Strategy**: Add one or two sentences about broader applicability if not already present in the paper\n\n---\n\n## Integration with RebuttalStudio Stages\n\n| Stage | How to Use This Skill |\n|-------|-----------------------|\n| **Stage 1 — Breakdown** | After receiving reviewer text, apply the classification table to categorize each atomic issue before writing titles |\n| **Stage 2 — Reply** | Use the Accept/Defend/Clarify/Experiment framework when drafting outlines; choose the strategy that matches each issue type |\n| **Stage 4 — Multi-Round** | Re-apply classification to follow-up comments; use \"Clarify\" or \"Experiment\" strategy for reviewer persistence |\n| **Stage 5 — Final Remarks** | Summarize the response strategies used for each reviewer in the final remarks |\n\n---\n\n## Rebuttal Structure Template\n\nFor a well-structured per-reviewer rebuttal block:\n\n```\nWe thank Reviewer [X] for their thoughtful and constructive feedback.\n\n**Response to [Issue Title]**\n\n> \"[quoted reviewer comment]\"\n\n[Strategy: Accept / Defend / Clarify / Experiment]\n\n[Response body: acknowledgment → direct answer → evidence → forward-looking note]\n\n**Changes made**: [Section X, paragraph Y; or \"no change needed because…\"]\n```\n\n---\n\n*Adapted from Claude Scholar's `review-response` skill by gaoruizhang. Original: https://github.com/Galaxy-Dawn/claude-scholar/blob/main/skills/review-response/SKILL.md*\n",
+      "bodyMd": "# Review Response Strategy Guide\n\n> **RebuttalStudio Utility — Stage-General**\n> This skill applies across the full 5-stage rebuttal pipeline. It provides strategic guidance for classifying reviewer comments and choosing response approaches, complementing the stage-specific breakdown and refinement skills.\n\nA systematic framework for analyzing reviewer comments and developing high-quality, professionally grounded rebuttal responses.\n\n---\n\n## Comment Classification\n\nEvery reviewer comment belongs to one of four types. Identify the type before selecting a strategy.\n\n| Type | Description | Examples |\n|------|-------------|---------|\n| **Major** | Core scientific or methodological concerns that affect the paper's conclusions | \"The baseline comparison is unfair\", \"The claims are unsupported by experiments\" |\n| **Minor** | Peripheral concerns about presentation, wording, or supplementary experiments | \"Figure 3 is hard to read\", \"Missing ablation on X\" |\n| **Misunderstanding** | Reviewer has misread or misinterpreted the paper | \"The authors do not compare with Y\" (but Y is in Table 2) |\n| **Typo / Clarity** | Factual errors, grammar, or unclear exposition | \"Definition 2 appears to be incorrect\", \"Section 3 is confusing\" |\n\n---\n\n## Response Strategies\n\nAfter classification, select the appropriate response strategy:\n\n| Strategy | When to Use | Core Approach |\n|----------|-------------|---------------|\n| **Accept** | Reviewer is correct; the concern is valid | Acknowledge explicitly, describe the change made, point to location |\n| **Defend** | Reviewer's concern is based on a valid scientific disagreement | Provide evidence, cite prior work, offer additional data if available |\n| **Clarify** | Reviewer has a misunderstanding that the paper actually addresses | Quote the relevant section, explain why the concern does not apply |\n| **Experiment** | Reviewer requests additional empirical validation | Describe the experiment, provide preliminary results if possible |\n\n---\n\n## Core Principles\n\nThese apply to every response at every stage, from Stage 2 draft outlines to Stage 4 follow-up refinement:\n\n1. **Acknowledge strengths before criticism** — Thank reviewers for recognized contributions before addressing concerns. Even a brief acknowledgment improves tone.\n\n2. **Anchor to evidence** — Every claim in a response must be backed by: a paper section, a result in the supplementary, a cited prior work, or a new experiment. Do not assert without grounding.\n\n3. **Address all concerns** — An unreplied-to comment is treated by reviewers as evasion. Even a one-sentence acknowledgment is better than silence.\n\n4. **No defensive language** — Phrases like \"the reviewer is incorrect\" or \"this criticism is unfounded\" damage tone. Prefer collaborative phrasing: \"We believe this may stem from…\", \"To clarify our intent…\"\n\n5. **Completeness over brevity** — Concision matters, but do not sacrifice completeness. A reviewer who feels dismissed will lower the score.\n\n---\n\n## Success Factors (from ICLR Spotlight Paper Analysis)\n\nKey lessons distilled from analyzing accepted papers' rebuttals:\n\n### 1. Acknowledge Strengths, Respond Positively to Criticism\n- Even spotlight papers receive constructive criticism\n- Reviewers are more receptive when they feel their positive observations were noted\n- **Strategy**: Lead with appreciation, then address each concern specifically\n\n### 2. Provide Clarity and Intuitive Understanding\n- High-quality work can still have presentation gaps\n- Reviewers with different backgrounds may need extra scaffolding\n- **Strategy**: Expand explanations inline, move heavy derivations to appendix, add step-by-step walkthroughs where missing\n\n### 3. Thorough Justification of Experimental Choices\n- Reviewers may question design decisions that seem obvious to the authors\n- Alternative metrics and ablations demonstrate rigor\n- **Strategy**: Justify each major choice; offer to add ablations if feasible within the rebuttal period\n\n### 4. Address Ethics and Limitations Proactively\n- Especially important for sensitive application areas\n- Unaddressed limitations signal incomplete scholarship\n- **Strategy**: If a reviewer raises an ethical concern, respond directly with the paper's safeguards or discuss as a known limitation\n\n### 5. Emphasize Practical Value and Scalability\n- Reviewers respond well to practical impact framing\n- Show that the contribution generalizes beyond the specific setting tested\n- **Strategy**: Add one or two sentences about broader applicability if not already present in the paper\n\n---\n\n## Integration with RebuttalStudio Stages\n\n| Stage | How to Use This Skill |\n|-------|-----------------------|\n| **Stage 1 — Breakdown** | After receiving reviewer text, apply the classification table to categorize each atomic issue before writing titles |\n| **Stage 2 — Reply** | Use the Accept/Defend/Clarify/Experiment framework when drafting outlines; choose the strategy that matches each issue type |\n| **Stage 4 — Multi-Round** | Re-apply classification to follow-up comments; use \"Clarify\" or \"Experiment\" strategy for reviewer persistence |\n| **Stage 5 — Final Remarks** | Summarize the response strategies used for each reviewer in the final remarks |\n\n---\n\n## Rebuttal Structure Template\n\nFor a well-structured per-reviewer rebuttal block:\n\n```\nWe thank Reviewer [X] for their thoughtful and constructive feedback.\n\n**Response to [Issue Title]**\n\n> \"[quoted reviewer comment]\"\n\n[Strategy: Accept / Defend / Clarify / Experiment]\n\n[Response body: acknowledgment → direct answer → evidence → forward-looking note]\n\n**Changes made**: [Section X, paragraph Y; or \"no change needed because…\"]\n```\n\n---\n\n*Adapted from Claude Scholar's `review-response` skill by gaoruizhang. Original: https://github.com/Galaxy-Dawn/claude-scholar/blob/main/skills/review-response/SKILL.md*\n"
+    },
+    {
+      "slug": "text-condense",
+      "name": "text-condense",
+      "dir": "skills/utility/stage/text-condense",
+      "path": "skills/utility/stage/text-condense/SKILL.md",
+      "desc": "Condense rebuttal prose into fewer words without changing the original meaning. Use when a response block, paragraph, or selected passage is too long but all technical content, citations, and commitments must stay intact. Supports academic English.",
+      "descZh": "",
+      "triggers": [
+        "a response block",
+        "paragraph",
+        "ci"
+      ],
+      "version": "1.0.0",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/runtsang/RebuttalStudio.git",
+        "copy": "cp -r skills/utility/stage/text-condense ~/.claude/skills/text-condense",
+        "raw": "https://raw.githubusercontent.com/runtsang/RebuttalStudio/1f81e2f0aeccd582df2f5f84dfb3c17da5189599/skills/utility/stage/text-condense/SKILL.md",
+        "saveAs": "~/.claude/skills/text-condense/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:47a2e81b5eee2f59f69c6708356b5b8151ccd2e42275734a91373a0cc2a4ddfc",
+      "bytes": 1859,
+      "wordCount": 237,
+      "repoLicense": "",
+      "commit": "1f81e2f0aeccd582df2f5f84dfb3c17da5189599",
+      "branch": "master",
+      "body": "---\nname: text-condense\ndescription: Condense rebuttal prose into fewer words without changing the original meaning. Use when a response block, paragraph, or selected passage is too long but all technical content, citations, and commitments must stay intact. Supports academic English.\ntags: [Writing, Rebuttal, Condense, Concise, Polish]\nversion: 1.0.0\n---\n\n# Text Condense for Rebuttal Prose\n\n> **RebuttalStudio Utility**\n> Apply this skill when a selected passage is too long and needs to be tighter without changing what it says.\n\nCondense the text by removing redundancy, filler, and repeated phrasing while preserving the original meaning, evidence, and technical content.\n\n## Goal\n\nProduce a shorter version of the selected text that says the same thing more efficiently.\n\n## Rules\n\n1. Preserve the original meaning exactly.\n2. Remove filler, repetition, and unnecessary hedging.\n3. Preserve all technical claims, numbers, citations, equations, named entities, and placeholder tokens.\n4. Preserve reviewer quotations and structural labels if they appear.\n5. Do not add new information, interpretations, promises, or evidence.\n6. Do not change stance, polarity, or confidence level.\n7. Keep the original paragraph, list, and markdown structure whenever possible.\n8. If the text is already concise, make only minimal edits.\n\n## Output\n\nReturn strict JSON:\n\n```json\n{ \"text\": \"...\" }\n```\n\n## Good Use Cases\n\n- A Stage 2 response that repeats the same defense twice\n- A Stage 3 response block that is clear but too long\n- A Stage 4 follow-up answer that can be made tighter before submission\n- A Stage 5 summary paragraph that needs a shorter version\n\n## What Not to Change\n\n- Technical substance\n- Numerical values\n- Citations\n- Placeholder tokens such as `{{reviewerId}}`\n- Reviewer comment labels such as `> **Reviewer's Comment**:` and `**Response**:`\n",
+      "bodyMd": "# Text Condense for Rebuttal Prose\n\n> **RebuttalStudio Utility**\n> Apply this skill when a selected passage is too long and needs to be tighter without changing what it says.\n\nCondense the text by removing redundancy, filler, and repeated phrasing while preserving the original meaning, evidence, and technical content.\n\n## Goal\n\nProduce a shorter version of the selected text that says the same thing more efficiently.\n\n## Rules\n\n1. Preserve the original meaning exactly.\n2. Remove filler, repetition, and unnecessary hedging.\n3. Preserve all technical claims, numbers, citations, equations, named entities, and placeholder tokens.\n4. Preserve reviewer quotations and structural labels if they appear.\n5. Do not add new information, interpretations, promises, or evidence.\n6. Do not change stance, polarity, or confidence level.\n7. Keep the original paragraph, list, and markdown structure whenever possible.\n8. If the text is already concise, make only minimal edits.\n\n## Output\n\nReturn strict JSON:\n\n```json\n{ \"text\": \"...\" }\n```\n\n## Good Use Cases\n\n- A Stage 2 response that repeats the same defense twice\n- A Stage 3 response block that is clear but too long\n- A Stage 4 follow-up answer that can be made tighter before submission\n- A Stage 5 summary paragraph that needs a shorter version\n\n## What Not to Change\n\n- Technical substance\n- Numerical values\n- Citations\n- Placeholder tokens such as `{{reviewerId}}`\n- Reviewer comment labels such as `> **Reviewer's Comment**:` and `**Response**:`\n"
+    },
+    {
+      "slug": "writing-anti-ai",
+      "name": "writing-anti-ai",
+      "dir": "skills/utility/stage/writing-anti-ai",
+      "path": "skills/utility/stage/writing-anti-ai/SKILL.md",
+      "desc": "Remove AI-generated writing patterns from rebuttal prose to make it sound natural, direct, and authentically human-authored. Use when a Stage 2 refined draft or Stage 4 follow-up response reads too formulaic, robotic, or \"GPT-like\". Supports academic English.",
+      "descZh": "",
+      "triggers": [
+        "a Stage 2 refined draft",
+        "robotic",
+        "GP"
+      ],
+      "version": "1.0.0",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/runtsang/RebuttalStudio.git",
+        "copy": "cp -r skills/utility/stage/writing-anti-ai ~/.claude/skills/writing-anti-ai",
+        "raw": "https://raw.githubusercontent.com/runtsang/RebuttalStudio/1f81e2f0aeccd582df2f5f84dfb3c17da5189599/skills/utility/stage/writing-anti-ai/SKILL.md",
+        "saveAs": "~/.claude/skills/writing-anti-ai/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:f9444cece833cc6b58dd038569ef32d90f55fed12884f5b423001010915aa719",
+      "bytes": 6567,
+      "wordCount": 914,
+      "repoLicense": "",
+      "commit": "1f81e2f0aeccd582df2f5f84dfb3c17da5189599",
+      "branch": "master",
+      "body": "---\nname: writing-anti-ai\ndescription: Remove AI-generated writing patterns from rebuttal prose to make it sound natural, direct, and authentically human-authored. Use when a Stage 2 refined draft or Stage 4 follow-up response reads too formulaic, robotic, or \"GPT-like\". Supports academic English.\ntags: [Writing, Rebuttal, Anti-AI, Humanizer, Polish]\nversion: 1.0.0\nsource: Adapted from Claude Scholar (https://github.com/Galaxy-Dawn/claude-scholar), skills/writing-anti-ai/SKILL.md. Original authored by gaoruizhang; based on Wikipedia's \"Signs of AI writing\" guide (WikiProject AI Cleanup).\n---\n\n# Writing Anti-AI for Rebuttal Prose\n\n> **RebuttalStudio Utility — Stage 2 / Stage 4 / Polish**\n> Apply this skill after Stage 2 refinement or Stage 4 follow-up drafting when the output reads formulaic or over-polished. Use before the Stage 3 document compilation to ensure the final rebuttal sounds authored by a researcher, not generated by a model.\n\nRemove predictable AI writing patterns from rebuttal text so it reads as natural, confident academic prose — not as machine-generated boilerplate.\n\n---\n\n## Why This Matters for Rebuttals\n\nReviewers are experienced academics who read hundreds of papers and rebuttals. A rebuttal that sounds AI-generated signals:\n- Lack of genuine engagement with the concerns\n- Boilerplate responses that don't address the specific paper\n- Reduced credibility and persuasiveness\n\nThe goal is not to hide AI assistance — it's to ensure the **ideas and voice** of the actual authors come through clearly.\n\n---\n\n## Core Insight\n\nLLMs predict statistically likely continuations. This produces text that applies to the widest variety of cases — which is exactly what makes it feel generic in a rebuttal. Rebuttal prose needs to be *specific* to this paper, this reviewer, and this concern.\n\n**Core principle**: Every sentence in a rebuttal should only be true for *this* paper. If it could appear in any rebuttal, rewrite it.\n\n---\n\n## Quick Checklist (Apply in Order)\n\n### 1. Cut Filler Phrases\n\nRemove throat-clearing openers and emphasis crutches that add length without adding meaning.\n\n**Common AI openers to remove:**\n- \"In order to address this concern…\" → \"To address this…\"\n- \"It is worth noting that…\" → (delete or restate directly)\n- \"It is important to highlight that…\" → (delete)\n- \"We would like to clarify that…\" → \"We clarify that…\"\n- \"Due to the fact that…\" → \"Because…\"\n\n**AI emphasis phrases to cut:**\n- \"crucial\", \"pivotal\", \"paramount\", \"essential\" (unless truly warranted)\n- \"delve into\", \"unpack\", \"dive deeper\"\n- \"It goes without saying that…\" → (just say it)\n\n### 2. Break Formulaic Structures\n\nAI tends toward predictable patterns. In rebuttals, these appear as:\n\n| AI Pattern | Rebuttal Fix |\n|-----------|-------------|\n| \"It's not just X, it's also Y\" (negative parallelism) | Drop it; state Y directly |\n| \"First… Second… Third…\" for every single response | Only use numbered lists when the reviewer explicitly listed multiple concerns |\n| Em-dash reveals: \"X — which shows Y\" | \"X, which shows Y\" or split into two sentences |\n| \"This represents a significant advancement…\" | State what changed specifically |\n\n### 3. Vary Rhythm\n\nCheck sentence length distribution in each response block:\n- Three consecutive sentences of similar length? Break or merge one.\n- Every paragraph ending with a confident one-liner? Vary endings.\n- Mix short punchy sentences with longer elaborations.\n\n### 4. Trust the Reviewer\n\nReviewers are experts. Do not over-explain or over-justify.\n\n**Bad (patronizing):** \"To ensure complete clarity, and so that the reviewer can fully appreciate our contribution, we explain in detail…\"\n\n**Good:** \"To clarify: [the specific point].\"\n\n**Bad (hand-holding):** \"It could potentially be argued that the metric might perhaps be considered somewhat limited in scope.\"\n\n**Good:** \"The metric has a known limitation: [state it]. We address this in Appendix B.\"\n\n### 5. Remove Pull-Quote Language\n\nIf a sentence sounds like it was written to be quoted or highlighted, rewrite it.\n\n**Bad:** \"This represents a paradigm shift in how the community will approach [problem].\"\n\n**Good:** \"The method reduces [specific metric] by X% over [specific baseline], enabling [specific application].\"\n\n### 6. Use First-Person Plural Correctly\n\nAcademic rebuttals use \"we\" — but AI-generated text often over-hedges or over-personalizes.\n\n**Too hedged:** \"The authors feel that it may be the case that…\" → \"We argue that…\"\n**Over-personalized:** \"We personally believe that…\" → \"We believe that…\"\n\n---\n\n## Common AI Vocabulary in Rebuttals to Avoid\n\nThese words are statistically overrepresented in AI-generated academic text:\n\n| Overused | Replace With |\n|----------|-------------|\n| additionally | also / and / (restructure sentence) |\n| furthermore | (restructure sentence) |\n| notably | (delete or be specific) |\n| it is worth noting | (just state the point) |\n| comprehensive | thorough / complete (or be specific) |\n| leverage | use |\n| utilize | use |\n| facilitate | help / enable |\n| demonstrate | show |\n| novel | (be specific about what is new) |\n\n---\n\n## Scoring: Is the Rebuttal Prose Human?\n\nRate each response block (0–10 points each):\n\n| Dimension | 0 pts | 10 pts |\n|-----------|-------|--------|\n| **Directness** | Opens with filler, buries the answer | States the answer in the first sentence |\n| **Specificity** | Could appear in any rebuttal | References this specific paper, reviewer comment, or result |\n| **Rhythm** | All sentences same length | Mix of short and long sentences |\n| **Tone** | Defensive or overly formal | Collegial, confident, factual |\n| **Density** | Padded with acknowledgments | Information-dense; every sentence moves forward |\n\n**40–50**: Ready to submit. **30–39**: Needs targeted edits. **< 30**: Rewrite from outline.\n\n---\n\n## What NOT to Change\n\nThis skill only removes AI patterns. Do **not**:\n- Alter technical claims or experimental results\n- Remove citations or evidence\n- Change `{{placeholder}}` tokens\n- Modify quoted reviewer text\n- Change the structure required by Stage 2 output format (the `> **Reviewer's Comment**:` / `**Response**:` block)\n\n---\n\n*Adapted from Claude Scholar's `writing-anti-ai` skill. Original authored by gaoruizhang. Based on [Wikipedia: Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing), maintained by WikiProject AI Cleanup. Source: https://github.com/Galaxy-Dawn/claude-scholar/blob/main/skills/writing-anti-ai/SKILL.md*\n",
+      "bodyMd": "# Writing Anti-AI for Rebuttal Prose\n\n> **RebuttalStudio Utility — Stage 2 / Stage 4 / Polish**\n> Apply this skill after Stage 2 refinement or Stage 4 follow-up drafting when the output reads formulaic or over-polished. Use before the Stage 3 document compilation to ensure the final rebuttal sounds authored by a researcher, not generated by a model.\n\nRemove predictable AI writing patterns from rebuttal text so it reads as natural, confident academic prose — not as machine-generated boilerplate.\n\n---\n\n## Why This Matters for Rebuttals\n\nReviewers are experienced academics who read hundreds of papers and rebuttals. A rebuttal that sounds AI-generated signals:\n- Lack of genuine engagement with the concerns\n- Boilerplate responses that don't address the specific paper\n- Reduced credibility and persuasiveness\n\nThe goal is not to hide AI assistance — it's to ensure the **ideas and voice** of the actual authors come through clearly.\n\n---\n\n## Core Insight\n\nLLMs predict statistically likely continuations. This produces text that applies to the widest variety of cases — which is exactly what makes it feel generic in a rebuttal. Rebuttal prose needs to be *specific* to this paper, this reviewer, and this concern.\n\n**Core principle**: Every sentence in a rebuttal should only be true for *this* paper. If it could appear in any rebuttal, rewrite it.\n\n---\n\n## Quick Checklist (Apply in Order)\n\n### 1. Cut Filler Phrases\n\nRemove throat-clearing openers and emphasis crutches that add length without adding meaning.\n\n**Common AI openers to remove:**\n- \"In order to address this concern…\" → \"To address this…\"\n- \"It is worth noting that…\" → (delete or restate directly)\n- \"It is important to highlight that…\" → (delete)\n- \"We would like to clarify that…\" → \"We clarify that…\"\n- \"Due to the fact that…\" → \"Because…\"\n\n**AI emphasis phrases to cut:**\n- \"crucial\", \"pivotal\", \"paramount\", \"essential\" (unless truly warranted)\n- \"delve into\", \"unpack\", \"dive deeper\"\n- \"It goes without saying that…\" → (just say it)\n\n### 2. Break Formulaic Structures\n\nAI tends toward predictable patterns. In rebuttals, these appear as:\n\n| AI Pattern | Rebuttal Fix |\n|-----------|-------------|\n| \"It's not just X, it's also Y\" (negative parallelism) | Drop it; state Y directly |\n| \"First… Second… Third…\" for every single response | Only use numbered lists when the reviewer explicitly listed multiple concerns |\n| Em-dash reveals: \"X — which shows Y\" | \"X, which shows Y\" or split into two sentences |\n| \"This represents a significant advancement…\" | State what changed specifically |\n\n### 3. Vary Rhythm\n\nCheck sentence length distribution in each response block:\n- Three consecutive sentences of similar length? Break or merge one.\n- Every paragraph ending with a confident one-liner? Vary endings.\n- Mix short punchy sentences with longer elaborations.\n\n### 4. Trust the Reviewer\n\nReviewers are experts. Do not over-explain or over-justify.\n\n**Bad (patronizing):** \"To ensure complete clarity, and so that the reviewer can fully appreciate our contribution, we explain in detail…\"\n\n**Good:** \"To clarify: [the specific point].\"\n\n**Bad (hand-holding):** \"It could potentially be argued that the metric might perhaps be considered somewhat limited in scope.\"\n\n**Good:** \"The metric has a known limitation: [state it]. We address this in Appendix B.\"\n\n### 5. Remove Pull-Quote Language\n\nIf a sentence sounds like it was written to be quoted or highlighted, rewrite it.\n\n**Bad:** \"This represents a paradigm shift in how the community will approach [problem].\"\n\n**Good:** \"The method reduces [specific metric] by X% over [specific baseline], enabling [specific application].\"\n\n### 6. Use First-Person Plural Correctly\n\nAcademic rebuttals use \"we\" — but AI-generated text often over-hedges or over-personalizes.\n\n**Too hedged:** \"The authors feel that it may be the case that…\" → \"We argue that…\"\n**Over-personalized:** \"We personally believe that…\" → \"We believe that…\"\n\n---\n\n## Common AI Vocabulary in Rebuttals to Avoid\n\nThese words are statistically overrepresented in AI-generated academic text:\n\n| Overused | Replace With |\n|----------|-------------|\n| additionally | also / and / (restructure sentence) |\n| furthermore | (restructure sentence) |\n| notably | (delete or be specific) |\n| it is worth noting | (just state the point) |\n| comprehensive | thorough / complete (or be specific) |\n| leverage | use |\n| utilize | use |\n| facilitate | help / enable |\n| demonstrate | show |\n| novel | (be specific about what is new) |\n\n---\n\n## Scoring: Is the Rebuttal Prose Human?\n\nRate each response block (0–10 points each):\n\n| Dimension | 0 pts | 10 pts |\n|-----------|-------|--------|\n| **Directness** | Opens with filler, buries the answer | States the answer in the first sentence |\n| **Specificity** | Could appear in any rebuttal | References this specific paper, reviewer comment, or result |\n| **Rhythm** | All sentences same length | Mix of short and long sentences |\n| **Tone** | Defensive or overly formal | Collegial, confident, factual |\n| **Density** | Padded with acknowledgments | Information-dense; every sentence moves forward |\n\n**40–50**: Ready to submit. **30–39**: Needs targeted edits. **< 30**: Rewrite from outline.\n\n---\n\n## What NOT to Change\n\nThis skill only removes AI patterns. Do **not**:\n- Alter technical claims or experimental results\n- Remove citations or evidence\n- Change `{{placeholder}}` tokens\n- Modify quoted reviewer text\n- Change the structure required by Stage 2 output format (the `> **Reviewer's Comment**:` / `**Response**:` block)\n\n---\n\n*Adapted from Claude Scholar's `writing-anti-ai` skill. Original authored by gaoruizhang. Based on [Wikipedia: Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing), maintained by WikiProject AI Cleanup. Source: https://github.com/Galaxy-Dawn/claude-scholar/blob/main/skills/writing-anti-ai/SKILL.md*\n"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "repo": "upstash/workflow-js",
+  "commit": "2f367b4ee04353281cf32511c89d7281cc7dde45",
+  "branch": "main",
+  "fetchedAt": "2026-10-13T06:57:36.756Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "skills",
+      "name": "upstash-workflow-js",
+      "dir": "skills",
+      "path": "skills/SKILL.md",
+      "desc": "Lightweight guidance for using the Upstash Workflow SDK to define, trigger, and manage workflows. Use this Skill whenever a user wants to create workflow endpoints, run steps, or interact with the Upstash Workflow client.",
+      "descZh": "",
+      "triggers": [
+        "run steps"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "npm"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/upstash/workflow-js.git",
+        "copy": "cp -r skills ~/.claude/skills/skills",
+        "raw": "https://raw.githubusercontent.com/upstash/workflow-js/2f367b4ee04353281cf32511c89d7281cc7dde45/skills/SKILL.md",
+        "saveAs": "~/.claude/skills/skills/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:8d94ad14a754cbf10a5c6908205a38955dfae9232cd197d2187830435c7f017b",
+      "bytes": 2249,
+      "wordCount": 251,
+      "repoLicense": "MIT",
+      "commit": "2f367b4ee04353281cf32511c89d7281cc7dde45",
+      "branch": "main",
+      "body": "---\nname: upstash-workflow-js\ndescription: Lightweight guidance for using the Upstash Workflow SDK to define, trigger, and manage workflows. Use this Skill whenever a user wants to create workflow endpoints, run steps, or interact with the Upstash Workflow client.\n---\n\n# Upstash Workflow SDK\n\n## Quick Start\n\nThe Upstash Workflow SDK lets you expose serverless workflow endpoints and run them reliably using QStash under the hood.\n\nInstall:\n\n```bash\nnpm install @upstash/workflow\n```\n\nDefine a simple workflow endpoint:\n\n```ts\nimport { serve } from \"@upstash/workflow\";\n\nexport const { POST } = serve(async (context) => {\n  await context.run(\"step-1\", () => console.log(\"step 1\"));\n  await context.run(\"step-2\", () => console.log(\"step 2\"));\n});\n```\n\nTrigger it from your backend:\n\n```ts\nimport { Client } from \"@upstash/workflow\";\n\nconst client = new Client({ token: process.env.QSTASH_TOKEN! });\nawait client.trigger({ url: \"https://your-app.com/api/workflow\" });\n```\n\n## Other Skill Files\n\nThese files contain the full documentation. Use them for details, patterns, and advanced behavior.\n\n- basics:\n  - **basics/serve** – How to expose workflow endpoints.\n  - **basics/context** – Full API for workflow `context` (steps, waits, webhooks, events, invoke, etc.).\n  - **basics/client** – Using the Workflow client to trigger, cancel, inspect, and notify runs.\n- features:\n  - **features/invoke** – Cross‑workflow invocation.\n  - **features/reliability** – Retries, failure callbacks, and DLQ.\n  - **features/flow-control** – Rate limits, concurrency, and parallelism.\n  - **features/wait-for-event** – Notify and wait-for-event patterns.\n  - **features/webhooks** – Webhook creation and consumption.\n- how to:\n  - **how-to/local-dev** – Local QStash dev server and tunneling.\n  - **how-to/realtime** – Realtime and human‑in‑the‑loop workflows.\n  - **how-to/migrations** – Migrating workflows safely.\n  - **how-to/middleware** – Adding middleware to workflows.\n- other files:\n  - **rest-api** – Low-level REST endpoints for interacting with QStash/Workflow.\n  - **troubleshooting** – Common debugging and environment issues.\n  - **agents** – Using Workflow with agents, orchestrators, and automation patterns.\n",
+      "bodyMd": "# Upstash Workflow SDK\n\n## Quick Start\n\nThe Upstash Workflow SDK lets you expose serverless workflow endpoints and run them reliably using QStash under the hood.\n\nInstall:\n\n```bash\nnpm install @upstash/workflow\n```\n\nDefine a simple workflow endpoint:\n\n```ts\nimport { serve } from \"@upstash/workflow\";\n\nexport const { POST } = serve(async (context) => {\n  await context.run(\"step-1\", () => console.log(\"step 1\"));\n  await context.run(\"step-2\", () => console.log(\"step 2\"));\n});\n```\n\nTrigger it from your backend:\n\n```ts\nimport { Client } from \"@upstash/workflow\";\n\nconst client = new Client({ token: process.env.QSTASH_TOKEN! });\nawait client.trigger({ url: \"https://your-app.com/api/workflow\" });\n```\n\n## Other Skill Files\n\nThese files contain the full documentation. Use them for details, patterns, and advanced behavior.\n\n- basics:\n  - **basics/serve** – How to expose workflow endpoints.\n  - **basics/context** – Full API for workflow `context` (steps, waits, webhooks, events, invoke, etc.).\n  - **basics/client** – Using the Workflow client to trigger, cancel, inspect, and notify runs.\n- features:\n  - **features/invoke** – Cross‑workflow invocation.\n  - **features/reliability** – Retries, failure callbacks, and DLQ.\n  - **features/flow-control** – Rate limits, concurrency, and parallelism.\n  - **features/wait-for-event** – Notify and wait-for-event patterns.\n  - **features/webhooks** – Webhook creation and consumption.\n- how to:\n  - **how-to/local-dev** – Local QStash dev server and tunneling.\n  - **how-to/realtime** – Realtime and human‑in‑the‑loop workflows.\n  - **how-to/migrations** – Migrating workflows safely.\n  - **how-to/middleware** – Adding middleware to workflows.\n- other files:\n  - **rest-api** – Low-level REST endpoints for interacting with QStash/Workflow.\n  - **troubleshooting** – Common debugging and environment issues.\n  - **agents** – Using Workflow with agents, orchestrators, and automation patterns.\n"
+    }
+  ]
+}

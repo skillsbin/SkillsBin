@@ -1,0 +1,48 @@
+{
+  "repo": "sstklen/infinite-gratitude",
+  "commit": "40e0f9704d4d20c6b58e9eec9137c546bd24a305",
+  "branch": "main",
+  "fetchedAt": "2026-10-13T06:59:27.332Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "infinite-gratitude",
+      "name": "infinite-gratitude",
+      "dir": "",
+      "path": "SKILL.md",
+      "desc": "Multi-agent research that keeps bringing gifts back — like cats! Dispatch multiple agents to research a topic in parallel, compile findings, and iterate on new discoveries.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/sstklen/infinite-gratitude.git",
+        "copy": "",
+        "raw": "https://raw.githubusercontent.com/sstklen/infinite-gratitude/40e0f9704d4d20c6b58e9eec9137c546bd24a305/SKILL.md",
+        "saveAs": "~/.claude/skills/infinite-gratitude/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:86f18da47ed4fd88b5318b5e786111216d1ae561a7cbb843fd1109e685a255b3",
+      "bytes": 2391,
+      "wordCount": 282,
+      "repoLicense": "MIT",
+      "commit": "40e0f9704d4d20c6b58e9eec9137c546bd24a305",
+      "branch": "main",
+      "body": "---\nname: infinite-gratitude\ndescription: Multi-agent research that keeps bringing gifts back — like cats! Dispatch multiple agents to research a topic in parallel, compile findings, and iterate on new discoveries.\nargument-hint: \"<topic>\" [--depth quick|normal|deep] [--agents 1-10]\n---\n\n# Infinite Gratitude 🐾\n\n> 無限貓報恩 | 無限の恩返し\n> Multi-agent research that keeps bringing gifts back — like cats! 🐱\n\n## Quick Reference\n\n| Option | Values | Default |\n|--------|--------|---------|\n| `topic` | Required | - |\n| `--depth` | quick / normal / deep | normal |\n| `--agents` | 1-10 | 5 |\n\n## Usage\n\n```bash\n/infinite-gratitude \"pet AI recognition\"\n/infinite-gratitude \"RAG best practices\" --depth deep\n/infinite-gratitude \"React state management\" --agents 3\n```\n\n## Behavior\n\n### Step 1: Split Directions\nSplit `{topic}` into 5 parallel research directions:\n1. GitHub projects\n2. HuggingFace models\n3. Papers / articles\n4. Competitors\n5. Best practices\n\n### Step 2: Dispatch Agents\n```\nTask(\n    prompt=\"Research {direction} for {topic}...\",\n    subagent_type=\"research-scout\",\n    model=\"haiku\",\n    run_in_background=True\n)\n```\n\n### Step 3: Collect Gifts\nCompile all findings into structured report.\n\n### Step 4: Loop\nIf follow-up questions exist → Ask user → Continue? → Back to Step 2\n\n### Step 5: Final Report\n\n## Example Output\n\n```\n🐾 Infinite Gratitude!\n\n📋 Topic: \"pet AI recognition\"\n🐱 Dispatching 5 agents...\n\n━━━━━━━━━━━━━━━━━━━━━━\n🎁 Wave 1\n━━━━━━━━━━━━━━━━━━━━━━\n\n🐱 GitHub: MegaDescriptor, wildlife-datasets...\n🐱 HuggingFace: DINOv2, CLIP...\n🐱 Papers: Petnow uses Siamese Network...\n🐱 Competitors: Petnow 99%...\n🐱 Tutorials: ArcFace > Triplet Loss...\n\n💡 Key: Data volume is everything!\n\n🔍 New questions:\n   - How to implement ArcFace?\n   - How to use MegaDescriptor?\n\nContinue? (y/n)\n\n🐾 by washinmura.jp\n```\n\n## Notes\n\n- Uses `haiku` model to save cost\n- Max 5 agents per wave\n- Deep mode loops until satisfied\n\n## Additional Resources\n\n- For agent configuration, see [references/agent-config.md](references/agent-config.md)\n\n## Related Skills\n\n- **ai-dojo** — Foundation for AI coding agents\n- **research-scout** — Single-agent research\n\n---\n\n*Part of 🥋 AI Dojo Series by [Washin Village](https://washinmura.jp) 🐾*\n",
+      "bodyMd": "# Infinite Gratitude 🐾\n\n> 無限貓報恩 | 無限の恩返し\n> Multi-agent research that keeps bringing gifts back — like cats! 🐱\n\n## Quick Reference\n\n| Option | Values | Default |\n|--------|--------|---------|\n| `topic` | Required | - |\n| `--depth` | quick / normal / deep | normal |\n| `--agents` | 1-10 | 5 |\n\n## Usage\n\n```bash\n/infinite-gratitude \"pet AI recognition\"\n/infinite-gratitude \"RAG best practices\" --depth deep\n/infinite-gratitude \"React state management\" --agents 3\n```\n\n## Behavior\n\n### Step 1: Split Directions\nSplit `{topic}` into 5 parallel research directions:\n1. GitHub projects\n2. HuggingFace models\n3. Papers / articles\n4. Competitors\n5. Best practices\n\n### Step 2: Dispatch Agents\n```\nTask(\n    prompt=\"Research {direction} for {topic}...\",\n    subagent_type=\"research-scout\",\n    model=\"haiku\",\n    run_in_background=True\n)\n```\n\n### Step 3: Collect Gifts\nCompile all findings into structured report.\n\n### Step 4: Loop\nIf follow-up questions exist → Ask user → Continue? → Back to Step 2\n\n### Step 5: Final Report\n\n## Example Output\n\n```\n🐾 Infinite Gratitude!\n\n📋 Topic: \"pet AI recognition\"\n🐱 Dispatching 5 agents...\n\n━━━━━━━━━━━━━━━━━━━━━━\n🎁 Wave 1\n━━━━━━━━━━━━━━━━━━━━━━\n\n🐱 GitHub: MegaDescriptor, wildlife-datasets...\n🐱 HuggingFace: DINOv2, CLIP...\n🐱 Papers: Petnow uses Siamese Network...\n🐱 Competitors: Petnow 99%...\n🐱 Tutorials: ArcFace > Triplet Loss...\n\n💡 Key: Data volume is everything!\n\n🔍 New questions:\n   - How to implement ArcFace?\n   - How to use MegaDescriptor?\n\nContinue? (y/n)\n\n🐾 by washinmura.jp\n```\n\n## Notes\n\n- Uses `haiku` model to save cost\n- Max 5 agents per wave\n- Deep mode loops until satisfied\n\n## Additional Resources\n\n- For agent configuration, see [references/agent-config.md](references/agent-config.md)\n\n## Related Skills\n\n- **ai-dojo** — Foundation for AI coding agents\n- **research-scout** — Single-agent research\n\n---\n\n*Part of 🥋 AI Dojo Series by [Washin Village](https://washinmura.jp) 🐾*\n"
+    }
+  ]
+}

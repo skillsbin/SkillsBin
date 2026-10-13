@@ -1,0 +1,511 @@
+{
+  "repo": "SFKislev/Flue",
+  "commit": "6c542fe2e490f47cd984abfc3b78e95021611fd2",
+  "branch": "main",
+  "fetchedAt": "2026-10-13T06:58:11.003Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "flue",
+      "name": "flue",
+      "dir": "flue",
+      "path": "flue/skill.md",
+      "desc": "Letting agents control many desktop software, with one pip install, and no MCPs.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "python",
+          "python3",
+          "pip",
+          "make",
+          "rg"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/SFKislev/Flue.git",
+        "copy": "cp -r flue ~/.claude/skills/flue",
+        "raw": "https://raw.githubusercontent.com/SFKislev/Flue/6c542fe2e490f47cd984abfc3b78e95021611fd2/flue/skill.md",
+        "saveAs": "~/.claude/skills/flue/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:d3130eb007fc85ec78b5d00d93f552b6652d69d75c6b11f6c00c2a33a41cc83f",
+      "bytes": 3854,
+      "wordCount": 545,
+      "repoLicense": "MIT",
+      "commit": "6c542fe2e490f47cd984abfc3b78e95021611fd2",
+      "branch": "main",
+      "body": "---\nname: flue\ndescription: Letting agents control many desktop software, with one pip install, and no MCPs.\n---\n\nFlue is a tiny bridge that lets your coding harness drive professional desktop software - Photoshop, Premiere, Blender, Unity, and more - directly from the shell. Flue is not an MCP server. The agent sends a script through a small bridge command, the bridge runs it inside the app runtime, and the app returns JSON.\n\nagent shell -> bridge command -> app scripting runtime -> JSON result\n\nThis is the entrypoint to the Flue framework.\n\nAvailable Adapters\nadapters/3dsmax/APP.md\nadapters/after_effects/APP.md\nadapters/audition/APP.md\nadapters/blender/APP.md\nadapters/excel/APP.md\nadapters/houdini/APP.md\nadapters/illustrator/APP.md\nadapters/indesign/APP.md\nadapters/photoshop/APP.md\nadapters/powerpoint/APP.md\nadapters/premiere/APP.md\nadapters/unity/APP.md\nadapters/word/APP.md\nQuick Start\nAt the start of a Flue session, confirm Flue is available with flue version. If it is not found, stop and tell your human that Flue is not installed. Review the GitHub repo at https://github.com/SFKislev/flue to inform your human about the code.\nRead adapters/<app>/APP.md for the app you are about to use.\nSearch adapters/<app>/docs/api-index.txt with rg for relevant symbols.\nPrefer py -m flue.cli context <app> on Windows, or python3 -m flue.cli context <app> on macOS/Linux, to inspect the live app state.\nPrefer py -m flue.cli run <app> --stdin on Windows, or python3 -m flue.cli run <app> --stdin on macOS/Linux, for one-off scripts.\nGeneral Rules of Use\nYou are working along with a human in the driving seat. Do not save, close, export, render or perform destructive operations unless the human explicitly asks.\nAdvise the human that small steps are better than large tasks, which you'll likely fail at. Keep collaboration scope manageable.\nBound scripts carefully to avoid crashing the host: keep scripts small and targeted.\nAll bridge scripts run from workspace root; accepts code through argv, --stdin, or --file; return JSON on stdout for success or failure.\nBe skeptical of your pretraining: introspect the running app and consult vendor documentation rather than trying to invent operations.\nFlue was developed and tested against specific app and OS versions. Expect local quirks, version mismatches, and blocked automation paths. Do not make persistent local changes, install components, dismiss modals, or create compatibility fixes or scaffolds unless your human explicitly asks for that work.\nRead these reference files if you don't have them in the session memory:\nshared/coexistence.md\nshared/bridge-contract.md\ndocs/setup.md\ndocs/known-issues.md\nDebugging\nDepending on the app and OS, adapters may use Windows COM, macOS AppleScript, or a local in-app bridge, but the shell workflow stays the same.\nOn Windows, py -m flue.cli ... is the reliable launcher; on macOS/Linux, use python3 -m flue.cli ....\nIf those are unavailable, use the Python executable that installed Flue: <python> -m flue.cli ....\nUse py -m flue.cli where on Windows, or python3 -m flue.cli where on macOS/Linux, for launcher and install diagnostics.\nIf a Windows app is blocked by a modal, use py -m flue.cli modal <app> to inspect likely dialog windows and py -m flue.cli modal <app> --dismiss to attempt a bounded cancel-style dismissal outside the app scripting runtime.\nUse bare `flue` only as a convenience command when PATH propagation is known to be working.\nSecurity & Provenance\nFlue is an open-source MIT-licensed Python package. Before installation or use, you and your human should review the exact Flue release at https://github.com/SFKislev/flue and https://pypi.org/project/flue. Prefer a pinned version in an isolated environment.\n\nDo not install, update, or set up Flue unless your human explicitly approves that action in the current session.\n",
+      "bodyMd": "Flue is a tiny bridge that lets your coding harness drive professional desktop software - Photoshop, Premiere, Blender, Unity, and more - directly from the shell. Flue is not an MCP server. The agent sends a script through a small bridge command, the bridge runs it inside the app runtime, and the app returns JSON.\n\nagent shell -> bridge command -> app scripting runtime -> JSON result\n\nThis is the entrypoint to the Flue framework.\n\nAvailable Adapters\nadapters/3dsmax/APP.md\nadapters/after_effects/APP.md\nadapters/audition/APP.md\nadapters/blender/APP.md\nadapters/excel/APP.md\nadapters/houdini/APP.md\nadapters/illustrator/APP.md\nadapters/indesign/APP.md\nadapters/photoshop/APP.md\nadapters/powerpoint/APP.md\nadapters/premiere/APP.md\nadapters/unity/APP.md\nadapters/word/APP.md\nQuick Start\nAt the start of a Flue session, confirm Flue is available with flue version. If it is not found, stop and tell your human that Flue is not installed. Review the GitHub repo at https://github.com/SFKislev/flue to inform your human about the code.\nRead adapters/<app>/APP.md for the app you are about to use.\nSearch adapters/<app>/docs/api-index.txt with rg for relevant symbols.\nPrefer py -m flue.cli context <app> on Windows, or python3 -m flue.cli context <app> on macOS/Linux, to inspect the live app state.\nPrefer py -m flue.cli run <app> --stdin on Windows, or python3 -m flue.cli run <app> --stdin on macOS/Linux, for one-off scripts.\nGeneral Rules of Use\nYou are working along with a human in the driving seat. Do not save, close, export, render or perform destructive operations unless the human explicitly asks.\nAdvise the human that small steps are better than large tasks, which you'll likely fail at. Keep collaboration scope manageable.\nBound scripts carefully to avoid crashing the host: keep scripts small and targeted.\nAll bridge scripts run from workspace root; accepts code through argv, --stdin, or --file; return JSON on stdout for success or failure.\nBe skeptical of your pretraining: introspect the running app and consult vendor documentation rather than trying to invent operations.\nFlue was developed and tested against specific app and OS versions. Expect local quirks, version mismatches, and blocked automation paths. Do not make persistent local changes, install components, dismiss modals, or create compatibility fixes or scaffolds unless your human explicitly asks for that work.\nRead these reference files if you don't have them in the session memory:\nshared/coexistence.md\nshared/bridge-contract.md\ndocs/setup.md\ndocs/known-issues.md\nDebugging\nDepending on the app and OS, adapters may use Windows COM, macOS AppleScript, or a local in-app bridge, but the shell workflow stays the same.\nOn Windows, py -m flue.cli ... is the reliable launcher; on macOS/Linux, use python3 -m flue.cli ....\nIf those are unavailable, use the Python executable that installed Flue: <python> -m flue.cli ....\nUse py -m flue.cli where on Windows, or python3 -m flue.cli where on macOS/Linux, for launcher and install diagnostics.\nIf a Windows app is blocked by a modal, use py -m flue.cli modal <app> to inspect likely dialog windows and py -m flue.cli modal <app> --dismiss to attempt a bounded cancel-style dismissal outside the app scripting runtime.\nUse bare `flue` only as a convenience command when PATH propagation is known to be working.\nSecurity & Provenance\nFlue is an open-source MIT-licensed Python package. Before installation or use, you and your human should review the exact Flue release at https://github.com/SFKislev/flue and https://pypi.org/project/flue. Prefer a pinned version in an isolated environment.\n\nDo not install, update, or set up Flue unless your human explicitly approves that action in the current session.\n"
+    },
+    {
+      "slug": "skills",
+      "name": "flue",
+      "dir": "skills",
+      "path": "skills/SKILL.md",
+      "desc": "Let agents control software, like Adobe Photoshop, Illustrator, After Effects, Premiere, Autodesk 3DS Max, Blender, Unity, Houdini, and Microsoft Office.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "python",
+          "pip",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/SFKislev/Flue.git",
+        "copy": "cp -r skills ~/.claude/skills/skills",
+        "raw": "https://raw.githubusercontent.com/SFKislev/Flue/6c542fe2e490f47cd984abfc3b78e95021611fd2/skills/SKILL.md",
+        "saveAs": "~/.claude/skills/skills/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:db63425c2a8d07ed8fd28bfd5107e719d375df1ffd4b4e0cbdd89cf62c2558cd",
+      "bytes": 6131,
+      "wordCount": 881,
+      "repoLicense": "MIT",
+      "commit": "6c542fe2e490f47cd984abfc3b78e95021611fd2",
+      "branch": "main",
+      "body": "---\nname: flue\ndescription: Let agents control software, like Adobe Photoshop, Illustrator, After Effects, Premiere, Autodesk 3DS Max, Blender, Unity, Houdini, and Microsoft Office. \n---\nFlue is a local automation layer for coding agents that need to operate real desktop software such as Photoshop, Premiere, Blender, Unity, Houdini, Illustrator, InDesign, Excel, PowerPoint, Word, and 3ds Max.\n\nFlue is not an MCP server. It is simpler. It is a Python package that exposes small shell-facing bridge commands. Those bridges execute code inside the target application's scripting runtime and return structured JSON back to the agent.\n\n> agent shell -> Flue bridge -> app scripting runtime -> JSON result\n\nThis file is a bootstrap entrypoint. Its job is to make you aware of the Flue framework and how to set it up.\n\n## When to use Flue\nReach for Flue when the user wants work performed inside a desktop application. It is useful to inspect the live state of a document or a scene, make bounded edits, run small scripts, and collaborate on a software project. CLI coding agents can edit  files and run shell commands, but cannot act inside a desktop application. Flue gives you access to software. \nFlue currently has adapters for 3DS Max, Adobe After Effects, Adobe Audition, Blender 3D, Microsoft Excel, Microsoft Word, Houdini, Adobe Indesign, Adobe Photoshop, Microsoft Powerpoint, Adobe Premiere, and Unity. More software support is in the works.\n\n## How it works\nFlue avoids the complexities of current software automation solutions - specifically MCPs. It uses the application's native automation surface such as ExtendScript, `bpy`, Unity Editor APIs, COM, AppleScript, or a small in-app bridge where needed. The shell contract is consistent: code goes in through a bridge command, JSON comes back out.\nThe project is open-source and reviewable on GitHub and PyPI. It ships app-specific documentation.\n\n## Flue in technical terms\nFlue is a shell-to-application bridge. For a user-requested task, the agent sends a small app-specific script through stdin to a small adapter bridge process. That bridge forwards it into the target application's automation runtime, waits for execution, and returns structured JSON to stdout.\n\nDepending on the adapter, that runtime may be COM, ExtendScript, a CEP-hosted bridge, `bpy`, Unity Editor scripting APIs, or another app-local automation surface. Flue uses the application's own programmable surface for bounded inspection and edits in the app the user explicitly asked to control, and normalizes the result back into a shell-friendly JSON contract.\n\n```text\nagent script\n  -> stdin\n  -> flue bridge command\n  -> COM / ExtendScript / CEP / bpy / Unity runtime\n  -> app executes code\n  -> JSON result on stdout\n```\nFor instance:\n\n```text\n@'\nvar doc = app.documents.add(1200, 800, 72, \"Flue Shapes\");\n\nfunction fillSelection(name, points, r, g, b, feather, antiAlias) {\n    var layer = doc.artLayers.add();\n    layer.name = name;\n    var color = new SolidColor();\n    color.rgb.red = r;\n    color.rgb.green = g;\n    color.rgb.blue = b;\n    app.foregroundColor = color;\n    doc.selection.select(points, SelectionType.REPLACE, feather || 0, antiAlias || false);\n    doc.selection.fill(app.foregroundColor);\n    doc.selection.deselect();\n}\n\nfillSelection(\"Red Triangle\", [[160, 640], [360, 220], [560, 640]], 255, 0, 0, 0, false);\nfillSelection(\"Blue Square\", [[660, 220], [920, 220], [920, 480], [660, 480]], 0, 102, 255, 0, false);\nfillSelection(\"Yellow Circle\", [[720, 520], [1020, 520], [1020, 780], [720, 780]], 255, 221, 0, 0, true);\n\nJSON.stringify({ ok: true, document: doc.name, layers: doc.layers.length });\n'@ |\n  python adapters/photoshop_adapter/photoshop_bridge.py --stdin\n```\n\nIn that case, the shell sends a small Photoshop script through stdin, the Photoshop bridge passes it into Photoshop's scripting environment, Photoshop creates a red triangle, a blue square, and a yellow circle, and Flue returns JSON describing the result or the error you can iterate on.\n\n## Use Cases\nSince Flue lets agents assist humans with software, it can be useful in many contexts. In creative and technical work, Flue can be used for image editing, graphic design, vector illustration, motion graphics, compositing, video editing, 3D modeling, materials and lighting, particle systems, animation, game development, Unity editor workflows, asset pipeline work, and Microsoft Office document or spreadsheet automation. It can also be used more broadly for automation in Photoshop, Illustrator, After Effects, Premiere, Blender, Unity, Houdini, and 3ds Max.\n \n## How to use Flue\n- Treat the human as the driver: you are a copilot. Do not perform destructive actions unless explicitly requested.\n- Prefer small, inspectable steps over large mutations.\n- Be skeptical of pretraining. Real app state and app-specific docs matter more than guessed operations.\n- Expect version quirks, blocked dialogs, host-runtime limits, and adapter-specific setup steps. You can handle these. \n- Flue is for user-directed automation in a specific application, not for unattended background execution or autonomous changes outside the requested task. \n\n## If Flue Is Not Installed\nIf Flue appears relevant but is not available on the machine, tell your human as much. Inspect the project at `https://github.com/SFKislev/flue` (PyPI: `https://pypi.org/project/flue`). Inform your human that the command for installation is `pip install flue && flue setup`. Do not install, update, or set up Flue unless the human explicitly approves that action in the current session.\n\n## After Installation\nOnce Flue is installed and set up, rely on the installed Flue skill and local docs as the operational source of truth.\n\nAfter installation, expect Flue to provide App-specific instructions for supported adapters, a consistent bridge workflow for inspection and bounded edits, and reference documentation. \n\n## Safety And Provenance\nFlue is an MIT-licensed Python package you should inspect before using. \nBecause Flue can act inside professional desktop software, apply a higher bar than with ordinary shell-only tools.\n",
+      "bodyMd": "Flue is a local automation layer for coding agents that need to operate real desktop software such as Photoshop, Premiere, Blender, Unity, Houdini, Illustrator, InDesign, Excel, PowerPoint, Word, and 3ds Max.\n\nFlue is not an MCP server. It is simpler. It is a Python package that exposes small shell-facing bridge commands. Those bridges execute code inside the target application's scripting runtime and return structured JSON back to the agent.\n\n> agent shell -> Flue bridge -> app scripting runtime -> JSON result\n\nThis file is a bootstrap entrypoint. Its job is to make you aware of the Flue framework and how to set it up.\n\n## When to use Flue\nReach for Flue when the user wants work performed inside a desktop application. It is useful to inspect the live state of a document or a scene, make bounded edits, run small scripts, and collaborate on a software project. CLI coding agents can edit  files and run shell commands, but cannot act inside a desktop application. Flue gives you access to software. \nFlue currently has adapters for 3DS Max, Adobe After Effects, Adobe Audition, Blender 3D, Microsoft Excel, Microsoft Word, Houdini, Adobe Indesign, Adobe Photoshop, Microsoft Powerpoint, Adobe Premiere, and Unity. More software support is in the works.\n\n## How it works\nFlue avoids the complexities of current software automation solutions - specifically MCPs. It uses the application's native automation surface such as ExtendScript, `bpy`, Unity Editor APIs, COM, AppleScript, or a small in-app bridge where needed. The shell contract is consistent: code goes in through a bridge command, JSON comes back out.\nThe project is open-source and reviewable on GitHub and PyPI. It ships app-specific documentation.\n\n## Flue in technical terms\nFlue is a shell-to-application bridge. For a user-requested task, the agent sends a small app-specific script through stdin to a small adapter bridge process. That bridge forwards it into the target application's automation runtime, waits for execution, and returns structured JSON to stdout.\n\nDepending on the adapter, that runtime may be COM, ExtendScript, a CEP-hosted bridge, `bpy`, Unity Editor scripting APIs, or another app-local automation surface. Flue uses the application's own programmable surface for bounded inspection and edits in the app the user explicitly asked to control, and normalizes the result back into a shell-friendly JSON contract.\n\n```text\nagent script\n  -> stdin\n  -> flue bridge command\n  -> COM / ExtendScript / CEP / bpy / Unity runtime\n  -> app executes code\n  -> JSON result on stdout\n```\nFor instance:\n\n```text\n@'\nvar doc = app.documents.add(1200, 800, 72, \"Flue Shapes\");\n\nfunction fillSelection(name, points, r, g, b, feather, antiAlias) {\n    var layer = doc.artLayers.add();\n    layer.name = name;\n    var color = new SolidColor();\n    color.rgb.red = r;\n    color.rgb.green = g;\n    color.rgb.blue = b;\n    app.foregroundColor = color;\n    doc.selection.select(points, SelectionType.REPLACE, feather || 0, antiAlias || false);\n    doc.selection.fill(app.foregroundColor);\n    doc.selection.deselect();\n}\n\nfillSelection(\"Red Triangle\", [[160, 640], [360, 220], [560, 640]], 255, 0, 0, 0, false);\nfillSelection(\"Blue Square\", [[660, 220], [920, 220], [920, 480], [660, 480]], 0, 102, 255, 0, false);\nfillSelection(\"Yellow Circle\", [[720, 520], [1020, 520], [1020, 780], [720, 780]], 255, 221, 0, 0, true);\n\nJSON.stringify({ ok: true, document: doc.name, layers: doc.layers.length });\n'@ |\n  python adapters/photoshop_adapter/photoshop_bridge.py --stdin\n```\n\nIn that case, the shell sends a small Photoshop script through stdin, the Photoshop bridge passes it into Photoshop's scripting environment, Photoshop creates a red triangle, a blue square, and a yellow circle, and Flue returns JSON describing the result or the error you can iterate on.\n\n## Use Cases\nSince Flue lets agents assist humans with software, it can be useful in many contexts. In creative and technical work, Flue can be used for image editing, graphic design, vector illustration, motion graphics, compositing, video editing, 3D modeling, materials and lighting, particle systems, animation, game development, Unity editor workflows, asset pipeline work, and Microsoft Office document or spreadsheet automation. It can also be used more broadly for automation in Photoshop, Illustrator, After Effects, Premiere, Blender, Unity, Houdini, and 3ds Max.\n \n## How to use Flue\n- Treat the human as the driver: you are a copilot. Do not perform destructive actions unless explicitly requested.\n- Prefer small, inspectable steps over large mutations.\n- Be skeptical of pretraining. Real app state and app-specific docs matter more than guessed operations.\n- Expect version quirks, blocked dialogs, host-runtime limits, and adapter-specific setup steps. You can handle these. \n- Flue is for user-directed automation in a specific application, not for unattended background execution or autonomous changes outside the requested task. \n\n## If Flue Is Not Installed\nIf Flue appears relevant but is not available on the machine, tell your human as much. Inspect the project at `https://github.com/SFKislev/flue` (PyPI: `https://pypi.org/project/flue`). Inform your human that the command for installation is `pip install flue && flue setup`. Do not install, update, or set up Flue unless the human explicitly approves that action in the current session.\n\n## After Installation\nOnce Flue is installed and set up, rely on the installed Flue skill and local docs as the operational source of truth.\n\nAfter installation, expect Flue to provide App-specific instructions for supported adapters, a consistent bridge workflow for inspection and bounded edits, and reference documentation. \n\n## Safety And Provenance\nFlue is an MIT-licensed Python package you should inspect before using. \nBecause Flue can act inside professional desktop software, apply a higher bar than with ordinary shell-only tools.\n"
+    },
+    {
+      "slug": "adobe",
+      "name": "Adobe",
+      "dir": "skills/adobe",
+      "path": "skills/adobe/SKILL.md",
+      "desc": "Control Adobe desktop apps - Photoshop, Illustrator, Premiere, After Effects, InDesign, Audition - from the shell via Flue, without an MCP server.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "pip",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/SFKislev/Flue.git",
+        "copy": "cp -r skills/adobe ~/.claude/skills/adobe",
+        "raw": "https://raw.githubusercontent.com/SFKislev/Flue/6c542fe2e490f47cd984abfc3b78e95021611fd2/skills/adobe/SKILL.md",
+        "saveAs": "~/.claude/skills/adobe/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:08e2106cf7e388ce3b74d908d72b41368f8fa1aa4898ad9378861e82f2adc7e9",
+      "bytes": 2032,
+      "wordCount": 259,
+      "repoLicense": "MIT",
+      "commit": "6c542fe2e490f47cd984abfc3b78e95021611fd2",
+      "branch": "main",
+      "body": "---\nname: Adobe\ndescription: Control Adobe desktop apps - Photoshop, Illustrator, Premiere, After Effects, InDesign, Audition - from the shell via Flue, without an MCP server.\n---\nThis skill lets a coding agent operate **Adobe desktop applications** through [Flue](https://github.com/SFKislev/flue), a local shell-to-application bridge. The agent pipes ExtendScript into a per-app bridge process and gets structured JSON back. Flue covers Photoshop, Illustrator, Premiere Pro, After Effects, InDesign, and Audition through a consistent stdin/stdout contract.\n\n> agent shell -> `<app>_bridge.py` -> ExtendScript -> JSON result\n\n## When to use\nThe human requests work performed **inside an Adobe desktop app** — inspect the open document or project, make bounded edits, run small ExtendScript steps. A CLI agent cannot act inside these apps without a bridge like Flue.\n\n## How to proceed\n1. **Read `FLUE.md` in this directory first.** It explains how Flue works, the bridge contract, a worked ExtendScript example, and safety expectations.\n2. **Identify which Adobe app the human is working in** — Photoshop, Illustrator, Premiere, After Effects, InDesign, or Audition — and use the matching adapter (e.g. `adapters/photoshop_adapter/photoshop_bridge.py`).\n3. **If Flue is installed:** also read `C:\\Users\\fredd\\.claude\\skills\\flue\\SKILL.md` and the matching `adapters/<app>_adapter/APP.md` for the operational contract, then work from there.\n4. **If Flue is not installed:** tell the human. The install command is `pip install flue && flue setup`. Do not install without explicit approval in the current session.\n\n## Other apps\nFlue also supports Blender, Houdini, Autodesk 3ds Max, Unity, and Microsoft Office through the same stdin/stdout contract. One install covers all adapters.\n\n## Safety\nFlue acts inside professional desktop software. Treat the human as the driver; prefer small, inspectable steps; avoid destructive actions unless explicitly requested. Flue is MIT-licensed and reviewable on GitHub / PyPI before use.\n",
+      "bodyMd": "This skill lets a coding agent operate **Adobe desktop applications** through [Flue](https://github.com/SFKislev/flue), a local shell-to-application bridge. The agent pipes ExtendScript into a per-app bridge process and gets structured JSON back. Flue covers Photoshop, Illustrator, Premiere Pro, After Effects, InDesign, and Audition through a consistent stdin/stdout contract.\n\n> agent shell -> `<app>_bridge.py` -> ExtendScript -> JSON result\n\n## When to use\nThe human requests work performed **inside an Adobe desktop app** — inspect the open document or project, make bounded edits, run small ExtendScript steps. A CLI agent cannot act inside these apps without a bridge like Flue.\n\n## How to proceed\n1. **Read `FLUE.md` in this directory first.** It explains how Flue works, the bridge contract, a worked ExtendScript example, and safety expectations.\n2. **Identify which Adobe app the human is working in** — Photoshop, Illustrator, Premiere, After Effects, InDesign, or Audition — and use the matching adapter (e.g. `adapters/photoshop_adapter/photoshop_bridge.py`).\n3. **If Flue is installed:** also read `C:\\Users\\fredd\\.claude\\skills\\flue\\SKILL.md` and the matching `adapters/<app>_adapter/APP.md` for the operational contract, then work from there.\n4. **If Flue is not installed:** tell the human. The install command is `pip install flue && flue setup`. Do not install without explicit approval in the current session.\n\n## Other apps\nFlue also supports Blender, Houdini, Autodesk 3ds Max, Unity, and Microsoft Office through the same stdin/stdout contract. One install covers all adapters.\n\n## Safety\nFlue acts inside professional desktop software. Treat the human as the driver; prefer small, inspectable steps; avoid destructive actions unless explicitly requested. Flue is MIT-licensed and reviewable on GitHub / PyPI before use.\n"
+    },
+    {
+      "slug": "audition",
+      "name": "Audition",
+      "dir": "skills/audition",
+      "path": "skills/audition/SKILL.md",
+      "desc": "Control Adobe Audition from the shell via Flue - ExtendScript bridges without an MCP server.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "pip",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/SFKislev/Flue.git",
+        "copy": "cp -r skills/audition ~/.claude/skills/audition",
+        "raw": "https://raw.githubusercontent.com/SFKislev/Flue/6c542fe2e490f47cd984abfc3b78e95021611fd2/skills/audition/SKILL.md",
+        "saveAs": "~/.claude/skills/audition/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:a5162fd0c56c0d6a2f8618872f4bac0af891bf524cee6139235cefe9571ec6a8",
+      "bytes": 1668,
+      "wordCount": 215,
+      "repoLicense": "MIT",
+      "commit": "6c542fe2e490f47cd984abfc3b78e95021611fd2",
+      "branch": "main",
+      "body": "---\nname: Audition\ndescription: Control Adobe Audition from the shell via Flue - ExtendScript bridges without an MCP server.\n---\nThis skill lets a coding agent operate **Adobe Audition** on the desktop through [Flue](https://github.com/SFKislev/flue), a local shell-to-application bridge. The agent pipes ExtendScript into `audition_bridge.py` and gets structured JSON back.\n\n> agent shell -> `audition_bridge.py` -> ExtendScript -> JSON result\n\n## When to use\nThe human requests work performed **inside Audition** — inspect the open session, tracks, clips, markers; make bounded edits; run small ExtendScript steps. A CLI agent cannot act inside Audition without a bridge like Flue.\n\n## How to proceed\n1. **Read `FLUE.md` in this directory first.** It explains how Flue works, the bridge contract, a worked ExtendScript example, and safety expectations.\n2. **If Flue is installed:** also read `C:\\Users\\fredd\\.claude\\skills\\flue\\SKILL.md` and `adapters/audition_adapter/APP.md` for the operational contract, then work from there.\n3. **If Flue is not installed:** tell the human. The install command is `pip install flue && flue setup`. Do not install without explicit approval in the current session.\n\n## Other apps\nFlue also supports Photoshop, Illustrator, Premiere, After Effects, InDesign, Blender, Houdini, 3ds Max, Unity, and Microsoft Office through the same stdin/stdout contract. One install covers all adapters.\n\n## Safety\nFlue acts inside professional desktop software. Treat the human as the driver; prefer small, inspectable steps; avoid destructive actions unless explicitly requested. Flue is MIT-licensed and reviewable on GitHub / PyPI before use.\n",
+      "bodyMd": "This skill lets a coding agent operate **Adobe Audition** on the desktop through [Flue](https://github.com/SFKislev/flue), a local shell-to-application bridge. The agent pipes ExtendScript into `audition_bridge.py` and gets structured JSON back.\n\n> agent shell -> `audition_bridge.py` -> ExtendScript -> JSON result\n\n## When to use\nThe human requests work performed **inside Audition** — inspect the open session, tracks, clips, markers; make bounded edits; run small ExtendScript steps. A CLI agent cannot act inside Audition without a bridge like Flue.\n\n## How to proceed\n1. **Read `FLUE.md` in this directory first.** It explains how Flue works, the bridge contract, a worked ExtendScript example, and safety expectations.\n2. **If Flue is installed:** also read `C:\\Users\\fredd\\.claude\\skills\\flue\\SKILL.md` and `adapters/audition_adapter/APP.md` for the operational contract, then work from there.\n3. **If Flue is not installed:** tell the human. The install command is `pip install flue && flue setup`. Do not install without explicit approval in the current session.\n\n## Other apps\nFlue also supports Photoshop, Illustrator, Premiere, After Effects, InDesign, Blender, Houdini, 3ds Max, Unity, and Microsoft Office through the same stdin/stdout contract. One install covers all adapters.\n\n## Safety\nFlue acts inside professional desktop software. Treat the human as the driver; prefer small, inspectable steps; avoid destructive actions unless explicitly requested. Flue is MIT-licensed and reviewable on GitHub / PyPI before use.\n"
+    },
+    {
+      "slug": "autodesk",
+      "name": "Autodesk",
+      "dir": "skills/autodesk",
+      "path": "skills/autodesk/SKILL.md",
+      "desc": "Control Autodesk desktop apps - 3ds Max and friends - from the shell via Flue, without an MCP server.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "python",
+          "pip",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/SFKislev/Flue.git",
+        "copy": "cp -r skills/autodesk ~/.claude/skills/autodesk",
+        "raw": "https://raw.githubusercontent.com/SFKislev/Flue/6c542fe2e490f47cd984abfc3b78e95021611fd2/skills/autodesk/SKILL.md",
+        "saveAs": "~/.claude/skills/autodesk/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:3ea0e7cc6b719ce88a647dc383b85532107dd516107a13809920b857645cca4b",
+      "bytes": 1901,
+      "wordCount": 245,
+      "repoLicense": "MIT",
+      "commit": "6c542fe2e490f47cd984abfc3b78e95021611fd2",
+      "branch": "main",
+      "body": "---\nname: Autodesk\ndescription: Control Autodesk desktop apps - 3ds Max and friends - from the shell via Flue, without an MCP server.\n---\nThis skill lets a coding agent operate **Autodesk desktop applications** through [Flue](https://github.com/SFKislev/flue), a local shell-to-application bridge. Flue currently covers **Autodesk 3ds Max** through a consistent stdin/stdout contract; further Autodesk adapters are in scope.\n\n> agent shell -> `3dsmax_bridge.py` -> MAXScript / Python -> JSON result\n\n## When to use\nThe human requests work performed **inside an Autodesk desktop app** — inspect the open scene, objects, modifiers, materials, selection; make bounded edits; run small scripts. A CLI agent cannot act inside these apps without a bridge like Flue.\n\n## How to proceed\n1. **Read `FLUE.md` in this directory first.** It explains how Flue works, the bridge contract, a worked example, and safety expectations.\n2. **Identify which Autodesk app the human is working in** (currently 3ds Max) and use the matching adapter (e.g. `adapters/3dsmax_adapter/3dsmax_bridge.py`).\n3. **If Flue is installed:** also read `C:\\Users\\fredd\\.claude\\skills\\flue\\SKILL.md` and the matching `adapters/<app>_adapter/APP.md` for the operational contract, then work from there.\n4. **If Flue is not installed:** tell the human. The install command is `pip install flue && flue setup`. Do not install without explicit approval in the current session.\n\n## Other apps\nFlue also supports Photoshop, Illustrator, Premiere, After Effects, InDesign, Audition, Blender, Houdini, Unity, and Microsoft Office through the same stdin/stdout contract. One install covers all adapters.\n\n## Safety\nFlue acts inside professional desktop software. Treat the human as the driver; prefer small, inspectable steps; avoid destructive actions unless explicitly requested. Flue is MIT-licensed and reviewable on GitHub / PyPI before use.\n",
+      "bodyMd": "This skill lets a coding agent operate **Autodesk desktop applications** through [Flue](https://github.com/SFKislev/flue), a local shell-to-application bridge. Flue currently covers **Autodesk 3ds Max** through a consistent stdin/stdout contract; further Autodesk adapters are in scope.\n\n> agent shell -> `3dsmax_bridge.py` -> MAXScript / Python -> JSON result\n\n## When to use\nThe human requests work performed **inside an Autodesk desktop app** — inspect the open scene, objects, modifiers, materials, selection; make bounded edits; run small scripts. A CLI agent cannot act inside these apps without a bridge like Flue.\n\n## How to proceed\n1. **Read `FLUE.md` in this directory first.** It explains how Flue works, the bridge contract, a worked example, and safety expectations.\n2. **Identify which Autodesk app the human is working in** (currently 3ds Max) and use the matching adapter (e.g. `adapters/3dsmax_adapter/3dsmax_bridge.py`).\n3. **If Flue is installed:** also read `C:\\Users\\fredd\\.claude\\skills\\flue\\SKILL.md` and the matching `adapters/<app>_adapter/APP.md` for the operational contract, then work from there.\n4. **If Flue is not installed:** tell the human. The install command is `pip install flue && flue setup`. Do not install without explicit approval in the current session.\n\n## Other apps\nFlue also supports Photoshop, Illustrator, Premiere, After Effects, InDesign, Audition, Blender, Houdini, Unity, and Microsoft Office through the same stdin/stdout contract. One install covers all adapters.\n\n## Safety\nFlue acts inside professional desktop software. Treat the human as the driver; prefer small, inspectable steps; avoid destructive actions unless explicitly requested. Flue is MIT-licensed and reviewable on GitHub / PyPI before use.\n"
+    },
+    {
+      "slug": "blender",
+      "name": "Blender",
+      "dir": "skills/blender",
+      "path": "skills/blender/SKILL.md",
+      "desc": "Control Blender from the shell via Flue - a Python bridge to bpy without an MCP server.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "python",
+          "pip",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/SFKislev/Flue.git",
+        "copy": "cp -r skills/blender ~/.claude/skills/blender",
+        "raw": "https://raw.githubusercontent.com/SFKislev/Flue/6c542fe2e490f47cd984abfc3b78e95021611fd2/skills/blender/SKILL.md",
+        "saveAs": "~/.claude/skills/blender/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:49d8ea7238c7cc66b5814b4e19031bfef0f02a568459f4d2a9129dabc2b3a421",
+      "bytes": 1774,
+      "wordCount": 237,
+      "repoLicense": "MIT",
+      "commit": "6c542fe2e490f47cd984abfc3b78e95021611fd2",
+      "branch": "main",
+      "body": "---\nname: Blender\ndescription: Control Blender from the shell via Flue - a Python bridge to bpy without an MCP server.\n---\nThis skill lets a coding agent operate **Blender** on the desktop through [Flue](https://github.com/SFKislev/flue), a local shell-to-application bridge. The agent pipes Python into `blender_bridge.py` and gets structured JSON back. Flue is **not an MCP server** — it is a thinner, simpler shell contract that drives Blender's own `bpy` runtime directly.\n\n> agent shell -> `blender_bridge.py` -> bpy -> JSON result\n\n## When to use\nThe human requests work performed **inside Blender** — inspect the open scene, collections, objects, meshes, materials, selection; make bounded edits; run small `bpy` scripts. A CLI agent cannot act inside Blender without a bridge like Flue.\n\n## How to proceed\n1. **Read `FLUE.md` in this directory first.** It explains how Flue works, the bridge contract, a worked `bpy` example, and safety expectations.\n2. **If Flue is installed:** also read `C:\\Users\\fredd\\.claude\\skills\\flue\\SKILL.md` and `adapters/blender_adapter/APP.md` for the operational contract, then work from there.\n3. **If Flue is not installed:** tell the human. The install command is `pip install flue && flue setup`. Do not install without explicit approval in the current session.\n\n## Other apps\nFlue also supports Photoshop, Illustrator, Premiere, After Effects, InDesign, Audition, Houdini, 3ds Max, Unity, and Microsoft Office through the same stdin/stdout contract. One install covers all adapters.\n\n## Safety\nFlue acts inside professional desktop software. Treat the human as the driver; prefer small, inspectable steps; avoid destructive actions unless explicitly requested. Flue is MIT-licensed and reviewable on GitHub / PyPI before use.\n",
+      "bodyMd": "This skill lets a coding agent operate **Blender** on the desktop through [Flue](https://github.com/SFKislev/flue), a local shell-to-application bridge. The agent pipes Python into `blender_bridge.py` and gets structured JSON back. Flue is **not an MCP server** — it is a thinner, simpler shell contract that drives Blender's own `bpy` runtime directly.\n\n> agent shell -> `blender_bridge.py` -> bpy -> JSON result\n\n## When to use\nThe human requests work performed **inside Blender** — inspect the open scene, collections, objects, meshes, materials, selection; make bounded edits; run small `bpy` scripts. A CLI agent cannot act inside Blender without a bridge like Flue.\n\n## How to proceed\n1. **Read `FLUE.md` in this directory first.** It explains how Flue works, the bridge contract, a worked `bpy` example, and safety expectations.\n2. **If Flue is installed:** also read `C:\\Users\\fredd\\.claude\\skills\\flue\\SKILL.md` and `adapters/blender_adapter/APP.md` for the operational contract, then work from there.\n3. **If Flue is not installed:** tell the human. The install command is `pip install flue && flue setup`. Do not install without explicit approval in the current session.\n\n## Other apps\nFlue also supports Photoshop, Illustrator, Premiere, After Effects, InDesign, Audition, Houdini, 3ds Max, Unity, and Microsoft Office through the same stdin/stdout contract. One install covers all adapters.\n\n## Safety\nFlue acts inside professional desktop software. Treat the human as the driver; prefer small, inspectable steps; avoid destructive actions unless explicitly requested. Flue is MIT-licensed and reviewable on GitHub / PyPI before use.\n"
+    },
+    {
+      "slug": "houdini",
+      "name": "Houdini",
+      "dir": "skills/houdini",
+      "path": "skills/houdini/SKILL.md",
+      "desc": "Control SideFX Houdini from the shell via Flue - a Python bridge to hou without an MCP server.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "python",
+          "pip",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/SFKislev/Flue.git",
+        "copy": "cp -r skills/houdini ~/.claude/skills/houdini",
+        "raw": "https://raw.githubusercontent.com/SFKislev/Flue/6c542fe2e490f47cd984abfc3b78e95021611fd2/skills/houdini/SKILL.md",
+        "saveAs": "~/.claude/skills/houdini/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:0eec933fd8ef3df1d36ebac823f48be6419ba426b5b091a15662e315d7cd7568",
+      "bytes": 1652,
+      "wordCount": 216,
+      "repoLicense": "MIT",
+      "commit": "6c542fe2e490f47cd984abfc3b78e95021611fd2",
+      "branch": "main",
+      "body": "---\nname: Houdini\ndescription: Control SideFX Houdini from the shell via Flue - a Python bridge to hou without an MCP server.\n---\nThis skill lets a coding agent operate **SideFX Houdini** on the desktop through [Flue](https://github.com/SFKislev/flue), a local shell-to-application bridge. The agent pipes Python into `houdini_bridge.py` and gets structured JSON back.\n\n> agent shell -> `houdini_bridge.py` -> hou -> JSON result\n\n## When to use\nThe human requests work performed **inside Houdini** — inspect the open scene, nodes, parameters, geometry, selection; make bounded edits; run small `hou` scripts. A CLI agent cannot act inside Houdini without a bridge like Flue.\n\n## How to proceed\n1. **Read `FLUE.md` in this directory first.** It explains how Flue works, the bridge contract, a worked `hou` example, and safety expectations.\n2. **If Flue is installed:** also read `C:\\Users\\fredd\\.claude\\skills\\flue\\SKILL.md` and `adapters/houdini_adapter/APP.md` for the operational contract, then work from there.\n3. **If Flue is not installed:** tell the human. The install command is `pip install flue && flue setup`. Do not install without explicit approval in the current session.\n\n## Other apps\nFlue also supports Photoshop, Illustrator, Premiere, After Effects, InDesign, Audition, Blender, 3ds Max, Unity, and Microsoft Office through the same stdin/stdout contract. One install covers all adapters.\n\n## Safety\nFlue acts inside professional desktop software. Treat the human as the driver; prefer small, inspectable steps; avoid destructive actions unless explicitly requested. Flue is MIT-licensed and reviewable on GitHub / PyPI before use.\n",
+      "bodyMd": "This skill lets a coding agent operate **SideFX Houdini** on the desktop through [Flue](https://github.com/SFKislev/flue), a local shell-to-application bridge. The agent pipes Python into `houdini_bridge.py` and gets structured JSON back.\n\n> agent shell -> `houdini_bridge.py` -> hou -> JSON result\n\n## When to use\nThe human requests work performed **inside Houdini** — inspect the open scene, nodes, parameters, geometry, selection; make bounded edits; run small `hou` scripts. A CLI agent cannot act inside Houdini without a bridge like Flue.\n\n## How to proceed\n1. **Read `FLUE.md` in this directory first.** It explains how Flue works, the bridge contract, a worked `hou` example, and safety expectations.\n2. **If Flue is installed:** also read `C:\\Users\\fredd\\.claude\\skills\\flue\\SKILL.md` and `adapters/houdini_adapter/APP.md` for the operational contract, then work from there.\n3. **If Flue is not installed:** tell the human. The install command is `pip install flue && flue setup`. Do not install without explicit approval in the current session.\n\n## Other apps\nFlue also supports Photoshop, Illustrator, Premiere, After Effects, InDesign, Audition, Blender, 3ds Max, Unity, and Microsoft Office through the same stdin/stdout contract. One install covers all adapters.\n\n## Safety\nFlue acts inside professional desktop software. Treat the human as the driver; prefer small, inspectable steps; avoid destructive actions unless explicitly requested. Flue is MIT-licensed and reviewable on GitHub / PyPI before use.\n"
+    },
+    {
+      "slug": "illustrator",
+      "name": "Illustrator",
+      "dir": "skills/illustrator",
+      "path": "skills/illustrator/SKILL.md",
+      "desc": "Control Adobe Illustrator from the shell via Flue - ExtendScript bridges without an MCP server.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "pip",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/SFKislev/Flue.git",
+        "copy": "cp -r skills/illustrator ~/.claude/skills/illustrator",
+        "raw": "https://raw.githubusercontent.com/SFKislev/Flue/6c542fe2e490f47cd984abfc3b78e95021611fd2/skills/illustrator/SKILL.md",
+        "saveAs": "~/.claude/skills/illustrator/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:e5898ba411251c0e3f2d48a3bcc73ebe9c34332806a9bfc671de5f9b5ae4e9e2",
+      "bytes": 1703,
+      "wordCount": 216,
+      "repoLicense": "MIT",
+      "commit": "6c542fe2e490f47cd984abfc3b78e95021611fd2",
+      "branch": "main",
+      "body": "---\nname: Illustrator\ndescription: Control Adobe Illustrator from the shell via Flue - ExtendScript bridges without an MCP server.\n---\nThis skill lets a coding agent operate **Adobe Illustrator** on the desktop through [Flue](https://github.com/SFKislev/flue), a local shell-to-application bridge. The agent pipes ExtendScript into `illustrator_bridge.py` and gets structured JSON back.\n\n> agent shell -> `illustrator_bridge.py` -> ExtendScript -> JSON result\n\n## When to use\nThe human requests work performed **inside Illustrator** — inspect the open document, artboards, layers, paths, selection; make bounded edits; run small ExtendScript steps. A CLI agent cannot act inside Illustrator without a bridge like Flue.\n\n## How to proceed\n1. **Read `FLUE.md` in this directory first.** It explains how Flue works, the bridge contract, a worked ExtendScript example, and safety expectations.\n2. **If Flue is installed:** also read `C:\\Users\\fredd\\.claude\\skills\\flue\\SKILL.md` and `adapters/illustrator_adapter/APP.md` for the operational contract, then work from there.\n3. **If Flue is not installed:** tell the human. The install command is `pip install flue && flue setup`. Do not install without explicit approval in the current session.\n\n## Other apps\nFlue also supports Photoshop, Premiere, After Effects, InDesign, Audition, Blender, Houdini, 3ds Max, Unity, and Microsoft Office through the same stdin/stdout contract. One install covers all adapters.\n\n## Safety\nFlue acts inside professional desktop software. Treat the human as the driver; prefer small, inspectable steps; avoid destructive actions unless explicitly requested. Flue is MIT-licensed and reviewable on GitHub / PyPI before use.\n",
+      "bodyMd": "This skill lets a coding agent operate **Adobe Illustrator** on the desktop through [Flue](https://github.com/SFKislev/flue), a local shell-to-application bridge. The agent pipes ExtendScript into `illustrator_bridge.py` and gets structured JSON back.\n\n> agent shell -> `illustrator_bridge.py` -> ExtendScript -> JSON result\n\n## When to use\nThe human requests work performed **inside Illustrator** — inspect the open document, artboards, layers, paths, selection; make bounded edits; run small ExtendScript steps. A CLI agent cannot act inside Illustrator without a bridge like Flue.\n\n## How to proceed\n1. **Read `FLUE.md` in this directory first.** It explains how Flue works, the bridge contract, a worked ExtendScript example, and safety expectations.\n2. **If Flue is installed:** also read `C:\\Users\\fredd\\.claude\\skills\\flue\\SKILL.md` and `adapters/illustrator_adapter/APP.md` for the operational contract, then work from there.\n3. **If Flue is not installed:** tell the human. The install command is `pip install flue && flue setup`. Do not install without explicit approval in the current session.\n\n## Other apps\nFlue also supports Photoshop, Premiere, After Effects, InDesign, Audition, Blender, Houdini, 3ds Max, Unity, and Microsoft Office through the same stdin/stdout contract. One install covers all adapters.\n\n## Safety\nFlue acts inside professional desktop software. Treat the human as the driver; prefer small, inspectable steps; avoid destructive actions unless explicitly requested. Flue is MIT-licensed and reviewable on GitHub / PyPI before use.\n"
+    },
+    {
+      "slug": "indesign",
+      "name": "InDesign",
+      "dir": "skills/indesign",
+      "path": "skills/indesign/SKILL.md",
+      "desc": "Control Adobe InDesign from the shell via Flue - ExtendScript bridges without an MCP server.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "pip",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/SFKislev/Flue.git",
+        "copy": "cp -r skills/indesign ~/.claude/skills/indesign",
+        "raw": "https://raw.githubusercontent.com/SFKislev/Flue/6c542fe2e490f47cd984abfc3b78e95021611fd2/skills/indesign/SKILL.md",
+        "saveAs": "~/.claude/skills/indesign/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:64eb7d7305667f021101a9e359eeb6fc7b1421b1024b5c93062d0d65c48267d2",
+      "bytes": 1689,
+      "wordCount": 218,
+      "repoLicense": "MIT",
+      "commit": "6c542fe2e490f47cd984abfc3b78e95021611fd2",
+      "branch": "main",
+      "body": "---\nname: InDesign\ndescription: Control Adobe InDesign from the shell via Flue - ExtendScript bridges without an MCP server.\n---\nThis skill lets a coding agent operate **Adobe InDesign** on the desktop through [Flue](https://github.com/SFKislev/flue), a local shell-to-application bridge. The agent pipes ExtendScript into `indesign_bridge.py` and gets structured JSON back.\n\n> agent shell -> `indesign_bridge.py` -> ExtendScript -> JSON result\n\n## When to use\nThe human requests work performed **inside InDesign** — inspect the open document, spreads, pages, frames, text flows, styles; make bounded edits; run small ExtendScript steps. A CLI agent cannot act inside InDesign without a bridge like Flue.\n\n## How to proceed\n1. **Read `FLUE.md` in this directory first.** It explains how Flue works, the bridge contract, a worked ExtendScript example, and safety expectations.\n2. **If Flue is installed:** also read `C:\\Users\\fredd\\.claude\\skills\\flue\\SKILL.md` and `adapters/indesign_adapter/APP.md` for the operational contract, then work from there.\n3. **If Flue is not installed:** tell the human. The install command is `pip install flue && flue setup`. Do not install without explicit approval in the current session.\n\n## Other apps\nFlue also supports Photoshop, Illustrator, Premiere, After Effects, Audition, Blender, Houdini, 3ds Max, Unity, and Microsoft Office through the same stdin/stdout contract. One install covers all adapters.\n\n## Safety\nFlue acts inside professional desktop software. Treat the human as the driver; prefer small, inspectable steps; avoid destructive actions unless explicitly requested. Flue is MIT-licensed and reviewable on GitHub / PyPI before use.\n",
+      "bodyMd": "This skill lets a coding agent operate **Adobe InDesign** on the desktop through [Flue](https://github.com/SFKislev/flue), a local shell-to-application bridge. The agent pipes ExtendScript into `indesign_bridge.py` and gets structured JSON back.\n\n> agent shell -> `indesign_bridge.py` -> ExtendScript -> JSON result\n\n## When to use\nThe human requests work performed **inside InDesign** — inspect the open document, spreads, pages, frames, text flows, styles; make bounded edits; run small ExtendScript steps. A CLI agent cannot act inside InDesign without a bridge like Flue.\n\n## How to proceed\n1. **Read `FLUE.md` in this directory first.** It explains how Flue works, the bridge contract, a worked ExtendScript example, and safety expectations.\n2. **If Flue is installed:** also read `C:\\Users\\fredd\\.claude\\skills\\flue\\SKILL.md` and `adapters/indesign_adapter/APP.md` for the operational contract, then work from there.\n3. **If Flue is not installed:** tell the human. The install command is `pip install flue && flue setup`. Do not install without explicit approval in the current session.\n\n## Other apps\nFlue also supports Photoshop, Illustrator, Premiere, After Effects, Audition, Blender, Houdini, 3ds Max, Unity, and Microsoft Office through the same stdin/stdout contract. One install covers all adapters.\n\n## Safety\nFlue acts inside professional desktop software. Treat the human as the driver; prefer small, inspectable steps; avoid destructive actions unless explicitly requested. Flue is MIT-licensed and reviewable on GitHub / PyPI before use.\n"
+    },
+    {
+      "slug": "photoshop",
+      "name": "Photoshop",
+      "dir": "skills/photoshop",
+      "path": "skills/photoshop/SKILL.md",
+      "desc": "Control Adobe Photoshop from the shell via Flue - ExtendScript bridges without an MCP server.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "pip",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/SFKislev/Flue.git",
+        "copy": "cp -r skills/photoshop ~/.claude/skills/photoshop",
+        "raw": "https://raw.githubusercontent.com/SFKislev/Flue/6c542fe2e490f47cd984abfc3b78e95021611fd2/skills/photoshop/SKILL.md",
+        "saveAs": "~/.claude/skills/photoshop/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:5eb34c2cb55316e5b7adbbddaf9f0191fb31050bb17fcd5de6e526076e83ec2e",
+      "bytes": 1672,
+      "wordCount": 214,
+      "repoLicense": "MIT",
+      "commit": "6c542fe2e490f47cd984abfc3b78e95021611fd2",
+      "branch": "main",
+      "body": "---\nname: Photoshop\ndescription: Control Adobe Photoshop from the shell via Flue - ExtendScript bridges without an MCP server.\n---\nThis skill lets a coding agent operate **Adobe Photoshop** on the desktop through [Flue](https://github.com/SFKislev/flue), a local shell-to-application bridge. The agent pipes ExtendScript into `photoshop_bridge.py` and gets structured JSON back.\n\n> agent shell -> `photoshop_bridge.py` -> ExtendScript -> JSON result\n\n## When to use\nThe human requests work performed **inside Photoshop** — inspect the open document, layers, selection; make bounded edits; run small ExtendScript steps. A CLI agent cannot act inside Photoshop without a bridge like Flue.\n\n## How to proceed\n1. **Read `FLUE.md` in this directory first.** It explains how Flue works, the bridge contract, a worked ExtendScript example, and safety expectations. \n2. **If Flue is installed:** also read `C:\\Users\\fredd\\.claude\\skills\\flue\\SKILL.md` and `adapters/photoshop_adapter/APP.md` for the operational contract, then work from there.\n3. **If Flue is not installed:** tell the human. The install command is `pip install flue && flue setup`. Do not install without explicit approval in the current session.\n\n## Other apps\nFlue also supports Illustrator, Premiere, After Effects, InDesign, Audition, Blender, Houdini, 3ds Max, Unity, and Microsoft Office through the same stdin/stdout contract. One install covers all adapters.\n\n## Safety\nFlue acts inside professional desktop software. Treat the human as the driver; prefer small, inspectable steps; avoid destructive actions unless explicitly requested. Flue is MIT-licensed and reviewable on GitHub / PyPI before use.\n",
+      "bodyMd": "This skill lets a coding agent operate **Adobe Photoshop** on the desktop through [Flue](https://github.com/SFKislev/flue), a local shell-to-application bridge. The agent pipes ExtendScript into `photoshop_bridge.py` and gets structured JSON back.\n\n> agent shell -> `photoshop_bridge.py` -> ExtendScript -> JSON result\n\n## When to use\nThe human requests work performed **inside Photoshop** — inspect the open document, layers, selection; make bounded edits; run small ExtendScript steps. A CLI agent cannot act inside Photoshop without a bridge like Flue.\n\n## How to proceed\n1. **Read `FLUE.md` in this directory first.** It explains how Flue works, the bridge contract, a worked ExtendScript example, and safety expectations. \n2. **If Flue is installed:** also read `C:\\Users\\fredd\\.claude\\skills\\flue\\SKILL.md` and `adapters/photoshop_adapter/APP.md` for the operational contract, then work from there.\n3. **If Flue is not installed:** tell the human. The install command is `pip install flue && flue setup`. Do not install without explicit approval in the current session.\n\n## Other apps\nFlue also supports Illustrator, Premiere, After Effects, InDesign, Audition, Blender, Houdini, 3ds Max, Unity, and Microsoft Office through the same stdin/stdout contract. One install covers all adapters.\n\n## Safety\nFlue acts inside professional desktop software. Treat the human as the driver; prefer small, inspectable steps; avoid destructive actions unless explicitly requested. Flue is MIT-licensed and reviewable on GitHub / PyPI before use.\n"
+    },
+    {
+      "slug": "premiere",
+      "name": "Premiere",
+      "dir": "skills/premiere",
+      "path": "skills/premiere/SKILL.md",
+      "desc": "Control Adobe Premiere Pro from the shell via Flue - ExtendScript bridges without an MCP server.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "pip",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/SFKislev/Flue.git",
+        "copy": "cp -r skills/premiere ~/.claude/skills/premiere",
+        "raw": "https://raw.githubusercontent.com/SFKislev/Flue/6c542fe2e490f47cd984abfc3b78e95021611fd2/skills/premiere/SKILL.md",
+        "saveAs": "~/.claude/skills/premiere/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:216cb10c497e9566e9f1a1691ef40e9ff704766cb5733d3a00782126de9a60cf",
+      "bytes": 1679,
+      "wordCount": 216,
+      "repoLicense": "MIT",
+      "commit": "6c542fe2e490f47cd984abfc3b78e95021611fd2",
+      "branch": "main",
+      "body": "---\nname: Premiere\ndescription: Control Adobe Premiere Pro from the shell via Flue - ExtendScript bridges without an MCP server.\n---\nThis skill lets a coding agent operate **Adobe Premiere Pro** on the desktop through [Flue](https://github.com/SFKislev/flue), a local shell-to-application bridge. The agent pipes ExtendScript into `premiere_bridge.py` and gets structured JSON back.\n\n> agent shell -> `premiere_bridge.py` -> ExtendScript -> JSON result\n\n## When to use\nThe human requests work performed **inside Premiere** — inspect the open project, sequences, clips, markers; make bounded edits; run small ExtendScript steps. A CLI agent cannot act inside Premiere without a bridge like Flue.\n\n## How to proceed\n1. **Read `FLUE.md` in this directory first.** It explains how Flue works, the bridge contract, a worked ExtendScript example, and safety expectations.\n2. **If Flue is installed:** also read `C:\\Users\\fredd\\.claude\\skills\\flue\\SKILL.md` and `adapters/premiere_adapter/APP.md` for the operational contract, then work from there.\n3. **If Flue is not installed:** tell the human. The install command is `pip install flue && flue setup`. Do not install without explicit approval in the current session.\n\n## Other apps\nFlue also supports Photoshop, After Effects, Illustrator, InDesign, Audition, Blender, Houdini, 3ds Max, Unity, and Microsoft Office through the same stdin/stdout contract. One install covers all adapters.\n\n## Safety\nFlue acts inside professional desktop software. Treat the human as the driver; prefer small, inspectable steps; avoid destructive actions unless explicitly requested. Flue is MIT-licensed and reviewable on GitHub / PyPI before use.\n",
+      "bodyMd": "This skill lets a coding agent operate **Adobe Premiere Pro** on the desktop through [Flue](https://github.com/SFKislev/flue), a local shell-to-application bridge. The agent pipes ExtendScript into `premiere_bridge.py` and gets structured JSON back.\n\n> agent shell -> `premiere_bridge.py` -> ExtendScript -> JSON result\n\n## When to use\nThe human requests work performed **inside Premiere** — inspect the open project, sequences, clips, markers; make bounded edits; run small ExtendScript steps. A CLI agent cannot act inside Premiere without a bridge like Flue.\n\n## How to proceed\n1. **Read `FLUE.md` in this directory first.** It explains how Flue works, the bridge contract, a worked ExtendScript example, and safety expectations.\n2. **If Flue is installed:** also read `C:\\Users\\fredd\\.claude\\skills\\flue\\SKILL.md` and `adapters/premiere_adapter/APP.md` for the operational contract, then work from there.\n3. **If Flue is not installed:** tell the human. The install command is `pip install flue && flue setup`. Do not install without explicit approval in the current session.\n\n## Other apps\nFlue also supports Photoshop, After Effects, Illustrator, InDesign, Audition, Blender, Houdini, 3ds Max, Unity, and Microsoft Office through the same stdin/stdout contract. One install covers all adapters.\n\n## Safety\nFlue acts inside professional desktop software. Treat the human as the driver; prefer small, inspectable steps; avoid destructive actions unless explicitly requested. Flue is MIT-licensed and reviewable on GitHub / PyPI before use.\n"
+    }
+  ]
+}

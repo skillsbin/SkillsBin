@@ -1,0 +1,51 @@
+{
+  "repo": "feder-cr/invisible_dots",
+  "commit": "a2584f26195062628263f465b4b3ec62939c60d0",
+  "branch": "main",
+  "fetchedAt": "2026-10-13T07:00:18.675Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "invisible-playwright",
+      "name": "invisible-playwright",
+      "dir": "invisible_engine_dots/skills/invisible-playwright",
+      "path": "invisible_engine_dots/skills/invisible-playwright/SKILL.md",
+      "desc": "Use the Dot's browser identities for any task on a website or search on the web: which identity to use, opening and closing one, and when a plain download is simpler than a browser.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "curl",
+          "go"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/feder-cr/invisible_dots.git",
+        "copy": "cp -r invisible_engine_dots/skills/invisible-playwright ~/.claude/skills/invisible-playwright",
+        "raw": "https://raw.githubusercontent.com/feder-cr/invisible_dots/a2584f26195062628263f465b4b3ec62939c60d0/invisible_engine_dots/skills/invisible-playwright/SKILL.md",
+        "saveAs": "~/.claude/skills/invisible-playwright/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:c4ead9fbb1fd8220854d64322230aa75c3b3088ad2e30fa3587bc6e36b7c1e08",
+      "bytes": 2291,
+      "wordCount": 361,
+      "repoLicense": "MIT",
+      "commit": "a2584f26195062628263f465b4b3ec62939c60d0",
+      "branch": "main",
+      "body": "---\nname: invisible-playwright\ndescription: Use the Dot's browser identities for any task on a website or search on the web: which identity to use, opening and closing one, and when a plain download is simpler than a browser.\n---\n\n# The browser identities\n\nYour browser is invisible_playwright: a real Firefox that a site sees as a person at a computer. How to drive a page\n(finding a page, the order to try things in, what a page can tell) is in the browser server's instructions, which your\nsystem prompt carries. This file is about the identities. Use the browser when a task needs a website; for a plain\ndownload or an API, `exec` with `curl` is simpler.\n\n## Identities\n\nA browser identity is one person on the web: its own profile, cookies, logins and fingerprint, kept on disk between\nuses.\n\n- `browser_identity_list` shows the identities, which are open, and how many may be open at once.\n- `browser_identity_create` makes one, closed. Give it a name only: it then leaves through this computer's own network,\n  which is right unless the person asked for this one identity to use a proxy of theirs.\n- `browser_identity_launch` opens it on your desktop. The first launch of a new identity can take minutes.\n- `browser_identity_close` closes it; its profile, cookies and logins stay.\n- Every page tool takes the `identity_id` of an open identity, and acts on that identity's one page.\n- Reuse the identity that is already logged in to a site instead of making a new one, and keep one identity per\n  person or account you act as: two accounts in one identity are one person to anyone looking.\n- A second identity is for what must not touch the first. The usual case: signing up somewhere and needing a mailbox\n  for the verification. Open a throwaway-mail site in another identity, take the address, type it into the form in the\n  first one, and go back to the other for the link.\n\nClose an identity with `browser_identity_close` once the task no longer needs it, before you answer: an open browser\nholds memory on your computer.\n\n## Your own skills\n\nWhen you work out how to do something on a site that you will do again (where its login is, which steps a form needs,\nwhat blocks you), write it down as a skill of your own: /home/dot/skills/<name>/SKILL.md, the same shape as this file.\n",
+      "bodyMd": "# The browser identities\n\nYour browser is invisible_playwright: a real Firefox that a site sees as a person at a computer. How to drive a page\n(finding a page, the order to try things in, what a page can tell) is in the browser server's instructions, which your\nsystem prompt carries. This file is about the identities. Use the browser when a task needs a website; for a plain\ndownload or an API, `exec` with `curl` is simpler.\n\n## Identities\n\nA browser identity is one person on the web: its own profile, cookies, logins and fingerprint, kept on disk between\nuses.\n\n- `browser_identity_list` shows the identities, which are open, and how many may be open at once.\n- `browser_identity_create` makes one, closed. Give it a name only: it then leaves through this computer's own network,\n  which is right unless the person asked for this one identity to use a proxy of theirs.\n- `browser_identity_launch` opens it on your desktop. The first launch of a new identity can take minutes.\n- `browser_identity_close` closes it; its profile, cookies and logins stay.\n- Every page tool takes the `identity_id` of an open identity, and acts on that identity's one page.\n- Reuse the identity that is already logged in to a site instead of making a new one, and keep one identity per\n  person or account you act as: two accounts in one identity are one person to anyone looking.\n- A second identity is for what must not touch the first. The usual case: signing up somewhere and needing a mailbox\n  for the verification. Open a throwaway-mail site in another identity, take the address, type it into the form in the\n  first one, and go back to the other for the link.\n\nClose an identity with `browser_identity_close` once the task no longer needs it, before you answer: an open browser\nholds memory on your computer.\n\n## Your own skills\n\nWhen you work out how to do something on a site that you will do again (where its login is, which steps a form needs,\nwhat blocks you), write it down as a skill of your own: /home/dot/skills/<name>/SKILL.md, the same shape as this file.\n"
+    }
+  ]
+}

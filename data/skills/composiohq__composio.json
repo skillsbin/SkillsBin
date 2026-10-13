@@ -1,0 +1,888 @@
+{
+  "repo": "ComposioHQ/composio",
+  "commit": "2d2e2918d682de8de1d275555f43749627085b87",
+  "branch": "next",
+  "fetchedAt": "2026-10-13T07:00:36.546Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "bug-fixing",
+      "name": "bug-fixing",
+      "dir": ".agents/skills/bug-fixing",
+      "path": ".agents/skills/bug-fixing/SKILL.md",
+      "desc": "Fix defects in the Composio SDK repository with focused reproduction, root-cause analysis, regression tests, and narrow verification. Use when the user reports a bug, failing test, CI regression, runtime defect, or incorrect SDK behavior. Do not use for new feature design or broad refactors.",
+      "descZh": "",
+      "triggers": [
+        "the user reports a bug",
+        "failing test",
+        "CI regression",
+        "runtime defect",
+        "incorrect SDK beha"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ComposioHQ/composio.git",
+        "copy": "cp -r .agents/skills/bug-fixing ~/.claude/skills/bug-fixing",
+        "raw": "https://raw.githubusercontent.com/ComposioHQ/composio/2d2e2918d682de8de1d275555f43749627085b87/.agents/skills/bug-fixing/SKILL.md",
+        "saveAs": "~/.claude/skills/bug-fixing/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:e188bcff6dcc6dbbd33e92a0a4d1d6068c62cb5cb9041e4301099054e2ed56ac",
+      "bytes": 493,
+      "wordCount": 23,
+      "repoLicense": "MIT",
+      "commit": "2d2e2918d682de8de1d275555f43749627085b87",
+      "branch": "next",
+      "body": "---\nname: bug-fixing\ndescription: Fix defects in the Composio SDK repository with focused reproduction, root-cause analysis, regression tests, and narrow verification. Use when the user reports a bug, failing test, CI regression, runtime defect, or incorrect SDK behavior. Do not use for new feature design or broad refactors.\n---\n\n# Bug Fixing\n\nUse this skill for defect work.\n\nRead `references/regression-testing.md` before editing code so the fix includes the right reproduction and tests.\n",
+      "bodyMd": "# Bug Fixing\n\nUse this skill for defect work.\n\nRead `references/regression-testing.md` before editing code so the fix includes the right reproduction and tests.\n"
+    },
+    {
+      "slug": "cli-command",
+      "name": "cli-command",
+      "dir": ".agents/skills/cli-command",
+      "path": ".agents/skills/cli-command/SKILL.md",
+      "desc": "Design, implement, or review Composio CLI commands under ts/packages/cli using Effect, effect/unstable/cli, services, output conventions, configuration and environment variables, and local vendor references. Use for CLI command UX, command wiring, service changes, or CLI source edits. Do not use for CLI E2E-only work; use cli-e2e there.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ComposioHQ/composio.git",
+        "copy": "cp -r .agents/skills/cli-command ~/.claude/skills/cli-command",
+        "raw": "https://raw.githubusercontent.com/ComposioHQ/composio/2d2e2918d682de8de1d275555f43749627085b87/.agents/skills/cli-command/SKILL.md",
+        "saveAs": "~/.claude/skills/cli-command/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:1425da7070db6ab6dd16aa31a1ffcc5103690e59fef4715ee6f0db81ed86a65c",
+      "bytes": 747,
+      "wordCount": 44,
+      "repoLicense": "MIT",
+      "commit": "2d2e2918d682de8de1d275555f43749627085b87",
+      "branch": "next",
+      "body": "---\nname: cli-command\ndescription: Design, implement, or review Composio CLI commands under ts/packages/cli using Effect, effect/unstable/cli, services, output conventions, configuration and environment variables, and local vendor references. Use for CLI command UX, command wiring, service changes, or CLI source edits. Do not use for CLI E2E-only work; use cli-e2e there.\n---\n\n# CLI Command\n\nUse this skill for CLI command design and implementation.\n\nRead the relevant reference:\n\n- `references/design.md` for command surface, output, errors, interactivity, configuration, and exit codes.\n- `references/implementation.md` for Effect command wiring and service patterns.\n- `references/client-cache-sync.md` when touching toolkit client services.\n",
+      "bodyMd": "# CLI Command\n\nUse this skill for CLI command design and implementation.\n\nRead the relevant reference:\n\n- `references/design.md` for command surface, output, errors, interactivity, configuration, and exit codes.\n- `references/implementation.md` for Effect command wiring and service patterns.\n- `references/client-cache-sync.md` when touching toolkit client services.\n"
+    },
+    {
+      "slug": "cli-e2e",
+      "name": "cli-e2e",
+      "dir": ".agents/skills/cli-e2e",
+      "path": ".agents/skills/cli-e2e/SKILL.md",
+      "desc": "Write, modify, or debug Docker-based Composio CLI end-to-end tests under ts/e2e-tests/cli, including binary invocation, fixture isolation, output assertions, and package manifests. Use for CLI E2E test suites only; use cli-command for CLI source implementation.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ComposioHQ/composio.git",
+        "copy": "cp -r .agents/skills/cli-e2e ~/.claude/skills/cli-e2e",
+        "raw": "https://raw.githubusercontent.com/ComposioHQ/composio/2d2e2918d682de8de1d275555f43749627085b87/.agents/skills/cli-e2e/SKILL.md",
+        "saveAs": "~/.claude/skills/cli-e2e/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:2c4dc49e09484d4754b0e93d74277c8f93f53c6c09cf74b42d604899a3df328f",
+      "bytes": 447,
+      "wordCount": 19,
+      "repoLicense": "MIT",
+      "commit": "2d2e2918d682de8de1d275555f43749627085b87",
+      "branch": "next",
+      "body": "---\nname: cli-e2e\ndescription: Write, modify, or debug Docker-based Composio CLI end-to-end tests under ts/e2e-tests/cli, including binary invocation, fixture isolation, output assertions, and package manifests. Use for CLI E2E test suites only; use cli-command for CLI source implementation.\n---\n\n# CLI E2E\n\nUse this skill for CLI end-to-end tests.\n\nRead `references/docker-cli-e2e.md` before adding or changing suites under `ts/e2e-tests/cli/`.\n",
+      "bodyMd": "# CLI E2E\n\nUse this skill for CLI end-to-end tests.\n\nRead `references/docker-cli-e2e.md` before adding or changing suites under `ts/e2e-tests/cli/`.\n"
+    },
+    {
+      "slug": "cli-release",
+      "name": "cli-release",
+      "dir": ".agents/skills/cli-release",
+      "path": ".agents/skills/cli-release/SKILL.md",
+      "desc": "Release and recover first-party Composio CLI binaries through Build CLI Binaries, including automatic beta builds, promote-stable dispatches, beta-tag selection, asset and installation verification, and failed release recovery. Use when a contributor asks to build a CLI beta, publish or promote a stable CLI version, choose a release candidate, monitor a CLI release, or diagnose a failed CLI release. Do not use for TypeScript SDK Changesets releases or CLI source implementation.",
+      "descZh": "",
+      "triggers": [
+        "publish",
+        "choose a"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ComposioHQ/composio.git",
+        "copy": "cp -r .agents/skills/cli-release ~/.claude/skills/cli-release",
+        "raw": "https://raw.githubusercontent.com/ComposioHQ/composio/2d2e2918d682de8de1d275555f43749627085b87/.agents/skills/cli-release/SKILL.md",
+        "saveAs": "~/.claude/skills/cli-release/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:f3917c5fde4efa3cca10982787c15b2476e82a1d1548224d30ae2b489a8415cc",
+      "bytes": 2158,
+      "wordCount": 252,
+      "repoLicense": "MIT",
+      "commit": "2d2e2918d682de8de1d275555f43749627085b87",
+      "branch": "next",
+      "body": "---\nname: cli-release\ndescription: Release and recover first-party Composio CLI binaries through Build CLI Binaries, including automatic beta builds, promote-stable dispatches, beta-tag selection, asset and installation verification, and failed release recovery. Use when a contributor asks to build a CLI beta, publish or promote a stable CLI version, choose a release candidate, monitor a CLI release, or diagnose a failed CLI release. Do not use for TypeScript SDK Changesets releases or CLI source implementation.\n---\n\n# CLI Release\n\nUse this skill for the GitHub Release that powers the standalone `composio` binary and installer.\n\nRead `references/release-workflow.md` before selecting a candidate or dispatching a workflow.\n\n## Release Contract\n\n- Never add a Changeset for `@composio/cli`; the package is ignored by Changesets and such files wedge `ts.release.yml`.\n- Treat a merge to `next` that touches CLI paths as a beta build. Promote a tested beta with the `promote-stable` workflow action for the normal stable-release path.\n- Never bump the private CLI `package.json` to select a binary version. For an\n  intentional minor or major, build an explicitly versioned beta and promote\n  that tested beta through the same stable path.\n- Resolve beta tags and workflow state from GitHub immediately before acting. Never invent or reuse a stale candidate from memory.\n- A stable promotion is a production write. If the user did not name the exact beta tag, present the resolved candidate and obtain explicit confirmation before dispatching it.\n- Follow the release through asset verification and installation tests. Do not stop after the dispatch succeeds.\n\n## Execution\n\n1. Classify the request as automatic beta, manual beta, stable promotion, or recovery.\n2. Run the playbook's read-only preflight and identify the exact source commit and release tag.\n3. Dispatch only the requested workflow action and watch the resulting run to completion.\n4. Verify the published release and downstream checks named in the playbook.\n5. Report the released tag, source beta or commit, workflow URL, asset state, install-test result, and any remaining follow-up.\n",
+      "bodyMd": "# CLI Release\n\nUse this skill for the GitHub Release that powers the standalone `composio` binary and installer.\n\nRead `references/release-workflow.md` before selecting a candidate or dispatching a workflow.\n\n## Release Contract\n\n- Never add a Changeset for `@composio/cli`; the package is ignored by Changesets and such files wedge `ts.release.yml`.\n- Treat a merge to `next` that touches CLI paths as a beta build. Promote a tested beta with the `promote-stable` workflow action for the normal stable-release path.\n- Never bump the private CLI `package.json` to select a binary version. For an\n  intentional minor or major, build an explicitly versioned beta and promote\n  that tested beta through the same stable path.\n- Resolve beta tags and workflow state from GitHub immediately before acting. Never invent or reuse a stale candidate from memory.\n- A stable promotion is a production write. If the user did not name the exact beta tag, present the resolved candidate and obtain explicit confirmation before dispatching it.\n- Follow the release through asset verification and installation tests. Do not stop after the dispatch succeeds.\n\n## Execution\n\n1. Classify the request as automatic beta, manual beta, stable promotion, or recovery.\n2. Run the playbook's read-only preflight and identify the exact source commit and release tag.\n3. Dispatch only the requested workflow action and watch the resulting run to completion.\n4. Verify the published release and downstream checks named in the playbook.\n5. Report the released tag, source beta or commit, workflow URL, asset state, install-test result, and any remaining follow-up.\n"
+    },
+    {
+      "slug": "cross-sdk-parity",
+      "name": "cross-sdk-parity",
+      "dir": ".agents/skills/cross-sdk-parity",
+      "path": ".agents/skills/cross-sdk-parity/SKILL.md",
+      "desc": "Keep TypeScript and Python SDK behavior, generated client usage, public API naming, and docs examples aligned. Use when a change affects both SDKs, when generated client pins move, when comparing TS/Python behavior, or when a backend API contract changed. Do not use for single-language internal-only changes.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ComposioHQ/composio.git",
+        "copy": "cp -r .agents/skills/cross-sdk-parity ~/.claude/skills/cross-sdk-parity",
+        "raw": "https://raw.githubusercontent.com/ComposioHQ/composio/2d2e2918d682de8de1d275555f43749627085b87/.agents/skills/cross-sdk-parity/SKILL.md",
+        "saveAs": "~/.claude/skills/cross-sdk-parity/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:6e8dad11e98f36a8bf1f00e57345d49d6c8f4194227cc0b8881355e0c62e4c14",
+      "bytes": 536,
+      "wordCount": 24,
+      "repoLicense": "MIT",
+      "commit": "2d2e2918d682de8de1d275555f43749627085b87",
+      "branch": "next",
+      "body": "---\nname: cross-sdk-parity\ndescription: Keep TypeScript and Python SDK behavior, generated client usage, public API naming, and docs examples aligned. Use when a change affects both SDKs, when generated client pins move, when comparing TS/Python behavior, or when a backend API contract changed. Do not use for single-language internal-only changes.\n---\n\n# Cross-SDK Parity\n\nUse this skill when TypeScript and Python must stay aligned.\n\nRead `references/parity-workflow.md` before changing shared SDK behavior or generated client pins.\n",
+      "bodyMd": "# Cross-SDK Parity\n\nUse this skill when TypeScript and Python must stay aligned.\n\nRead `references/parity-workflow.md` before changing shared SDK behavior or generated client pins.\n"
+    },
+    {
+      "slug": "docs-decisions",
+      "name": "docs-decisions",
+      "dir": ".agents/skills/docs-decisions",
+      "path": ".agents/skills/docs-decisions/SKILL.md",
+      "desc": "Work on Composio documentation content, Fumadocs configuration, changelogs, docs automation prompts, docs decisions, ADR-style records, and docs review guidance. Use for files under docs/, documentation workflows, or requests to record or update a docs decision. Do not use for SDK runtime changes unless docs are the main deliverable.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ComposioHQ/composio.git",
+        "copy": "cp -r .agents/skills/docs-decisions ~/.claude/skills/docs-decisions",
+        "raw": "https://raw.githubusercontent.com/ComposioHQ/composio/2d2e2918d682de8de1d275555f43749627085b87/.agents/skills/docs-decisions/SKILL.md",
+        "saveAs": "~/.claude/skills/docs-decisions/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:508241e6573db4fab6d75c46f902afa9f04c2f5f41696751be401c76077f352c",
+      "bytes": 643,
+      "wordCount": 33,
+      "repoLicense": "MIT",
+      "commit": "2d2e2918d682de8de1d275555f43749627085b87",
+      "branch": "next",
+      "body": "---\nname: docs-decisions\ndescription: Work on Composio documentation content, Fumadocs configuration, changelogs, docs automation prompts, docs decisions, ADR-style records, and docs review guidance. Use for files under docs/, documentation workflows, or requests to record or update a docs decision. Do not use for SDK runtime changes unless docs are the main deliverable.\n---\n\n# Docs Decisions\n\nUse this skill for docs-site work and docs decision records.\n\nRead the relevant reference:\n\n- `references/docs-workflow.md` for docs commands, content rules, and automation.\n- `references/decision-records.md` for decisions and ADR-style updates.\n",
+      "bodyMd": "# Docs Decisions\n\nUse this skill for docs-site work and docs decision records.\n\nRead the relevant reference:\n\n- `references/docs-workflow.md` for docs commands, content rules, and automation.\n- `references/decision-records.md` for decisions and ADR-style updates.\n"
+    },
+    {
+      "slug": "effect-v4",
+      "name": "effect-v4",
+      "dir": ".agents/skills/effect-v4",
+      "path": ".agents/skills/effect-v4/SKILL.md",
+      "desc": "Write, review, or upgrade Effect v4 code in the Composio CLI, cli-keyring, and json-schema-to-effect-schema packages, all pinned exactly to effect@4.0.0-rc.117 — Context.Service and explicit layers, Schema.TaggedError and typed recovery, the effect/unstable/cli command surface, and the vendored effect source oracle. Use when writing or reviewing Effect v4 code, answering a v4 API question, working in effect/unstable/cli, defining a Context.Service service, modeling an error with Schema.TaggedError, bumping the Effect prerelease pins, or verifying an unfamiliar API against ts/vendor/effect. Do not use for CLI command UX/wiring design (use cli-command) or CLI E2E tests (use cli-e2e).",
+      "descZh": "",
+      "triggers": [
+        "writing",
+        "reviewing Effect v4 code",
+        "working in effect/unstab"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "node",
+          "pnpm"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ComposioHQ/composio.git",
+        "copy": "cp -r .agents/skills/effect-v4 ~/.claude/skills/effect-v4",
+        "raw": "https://raw.githubusercontent.com/ComposioHQ/composio/2d2e2918d682de8de1d275555f43749627085b87/.agents/skills/effect-v4/SKILL.md",
+        "saveAs": "~/.claude/skills/effect-v4/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:47206adf4a5fe9fd8930e19936020c9e97dac7d82124c664613a477c0f7291a7",
+      "bytes": 4209,
+      "wordCount": 426,
+      "repoLicense": "MIT",
+      "commit": "2d2e2918d682de8de1d275555f43749627085b87",
+      "branch": "next",
+      "body": "---\nname: effect-v4\ndescription: Write, review, or upgrade Effect v4 code in the Composio CLI, cli-keyring, and json-schema-to-effect-schema packages, all pinned exactly to effect@4.0.0-rc.117 — Context.Service and explicit layers, Schema.TaggedError and typed recovery, the effect/unstable/cli command surface, and the vendored effect source oracle. Use when writing or reviewing Effect v4 code, answering a v4 API question, working in effect/unstable/cli, defining a Context.Service service, modeling an error with Schema.TaggedError, bumping the Effect prerelease pins, or verifying an unfamiliar API against ts/vendor/effect. Do not use for CLI command UX/wiring design (use cli-command) or CLI E2E tests (use cli-e2e).\n---\n\n# Effect v4\n\nThe CLI, `@composio/cli-keyring`, and `@composio/json-schema-to-effect-schema` run on\nEffect v4 (release candidate). Every claim below is grounded in the migrated source, not memory of v3.\n\n## Exact version matrix\n\n`effect`, `@effect/platform-bun`, and `@effect/vitest`\nare pinned to the **same exact** `4.0.0-rc.117` — never `^`, `@next`, or a mismatched\nprerelease across packages. `@effect/cli` and `@effect/platform` no longer exist as\ndependencies; their surfaces are consolidated into `effect` and `effect/unstable/*`.\nSee [versions.json](versions.json) for the full matrix (also `typescript`, `vitest`).\n\n## Read next\n\n- [references/core-patterns.md](references/core-patterns.md) — services, layers, typed\n  errors, Schema, choosing between `Effect.gen` and `Effect.fn`, and the v3→v4 rename table\n  (labeled historical, for recognizing stale patterns).\n- [references/cli-surface.md](references/cli-surface.md) — `effect/unstable/cli`:\n  `Command`, `Flag`, `Argument`, `GlobalFlag`, `CliConfig`, the custom\n  `CliOutput.Formatter`, and the runner's double-print rule.\n- [references/upgrade-workflow.md](references/upgrade-workflow.md) — procedure for\n  bumping to a newer prerelease.\n\nCode excerpts in those references are short quotes from real, currently-compiling repo\nfiles (path cited at each excerpt) — not standalone examples. The compile-checked\nsource of truth is always the cited file itself; when it and a reference disagree,\ntrust the file and fix the reference.\n\n## Non-negotiables\n\n- `Effect.gen(function* () {...})` for effect values — the dominant form, including named\n  module consts — and `(params) => Effect.gen(...)` for parameterized helpers.\n  `Effect.fn(...)` is the function form whose effects carry stack-frame annotations (its\n  optional name string adds a per-call tracing span), worth it for service members and\n  combinator callbacks that should be attributable in error reports. All forms re-run\n  their body per execution. See \"`Effect.gen` vs `Effect.fn`\" in core-patterns.\n- Define services with `Context.Service` and an explicit `static readonly Default`/`layer`\n  layer built with `Layer.succeed`/`Layer.effect`/`Layer.provide`. V4 does not generate a\n  layer for you.\n- Model expected failures with `Schema.TaggedError` (or a plain `Data.TaggedError`\n  when no Schema fields are needed) and recover with `Effect.catchTag`/`catchTags`/`Match`,\n  never manual `_tag` string comparisons.\n- Wrap fallible Promises with `Effect.tryPromise({ try, catch })`; `Effect.promise` turns\n  rejection into a defect. No `async`/`await` or `try`/`catch` inside Effect workflows —\n  ESLint bans them in `ts/packages/cli/src`.\n- Treat every remembered v3 package name and API as wrong until verified against\n  `ts/vendor/effect` (read-only source oracle — never edit or import from it) and the\n  installed `effect@4.0.0-rc.117` typings. Source may be ahead of the published package;\n  the compiler is the compatibility gate.\n\n## Verification\n\n```bash\npnpm typecheck\npnpm --filter @composio/cli test\n```\n\nRun `pnpm validate:agent-skills` and `pnpm validate:skill-routing` after editing this\nskill or its descriptions, and compile the TypeScript blocks in this skill and in\n`typescript-testing/references/effect-v4-cli.md` against the pinned packages with:\n\n```bash\nnode .agents/skills/effect-v4/scripts/check-examples.mjs\n```\n\nBlocks that quote repo files with unresolvable imports carry a `no-check` fence info string.\n",
+      "bodyMd": "# Effect v4\n\nThe CLI, `@composio/cli-keyring`, and `@composio/json-schema-to-effect-schema` run on\nEffect v4 (release candidate). Every claim below is grounded in the migrated source, not memory of v3.\n\n## Exact version matrix\n\n`effect`, `@effect/platform-bun`, and `@effect/vitest`\nare pinned to the **same exact** `4.0.0-rc.117` — never `^`, `@next`, or a mismatched\nprerelease across packages. `@effect/cli` and `@effect/platform` no longer exist as\ndependencies; their surfaces are consolidated into `effect` and `effect/unstable/*`.\nSee [versions.json](versions.json) for the full matrix (also `typescript`, `vitest`).\n\n## Read next\n\n- [references/core-patterns.md](references/core-patterns.md) — services, layers, typed\n  errors, Schema, choosing between `Effect.gen` and `Effect.fn`, and the v3→v4 rename table\n  (labeled historical, for recognizing stale patterns).\n- [references/cli-surface.md](references/cli-surface.md) — `effect/unstable/cli`:\n  `Command`, `Flag`, `Argument`, `GlobalFlag`, `CliConfig`, the custom\n  `CliOutput.Formatter`, and the runner's double-print rule.\n- [references/upgrade-workflow.md](references/upgrade-workflow.md) — procedure for\n  bumping to a newer prerelease.\n\nCode excerpts in those references are short quotes from real, currently-compiling repo\nfiles (path cited at each excerpt) — not standalone examples. The compile-checked\nsource of truth is always the cited file itself; when it and a reference disagree,\ntrust the file and fix the reference.\n\n## Non-negotiables\n\n- `Effect.gen(function* () {...})` for effect values — the dominant form, including named\n  module consts — and `(params) => Effect.gen(...)` for parameterized helpers.\n  `Effect.fn(...)` is the function form whose effects carry stack-frame annotations (its\n  optional name string adds a per-call tracing span), worth it for service members and\n  combinator callbacks that should be attributable in error reports. All forms re-run\n  their body per execution. See \"`Effect.gen` vs `Effect.fn`\" in core-patterns.\n- Define services with `Context.Service` and an explicit `static readonly Default`/`layer`\n  layer built with `Layer.succeed`/`Layer.effect`/`Layer.provide`. V4 does not generate a\n  layer for you.\n- Model expected failures with `Schema.TaggedError` (or a plain `Data.TaggedError`\n  when no Schema fields are needed) and recover with `Effect.catchTag`/`catchTags`/`Match`,\n  never manual `_tag` string comparisons.\n- Wrap fallible Promises with `Effect.tryPromise({ try, catch })`; `Effect.promise` turns\n  rejection into a defect. No `async`/`await` or `try`/`catch` inside Effect workflows —\n  ESLint bans them in `ts/packages/cli/src`.\n- Treat every remembered v3 package name and API as wrong until verified against\n  `ts/vendor/effect` (read-only source oracle — never edit or import from it) and the\n  installed `effect@4.0.0-rc.117` typings. Source may be ahead of the published package;\n  the compiler is the compatibility gate.\n\n## Verification\n\n```bash\npnpm typecheck\npnpm --filter @composio/cli test\n```\n\nRun `pnpm validate:agent-skills` and `pnpm validate:skill-routing` after editing this\nskill or its descriptions, and compile the TypeScript blocks in this skill and in\n`typescript-testing/references/effect-v4-cli.md` against the pinned packages with:\n\n```bash\nnode .agents/skills/effect-v4/scripts/check-examples.mjs\n```\n\nBlocks that quote repo files with unresolvable imports carry a `no-check` fence info string.\n"
+    },
+    {
+      "slug": "eve",
+      "name": "eve",
+      "dir": ".agents/skills/eve",
+      "path": ".agents/skills/eve/SKILL.md",
+      "desc": "Build durable backend AI agents with the eve framework. Use when creating, editing, or debugging an eve project — agent instructions, skills, tools, connections, channels, sandboxes, subagents, schedules, or evals.",
+      "descZh": "",
+      "triggers": [
+        "creating",
+        "editing",
+        "skills",
+        "tools",
+        "connec"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "npm",
+          "npx"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ComposioHQ/composio.git",
+        "copy": "cp -r .agents/skills/eve ~/.claude/skills/eve",
+        "raw": "https://raw.githubusercontent.com/ComposioHQ/composio/2d2e2918d682de8de1d275555f43749627085b87/.agents/skills/eve/SKILL.md",
+        "saveAs": "~/.claude/skills/eve/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:3db35e58e89311e285e17dce8f5ba74bd905efb77b8b1ab8991019521a4fbf3f",
+      "bytes": 1106,
+      "wordCount": 129,
+      "repoLicense": "MIT",
+      "commit": "2d2e2918d682de8de1d275555f43749627085b87",
+      "branch": "next",
+      "body": "---\nname: eve\ndescription: Build durable backend AI agents with the eve framework. Use when creating, editing, or debugging an eve project — agent instructions, skills, tools, connections, channels, sandboxes, subagents, schedules, or evals.\n---\n\n# eve\n\neve is a filesystem-first framework for durable backend AI agents. An agent is\na directory on disk — instructions, skills, tools, connections, channels,\nsubagents, and schedules are all files — and eve compiles and runs it.\n\n## Source of truth\n\nThe complete documentation ships inside the `eve` package. Do not rely on this\nskill for guidance — always read the bundled docs, which match the installed\nversion exactly:\n\n```\nnode_modules/eve/docs/\n```\n\nStart with `node_modules/eve/docs/README.md`. It contains the full\nindex and recommended reading order. Before writing any eve code, read the\nrelevant guide there first.\n\nIf `eve` is not installed yet, install it (`npm install eve`) or scaffold a new\nagent with `npx eve init <agent-name>`, then read the bundled docs.\n\nSee `references/source-of-truth.md` for the repo-local handoff boundary.\n",
+      "bodyMd": "# eve\n\neve is a filesystem-first framework for durable backend AI agents. An agent is\na directory on disk — instructions, skills, tools, connections, channels,\nsubagents, and schedules are all files — and eve compiles and runs it.\n\n## Source of truth\n\nThe complete documentation ships inside the `eve` package. Do not rely on this\nskill for guidance — always read the bundled docs, which match the installed\nversion exactly:\n\n```\nnode_modules/eve/docs/\n```\n\nStart with `node_modules/eve/docs/README.md`. It contains the full\nindex and recommended reading order. Before writing any eve code, read the\nrelevant guide there first.\n\nIf `eve` is not installed yet, install it (`npm install eve`) or scaffold a new\nagent with `npx eve init <agent-name>`, then read the bundled docs.\n\nSee `references/source-of-truth.md` for the repo-local handoff boundary.\n"
+    },
+    {
+      "slug": "good-docs-audit",
+      "name": "good-docs-audit",
+      "dir": ".agents/skills/good-docs-audit",
+      "path": ".agents/skills/good-docs-audit/SKILL.md",
+      "desc": "Audit a doc, guide, README, or block of prose against the good-docs-writing style guide and report violations. Use when the user asks to review, critique, lint, or check the voice and tone of documentation or text. Produces a structured findings report (file:line, rule violated, offending text, suggested rewrite) and does NOT edit files unless explicitly asked.",
+      "descZh": "",
+      "triggers": [
+        "the user asks to review",
+        "critique",
+        "lint"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ComposioHQ/composio.git",
+        "copy": "cp -r .agents/skills/good-docs-audit ~/.claude/skills/good-docs-audit",
+        "raw": "https://raw.githubusercontent.com/ComposioHQ/composio/2d2e2918d682de8de1d275555f43749627085b87/.agents/skills/good-docs-audit/SKILL.md",
+        "saveAs": "~/.claude/skills/good-docs-audit/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:88728bfd431d3c60e56cd2022d3456f5780e4d17548a3a887a167ec8880ac44f",
+      "bytes": 1171,
+      "wordCount": 112,
+      "repoLicense": "MIT",
+      "commit": "2d2e2918d682de8de1d275555f43749627085b87",
+      "branch": "next",
+      "body": "---\nname: good-docs-audit\ndescription: Audit a doc, guide, README, or block of prose against the good-docs-writing style guide and report violations. Use when the user asks to review, critique, lint, or check the voice and tone of documentation or text. Produces a structured findings report (file:line, rule violated, offending text, suggested rewrite) and does NOT edit files unless explicitly asked.\n---\n\n# Good docs audit\n\nReview target documentation against the `good-docs-writing` rules and report where the writing drifts from that voice. Default behavior is **report only**: produce findings, do not edit. Only modify files if the user explicitly says to fix, rewrite, or apply.\n\nRead `references/audit-process.md` for the procedure, the prioritized violation checklist, the report format, and the reporting rules.\n\nNon-negotiables:\n\n- Read `good-docs-writing` (and its `references/style-guide.md`) first. Those rules are the rubric; this skill is the process.\n- Cite `file:line` for every finding and quote the exact offending text.\n- Give a real rewrite in the target voice, not \"consider revising.\"\n- Don't invent violations. A short report is a good outcome.\n",
+      "bodyMd": "# Good docs audit\n\nReview target documentation against the `good-docs-writing` rules and report where the writing drifts from that voice. Default behavior is **report only**: produce findings, do not edit. Only modify files if the user explicitly says to fix, rewrite, or apply.\n\nRead `references/audit-process.md` for the procedure, the prioritized violation checklist, the report format, and the reporting rules.\n\nNon-negotiables:\n\n- Read `good-docs-writing` (and its `references/style-guide.md`) first. Those rules are the rubric; this skill is the process.\n- Cite `file:line` for every finding and quote the exact offending text.\n- Give a real rewrite in the target voice, not \"consider revising.\"\n- Don't invent violations. A short report is a good outcome.\n"
+    },
+    {
+      "slug": "good-docs-writing",
+      "name": "good-docs-writing",
+      "dir": ".agents/skills/good-docs-writing",
+      "path": ".agents/skills/good-docs-writing/SKILL.md",
+      "desc": "Writing style guide derived from Modal's documentation voice. Apply when writing or editing docs, guides, tutorials, or technical prose that should read direct, second-person, confident, low-jargon, and example-first. Use to draft new docs in this voice or to revise existing prose toward it.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ComposioHQ/composio.git",
+        "copy": "cp -r .agents/skills/good-docs-writing ~/.claude/skills/good-docs-writing",
+        "raw": "https://raw.githubusercontent.com/ComposioHQ/composio/2d2e2918d682de8de1d275555f43749627085b87/.agents/skills/good-docs-writing/SKILL.md",
+        "saveAs": "~/.claude/skills/good-docs-writing/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:fa65a6ee300dafe290e51c01d348c8e2af68ca2c18e7a98e480528d3ce014975",
+      "bytes": 1417,
+      "wordCount": 165,
+      "repoLicense": "MIT",
+      "commit": "2d2e2918d682de8de1d275555f43749627085b87",
+      "branch": "next",
+      "body": "---\nname: good-docs-writing\ndescription: Writing style guide derived from Modal's documentation voice. Apply when writing or editing docs, guides, tutorials, or technical prose that should read direct, second-person, confident, low-jargon, and example-first. Use to draft new docs in this voice or to revise existing prose toward it.\n---\n\n# Good docs writing\n\nWrite docs the way Modal writes them: direct, friendly, confident, and ruthlessly practical. Explain the _why_ in one breath, then show working code. Treat the reader as a capable developer who wants to ship, not a student who needs a lecture.\n\nRead `references/style-guide.md` for the full rule set (Voice, Structure, Terminology, Punctuation, Code examples, Formatting) and apply every rule while drafting.\n\nThe rules that matter most, before you open the reference:\n\n- Address the reader as \"you\", never \"the user\" or \"one\".\n- Open with the concept or benefit in the first sentence. No throat-clearing.\n- Put a minimal runnable example near the top, then explain what just happened.\n- Remove every em-dash. Use a period, comma, colon, or parentheses instead.\n- Cut vague intensifiers (\"seamlessly\", \"powerful\", \"robust\", \"cutting-edge\"). Show a thing being easy instead of calling it easy.\n- Backtick every code identifier, command, parameter, path, and filename.\n\nTo review existing prose against these rules instead of drafting, use `good-docs-audit`.\n",
+      "bodyMd": "# Good docs writing\n\nWrite docs the way Modal writes them: direct, friendly, confident, and ruthlessly practical. Explain the _why_ in one breath, then show working code. Treat the reader as a capable developer who wants to ship, not a student who needs a lecture.\n\nRead `references/style-guide.md` for the full rule set (Voice, Structure, Terminology, Punctuation, Code examples, Formatting) and apply every rule while drafting.\n\nThe rules that matter most, before you open the reference:\n\n- Address the reader as \"you\", never \"the user\" or \"one\".\n- Open with the concept or benefit in the first sentence. No throat-clearing.\n- Put a minimal runnable example near the top, then explain what just happened.\n- Remove every em-dash. Use a period, comma, colon, or parentheses instead.\n- Cut vague intensifiers (\"seamlessly\", \"powerful\", \"robust\", \"cutting-edge\"). Show a thing being easy instead of calling it easy.\n- Backtick every code identifier, command, parameter, path, and filename.\n\nTo review existing prose against these rules instead of drafting, use `good-docs-audit`.\n"
+    },
+    {
+      "slug": "python-providers",
+      "name": "python-providers",
+      "dir": ".agents/skills/python-providers",
+      "path": ".agents/skills/python-providers/SKILL.md",
+      "desc": "Create, modify, test, or package Python provider adapters under python/providers, including framework-specific dependencies, public imports, type inference, and provider metadata. Use for Python provider work only; use python-sdk for core SDK changes.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ComposioHQ/composio.git",
+        "copy": "cp -r .agents/skills/python-providers ~/.claude/skills/python-providers",
+        "raw": "https://raw.githubusercontent.com/ComposioHQ/composio/2d2e2918d682de8de1d275555f43749627085b87/.agents/skills/python-providers/SKILL.md",
+        "saveAs": "~/.claude/skills/python-providers/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:6ac00698f0457bfa86bdfc3397598c97a72129f866582ca3abc978b4aeb765f2",
+      "bytes": 444,
+      "wordCount": 16,
+      "repoLicense": "MIT",
+      "commit": "2d2e2918d682de8de1d275555f43749627085b87",
+      "branch": "next",
+      "body": "---\nname: python-providers\ndescription: Create, modify, test, or package Python provider adapters under python/providers, including framework-specific dependencies, public imports, type inference, and provider metadata. Use for Python provider work only; use python-sdk for core SDK changes.\n---\n\n# Python Providers\n\nUse this skill for Python provider package work.\n\nRead `references/provider-workflow.md` before changing `python/providers/*`.\n",
+      "bodyMd": "# Python Providers\n\nUse this skill for Python provider package work.\n\nRead `references/provider-workflow.md` before changing `python/providers/*`.\n"
+    },
+    {
+      "slug": "python-release",
+      "name": "python-release",
+      "dir": ".agents/skills/python-release",
+      "path": ".agents/skills/python-release/SKILL.md",
+      "desc": "Handle Python SDK release, build, bump, packaging metadata, PyPI client pin, uv.lock, nox/build workflow, and publish verification changes. Use for Python release process work or dependency pin bumps; do not use for ordinary Python feature implementation.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "uv"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ComposioHQ/composio.git",
+        "copy": "cp -r .agents/skills/python-release ~/.claude/skills/python-release",
+        "raw": "https://raw.githubusercontent.com/ComposioHQ/composio/2d2e2918d682de8de1d275555f43749627085b87/.agents/skills/python-release/SKILL.md",
+        "saveAs": "~/.claude/skills/python-release/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:d31936f37668c4b22be36a46568ac89a40e972ffc79f50874bdbea9b0e298822",
+      "bytes": 476,
+      "wordCount": 23,
+      "repoLicense": "MIT",
+      "commit": "2d2e2918d682de8de1d275555f43749627085b87",
+      "branch": "next",
+      "body": "---\nname: python-release\ndescription: Handle Python SDK release, build, bump, packaging metadata, PyPI client pin, uv.lock, nox/build workflow, and publish verification changes. Use for Python release process work or dependency pin bumps; do not use for ordinary Python feature implementation.\n---\n\n# Python Release\n\nUse this skill for Python release and packaging work.\n\nRead `references/release-workflow.md` before changing Python release metadata or generated client pins.\n",
+      "bodyMd": "# Python Release\n\nUse this skill for Python release and packaging work.\n\nRead `references/release-workflow.md` before changing Python release metadata or generated client pins.\n"
+    },
+    {
+      "slug": "python-sdk",
+      "name": "python-sdk",
+      "dir": ".agents/skills/python-sdk",
+      "path": ".agents/skills/python-sdk/SKILL.md",
+      "desc": "Implement or modify Python SDK behavior under python/composio, including tools, toolkits, sessions, auth configs, connected accounts, client integration, and shared Python models. Use for Python core runtime/API work; pair with python-testing and cross-sdk-parity when TypeScript must match.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ComposioHQ/composio.git",
+        "copy": "cp -r .agents/skills/python-sdk ~/.claude/skills/python-sdk",
+        "raw": "https://raw.githubusercontent.com/ComposioHQ/composio/2d2e2918d682de8de1d275555f43749627085b87/.agents/skills/python-sdk/SKILL.md",
+        "saveAs": "~/.claude/skills/python-sdk/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:f4102b6a9105f50cf2052410bcfa0736b9c7d10740a7e2a94e7ec27fa1e9d369",
+      "bytes": 463,
+      "wordCount": 16,
+      "repoLicense": "MIT",
+      "commit": "2d2e2918d682de8de1d275555f43749627085b87",
+      "branch": "next",
+      "body": "---\nname: python-sdk\ndescription: Implement or modify Python SDK behavior under python/composio, including tools, toolkits, sessions, auth configs, connected accounts, client integration, and shared Python models. Use for Python core runtime/API work; pair with python-testing and cross-sdk-parity when TypeScript must match.\n---\n\n# Python SDK\n\nUse this skill for Python SDK implementation work.\n\nRead `references/sdk-layout.md` before editing `python/composio`.\n",
+      "bodyMd": "# Python SDK\n\nUse this skill for Python SDK implementation work.\n\nRead `references/sdk-layout.md` before editing `python/composio`.\n"
+    },
+    {
+      "slug": "python-testing",
+      "name": "python-testing",
+      "dir": ".agents/skills/python-testing",
+      "path": ".agents/skills/python-testing/SKILL.md",
+      "desc": "Select and run Python SDK verification with nox, Makefile targets, Ruff, mypy, pytest markers, sanity tests, type inference checks, and build checks. Use when adding Python tests, diagnosing Python CI, or validating Python SDK/provider changes. Do not use for TypeScript-only checks.",
+      "descZh": "",
+      "triggers": [
+        "adding Python tests",
+        "diagnosing Python CI"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ComposioHQ/composio.git",
+        "copy": "cp -r .agents/skills/python-testing ~/.claude/skills/python-testing",
+        "raw": "https://raw.githubusercontent.com/ComposioHQ/composio/2d2e2918d682de8de1d275555f43749627085b87/.agents/skills/python-testing/SKILL.md",
+        "saveAs": "~/.claude/skills/python-testing/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:b267d508357372cbef6d1c837940653ac735b1d5ff12cf271952d2222b0e3034",
+      "bytes": 482,
+      "wordCount": 21,
+      "repoLicense": "MIT",
+      "commit": "2d2e2918d682de8de1d275555f43749627085b87",
+      "branch": "next",
+      "body": "---\nname: python-testing\ndescription: Select and run Python SDK verification with nox, Makefile targets, Ruff, mypy, pytest markers, sanity tests, type inference checks, and build checks. Use when adding Python tests, diagnosing Python CI, or validating Python SDK/provider changes. Do not use for TypeScript-only checks.\n---\n\n# Python Testing\n\nUse this skill to choose Python verification.\n\nRead `references/nox-make.md` before running broad Python checks or adding test coverage.\n",
+      "bodyMd": "# Python Testing\n\nUse this skill to choose Python verification.\n\nRead `references/nox-make.md` before running broad Python checks or adding test coverage.\n"
+    },
+    {
+      "slug": "repo-guidance",
+      "name": "repo-guidance",
+      "dir": ".agents/skills/repo-guidance",
+      "path": ".agents/skills/repo-guidance/SKILL.md",
+      "desc": "Navigate the Composio SDK monorepo, branch and PR workflow, repo layout, generated-file boundaries, changesets, and shared maintenance rules. Use when work spans multiple packages, when deciding where code belongs, when preparing a PR, or when the user asks about repository conventions rather than a specific SDK implementation.",
+      "descZh": "",
+      "triggers": [
+        "when preparing a PR",
+        "wh"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ComposioHQ/composio.git",
+        "copy": "cp -r .agents/skills/repo-guidance ~/.claude/skills/repo-guidance",
+        "raw": "https://raw.githubusercontent.com/ComposioHQ/composio/2d2e2918d682de8de1d275555f43749627085b87/.agents/skills/repo-guidance/SKILL.md",
+        "saveAs": "~/.claude/skills/repo-guidance/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:53d61096e67872ca828a913be2786f2333c36036b036fd03cadaa7c5cfc95fc0",
+      "bytes": 618,
+      "wordCount": 34,
+      "repoLicense": "MIT",
+      "commit": "2d2e2918d682de8de1d275555f43749627085b87",
+      "branch": "next",
+      "body": "---\nname: repo-guidance\ndescription: Navigate the Composio SDK monorepo, branch and PR workflow, repo layout, generated-file boundaries, changesets, and shared maintenance rules. Use when work spans multiple packages, when deciding where code belongs, when preparing a PR, or when the user asks about repository conventions rather than a specific SDK implementation.\n---\n\n# Repo Guidance\n\nUse this skill to orient work in the Composio SDK repository.\n\nRead `references/repository-workflow.md` before changing files when the task touches more than one package, release metadata, generated files, or branch/PR workflow.\n",
+      "bodyMd": "# Repo Guidance\n\nUse this skill to orient work in the Composio SDK repository.\n\nRead `references/repository-workflow.md` before changing files when the task touches more than one package, release metadata, generated files, or branch/PR workflow.\n"
+    },
+    {
+      "slug": "skill-maintenance",
+      "name": "skill-maintenance",
+      "dir": ".agents/skills/skill-maintenance",
+      "path": ".agents/skills/skill-maintenance/SKILL.md",
+      "desc": "Create, update, validate, or reorganize repo-local Agent Skills under .agents/skills, including SKILL.md frontmatter, first-level references, compatibility symlinks, and validation scripts. Use only for skill-tree maintenance, skill taxonomy changes, or agent-guidance validation work.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ComposioHQ/composio.git",
+        "copy": "cp -r .agents/skills/skill-maintenance ~/.claude/skills/skill-maintenance",
+        "raw": "https://raw.githubusercontent.com/ComposioHQ/composio/2d2e2918d682de8de1d275555f43749627085b87/.agents/skills/skill-maintenance/SKILL.md",
+        "saveAs": "~/.claude/skills/skill-maintenance/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:1cd7c17718df42ceb4b554a508e15fb9e7f39a2cd734b131463b01c68b0e2034",
+      "bytes": 512,
+      "wordCount": 22,
+      "repoLicense": "MIT",
+      "commit": "2d2e2918d682de8de1d275555f43749627085b87",
+      "branch": "next",
+      "body": "---\nname: skill-maintenance\ndescription: Create, update, validate, or reorganize repo-local Agent Skills under .agents/skills, including SKILL.md frontmatter, first-level references, compatibility symlinks, and validation scripts. Use only for skill-tree maintenance, skill taxonomy changes, or agent-guidance validation work.\n---\n\n# Skill Maintenance\n\nUse this skill when editing the repo-local skill tree.\n\nRead `references/skill-format.md` before changing skill folders, validation, or compatibility mirrors.\n",
+      "bodyMd": "# Skill Maintenance\n\nUse this skill when editing the repo-local skill tree.\n\nRead `references/skill-format.md` before changing skill folders, validation, or compatibility mirrors.\n"
+    },
+    {
+      "slug": "typescript-providers",
+      "name": "typescript-providers",
+      "dir": ".agents/skills/typescript-providers",
+      "path": ".agents/skills/typescript-providers/SKILL.md",
+      "desc": "Implement, modify, test, or document TypeScript provider packages under ts/packages/providers, including framework adapters for OpenAI, Anthropic, Google, LangChain, Mastra, Vercel, LlamaIndex, Cloudflare, Claude Agent SDK, and TypeSafe. Use for provider-specific TS work; do not use for core-only changes.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ComposioHQ/composio.git",
+        "copy": "cp -r .agents/skills/typescript-providers ~/.claude/skills/typescript-providers",
+        "raw": "https://raw.githubusercontent.com/ComposioHQ/composio/2d2e2918d682de8de1d275555f43749627085b87/.agents/skills/typescript-providers/SKILL.md",
+        "saveAs": "~/.claude/skills/typescript-providers/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:ccf0d206c9de5dd9a36f0777ed35d79371ba679d6ba72f5d49f91f621f8ca324",
+      "bytes": 501,
+      "wordCount": 17,
+      "repoLicense": "MIT",
+      "commit": "2d2e2918d682de8de1d275555f43749627085b87",
+      "branch": "next",
+      "body": "---\nname: typescript-providers\ndescription: Implement, modify, test, or document TypeScript provider packages under ts/packages/providers, including framework adapters for OpenAI, Anthropic, Google, LangChain, Mastra, Vercel, LlamaIndex, Cloudflare, Claude Agent SDK, and TypeSafe. Use for provider-specific TS work; do not use for core-only changes.\n---\n\n# TypeScript Providers\n\nUse this skill for provider package work.\n\nRead `references/provider-workflow.md` before changing a TypeScript provider.\n",
+      "bodyMd": "# TypeScript Providers\n\nUse this skill for provider package work.\n\nRead `references/provider-workflow.md` before changing a TypeScript provider.\n"
+    },
+    {
+      "slug": "typescript-sdk",
+      "name": "typescript-sdk",
+      "dir": ".agents/skills/typescript-sdk",
+      "path": ".agents/skills/typescript-sdk/SKILL.md",
+      "desc": "Implement or modify TypeScript SDK behavior in @composio/core or shared TypeScript packages, including tools, toolkits, sessions, auth configs, connected accounts, modifiers, and generated SDK surfaces. Use for TS runtime/API work; pair with typescript-testing for verification and cross-sdk-parity when Python must match.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ComposioHQ/composio.git",
+        "copy": "cp -r .agents/skills/typescript-sdk ~/.claude/skills/typescript-sdk",
+        "raw": "https://raw.githubusercontent.com/ComposioHQ/composio/2d2e2918d682de8de1d275555f43749627085b87/.agents/skills/typescript-sdk/SKILL.md",
+        "saveAs": "~/.claude/skills/typescript-sdk/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:fb4074ebf7deae767f64b8d40cf585526e9b436b5c197abfbdd79fa2d2000e7a",
+      "bytes": 539,
+      "wordCount": 21,
+      "repoLicense": "MIT",
+      "commit": "2d2e2918d682de8de1d275555f43749627085b87",
+      "branch": "next",
+      "body": "---\nname: typescript-sdk\ndescription: Implement or modify TypeScript SDK behavior in @composio/core or shared TypeScript packages, including tools, toolkits, sessions, auth configs, connected accounts, modifiers, and generated SDK surfaces. Use for TS runtime/API work; pair with typescript-testing for verification and cross-sdk-parity when Python must match.\n---\n\n# TypeScript SDK\n\nUse this skill for TypeScript SDK implementation work.\n\nRead `references/core-sdk.md` before editing `ts/packages/core` or shared TypeScript SDK packages.\n",
+      "bodyMd": "# TypeScript SDK\n\nUse this skill for TypeScript SDK implementation work.\n\nRead `references/core-sdk.md` before editing `ts/packages/core` or shared TypeScript SDK packages.\n"
+    },
+    {
+      "slug": "typescript-testing",
+      "name": "typescript-testing",
+      "dir": ".agents/skills/typescript-testing",
+      "path": ".agents/skills/typescript-testing/SKILL.md",
+      "desc": "Select and run TypeScript SDK verification for packages, examples, type checks, linting, builds, Vitest suites, Effect v4 CLI tests, and runtime E2E tests. Use when adding tests, diagnosing TypeScript CI, choosing a focused test command, validating TypeScript package changes, or writing/porting CLI tests against effect@4.0.0-rc.117 and @effect/vitest. Do not use for Python-only checks.",
+      "descZh": "",
+      "triggers": [
+        "adding tests",
+        "diagnosing TypeScript CI",
+        "validating TypeSc"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ComposioHQ/composio.git",
+        "copy": "cp -r .agents/skills/typescript-testing ~/.claude/skills/typescript-testing",
+        "raw": "https://raw.githubusercontent.com/ComposioHQ/composio/2d2e2918d682de8de1d275555f43749627085b87/.agents/skills/typescript-testing/SKILL.md",
+        "saveAs": "~/.claude/skills/typescript-testing/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:4fb192f0c2db6fda3c96018f7ac911cb9ebbc87b2fc8e9e70532fe50bc967fda",
+      "bytes": 889,
+      "wordCount": 51,
+      "repoLicense": "MIT",
+      "commit": "2d2e2918d682de8de1d275555f43749627085b87",
+      "branch": "next",
+      "body": "---\nname: typescript-testing\ndescription: Select and run TypeScript SDK verification for packages, examples, type checks, linting, builds, Vitest suites, Effect v4 CLI tests, and runtime E2E tests. Use when adding tests, diagnosing TypeScript CI, choosing a focused test command, validating TypeScript package changes, or writing/porting CLI tests against effect@4.0.0-rc.117 and @effect/vitest. Do not use for Python-only checks.\n---\n\n# TypeScript Testing\n\nUse this skill to choose verification for TypeScript changes.\n\nRead `references/test-commands.md` before running broad checks or adding new test coverage.\n\nRead `references/effect-v4-cli.md` before writing or modifying tests under `ts/packages/cli/test/`\n— it covers `it.effect`/`layer(...)` conventions, explicit per-service test layers (no `.Default`\nauto-generation in v4), and the `@effect/platform-bun` subpath-import rule.\n",
+      "bodyMd": "# TypeScript Testing\n\nUse this skill to choose verification for TypeScript changes.\n\nRead `references/test-commands.md` before running broad checks or adding new test coverage.\n\nRead `references/effect-v4-cli.md` before writing or modifying tests under `ts/packages/cli/test/`\n— it covers `it.effect`/`layer(...)` conventions, explicit per-service test layers (no `.Default`\nauto-generation in v4), and the `@effect/platform-bun` subpath-import rule.\n"
+    },
+    {
+      "slug": "composio",
+      "name": "composio",
+      "dir": "skills/composio",
+      "path": "skills/composio/SKILL.md",
+      "desc": "Route and complete Composio work across Composio For You and Composio Platform. Use when the user mentions Composio; wants an agent to use apps such as Gmail, Slack, GitHub, Notion, Calendar, or Linear; needs first-time setup, an SDK or MCP integration, CLI operation, migration guidance, current documentation, or help diagnosing a connection or tool call.",
+      "descZh": "",
+      "triggers": [
+        "Slack",
+        "GitHub",
+        "Notio"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": true,
+        "network": true,
+        "bins": [
+          "python",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ComposioHQ/composio.git",
+        "copy": "cp -r skills/composio ~/.claude/skills/composio",
+        "raw": "https://raw.githubusercontent.com/ComposioHQ/composio/2d2e2918d682de8de1d275555f43749627085b87/skills/composio/SKILL.md",
+        "saveAs": "~/.claude/skills/composio/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:1d9e3e51867fe1a346392631dc3f5139f32317642b9468d49e4b8714df818bdf",
+      "bytes": 6636,
+      "wordCount": 951,
+      "repoLicense": "MIT",
+      "commit": "2d2e2918d682de8de1d275555f43749627085b87",
+      "branch": "next",
+      "body": "---\nname: composio\ndescription: Route and complete Composio work across Composio For You and Composio Platform. Use when the user mentions Composio; wants an agent to use apps such as Gmail, Slack, GitHub, Notion, Calendar, or Linear; needs first-time setup, an SDK or MCP integration, CLI operation, migration guidance, current documentation, or help diagnosing a connection or tool call.\n---\n\n# Composio\n\nUse this skill as a router. Identify the product and the job, load only the relevant guidance, consult canonical documentation for volatile details, and then answer or do the work the user requested.\n\n## 1. Choose the product\n\nDo not blend the products. They use different credentials and setup paths.\n\n| | Composio For You | Composio Platform |\n|---|---|---|\n| Use when | Someone wants their own agent to use their own apps | A developer is building a product whose users connect accounts |\n| Primary surface | MCP or the Composio CLI | SDK sessions inside an application |\n| Credential | `ck_...` consumer key when the client requires a header | `COMPOSIO_API_KEY` project key |\n| Dashboard | `dashboard.composio.dev` → For You | `dashboard.composio.dev` → Platform |\n\nAsk one short question only when context does not establish the product:\n\n> Is this for your own agent and accounts, or for a product where your users connect their accounts?\n\nTreat a named personal AI client with no product code as For You. Treat an application codebase, SDK, user or tenant identity, backend, or product agent as Platform.\n\n## 2. Choose the job\n\nIdentify the requested outcome before taking action:\n\n- **Explain or discover:** answer a question, compare approaches, or find the current API.\n- **Set up:** establish credentials, an MCP client, the CLI, or an SDK for the first time.\n- **Build or change:** integrate Composio into an existing agent or application.\n- **Operate:** find, connect, and run tools for a real task.\n- **Debug or migrate:** diagnose a failure, update an older integration, or move from legacy direct execution or Tool Router.\n\nDo not turn an explanation, documentation lookup, or narrow bug fix into onboarding.\n\n## 3. Load only the relevant guidance\n\n- For You: read [Composio For You](references/for-you.md).\n- Platform: read [Composio Platform](references/platform.md).\n- Provider, connection, or execution failure: also read [Errors and provider gotchas](references/errors.md).\n\n## Complete the selected job\n\n- For a question, fetch current documentation when needed and give the concrete answer. Do not mutate a project or force a tool call.\n- For setup or integration, inspect the existing environment, preserve its architecture and identity model, make the smallest useful change, and verify it with one safe real tool call when credentials and user authorization are available.\n- For an operational request, connect only the apps the task needs and execute the requested workflow.\n- For debugging, get the Composio log or request ID, identify the failing boundary, fix that boundary, and retry when the user authorized execution.\n\n## Stable rules\n\n1. Establish the product before choosing credentials, URLs, SDKs, or commands.\n2. Treat dashboard onboarding as a context, not the skill's identity. When the developer arrives with an existing `COMPOSIO_API_KEY` from Getting Started, use it and never create, rotate, replace, print, or request it in chat. Do not run `composio dev init` in that path.\n3. For a general first-time Platform setup with no dashboard credential handoff, follow the current setup path in the Platform guide.\n4. Never invent toolkit or tool slugs. Discover them at runtime or with the CLI.\n5. Do not build a provider OAuth flow. Composio returns a Connect Link when authentication is needed.\n6. Use sessions for new Platform integrations. Preserve the application's existing user identity and agent architecture.\n7. Keep credentials out of source control, URLs, logs, chat, and command output.\n8. Get the log or request ID before diagnosing a failed tool call.\n9. Prefer the smallest configuration that completes the current job. Keep toolkit filters, tag policies, sandbox controls, custom auth, provider-specific hardening, and other advanced options out of the first path unless the request or existing code requires them.\n10. Do not invent repository facts. Never claim that a file, framework, environment loader, identity field, agent path, or dependency exists until it was provided or inspected. If codebase context is unavailable, state the unknown and ask for access or one necessary detail.\n11. In SDK or API examples, use exact identifiers and call shapes from a current public page or schema. Copy the documented shape for the requested language instead of translating names between TypeScript and Python; if a required detail is not documented, explain the behavior without inventing code.\n\n## Canonical information\n\nUse bundled references for stable decisions. A user-facing source list contains only public `https://docs.composio.dev/...` pages actually consulted; bundled reference names, local paths, and `file://` URLs are omitted. For versions, provider adapters, client-specific setup, toolkit behavior, or APIs that may have changed, use the current canonical documentation and current CLI or tool schemas as the primary sources before answering or editing code:\n\nWhen sources disagree, prefer the current API reference and live endpoint behavior over any page marked Legacy, and name the REST API version explicitly.\n\n```text\nhttps://docs.composio.dev/llms.txt\nhttps://docs.composio.dev/docs/<page>.md\nhttps://docs.composio.dev/toolkits/<toolkit>.md\n```\n\nIf those primary sources do not answer a Composio product or troubleshooting question, query the public unified knowledge search at `https://docs.composio.dev/api/knowledge-search?q=<question>`.\n\nResults may be canonical docs, KB, toolkit, example, or reference pages. Use the returned evidence to answer the question; public records do not establish the live state of a user's account, project, connection, or tool call.\n\nWhen knowledge search supplies evidence, cite the result's returned `canonicalUrl`, not the search API URL. If `canonicalUrl` is relative, prefix it with `https://docs.composio.dev` before citing it.\n\nOnly treat a result as evidence when its excerpt or page directly addresses the question. If no public source directly documents an exact error or symptom, say so instead of diagnosing from adjacent results; request the log or request ID, or the necessary live evidence.\n\nUse the documentation to complete the task. Do not merely hand the user a link unless they asked for one.\n",
+      "bodyMd": "# Composio\n\nUse this skill as a router. Identify the product and the job, load only the relevant guidance, consult canonical documentation for volatile details, and then answer or do the work the user requested.\n\n## 1. Choose the product\n\nDo not blend the products. They use different credentials and setup paths.\n\n| | Composio For You | Composio Platform |\n|---|---|---|\n| Use when | Someone wants their own agent to use their own apps | A developer is building a product whose users connect accounts |\n| Primary surface | MCP or the Composio CLI | SDK sessions inside an application |\n| Credential | `ck_...` consumer key when the client requires a header | `COMPOSIO_API_KEY` project key |\n| Dashboard | `dashboard.composio.dev` → For You | `dashboard.composio.dev` → Platform |\n\nAsk one short question only when context does not establish the product:\n\n> Is this for your own agent and accounts, or for a product where your users connect their accounts?\n\nTreat a named personal AI client with no product code as For You. Treat an application codebase, SDK, user or tenant identity, backend, or product agent as Platform.\n\n## 2. Choose the job\n\nIdentify the requested outcome before taking action:\n\n- **Explain or discover:** answer a question, compare approaches, or find the current API.\n- **Set up:** establish credentials, an MCP client, the CLI, or an SDK for the first time.\n- **Build or change:** integrate Composio into an existing agent or application.\n- **Operate:** find, connect, and run tools for a real task.\n- **Debug or migrate:** diagnose a failure, update an older integration, or move from legacy direct execution or Tool Router.\n\nDo not turn an explanation, documentation lookup, or narrow bug fix into onboarding.\n\n## 3. Load only the relevant guidance\n\n- For You: read [Composio For You](references/for-you.md).\n- Platform: read [Composio Platform](references/platform.md).\n- Provider, connection, or execution failure: also read [Errors and provider gotchas](references/errors.md).\n\n## Complete the selected job\n\n- For a question, fetch current documentation when needed and give the concrete answer. Do not mutate a project or force a tool call.\n- For setup or integration, inspect the existing environment, preserve its architecture and identity model, make the smallest useful change, and verify it with one safe real tool call when credentials and user authorization are available.\n- For an operational request, connect only the apps the task needs and execute the requested workflow.\n- For debugging, get the Composio log or request ID, identify the failing boundary, fix that boundary, and retry when the user authorized execution.\n\n## Stable rules\n\n1. Establish the product before choosing credentials, URLs, SDKs, or commands.\n2. Treat dashboard onboarding as a context, not the skill's identity. When the developer arrives with an existing `COMPOSIO_API_KEY` from Getting Started, use it and never create, rotate, replace, print, or request it in chat. Do not run `composio dev init` in that path.\n3. For a general first-time Platform setup with no dashboard credential handoff, follow the current setup path in the Platform guide.\n4. Never invent toolkit or tool slugs. Discover them at runtime or with the CLI.\n5. Do not build a provider OAuth flow. Composio returns a Connect Link when authentication is needed.\n6. Use sessions for new Platform integrations. Preserve the application's existing user identity and agent architecture.\n7. Keep credentials out of source control, URLs, logs, chat, and command output.\n8. Get the log or request ID before diagnosing a failed tool call.\n9. Prefer the smallest configuration that completes the current job. Keep toolkit filters, tag policies, sandbox controls, custom auth, provider-specific hardening, and other advanced options out of the first path unless the request or existing code requires them.\n10. Do not invent repository facts. Never claim that a file, framework, environment loader, identity field, agent path, or dependency exists until it was provided or inspected. If codebase context is unavailable, state the unknown and ask for access or one necessary detail.\n11. In SDK or API examples, use exact identifiers and call shapes from a current public page or schema. Copy the documented shape for the requested language instead of translating names between TypeScript and Python; if a required detail is not documented, explain the behavior without inventing code.\n\n## Canonical information\n\nUse bundled references for stable decisions. A user-facing source list contains only public `https://docs.composio.dev/...` pages actually consulted; bundled reference names, local paths, and `file://` URLs are omitted. For versions, provider adapters, client-specific setup, toolkit behavior, or APIs that may have changed, use the current canonical documentation and current CLI or tool schemas as the primary sources before answering or editing code:\n\nWhen sources disagree, prefer the current API reference and live endpoint behavior over any page marked Legacy, and name the REST API version explicitly.\n\n```text\nhttps://docs.composio.dev/llms.txt\nhttps://docs.composio.dev/docs/<page>.md\nhttps://docs.composio.dev/toolkits/<toolkit>.md\n```\n\nIf those primary sources do not answer a Composio product or troubleshooting question, query the public unified knowledge search at `https://docs.composio.dev/api/knowledge-search?q=<question>`.\n\nResults may be canonical docs, KB, toolkit, example, or reference pages. Use the returned evidence to answer the question; public records do not establish the live state of a user's account, project, connection, or tool call.\n\nWhen knowledge search supplies evidence, cite the result's returned `canonicalUrl`, not the search API URL. If `canonicalUrl` is relative, prefix it with `https://docs.composio.dev` before citing it.\n\nOnly treat a result as evidence when its excerpt or page directly addresses the question. If no public source directly documents an exact error or symptom, say so instead of diagnosing from adjacent results; request the log or request ID, or the necessary live evidence.\n\nUse the documentation to complete the task. Do not merely hand the user a link unless they asked for one.\n"
+    }
+  ]
+}

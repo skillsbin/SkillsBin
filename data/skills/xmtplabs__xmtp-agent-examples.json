@@ -1,0 +1,358 @@
+{
+  "repo": "xmtplabs/xmtp-agent-examples",
+  "commit": "8116b7fbd4bde327c06a51ec15defe8046be1953",
+  "branch": "main",
+  "fetchedAt": "2026-10-13T06:58:59.561Z",
+  "parseFail": 1,
+  "skills": [
+    {
+      "slug": "building-agents",
+      "name": "building-agents",
+      "dir": "skills/building-agents",
+      "path": "skills/building-agents/SKILL.md",
+      "desc": "Core XMTP Agent SDK setup and patterns. Use when creating new agents, handling messages, setting up middleware, or configuring environment variables. Triggers on agent setup, XMTP configuration, message handling, or middleware implementation.",
+      "descZh": "",
+      "triggers": [
+        "creating new agents",
+        "handling messages",
+        "setting up middleware",
+        "configuring environment"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "npm",
+          "yarn"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/xmtplabs/xmtp-agent-examples.git",
+        "copy": "cp -r skills/building-agents ~/.claude/skills/building-agents",
+        "raw": "https://raw.githubusercontent.com/xmtplabs/xmtp-agent-examples/8116b7fbd4bde327c06a51ec15defe8046be1953/skills/building-agents/SKILL.md",
+        "saveAs": "~/.claude/skills/building-agents/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:07c43a4b593f7197d13c5e3ed49bed1091871e3f6d5d57e3f3b390a2190591f3",
+      "bytes": 2922,
+      "wordCount": 350,
+      "repoLicense": "MIT",
+      "commit": "8116b7fbd4bde327c06a51ec15defe8046be1953",
+      "branch": "main",
+      "body": "---\nname: building-agents\ndescription: Core XMTP Agent SDK setup and patterns. Use when creating new agents, handling messages, setting up middleware, or configuring environment variables. Triggers on agent setup, XMTP configuration, message handling, or middleware implementation.\nlicense: MIT\nmetadata:\n  author: xmtp\n  version: \"1.0.0\"\n---\n\n# XMTP agent basics\n\nBuild event-driven, middleware-powered messaging agents on the XMTP network using the `@xmtp/agent-sdk`.\n\n## When to apply\n\nReference these guidelines when:\n- Creating a new XMTP agent\n- Setting up environment variables\n- Handling text messages and events\n- Implementing middleware\n- Using filters and context helpers\n\n## Rule categories by priority\n\n| Priority | Category | Impact | Prefix |\n|----------|----------|--------|--------|\n| 1 | Setup | CRITICAL | `setup-` |\n| 2 | Events | HIGH | `events-` |\n| 3 | Middleware | MEDIUM | `middleware-` |\n| 4 | Filters | MEDIUM | `filters-` |\n\n## Quick reference\n\n### Setup (CRITICAL)\n- `setup-environment` - Configure environment variables for agent\n- `setup-from-env` - Create agent using Agent.createFromEnv()\n- `setup-manual` - Manual agent creation with signer\n\n### Events (HIGH)\n- `events-text` - Handle text messages\n- `events-lifecycle` - Handle start/stop events\n- `events-conversation` - Handle new DM and group conversations\n- `events-message-types` - Handle different message types (reaction, reply, attachment)\n\n### Middleware (MEDIUM)\n- `middleware-basics` - Create and register middleware\n- `middleware-error-handling` - Handle errors in middleware chain\n- `middleware-command-router` - Use CommandRouter for slash commands\n\n### Filters (MEDIUM)\n- `filters-message-types` - Filter by message type\n- `filters-sender` - Filter out self-messages\n\n## Installation\n\n```bash\nnpm install @xmtp/agent-sdk\n# or\nyarn add @xmtp/agent-sdk\n```\n\nSDK 2.0+ uses unified exports: import everything from `@xmtp/agent-sdk` (no `/debug`, `/middleware`, `/user`, `/util` subpaths).\n\n## Quick start\n\n```typescript\nimport { Agent, getTestUrl } from \"@xmtp/agent-sdk\";\n\n// Create agent using environment variables\nconst agent = await Agent.createFromEnv();\n\n// Handle text messages\nagent.on(\"text\", async (ctx) => {\n  await ctx.conversation.sendText(\"Hello from my XMTP Agent!\");\n});\n\n// Log when ready\nagent.on(\"start\", () => {\n  console.log(`Agent online: ${getTestUrl(agent.client)}`);\n});\n\nawait agent.start();\n```\n\n## Environment variables\n\n| Variable | Purpose | Example |\n|----------|---------|---------|\n| `XMTP_WALLET_KEY` | Private key for wallet | `0x1234...abcd` |\n| `XMTP_DB_ENCRYPTION_KEY` | Database encryption key | `0xabcd...1234` |\n| `XMTP_ENV` | Network environment | `dev` or `production` |\n| `XMTP_DB_DIRECTORY` | Database directory | `./data` |\n\n## How to use\n\nRead individual rule files for detailed explanations:\n\n```\nrules/setup-environment.md\nrules/events-text.md\nrules/middleware-basics.md\n```\n\n",
+      "bodyMd": "# XMTP agent basics\n\nBuild event-driven, middleware-powered messaging agents on the XMTP network using the `@xmtp/agent-sdk`.\n\n## When to apply\n\nReference these guidelines when:\n- Creating a new XMTP agent\n- Setting up environment variables\n- Handling text messages and events\n- Implementing middleware\n- Using filters and context helpers\n\n## Rule categories by priority\n\n| Priority | Category | Impact | Prefix |\n|----------|----------|--------|--------|\n| 1 | Setup | CRITICAL | `setup-` |\n| 2 | Events | HIGH | `events-` |\n| 3 | Middleware | MEDIUM | `middleware-` |\n| 4 | Filters | MEDIUM | `filters-` |\n\n## Quick reference\n\n### Setup (CRITICAL)\n- `setup-environment` - Configure environment variables for agent\n- `setup-from-env` - Create agent using Agent.createFromEnv()\n- `setup-manual` - Manual agent creation with signer\n\n### Events (HIGH)\n- `events-text` - Handle text messages\n- `events-lifecycle` - Handle start/stop events\n- `events-conversation` - Handle new DM and group conversations\n- `events-message-types` - Handle different message types (reaction, reply, attachment)\n\n### Middleware (MEDIUM)\n- `middleware-basics` - Create and register middleware\n- `middleware-error-handling` - Handle errors in middleware chain\n- `middleware-command-router` - Use CommandRouter for slash commands\n\n### Filters (MEDIUM)\n- `filters-message-types` - Filter by message type\n- `filters-sender` - Filter out self-messages\n\n## Installation\n\n```bash\nnpm install @xmtp/agent-sdk\n# or\nyarn add @xmtp/agent-sdk\n```\n\nSDK 2.0+ uses unified exports: import everything from `@xmtp/agent-sdk` (no `/debug`, `/middleware`, `/user`, `/util` subpaths).\n\n## Quick start\n\n```typescript\nimport { Agent, getTestUrl } from \"@xmtp/agent-sdk\";\n\n// Create agent using environment variables\nconst agent = await Agent.createFromEnv();\n\n// Handle text messages\nagent.on(\"text\", async (ctx) => {\n  await ctx.conversation.sendText(\"Hello from my XMTP Agent!\");\n});\n\n// Log when ready\nagent.on(\"start\", () => {\n  console.log(`Agent online: ${getTestUrl(agent.client)}`);\n});\n\nawait agent.start();\n```\n\n## Environment variables\n\n| Variable | Purpose | Example |\n|----------|---------|---------|\n| `XMTP_WALLET_KEY` | Private key for wallet | `0x1234...abcd` |\n| `XMTP_DB_ENCRYPTION_KEY` | Database encryption key | `0xabcd...1234` |\n| `XMTP_ENV` | Network environment | `dev` or `production` |\n| `XMTP_DB_DIRECTORY` | Database directory | `./data` |\n\n## How to use\n\nRead individual rule files for detailed explanations:\n\n```\nrules/setup-environment.md\nrules/events-text.md\nrules/middleware-basics.md\n```\n\n"
+    },
+    {
+      "slug": "creating-inline-actions",
+      "name": "creating-inline-actions",
+      "dir": "skills/creating-inline-actions",
+      "path": "skills/creating-inline-actions/SKILL.md",
+      "desc": "Interactive button-based UI for XMTP agents following XIP-67. Use when creating menus, confirmation dialogs, selection options, or any button-based interaction. Triggers on inline actions, buttons, menus, or ActionBuilder.",
+      "descZh": "",
+      "triggers": [
+        "creating menus",
+        "confirmation dialogs",
+        "selection options"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/xmtplabs/xmtp-agent-examples.git",
+        "copy": "cp -r skills/creating-inline-actions ~/.claude/skills/creating-inline-actions",
+        "raw": "https://raw.githubusercontent.com/xmtplabs/xmtp-agent-examples/8116b7fbd4bde327c06a51ec15defe8046be1953/skills/creating-inline-actions/SKILL.md",
+        "saveAs": "~/.claude/skills/creating-inline-actions/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:69d072837b247f09595eb62e52803057b030e30cf5091608d5c15846bbe1faed",
+      "bytes": 4143,
+      "wordCount": 445,
+      "repoLicense": "MIT",
+      "commit": "8116b7fbd4bde327c06a51ec15defe8046be1953",
+      "branch": "main",
+      "body": "---\nname: creating-inline-actions\ndescription: Interactive button-based UI for XMTP agents following XIP-67. Use when creating menus, confirmation dialogs, selection options, or any button-based interaction. Triggers on inline actions, buttons, menus, or ActionBuilder.\nlicense: MIT\nmetadata:\n  author: xmtp\n  version: \"1.0.0\"\n---\n\n# XMTP inline actions\n\nInteractive button-based UI for XMTP agents following the XIP-67 specification. Users can tap buttons instead of typing commands.\n\n## When to apply\n\nReference these guidelines when:\n- Creating interactive button menus\n- Building confirmation dialogs\n- Implementing selection options\n- Setting up multi-menu navigation\n- Handling action callbacks\n\n## Rule categories by priority\n\n| Priority | Category | Impact | Prefix |\n|----------|----------|--------|--------|\n| 1 | ActionBuilder | CRITICAL | `builder-` |\n| 2 | Helpers | HIGH | `helpers-` |\n| 3 | App Config | MEDIUM | `config-` |\n| 4 | Validators | MEDIUM | `validators-` |\n\n## Quick reference\n\n### ActionBuilder (CRITICAL)\n- `builder-create` - Create action menus with ActionBuilder\n- `builder-send` - Send actions to conversation\n\n### Helpers (HIGH)\n- `helpers-confirmation` - Send confirmation dialogs\n- `helpers-selection` - Send selection menus\n- `helpers-navigation` - Show navigation options\n\n### App Config (MEDIUM)\n- `config-menus` - Configure multi-menu applications\n- `config-initialize` - Initialize app from config\n\n### Validators (MEDIUM)\n- `validators-inbox-id` - Validate inbox ID format\n- `validators-ethereum-address` - Validate Ethereum address\n\n## Quick start\n\n```typescript\n// 1. Add middleware to handle intent messages\nagent.use(inlineActionsMiddleware);\n\n// 2. Register action handlers\nregisterAction(\"my-action\", async (ctx) => {\n  await ctx.conversation.sendText(\"Action executed!\");\n});\n\n// 3. Send interactive buttons\nawait ActionBuilder.create(\"my-menu\", \"Choose an option:\")\n  .add(\"my-action\", \"Click Me\")\n  .add(\"other-action\", \"Cancel\")\n  .send(ctx);\n```\n\n## Implementation snippets\n\n**Action registry and handler:**\n\n```typescript\nimport type { AgentMiddleware, MessageContext } from \"@xmtp/agent-sdk\";\nimport type { Intent } from \"@xmtp/node-sdk\";\n\ntype ActionHandler = (ctx: MessageContext) => Promise<void>;\nconst actionHandlers = new Map<string, ActionHandler>();\n\nconst registerAction = (id: string, handler: ActionHandler) => {\n  actionHandlers.set(id, handler);\n};\n```\n\n**Inline actions middleware:**\n\n```typescript\nconst inlineActionsMiddleware: AgentMiddleware = async (ctx, next) => {\n  if (ctx.message.contentType?.typeId === \"intent\") {\n    const intent = ctx.message.content as Intent;\n    const handler = actionHandlers.get(intent.actionId);\n    if (handler) await handler(ctx);\n    else await ctx.conversation.sendText(`Unknown action: ${intent.actionId}`);\n    return;\n  }\n  await next();\n};\n```\n\n**ActionBuilder class:**\n\n```typescript\nimport { ActionStyle } from \"@xmtp/node-sdk\";\n\nclass ActionBuilder {\n  private actions: { id: string; label: string; style?: ActionStyle }[] = [];\n  constructor(private id: string, private description: string) {}\n  \n  static create(id: string, description: string) {\n    return new ActionBuilder(id, description);\n  }\n  \n  add(id: string, label: string, style?: ActionStyle) {\n    this.actions.push({ id, label, style });\n    return this;\n  }\n  \n  async send(ctx: MessageContext) {\n    await ctx.conversation.sendActions({\n      id: this.id,\n      description: this.description,\n      actions: this.actions,\n    });\n  }\n}\n```\n\n**Confirmation helper:**\n\n```typescript\nconst sendConfirmation = async (\n  ctx: MessageContext, message: string,\n  onYes: ActionHandler, onNo?: ActionHandler\n) => {\n  const ts = Date.now();\n  registerAction(`yes-${ts}`, onYes);\n  registerAction(`no-${ts}`, onNo || (async (c) => c.conversation.sendText(\"Cancelled\")));\n  await ActionBuilder.create(`confirm-${ts}`, message)\n    .add(`yes-${ts}`, \"Yes\").add(`no-${ts}`, \"No\", ActionStyle.Danger).send(ctx);\n};\n```\n\n## How to use\n\nRead individual rule files for detailed explanations:\n\n```\nrules/builder-create.md\nrules/helpers-confirmation.md\nrules/config-menus.md\n```\n\n",
+      "bodyMd": "# XMTP inline actions\n\nInteractive button-based UI for XMTP agents following the XIP-67 specification. Users can tap buttons instead of typing commands.\n\n## When to apply\n\nReference these guidelines when:\n- Creating interactive button menus\n- Building confirmation dialogs\n- Implementing selection options\n- Setting up multi-menu navigation\n- Handling action callbacks\n\n## Rule categories by priority\n\n| Priority | Category | Impact | Prefix |\n|----------|----------|--------|--------|\n| 1 | ActionBuilder | CRITICAL | `builder-` |\n| 2 | Helpers | HIGH | `helpers-` |\n| 3 | App Config | MEDIUM | `config-` |\n| 4 | Validators | MEDIUM | `validators-` |\n\n## Quick reference\n\n### ActionBuilder (CRITICAL)\n- `builder-create` - Create action menus with ActionBuilder\n- `builder-send` - Send actions to conversation\n\n### Helpers (HIGH)\n- `helpers-confirmation` - Send confirmation dialogs\n- `helpers-selection` - Send selection menus\n- `helpers-navigation` - Show navigation options\n\n### App Config (MEDIUM)\n- `config-menus` - Configure multi-menu applications\n- `config-initialize` - Initialize app from config\n\n### Validators (MEDIUM)\n- `validators-inbox-id` - Validate inbox ID format\n- `validators-ethereum-address` - Validate Ethereum address\n\n## Quick start\n\n```typescript\n// 1. Add middleware to handle intent messages\nagent.use(inlineActionsMiddleware);\n\n// 2. Register action handlers\nregisterAction(\"my-action\", async (ctx) => {\n  await ctx.conversation.sendText(\"Action executed!\");\n});\n\n// 3. Send interactive buttons\nawait ActionBuilder.create(\"my-menu\", \"Choose an option:\")\n  .add(\"my-action\", \"Click Me\")\n  .add(\"other-action\", \"Cancel\")\n  .send(ctx);\n```\n\n## Implementation snippets\n\n**Action registry and handler:**\n\n```typescript\nimport type { AgentMiddleware, MessageContext } from \"@xmtp/agent-sdk\";\nimport type { Intent } from \"@xmtp/node-sdk\";\n\ntype ActionHandler = (ctx: MessageContext) => Promise<void>;\nconst actionHandlers = new Map<string, ActionHandler>();\n\nconst registerAction = (id: string, handler: ActionHandler) => {\n  actionHandlers.set(id, handler);\n};\n```\n\n**Inline actions middleware:**\n\n```typescript\nconst inlineActionsMiddleware: AgentMiddleware = async (ctx, next) => {\n  if (ctx.message.contentType?.typeId === \"intent\") {\n    const intent = ctx.message.content as Intent;\n    const handler = actionHandlers.get(intent.actionId);\n    if (handler) await handler(ctx);\n    else await ctx.conversation.sendText(`Unknown action: ${intent.actionId}`);\n    return;\n  }\n  await next();\n};\n```\n\n**ActionBuilder class:**\n\n```typescript\nimport { ActionStyle } from \"@xmtp/node-sdk\";\n\nclass ActionBuilder {\n  private actions: { id: string; label: string; style?: ActionStyle }[] = [];\n  constructor(private id: string, private description: string) {}\n  \n  static create(id: string, description: string) {\n    return new ActionBuilder(id, description);\n  }\n  \n  add(id: string, label: string, style?: ActionStyle) {\n    this.actions.push({ id, label, style });\n    return this;\n  }\n  \n  async send(ctx: MessageContext) {\n    await ctx.conversation.sendActions({\n      id: this.id,\n      description: this.description,\n      actions: this.actions,\n    });\n  }\n}\n```\n\n**Confirmation helper:**\n\n```typescript\nconst sendConfirmation = async (\n  ctx: MessageContext, message: string,\n  onYes: ActionHandler, onNo?: ActionHandler\n) => {\n  const ts = Date.now();\n  registerAction(`yes-${ts}`, onYes);\n  registerAction(`no-${ts}`, onNo || (async (c) => c.conversation.sendText(\"Cancelled\")));\n  await ActionBuilder.create(`confirm-${ts}`, message)\n    .add(`yes-${ts}`, \"Yes\").add(`no-${ts}`, \"No\", ActionStyle.Danger).send(ctx);\n};\n```\n\n## How to use\n\nRead individual rule files for detailed explanations:\n\n```\nrules/builder-create.md\nrules/helpers-confirmation.md\nrules/config-menus.md\n```\n\n"
+    },
+    {
+      "slug": "handling-attachments",
+      "name": "handling-attachments",
+      "dir": "skills/handling-attachments",
+      "path": "skills/handling-attachments/SKILL.md",
+      "desc": "File attachment handling for XMTP agents. Use when sending or receiving images, files, or any encrypted remote attachments. Triggers on file upload, image sending, or remote attachment handling.",
+      "descZh": "",
+      "triggers": [
+        "sending",
+        "receiving images",
+        "files"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/xmtplabs/xmtp-agent-examples.git",
+        "copy": "cp -r skills/handling-attachments ~/.claude/skills/handling-attachments",
+        "raw": "https://raw.githubusercontent.com/xmtplabs/xmtp-agent-examples/8116b7fbd4bde327c06a51ec15defe8046be1953/skills/handling-attachments/SKILL.md",
+        "saveAs": "~/.claude/skills/handling-attachments/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:20270a42198f67f750558521f1a687c5fd9f4f7466323d5dfc579c3289f4090e",
+      "bytes": 1856,
+      "wordCount": 200,
+      "repoLicense": "MIT",
+      "commit": "8116b7fbd4bde327c06a51ec15defe8046be1953",
+      "branch": "main",
+      "body": "---\nname: handling-attachments\ndescription: File attachment handling for XMTP agents. Use when sending or receiving images, files, or any encrypted remote attachments. Triggers on file upload, image sending, or remote attachment handling.\nlicense: MIT\nmetadata:\n  author: xmtp\n  version: \"1.0.0\"\n---\n\n# XMTP attachments\n\nHandle file attachments using encrypted remote attachments. Files are encrypted locally, uploaded to your storage provider, and sent as a remote attachment message.\n\n## When to apply\n\nReference these guidelines when:\n- Sending files or images from an agent\n- Receiving and downloading attachments\n- Implementing custom upload storage\n- Working with encrypted file transfers\n\n## Rule categories by priority\n\n| Priority | Category | Impact | Prefix |\n|----------|----------|--------|--------|\n| 1 | Send | CRITICAL | `send-` |\n| 2 | Receive | CRITICAL | `receive-` |\n| 3 | Upload | HIGH | `upload-` |\n\n## Quick reference\n\n### Send (CRITICAL)\n- `send-remote-attachment` - Send encrypted file attachments\n\n### Receive (CRITICAL)\n- `receive-attachment` - Download and decrypt attachments\n\n### Upload (HIGH)\n- `upload-callback` - Implement custom upload storage (Pinata, S3, etc.)\n\n## Quick start\n\n```typescript\nimport {\n  type AttachmentUploadCallback,\n  downloadRemoteAttachment,\n} from \"@xmtp/agent-sdk\";\n\n// Send an attachment\nconst file = new File([\"Hello, World!\"], \"hello.txt\", { type: \"text/plain\" });\nawait ctx.conversation.sendRemoteAttachment(file, uploadCallback);\n\n// Receive an attachment\nagent.on(\"attachment\", async (ctx) => {\n  const attachment = await downloadRemoteAttachment(ctx.message.content);\n  console.log(`Received: ${attachment.filename}`);\n});\n```\n\n## How to use\n\nRead individual rule files for detailed explanations:\n\n```\nrules/send-remote-attachment.md\nrules/receive-attachment.md\nrules/upload-callback.md\n```\n\n",
+      "bodyMd": "# XMTP attachments\n\nHandle file attachments using encrypted remote attachments. Files are encrypted locally, uploaded to your storage provider, and sent as a remote attachment message.\n\n## When to apply\n\nReference these guidelines when:\n- Sending files or images from an agent\n- Receiving and downloading attachments\n- Implementing custom upload storage\n- Working with encrypted file transfers\n\n## Rule categories by priority\n\n| Priority | Category | Impact | Prefix |\n|----------|----------|--------|--------|\n| 1 | Send | CRITICAL | `send-` |\n| 2 | Receive | CRITICAL | `receive-` |\n| 3 | Upload | HIGH | `upload-` |\n\n## Quick reference\n\n### Send (CRITICAL)\n- `send-remote-attachment` - Send encrypted file attachments\n\n### Receive (CRITICAL)\n- `receive-attachment` - Download and decrypt attachments\n\n### Upload (HIGH)\n- `upload-callback` - Implement custom upload storage (Pinata, S3, etc.)\n\n## Quick start\n\n```typescript\nimport {\n  type AttachmentUploadCallback,\n  downloadRemoteAttachment,\n} from \"@xmtp/agent-sdk\";\n\n// Send an attachment\nconst file = new File([\"Hello, World!\"], \"hello.txt\", { type: \"text/plain\" });\nawait ctx.conversation.sendRemoteAttachment(file, uploadCallback);\n\n// Receive an attachment\nagent.on(\"attachment\", async (ctx) => {\n  const attachment = await downloadRemoteAttachment(ctx.message.content);\n  console.log(`Received: ${attachment.filename}`);\n});\n```\n\n## How to use\n\nRead individual rule files for detailed explanations:\n\n```\nrules/send-remote-attachment.md\nrules/receive-attachment.md\nrules/upload-callback.md\n```\n\n"
+    },
+    {
+      "slug": "handling-commands",
+      "name": "handling-commands",
+      "dir": "skills/handling-commands",
+      "path": "skills/handling-commands/SKILL.md",
+      "desc": "Patterns for handling commands, validating input, and filtering messages in XMTP agents. Use when implementing slash commands, validators, or message filters. Triggers on command handling, input validation, or type guards.",
+      "descZh": "",
+      "triggers": [
+        "validators",
+        "message filters"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/xmtplabs/xmtp-agent-examples.git",
+        "copy": "cp -r skills/handling-commands ~/.claude/skills/handling-commands",
+        "raw": "https://raw.githubusercontent.com/xmtplabs/xmtp-agent-examples/8116b7fbd4bde327c06a51ec15defe8046be1953/skills/handling-commands/SKILL.md",
+        "saveAs": "~/.claude/skills/handling-commands/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:eb0bb6947ae6559113376a8919f3506b3ad602b8b482daf9ec1e38fee2761ce1",
+      "bytes": 1647,
+      "wordCount": 184,
+      "repoLicense": "MIT",
+      "commit": "8116b7fbd4bde327c06a51ec15defe8046be1953",
+      "branch": "main",
+      "body": "---\nname: handling-commands\ndescription: Patterns for handling commands, validating input, and filtering messages in XMTP agents. Use when implementing slash commands, validators, or message filters. Triggers on command handling, input validation, or type guards.\nlicense: MIT\nmetadata:\n  author: xmtp\n  version: \"1.0.0\"\n---\n\n# XMTP commands and validation\n\nBest practices for handling commands, validating input, and filtering messages.\n\n## When to apply\n\nReference these guidelines when:\n- Implementing slash commands\n- Validating hex strings and addresses\n- Filtering message types\n- Using type guards instead of type assertions\n\n## Rule categories by priority\n\n| Priority | Category | Impact | Prefix |\n|----------|----------|--------|--------|\n| 1 | Validators | CRITICAL | `validators-` |\n| 2 | Filters | HIGH | `filters-` |\n| 3 | Type Guards | HIGH | `guards-` |\n\n## Quick reference\n\n### Validators (CRITICAL)\n- `validators-hex` - Use validHex() for hex string validation\n- `validators-address` - Validate Ethereum addresses\n\n### Filters (HIGH)\n- `filters-message-types` - Filter by message type (SDK 2.0+: use direct imports `isText`, `isReaction`, `isReply`, etc. from `@xmtp/agent-sdk`; keep `filter.fromSelf`, `filter.hasDefinedContent`)\n- `filters-sender` - Filter out self-messages\n- `filters-content` - Check for defined content\n\n### Type Guards (HIGH)\n- `guards-codec` - Use usesCodec() instead of type assertions\n- `guards-content-type` - Use filter helpers for type safety\n\n## How to use\n\nRead individual rule files for detailed explanations:\n\n```\nrules/validators-hex.md\nrules/filters-message-types.md\nrules/guards-codec.md\n```\n\n",
+      "bodyMd": "# XMTP commands and validation\n\nBest practices for handling commands, validating input, and filtering messages.\n\n## When to apply\n\nReference these guidelines when:\n- Implementing slash commands\n- Validating hex strings and addresses\n- Filtering message types\n- Using type guards instead of type assertions\n\n## Rule categories by priority\n\n| Priority | Category | Impact | Prefix |\n|----------|----------|--------|--------|\n| 1 | Validators | CRITICAL | `validators-` |\n| 2 | Filters | HIGH | `filters-` |\n| 3 | Type Guards | HIGH | `guards-` |\n\n## Quick reference\n\n### Validators (CRITICAL)\n- `validators-hex` - Use validHex() for hex string validation\n- `validators-address` - Validate Ethereum addresses\n\n### Filters (HIGH)\n- `filters-message-types` - Filter by message type (SDK 2.0+: use direct imports `isText`, `isReaction`, `isReply`, etc. from `@xmtp/agent-sdk`; keep `filter.fromSelf`, `filter.hasDefinedContent`)\n- `filters-sender` - Filter out self-messages\n- `filters-content` - Check for defined content\n\n### Type Guards (HIGH)\n- `guards-codec` - Use usesCodec() instead of type assertions\n- `guards-content-type` - Use filter helpers for type safety\n\n## How to use\n\nRead individual rule files for detailed explanations:\n\n```\nrules/validators-hex.md\nrules/filters-message-types.md\nrules/guards-codec.md\n```\n\n"
+    },
+    {
+      "slug": "handling-transactions",
+      "name": "handling-transactions",
+      "dir": "skills/handling-transactions",
+      "path": "skills/handling-transactions/SKILL.md",
+      "desc": "Token transactions and wallet integration for XMTP agents. Use when sending USDC, creating transaction requests, or handling transaction confirmations. Triggers on USDC transfer, wallet calls, or transaction reference.",
+      "descZh": "",
+      "triggers": [
+        "sending USDC"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/xmtplabs/xmtp-agent-examples.git",
+        "copy": "cp -r skills/handling-transactions ~/.claude/skills/handling-transactions",
+        "raw": "https://raw.githubusercontent.com/xmtplabs/xmtp-agent-examples/8116b7fbd4bde327c06a51ec15defe8046be1953/skills/handling-transactions/SKILL.md",
+        "saveAs": "~/.claude/skills/handling-transactions/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:02a51060639ada1f3e5d23ff932f0b25ce62e6df7e93ac4eb9630529727a8b68",
+      "bytes": 4006,
+      "wordCount": 431,
+      "repoLicense": "MIT",
+      "commit": "8116b7fbd4bde327c06a51ec15defe8046be1953",
+      "branch": "main",
+      "body": "---\nname: handling-transactions\ndescription: Token transactions and wallet integration for XMTP agents. Use when sending USDC, creating transaction requests, or handling transaction confirmations. Triggers on USDC transfer, wallet calls, or transaction reference.\nlicense: MIT\nmetadata:\n  author: xmtp\n  version: \"1.0.0\"\n---\n\n# XMTP transactions\n\nSend and receive token transactions using wallet_sendCalls (EIP-5792) specification.\n\n## When to apply\n\nReference these guidelines when:\n- Sending USDC or other tokens\n- Creating transaction requests\n- Handling transaction confirmations\n- Checking token balances\n- Working with smart contract wallets\n\n## Rule categories by priority\n\n| Priority | Category | Impact | Prefix |\n|----------|----------|--------|--------|\n| 1 | Send | CRITICAL | `send-` |\n| 2 | Receive | CRITICAL | `receive-` |\n| 3 | Balance | HIGH | `balance-` |\n\n## Quick reference\n\n### Send (CRITICAL)\n- `send-usdc-transfer` - Create USDC transfer requests\n- `send-wallet-calls` - Send wallet_sendCalls messages\n\n### Receive (CRITICAL)\n- `receive-transaction-reference` - Handle transaction confirmations\n\n### Balance (HIGH)\n- `balance-check` - Check USDC balance\n\n## Supported networks\n\n| Network | Chain ID | USDC Address |\n|---------|----------|--------------|\n| Base Sepolia | 84532 | `0x036CbD53842c5426634e7929541eC2318f3dCF7e` |\n| Base Mainnet | 8453 | `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913` |\n\n## Quick start\n\nUse the SDK 2.2.0 transaction helpers with viem chains and bigint amounts:\n\n```typescript\nimport {\n  createERC20TransferCalls,\n  getERC20Balance,\n  getERC20Decimals,\n  validHex,\n} from \"@xmtp/agent-sdk\";\nimport { formatUnits, parseUnits } from \"viem\";\nimport { base, baseSepolia } from \"viem/chains\";\n\nconst CHAIN = baseSepolia; // or base for mainnet\nconst USDC_ADDRESS = \"0x036CbD53842c5426634e7929541eC2318f3dCF7e\"; // Base Sepolia\n\n// Get decimals (e.g. 6 for USDC)\nconst decimals = await getERC20Decimals({ chain: CHAIN, tokenAddress: USDC_ADDRESS });\n\n// Check balance (returns bigint; format for display)\nconst balance = await getERC20Balance({\n  chain: CHAIN,\n  tokenAddress: USDC_ADDRESS,\n  address: validHex(address),\n});\nawait ctx.conversation.sendText(`Your balance: ${formatUnits(balance, decimals)} USDC`);\n\n// Create USDC transfer calls (EIP-5792)\nconst calls = createERC20TransferCalls({\n  chain: CHAIN,\n  tokenAddress: USDC_ADDRESS,\n  from: validHex(fromAddress),\n  to: validHex(toAddress),\n  amount: parseUnits(\"1\", decimals), // 1 USDC\n  description: `Transfer 1 USDC on ${CHAIN.name}`,\n});\nawait ctx.conversation.sendWalletSendCalls(calls);\n```\n\n## Implementation snippets\n\n**USDC addresses (viem chains):**\n\n```typescript\nimport { base, baseSepolia } from \"viem/chains\";\n\nconst CHAIN = baseSepolia; // or base\nconst USDC_ADDRESS = CHAIN.id === 8453\n  ? \"0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913\"   // Base Mainnet\n  : \"0x036CbD53842c5426634e7929541eC2318f3dCF7e\";  // Base Sepolia\n```\n\n**Get ERC-20 balance (SDK 2.2.0):**\n\n```typescript\nimport { getERC20Balance, getERC20Decimals } from \"@xmtp/agent-sdk\";\nimport { formatUnits } from \"viem\";\n\nconst balance = await getERC20Balance({\n  chain: CHAIN,\n  tokenAddress: USDC_ADDRESS,\n  address: validHex(address),\n});\nconst decimals = await getERC20Decimals({ chain: CHAIN, tokenAddress: USDC_ADDRESS });\nconst formatted = formatUnits(balance, decimals);\n```\n\n**Create ERC-20 transfer calls (SDK 2.2.0):**\n\n```typescript\nimport { createERC20TransferCalls } from \"@xmtp/agent-sdk\";\nimport { parseUnits } from \"viem\";\n\nconst walletSendCalls = createERC20TransferCalls({\n  chain: CHAIN,\n  tokenAddress: USDC_ADDRESS,\n  from: validHex(senderAddress),\n  to: validHex(recipientAddress),\n  amount: parseUnits(\"2.5\", 6), // 2.5 USDC\n  description: \"Transfer 2.5 USDC\",\n});\nawait ctx.conversation.sendWalletSendCalls(walletSendCalls);\n```\n\n## How to use\n\nRead individual rule files for detailed explanations:\n\n```\nrules/send-usdc-transfer.md\nrules/receive-transaction-reference.md\nrules/balance-check.md\n```\n\n",
+      "bodyMd": "# XMTP transactions\n\nSend and receive token transactions using wallet_sendCalls (EIP-5792) specification.\n\n## When to apply\n\nReference these guidelines when:\n- Sending USDC or other tokens\n- Creating transaction requests\n- Handling transaction confirmations\n- Checking token balances\n- Working with smart contract wallets\n\n## Rule categories by priority\n\n| Priority | Category | Impact | Prefix |\n|----------|----------|--------|--------|\n| 1 | Send | CRITICAL | `send-` |\n| 2 | Receive | CRITICAL | `receive-` |\n| 3 | Balance | HIGH | `balance-` |\n\n## Quick reference\n\n### Send (CRITICAL)\n- `send-usdc-transfer` - Create USDC transfer requests\n- `send-wallet-calls` - Send wallet_sendCalls messages\n\n### Receive (CRITICAL)\n- `receive-transaction-reference` - Handle transaction confirmations\n\n### Balance (HIGH)\n- `balance-check` - Check USDC balance\n\n## Supported networks\n\n| Network | Chain ID | USDC Address |\n|---------|----------|--------------|\n| Base Sepolia | 84532 | `0x036CbD53842c5426634e7929541eC2318f3dCF7e` |\n| Base Mainnet | 8453 | `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913` |\n\n## Quick start\n\nUse the SDK 2.2.0 transaction helpers with viem chains and bigint amounts:\n\n```typescript\nimport {\n  createERC20TransferCalls,\n  getERC20Balance,\n  getERC20Decimals,\n  validHex,\n} from \"@xmtp/agent-sdk\";\nimport { formatUnits, parseUnits } from \"viem\";\nimport { base, baseSepolia } from \"viem/chains\";\n\nconst CHAIN = baseSepolia; // or base for mainnet\nconst USDC_ADDRESS = \"0x036CbD53842c5426634e7929541eC2318f3dCF7e\"; // Base Sepolia\n\n// Get decimals (e.g. 6 for USDC)\nconst decimals = await getERC20Decimals({ chain: CHAIN, tokenAddress: USDC_ADDRESS });\n\n// Check balance (returns bigint; format for display)\nconst balance = await getERC20Balance({\n  chain: CHAIN,\n  tokenAddress: USDC_ADDRESS,\n  address: validHex(address),\n});\nawait ctx.conversation.sendText(`Your balance: ${formatUnits(balance, decimals)} USDC`);\n\n// Create USDC transfer calls (EIP-5792)\nconst calls = createERC20TransferCalls({\n  chain: CHAIN,\n  tokenAddress: USDC_ADDRESS,\n  from: validHex(fromAddress),\n  to: validHex(toAddress),\n  amount: parseUnits(\"1\", decimals), // 1 USDC\n  description: `Transfer 1 USDC on ${CHAIN.name}`,\n});\nawait ctx.conversation.sendWalletSendCalls(calls);\n```\n\n## Implementation snippets\n\n**USDC addresses (viem chains):**\n\n```typescript\nimport { base, baseSepolia } from \"viem/chains\";\n\nconst CHAIN = baseSepolia; // or base\nconst USDC_ADDRESS = CHAIN.id === 8453\n  ? \"0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913\"   // Base Mainnet\n  : \"0x036CbD53842c5426634e7929541eC2318f3dCF7e\";  // Base Sepolia\n```\n\n**Get ERC-20 balance (SDK 2.2.0):**\n\n```typescript\nimport { getERC20Balance, getERC20Decimals } from \"@xmtp/agent-sdk\";\nimport { formatUnits } from \"viem\";\n\nconst balance = await getERC20Balance({\n  chain: CHAIN,\n  tokenAddress: USDC_ADDRESS,\n  address: validHex(address),\n});\nconst decimals = await getERC20Decimals({ chain: CHAIN, tokenAddress: USDC_ADDRESS });\nconst formatted = formatUnits(balance, decimals);\n```\n\n**Create ERC-20 transfer calls (SDK 2.2.0):**\n\n```typescript\nimport { createERC20TransferCalls } from \"@xmtp/agent-sdk\";\nimport { parseUnits } from \"viem\";\n\nconst walletSendCalls = createERC20TransferCalls({\n  chain: CHAIN,\n  tokenAddress: USDC_ADDRESS,\n  from: validHex(senderAddress),\n  to: validHex(recipientAddress),\n  amount: parseUnits(\"2.5\", 6), // 2.5 USDC\n  description: \"Transfer 2.5 USDC\",\n});\nawait ctx.conversation.sendWalletSendCalls(walletSendCalls);\n```\n\n## How to use\n\nRead individual rule files for detailed explanations:\n\n```\nrules/send-usdc-transfer.md\nrules/receive-transaction-reference.md\nrules/balance-check.md\n```\n\n"
+    },
+    {
+      "slug": "managing-groups",
+      "name": "managing-groups",
+      "dir": "skills/managing-groups",
+      "path": "skills/managing-groups/SKILL.md",
+      "desc": "Group conversation management for XMTP agents. Use when creating groups, managing members, setting permissions, or sending welcome messages. Triggers on group creation, member management, or permissions.",
+      "descZh": "",
+      "triggers": [
+        "creating groups",
+        "managing members",
+        "setting permissions",
+        "sending welcome messages"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/xmtplabs/xmtp-agent-examples.git",
+        "copy": "cp -r skills/managing-groups ~/.claude/skills/managing-groups",
+        "raw": "https://raw.githubusercontent.com/xmtplabs/xmtp-agent-examples/8116b7fbd4bde327c06a51ec15defe8046be1953/skills/managing-groups/SKILL.md",
+        "saveAs": "~/.claude/skills/managing-groups/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:a1c69ec60b032b26b493c8bdd5f6c769370b166087dacde13749e1a529e45a91",
+      "bytes": 2008,
+      "wordCount": 236,
+      "repoLicense": "MIT",
+      "commit": "8116b7fbd4bde327c06a51ec15defe8046be1953",
+      "branch": "main",
+      "body": "---\nname: managing-groups\ndescription: Group conversation management for XMTP agents. Use when creating groups, managing members, setting permissions, or sending welcome messages. Triggers on group creation, member management, or permissions.\nlicense: MIT\nmetadata:\n  author: xmtp\n  version: \"1.0.0\"\n---\n\n# XMTP groups\n\nManage group conversations, permissions, and members.\n\n## When to apply\n\nReference these guidelines when:\n- Creating new group conversations\n- Managing group members (add/remove)\n- Setting group permissions\n- Sending welcome messages\n- Gating group access\n\n## Rule categories by priority\n\n| Priority | Category | Impact | Prefix |\n|----------|----------|--------|--------|\n| 1 | Create | CRITICAL | `create-` |\n| 2 | Members | HIGH | `members-` |\n| 3 | Permissions | HIGH | `permissions-` |\n| 4 | Welcome | MEDIUM | `welcome-` |\n\n## Quick reference\n\n### Create (CRITICAL)\n- `create-group` - Create new group conversations\n- `create-dm` - Create direct messages\n\n### Members (HIGH)\n- `members-add` - Add members to groups\n- `members-remove` - Remove members from groups\n- `members-get-address` - Get member Ethereum addresses\n\n### Permissions (HIGH)\n- `permissions-roles` - Understand member, admin, super admin roles\n- `permissions-custom` - Set custom permission policies\n\n### Welcome (MEDIUM)\n- `welcome-on-install` - Send welcome on agent installation\n- `welcome-new-members` - Welcome new group members\n\n## Quick start\n\n```typescript\n// Create a group\nconst group = await agent.createGroupWithAddresses(addresses, {\n  groupName: \"My Group\",\n  groupDescription: \"A cool group\",\n});\n\n// Welcome on new conversations\nagent.on(\"group\", async (ctx) => {\n  await ctx.conversation.sendText(\"Hello group!\");\n});\n\nagent.on(\"dm\", async (ctx) => {\n  await ctx.conversation.sendText(\"Hello! How can I help?\");\n});\n```\n\n## How to use\n\nRead individual rule files for detailed explanations:\n\n```\nrules/create-group.md\nrules/members-add.md\nrules/permissions-roles.md\nrules/welcome-on-install.md\n```\n\n",
+      "bodyMd": "# XMTP groups\n\nManage group conversations, permissions, and members.\n\n## When to apply\n\nReference these guidelines when:\n- Creating new group conversations\n- Managing group members (add/remove)\n- Setting group permissions\n- Sending welcome messages\n- Gating group access\n\n## Rule categories by priority\n\n| Priority | Category | Impact | Prefix |\n|----------|----------|--------|--------|\n| 1 | Create | CRITICAL | `create-` |\n| 2 | Members | HIGH | `members-` |\n| 3 | Permissions | HIGH | `permissions-` |\n| 4 | Welcome | MEDIUM | `welcome-` |\n\n## Quick reference\n\n### Create (CRITICAL)\n- `create-group` - Create new group conversations\n- `create-dm` - Create direct messages\n\n### Members (HIGH)\n- `members-add` - Add members to groups\n- `members-remove` - Remove members from groups\n- `members-get-address` - Get member Ethereum addresses\n\n### Permissions (HIGH)\n- `permissions-roles` - Understand member, admin, super admin roles\n- `permissions-custom` - Set custom permission policies\n\n### Welcome (MEDIUM)\n- `welcome-on-install` - Send welcome on agent installation\n- `welcome-new-members` - Welcome new group members\n\n## Quick start\n\n```typescript\n// Create a group\nconst group = await agent.createGroupWithAddresses(addresses, {\n  groupName: \"My Group\",\n  groupDescription: \"A cool group\",\n});\n\n// Welcome on new conversations\nagent.on(\"group\", async (ctx) => {\n  await ctx.conversation.sendText(\"Hello group!\");\n});\n\nagent.on(\"dm\", async (ctx) => {\n  await ctx.conversation.sendText(\"Hello! How can I help?\");\n});\n```\n\n## How to use\n\nRead individual rule files for detailed explanations:\n\n```\nrules/create-group.md\nrules/members-add.md\nrules/permissions-roles.md\nrules/welcome-on-install.md\n```\n\n"
+    },
+    {
+      "slug": "resolving-domains",
+      "name": "resolving-domains",
+      "dir": "skills/resolving-domains",
+      "path": "skills/resolving-domains/SKILL.md",
+      "desc": "ENS and Web3 identity resolution for XMTP agents. Use when resolving domain names, extracting mentions, or fetching Farcaster profiles. Triggers on ENS resolution, Farcaster lookup, or mention extraction.",
+      "descZh": "",
+      "triggers": [
+        "resolving domain names",
+        "extracting mentions"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor"
+      ],
+      "requires": {
+        "apiKey": true,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/xmtplabs/xmtp-agent-examples.git",
+        "copy": "cp -r skills/resolving-domains ~/.claude/skills/resolving-domains",
+        "raw": "https://raw.githubusercontent.com/xmtplabs/xmtp-agent-examples/8116b7fbd4bde327c06a51ec15defe8046be1953/skills/resolving-domains/SKILL.md",
+        "saveAs": "~/.claude/skills/resolving-domains/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:7e06b9d78aada922881072604586603f6401ecfc4f505ff12a74b2ffa0233052",
+      "bytes": 3975,
+      "wordCount": 426,
+      "repoLicense": "MIT",
+      "commit": "8116b7fbd4bde327c06a51ec15defe8046be1953",
+      "branch": "main",
+      "body": "---\nname: resolving-domains\ndescription: ENS and Web3 identity resolution for XMTP agents. Use when resolving domain names, extracting mentions, or fetching Farcaster profiles. Triggers on ENS resolution, Farcaster lookup, or mention extraction.\nlicense: MIT\nmetadata:\n  author: xmtp\n  version: \"1.0.0\"\n---\n\n# XMTP domain resolver\n\nResolve Web3 identities including ENS, Farcaster, Basenames, and Lens Protocol.\n\n## When to apply\n\nReference these guidelines when:\n- Resolving ENS names to addresses\n- Extracting @mentions from messages\n- Fetching Farcaster profiles\n- Working with shortened addresses in groups\n\n## Rule categories by priority\n\n| Priority | Category | Impact | Prefix |\n|----------|----------|--------|--------|\n| 1 | Resolve | HIGH | `resolve-` |\n| 2 | Extract | HIGH | `extract-` |\n| 3 | Profiles | MEDIUM | `profiles-` |\n\n## Quick reference\n\n### Resolve (HIGH)\n- `resolve-address` - Resolve domain names to addresses\n- `resolve-mentions` - Resolve all mentions in a message\n\n### Extract (HIGH)\n- `extract-mentions` - Extract @mentions from text\n\n### Profiles (MEDIUM)\n- `profiles-farcaster` - Fetch Farcaster profile data\n\n## Supported platforms\n\n- **ENS** - `vitalik.eth`\n- **Farcaster** - `dwr.eth`, `username.farcaster.eth`\n- **Basenames** - `tony.base.eth`\n- **Lens Protocol** - `stani.lens`\n\n## Quick start\n\n```typescript\nimport { createNameResolver } from \"@xmtp/agent-sdk\";\n\n// Resolve a single name using the SDK resolver\nconst resolver = createNameResolver(process.env.WEB3_BIO_API_KEY || \"\");\nconst address = await resolver(\"vitalik.eth\");\n\n// Resolve all mentions in a message\nconst resolved = await resolveMentionsInMessage(\n  ctx.message.content,\n  await ctx.conversation.members()\n);\n// Returns: { \"bankr.eth\": \"0x...\", \"@fabri\": \"0x...\" }\n\n// Get Farcaster profile via web3.bio API\nconst profile = await fetchFarcasterProfile(\"dwr.eth\");\nconsole.log(profile.username, profile.fid);\n```\n\n## Implementation snippets\n\n**Extract mentions from text:**\n\n```typescript\nconst extractMentions = (message: string): string[] => {\n  const mentions: string[] = [];\n  \n  // Full addresses\n  const addresses = message.match(/(0x[a-fA-F0-9]{40})\\b/g);\n  if (addresses) mentions.push(...addresses);\n  \n  // @mentions and domains\n  const atMentions = message.match(/@(?!0x)([\\w.-]+\\.eth|[\\w.-]+)/g);\n  if (atMentions) mentions.push(...atMentions.map(m => m.slice(1)));\n  \n  // Standalone domains\n  const domains = message.match(/\\b([\\w-]+(?:\\.[\\w-]+)*\\.eth)\\b/g);\n  if (domains) mentions.push(...domains);\n  \n  return [...new Set(mentions)];\n};\n```\n\n**Resolve mentions in message:**\n\n```typescript\nimport { createNameResolver } from \"@xmtp/agent-sdk\";\n\nconst resolveMentionsInMessage = async (\n  message: string, members?: GroupMember[]\n): Promise<Record<string, string | null>> => {\n  const resolver = createNameResolver(process.env.WEB3_BIO_API_KEY || \"\");\n  const mentions = extractMentions(message);\n  const results: Record<string, string | null> = {};\n  \n  await Promise.all(mentions.map(async (mention) => {\n    if (mention.match(/^0x[a-fA-F0-9]{40}$/)) {\n      results[mention] = mention;\n    } else {\n      const name = mention.includes(\".\") ? mention : `${mention}.farcaster.eth`;\n      results[mention] = await resolver(name).catch(() => null);\n    }\n  }));\n  return results;\n};\n```\n\n**Fetch Farcaster profile:**\n\n```typescript\nconst fetchFarcasterProfile = async (name: string) => {\n  const response = await fetch(`https://api.web3.bio/profile/${encodeURIComponent(name)}`);\n  if (!response.ok) return { address: null, username: null, fid: null };\n  const data = await response.json();\n  const profile = data?.find((p: any) => p.platform === \"farcaster\");\n  return {\n    address: profile?.address,\n    username: profile?.displayName,\n    fid: profile?.social?.uid?.toString(),\n  };\n};\n```\n\n## How to use\n\nRead individual rule files for detailed explanations:\n\n```\nrules/resolve-address.md\nrules/extract-mentions.md\nrules/profiles-farcaster.md\n```\n\n",
+      "bodyMd": "# XMTP domain resolver\n\nResolve Web3 identities including ENS, Farcaster, Basenames, and Lens Protocol.\n\n## When to apply\n\nReference these guidelines when:\n- Resolving ENS names to addresses\n- Extracting @mentions from messages\n- Fetching Farcaster profiles\n- Working with shortened addresses in groups\n\n## Rule categories by priority\n\n| Priority | Category | Impact | Prefix |\n|----------|----------|--------|--------|\n| 1 | Resolve | HIGH | `resolve-` |\n| 2 | Extract | HIGH | `extract-` |\n| 3 | Profiles | MEDIUM | `profiles-` |\n\n## Quick reference\n\n### Resolve (HIGH)\n- `resolve-address` - Resolve domain names to addresses\n- `resolve-mentions` - Resolve all mentions in a message\n\n### Extract (HIGH)\n- `extract-mentions` - Extract @mentions from text\n\n### Profiles (MEDIUM)\n- `profiles-farcaster` - Fetch Farcaster profile data\n\n## Supported platforms\n\n- **ENS** - `vitalik.eth`\n- **Farcaster** - `dwr.eth`, `username.farcaster.eth`\n- **Basenames** - `tony.base.eth`\n- **Lens Protocol** - `stani.lens`\n\n## Quick start\n\n```typescript\nimport { createNameResolver } from \"@xmtp/agent-sdk\";\n\n// Resolve a single name using the SDK resolver\nconst resolver = createNameResolver(process.env.WEB3_BIO_API_KEY || \"\");\nconst address = await resolver(\"vitalik.eth\");\n\n// Resolve all mentions in a message\nconst resolved = await resolveMentionsInMessage(\n  ctx.message.content,\n  await ctx.conversation.members()\n);\n// Returns: { \"bankr.eth\": \"0x...\", \"@fabri\": \"0x...\" }\n\n// Get Farcaster profile via web3.bio API\nconst profile = await fetchFarcasterProfile(\"dwr.eth\");\nconsole.log(profile.username, profile.fid);\n```\n\n## Implementation snippets\n\n**Extract mentions from text:**\n\n```typescript\nconst extractMentions = (message: string): string[] => {\n  const mentions: string[] = [];\n  \n  // Full addresses\n  const addresses = message.match(/(0x[a-fA-F0-9]{40})\\b/g);\n  if (addresses) mentions.push(...addresses);\n  \n  // @mentions and domains\n  const atMentions = message.match(/@(?!0x)([\\w.-]+\\.eth|[\\w.-]+)/g);\n  if (atMentions) mentions.push(...atMentions.map(m => m.slice(1)));\n  \n  // Standalone domains\n  const domains = message.match(/\\b([\\w-]+(?:\\.[\\w-]+)*\\.eth)\\b/g);\n  if (domains) mentions.push(...domains);\n  \n  return [...new Set(mentions)];\n};\n```\n\n**Resolve mentions in message:**\n\n```typescript\nimport { createNameResolver } from \"@xmtp/agent-sdk\";\n\nconst resolveMentionsInMessage = async (\n  message: string, members?: GroupMember[]\n): Promise<Record<string, string | null>> => {\n  const resolver = createNameResolver(process.env.WEB3_BIO_API_KEY || \"\");\n  const mentions = extractMentions(message);\n  const results: Record<string, string | null> = {};\n  \n  await Promise.all(mentions.map(async (mention) => {\n    if (mention.match(/^0x[a-fA-F0-9]{40}$/)) {\n      results[mention] = mention;\n    } else {\n      const name = mention.includes(\".\") ? mention : `${mention}.farcaster.eth`;\n      results[mention] = await resolver(name).catch(() => null);\n    }\n  }));\n  return results;\n};\n```\n\n**Fetch Farcaster profile:**\n\n```typescript\nconst fetchFarcasterProfile = async (name: string) => {\n  const response = await fetch(`https://api.web3.bio/profile/${encodeURIComponent(name)}`);\n  if (!response.ok) return { address: null, username: null, fid: null };\n  const data = await response.json();\n  const profile = data?.find((p: any) => p.platform === \"farcaster\");\n  return {\n    address: profile?.address,\n    username: profile?.displayName,\n    fid: profile?.social?.uid?.toString(),\n  };\n};\n```\n\n## How to use\n\nRead individual rule files for detailed explanations:\n\n```\nrules/resolve-address.md\nrules/extract-mentions.md\nrules/profiles-farcaster.md\n```\n\n"
+    },
+    {
+      "slug": "sending-reactions",
+      "name": "sending-reactions",
+      "dir": "skills/sending-reactions",
+      "path": "skills/sending-reactions/SKILL.md",
+      "desc": "Emoji reactions and thinking indicators for XMTP agents. Use when adding reactions to messages or showing processing state with thinking emoji. Triggers on emoji reactions, thinking indicator, or message acknowledgment.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/xmtplabs/xmtp-agent-examples.git",
+        "copy": "cp -r skills/sending-reactions ~/.claude/skills/sending-reactions",
+        "raw": "https://raw.githubusercontent.com/xmtplabs/xmtp-agent-examples/8116b7fbd4bde327c06a51ec15defe8046be1953/skills/sending-reactions/SKILL.md",
+        "saveAs": "~/.claude/skills/sending-reactions/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:0d979cedcec9a7f0ce4729c699a89368d5adaa076c2ad0e0de767b9095218a1e",
+      "bytes": 1718,
+      "wordCount": 178,
+      "repoLicense": "MIT",
+      "commit": "8116b7fbd4bde327c06a51ec15defe8046be1953",
+      "branch": "main",
+      "body": "---\nname: sending-reactions\ndescription: Emoji reactions and thinking indicators for XMTP agents. Use when adding reactions to messages or showing processing state with thinking emoji. Triggers on emoji reactions, thinking indicator, or message acknowledgment.\nlicense: MIT\nmetadata:\n  author: xmtp\n  version: \"1.0.0\"\n---\n\n# XMTP reactions\n\nSend and receive emoji reactions, including thinking indicator patterns.\n\n## When to apply\n\nReference these guidelines when:\n- Reacting to user messages with emoji\n- Showing processing/thinking state\n- Receiving and handling reactions\n- Implementing acknowledgment patterns\n\n## Rule categories by priority\n\n| Priority | Category | Impact | Prefix |\n|----------|----------|--------|--------|\n| 1 | Send | HIGH | `send-` |\n| 2 | Receive | HIGH | `receive-` |\n| 3 | Patterns | MEDIUM | `patterns-` |\n\n## Quick reference\n\n### Send (HIGH)\n- `send-reaction` - Send emoji reactions to messages\n\n### Receive (HIGH)\n- `receive-reaction` - Handle incoming reactions\n\n### Patterns (MEDIUM)\n- `patterns-thinking` - Thinking indicator pattern\n\n## Quick start\n\n```typescript\n// Send a reaction\nawait ctx.conversation.sendReaction({\n  reference: ctx.message.id,\n  action: \"added\",\n  content: \"👍\",\n  schema: \"unicode\",\n});\n\n// Thinking indicator pattern\nawait ctx.conversation.sendReaction({\n  reference: ctx.message.id,\n  action: \"added\",\n  content: \"⏳\",\n  schema: \"unicode\",\n});\n\n// Process...\n\nawait ctx.conversation.sendReaction({\n  reference: ctx.message.id,\n  action: \"removed\",\n  content: \"⏳\",\n  schema: \"unicode\",\n});\n```\n\n## How to use\n\nRead individual rule files for detailed explanations:\n\n```\nrules/send-reaction.md\nrules/receive-reaction.md\nrules/patterns-thinking.md\n```\n\n",
+      "bodyMd": "# XMTP reactions\n\nSend and receive emoji reactions, including thinking indicator patterns.\n\n## When to apply\n\nReference these guidelines when:\n- Reacting to user messages with emoji\n- Showing processing/thinking state\n- Receiving and handling reactions\n- Implementing acknowledgment patterns\n\n## Rule categories by priority\n\n| Priority | Category | Impact | Prefix |\n|----------|----------|--------|--------|\n| 1 | Send | HIGH | `send-` |\n| 2 | Receive | HIGH | `receive-` |\n| 3 | Patterns | MEDIUM | `patterns-` |\n\n## Quick reference\n\n### Send (HIGH)\n- `send-reaction` - Send emoji reactions to messages\n\n### Receive (HIGH)\n- `receive-reaction` - Handle incoming reactions\n\n### Patterns (MEDIUM)\n- `patterns-thinking` - Thinking indicator pattern\n\n## Quick start\n\n```typescript\n// Send a reaction\nawait ctx.conversation.sendReaction({\n  reference: ctx.message.id,\n  action: \"added\",\n  content: \"👍\",\n  schema: \"unicode\",\n});\n\n// Thinking indicator pattern\nawait ctx.conversation.sendReaction({\n  reference: ctx.message.id,\n  action: \"added\",\n  content: \"⏳\",\n  schema: \"unicode\",\n});\n\n// Process...\n\nawait ctx.conversation.sendReaction({\n  reference: ctx.message.id,\n  action: \"removed\",\n  content: \"⏳\",\n  schema: \"unicode\",\n});\n```\n\n## How to use\n\nRead individual rule files for detailed explanations:\n\n```\nrules/send-reaction.md\nrules/receive-reaction.md\nrules/patterns-thinking.md\n```\n\n"
+    }
+  ]
+}

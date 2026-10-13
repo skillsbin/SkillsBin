@@ -1,0 +1,140 @@
+{
+  "repo": "nirholas/PAI",
+  "commit": "d76c406ade6730508a8ff02a74598df2be1ea52b",
+  "branch": "main",
+  "fetchedAt": "2026-10-13T06:57:48.953Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "skills",
+      "name": "pai-skills-root",
+      "dir": "skills",
+      "path": "skills/SKILL.md",
+      "desc": "Index of all PAI skills.",
+      "descZh": "",
+      "triggers": [],
+      "version": "0.1.0",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nirholas/PAI.git",
+        "copy": "cp -r skills ~/.claude/skills/skills",
+        "raw": "https://raw.githubusercontent.com/nirholas/PAI/d76c406ade6730508a8ff02a74598df2be1ea52b/skills/SKILL.md",
+        "saveAs": "~/.claude/skills/skills/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:50dcdabca68e7ea398c1ccf30d1850a1aedd1c91c9f1ec191d16e9bc1d05742d",
+      "bytes": 1331,
+      "wordCount": 189,
+      "repoLicense": "",
+      "commit": "d76c406ade6730508a8ff02a74598df2be1ea52b",
+      "branch": "main",
+      "body": "---\nname: pai-skills-root\ndescription: Index of all PAI skills.\nversion: 0.1.0\n---\n\n# PAI Skills — Root Index\n\nThis file is the machine-readable index of every skill shipped in PAI.\nAgents scan `/skills/*/SKILL.md` at session start and use this file as\nthe canonical list of what is available.\n\nFor the human-facing overview of the skill convention, see\n[../SKILLS.md](../SKILLS.md). For how agents consume skills, see\n[../AGENTS.md](../AGENTS.md). For the underlying primitives skills are\nbuilt from, see [../TOOLS.md](../TOOLS.md).\n\n## Catalog\n\n| Name | Description | Status | Link |\n| ---- | ----------- | ------ | ---- |\n| `example-tool` | Template skill demonstrating the PAI `SKILL.md` format. | stable | [example-tool/SKILL.md](example-tool/SKILL.md) |\n\n## How skills are discovered by agents\n\nAt session start, an agent should:\n\n1. Enumerate every `SKILL.md` under `/skills/` (excluding this root\n   index itself).\n2. Parse the YAML frontmatter of each file.\n3. Build an in-memory registry keyed by `name`, with `triggers` used to\n   match user intent.\n4. When a user request matches one or more triggers, the agent loads\n   the full `SKILL.md` body and follows its instructions.\n\nAgents MUST NOT invoke a skill whose `SKILL.md` failed to parse or\nwhose frontmatter is incomplete. Report the problem to the user\ninstead.\n",
+      "bodyMd": "# PAI Skills — Root Index\n\nThis file is the machine-readable index of every skill shipped in PAI.\nAgents scan `/skills/*/SKILL.md` at session start and use this file as\nthe canonical list of what is available.\n\nFor the human-facing overview of the skill convention, see\n[../SKILLS.md](../SKILLS.md). For how agents consume skills, see\n[../AGENTS.md](../AGENTS.md). For the underlying primitives skills are\nbuilt from, see [../TOOLS.md](../TOOLS.md).\n\n## Catalog\n\n| Name | Description | Status | Link |\n| ---- | ----------- | ------ | ---- |\n| `example-tool` | Template skill demonstrating the PAI `SKILL.md` format. | stable | [example-tool/SKILL.md](example-tool/SKILL.md) |\n\n## How skills are discovered by agents\n\nAt session start, an agent should:\n\n1. Enumerate every `SKILL.md` under `/skills/` (excluding this root\n   index itself).\n2. Parse the YAML frontmatter of each file.\n3. Build an in-memory registry keyed by `name`, with `triggers` used to\n   match user intent.\n4. When a user request matches one or more triggers, the agent loads\n   the full `SKILL.md` body and follows its instructions.\n\nAgents MUST NOT invoke a skill whose `SKILL.md` failed to parse or\nwhose frontmatter is incomplete. Report the problem to the user\ninstead.\n"
+    },
+    {
+      "slug": "example-tool",
+      "name": "example-tool",
+      "dir": "skills/example-tool",
+      "path": "skills/example-tool/SKILL.md",
+      "desc": "A template skill demonstrating the PAI SKILL.md format.",
+      "descZh": "",
+      "triggers": [
+        "when the user asks how to author a new skill",
+        "when an agent needs a template to copy"
+      ],
+      "version": "0.1.0",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nirholas/PAI.git",
+        "copy": "cp -r skills/example-tool ~/.claude/skills/example-tool",
+        "raw": "https://raw.githubusercontent.com/nirholas/PAI/d76c406ade6730508a8ff02a74598df2be1ea52b/skills/example-tool/SKILL.md",
+        "saveAs": "~/.claude/skills/example-tool/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:951eda52ef4905548953d241b1da21489591d45230a38a9ba8b9569a8753ebfb",
+      "bytes": 3684,
+      "wordCount": 419,
+      "repoLicense": "",
+      "commit": "d76c406ade6730508a8ff02a74598df2be1ea52b",
+      "branch": "main",
+      "body": "---\nname: example-tool\ndescription: A template skill demonstrating the PAI SKILL.md format.\nversion: 0.1.0\ntriggers:\n  - when the user asks how to author a new skill\n  - when an agent needs a template to copy\ninputs:\n  - name: target_name\n    type: string\n    required: true\n    description: kebab-case name of the new skill\noutputs:\n  - a new directory under /skills/ with a populated SKILL.md\nconstraints:\n  - must not commit secrets\n  - must pass scripts/validate-skills.sh\nexamples:\n  - prompt: \"Create a skill that flashes a USB with the latest ISO\"\n    expected: \"/skills/flash-usb/ with SKILL.md filled in\"\n---\n\n# example-tool\n\nA reference implementation of the PAI `SKILL.md` convention. Copy this\ndirectory as a starting point for any new skill.\n\nRelated docs: [../../SKILLS.md](../../SKILLS.md),\n[../SKILL.md](../SKILL.md), [../../AGENTS.md](../../AGENTS.md),\n[../../TOOLS.md](../../TOOLS.md).\n\n## 1. Purpose\n\n`example-tool` exists so that contributors and agents have a known-good\ntemplate to copy when creating a new PAI skill. It is not intended to\nperform useful work on its own — its value is that every field is\npopulated, every required section exists, and the structure is easy to\nadapt.\n\n## 2. Instructions\n\nWhen this skill is triggered, the agent should:\n\n1. Ask the user for `target_name` if it was not provided. The name must\n   be kebab-case, lowercase, and not already present under `/skills/`.\n2. Create the directory `/skills/<target_name>/`.\n3. Copy `/skills/example-tool/SKILL.md` to\n   `/skills/<target_name>/SKILL.md`.\n4. Update the YAML frontmatter in the new file:\n   - Set `name` to `<target_name>`.\n   - Rewrite `description`, `triggers`, `inputs`, `outputs`,\n     `constraints`, and `examples` for the new skill.\n   - Reset `version` to `0.1.0`.\n5. Rewrite the body sections (Purpose, Instructions, Guardrails,\n   Example session, Testing, Changelog) to describe the new skill.\n6. Add a row for the new skill to the catalog table in\n   [../../SKILLS.md](../../SKILLS.md) and\n   [../SKILL.md](../SKILL.md).\n7. Run `scripts/validate-skills.sh` if it exists; otherwise prompt the\n   reviewer to validate by hand.\n8. Open a pull request.\n\n## 3. Guardrails\n\nThe agent MUST NOT:\n\n- Overwrite an existing skill directory without explicit user approval.\n- Commit credentials, API tokens, or any file listed in `.gitignore`.\n- Declare triggers so broad that the skill would activate for unrelated\n  requests (e.g., `\"any request\"`).\n- Skip the catalog update in [../../SKILLS.md](../../SKILLS.md) — a\n  skill that is not in the catalog is effectively invisible.\n- Increase `version` beyond `0.1.0` on initial creation.\n\n## 4. Example session\n\n```\nUser:  I want to add a skill that generates release notes from a git range.\nAgent: I'll use example-tool as a template. Skill name: generate-release-notes?\nUser:  Yes.\nAgent: Created /skills/generate-release-notes/SKILL.md from the template,\n       updated frontmatter (name, triggers, inputs for git_range), rewrote\n       the body, and added a row to SKILLS.md and skills/SKILL.md.\n       Ready for review.\n```\n\n## 5. Testing this skill\n\nManual-test steps:\n\n1. From a clean checkout, invoke the skill with `target_name=test-skill`.\n2. Verify `/skills/test-skill/SKILL.md` exists and its frontmatter\n   `name` is `test-skill`.\n3. Verify new rows appear in both [../../SKILLS.md](../../SKILLS.md)\n   and [../SKILL.md](../SKILL.md).\n4. Run `scripts/validate-skills.sh` (if present) and confirm exit 0.\n5. `git status` should show only the new skill directory and the two\n   catalog edits — nothing else.\n6. Revert the test changes before committing.\n\n## 6. Changelog\n\n- `0.1.0` — Initial template skill.\n",
+      "bodyMd": "# example-tool\n\nA reference implementation of the PAI `SKILL.md` convention. Copy this\ndirectory as a starting point for any new skill.\n\nRelated docs: [../../SKILLS.md](../../SKILLS.md),\n[../SKILL.md](../SKILL.md), [../../AGENTS.md](../../AGENTS.md),\n[../../TOOLS.md](../../TOOLS.md).\n\n## 1. Purpose\n\n`example-tool` exists so that contributors and agents have a known-good\ntemplate to copy when creating a new PAI skill. It is not intended to\nperform useful work on its own — its value is that every field is\npopulated, every required section exists, and the structure is easy to\nadapt.\n\n## 2. Instructions\n\nWhen this skill is triggered, the agent should:\n\n1. Ask the user for `target_name` if it was not provided. The name must\n   be kebab-case, lowercase, and not already present under `/skills/`.\n2. Create the directory `/skills/<target_name>/`.\n3. Copy `/skills/example-tool/SKILL.md` to\n   `/skills/<target_name>/SKILL.md`.\n4. Update the YAML frontmatter in the new file:\n   - Set `name` to `<target_name>`.\n   - Rewrite `description`, `triggers`, `inputs`, `outputs`,\n     `constraints`, and `examples` for the new skill.\n   - Reset `version` to `0.1.0`.\n5. Rewrite the body sections (Purpose, Instructions, Guardrails,\n   Example session, Testing, Changelog) to describe the new skill.\n6. Add a row for the new skill to the catalog table in\n   [../../SKILLS.md](../../SKILLS.md) and\n   [../SKILL.md](../SKILL.md).\n7. Run `scripts/validate-skills.sh` if it exists; otherwise prompt the\n   reviewer to validate by hand.\n8. Open a pull request.\n\n## 3. Guardrails\n\nThe agent MUST NOT:\n\n- Overwrite an existing skill directory without explicit user approval.\n- Commit credentials, API tokens, or any file listed in `.gitignore`.\n- Declare triggers so broad that the skill would activate for unrelated\n  requests (e.g., `\"any request\"`).\n- Skip the catalog update in [../../SKILLS.md](../../SKILLS.md) — a\n  skill that is not in the catalog is effectively invisible.\n- Increase `version` beyond `0.1.0` on initial creation.\n\n## 4. Example session\n\n```\nUser:  I want to add a skill that generates release notes from a git range.\nAgent: I'll use example-tool as a template. Skill name: generate-release-notes?\nUser:  Yes.\nAgent: Created /skills/generate-release-notes/SKILL.md from the template,\n       updated frontmatter (name, triggers, inputs for git_range), rewrote\n       the body, and added a row to SKILLS.md and skills/SKILL.md.\n       Ready for review.\n```\n\n## 5. Testing this skill\n\nManual-test steps:\n\n1. From a clean checkout, invoke the skill with `target_name=test-skill`.\n2. Verify `/skills/test-skill/SKILL.md` exists and its frontmatter\n   `name` is `test-skill`.\n3. Verify new rows appear in both [../../SKILLS.md](../../SKILLS.md)\n   and [../SKILL.md](../SKILL.md).\n4. Run `scripts/validate-skills.sh` (if present) and confirm exit 0.\n5. `git status` should show only the new skill directory and the two\n   catalog edits — nothing else.\n6. Revert the test changes before committing.\n\n## 6. Changelog\n\n- `0.1.0` — Initial template skill.\n"
+    },
+    {
+      "slug": "summarize-document",
+      "name": "summarize-document",
+      "dir": "skills/summarize-document",
+      "path": "skills/summarize-document/SKILL.md",
+      "desc": "Summarize a document at a requested length.",
+      "descZh": "",
+      "triggers": [
+        "summarize this document",
+        "give me the tldr of this file",
+        "shorten this document to a paragraph",
+        "summarize this pdf",
+        "give me a summary of this file"
+      ],
+      "version": "0.1.0",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python3",
+          "pandoc"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nirholas/PAI.git",
+        "copy": "cp -r skills/summarize-document ~/.claude/skills/summarize-document",
+        "raw": "https://raw.githubusercontent.com/nirholas/PAI/d76c406ade6730508a8ff02a74598df2be1ea52b/skills/summarize-document/SKILL.md",
+        "saveAs": "~/.claude/skills/summarize-document/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:17ffae747e64e6e099d2557dbb8648fdfd8e50db260ab603348d049a0e2d99b2",
+      "bytes": 3988,
+      "wordCount": 429,
+      "repoLicense": "",
+      "commit": "d76c406ade6730508a8ff02a74598df2be1ea52b",
+      "branch": "main",
+      "body": "---\nname: summarize-document\ndescription: Summarize a document at a requested length.\nversion: 0.1.0\nstatus: stable\ncategory: files\nnetwork: none\npreferred_model: qwen2.5:3b\ntriggers:\n  - summarize this document\n  - give me the tldr of this file\n  - shorten this document to a paragraph\n  - summarize this pdf\n  - give me a summary of this file\ninputs:\n  - name: path\n    type: path\n    required: true\n    description: Path to a PDF, DOCX, ODT, MD, TXT, or HTML file.\n  - name: length\n    type: string\n    required: false\n    description: \"short | medium | long (default medium)\"\n  - name: style\n    type: string\n    required: false\n    description: \"plain (default) | bullets | executive\"\noutputs:\n  - summary text in the chosen style and length\nconstraints:\n  - must not upload the file\n  - must refuse to process files > 50 MB without user_confirm\nexamples:\n  - prompt: \"Summarize this research paper as bullet points\"\n    expected: \"bullets-style medium summary without network access\"\n  - prompt: \"Give me a short tldr of this file\"\n    expected: \"plain short summary, a few sentences\"\n---\n\n# summarize-document\n\nSummarize a PDF, DOCX, ODT, MD, TXT, or HTML file locally with no network access.\nUses a map-reduce chunking strategy so large documents are handled without truncation.\n\nRelated docs: [../../SKILLS.md](../../SKILLS.md), [../SKILL.md](../SKILL.md).\n\n## 1. Purpose\n\nProduce a concise, well-structured summary of any supported document at a\nuser-chosen length and style, entirely offline. Useful for research papers,\ncontracts, meeting notes, and long web pages saved as HTML.\n\n## 2. Instructions\n\n1. **Size guard.** Check the file size. If > 50 MB, prompt `user_confirm` before\n   continuing; abort on decline.\n2. **Extract text** based on file extension:\n   - `.pdf` — `pdftotext -layout <path> -`\n   - `.docx` / `.odt` — `pandoc --to plain <path>`\n   - `.html` / `.htm` — `pandoc --strip-comments --to plain <path>`\n   - `.md` / `.txt` / `.rst` — read raw\n3. **Chunk** the extracted text into ~3000-token windows with a 200-token overlap.\n   Approximate token count as `len(text.split()) * 1.3`.\n4. **Map:** send each chunk to the model with the prompt:\n   > \"Summarize this passage in 3-5 sentences. Be factual; do not add information.\"\n5. **Reduce:** concatenate the per-chunk summaries and send to the model with the\n   target length instruction:\n   - `short` — 2-4 sentences total\n   - `medium` (default) — 1 paragraph (~150 words)\n   - `long` — 3-5 paragraphs\n6. **Apply style:**\n   - `plain` (default) — flowing prose\n   - `bullets` — unordered `-` list, one item per key point\n   - `executive` — 3 sentences, then **Key decisions:** and **Open questions:** sections\n7. Emit the summary. Do not emit the extracted text unless `--verbose` is set.\n\n## 3. Guardrails\n\n- Never upload or transmit the document.\n- No em dashes in output prose; use commas or parentheses instead.\n- If the file extension is not in the supported list, report the type and exit; do not guess.\n- If `pdftotext` or `pandoc` is not installed, emit a clear installation hint rather than failing silently.\n\n## 4. Example session\n\n```\nUser:  Summarize ~/Documents/lease.pdf in bullets\nAgent: Extracting text from lease.pdf (142 KB)...\n       Chunking into 4 windows...\n       Summarizing...\n\n       - Lease term: 12 months starting 2026-06-01.\n       - Monthly rent: $1,850 due on the 1st; $50/day late fee after the 5th.\n       - Pet policy: one cat or dog under 25 lb with a $500 deposit.\n       - Termination: 60-day written notice required from either party.\n       - Utilities: tenant pays electric and internet; landlord pays water and trash.\n```\n\n## 5. Testing\n\nRun from the skill root:\n\n```bash\nbash tests/test_basic.sh\npython3 tests/test_chunking.py\npython3 tests/test_length_targets.py\n```\n\nSee [tests/](tests/) for details. Fixtures in [fixtures/](fixtures/).\n\n## 6. Changelog\n\n- `0.1.0` — Initial skill: map-reduce summarizer, three length targets, three styles.",
+      "bodyMd": "# summarize-document\n\nSummarize a PDF, DOCX, ODT, MD, TXT, or HTML file locally with no network access.\nUses a map-reduce chunking strategy so large documents are handled without truncation.\n\nRelated docs: [../../SKILLS.md](../../SKILLS.md), [../SKILL.md](../SKILL.md).\n\n## 1. Purpose\n\nProduce a concise, well-structured summary of any supported document at a\nuser-chosen length and style, entirely offline. Useful for research papers,\ncontracts, meeting notes, and long web pages saved as HTML.\n\n## 2. Instructions\n\n1. **Size guard.** Check the file size. If > 50 MB, prompt `user_confirm` before\n   continuing; abort on decline.\n2. **Extract text** based on file extension:\n   - `.pdf` — `pdftotext -layout <path> -`\n   - `.docx` / `.odt` — `pandoc --to plain <path>`\n   - `.html` / `.htm` — `pandoc --strip-comments --to plain <path>`\n   - `.md` / `.txt` / `.rst` — read raw\n3. **Chunk** the extracted text into ~3000-token windows with a 200-token overlap.\n   Approximate token count as `len(text.split()) * 1.3`.\n4. **Map:** send each chunk to the model with the prompt:\n   > \"Summarize this passage in 3-5 sentences. Be factual; do not add information.\"\n5. **Reduce:** concatenate the per-chunk summaries and send to the model with the\n   target length instruction:\n   - `short` — 2-4 sentences total\n   - `medium` (default) — 1 paragraph (~150 words)\n   - `long` — 3-5 paragraphs\n6. **Apply style:**\n   - `plain` (default) — flowing prose\n   - `bullets` — unordered `-` list, one item per key point\n   - `executive` — 3 sentences, then **Key decisions:** and **Open questions:** sections\n7. Emit the summary. Do not emit the extracted text unless `--verbose` is set.\n\n## 3. Guardrails\n\n- Never upload or transmit the document.\n- No em dashes in output prose; use commas or parentheses instead.\n- If the file extension is not in the supported list, report the type and exit; do not guess.\n- If `pdftotext` or `pandoc` is not installed, emit a clear installation hint rather than failing silently.\n\n## 4. Example session\n\n```\nUser:  Summarize ~/Documents/lease.pdf in bullets\nAgent: Extracting text from lease.pdf (142 KB)...\n       Chunking into 4 windows...\n       Summarizing...\n\n       - Lease term: 12 months starting 2026-06-01.\n       - Monthly rent: $1,850 due on the 1st; $50/day late fee after the 5th.\n       - Pet policy: one cat or dog under 25 lb with a $500 deposit.\n       - Termination: 60-day written notice required from either party.\n       - Utilities: tenant pays electric and internet; landlord pays water and trash.\n```\n\n## 5. Testing\n\nRun from the skill root:\n\n```bash\nbash tests/test_basic.sh\npython3 tests/test_chunking.py\npython3 tests/test_length_targets.py\n```\n\nSee [tests/](tests/) for details. Fixtures in [fixtures/](fixtures/).\n\n## 6. Changelog\n\n- `0.1.0` — Initial skill: map-reduce summarizer, three length targets, three styles."
+    }
+  ]
+}

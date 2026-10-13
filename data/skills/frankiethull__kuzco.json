@@ -1,0 +1,259 @@
+{
+  "repo": "frankiethull/kuzco",
+  "commit": "f27c0c59fbe28ca1cb0a77d1f974896d3493e87c",
+  "branch": "main",
+  "fetchedAt": "2026-10-13T06:58:33.348Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "kuzco-alt-text",
+      "name": "kuzco-alt-text",
+      "dir": "skills/kuzco-alt-text",
+      "path": "skills/kuzco-alt-text/SKILL.md",
+      "desc": "Generate accessibility alt text for an image with a local vision LLM. Wraps kuzco's tool_llm_image_alt_text() ellmer tool. Use when the task needs a short textual description of an image, e.g. for accessibility, captions, or image indexing.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/frankiethull/kuzco.git",
+        "copy": "cp -r skills/kuzco-alt-text ~/.claude/skills/kuzco-alt-text",
+        "raw": "https://raw.githubusercontent.com/frankiethull/kuzco/f27c0c59fbe28ca1cb0a77d1f974896d3493e87c/skills/kuzco-alt-text/SKILL.md",
+        "saveAs": "~/.claude/skills/kuzco-alt-text/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:99bffbda2b308a5d9193943e0093f725026fe8b4f0b1ccd480b5e9c51e8a3b52",
+      "bytes": 1762,
+      "wordCount": 218,
+      "repoLicense": "",
+      "commit": "f27c0c59fbe28ca1cb0a77d1f974896d3493e87c",
+      "branch": "main",
+      "body": "---\nname: kuzco-alt-text\ndescription: Generate accessibility alt text for an image with a local vision LLM. Wraps kuzco's tool_llm_image_alt_text() ellmer tool. Use when the task needs a short textual description of an image, e.g. for accessibility, captions, or image indexing.\n---\n\n# kuzco-alt-text\n\nGenerate alt text for an image using a local vision language model, exposed as an\n[ellmer](https://ellmer.tidyverse.org/) tool by the kuzco R package.\n\n## When to use\n\nThe user wants a textual description of an image: accessibility alt text, a caption,\nor a quick summary of image contents for indexing or search.\n\n## Setup\n\nRegister the tool on an ellmer chat. The model and provider are fixed at registration;\nthe LLM controls the image path, extra prompt text, and output language per call.\n\n```r\nlibrary(kuzco)\nlibrary(ellmer)\n\nchat <- chat_ollama(model = \"qwen2.5vl\")\nchat$register_tool(tool_llm_image_alt_text())\n```\n\nTo use a different model or a hosted provider, pass them to the constructor:\n\n```r\nchat$register_tool(tool_llm_image_alt_text(\n  llm_model = \"qwen2.5vl\",\n  provider = \"ollama\"\n))\n```\n\n## Tool arguments (LLM-controlled)\n\n- `image` (required): local file path to a jpeg, jpg, or png image.\n- `additional_prompt` (optional): extra instructions appended to the image prompt,\n  e.g. \"focus on the people in the foreground\".\n- `language` (optional): output language, e.g. \"English\", \"Spanish\".\n\n## Result\n\nCompact JSON text describing the image, returned to the model as the tool result.\nRelay the description to the user; do not invent details beyond what the tool returned.\n\n## Example\n\n> User: \"Write alt text for img/photo.jpg\"\n> 1. Call `kuzco_image_alt_text` with `image = \"img/photo.jpg\"`.\n> 2. Return the description as the alt text.\n",
+      "bodyMd": "# kuzco-alt-text\n\nGenerate alt text for an image using a local vision language model, exposed as an\n[ellmer](https://ellmer.tidyverse.org/) tool by the kuzco R package.\n\n## When to use\n\nThe user wants a textual description of an image: accessibility alt text, a caption,\nor a quick summary of image contents for indexing or search.\n\n## Setup\n\nRegister the tool on an ellmer chat. The model and provider are fixed at registration;\nthe LLM controls the image path, extra prompt text, and output language per call.\n\n```r\nlibrary(kuzco)\nlibrary(ellmer)\n\nchat <- chat_ollama(model = \"qwen2.5vl\")\nchat$register_tool(tool_llm_image_alt_text())\n```\n\nTo use a different model or a hosted provider, pass them to the constructor:\n\n```r\nchat$register_tool(tool_llm_image_alt_text(\n  llm_model = \"qwen2.5vl\",\n  provider = \"ollama\"\n))\n```\n\n## Tool arguments (LLM-controlled)\n\n- `image` (required): local file path to a jpeg, jpg, or png image.\n- `additional_prompt` (optional): extra instructions appended to the image prompt,\n  e.g. \"focus on the people in the foreground\".\n- `language` (optional): output language, e.g. \"English\", \"Spanish\".\n\n## Result\n\nCompact JSON text describing the image, returned to the model as the tool result.\nRelay the description to the user; do not invent details beyond what the tool returned.\n\n## Example\n\n> User: \"Write alt text for img/photo.jpg\"\n> 1. Call `kuzco_image_alt_text` with `image = \"img/photo.jpg\"`.\n> 2. Return the description as the alt text.\n"
+    },
+    {
+      "slug": "kuzco-classification",
+      "name": "kuzco-classification",
+      "dir": "skills/kuzco-classification",
+      "path": "skills/kuzco-classification/SKILL.md",
+      "desc": "Classify an image and describe its contents with a local vision LLM. Wraps kuzco's tool_llm_image_classification() ellmer tool. Use when the task needs image classification, object identification, or a structured description of what an image contains.",
+      "descZh": "",
+      "triggers": [
+        "object identification"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/frankiethull/kuzco.git",
+        "copy": "cp -r skills/kuzco-classification ~/.claude/skills/kuzco-classification",
+        "raw": "https://raw.githubusercontent.com/frankiethull/kuzco/f27c0c59fbe28ca1cb0a77d1f974896d3493e87c/skills/kuzco-classification/SKILL.md",
+        "saveAs": "~/.claude/skills/kuzco-classification/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:a64938d21cce10308af6990b497eeb10cc4017f1bce0a8b1e7922d81a3241ce5",
+      "bytes": 1637,
+      "wordCount": 172,
+      "repoLicense": "",
+      "commit": "f27c0c59fbe28ca1cb0a77d1f974896d3493e87c",
+      "branch": "main",
+      "body": "---\nname: kuzco-classification\ndescription: Classify an image and describe its contents with a local vision LLM. Wraps kuzco's tool_llm_image_classification() ellmer tool. Use when the task needs image classification, object identification, or a structured description of what an image contains.\n---\n\n# kuzco-classification\n\nClassify an image and describe its contents using a local vision language model,\nexposed as an [ellmer](https://ellmer.tidyverse.org/) tool by the kuzco R package.\n\n## When to use\n\nThe user wants to know what an image shows: its category, the primary and secondary\nobjects, a description, dominant colors, or class probabilities. This is the default\nskill for \"what is in this image?\" questions.\n\n## Setup\n\n```r\nlibrary(kuzco)\nlibrary(ellmer)\n\nchat <- chat_ollama(model = \"qwen2.5vl\")\nchat$register_tool(tool_llm_image_classification())\n```\n\n## Tool arguments (LLM-controlled)\n\n- `image` (required): local file path to a jpeg, jpg, or png image.\n- `additional_prompt` (optional): extra instructions, e.g. \"pay special attention to text on signs\".\n- `language` (optional): output language, e.g. \"English\".\n\n## Result\n\nCompact JSON text with `image_classification`, `primary_object`, `secondary_object`,\n`image_description`, `image_colors`, and `image_proba_names` / `image_proba_values`.\nSummarize the key fields for the user; quote the description verbatim when asked for detail.\n\n## Example\n\n> User: \"What animal is in img/puppy.jpg?\"\n> 1. Call `kuzco_image_classification` with `image = \"img/puppy.jpg\"`.\n> 2. Answer from `primary_object` and `image_description`, mentioning the classification and confidence.\n",
+      "bodyMd": "# kuzco-classification\n\nClassify an image and describe its contents using a local vision language model,\nexposed as an [ellmer](https://ellmer.tidyverse.org/) tool by the kuzco R package.\n\n## When to use\n\nThe user wants to know what an image shows: its category, the primary and secondary\nobjects, a description, dominant colors, or class probabilities. This is the default\nskill for \"what is in this image?\" questions.\n\n## Setup\n\n```r\nlibrary(kuzco)\nlibrary(ellmer)\n\nchat <- chat_ollama(model = \"qwen2.5vl\")\nchat$register_tool(tool_llm_image_classification())\n```\n\n## Tool arguments (LLM-controlled)\n\n- `image` (required): local file path to a jpeg, jpg, or png image.\n- `additional_prompt` (optional): extra instructions, e.g. \"pay special attention to text on signs\".\n- `language` (optional): output language, e.g. \"English\".\n\n## Result\n\nCompact JSON text with `image_classification`, `primary_object`, `secondary_object`,\n`image_description`, `image_colors`, and `image_proba_names` / `image_proba_values`.\nSummarize the key fields for the user; quote the description verbatim when asked for detail.\n\n## Example\n\n> User: \"What animal is in img/puppy.jpg?\"\n> 1. Call `kuzco_image_classification` with `image = \"img/puppy.jpg\"`.\n> 2. Answer from `primary_object` and `image_description`, mentioning the classification and confidence.\n"
+    },
+    {
+      "slug": "kuzco-custom",
+      "name": "kuzco-custom",
+      "dir": "skills/kuzco-custom",
+      "path": "skills/kuzco-custom/SKILL.md",
+      "desc": "Run a custom computer-vision prompt against an image with a local vision LLM. Wraps kuzco's tool_llm_image_custom() ellmer tool. Use when none of the specialized kuzco image skills (classification, OCR, recognition, sentiment, alt text) fit the task.",
+      "descZh": "",
+      "triggers": [
+        "OCR",
+        "recognition",
+        "sentiment"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/frankiethull/kuzco.git",
+        "copy": "cp -r skills/kuzco-custom ~/.claude/skills/kuzco-custom",
+        "raw": "https://raw.githubusercontent.com/frankiethull/kuzco/f27c0c59fbe28ca1cb0a77d1f974896d3493e87c/skills/kuzco-custom/SKILL.md",
+        "saveAs": "~/.claude/skills/kuzco-custom/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:a5ff6ff27b85ea383b4809eb57de3802f73e44937ad2dc358cf8dc9a2cffb089",
+      "bytes": 1850,
+      "wordCount": 232,
+      "repoLicense": "",
+      "commit": "f27c0c59fbe28ca1cb0a77d1f974896d3493e87c",
+      "branch": "main",
+      "body": "---\nname: kuzco-custom\ndescription: Run a custom computer-vision prompt against an image with a local vision LLM. Wraps kuzco's tool_llm_image_custom() ellmer tool. Use when none of the specialized kuzco image skills (classification, OCR, recognition, sentiment, alt text) fit the task.\n---\n\n# kuzco-custom\n\nRun an arbitrary computer-vision prompt against an image using a local vision\nlanguage model, exposed as an [ellmer](https://ellmer.tidyverse.org/) tool by the\nkuzco R package. This is the escape hatch for image tasks the specialized skills\ndo not cover.\n\n## When to use\n\nThe task needs something from an image that classification, OCR, object recognition,\nsentiment analysis, or alt text do not capture — e.g. \"count the windows\", \"is anyone\nwearing a red hat?\", \"describe the chart axes\". Prefer a specialized skill when one fits;\nuse this one otherwise.\n\n## Setup\n\n```r\nlibrary(kuzco)\nlibrary(ellmer)\n\nchat <- chat_ollama(model = \"qwen2.5vl\")\nchat$register_tool(tool_llm_image_custom())\n```\n\n## Tool arguments (LLM-controlled)\n\n- `image` (required): local file path to a jpeg, jpg, or png image.\n- `image_prompt` (required): the prompt describing what to extract or describe about\n  the image. Be specific: state exactly what to look for and what shape the answer\n  should take.\n- `system_prompt` (optional): persona/style steering, defaults to a terse computer\n  vision assistant.\n\n## Result\n\nCompact JSON text with the model's structured response to the custom prompt.\nPresent it directly; do not reformat structured fields the user asked for.\n\n## Example\n\n> User: \"How many bicycles are in img/street.jpg?\"\n> 1. Call `kuzco_image_custom` with `image = \"img/street.jpg\"` and\n>    `image_prompt = \"Count the bicycles visible in the image. Return the count and briefly describe where each one is.\"`.\n> 2. Report the count and locations.\n",
+      "bodyMd": "# kuzco-custom\n\nRun an arbitrary computer-vision prompt against an image using a local vision\nlanguage model, exposed as an [ellmer](https://ellmer.tidyverse.org/) tool by the\nkuzco R package. This is the escape hatch for image tasks the specialized skills\ndo not cover.\n\n## When to use\n\nThe task needs something from an image that classification, OCR, object recognition,\nsentiment analysis, or alt text do not capture — e.g. \"count the windows\", \"is anyone\nwearing a red hat?\", \"describe the chart axes\". Prefer a specialized skill when one fits;\nuse this one otherwise.\n\n## Setup\n\n```r\nlibrary(kuzco)\nlibrary(ellmer)\n\nchat <- chat_ollama(model = \"qwen2.5vl\")\nchat$register_tool(tool_llm_image_custom())\n```\n\n## Tool arguments (LLM-controlled)\n\n- `image` (required): local file path to a jpeg, jpg, or png image.\n- `image_prompt` (required): the prompt describing what to extract or describe about\n  the image. Be specific: state exactly what to look for and what shape the answer\n  should take.\n- `system_prompt` (optional): persona/style steering, defaults to a terse computer\n  vision assistant.\n\n## Result\n\nCompact JSON text with the model's structured response to the custom prompt.\nPresent it directly; do not reformat structured fields the user asked for.\n\n## Example\n\n> User: \"How many bicycles are in img/street.jpg?\"\n> 1. Call `kuzco_image_custom` with `image = \"img/street.jpg\"` and\n>    `image_prompt = \"Count the bicycles visible in the image. Return the count and briefly describe where each one is.\"`.\n> 2. Report the count and locations.\n"
+    },
+    {
+      "slug": "kuzco-extract-text",
+      "name": "kuzco-extract-text",
+      "dir": "skills/kuzco-extract-text",
+      "path": "skills/kuzco-extract-text/SKILL.md",
+      "desc": "Extract text visible in an image (OCR) with a local vision LLM. Wraps kuzco's tool_llm_image_extract_text() ellmer tool. Use when the task needs reading text from screenshots, documents, signs, labels, or any image containing writing.",
+      "descZh": "",
+      "triggers": [
+        "documents",
+        "signs",
+        "labels",
+        "any image conta"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/frankiethull/kuzco.git",
+        "copy": "cp -r skills/kuzco-extract-text ~/.claude/skills/kuzco-extract-text",
+        "raw": "https://raw.githubusercontent.com/frankiethull/kuzco/f27c0c59fbe28ca1cb0a77d1f974896d3493e87c/skills/kuzco-extract-text/SKILL.md",
+        "saveAs": "~/.claude/skills/kuzco-extract-text/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:dc913b93d1f1268c9ac59611f76851f160cd48a72568d51763cacbda6df2ca21",
+      "bytes": 1498,
+      "wordCount": 172,
+      "repoLicense": "",
+      "commit": "f27c0c59fbe28ca1cb0a77d1f974896d3493e87c",
+      "branch": "main",
+      "body": "---\nname: kuzco-extract-text\ndescription: Extract text visible in an image (OCR) with a local vision LLM. Wraps kuzco's tool_llm_image_extract_text() ellmer tool. Use when the task needs reading text from screenshots, documents, signs, labels, or any image containing writing.\n---\n\n# kuzco-extract-text\n\nExtract text visible in an image (OCR) using a local vision language model, exposed\nas an [ellmer](https://ellmer.tidyverse.org/) tool by the kuzco R package.\n\n## When to use\n\nThe user wants the text content of an image: screenshots, scanned documents, photos\nof signs or labels, memes, charts with annotations. If the task is about the image\nas a whole rather than its text, use kuzco-classification instead.\n\n## Setup\n\n```r\nlibrary(kuzco)\nlibrary(ellmer)\n\nchat <- chat_ollama(model = \"qwen2.5vl\")\nchat$register_tool(tool_llm_image_extract_text())\n```\n\n## Tool arguments (LLM-controlled)\n\n- `image` (required): local file path to a jpeg, jpg, or png image.\n- `additional_prompt` (optional): extra instructions, e.g. \"only transcribe the headline\".\n- `language` (optional): output language, e.g. \"English\".\n\n## Result\n\nCompact JSON text with the extracted text and a confidence score. Reproduce the\ntranscribed text faithfully; flag low confidence to the user rather than silently\n\"fixing\" unclear passages.\n\n## Example\n\n> User: \"What does the sign say in img/sign.jpg?\"\n> 1. Call `kuzco_image_extract_text` with `image = \"img/sign.jpg\"`.\n> 2. Quote the extracted text and note the confidence.\n",
+      "bodyMd": "# kuzco-extract-text\n\nExtract text visible in an image (OCR) using a local vision language model, exposed\nas an [ellmer](https://ellmer.tidyverse.org/) tool by the kuzco R package.\n\n## When to use\n\nThe user wants the text content of an image: screenshots, scanned documents, photos\nof signs or labels, memes, charts with annotations. If the task is about the image\nas a whole rather than its text, use kuzco-classification instead.\n\n## Setup\n\n```r\nlibrary(kuzco)\nlibrary(ellmer)\n\nchat <- chat_ollama(model = \"qwen2.5vl\")\nchat$register_tool(tool_llm_image_extract_text())\n```\n\n## Tool arguments (LLM-controlled)\n\n- `image` (required): local file path to a jpeg, jpg, or png image.\n- `additional_prompt` (optional): extra instructions, e.g. \"only transcribe the headline\".\n- `language` (optional): output language, e.g. \"English\".\n\n## Result\n\nCompact JSON text with the extracted text and a confidence score. Reproduce the\ntranscribed text faithfully; flag low confidence to the user rather than silently\n\"fixing\" unclear passages.\n\n## Example\n\n> User: \"What does the sign say in img/sign.jpg?\"\n> 1. Call `kuzco_image_extract_text` with `image = \"img/sign.jpg\"`.\n> 2. Quote the extracted text and note the confidence.\n"
+    },
+    {
+      "slug": "kuzco-recognition",
+      "name": "kuzco-recognition",
+      "dir": "skills/kuzco-recognition",
+      "path": "skills/kuzco-recognition/SKILL.md",
+      "desc": "Recognize and locate instances of an object in an image with a local vision LLM. Wraps kuzco's tool_llm_image_recognition() ellmer tool. Use when the task needs finding, counting, or locating specific objects (faces, cars, animals) in an image.",
+      "descZh": "",
+      "triggers": [
+        "the task needs finding",
+        "counting",
+        "cars",
+        "animals) in a"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/frankiethull/kuzco.git",
+        "copy": "cp -r skills/kuzco-recognition ~/.claude/skills/kuzco-recognition",
+        "raw": "https://raw.githubusercontent.com/frankiethull/kuzco/f27c0c59fbe28ca1cb0a77d1f974896d3493e87c/skills/kuzco-recognition/SKILL.md",
+        "saveAs": "~/.claude/skills/kuzco-recognition/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:37ef97649a320ffebb31c84859381a442b6ba2852e44879f22a4922d977cee2f",
+      "bytes": 1675,
+      "wordCount": 187,
+      "repoLicense": "",
+      "commit": "f27c0c59fbe28ca1cb0a77d1f974896d3493e87c",
+      "branch": "main",
+      "body": "---\nname: kuzco-recognition\ndescription: Recognize and locate instances of an object in an image with a local vision LLM. Wraps kuzco's tool_llm_image_recognition() ellmer tool. Use when the task needs finding, counting, or locating specific objects (faces, cars, animals) in an image.\n---\n\n# kuzco-recognition\n\nRecognize and locate instances of an object in an image using a local vision\nlanguage model, exposed as an [ellmer](https://ellmer.tidyverse.org/) tool by the\nkuzco R package.\n\n## When to use\n\nThe user wants to find a specific kind of object in an image: faces, cars, dogs,\ntext regions. Counting instances and describing/locating each one. For general\n\"what is in this image?\" questions, use kuzco-classification instead.\n\n## Setup\n\n```r\nlibrary(kuzco)\nlibrary(ellmer)\n\nchat <- chat_ollama(model = \"qwen2.5vl\")\nchat$register_tool(tool_llm_image_recognition())\n```\n\n## Tool arguments (LLM-controlled)\n\n- `image` (required): local file path to a jpeg, jpg, or png image.\n- `recognize_object` (optional): the object to recognize, e.g. \"face\", \"car\", \"dog\".\n  Defaults to \"face\".\n- `additional_prompt` (optional): extra instructions, e.g. \"only count adults\".\n- `language` (optional): output language, e.g. \"English\".\n\n## Result\n\nCompact JSON text with `object_recognized`, `object_count`, `object_description`,\nand `object_location`. Report the count first, then describe/locate instances.\nIf the count is zero, say so plainly rather than hedging.\n\n## Example\n\n> User: \"How many faces are in img/group.jpg and where?\"\n> 1. Call `kuzco_image_recognition` with `image = \"img/group.jpg\"`, `recognize_object = \"face\"`.\n> 2. Report the count and describe each location.\n",
+      "bodyMd": "# kuzco-recognition\n\nRecognize and locate instances of an object in an image using a local vision\nlanguage model, exposed as an [ellmer](https://ellmer.tidyverse.org/) tool by the\nkuzco R package.\n\n## When to use\n\nThe user wants to find a specific kind of object in an image: faces, cars, dogs,\ntext regions. Counting instances and describing/locating each one. For general\n\"what is in this image?\" questions, use kuzco-classification instead.\n\n## Setup\n\n```r\nlibrary(kuzco)\nlibrary(ellmer)\n\nchat <- chat_ollama(model = \"qwen2.5vl\")\nchat$register_tool(tool_llm_image_recognition())\n```\n\n## Tool arguments (LLM-controlled)\n\n- `image` (required): local file path to a jpeg, jpg, or png image.\n- `recognize_object` (optional): the object to recognize, e.g. \"face\", \"car\", \"dog\".\n  Defaults to \"face\".\n- `additional_prompt` (optional): extra instructions, e.g. \"only count adults\".\n- `language` (optional): output language, e.g. \"English\".\n\n## Result\n\nCompact JSON text with `object_recognized`, `object_count`, `object_description`,\nand `object_location`. Report the count first, then describe/locate instances.\nIf the count is zero, say so plainly rather than hedging.\n\n## Example\n\n> User: \"How many faces are in img/group.jpg and where?\"\n> 1. Call `kuzco_image_recognition` with `image = \"img/group.jpg\"`, `recognize_object = \"face\"`.\n> 2. Report the count and describe each location.\n"
+    },
+    {
+      "slug": "kuzco-sentiment",
+      "name": "kuzco-sentiment",
+      "dir": "skills/kuzco-sentiment",
+      "path": "skills/kuzco-sentiment/SKILL.md",
+      "desc": "Analyze the sentiment or mood conveyed by an image with a local vision LLM. Wraps kuzco's tool_llm_image_sentiment() ellmer tool. Use when the task needs the emotional tone of an image, e.g. for content moderation, marketing, or curation.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/frankiethull/kuzco.git",
+        "copy": "cp -r skills/kuzco-sentiment ~/.claude/skills/kuzco-sentiment",
+        "raw": "https://raw.githubusercontent.com/frankiethull/kuzco/f27c0c59fbe28ca1cb0a77d1f974896d3493e87c/skills/kuzco-sentiment/SKILL.md",
+        "saveAs": "~/.claude/skills/kuzco-sentiment/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:7cdb1d4cc4412dc9834b9e741c8b3ce805e485f35b9154fe225ba0609b07eee4",
+      "bytes": 1540,
+      "wordCount": 164,
+      "repoLicense": "",
+      "commit": "f27c0c59fbe28ca1cb0a77d1f974896d3493e87c",
+      "branch": "main",
+      "body": "---\nname: kuzco-sentiment\ndescription: Analyze the sentiment or mood conveyed by an image with a local vision LLM. Wraps kuzco's tool_llm_image_sentiment() ellmer tool. Use when the task needs the emotional tone of an image, e.g. for content moderation, marketing, or curation.\n---\n\n# kuzco-sentiment\n\nAnalyze the sentiment or mood conveyed by an image using a local vision language\nmodel, exposed as an [ellmer](https://ellmer.tidyverse.org/) tool by the kuzco R\npackage.\n\n## When to use\n\nThe user wants the emotional tone of an image: cheerful, somber, threatening,\ncalm. Useful for content moderation triage, marketing asset selection, or photo\ncuration. For factual descriptions of image contents, use kuzco-classification.\n\n## Setup\n\n```r\nlibrary(kuzco)\nlibrary(ellmer)\n\nchat <- chat_ollama(model = \"qwen2.5vl\")\nchat$register_tool(tool_llm_image_sentiment())\n```\n\n## Tool arguments (LLM-controlled)\n\n- `image` (required): local file path to a jpeg, jpg, or png image.\n- `additional_prompt` (optional): extra instructions, e.g. \"consider cultural context\".\n- `language` (optional): output language, e.g. \"English\".\n\n## Result\n\nCompact JSON text with `image_sentiment`, `image_score`, `sentiment_description`,\nand `image_keywords`. Lead with the sentiment label and score, then the description.\nPresent sentiment as the model's reading, not as ground truth.\n\n## Example\n\n> User: \"What mood does img/sunset.jpg convey?\"\n> 1. Call `kuzco_image_sentiment` with `image = \"img/sunset.jpg\"`.\n> 2. Report the sentiment, score, and description.\n",
+      "bodyMd": "# kuzco-sentiment\n\nAnalyze the sentiment or mood conveyed by an image using a local vision language\nmodel, exposed as an [ellmer](https://ellmer.tidyverse.org/) tool by the kuzco R\npackage.\n\n## When to use\n\nThe user wants the emotional tone of an image: cheerful, somber, threatening,\ncalm. Useful for content moderation triage, marketing asset selection, or photo\ncuration. For factual descriptions of image contents, use kuzco-classification.\n\n## Setup\n\n```r\nlibrary(kuzco)\nlibrary(ellmer)\n\nchat <- chat_ollama(model = \"qwen2.5vl\")\nchat$register_tool(tool_llm_image_sentiment())\n```\n\n## Tool arguments (LLM-controlled)\n\n- `image` (required): local file path to a jpeg, jpg, or png image.\n- `additional_prompt` (optional): extra instructions, e.g. \"consider cultural context\".\n- `language` (optional): output language, e.g. \"English\".\n\n## Result\n\nCompact JSON text with `image_sentiment`, `image_score`, `sentiment_description`,\nand `image_keywords`. Lead with the sentiment label and score, then the description.\nPresent sentiment as the model's reading, not as ground truth.\n\n## Example\n\n> User: \"What mood does img/sunset.jpg convey?\"\n> 1. Call `kuzco_image_sentiment` with `image = \"img/sunset.jpg\"`.\n> 2. Report the sentiment, score, and description.\n"
+    }
+  ]
+}

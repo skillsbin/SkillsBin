@@ -1,0 +1,138 @@
+{
+  "repo": "saaspegasus/django-skills",
+  "commit": "c1c44cd5df629dcfd2832d03f47d90248b8811fa",
+  "branch": "main",
+  "fetchedAt": "2026-10-13T06:59:20.218Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "fix-types",
+      "name": "fix-types",
+      "dir": "skills/fix-types",
+      "path": "skills/fix-types/SKILL.md",
+      "desc": "Interactively fix any type checking issues in Python code",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "uv",
+          "go"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/saaspegasus/django-skills.git",
+        "copy": "cp -r skills/fix-types ~/.claude/skills/fix-types",
+        "raw": "https://raw.githubusercontent.com/saaspegasus/django-skills/c1c44cd5df629dcfd2832d03f47d90248b8811fa/skills/fix-types/SKILL.md",
+        "saveAs": "~/.claude/skills/fix-types/SKILL.md",
+        "marketplace": "/plugin marketplace add saaspegasus/django-skills"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:ecbd71f6349a61478606a1113445cfda9fbe85191eb698eccbf00af68c009f4d",
+      "bytes": 3224,
+      "wordCount": 471,
+      "repoLicense": "MIT",
+      "commit": "c1c44cd5df629dcfd2832d03f47d90248b8811fa",
+      "branch": "main",
+      "body": "---\nname: fix-types\ndescription: Interactively fix any type checking issues in Python code\nallowed-tools: [\n    Bash(uv run mypy *),\n]\n---\n\n## Your task\n\nTo fix types, do the following.\n\n1. First run the type checker to see what the issues are:\n    ```\n    uv run mypy .\n    ```\n2. Group the errors you find in to logical buckets.\n3. For each bucket of errors, go through the errors one at a time, tell me the fix you want to apply, and then ask if\n   I have any questions or suggestions before proceeding.\n4. Only once I approve, apply the fix and move onto the next error in the bucket.\n5. Once you've completed a bucket, ask me if I'd like to move on to the next bucket.\n\n#### Prefer `cast()` over `type: ignore`\n\nWhen mypy can't infer the correct type, prefer using `cast()` over `# type: ignore`:\n\n```python\n# Preferred - documents the expected type\nchoices = cast(list[tuple[str, str]], field.choices)\n\n# Avoid when cast is possible - just silences the error\nchoices = list(field.choices)  # type: ignore[arg-type]\n```\n\n**Why:** `cast()` explicitly documents what type you expect, making the code more readable and maintainable. It also doesn't silence other potential errors on the same line.\n\n#### Prefer proper errors over assertions for null checks\n\nWhen adding null checks to satisfy mypy, prefer raising proper exceptions over using `assert`:\n\n```python\n# Preferred - proper error handling\nif obj.related_field is None:\n    raise ValueError(\"Object must have a related field\")\nresult = obj.related_field.some_method()\n\n# Avoid - assertions can be disabled with -O flag\nassert obj.related_field is not None\nresult = obj.related_field.some_method()\n```\n\n**Why:** Assertions can be disabled in production with `python -O`, making them unreliable for runtime validation. Proper exceptions ensure the check always runs and provides better error handling.\n\n#### When using `type: ignore`, add a comment\n\nIf `type: ignore` is necessary (e.g., mypy limitation with valid code), always add a short explanation:\n\n```python\n# Good - explains why the ignore is needed\nself.tier = tier  # type: ignore[misc]  # mypy can't handle Enum tuple values with custom __init__\n\n# Bad - no explanation\nself.tier = tier  # type: ignore[misc]\n```\n\n#### Type Hints for Django Lazy Translation Strings\n\nWhen using type hints with Django's lazy translation strings (`gettext_lazy`), use the following pattern to avoid mypy errors while keeping the code working in production (where `django-stubs-ext` is not installed):\n\n```python\nfrom __future__ import annotations  # Must be the first import\n\nfrom typing import TYPE_CHECKING\n\nif TYPE_CHECKING:\n    from django_stubs_ext import StrOrPromise\n\n\n# Then use StrOrPromise in type hints\ndef my_function(name: StrOrPromise) -> StrOrPromise: ...\n\n\nclass MyData:\n    title: StrOrPromise\n    description: StrOrPromise\n```\n\n**Why this pattern:**\n- `from __future__ import annotations` makes type annotations strings at runtime (not evaluated)\n- `if TYPE_CHECKING:` ensures the import only happens during type checking, not at runtime\n- `django-stubs-ext` is a dev dependency and won't be available in production\n- This pattern allows both regular strings and lazy translation strings to be accepted\n",
+      "bodyMd": "## Your task\n\nTo fix types, do the following.\n\n1. First run the type checker to see what the issues are:\n    ```\n    uv run mypy .\n    ```\n2. Group the errors you find in to logical buckets.\n3. For each bucket of errors, go through the errors one at a time, tell me the fix you want to apply, and then ask if\n   I have any questions or suggestions before proceeding.\n4. Only once I approve, apply the fix and move onto the next error in the bucket.\n5. Once you've completed a bucket, ask me if I'd like to move on to the next bucket.\n\n#### Prefer `cast()` over `type: ignore`\n\nWhen mypy can't infer the correct type, prefer using `cast()` over `# type: ignore`:\n\n```python\n# Preferred - documents the expected type\nchoices = cast(list[tuple[str, str]], field.choices)\n\n# Avoid when cast is possible - just silences the error\nchoices = list(field.choices)  # type: ignore[arg-type]\n```\n\n**Why:** `cast()` explicitly documents what type you expect, making the code more readable and maintainable. It also doesn't silence other potential errors on the same line.\n\n#### Prefer proper errors over assertions for null checks\n\nWhen adding null checks to satisfy mypy, prefer raising proper exceptions over using `assert`:\n\n```python\n# Preferred - proper error handling\nif obj.related_field is None:\n    raise ValueError(\"Object must have a related field\")\nresult = obj.related_field.some_method()\n\n# Avoid - assertions can be disabled with -O flag\nassert obj.related_field is not None\nresult = obj.related_field.some_method()\n```\n\n**Why:** Assertions can be disabled in production with `python -O`, making them unreliable for runtime validation. Proper exceptions ensure the check always runs and provides better error handling.\n\n#### When using `type: ignore`, add a comment\n\nIf `type: ignore` is necessary (e.g., mypy limitation with valid code), always add a short explanation:\n\n```python\n# Good - explains why the ignore is needed\nself.tier = tier  # type: ignore[misc]  # mypy can't handle Enum tuple values with custom __init__\n\n# Bad - no explanation\nself.tier = tier  # type: ignore[misc]\n```\n\n#### Type Hints for Django Lazy Translation Strings\n\nWhen using type hints with Django's lazy translation strings (`gettext_lazy`), use the following pattern to avoid mypy errors while keeping the code working in production (where `django-stubs-ext` is not installed):\n\n```python\nfrom __future__ import annotations  # Must be the first import\n\nfrom typing import TYPE_CHECKING\n\nif TYPE_CHECKING:\n    from django_stubs_ext import StrOrPromise\n\n\n# Then use StrOrPromise in type hints\ndef my_function(name: StrOrPromise) -> StrOrPromise: ...\n\n\nclass MyData:\n    title: StrOrPromise\n    description: StrOrPromise\n```\n\n**Why this pattern:**\n- `from __future__ import annotations` makes type annotations strings at runtime (not evaluated)\n- `if TYPE_CHECKING:` ensures the import only happens during type checking, not at runtime\n- `django-stubs-ext` is a dev dependency and won't be available in production\n- This pattern allows both regular strings and lazy translation strings to be accepted\n"
+    },
+    {
+      "slug": "upgrade-js-deps",
+      "name": "upgrade-js-deps",
+      "dir": "skills/upgrade-js-deps",
+      "path": "skills/upgrade-js-deps/SKILL.md",
+      "desc": "Upgrade JavaScript dependencies using npm-check-updates, then run post-upgrade checks to ensure nothing is broken.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "npx",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/saaspegasus/django-skills.git",
+        "copy": "cp -r skills/upgrade-js-deps ~/.claude/skills/upgrade-js-deps",
+        "raw": "https://raw.githubusercontent.com/saaspegasus/django-skills/c1c44cd5df629dcfd2832d03f47d90248b8811fa/skills/upgrade-js-deps/SKILL.md",
+        "saveAs": "~/.claude/skills/upgrade-js-deps/SKILL.md",
+        "marketplace": "/plugin marketplace add saaspegasus/django-skills"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:101f1d285226d1bb202c0b4cb9f0c3afa1bf047325cfaef55832e0cfccb45d60",
+      "bytes": 1606,
+      "wordCount": 200,
+      "repoLicense": "MIT",
+      "commit": "c1c44cd5df629dcfd2832d03f47d90248b8811fa",
+      "branch": "main",
+      "body": "---\nname: upgrade-js-deps\ndescription: Upgrade JavaScript dependencies using npm-check-updates, then run post-upgrade checks to ensure nothing is broken.\nallowed-tools: [\n    Bash(npx npm-check-updates *),\n    Bash(make npm-install *),\n    Bash(make npm-build *),\n    Bash(make npm-type-check *),\n    Bash(make test *),\n]\n---\n\n## Your task\n\nUpgrade all JavaScript dependencies and verify nothing is broken.\n\n### Step 1: Check for available upgrades\n\nRun `npx npm-check-updates` to see what upgrades are available. Review the output and\npresent the list to the user.\n\n### Step 2: Update package.json\n\nRun `npx npm-check-updates -u` to update `package.json` with the new versions.\n\n### Step 3: Install updated dependencies\n\nRun `make npm-install` to install the upgraded dependencies and update `package-lock.json`.\n\n### Step 4: Run post-upgrade checks\n\nRun these checks sequentially, stopping if any step fails:\n\n1. **TypeScript type checking**: Run `make npm-type-check` and report any new type errors.\n2. **Build**: Run `make npm-build` to verify the production build still works.\n3. **Tests**: Run `make test` to verify the test suite still passes.\n\n### Step 5: Summarize and commit\n\nSummarize what was done:\n- Which packages were upgraded (notable version changes)\n- Whether any type errors were introduced\n- Whether the build succeeded\n- Whether all tests passed\n- Any issues that need manual attention\n\nIf there were failures, present the issues and ask how the user wants to proceed.\n\nIf everything passed, ask the user if they'd like to commit the changes. If yes, commit\nusing the `/commit` skill.\n",
+      "bodyMd": "## Your task\n\nUpgrade all JavaScript dependencies and verify nothing is broken.\n\n### Step 1: Check for available upgrades\n\nRun `npx npm-check-updates` to see what upgrades are available. Review the output and\npresent the list to the user.\n\n### Step 2: Update package.json\n\nRun `npx npm-check-updates -u` to update `package.json` with the new versions.\n\n### Step 3: Install updated dependencies\n\nRun `make npm-install` to install the upgraded dependencies and update `package-lock.json`.\n\n### Step 4: Run post-upgrade checks\n\nRun these checks sequentially, stopping if any step fails:\n\n1. **TypeScript type checking**: Run `make npm-type-check` and report any new type errors.\n2. **Build**: Run `make npm-build` to verify the production build still works.\n3. **Tests**: Run `make test` to verify the test suite still passes.\n\n### Step 5: Summarize and commit\n\nSummarize what was done:\n- Which packages were upgraded (notable version changes)\n- Whether any type errors were introduced\n- Whether the build succeeded\n- Whether all tests passed\n- Any issues that need manual attention\n\nIf there were failures, present the issues and ask how the user wants to proceed.\n\nIf everything passed, ask the user if they'd like to commit the changes. If yes, commit\nusing the `/commit` skill.\n"
+    },
+    {
+      "slug": "upgrade-python-deps",
+      "name": "upgrade-python-deps",
+      "dir": "skills/upgrade-python-deps",
+      "path": "skills/upgrade-python-deps/SKILL.md",
+      "desc": "Upgrade Python dependencies using uv, then run post-upgrade checks to ensure nothing is broken.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "uv",
+          "make",
+          "sed"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/saaspegasus/django-skills.git",
+        "copy": "cp -r skills/upgrade-python-deps ~/.claude/skills/upgrade-python-deps",
+        "raw": "https://raw.githubusercontent.com/saaspegasus/django-skills/c1c44cd5df629dcfd2832d03f47d90248b8811fa/skills/upgrade-python-deps/SKILL.md",
+        "saveAs": "~/.claude/skills/upgrade-python-deps/SKILL.md",
+        "marketplace": "/plugin marketplace add saaspegasus/django-skills"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:d0f49210dcc6df73e19ccdd1f0f02c3efb77e63766fc40c52e1110cb2d637c1b",
+      "bytes": 2281,
+      "wordCount": 307,
+      "repoLicense": "MIT",
+      "commit": "c1c44cd5df629dcfd2832d03f47d90248b8811fa",
+      "branch": "main",
+      "body": "---\nname: upgrade-python-deps\ndescription: Upgrade Python dependencies using uv, then run post-upgrade checks to ensure nothing is broken.\nallowed-tools: [\n    Bash(uv lock *),\n    Bash(uv sync *),\n    Bash(make test *),\n    Bash(uv run mypy *),\n    Bash(sed -i '/^\\[options\\]$/,/^$/d' uv.lock),\n    Bash(grep * uv.lock),\n]\n---\n\n## Your task\n\nUpgrade all Python dependencies and verify nothing is broken.\n\n### Step 1: Upgrade the lock file\n\nRun `uv lock --upgrade --exclude-newer \"7 days\"` to upgrade all dependencies to their latest compatible\nversions (with a 7-day cooldown to mitigate supply-chain attacks).\n\nReview the output for any resolution errors. If there are conflicts, report them to the user\nand ask how to proceed before continuing.\n\n### Step 2: Remove the cooldown marker from the lock file\n\nuv records the `--exclude-newer` cutoff inside `uv.lock` as project configuration. Since it\nisn't declared in `pyproject.toml`, any later `uv sync` or `uv run` sees a config mismatch,\ndiscards the lockfile, and silently re-resolves everything to the newest versions — undoing\nthe cooldown. Prevent this by deleting the `[options]` block at the top of `uv.lock`\n(the `exclude-newer` / `exclude-newer-span` lines) before syncing:\n\n```bash\nsed -i '/^\\[options\\]$/,/^$/d' uv.lock\n```\n\nThe cooldown-resolved versions stay in place; only the marker is removed. Verify with\n`grep exclude-newer uv.lock` (should print nothing).\n\n### Step 3: Sync the environment\n\nRun `uv sync` to install the upgraded dependencies into the virtual environment.\n\n### Step 4: Run post-upgrade checks\n\nRun these checks sequentially, stopping if any step fails:\n- **Type checking**: Run `uv run mypy .` and report any new type errors. These may be caused\n  by updated type stubs or changes in library APIs.\n- **Tests**: Run `make test` to verify the test suite still passes.\n\n### Step 5: Summarize and commit\n\nSummarize what was done:\n- Which packages were upgraded (notable version changes)\n- Whether any type errors were introduced\n- Whether all tests passed\n- Any issues that need manual attention\n\nIf there were failures, present the issues and ask how the user wants to proceed.\n\nIf everything passed, ask the user if they'd like to commit the changes. If yes, commit\nusing the `/commit` skill.\n",
+      "bodyMd": "## Your task\n\nUpgrade all Python dependencies and verify nothing is broken.\n\n### Step 1: Upgrade the lock file\n\nRun `uv lock --upgrade --exclude-newer \"7 days\"` to upgrade all dependencies to their latest compatible\nversions (with a 7-day cooldown to mitigate supply-chain attacks).\n\nReview the output for any resolution errors. If there are conflicts, report them to the user\nand ask how to proceed before continuing.\n\n### Step 2: Remove the cooldown marker from the lock file\n\nuv records the `--exclude-newer` cutoff inside `uv.lock` as project configuration. Since it\nisn't declared in `pyproject.toml`, any later `uv sync` or `uv run` sees a config mismatch,\ndiscards the lockfile, and silently re-resolves everything to the newest versions — undoing\nthe cooldown. Prevent this by deleting the `[options]` block at the top of `uv.lock`\n(the `exclude-newer` / `exclude-newer-span` lines) before syncing:\n\n```bash\nsed -i '/^\\[options\\]$/,/^$/d' uv.lock\n```\n\nThe cooldown-resolved versions stay in place; only the marker is removed. Verify with\n`grep exclude-newer uv.lock` (should print nothing).\n\n### Step 3: Sync the environment\n\nRun `uv sync` to install the upgraded dependencies into the virtual environment.\n\n### Step 4: Run post-upgrade checks\n\nRun these checks sequentially, stopping if any step fails:\n- **Type checking**: Run `uv run mypy .` and report any new type errors. These may be caused\n  by updated type stubs or changes in library APIs.\n- **Tests**: Run `make test` to verify the test suite still passes.\n\n### Step 5: Summarize and commit\n\nSummarize what was done:\n- Which packages were upgraded (notable version changes)\n- Whether any type errors were introduced\n- Whether all tests passed\n- Any issues that need manual attention\n\nIf there were failures, present the issues and ask how the user wants to proceed.\n\nIf everything passed, ask the user if they'd like to commit the changes. If yes, commit\nusing the `/commit` skill.\n"
+    }
+  ]
+}

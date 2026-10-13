@@ -1,0 +1,51 @@
+{
+  "repo": "youware-labs/figma-pilot",
+  "commit": "0aa745d1621f8dd88bf7b324a11acb541f422de9",
+  "branch": "master",
+  "fetchedAt": "2026-10-13T06:57:55.776Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "skills",
+      "name": "figma-pilot",
+      "dir": "skills",
+      "path": "skills/SKILL.md",
+      "desc": "REQUIRED reading before using figma_execute. Contains API syntax, parameter formats, and examples. READ rules/*.md files for correct usage.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "node"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/youware-labs/figma-pilot.git",
+        "copy": "cp -r skills ~/.claude/skills/skills",
+        "raw": "https://raw.githubusercontent.com/youware-labs/figma-pilot/0aa745d1621f8dd88bf7b324a11acb541f422de9/skills/SKILL.md",
+        "saveAs": "~/.claude/skills/skills/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:b73ac22afac0f5a10f5e6c8030b0aaaed1522ecea04122a6149583e1820f1b04",
+      "bytes": 3911,
+      "wordCount": 438,
+      "repoLicense": "MIT",
+      "commit": "0aa745d1621f8dd88bf7b324a11acb541f422de9",
+      "branch": "master",
+      "body": "---\nname: figma-pilot\ndescription: REQUIRED reading before using figma_execute. Contains API syntax, parameter formats, and examples. READ rules/*.md files for correct usage.\nmetadata:\n  tags: figma, mcp, design, ai, components, accessibility, tokens\n---\n\n## When to use\n\n**ALWAYS read this skill BEFORE calling figma_execute!** This skill contains the correct API syntax, parameter formats, and examples that you MUST follow. Failure to read this will result in syntax errors.\n\nUse this skill whenever you are working with figma-pilot MCP tools to create or modify Figma designs.\n\n## Code Execution Mode\n\nfigma-pilot uses a **code execution mode** for maximum efficiency. Instead of 15+ individual tools, you use `figma_execute` to run JavaScript code with access to all Figma APIs.\n\n### Available Tools\n\n| Tool | Description |\n|------|-------------|\n| `figma_status` | Check connection to Figma plugin (call first) |\n| `figma_execute` | Execute JavaScript with all Figma APIs |\n| `figma_get_api_docs` | Get detailed API documentation |\n\n### Quick Example\n\n```javascript\n// figma_execute\n// Create a card and modify selection\nawait figma.create({\n  type: 'card',\n  name: 'Welcome Card',\n  children: [\n    { type: 'text', content: 'Hello!', fontSize: 24 }\n  ]\n});\n\nconst { nodes } = await figma.query({ target: 'selection' });\nfor (const node of nodes) {\n  await figma.modify({ target: node.id, fill: '#0066FF' });\n}\nconsole.log(`Modified ${nodes.length} elements`);\n```\n\n### Benefits\n\n- **90%+ fewer tokens** - 3 tools instead of 15+\n- **Batch operations** - Modify many elements in one call\n- **Data filtering** - Filter results before returning to context\n- **Complex workflows** - Loops, conditionals, error handling\n\n## API Reference\n\nRead individual rule files for detailed API documentation:\n\n### Getting Started\n- [rules/quick-start.md](rules/quick-start.md) - Quick start guide and setup requirements\n- [rules/workflow.md](rules/workflow.md) - Recommended agent workflow and operator rules\n\n### Core APIs\n- [rules/status.md](rules/status.md) - `figma.status()` - Check connection\n- [rules/query.md](rules/query.md) - `figma.query()` - Query elements by ID, name, or selection\n\n### Creating Elements\n- [rules/create.md](rules/create.md) - `figma.create()` - Create elements (frames, text, shapes, semantic types)\n- [rules/layout.md](rules/layout.md) - Auto-layout configuration and patterns\n\n### Modifying Elements\n- [rules/modify.md](rules/modify.md) - `figma.modify()`, `figma.delete()`, `figma.append()`\n\n### Styling\n- [rules/effects.md](rules/effects.md) - Shadows, blur, and visual effects\n- [rules/gradients.md](rules/gradients.md) - Gradient fills (linear, radial, angular)\n- [rules/corner-radius.md](rules/corner-radius.md) - Independent corner radius\n- [rules/strokes.md](rules/strokes.md) - Stroke styling (dash patterns, caps, alignment)\n- [rules/transforms.md](rules/transforms.md) - Rotation and blend modes\n- [rules/constraints.md](rules/constraints.md) - Responsive constraints and min/max sizes\n\n### Text\n- [rules/text.md](rules/text.md) - Text elements, wrapping, and sizing\n- [rules/fonts.md](rules/fonts.md) - Loading and using custom fonts\n\n### Components\n- [rules/components.md](rules/components.md) - `figma.listComponents()`, `figma.instantiate()`, `figma.toComponent()`, `figma.createVariants()`\n\n### Accessibility\n- [rules/accessibility.md](rules/accessibility.md) - `figma.accessibility()` - WCAG compliance checking and auto-fixing\n\n### Design Tokens\n- [rules/tokens.md](rules/tokens.md) - `figma.createToken()`, `figma.bindToken()`, `figma.syncTokens()`\n\n### Export\n- [rules/export.md](rules/export.md) - `figma.export()` - Export as PNG, SVG, PDF, JPG\n\n### Common Patterns\n- [rules/patterns.md](rules/patterns.md) - Cards, navigation bars, page layouts\n\n### Reference\n- [rules/target-specifiers.md](rules/target-specifiers.md) - How to target elements (ID, selection, name)\n",
+      "bodyMd": "## When to use\n\n**ALWAYS read this skill BEFORE calling figma_execute!** This skill contains the correct API syntax, parameter formats, and examples that you MUST follow. Failure to read this will result in syntax errors.\n\nUse this skill whenever you are working with figma-pilot MCP tools to create or modify Figma designs.\n\n## Code Execution Mode\n\nfigma-pilot uses a **code execution mode** for maximum efficiency. Instead of 15+ individual tools, you use `figma_execute` to run JavaScript code with access to all Figma APIs.\n\n### Available Tools\n\n| Tool | Description |\n|------|-------------|\n| `figma_status` | Check connection to Figma plugin (call first) |\n| `figma_execute` | Execute JavaScript with all Figma APIs |\n| `figma_get_api_docs` | Get detailed API documentation |\n\n### Quick Example\n\n```javascript\n// figma_execute\n// Create a card and modify selection\nawait figma.create({\n  type: 'card',\n  name: 'Welcome Card',\n  children: [\n    { type: 'text', content: 'Hello!', fontSize: 24 }\n  ]\n});\n\nconst { nodes } = await figma.query({ target: 'selection' });\nfor (const node of nodes) {\n  await figma.modify({ target: node.id, fill: '#0066FF' });\n}\nconsole.log(`Modified ${nodes.length} elements`);\n```\n\n### Benefits\n\n- **90%+ fewer tokens** - 3 tools instead of 15+\n- **Batch operations** - Modify many elements in one call\n- **Data filtering** - Filter results before returning to context\n- **Complex workflows** - Loops, conditionals, error handling\n\n## API Reference\n\nRead individual rule files for detailed API documentation:\n\n### Getting Started\n- [rules/quick-start.md](rules/quick-start.md) - Quick start guide and setup requirements\n- [rules/workflow.md](rules/workflow.md) - Recommended agent workflow and operator rules\n\n### Core APIs\n- [rules/status.md](rules/status.md) - `figma.status()` - Check connection\n- [rules/query.md](rules/query.md) - `figma.query()` - Query elements by ID, name, or selection\n\n### Creating Elements\n- [rules/create.md](rules/create.md) - `figma.create()` - Create elements (frames, text, shapes, semantic types)\n- [rules/layout.md](rules/layout.md) - Auto-layout configuration and patterns\n\n### Modifying Elements\n- [rules/modify.md](rules/modify.md) - `figma.modify()`, `figma.delete()`, `figma.append()`\n\n### Styling\n- [rules/effects.md](rules/effects.md) - Shadows, blur, and visual effects\n- [rules/gradients.md](rules/gradients.md) - Gradient fills (linear, radial, angular)\n- [rules/corner-radius.md](rules/corner-radius.md) - Independent corner radius\n- [rules/strokes.md](rules/strokes.md) - Stroke styling (dash patterns, caps, alignment)\n- [rules/transforms.md](rules/transforms.md) - Rotation and blend modes\n- [rules/constraints.md](rules/constraints.md) - Responsive constraints and min/max sizes\n\n### Text\n- [rules/text.md](rules/text.md) - Text elements, wrapping, and sizing\n- [rules/fonts.md](rules/fonts.md) - Loading and using custom fonts\n\n### Components\n- [rules/components.md](rules/components.md) - `figma.listComponents()`, `figma.instantiate()`, `figma.toComponent()`, `figma.createVariants()`\n\n### Accessibility\n- [rules/accessibility.md](rules/accessibility.md) - `figma.accessibility()` - WCAG compliance checking and auto-fixing\n\n### Design Tokens\n- [rules/tokens.md](rules/tokens.md) - `figma.createToken()`, `figma.bindToken()`, `figma.syncTokens()`\n\n### Export\n- [rules/export.md](rules/export.md) - `figma.export()` - Export as PNG, SVG, PDF, JPG\n\n### Common Patterns\n- [rules/patterns.md](rules/patterns.md) - Cards, navigation bars, page layouts\n\n### Reference\n- [rules/target-specifiers.md](rules/target-specifiers.md) - How to target elements (ID, selection, name)\n"
+    }
+  ]
+}

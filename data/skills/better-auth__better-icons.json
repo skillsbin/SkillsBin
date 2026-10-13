@@ -1,0 +1,53 @@
+{
+  "repo": "better-auth/better-icons",
+  "commit": "033316ecb8f4982235af4111a2257e80231f5ab1",
+  "branch": "main",
+  "fetchedAt": "2026-10-13T06:56:27.308Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "skills",
+      "name": "better-icons",
+      "dir": "skills",
+      "path": "skills/SKILL.md",
+      "desc": "Use when working with icons in any project. Provides CLI for searching 200+ icon libraries (Iconify) and retrieving SVGs. Commands: `better-icons search <query>` to find icons, `better-icons get <id>` to get SVG. Also available as MCP server for AI agents.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "npm",
+          "bun",
+          "jq",
+          "npx"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/better-auth/better-icons.git",
+        "copy": "cp -r skills ~/.claude/skills/skills",
+        "raw": "https://raw.githubusercontent.com/better-auth/better-icons/033316ecb8f4982235af4111a2257e80231f5ab1/skills/SKILL.md",
+        "saveAs": "~/.claude/skills/skills/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:3d12532000bae46a54ac5ea47a8cc5ce24cb7008b366abe6ccf4f7e86c489110",
+      "bytes": 3584,
+      "wordCount": 470,
+      "repoLicense": "MIT",
+      "commit": "033316ecb8f4982235af4111a2257e80231f5ab1",
+      "branch": "main",
+      "body": "---\nname: better-icons\ndescription: 'Use when working with icons in any project. Provides CLI for searching 200+ icon libraries (Iconify) and retrieving SVGs. Commands: `better-icons search <query>` to find icons, `better-icons get <id>` to get SVG. Also available as MCP server for AI agents.'\n---\n\n# Better Icons\n\nSearch and retrieve icons from 200+ libraries via Iconify.\n\n## Installation\n\nBefore using any `better-icons` commands, ensure the tool is available in the environment.\n\n**Option 1 — Install globally (recommended, matches all examples below):**\n\n```bash\n# Using npm\nnpm install -g better-icons\n\n# Using Bun (faster)\nbun add -g better-icons\n```\n\n**Option 2 — Run without installing (prefix every command with `npx` or `bunx`):**\n\n```bash\n# Using npx (npm)\nnpx better-icons search arrow --limit 10\nnpx better-icons get lucide:home > icon.svg\n\n# Using bunx (Bun — faster)\nbunx better-icons search arrow --limit 10\nbunx better-icons get lucide:home > icon.svg\n```\n\n> **For AI agents:** Prefer the global install so that `better-icons` is on `$PATH` and the commands below work as-is. Run the install step once during environment setup, then use the commands without `npx`/`bunx`.\n\n## CLI\n\n```bash\n# Search icons\nbetter-icons search <query> [--prefix <prefix>] [--limit <n>] [--json]\n\n# Search and download all found icons as SVG files\nbetter-icons search <query> -d [dir] [--color <color>] [--size <px>]\n\n# Get icon SVG (outputs to stdout)\nbetter-icons get <icon-id> [--color <color>] [--size <px>] [--json]\n\n# Setup MCP server for AI agents\nbetter-icons setup [-a cursor,claude-code] [-s global|project]\n```\n\n## Examples\n\n```bash\nbetter-icons search arrow --limit 10\nbetter-icons search home --json | jq '.icons[0]'\nbetter-icons get lucide:home > icon.svg\nbetter-icons get mdi:home --color '#333' --json\n\n# Batch download all search results\nbetter-icons search arrow -d              # saves to ./icons/\nbetter-icons search check -d ./my-icons   # saves to ./my-icons/\nbetter-icons search star -d -c '#000' -s 24 --limit 64\n```\n\n## Icon ID Format\n\n`prefix:name` - e.g., `lucide:home`, `mdi:arrow-right`, `heroicons:check`\n\n## Popular Collections\n\n`lucide`, `mdi`, `heroicons`, `tabler`, `ph`, `ri`, `solar`, `iconamoon`\n\n---\n\n## MCP Tools (for AI agents)\n\n| Tool | Description |\n|------|-------------|\n| `search_icons` | Search across all libraries |\n| `get_icon` | Get single icon SVG |\n| `get_icons` | Batch retrieve multiple icons |\n| `list_collections` | Browse available icon sets |\n| `recommend_icons` | Smart recommendations for use cases |\n| `find_similar_icons` | Find variations across collections |\n| `sync_icon` | Add icon to project file |\n| `scan_project_icons` | List icons in project |\n\n## TypeScript Interfaces\n\n```typescript\ninterface SearchIcons {\n  query: string\n  limit?: number        // 1-999, default 32\n  prefix?: string       // e.g., 'mdi', 'lucide'\n  category?: string     // e.g., 'General', 'Emoji'\n}\n\ninterface GetIcon {\n  icon_id: string       // 'prefix:name' format\n  color?: string        // e.g., '#ff0000', 'currentColor'\n  size?: number         // pixels\n}\n\ninterface GetIcons {\n  icon_ids: string[]    // max 20\n  color?: string\n  size?: number\n}\n\ninterface RecommendIcons {\n  use_case: string      // e.g., 'navigation menu'\n  style?: 'solid' | 'outline' | 'any'\n  limit?: number        // default 10\n}\n\ninterface SyncIcon {\n  icons_file: string    // absolute path\n  framework: 'react' | 'vue' | 'svelte' | 'solid' | 'svg'\n  icon_id: string\n  component_name?: string\n}\n```\n\n## API\n\nAll icons from `https://api.iconify.design`\n",
+      "bodyMd": "# Better Icons\n\nSearch and retrieve icons from 200+ libraries via Iconify.\n\n## Installation\n\nBefore using any `better-icons` commands, ensure the tool is available in the environment.\n\n**Option 1 — Install globally (recommended, matches all examples below):**\n\n```bash\n# Using npm\nnpm install -g better-icons\n\n# Using Bun (faster)\nbun add -g better-icons\n```\n\n**Option 2 — Run without installing (prefix every command with `npx` or `bunx`):**\n\n```bash\n# Using npx (npm)\nnpx better-icons search arrow --limit 10\nnpx better-icons get lucide:home > icon.svg\n\n# Using bunx (Bun — faster)\nbunx better-icons search arrow --limit 10\nbunx better-icons get lucide:home > icon.svg\n```\n\n> **For AI agents:** Prefer the global install so that `better-icons` is on `$PATH` and the commands below work as-is. Run the install step once during environment setup, then use the commands without `npx`/`bunx`.\n\n## CLI\n\n```bash\n# Search icons\nbetter-icons search <query> [--prefix <prefix>] [--limit <n>] [--json]\n\n# Search and download all found icons as SVG files\nbetter-icons search <query> -d [dir] [--color <color>] [--size <px>]\n\n# Get icon SVG (outputs to stdout)\nbetter-icons get <icon-id> [--color <color>] [--size <px>] [--json]\n\n# Setup MCP server for AI agents\nbetter-icons setup [-a cursor,claude-code] [-s global|project]\n```\n\n## Examples\n\n```bash\nbetter-icons search arrow --limit 10\nbetter-icons search home --json | jq '.icons[0]'\nbetter-icons get lucide:home > icon.svg\nbetter-icons get mdi:home --color '#333' --json\n\n# Batch download all search results\nbetter-icons search arrow -d              # saves to ./icons/\nbetter-icons search check -d ./my-icons   # saves to ./my-icons/\nbetter-icons search star -d -c '#000' -s 24 --limit 64\n```\n\n## Icon ID Format\n\n`prefix:name` - e.g., `lucide:home`, `mdi:arrow-right`, `heroicons:check`\n\n## Popular Collections\n\n`lucide`, `mdi`, `heroicons`, `tabler`, `ph`, `ri`, `solar`, `iconamoon`\n\n---\n\n## MCP Tools (for AI agents)\n\n| Tool | Description |\n|------|-------------|\n| `search_icons` | Search across all libraries |\n| `get_icon` | Get single icon SVG |\n| `get_icons` | Batch retrieve multiple icons |\n| `list_collections` | Browse available icon sets |\n| `recommend_icons` | Smart recommendations for use cases |\n| `find_similar_icons` | Find variations across collections |\n| `sync_icon` | Add icon to project file |\n| `scan_project_icons` | List icons in project |\n\n## TypeScript Interfaces\n\n```typescript\ninterface SearchIcons {\n  query: string\n  limit?: number        // 1-999, default 32\n  prefix?: string       // e.g., 'mdi', 'lucide'\n  category?: string     // e.g., 'General', 'Emoji'\n}\n\ninterface GetIcon {\n  icon_id: string       // 'prefix:name' format\n  color?: string        // e.g., '#ff0000', 'currentColor'\n  size?: number         // pixels\n}\n\ninterface GetIcons {\n  icon_ids: string[]    // max 20\n  color?: string\n  size?: number\n}\n\ninterface RecommendIcons {\n  use_case: string      // e.g., 'navigation menu'\n  style?: 'solid' | 'outline' | 'any'\n  limit?: number        // default 10\n}\n\ninterface SyncIcon {\n  icons_file: string    // absolute path\n  framework: 'react' | 'vue' | 'svelte' | 'solid' | 'svg'\n  icon_id: string\n  component_name?: string\n}\n```\n\n## API\n\nAll icons from `https://api.iconify.design`\n"
+    }
+  ]
+}

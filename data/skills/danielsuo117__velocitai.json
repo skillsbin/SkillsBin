@@ -1,0 +1,618 @@
+{
+  "repo": "DanielSuo117/velocitai",
+  "commit": "dfcca7e835727886bf4d5e02994803a3a6c41bc5",
+  "branch": "main",
+  "fetchedAt": "2026-10-13T06:57:35.230Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "skills",
+      "name": "ui-automation-harness",
+      "dir": "skills",
+      "path": "skills/SKILL.md",
+      "desc": "UI 回归测试子 skill 路由入口。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "gemini"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "playwright"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/DanielSuo117/velocitai.git",
+        "copy": "cp -r skills ~/.claude/skills/skills",
+        "raw": "https://raw.githubusercontent.com/DanielSuo117/velocitai/dfcca7e835727886bf4d5e02994803a3a6c41bc5/skills/SKILL.md",
+        "saveAs": "~/.claude/skills/skills/SKILL.md",
+        "marketplace": "/plugin marketplace add DanielSuo117/velocitai"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:a9a4b2a38fb0196f0e79e09970423b1d4b002bb11d2f8011d85751c7bf9bb4c9",
+      "bytes": 1345,
+      "wordCount": 96,
+      "repoLicense": "MIT",
+      "commit": "dfcca7e835727886bf4d5e02994803a3a6c41bc5",
+      "branch": "main",
+      "body": "---\nname: ui-automation-harness\ndescription: UI 回归测试子 skill 路由入口。\n---\n\n# UI 回归测试 — 主 Skill\n\n## 组合场景\n\n- 新增页面并跑通 → `gen-page-test` → `test-runner`\n- 替换定位符并验证 → `locator-replacer` → `test-runner`\n- 给已有页面加功能 → `add-regression-point` → `test-runner`\n- 脱离门户布局的跳转用例 → `add-regression-point` + `case-round-trip` → `test-runner`\n- 设计新页面的加载验证 → `page-load-assertion` → `gen-page-test`\n- 审查变更 → `code-review-graph` → `test-runner`\n- 定位 bug → `code-review-graph`（调试工作流）\n- 安全重构 → `code-review-graph`（重构工作流）\n- 测试失败纠错 → `test-runner`（发现失败）→ `quick-debug`（免登排查 + 自动修复）→ `test-runner`（回归验证）\n- 表单保存后验证 → `save-verify-strategy`（选择验证方式）→ `test-runner`（运行验证）\n\n## 引用索引\n\n编码规范、项目事实、行为规则等均由 [CLAUDE.md](../CLAUDE.md) 统一指引，此处不重复。\n\n关键引用：\n- 命名 + 基类 + 用例组织 → [coding-conventions/](../rules/coding-conventions/)\n- 定位符禁令 + 等待策略 + context 共享 → [playwright/](../rules/playwright/)\n- Agent 行为边界 → [agent-behavior/](../rules/agent-behavior/)\n",
+      "bodyMd": "# UI 回归测试 — 主 Skill\n\n## 组合场景\n\n- 新增页面并跑通 → `gen-page-test` → `test-runner`\n- 替换定位符并验证 → `locator-replacer` → `test-runner`\n- 给已有页面加功能 → `add-regression-point` → `test-runner`\n- 脱离门户布局的跳转用例 → `add-regression-point` + `case-round-trip` → `test-runner`\n- 设计新页面的加载验证 → `page-load-assertion` → `gen-page-test`\n- 审查变更 → `code-review-graph` → `test-runner`\n- 定位 bug → `code-review-graph`（调试工作流）\n- 安全重构 → `code-review-graph`（重构工作流）\n- 测试失败纠错 → `test-runner`（发现失败）→ `quick-debug`（免登排查 + 自动修复）→ `test-runner`（回归验证）\n- 表单保存后验证 → `save-verify-strategy`（选择验证方式）→ `test-runner`（运行验证）\n\n## 引用索引\n\n编码规范、项目事实、行为规则等均由 [CLAUDE.md](../CLAUDE.md) 统一指引，此处不重复。\n\n关键引用：\n- 命名 + 基类 + 用例组织 → [coding-conventions/](../rules/coding-conventions/)\n- 定位符禁令 + 等待策略 + context 共享 → [playwright/](../rules/playwright/)\n- Agent 行为边界 → [agent-behavior/](../rules/agent-behavior/)\n"
+    },
+    {
+      "slug": "add-regression-point",
+      "name": "add-regression-point",
+      "dir": "skills/add-regression-point",
+      "path": "skills/add-regression-point/SKILL.md",
+      "desc": "为已有 PageObject 增量添加回归测试点。触发：新增测试点、添加回归点、add test point、增加覆盖、扩展页面方法。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "gemini"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "python",
+          "playwright"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/DanielSuo117/velocitai.git",
+        "copy": "cp -r skills/add-regression-point ~/.claude/skills/add-regression-point",
+        "raw": "https://raw.githubusercontent.com/DanielSuo117/velocitai/dfcca7e835727886bf4d5e02994803a3a6c41bc5/skills/add-regression-point/SKILL.md",
+        "saveAs": "~/.claude/skills/add-regression-point/SKILL.md",
+        "marketplace": "/plugin marketplace add DanielSuo117/velocitai"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:279d6a871cb9d17d1e713cb4d01e69568fc09f4b89d707bb897243acd79cd1c7",
+      "bytes": 3957,
+      "wordCount": 235,
+      "repoLicense": "MIT",
+      "commit": "dfcca7e835727886bf4d5e02994803a3a6c41bc5",
+      "branch": "main",
+      "body": "---\nname: add-regression-point\ndescription: 为已有 PageObject 增量添加回归测试点。触发：新增测试点、添加回归点、add test point、增加覆盖、扩展页面方法。\n---\n\n# Add Regression Point — 新增回归测试点\n\n## 适用场景\n\n为**已有 PageObject** 新增单个或多个回归测试点。与 `gen-page-test`（新建整个页面）不同，本 skill 针对已存在的页面做**增量扩展**。\n\n## 输入参数\n\n| 参数 | 必填 | 说明 | 示例 |\n|------|------|------|------|\n| 目标 PageObject | 是 | 已有的页面类名 | `<ExistingPage>` |\n| 页面 URL | 是 | 真实可访问的页面 URL（已认证态） | https://example.com/xxx |\n| 新增测试点 | 是 | 需要覆盖的交互元素 | 点击收藏、筛选类型 |\n\n---\n\n## 执行流程（4 步）\n\n### Step 1：访问真实页面抽取新元素定位符\n\n使用 agent-browser 以已认证态访问目标 URL，为每个新增测试点按 [locator-replacer](../locator-replacer/SKILL.md) 六级优先级选定定位符。浏览器工具选型遵循 [agent-behavior P0.4](../../rules/agent-behavior/agent-behavior.md)：DOM 探索 / 定位符采集用 agent-browser，agent-browser 未安装时降级到 Playwright MCP。\n\n### Step 2：更新 PageObject\n\n在 `pages/<page_name>_page.py` 中追加：\n\n**2a. 新增定位符常量**（插入到已有常量之后、方法之前）\n\n```python\n    # ↓ 新增定位符（来自真实页面，<日期>）\n    <NEW_LOCATOR_1> = \"<真实定位符>\"    # P<0-5>: 说明\n    <NEW_LOCATOR_2> = \"<真实定位符>\"    # P<0-5>: 说明\n```\n\n**2b. 新增业务方法**（插入到 `is_page_loaded()` 之前）\n\n```python\n    def click_<new_method_1>(self):\n        self.click(self.<NEW_LOCATOR_1>)\n\n    def click_<new_method_2>(self):\n        self.click(self.<NEW_LOCATOR_2>)\n\n    def is_page_loaded(self) -> bool:    # 保持为最后一个方法\n        return self.is_visible(self.PAGE_IDENTIFIER)\n```\n\n### Step 3：在对应角色回归测试中追加调用\n\n根据目标 PageObject 的角色：\n- 对应角色页面 → `tests/teacher/test_<feature>.py`（当前无主流程用例，新建时继承 `<Role>BaseTest`）\n- 对应角色页面 → `tests/<role>/test_<role>_flow.py`\n- 对应角色 → `tests/<role>/test_<role>_flow.py`\n\n在对应 `@allure.story` 方法中追加：\n\n```python\n    # ↓ 新增回归点\n    <page_instance>.click_<new_method_1>()\n    <page_instance>.click_<new_method_2>()\n```\n\n**⚠️ 若新增测试点的跳转目标脱离门户布局**（例如离开侧边导航的子路由、沉浸式页面），必须套用 [case-round-trip](../case-round-trip/SKILL.md)：PageObject 提供 `click_back_to_<landing>`，用例末尾显式返回起点页并断言；否则后续用例复位 fixture 会超时。\n\n### Step 4：同步更新 `docs/`\n\n- 在对应角色的 pages-catalog 子文件中追加新方法行：\n  - 对应角色 → [pages-catalog.md](../../docs/pages-catalog.md)\n  - （同上）\n  - \n- 在对应角色的 regression-points 子文件中追加回归点行 + 关键定位符常量：\n  - 对应角色 → [regression-points.md](../../docs/regression-points.md)\n  - \n\n---\n\n## 检查清单\n\n通用检查（命名/导入/is_page_loaded/allure）→ coding-conventions.md \"新增测试检查清单\"\n\n- [ ] 新增定位符均来自真实页面 DOM，行尾标注 P0~P5 级别\n- [ ] 对应角色 `test_<role>_flow.py` 已追加新方法调用\n- [ ] 对应角色的 `docs/pages-catalog-<role>.md` 已同步\n- [ ] 对应角色的 `docs/regression-points-<role>.md` 已同步\n- [ ] 若跳转目标脱离门户布局，已套用 `case-round-trip`\n\n## 注意事项\n\n- **不要修改已有方法**，只做增量添加\n- **不需要更新** `pages/__init__.py`（页面类已存在）\n- 如果新增测试点需要页面导航（跳转到子页面），考虑新建独立 PageObject（使用 `gen-page-test`）\n- 定位符直接基于真实页面抽取，不使用占位符\n",
+      "bodyMd": "# Add Regression Point — 新增回归测试点\n\n## 适用场景\n\n为**已有 PageObject** 新增单个或多个回归测试点。与 `gen-page-test`（新建整个页面）不同，本 skill 针对已存在的页面做**增量扩展**。\n\n## 输入参数\n\n| 参数 | 必填 | 说明 | 示例 |\n|------|------|------|------|\n| 目标 PageObject | 是 | 已有的页面类名 | `<ExistingPage>` |\n| 页面 URL | 是 | 真实可访问的页面 URL（已认证态） | https://example.com/xxx |\n| 新增测试点 | 是 | 需要覆盖的交互元素 | 点击收藏、筛选类型 |\n\n---\n\n## 执行流程（4 步）\n\n### Step 1：访问真实页面抽取新元素定位符\n\n使用 agent-browser 以已认证态访问目标 URL，为每个新增测试点按 [locator-replacer](../locator-replacer/SKILL.md) 六级优先级选定定位符。浏览器工具选型遵循 [agent-behavior P0.4](../../rules/agent-behavior/agent-behavior.md)：DOM 探索 / 定位符采集用 agent-browser，agent-browser 未安装时降级到 Playwright MCP。\n\n### Step 2：更新 PageObject\n\n在 `pages/<page_name>_page.py` 中追加：\n\n**2a. 新增定位符常量**（插入到已有常量之后、方法之前）\n\n```python\n    # ↓ 新增定位符（来自真实页面，<日期>）\n    <NEW_LOCATOR_1> = \"<真实定位符>\"    # P<0-5>: 说明\n    <NEW_LOCATOR_2> = \"<真实定位符>\"    # P<0-5>: 说明\n```\n\n**2b. 新增业务方法**（插入到 `is_page_loaded()` 之前）\n\n```python\n    def click_<new_method_1>(self):\n        self.click(self.<NEW_LOCATOR_1>)\n\n    def click_<new_method_2>(self):\n        self.click(self.<NEW_LOCATOR_2>)\n\n    def is_page_loaded(self) -> bool:    # 保持为最后一个方法\n        return self.is_visible(self.PAGE_IDENTIFIER)\n```\n\n### Step 3：在对应角色回归测试中追加调用\n\n根据目标 PageObject 的角色：\n- 对应角色页面 → `tests/teacher/test_<feature>.py`（当前无主流程用例，新建时继承 `<Role>BaseTest`）\n- 对应角色页面 → `tests/<role>/test_<role>_flow.py`\n- 对应角色 → `tests/<role>/test_<role>_flow.py`\n\n在对应 `@allure.story` 方法中追加：\n\n```python\n    # ↓ 新增回归点\n    <page_instance>.click_<new_method_1>()\n    <page_instance>.click_<new_method_2>()\n```\n\n**⚠️ 若新增测试点的跳转目标脱离门户布局**（例如离开侧边导航的子路由、沉浸式页面），必须套用 [case-round-trip](../case-round-trip/SKILL.md)：PageObject 提供 `click_back_to_<landing>`，用例末尾显式返回起点页并断言；否则后续用例复位 fixture 会超时。\n\n### Step 4：同步更新 `docs/`\n\n- 在对应角色的 pages-catalog 子文件中追加新方法行：\n  - 对应角色 → [pages-catalog.md](../../docs/pages-catalog.md)\n  - （同上）\n  - \n- 在对应角色的 regression-points 子文件中追加回归点行 + 关键定位符常量：\n  - 对应角色 → [regression-points.md](../../docs/regression-points.md)\n  - \n\n---\n\n## 检查清单\n\n通用检查（命名/导入/is_page_loaded/allure）→ coding-conventions.md \"新增测试检查清单\"\n\n- [ ] 新增定位符均来自真实页面 DOM，行尾标注 P0~P5 级别\n- [ ] 对应角色 `test_<role>_flow.py` 已追加新方法调用\n- [ ] 对应角色的 `docs/pages-catalog-<role>.md` 已同步\n- [ ] 对应角色的 `docs/regression-points-<role>.md` 已同步\n- [ ] 若跳转目标脱离门户布局，已套用 `case-round-trip`\n\n## 注意事项\n\n- **不要修改已有方法**，只做增量添加\n- **不需要更新** `pages/__init__.py`（页面类已存在）\n- 如果新增测试点需要页面导航（跳转到子页面），考虑新建独立 PageObject（使用 `gen-page-test`）\n- 定位符直接基于真实页面抽取，不使用占位符\n"
+    },
+    {
+      "slug": "architecture",
+      "name": "architecture",
+      "dir": "skills/architecture",
+      "path": "skills/architecture/SKILL.md",
+      "desc": "POM 分层与 context 共享决策树。触发：架构、分层、POM、Page Object、基类设计、新增角色。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "gemini"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "playwright"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/DanielSuo117/velocitai.git",
+        "copy": "cp -r skills/architecture ~/.claude/skills/architecture",
+        "raw": "https://raw.githubusercontent.com/DanielSuo117/velocitai/dfcca7e835727886bf4d5e02994803a3a6c41bc5/skills/architecture/SKILL.md",
+        "saveAs": "~/.claude/skills/architecture/SKILL.md",
+        "marketplace": "/plugin marketplace add DanielSuo117/velocitai"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:1dff901fe5e66bb63de12807dd8137b9e48ab39cb0a92619c497774f6cdd2675",
+      "bytes": 4601,
+      "wordCount": 278,
+      "repoLicense": "MIT",
+      "commit": "dfcca7e835727886bf4d5e02994803a3a6c41bc5",
+      "branch": "main",
+      "body": "---\nname: architecture\ndescription: POM 分层与 context 共享决策树。触发：架构、分层、POM、Page Object、基类设计、新增角色。\n---\n\n# 架构决策 — POM 分层与 context 共享模式\n\n## 适用场景\n\n- 新增角色/端时决定是否引入新基类\n- 判断某组用例要不要共享 page / context\n- 给新成员解释 POM 分层\n\n---\n\n## POM 分层通用骨架\n\n```\n┌─────────────────────────────────────────────┐\n│                  tests/ 测试层                │\n│  按角色拆分文件：test_<role>_flow.py          │\n│  每个测试类继承 Base（或 Role-Base）           │\n├─────────────────────────────────────────────┤\n│                  pages/ 页面对象层             │\n│  Base ← Login ← Landing ← Detail / ...        │\n│  通用 Role 用前缀命名：Role<Role><Page>Page   │\n├─────────────────────────────────────────────┤\n│                  config/ 配置层                │\n│  URL、Token、浏览器参数按环境切换              │\n├─────────────────────────────────────────────┤\n│                  conftest.py Fixture 层        │\n│  browser → context → page → Role-specific base │\n└─────────────────────────────────────────────┘\n```\n\n**数据流向**：`config` → `conftest`（读取配置创建 fixture） → `pages`（接收 page 对象） → `tests`（组合页面对象执行断言）\n\n---\n\n## PageObject 骨架\n\n```python\n# 页面名称：<中文名>\nfrom core.base.base_page import BasePage\n\n\nclass <PageName>(BasePage):\n    # 定位符常量（类顶部）\n    <LOCATOR_CONSTANT> = \"<selector>\"   # P<0-5>: 说明\n    PAGE_IDENTIFIER = \"<selector>\"      # 页面加载锚点\n\n    # 业务方法（前缀：click_ / fill_ / select_ / get_xxx_text / wait_for_ / is_xxx_visible）\n    def click_<action>(self):\n        self.click(self.<LOCATOR_CONSTANT>)\n\n    # 页面加载验证（必须实现，放在最后）\n    def is_page_loaded(self) -> bool:\n        return self.is_visible(self.PAGE_IDENTIFIER)\n```\n\n---\n\n## context 共享模式决策树\n\n```\n一组用例是否满足以下 3 条？\n   1. 同一域名（不跨端）\n   2. 有统一前置（登录、角色切换…）\n   3. 有统一起点页面（可复位）\n       │\n       ├─ 是（三条全满足）\n       │    └→ class 级共享 context\n       │       - 用 scope=\"class\" 的 page fixture（实现见 browser-config skill）\n       │       - 专用基类：class setup 完成前置；function-scope autouse 复位起点\n       │       - 用例末尾必须往返闭合（见 case-round-trip skill）\n       │\n       └─ 否（任一不满足）\n            └→ function 级独立 context\n               - 每用例独立 browser.new_context() + new_page()\n               - 每用例独立登录\n```\n\n**注意事项：**\n\n- ❌ 禁止 session 级跨 class 共享 context（跨 class 职责边界不清）\n- ❌ 禁止同一 class 内跨域（会污染共享 context）\n- 详细规则见 [rules/playwright/browser-context.md](../../rules/playwright/browser-context.md) \"浏览器上下文\"段\n\n---\n\n## 同 class 内跨用例 page 接力模式\n\n同一 class 的多个用例之间接力同一页面状态（避免每个用例重新登录导航）的\n实现要点、骨架与适用条件 →\n[references/page-relay-pattern.md](./references/page-relay-pattern.md)\n\n## 新增 Role 的落地步骤\n\n1. 决策：用上面的决策树判断新 Role 的用例是否可共享 context\n2. PageObject：以 `Role<Role><Page>Page` 命名、`role_<page>` 文件名前缀，继承 `BasePage`\n3. 基类（若采用 class 级共享）：新建 `tests/<role>/<role>_base_test.py::<Role>BaseTest` 继承 `BaseTest`，实现登录 + 切换 + 起点断言\n4. 用例：`tests/<role>/test_<role>_flow.py::Test<Role>Flow` 继承新基类\n5. 文档：在 [docs/architecture.md](../../docs/architecture.md) 表中追加一行\n6. 目录：`pages/__init__.py` 追加新页面导出\n\n---\n\n## 决策落地参考\n\n本项目当前的落地情况（具体类名、fixture、起点页面）→ [docs/architecture.md](../../docs/architecture.md)。\n",
+      "bodyMd": "# 架构决策 — POM 分层与 context 共享模式\n\n## 适用场景\n\n- 新增角色/端时决定是否引入新基类\n- 判断某组用例要不要共享 page / context\n- 给新成员解释 POM 分层\n\n---\n\n## POM 分层通用骨架\n\n```\n┌─────────────────────────────────────────────┐\n│                  tests/ 测试层                │\n│  按角色拆分文件：test_<role>_flow.py          │\n│  每个测试类继承 Base（或 Role-Base）           │\n├─────────────────────────────────────────────┤\n│                  pages/ 页面对象层             │\n│  Base ← Login ← Landing ← Detail / ...        │\n│  通用 Role 用前缀命名：Role<Role><Page>Page   │\n├─────────────────────────────────────────────┤\n│                  config/ 配置层                │\n│  URL、Token、浏览器参数按环境切换              │\n├─────────────────────────────────────────────┤\n│                  conftest.py Fixture 层        │\n│  browser → context → page → Role-specific base │\n└─────────────────────────────────────────────┘\n```\n\n**数据流向**：`config` → `conftest`（读取配置创建 fixture） → `pages`（接收 page 对象） → `tests`（组合页面对象执行断言）\n\n---\n\n## PageObject 骨架\n\n```python\n# 页面名称：<中文名>\nfrom core.base.base_page import BasePage\n\n\nclass <PageName>(BasePage):\n    # 定位符常量（类顶部）\n    <LOCATOR_CONSTANT> = \"<selector>\"   # P<0-5>: 说明\n    PAGE_IDENTIFIER = \"<selector>\"      # 页面加载锚点\n\n    # 业务方法（前缀：click_ / fill_ / select_ / get_xxx_text / wait_for_ / is_xxx_visible）\n    def click_<action>(self):\n        self.click(self.<LOCATOR_CONSTANT>)\n\n    # 页面加载验证（必须实现，放在最后）\n    def is_page_loaded(self) -> bool:\n        return self.is_visible(self.PAGE_IDENTIFIER)\n```\n\n---\n\n## context 共享模式决策树\n\n```\n一组用例是否满足以下 3 条？\n   1. 同一域名（不跨端）\n   2. 有统一前置（登录、角色切换…）\n   3. 有统一起点页面（可复位）\n       │\n       ├─ 是（三条全满足）\n       │    └→ class 级共享 context\n       │       - 用 scope=\"class\" 的 page fixture（实现见 browser-config skill）\n       │       - 专用基类：class setup 完成前置；function-scope autouse 复位起点\n       │       - 用例末尾必须往返闭合（见 case-round-trip skill）\n       │\n       └─ 否（任一不满足）\n            └→ function 级独立 context\n               - 每用例独立 browser.new_context() + new_page()\n               - 每用例独立登录\n```\n\n**注意事项：**\n\n- ❌ 禁止 session 级跨 class 共享 context（跨 class 职责边界不清）\n- ❌ 禁止同一 class 内跨域（会污染共享 context）\n- 详细规则见 [rules/playwright/browser-context.md](../../rules/playwright/browser-context.md) \"浏览器上下文\"段\n\n---\n\n## 同 class 内跨用例 page 接力模式\n\n同一 class 的多个用例之间接力同一页面状态（避免每个用例重新登录导航）的\n实现要点、骨架与适用条件 →\n[references/page-relay-pattern.md](./references/page-relay-pattern.md)\n\n## 新增 Role 的落地步骤\n\n1. 决策：用上面的决策树判断新 Role 的用例是否可共享 context\n2. PageObject：以 `Role<Role><Page>Page` 命名、`role_<page>` 文件名前缀，继承 `BasePage`\n3. 基类（若采用 class 级共享）：新建 `tests/<role>/<role>_base_test.py::<Role>BaseTest` 继承 `BaseTest`，实现登录 + 切换 + 起点断言\n4. 用例：`tests/<role>/test_<role>_flow.py::Test<Role>Flow` 继承新基类\n5. 文档：在 [docs/architecture.md](../../docs/architecture.md) 表中追加一行\n6. 目录：`pages/__init__.py` 追加新页面导出\n\n---\n\n## 决策落地参考\n\n本项目当前的落地情况（具体类名、fixture、起点页面）→ [docs/architecture.md](../../docs/architecture.md)。\n"
+    },
+    {
+      "slug": "browser-config",
+      "name": "browser-config",
+      "dir": "skills/browser-config",
+      "path": "skills/browser-config/SKILL.md",
+      "desc": "浏览器 viewport / headless / 超时分层配置。触发：viewport、浏览器配置、导航超时、headless、slow_mo、incognito。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "gemini"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/DanielSuo117/velocitai.git",
+        "copy": "cp -r skills/browser-config ~/.claude/skills/browser-config",
+        "raw": "https://raw.githubusercontent.com/DanielSuo117/velocitai/dfcca7e835727886bf4d5e02994803a3a6c41bc5/skills/browser-config/SKILL.md",
+        "saveAs": "~/.claude/skills/browser-config/SKILL.md",
+        "marketplace": "/plugin marketplace add DanielSuo117/velocitai"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:ff5b7d178628ca923b57b3d6869391e7bc8da2d6fd4e9f36324ec53731c3317d",
+      "bytes": 4079,
+      "wordCount": 292,
+      "repoLicense": "MIT",
+      "commit": "dfcca7e835727886bf4d5e02994803a3a6c41bc5",
+      "branch": "main",
+      "body": "---\nname: browser-config\ndescription: 浏览器 viewport / headless / 超时分层配置。触发：viewport、浏览器配置、导航超时、headless、slow_mo、incognito。\n---\n\n# 浏览器启动配置 — viewport / 无痕 / 超时分离\n\n## 核心原则\n\n**所有浏览器配置集中声明在配置文件，通过 fixture 分层注入，禁止在用例或 PageObject 中硬编码。**\n\n---\n\n## 一、pytest 浏览器完整配置架构\n\n### 配置分层\n\n```\n配置文件（常量声明）\n  │\n  ├─ browser fixture（session 级）\n  │    └─ headless / slow_mo / incognito\n  │\n  ├─ page fixture（function 级）\n  │    └─ viewport / timeout / navigation_timeout\n  │\n  └─ class_page fixture（class 级）\n       └─ viewport / timeout / navigation_timeout\n```\n\n### 配置文件：所有常量集中声明\n\n```python\n# 浏览器配置\nHEADLESS = False              # True: 无头模式（CI 环境）; False: 有头模式（本地调试）\nSLOW_MO = 500                 # 每步操作间隔（ms），便于肉眼观察；CI 设为 0\nDEFAULT_TIMEOUT = 15000       # 元素操作超时（ms）\nDEFAULT_NAVIGATION_TIMEOUT = 15000  # 页面导航超时（ms）\nVIEWPORT_WIDTH = 1280         # 视口宽度\nVIEWPORT_HEIGHT = 900         # 视口高度\n```\n\n### Fixture 分层模板\n\n```python\n@pytest.fixture(scope=\"session\")\ndef browser(playwright_instance):\n    browser = playwright_instance.chromium.launch(\n        headless=HEADLESS, slow_mo=SLOW_MO, args=[\"--incognito\"],\n    )\n    yield browser\n    browser.close()\n\n@pytest.fixture                   # function 级：每个用例独立 context + page\ndef page(browser):\n    context = browser.new_context(viewport={\"width\": VIEWPORT_WIDTH, \"height\": VIEWPORT_HEIGHT})\n    page = context.new_page()\n    page.set_default_timeout(DEFAULT_TIMEOUT)\n    page.set_default_navigation_timeout(DEFAULT_NAVIGATION_TIMEOUT)\n    yield page\n    page.close(); context.close()\n\n@pytest.fixture(scope=\"class\")    # class 级：同 class 内共享 context + page\ndef class_page(browser):\n    # 同 page fixture，scope=\"class\"\n    ...\n```\n\n**关键约束**：`viewport` 在 context 层、`timeout` 在 page 层、`--incognito` 在 browser 层——三者不得混用层级。\n\n---\n\n## 二、Viewport 尺寸选择\n\n### 核心约束：viewport 高度必须适配物理屏幕\n\nviewport 高度不能超过物理屏幕可用高度（屏幕分辨率 − 浏览器工具栏 − 系统任务栏），否则浏览器窗口底部超出屏幕，页面底部内容被遮挡、无法交互。\n\n### 正确策略：保持宽度，适当增加高度（不超出屏幕）\n\n响应式页面等比放大 viewport 无效（可见比不变）；应保持宽度，适当增加高度（不超出屏幕）。\n\n| 方案 | Viewport | 效果 |\n|------|----------|------|\n| 默认 | 1280x720 | 基准，较小 |\n| **推荐** | **1280x900** | **适配 MacBook 屏幕，窗口不超出屏幕** |\n| 外接显示器 | 1280x1080 | 适配 Full HD 显示器 |\n| 过大（错误） | 1280x1440 | 超出多数屏幕，底部被遮挡 |\n| 等比放大（错误） | 2560x1440 | 响应式页面可见比无改善 |\n\n---\n\n## 三、无痕模式（Incognito）\n\npytest 测试浏览器启用（隔离环境），MCP 调试浏览器视需求（可能需要保留登录态）。通过 `launch(args=[\"--incognito\"])` 在 browser 层传入。\n\n---\n\n## 四、导航超时与元素超时分离\n\n两者默认均为 15s。分离的意义：页面资源重时可**单独调大导航超时**而不影响元素操作的快速反馈。\n\n```python\npage.set_default_timeout(DEFAULT_TIMEOUT)                    # 元素操作\npage.set_default_navigation_timeout(DEFAULT_NAVIGATION_TIMEOUT)  # 页面跳转\n```\n\n---\n\n## 检查清单\n\n- [ ] `viewport` 在 `new_context()` 时传入（context 层），不在 browser 层\n- [ ] `set_default_timeout` 与 `set_default_navigation_timeout` 均已设置（两者分离）\n- [ ] `--incognito` 在 pytest 测试浏览器上启用，MCP 调试浏览器视需求\n- [ ] 用例和 PageObject 中无硬编码的浏览器配置值\n",
+      "bodyMd": "# 浏览器启动配置 — viewport / 无痕 / 超时分离\n\n## 核心原则\n\n**所有浏览器配置集中声明在配置文件，通过 fixture 分层注入，禁止在用例或 PageObject 中硬编码。**\n\n---\n\n## 一、pytest 浏览器完整配置架构\n\n### 配置分层\n\n```\n配置文件（常量声明）\n  │\n  ├─ browser fixture（session 级）\n  │    └─ headless / slow_mo / incognito\n  │\n  ├─ page fixture（function 级）\n  │    └─ viewport / timeout / navigation_timeout\n  │\n  └─ class_page fixture（class 级）\n       └─ viewport / timeout / navigation_timeout\n```\n\n### 配置文件：所有常量集中声明\n\n```python\n# 浏览器配置\nHEADLESS = False              # True: 无头模式（CI 环境）; False: 有头模式（本地调试）\nSLOW_MO = 500                 # 每步操作间隔（ms），便于肉眼观察；CI 设为 0\nDEFAULT_TIMEOUT = 15000       # 元素操作超时（ms）\nDEFAULT_NAVIGATION_TIMEOUT = 15000  # 页面导航超时（ms）\nVIEWPORT_WIDTH = 1280         # 视口宽度\nVIEWPORT_HEIGHT = 900         # 视口高度\n```\n\n### Fixture 分层模板\n\n```python\n@pytest.fixture(scope=\"session\")\ndef browser(playwright_instance):\n    browser = playwright_instance.chromium.launch(\n        headless=HEADLESS, slow_mo=SLOW_MO, args=[\"--incognito\"],\n    )\n    yield browser\n    browser.close()\n\n@pytest.fixture                   # function 级：每个用例独立 context + page\ndef page(browser):\n    context = browser.new_context(viewport={\"width\": VIEWPORT_WIDTH, \"height\": VIEWPORT_HEIGHT})\n    page = context.new_page()\n    page.set_default_timeout(DEFAULT_TIMEOUT)\n    page.set_default_navigation_timeout(DEFAULT_NAVIGATION_TIMEOUT)\n    yield page\n    page.close(); context.close()\n\n@pytest.fixture(scope=\"class\")    # class 级：同 class 内共享 context + page\ndef class_page(browser):\n    # 同 page fixture，scope=\"class\"\n    ...\n```\n\n**关键约束**：`viewport` 在 context 层、`timeout` 在 page 层、`--incognito` 在 browser 层——三者不得混用层级。\n\n---\n\n## 二、Viewport 尺寸选择\n\n### 核心约束：viewport 高度必须适配物理屏幕\n\nviewport 高度不能超过物理屏幕可用高度（屏幕分辨率 − 浏览器工具栏 − 系统任务栏），否则浏览器窗口底部超出屏幕，页面底部内容被遮挡、无法交互。\n\n### 正确策略：保持宽度，适当增加高度（不超出屏幕）\n\n响应式页面等比放大 viewport 无效（可见比不变）；应保持宽度，适当增加高度（不超出屏幕）。\n\n| 方案 | Viewport | 效果 |\n|------|----------|------|\n| 默认 | 1280x720 | 基准，较小 |\n| **推荐** | **1280x900** | **适配 MacBook 屏幕，窗口不超出屏幕** |\n| 外接显示器 | 1280x1080 | 适配 Full HD 显示器 |\n| 过大（错误） | 1280x1440 | 超出多数屏幕，底部被遮挡 |\n| 等比放大（错误） | 2560x1440 | 响应式页面可见比无改善 |\n\n---\n\n## 三、无痕模式（Incognito）\n\npytest 测试浏览器启用（隔离环境），MCP 调试浏览器视需求（可能需要保留登录态）。通过 `launch(args=[\"--incognito\"])` 在 browser 层传入。\n\n---\n\n## 四、导航超时与元素超时分离\n\n两者默认均为 15s。分离的意义：页面资源重时可**单独调大导航超时**而不影响元素操作的快速反馈。\n\n```python\npage.set_default_timeout(DEFAULT_TIMEOUT)                    # 元素操作\npage.set_default_navigation_timeout(DEFAULT_NAVIGATION_TIMEOUT)  # 页面跳转\n```\n\n---\n\n## 检查清单\n\n- [ ] `viewport` 在 `new_context()` 时传入（context 层），不在 browser 层\n- [ ] `set_default_timeout` 与 `set_default_navigation_timeout` 均已设置（两者分离）\n- [ ] `--incognito` 在 pytest 测试浏览器上启用，MCP 调试浏览器视需求\n- [ ] 用例和 PageObject 中无硬编码的浏览器配置值\n"
+    },
+    {
+      "slug": "case-round-trip",
+      "name": "case-round-trip",
+      "dir": "skills/case-round-trip",
+      "path": "skills/case-round-trip/SKILL.md",
+      "desc": "共享 page 下用例离开起点后必须 UI 返回并断言。触发：往返闭合、case round trip、复位超时、scope 共享 page。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "gemini"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "playwright"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/DanielSuo117/velocitai.git",
+        "copy": "cp -r skills/case-round-trip ~/.claude/skills/case-round-trip",
+        "raw": "https://raw.githubusercontent.com/DanielSuo117/velocitai/dfcca7e835727886bf4d5e02994803a3a6c41bc5/skills/case-round-trip/SKILL.md",
+        "saveAs": "~/.claude/skills/case-round-trip/SKILL.md",
+        "marketplace": "/plugin marketplace add DanielSuo117/velocitai"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:1e5bbe0546c25f9cc2e437bda7d85cb94c4b5ebcfbdb0992204c38d470bb27e1",
+      "bytes": 3644,
+      "wordCount": 248,
+      "repoLicense": "MIT",
+      "commit": "dfcca7e835727886bf4d5e02994803a3a6c41bc5",
+      "branch": "main",
+      "body": "---\nname: case-round-trip\ndescription: 共享 page 下用例离开起点后必须 UI 返回并断言。触发：往返闭合、case round trip、复位超时、scope 共享 page。\n---\n\n# Case Round Trip — 用例往返闭合\n\n> 仅适用 Playwright + pytest。\n\n## 核心规则\n\n共享 page（scope > function 的 fixture）下，**用例离开起点页后必须在末尾通过真实 UI 返回并断言**；不要在复位 fixture 里做 goto 兜底。\n\n## 何时适用\n\n- 多个用例共享一个 page / browser context（class/module/session scope）\n- 用例会进入\"脱离门户布局\"的页面（子路由、沉浸式页面、跨子域）\n- 复位 fixture 依赖门户布局才有的元素（侧边栏 / 顶部 nav）\n\n## 做法\n\n1. 给每个会\"脱离门户布局\"的 PageObject 加 `click_back_to_<landing>()`，走真实 UI 返回按钮\n2. 用例主断言后显式调用返回方法，并再次断言起点页加载\n3. 复位 fixture 保持最简单形态（仅走门户导航），不做 goto 兜底\n\n```python\ndef test_enter_detail(self):\n    self.home.click_first_item()\n    detail = DetailPage(self.page)\n    assert detail.is_page_loaded(), \"详情页未加载\"\n\n    detail.click_back_to_home()\n    assert self.home.is_page_loaded(), \"返回起点页失败\"\n```\n\n## 起点 is_page_loaded 的严格判据\n\n复位 fixture 通常判断 `if not start.is_page_loaded(): start.click_back_to_landing()`。若 `is_page_loaded()` 仅校验\"页面骨架可见\"（title / 容器），切到其他 tab/子路由后骨架仍在 → 返回 True → 复位永不触发 → 下一用例起点错乱。\n\n**规则：起点 PageObject 的 `is_page_loaded()` 必须包含\"当前停留在起点状态\"判据**（起点 tab 激活态 / 起点 URL / 起点独有内容），而不仅是\"骨架存在\"。\n\n```python\n# ❌ 只校验骨架 — 切到其他 tab 后仍返回 True，复位失效\ndef is_page_loaded(self) -> bool:\n    return self.is_visible(self.PAGE_TITLE) and self.is_visible(self.TAB_BAR)\n\n# ✅ 加\"当前在起点 tab\"判据 — tab 切换后返回 False，触发复位\ndef is_page_loaded(self) -> bool:\n    return (\n        self.is_visible(self.PAGE_TITLE)\n        and self.is_visible(self.TAB_BAR)\n        and self.is_visible(self.LANDING_TAB_ACTIVE_MARK)   # 关键第 3 条\n    )\n```\n\n`LANDING_TAB_ACTIVE_MARK` 的 selector 必须用 text= 等锁定到**具体起点 tab**（如 `.tab.active >> text=<起点 tab 名>`），否则 `.active` 会匹配任意激活 tab，同样失效（见 [locator-strategy.md 状态类 selector 必须配 text 锁定](../../rules/playwright/locator-strategy.md)）。\n\n## 决策\n\n```\n跳转目标是否仍保留起点页的门户导航？\n├─ 是 → 依赖复位 fixture 即可\n└─ 否 → PageObject 必须提供返回方法 + 用例末尾显式返回 + 断言\n```\n\n## ❌ 反例\n\n- 进入沉浸式页面后只断言进入，不返回 → 后续用例复位 fixture 点不到门户导航\n- `page.goto(<landing_url>)` 绕过返回按钮 → 失去对返回按钮的回归覆盖\n- `if not visible: goto(...)` 塞进复位 fixture → 掩盖\"用例未闭合\"真问题\n\n## 检查清单\n\n- [ ] 跳转目标脱离门户布局 → 本规则适用\n- [ ] PageObject 提供 `click_back_to_<landing>()`\n- [ ] 用例末尾调用返回方法并断言起点页加载\n- [ ] 测试顺序打乱仍全部通过\n\n---\n\n## 项目落地参考\n\n项目中脱离门户布局的 PageObject（需实现 `click_back_to_<landing>`）见 [docs/pages-catalog.md](../../docs/pages-catalog.md) 与 [docs/regression-points.md](../../docs/regression-points.md)（带\"⚠️ 跳转目标脱离门户布局\"标注的页面）。\n",
+      "bodyMd": "# Case Round Trip — 用例往返闭合\n\n> 仅适用 Playwright + pytest。\n\n## 核心规则\n\n共享 page（scope > function 的 fixture）下，**用例离开起点页后必须在末尾通过真实 UI 返回并断言**；不要在复位 fixture 里做 goto 兜底。\n\n## 何时适用\n\n- 多个用例共享一个 page / browser context（class/module/session scope）\n- 用例会进入\"脱离门户布局\"的页面（子路由、沉浸式页面、跨子域）\n- 复位 fixture 依赖门户布局才有的元素（侧边栏 / 顶部 nav）\n\n## 做法\n\n1. 给每个会\"脱离门户布局\"的 PageObject 加 `click_back_to_<landing>()`，走真实 UI 返回按钮\n2. 用例主断言后显式调用返回方法，并再次断言起点页加载\n3. 复位 fixture 保持最简单形态（仅走门户导航），不做 goto 兜底\n\n```python\ndef test_enter_detail(self):\n    self.home.click_first_item()\n    detail = DetailPage(self.page)\n    assert detail.is_page_loaded(), \"详情页未加载\"\n\n    detail.click_back_to_home()\n    assert self.home.is_page_loaded(), \"返回起点页失败\"\n```\n\n## 起点 is_page_loaded 的严格判据\n\n复位 fixture 通常判断 `if not start.is_page_loaded(): start.click_back_to_landing()`。若 `is_page_loaded()` 仅校验\"页面骨架可见\"（title / 容器），切到其他 tab/子路由后骨架仍在 → 返回 True → 复位永不触发 → 下一用例起点错乱。\n\n**规则：起点 PageObject 的 `is_page_loaded()` 必须包含\"当前停留在起点状态\"判据**（起点 tab 激活态 / 起点 URL / 起点独有内容），而不仅是\"骨架存在\"。\n\n```python\n# ❌ 只校验骨架 — 切到其他 tab 后仍返回 True，复位失效\ndef is_page_loaded(self) -> bool:\n    return self.is_visible(self.PAGE_TITLE) and self.is_visible(self.TAB_BAR)\n\n# ✅ 加\"当前在起点 tab\"判据 — tab 切换后返回 False，触发复位\ndef is_page_loaded(self) -> bool:\n    return (\n        self.is_visible(self.PAGE_TITLE)\n        and self.is_visible(self.TAB_BAR)\n        and self.is_visible(self.LANDING_TAB_ACTIVE_MARK)   # 关键第 3 条\n    )\n```\n\n`LANDING_TAB_ACTIVE_MARK` 的 selector 必须用 text= 等锁定到**具体起点 tab**（如 `.tab.active >> text=<起点 tab 名>`），否则 `.active` 会匹配任意激活 tab，同样失效（见 [locator-strategy.md 状态类 selector 必须配 text 锁定](../../rules/playwright/locator-strategy.md)）。\n\n## 决策\n\n```\n跳转目标是否仍保留起点页的门户导航？\n├─ 是 → 依赖复位 fixture 即可\n└─ 否 → PageObject 必须提供返回方法 + 用例末尾显式返回 + 断言\n```\n\n## ❌ 反例\n\n- 进入沉浸式页面后只断言进入，不返回 → 后续用例复位 fixture 点不到门户导航\n- `page.goto(<landing_url>)` 绕过返回按钮 → 失去对返回按钮的回归覆盖\n- `if not visible: goto(...)` 塞进复位 fixture → 掩盖\"用例未闭合\"真问题\n\n## 检查清单\n\n- [ ] 跳转目标脱离门户布局 → 本规则适用\n- [ ] PageObject 提供 `click_back_to_<landing>()`\n- [ ] 用例末尾调用返回方法并断言起点页加载\n- [ ] 测试顺序打乱仍全部通过\n\n---\n\n## 项目落地参考\n\n项目中脱离门户布局的 PageObject（需实现 `click_back_to_<landing>`）见 [docs/pages-catalog.md](../../docs/pages-catalog.md) 与 [docs/regression-points.md](../../docs/regression-points.md)（带\"⚠️ 跳转目标脱离门户布局\"标注的页面）。\n"
+    },
+    {
+      "slug": "code-review-graph",
+      "name": "code-review-graph",
+      "dir": "skills/code-review-graph",
+      "path": "skills/code-review-graph/SKILL.md",
+      "desc": "AST 知识图谱：变更审查、探索、调试、重构。触发：知识图谱、代码审查、影响分析、爆炸半径、重构。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "gemini"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/DanielSuo117/velocitai.git",
+        "copy": "cp -r skills/code-review-graph ~/.claude/skills/code-review-graph",
+        "raw": "https://raw.githubusercontent.com/DanielSuo117/velocitai/dfcca7e835727886bf4d5e02994803a3a6c41bc5/skills/code-review-graph/SKILL.md",
+        "saveAs": "~/.claude/skills/code-review-graph/SKILL.md",
+        "marketplace": "/plugin marketplace add DanielSuo117/velocitai"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:a56b62cc66813cee28126da0b8ab9ed98493fcc64f8200335d321dbbb445aaaa",
+      "bytes": 3284,
+      "wordCount": 185,
+      "repoLicense": "MIT",
+      "commit": "dfcca7e835727886bf4d5e02994803a3a6c41bc5",
+      "branch": "main",
+      "body": "---\nname: code-review-graph\ndescription: AST 知识图谱：变更审查、探索、调试、重构。触发：知识图谱、代码审查、影响分析、爆炸半径、重构。\n---\n\n# code-review-graph — 知识图谱工具集\n\n本项目通过 code-review-graph MCP 接入了基于 AST 的代码知识图谱。探索代码时**优先使用图谱工具**，再降级到 Grep/Glob/Read。\n\n## Token 效率规则（全局）\n\n- **始终**先调用 `get_minimal_context(task=\"<你的任务>\")`，再使用其他图谱工具。\n- 所有调用使用 `detail_level=\"minimal\"`，仅在不够用时升级到 \"standard\"。\n- 目标：5 次工具调用、800 个输出 token 内完成任务。\n\n---\n\n## 工作流一：变更审查\n\n利用知识图谱进行风险感知的代码审查。\n\n### 步骤\n\n1. 运行 `detect_changes` 获取带风险评分的变更分析。\n2. 运行 `get_affected_flows` 查找受影响的执行路径。\n3. 对高风险函数，运行 `query_graph` pattern=\"tests_for\" 检查测试覆盖。\n4. 运行 `get_impact_radius` 理解影响范围。\n5. 对未覆盖测试的变更，建议具体的测试用例。\n\n### 输出格式\n\n按风险等级（高/中/低）分组，包含：变更内容、测试覆盖状态、改进建议、合并建议。\n\n---\n\n## 工作流二：代码库探索\n\n利用图谱快速理解代码库结构。\n\n### 步骤\n\n1. 运行 `list_graph_stats` 查看整体指标。\n2. 运行 `get_architecture_overview` 了解高层模块结构。\n3. 使用 `list_communities` 查找主要模块，用 `get_community` 获取详情。\n4. 使用 `semantic_search_nodes` 按名称或关键词查找函数/类。\n5. 使用 `query_graph` 的 `callers_of`、`callees_of`、`imports_of` 追踪关系。\n6. 使用 `list_flows` 和 `get_flow` 理解执行路径。\n\n### 提示\n\n- 先宏观（统计、架构），再缩小到具体区域。\n- `children_of` 查看文件内所有函数和类；`find_large_functions` 定位复杂代码。\n\n---\n\n## 工作流三：问题调试\n\n利用图谱系统化追踪和调试问题。\n\n### 步骤\n\n1. 使用 `semantic_search_nodes` 查找与问题相关的代码。\n2. 使用 `query_graph` 的 `callers_of` 和 `callees_of` 追踪调用链。\n3. 使用 `get_flow` 查看可疑区域的完整执行路径。\n4. 运行 `detect_changes` 检查近期变更是否引发了问题。\n5. 对可疑文件使用 `get_impact_radius` 查看受影响范围。\n\n### 提示\n\n- 同时检查调用者和被调用者，理解完整上下文。\n- 查看受影响的执行流，找到触发 bug 的入口点。\n- 近期变更是新问题最常见的来源。\n\n---\n\n## 工作流四：安全重构\n\n利用图谱自信地规划和执行重构。\n\n### 步骤\n\n1. 使用 `refactor_tool` mode=\"suggest\" 获取重构建议。\n2. 使用 `refactor_tool` mode=\"dead_code\" 查找死代码。\n3. 重命名时用 `refactor_tool` mode=\"rename\" 预览所有受影响位置。\n4. 使用 `apply_refactor_tool` 配合 refactor_id 应用重命名。\n5. 变更后运行 `detect_changes` 验证影响。\n\n### 安全检查\n\n- 应用前始终先预览（rename 模式给出编辑清单）。\n- 大规模重构前先检查 `get_impact_radius`。\n- 使用 `get_affected_flows` 确保关键路径未被破坏。\n- `find_large_functions` 识别需要拆分的大函数。\n",
+      "bodyMd": "# code-review-graph — 知识图谱工具集\n\n本项目通过 code-review-graph MCP 接入了基于 AST 的代码知识图谱。探索代码时**优先使用图谱工具**，再降级到 Grep/Glob/Read。\n\n## Token 效率规则（全局）\n\n- **始终**先调用 `get_minimal_context(task=\"<你的任务>\")`，再使用其他图谱工具。\n- 所有调用使用 `detail_level=\"minimal\"`，仅在不够用时升级到 \"standard\"。\n- 目标：5 次工具调用、800 个输出 token 内完成任务。\n\n---\n\n## 工作流一：变更审查\n\n利用知识图谱进行风险感知的代码审查。\n\n### 步骤\n\n1. 运行 `detect_changes` 获取带风险评分的变更分析。\n2. 运行 `get_affected_flows` 查找受影响的执行路径。\n3. 对高风险函数，运行 `query_graph` pattern=\"tests_for\" 检查测试覆盖。\n4. 运行 `get_impact_radius` 理解影响范围。\n5. 对未覆盖测试的变更，建议具体的测试用例。\n\n### 输出格式\n\n按风险等级（高/中/低）分组，包含：变更内容、测试覆盖状态、改进建议、合并建议。\n\n---\n\n## 工作流二：代码库探索\n\n利用图谱快速理解代码库结构。\n\n### 步骤\n\n1. 运行 `list_graph_stats` 查看整体指标。\n2. 运行 `get_architecture_overview` 了解高层模块结构。\n3. 使用 `list_communities` 查找主要模块，用 `get_community` 获取详情。\n4. 使用 `semantic_search_nodes` 按名称或关键词查找函数/类。\n5. 使用 `query_graph` 的 `callers_of`、`callees_of`、`imports_of` 追踪关系。\n6. 使用 `list_flows` 和 `get_flow` 理解执行路径。\n\n### 提示\n\n- 先宏观（统计、架构），再缩小到具体区域。\n- `children_of` 查看文件内所有函数和类；`find_large_functions` 定位复杂代码。\n\n---\n\n## 工作流三：问题调试\n\n利用图谱系统化追踪和调试问题。\n\n### 步骤\n\n1. 使用 `semantic_search_nodes` 查找与问题相关的代码。\n2. 使用 `query_graph` 的 `callers_of` 和 `callees_of` 追踪调用链。\n3. 使用 `get_flow` 查看可疑区域的完整执行路径。\n4. 运行 `detect_changes` 检查近期变更是否引发了问题。\n5. 对可疑文件使用 `get_impact_radius` 查看受影响范围。\n\n### 提示\n\n- 同时检查调用者和被调用者，理解完整上下文。\n- 查看受影响的执行流，找到触发 bug 的入口点。\n- 近期变更是新问题最常见的来源。\n\n---\n\n## 工作流四：安全重构\n\n利用图谱自信地规划和执行重构。\n\n### 步骤\n\n1. 使用 `refactor_tool` mode=\"suggest\" 获取重构建议。\n2. 使用 `refactor_tool` mode=\"dead_code\" 查找死代码。\n3. 重命名时用 `refactor_tool` mode=\"rename\" 预览所有受影响位置。\n4. 使用 `apply_refactor_tool` 配合 refactor_id 应用重命名。\n5. 变更后运行 `detect_changes` 验证影响。\n\n### 安全检查\n\n- 应用前始终先预览（rename 模式给出编辑清单）。\n- 大规模重构前先检查 `get_impact_radius`。\n- 使用 `get_affected_flows` 确保关键路径未被破坏。\n- `find_large_functions` 识别需要拆分的大函数。\n"
+    },
+    {
+      "slug": "gen-page-test",
+      "name": "gen-page-test",
+      "dir": "skills/gen-page-test",
+      "path": "skills/gen-page-test/SKILL.md",
+      "desc": "一键生成 PageObject + 配套测试。触发：新增页面、生成页面、gen page、create page、添加页面对象。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "gemini"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/DanielSuo117/velocitai.git",
+        "copy": "cp -r skills/gen-page-test ~/.claude/skills/gen-page-test",
+        "raw": "https://raw.githubusercontent.com/DanielSuo117/velocitai/dfcca7e835727886bf4d5e02994803a3a6c41bc5/skills/gen-page-test/SKILL.md",
+        "saveAs": "~/.claude/skills/gen-page-test/SKILL.md",
+        "marketplace": "/plugin marketplace add DanielSuo117/velocitai"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:b3b96da02b628c01e74ec7c6fcd251332f27439b03beb9023e8f66210860006b",
+      "bytes": 4632,
+      "wordCount": 312,
+      "repoLicense": "MIT",
+      "commit": "dfcca7e835727886bf4d5e02994803a3a6c41bc5",
+      "branch": "main",
+      "body": "---\nname: gen-page-test\ndescription: 一键生成 PageObject + 配套测试。触发：新增页面、生成页面、gen page、create page、添加页面对象。\n---\n\n# Gen Page Test — 一键生成 PageObject + 测试\n\n## 使用方式\n\n```\n用户输入：为 <中文页面名>（URL: https://...）生成页面对象和测试，测试点：点击A、填写B、查看C\n```\n\n## 输入参数\n\n| 参数 | 必填 | 说明 | 示例 |\n|------|------|------|------|\n| 页面名称 | 是 | 中文业务名称 | 课程管理页 |\n| 页面 URL | 是 | 真实可访问的页面 URL（已认证态） | https://example.com/xxx |\n| 角色 | 是 | 项目中已有的角色（如 `<role>`） | 对应角色 |\n| 类名 | 否（自动推导） | PascalCase | `<Role><Page>Page` |\n| 回归测试点 | 是 | 需要覆盖的交互元素 | 点击新建、搜索、删除 |\n\n**类名推导规则**：\n- 非特定角色：中文名 → 英文翻译 → PascalCase + `Page` 后缀（如 `<Feature>Page`）\n- 特定角色：`<Role>` + 英文翻译 → PascalCase + `Page` 后缀（如 `<Role><Feature>Page`）\n- 角色文件名前缀：`<role>_`（如 `<role>_<feature>_page.py`）\n\n项目中已有的具体类名清单见 [docs/pages-catalog.md](../../docs/pages-catalog.md)。\n\n---\n\n## 执行流程（6 步）\n\n### Step 1：访问真实页面获取 DOM\n\n`browser_navigate`（必要时先 `/entry?token=xxx`）→ `browser_snapshot` → `browser_evaluate` 提取元素。按 [locator-replacer](../locator-replacer/SKILL.md) 六级优先级（P0 → P5）选出稳定定位符。\n\n### Step 2：生成 PageObject 文件\n\n创建 `pages/<snake_name>_page.py`：\n\n```python\n# 页面名称：<中文名>\nfrom core.base.base_page import BasePage\n\n\nclass <ClassName>(BasePage):\n    # 定位符 — 来自真实页面（<日期>，URL: <页面URL>）\n    <LOCATOR_1> = \"<真实定位符>\"    # P<0-5>: 说明\n    <LOCATOR_2> = \"<真实定位符>\"    # P<0-5>: 说明\n    PAGE_IDENTIFIER = \"<页面标识定位符>\"    # P<0-5>: 说明\n\n    def click_<method_1>(self):\n        self.click(self.<LOCATOR_1>)\n\n    def click_<method_2>(self):\n        self.click(self.<LOCATOR_2>)\n\n    def is_page_loaded(self) -> bool:\n        return self.is_visible(self.PAGE_IDENTIFIER)\n```\n\n### Step 3：更新 `pages/__init__.py`\n\n```python\nfrom pages.<snake_name>_page import <ClassName>\n\n# 在 __all__ 列表中追加 \"<ClassName>\"\n```\n\n### Step 4：在对应角色测试文件追加 story\n\n目标文件：对应角色 `tests/<role>/test_<role>_flow.py`（继承 `<Role>BaseTest`）中的 `Test<Role>Flow` 类。\n\n角色目录还不存在时，先 `python scripts/scaffold_role.py <role> --label <中文名>` 生成基类与流程文件，再往类末尾追加；不要手搓目录。\n\n对应角色示例：\n\n```python\n@allure.story(\"<页面中文名>\")\ndef test_<snake_name>(self):\n    page_obj = <ClassName>(self.<role>_page)\n    self.<role>_page.goto(\"<页面URL>\")\n    assert page_obj.is_page_loaded(), \"<页面中文名>加载失败\"\n    page_obj.click_<method_1>()\n    ...\n```\n\n对应角色使用 `self.<role>_page`，且若脱离门户布局须往返闭合（见 case-round-trip）：\n\n```python\n@allure.story(\"<页面中文名>\")\ndef test_<snake_name>(self):\n    self.<role>_home.click_<navigation>()\n    page_obj = <ClassName>(self.<role>_page)\n    assert page_obj.is_page_loaded(), \"<页面中文名>加载失败\"\n    page_obj.click_<method_1>()\n    page_obj.click_back_to_<landing>()\n    assert self.<role>_home.is_page_loaded(), \"返回起点失败\"\n```\n\n### Step 5：真实环境验证\n\n```bash\npytest framework/tests/<role>/test_<role>_flow.py --env=<pre|prod> -v -k \"test_<snake_name>\"\n```\n\n**⚠️ 运行前向用户确认 `--env`**（见 [agent-behavior.md](../../rules/agent-behavior/agent-behavior.md) P0.2）。\n\n失败时 → [locator-replacer](../locator-replacer/SKILL.md) 重新抽取定位符，或 [test-runner](../test-runner/SKILL.md) 分析失败类型。\n\n### Step 6：同步更新 `docs/`\n\n- `docs/pages-catalog.md`：追加新页面类 + 方法表\n- `docs/regression-points.md`：追加回归点表 + 关键定位符段\n\n---\n\n## 生成后检查清单\n\n通用检查（命名/导入/is_page_loaded/allure）→ coding-conventions.md \"新增测试检查清单\"\n\n- [ ] 定位符均来自真实页面 DOM，行尾标注 P0~P5 级别\n- [ ] `pytest framework/tests/<role>/test_<role>_flow.py --env=<pre|prod> -v -k \"test_<name>\"` 通过\n- [ ] 对应角色的 `docs/pages-catalog.md` 已追加\n- [ ] 对应角色的 `docs/regression-points.md` 已追加\n- [ ] 若跳转目标脱离门户布局，已套用 [case-round-trip](../case-round-trip/SKILL.md)\n",
+      "bodyMd": "# Gen Page Test — 一键生成 PageObject + 测试\n\n## 使用方式\n\n```\n用户输入：为 <中文页面名>（URL: https://...）生成页面对象和测试，测试点：点击A、填写B、查看C\n```\n\n## 输入参数\n\n| 参数 | 必填 | 说明 | 示例 |\n|------|------|------|------|\n| 页面名称 | 是 | 中文业务名称 | 课程管理页 |\n| 页面 URL | 是 | 真实可访问的页面 URL（已认证态） | https://example.com/xxx |\n| 角色 | 是 | 项目中已有的角色（如 `<role>`） | 对应角色 |\n| 类名 | 否（自动推导） | PascalCase | `<Role><Page>Page` |\n| 回归测试点 | 是 | 需要覆盖的交互元素 | 点击新建、搜索、删除 |\n\n**类名推导规则**：\n- 非特定角色：中文名 → 英文翻译 → PascalCase + `Page` 后缀（如 `<Feature>Page`）\n- 特定角色：`<Role>` + 英文翻译 → PascalCase + `Page` 后缀（如 `<Role><Feature>Page`）\n- 角色文件名前缀：`<role>_`（如 `<role>_<feature>_page.py`）\n\n项目中已有的具体类名清单见 [docs/pages-catalog.md](../../docs/pages-catalog.md)。\n\n---\n\n## 执行流程（6 步）\n\n### Step 1：访问真实页面获取 DOM\n\n`browser_navigate`（必要时先 `/entry?token=xxx`）→ `browser_snapshot` → `browser_evaluate` 提取元素。按 [locator-replacer](../locator-replacer/SKILL.md) 六级优先级（P0 → P5）选出稳定定位符。\n\n### Step 2：生成 PageObject 文件\n\n创建 `pages/<snake_name>_page.py`：\n\n```python\n# 页面名称：<中文名>\nfrom core.base.base_page import BasePage\n\n\nclass <ClassName>(BasePage):\n    # 定位符 — 来自真实页面（<日期>，URL: <页面URL>）\n    <LOCATOR_1> = \"<真实定位符>\"    # P<0-5>: 说明\n    <LOCATOR_2> = \"<真实定位符>\"    # P<0-5>: 说明\n    PAGE_IDENTIFIER = \"<页面标识定位符>\"    # P<0-5>: 说明\n\n    def click_<method_1>(self):\n        self.click(self.<LOCATOR_1>)\n\n    def click_<method_2>(self):\n        self.click(self.<LOCATOR_2>)\n\n    def is_page_loaded(self) -> bool:\n        return self.is_visible(self.PAGE_IDENTIFIER)\n```\n\n### Step 3：更新 `pages/__init__.py`\n\n```python\nfrom pages.<snake_name>_page import <ClassName>\n\n# 在 __all__ 列表中追加 \"<ClassName>\"\n```\n\n### Step 4：在对应角色测试文件追加 story\n\n目标文件：对应角色 `tests/<role>/test_<role>_flow.py`（继承 `<Role>BaseTest`）中的 `Test<Role>Flow` 类。\n\n角色目录还不存在时，先 `python scripts/scaffold_role.py <role> --label <中文名>` 生成基类与流程文件，再往类末尾追加；不要手搓目录。\n\n对应角色示例：\n\n```python\n@allure.story(\"<页面中文名>\")\ndef test_<snake_name>(self):\n    page_obj = <ClassName>(self.<role>_page)\n    self.<role>_page.goto(\"<页面URL>\")\n    assert page_obj.is_page_loaded(), \"<页面中文名>加载失败\"\n    page_obj.click_<method_1>()\n    ...\n```\n\n对应角色使用 `self.<role>_page`，且若脱离门户布局须往返闭合（见 case-round-trip）：\n\n```python\n@allure.story(\"<页面中文名>\")\ndef test_<snake_name>(self):\n    self.<role>_home.click_<navigation>()\n    page_obj = <ClassName>(self.<role>_page)\n    assert page_obj.is_page_loaded(), \"<页面中文名>加载失败\"\n    page_obj.click_<method_1>()\n    page_obj.click_back_to_<landing>()\n    assert self.<role>_home.is_page_loaded(), \"返回起点失败\"\n```\n\n### Step 5：真实环境验证\n\n```bash\npytest framework/tests/<role>/test_<role>_flow.py --env=<pre|prod> -v -k \"test_<snake_name>\"\n```\n\n**⚠️ 运行前向用户确认 `--env`**（见 [agent-behavior.md](../../rules/agent-behavior/agent-behavior.md) P0.2）。\n\n失败时 → [locator-replacer](../locator-replacer/SKILL.md) 重新抽取定位符，或 [test-runner](../test-runner/SKILL.md) 分析失败类型。\n\n### Step 6：同步更新 `docs/`\n\n- `docs/pages-catalog.md`：追加新页面类 + 方法表\n- `docs/regression-points.md`：追加回归点表 + 关键定位符段\n\n---\n\n## 生成后检查清单\n\n通用检查（命名/导入/is_page_loaded/allure）→ coding-conventions.md \"新增测试检查清单\"\n\n- [ ] 定位符均来自真实页面 DOM，行尾标注 P0~P5 级别\n- [ ] `pytest framework/tests/<role>/test_<role>_flow.py --env=<pre|prod> -v -k \"test_<name>\"` 通过\n- [ ] 对应角色的 `docs/pages-catalog.md` 已追加\n- [ ] 对应角色的 `docs/regression-points.md` 已追加\n- [ ] 若跳转目标脱离门户布局，已套用 [case-round-trip](../case-round-trip/SKILL.md)\n"
+    },
+    {
+      "slug": "locator-replacer",
+      "name": "locator-replacer",
+      "dir": "skills/locator-replacer",
+      "path": "skills/locator-replacer/SKILL.md",
+      "desc": "替换占位定位符为真实选择器（六级优先级）。触发：替换定位符、locator、selector、定位失败、元素找不到、DOM 分析。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "gemini"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "playwright"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/DanielSuo117/velocitai.git",
+        "copy": "cp -r skills/locator-replacer ~/.claude/skills/locator-replacer",
+        "raw": "https://raw.githubusercontent.com/DanielSuo117/velocitai/dfcca7e835727886bf4d5e02994803a3a6c41bc5/skills/locator-replacer/SKILL.md",
+        "saveAs": "~/.claude/skills/locator-replacer/SKILL.md",
+        "marketplace": "/plugin marketplace add DanielSuo117/velocitai"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:ba7d3e27c6aaded5a259dc42d1f3ed971e7f1afb2a2b38f1d9724d5021c86afd",
+      "bytes": 4384,
+      "wordCount": 359,
+      "repoLicense": "MIT",
+      "commit": "dfcca7e835727886bf4d5e02994803a3a6c41bc5",
+      "branch": "main",
+      "body": "---\nname: locator-replacer\ndescription: 替换占位定位符为真实选择器（六级优先级）。触发：替换定位符、locator、selector、定位失败、元素找不到、DOM 分析。\n---\n\n# Locator Replacer — 定位符替换 Skill\n\n## 适用场景\n\n- 将页面对象中 `text=` 占位定位符替换为真实选择器\n- 前端构建后原有选择器失效，需要重新定位\n- 新增页面元素需要选择最佳定位策略\n\n---\n\n## 定位符选择策略（六级优先级）\n\n按优先级从高到低，**逐级尝试，选中即停**。优先使用页面上已有的语义化信息，\n避免依赖需要前端额外配合的属性。\n\n| 级别 | 策略 | 抗什么 | 代价 |\n|------|------|--------|------|\n| **P0** | ARIA role + 可见文本 | CSS 重构、构建哈希 | 文案变更需同步 |\n| **P1** | 可见文本 | CSS 重构、构建哈希 | 文案变更需同步、可能不唯一 |\n| **P2** | 表单特有属性（name/placeholder/type） | 样式与文案变更 | 仅适用于表单控件 |\n| **P3** | 语义化 CSS class / id | 文案变更 | 样式重构即失效 |\n| **P4** | `data-testid` | 几乎全部 | **需前端配合添加** |\n| **P5** | 相对 XPath / CSS 结构 | —— | 最脆弱，最后手段 |\n\n**完整写法、判断依据与代码示例** → [references/priority-levels.md](./references/priority-levels.md)\n\n## 执行流程\n\n### Step 1: 分析目标页面 DOM\n\n使用 agent-browser 打开目标页面，获取交互元素信息（工具选型遵循 [agent-behavior P0.4](../../rules/agent-behavior/agent-behavior.md)，agent-browser 未安装时降级到 Playwright MCP）：\n\n```\n操作步骤：\n1. browser_navigate → 访问目标页面（已认证状态）\n2. browser_snapshot → 获取页面无障碍树（accessibility tree）\n3. browser_evaluate → 执行 JS 提取元素属性：\n   - document.querySelectorAll('[data-testid]')  → 已有 testid\n   - document.querySelectorAll('[role]')          → ARIA role\n   - document.querySelectorAll('button, a, input') → 交互元素\n```\n\n### Step 2: 为每个元素选择定位策略\n\n对照页面对象中的每个占位定位符，按 P0→P5 逐级尝试，命中即停：\n\n| 检查顺序 | 条件 | 使用 |\n|---------|------|------|\n| P0 | 有 role + name | `role=button[name='...']` |\n| P1 | text= 唯一且稳定 | `text=...`（标记\"已验证唯一\"）|\n| P2 | 表单属性（placeholder/name/type） | `[placeholder='...']` |\n| P3 | 稳定 CSS class（非哈希） | `css=.xxx` |\n| P4 | 有 data-testid | `[data-testid='...']` |\n| P5 | 以上均无 | 相对 XPath（≤3 层） |\n\n### Step 3: 更新页面对象\n\n```python\nclass <PageName>(BasePage):\n    # 定位符 — 已替换为真实选择器（<日期>）\n    <PRIMARY_ACTION_BTN> = \"role=button[name='<按钮文案>']\"  # P0: ARIA role\n    <SECONDARY_LINK> = \"text=<链接文案>\"                      # P1: text（已验证唯一）\n    PAGE_IDENTIFIER = \"role=heading[name='<页面标题>']\"       # P0: ARIA role\n```\n\n**更新规则：**\n- 在定位符行尾注释标注选择级别（`# P0: ARIA role` / `# P1: text` / ... / `# P4: testid` / `# P5: XPath`）\n- 如果 `text=` 经验证确实稳定且唯一，注释标记 `# P1: text（已验证唯一）`\n- 删除原来的 `# 定位符 — 后续替换为实际选择器` 注释\n- 更新为 `# 定位符 — 已替换为真实选择器（日期）`\n\n### Step 4: 验证\n\n```bash\n# 在对应角色的回归文件中跑指定用例（运行前向用户确认 --env，见 agent-behavior P0.2）\npytest framework/tests/<role>/test_<role>_flow.py --env=<pre|prod> -v -k \"test_<story_name>\"\n```\n\n### Step 5: 同步更新文档\n\n更新 [docs/regression-points.md](../../docs/regression-points.md) 中对应 PageObject 的\"关键定位符\"段。\n\n---\n\n## 定位符质量检查清单\n\n替换完成后，逐项确认：\n\n- [ ] 没有使用绝对 XPath（`/html/body/...`）\n- [ ] 没有使用哈希类名（`sc-xxx`, `css-xxx`, `_module_xxx`）\n- [ ] 没有使用纯数字索引（`div[3]`，除非列表取第 N 项）\n- [ ] 每个定位符行尾标注了选择级别（`# P0` ~ `# P5`）\n- [ ] XPath 层级不超过 3 层\n- [ ] 主流程测试在真实环境通过\n\n---\n\n## 常见问题处理\n\n同一文本重复、元素无稳定属性、构建后批量失效等症状的处理方式 →\n[references/troubleshooting.md](./references/troubleshooting.md)\n",
+      "bodyMd": "# Locator Replacer — 定位符替换 Skill\n\n## 适用场景\n\n- 将页面对象中 `text=` 占位定位符替换为真实选择器\n- 前端构建后原有选择器失效，需要重新定位\n- 新增页面元素需要选择最佳定位策略\n\n---\n\n## 定位符选择策略（六级优先级）\n\n按优先级从高到低，**逐级尝试，选中即停**。优先使用页面上已有的语义化信息，\n避免依赖需要前端额外配合的属性。\n\n| 级别 | 策略 | 抗什么 | 代价 |\n|------|------|--------|------|\n| **P0** | ARIA role + 可见文本 | CSS 重构、构建哈希 | 文案变更需同步 |\n| **P1** | 可见文本 | CSS 重构、构建哈希 | 文案变更需同步、可能不唯一 |\n| **P2** | 表单特有属性（name/placeholder/type） | 样式与文案变更 | 仅适用于表单控件 |\n| **P3** | 语义化 CSS class / id | 文案变更 | 样式重构即失效 |\n| **P4** | `data-testid` | 几乎全部 | **需前端配合添加** |\n| **P5** | 相对 XPath / CSS 结构 | —— | 最脆弱，最后手段 |\n\n**完整写法、判断依据与代码示例** → [references/priority-levels.md](./references/priority-levels.md)\n\n## 执行流程\n\n### Step 1: 分析目标页面 DOM\n\n使用 agent-browser 打开目标页面，获取交互元素信息（工具选型遵循 [agent-behavior P0.4](../../rules/agent-behavior/agent-behavior.md)，agent-browser 未安装时降级到 Playwright MCP）：\n\n```\n操作步骤：\n1. browser_navigate → 访问目标页面（已认证状态）\n2. browser_snapshot → 获取页面无障碍树（accessibility tree）\n3. browser_evaluate → 执行 JS 提取元素属性：\n   - document.querySelectorAll('[data-testid]')  → 已有 testid\n   - document.querySelectorAll('[role]')          → ARIA role\n   - document.querySelectorAll('button, a, input') → 交互元素\n```\n\n### Step 2: 为每个元素选择定位策略\n\n对照页面对象中的每个占位定位符，按 P0→P5 逐级尝试，命中即停：\n\n| 检查顺序 | 条件 | 使用 |\n|---------|------|------|\n| P0 | 有 role + name | `role=button[name='...']` |\n| P1 | text= 唯一且稳定 | `text=...`（标记\"已验证唯一\"）|\n| P2 | 表单属性（placeholder/name/type） | `[placeholder='...']` |\n| P3 | 稳定 CSS class（非哈希） | `css=.xxx` |\n| P4 | 有 data-testid | `[data-testid='...']` |\n| P5 | 以上均无 | 相对 XPath（≤3 层） |\n\n### Step 3: 更新页面对象\n\n```python\nclass <PageName>(BasePage):\n    # 定位符 — 已替换为真实选择器（<日期>）\n    <PRIMARY_ACTION_BTN> = \"role=button[name='<按钮文案>']\"  # P0: ARIA role\n    <SECONDARY_LINK> = \"text=<链接文案>\"                      # P1: text（已验证唯一）\n    PAGE_IDENTIFIER = \"role=heading[name='<页面标题>']\"       # P0: ARIA role\n```\n\n**更新规则：**\n- 在定位符行尾注释标注选择级别（`# P0: ARIA role` / `# P1: text` / ... / `# P4: testid` / `# P5: XPath`）\n- 如果 `text=` 经验证确实稳定且唯一，注释标记 `# P1: text（已验证唯一）`\n- 删除原来的 `# 定位符 — 后续替换为实际选择器` 注释\n- 更新为 `# 定位符 — 已替换为真实选择器（日期）`\n\n### Step 4: 验证\n\n```bash\n# 在对应角色的回归文件中跑指定用例（运行前向用户确认 --env，见 agent-behavior P0.2）\npytest framework/tests/<role>/test_<role>_flow.py --env=<pre|prod> -v -k \"test_<story_name>\"\n```\n\n### Step 5: 同步更新文档\n\n更新 [docs/regression-points.md](../../docs/regression-points.md) 中对应 PageObject 的\"关键定位符\"段。\n\n---\n\n## 定位符质量检查清单\n\n替换完成后，逐项确认：\n\n- [ ] 没有使用绝对 XPath（`/html/body/...`）\n- [ ] 没有使用哈希类名（`sc-xxx`, `css-xxx`, `_module_xxx`）\n- [ ] 没有使用纯数字索引（`div[3]`，除非列表取第 N 项）\n- [ ] 每个定位符行尾标注了选择级别（`# P0` ~ `# P5`）\n- [ ] XPath 层级不超过 3 层\n- [ ] 主流程测试在真实环境通过\n\n---\n\n## 常见问题处理\n\n同一文本重复、元素无稳定属性、构建后批量失效等症状的处理方式 →\n[references/troubleshooting.md](./references/troubleshooting.md)\n"
+    },
+    {
+      "slug": "page-load-assertion",
+      "name": "page-load-assertion",
+      "dir": "skills/page-load-assertion",
+      "path": "skills/page-load-assertion/SKILL.md",
+      "desc": "is_page_loaded() 四种验证模式与调用层级。触发：页面断言、is_page_loaded、page loaded、页面加载验证。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "gemini"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "playwright"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/DanielSuo117/velocitai.git",
+        "copy": "cp -r skills/page-load-assertion ~/.claude/skills/page-load-assertion",
+        "raw": "https://raw.githubusercontent.com/DanielSuo117/velocitai/dfcca7e835727886bf4d5e02994803a3a6c41bc5/skills/page-load-assertion/SKILL.md",
+        "saveAs": "~/.claude/skills/page-load-assertion/SKILL.md",
+        "marketplace": "/plugin marketplace add DanielSuo117/velocitai"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:24844159de1d534d83a56a6052176c0aa9ef690a507e8ac672e3dc06f592f3a7",
+      "bytes": 4882,
+      "wordCount": 323,
+      "repoLicense": "MIT",
+      "commit": "dfcca7e835727886bf4d5e02994803a3a6c41bc5",
+      "branch": "main",
+      "body": "---\nname: page-load-assertion\ndescription: is_page_loaded() 四种验证模式与调用层级。触发：页面断言、is_page_loaded、page loaded、页面加载验证。\n---\n\n# Page Load Assertion — 页面加载断言方法论\n\n## 核心思路\n\n页面\"正常\"的判断不是检查 HTTP 状态码，而是验证**用户能看到的关键元素确实渲染出来了**。通过每个 PageObject 的 `is_page_loaded()` 方法统一实现。\n\n---\n\n## `is_page_loaded()` 的四种验证模式\n\n按严格程度从低到高：\n\n### 模式 A：单元素验证（最简单）\n\n检查该页面**独有的标志性容器**是否可见。适用于结构简单、一个元素就能区分的页面：\n\n```python\nPAGE_CONTAINER = \"css=.feature-container\"    # P3\n\ndef is_page_loaded(self) -> bool:\n    return self.is_visible(self.PAGE_CONTAINER)\n```\n\n### 模式 B：双元素 AND 组合（推荐默认）\n\n**容器 + 内容** 双重验证，确保\"页面骨架到位 + 数据渲染完成\"：\n\n```python\nPAGE_CONTAINER = \"css=.feature-container\"    # P3\nPAGE_TITLE = \"text=欢迎使用\"                  # P1\n\ndef is_page_loaded(self) -> bool:\n    return self.is_visible(self.PAGE_CONTAINER) and self.is_visible(self.PAGE_TITLE)\n```\n\n### 模式 C：多元素 + 激活态验证（最严格）\n\n在结构和内容基础上，还验证**当前 UI 状态**（如某个 tab 处于 active）。适用于承担\"起点状态判断\"语义的页面：\n\n```python\nPAGE_TITLE = \"css=span.page-title\"                                    # P3\nTAB_BAR = \"css=ul.tab-bar\"                                            # P3\nDEFAULT_TAB_ACTIVE = \"css=ul.tab-bar li.tab.active >> text=默认Tab\"    # P3+P1\n\ndef is_page_loaded(self) -> bool:\n    return (\n        self.is_visible(self.PAGE_TITLE)\n        and self.is_visible(self.TAB_BAR)\n        and self.is_visible(self.DEFAULT_TAB_ACTIVE)\n    )\n```\n\n注意：状态类 selector（`.active` / `aria-selected` 等）**必须配 text 锁定**，否则切换 tab 后 `.active` 跟随新激活对象漂移。\n\n### 模式 D：委托给语义方法\n\n把验证逻辑提取为有业务含义的方法名，便于 setup fixture 中单独调用：\n\n```python\ndef is_page_loaded(self) -> bool:\n    return self.is_login_success()\n\ndef is_login_success(self) -> bool:\n    return self.is_visible(self.SUCCESS_FLAG) and self.is_visible(self.NAV_LIST)\n```\n\n---\n\n## 模式选择决策树\n\n```\n新页面需要 is_page_loaded()\n│\n├─ 页面结构简单，一个独有容器即可区分？\n│  └─ 是 → 模式 A（单元素）\n│\n├─ 需要确认内容也渲染到位？\n│  └─ 是 → 模式 B（容器 + 内容，推荐默认）\n│\n├─ 该页面是复位 fixture 的起点，需要判断 UI 状态？\n│  └─ 是 → 模式 C（多元素 + 激活态）\n│\n├─ 验证逻辑在 setup 中也需要单独调用？\n│  └─ 是 → 模式 D（委托给语义方法）\n│\n└─ 容器可能存在但内容未渲染（SPA 子 Tab 切换 / 异步加载）？\n   └─ 是 → 模式 E（JS evaluate 检查子元素数量）\n```\n\n---\n\n## 验证元素的选择原则\n\n| 原则 | 说明 |\n|------|------|\n| 选该页面独有的元素 | 不选通用 header/footer，选只有这个页面才有的容器或文本 |\n| 优先选结构性容器 | 如 `.feature-container`、`.detail-wrapper`，页面骨架不易变 |\n| 文本元素锁定业务语义 | 如 `text=欢迎使用`，确认内容渲染到位 |\n| 状态类 selector 配 text | `.active` 会随操作漂移，必须加 `>> text=具体文本` 锁定 |\n| 不选动态数据 | 具体数字、用户名等因数据变化导致断言不稳定 |\n\n### 断言目标的三级稳定性\n\n核心原则：优先选**模板级**文本（页面框架固定标题），禁止选**数据级**内容（动态计数、日期）。多视图场景中每个断言目标须同时满足「模板级 + 视图独占」。\n\n完整规则与反例/正例 → [assertion-patterns.md](../../rules/playwright/assertion-patterns.md) \"断言目标稳定性\"章节。\n\n### 模式 E：白屏检测 + 空数据 vs 有数据 三态判断\n\nSPA 中容器 div 可能存在且 `is_visible` 为真，但内部组件未挂载（白屏）——\n此时模式 A/B 会误判为正常。该场景需要三态判断，细节较多且只在 SPA 下适用。\n\n**按需展开** → [references/blank-screen-detection.md](./references/blank-screen-detection.md)\n\n## 调用层级\n\n1. **class setup**：登录后 `assert home.is_page_loaded(), \"首页加载失败\"`\n2. **function reset**：`if not self.home.is_page_loaded(): click_nav_home(); assert ...`\n3. **用例体**：每次跳转后 `assert target.is_page_loaded(), \"<页面>加载失败\"`\n\n---\n\n## 规则约束\n\n1. **每个 PageObject 必须实现 `is_page_loaded()`**——返回 `bool`，放在类的最后一个方法\n2. `is_page_loaded()` 内部只用 `is_visible()` 组合，**不抛异常**\n",
+      "bodyMd": "# Page Load Assertion — 页面加载断言方法论\n\n## 核心思路\n\n页面\"正常\"的判断不是检查 HTTP 状态码，而是验证**用户能看到的关键元素确实渲染出来了**。通过每个 PageObject 的 `is_page_loaded()` 方法统一实现。\n\n---\n\n## `is_page_loaded()` 的四种验证模式\n\n按严格程度从低到高：\n\n### 模式 A：单元素验证（最简单）\n\n检查该页面**独有的标志性容器**是否可见。适用于结构简单、一个元素就能区分的页面：\n\n```python\nPAGE_CONTAINER = \"css=.feature-container\"    # P3\n\ndef is_page_loaded(self) -> bool:\n    return self.is_visible(self.PAGE_CONTAINER)\n```\n\n### 模式 B：双元素 AND 组合（推荐默认）\n\n**容器 + 内容** 双重验证，确保\"页面骨架到位 + 数据渲染完成\"：\n\n```python\nPAGE_CONTAINER = \"css=.feature-container\"    # P3\nPAGE_TITLE = \"text=欢迎使用\"                  # P1\n\ndef is_page_loaded(self) -> bool:\n    return self.is_visible(self.PAGE_CONTAINER) and self.is_visible(self.PAGE_TITLE)\n```\n\n### 模式 C：多元素 + 激活态验证（最严格）\n\n在结构和内容基础上，还验证**当前 UI 状态**（如某个 tab 处于 active）。适用于承担\"起点状态判断\"语义的页面：\n\n```python\nPAGE_TITLE = \"css=span.page-title\"                                    # P3\nTAB_BAR = \"css=ul.tab-bar\"                                            # P3\nDEFAULT_TAB_ACTIVE = \"css=ul.tab-bar li.tab.active >> text=默认Tab\"    # P3+P1\n\ndef is_page_loaded(self) -> bool:\n    return (\n        self.is_visible(self.PAGE_TITLE)\n        and self.is_visible(self.TAB_BAR)\n        and self.is_visible(self.DEFAULT_TAB_ACTIVE)\n    )\n```\n\n注意：状态类 selector（`.active` / `aria-selected` 等）**必须配 text 锁定**，否则切换 tab 后 `.active` 跟随新激活对象漂移。\n\n### 模式 D：委托给语义方法\n\n把验证逻辑提取为有业务含义的方法名，便于 setup fixture 中单独调用：\n\n```python\ndef is_page_loaded(self) -> bool:\n    return self.is_login_success()\n\ndef is_login_success(self) -> bool:\n    return self.is_visible(self.SUCCESS_FLAG) and self.is_visible(self.NAV_LIST)\n```\n\n---\n\n## 模式选择决策树\n\n```\n新页面需要 is_page_loaded()\n│\n├─ 页面结构简单，一个独有容器即可区分？\n│  └─ 是 → 模式 A（单元素）\n│\n├─ 需要确认内容也渲染到位？\n│  └─ 是 → 模式 B（容器 + 内容，推荐默认）\n│\n├─ 该页面是复位 fixture 的起点，需要判断 UI 状态？\n│  └─ 是 → 模式 C（多元素 + 激活态）\n│\n├─ 验证逻辑在 setup 中也需要单独调用？\n│  └─ 是 → 模式 D（委托给语义方法）\n│\n└─ 容器可能存在但内容未渲染（SPA 子 Tab 切换 / 异步加载）？\n   └─ 是 → 模式 E（JS evaluate 检查子元素数量）\n```\n\n---\n\n## 验证元素的选择原则\n\n| 原则 | 说明 |\n|------|------|\n| 选该页面独有的元素 | 不选通用 header/footer，选只有这个页面才有的容器或文本 |\n| 优先选结构性容器 | 如 `.feature-container`、`.detail-wrapper`，页面骨架不易变 |\n| 文本元素锁定业务语义 | 如 `text=欢迎使用`，确认内容渲染到位 |\n| 状态类 selector 配 text | `.active` 会随操作漂移，必须加 `>> text=具体文本` 锁定 |\n| 不选动态数据 | 具体数字、用户名等因数据变化导致断言不稳定 |\n\n### 断言目标的三级稳定性\n\n核心原则：优先选**模板级**文本（页面框架固定标题），禁止选**数据级**内容（动态计数、日期）。多视图场景中每个断言目标须同时满足「模板级 + 视图独占」。\n\n完整规则与反例/正例 → [assertion-patterns.md](../../rules/playwright/assertion-patterns.md) \"断言目标稳定性\"章节。\n\n### 模式 E：白屏检测 + 空数据 vs 有数据 三态判断\n\nSPA 中容器 div 可能存在且 `is_visible` 为真，但内部组件未挂载（白屏）——\n此时模式 A/B 会误判为正常。该场景需要三态判断，细节较多且只在 SPA 下适用。\n\n**按需展开** → [references/blank-screen-detection.md](./references/blank-screen-detection.md)\n\n## 调用层级\n\n1. **class setup**：登录后 `assert home.is_page_loaded(), \"首页加载失败\"`\n2. **function reset**：`if not self.home.is_page_loaded(): click_nav_home(); assert ...`\n3. **用例体**：每次跳转后 `assert target.is_page_loaded(), \"<页面>加载失败\"`\n\n---\n\n## 规则约束\n\n1. **每个 PageObject 必须实现 `is_page_loaded()`**——返回 `bool`，放在类的最后一个方法\n2. `is_page_loaded()` 内部只用 `is_visible()` 组合，**不抛异常**\n"
+    },
+    {
+      "slug": "quick-debug",
+      "name": "quick-debug",
+      "dir": "skills/quick-debug",
+      "path": "skills/quick-debug/SKILL.md",
+      "desc": "测试失败时免登跳转原地排查修复。触发：排查、纠错、debug、定位符失败、超时、元素找不到、断言失败。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "gemini"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "playwright"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/DanielSuo117/velocitai.git",
+        "copy": "cp -r skills/quick-debug ~/.claude/skills/quick-debug",
+        "raw": "https://raw.githubusercontent.com/DanielSuo117/velocitai/dfcca7e835727886bf4d5e02994803a3a6c41bc5/skills/quick-debug/SKILL.md",
+        "saveAs": "~/.claude/skills/quick-debug/SKILL.md",
+        "marketplace": "/plugin marketplace add DanielSuo117/velocitai"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:7b5da70876307f3b137cbd5c912a8e21aada0b5798889790acea301f7a6055eb",
+      "bytes": 3346,
+      "wordCount": 210,
+      "repoLicense": "MIT",
+      "commit": "dfcca7e835727886bf4d5e02994803a3a6c41bc5",
+      "branch": "main",
+      "body": "---\nname: quick-debug\ndescription: 测试失败时免登跳转原地排查修复。触发：排查、纠错、debug、定位符失败、超时、元素找不到、断言失败。\n---\n\n# Quick Debug — 快速纠错验证\n\n## 核心思路\n\n**跳过从登录到问题节点的完整流程，直接免登到目标页面原地排查。**\n\n利用项目已有的 token URL 免登机制，配合浏览器工具直接在问题页面进行 DOM 探索、定位符验证、等待策略调整，修复后原地验证，全程不重跑完整测试流程。\n\n---\n\n## 主干流程（5 步）\n\n```\nStep 1: 解析失败信息\n    ↓\nStep 2: 构造免登跳转 URL\n    ↓\nStep 3: 免登跳转到目标页面\n    ↓\nStep 4: 诊断问题（决策树）\n    ↓\nStep 5: 修复 + 原地验证\n```\n\n### Step 1: 解析失败信息\n\n从堆栈 / 用户描述提取：失败用例名、错误类型（TimeoutError / AssertionError）、失败定位符、失败时所在 URL。信息不足时读取测试代码反推。\n\n### Step 2: 构造免登跳转 URL\n\n从配置文件读取对应环境的 token。\n\n**⚠️ 免登前必须向用户确认 `--env`**（见 [agent-behavior P0.2](../../rules/agent-behavior/agent-behavior.md)）。\n\n**两种情况：**\n\n| 情况 | 策略 |\n|------|------|\n| 目标页面有明确 URL 路径 | 先免登（`/entry?token=<JWT>`），再导航到目标路径 |\n| 目标页面需要交互才能到达（弹窗、新 tab 等） | 免登到最近的可直接访问的父级页面，执行最少量的导航操作到达目标 |\n\n### Step 3: 免登跳转到目标页面\n\n`browser_navigate → <base_url>/entry?token=<JWT>` → 导航到目标路径 → 验证 `is_page_loaded()`。免登失败（跳回登录页）→ 提示用户刷新 token。\n\n### Step 4: 诊断问题\n\n见下一节「诊断决策树」。\n\n### Step 5: 修复 + 原地验证\n\n**根据诊断结果调用对应 skill：**\n\n| 诊断结果 | 调用 skill |\n|---------|-----------|\n| 定位符问题 | [locator-replacer](../locator-replacer/SKILL.md) |\n| 等待策略问题 | [wait-strategy](../wait-strategy/SKILL.md) |\n| 页面加载断言问题 | [page-load-assertion](../page-load-assertion/SKILL.md) |\n| 页面大改版 | 报告用户，建议 [gen-page-test](../gen-page-test/SKILL.md) 重新生成 |\n| 断言预期值变更 | 报告差异，由用户决策是否更新预期值 |\n\n**原地验证：** 修复后在当前浏览器页面直接验证（用 Playwright MCP 重新执行失败操作），确认无误后建议用户重跑完整测试。\n\n---\n\n## 诊断决策树（Step 4 展开）\n\n走到 Step 4 需要判断根因时展开 →\n[references/diagnosis-tree.md](./references/diagnosis-tree.md)\n\n## 浏览器工具选择\n\nDOM 探索/定位符采集 → agent-browser（优先）；精确验证/断言 → Playwright MCP；agent-browser 未安装 → 全程 Playwright MCP（P0.4 降级）。\n\n---\n\n## 检查清单\n\n每次 quick-debug 结束前，必须确认：\n\n- [ ] 已明确失败原因并归类（A/B/C/D 哪个分支）\n- [ ] 修复动作已执行（或已报告用户需人工决策）\n- [ ] 原地验证通过（修复后的定位符/等待在当前页面生效）\n- [ ] 建议用户重跑完整测试确认回归\n- [ ] 保存操作验证失败时，参考 [save-verify-strategy](../save-verify-strategy/)（Toast 时序 / 重定向检测 / 数据对比）\n",
+      "bodyMd": "# Quick Debug — 快速纠错验证\n\n## 核心思路\n\n**跳过从登录到问题节点的完整流程，直接免登到目标页面原地排查。**\n\n利用项目已有的 token URL 免登机制，配合浏览器工具直接在问题页面进行 DOM 探索、定位符验证、等待策略调整，修复后原地验证，全程不重跑完整测试流程。\n\n---\n\n## 主干流程（5 步）\n\n```\nStep 1: 解析失败信息\n    ↓\nStep 2: 构造免登跳转 URL\n    ↓\nStep 3: 免登跳转到目标页面\n    ↓\nStep 4: 诊断问题（决策树）\n    ↓\nStep 5: 修复 + 原地验证\n```\n\n### Step 1: 解析失败信息\n\n从堆栈 / 用户描述提取：失败用例名、错误类型（TimeoutError / AssertionError）、失败定位符、失败时所在 URL。信息不足时读取测试代码反推。\n\n### Step 2: 构造免登跳转 URL\n\n从配置文件读取对应环境的 token。\n\n**⚠️ 免登前必须向用户确认 `--env`**（见 [agent-behavior P0.2](../../rules/agent-behavior/agent-behavior.md)）。\n\n**两种情况：**\n\n| 情况 | 策略 |\n|------|------|\n| 目标页面有明确 URL 路径 | 先免登（`/entry?token=<JWT>`），再导航到目标路径 |\n| 目标页面需要交互才能到达（弹窗、新 tab 等） | 免登到最近的可直接访问的父级页面，执行最少量的导航操作到达目标 |\n\n### Step 3: 免登跳转到目标页面\n\n`browser_navigate → <base_url>/entry?token=<JWT>` → 导航到目标路径 → 验证 `is_page_loaded()`。免登失败（跳回登录页）→ 提示用户刷新 token。\n\n### Step 4: 诊断问题\n\n见下一节「诊断决策树」。\n\n### Step 5: 修复 + 原地验证\n\n**根据诊断结果调用对应 skill：**\n\n| 诊断结果 | 调用 skill |\n|---------|-----------|\n| 定位符问题 | [locator-replacer](../locator-replacer/SKILL.md) |\n| 等待策略问题 | [wait-strategy](../wait-strategy/SKILL.md) |\n| 页面加载断言问题 | [page-load-assertion](../page-load-assertion/SKILL.md) |\n| 页面大改版 | 报告用户，建议 [gen-page-test](../gen-page-test/SKILL.md) 重新生成 |\n| 断言预期值变更 | 报告差异，由用户决策是否更新预期值 |\n\n**原地验证：** 修复后在当前浏览器页面直接验证（用 Playwright MCP 重新执行失败操作），确认无误后建议用户重跑完整测试。\n\n---\n\n## 诊断决策树（Step 4 展开）\n\n走到 Step 4 需要判断根因时展开 →\n[references/diagnosis-tree.md](./references/diagnosis-tree.md)\n\n## 浏览器工具选择\n\nDOM 探索/定位符采集 → agent-browser（优先）；精确验证/断言 → Playwright MCP；agent-browser 未安装 → 全程 Playwright MCP（P0.4 降级）。\n\n---\n\n## 检查清单\n\n每次 quick-debug 结束前，必须确认：\n\n- [ ] 已明确失败原因并归类（A/B/C/D 哪个分支）\n- [ ] 修复动作已执行（或已报告用户需人工决策）\n- [ ] 原地验证通过（修复后的定位符/等待在当前页面生效）\n- [ ] 建议用户重跑完整测试确认回归\n- [ ] 保存操作验证失败时，参考 [save-verify-strategy](../save-verify-strategy/)（Toast 时序 / 重定向检测 / 数据对比）\n"
+    },
+    {
+      "slug": "save-verify-strategy",
+      "name": "save-verify-strategy",
+      "dir": "skills/save-verify-strategy",
+      "path": "skills/save-verify-strategy/SKILL.md",
+      "desc": "表单保存后验证（Toast / 重定向 / 数据对比 / 富文本清空）。触发：保存验证、toast、重定向检测、Meta+A、保存成功判断。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "gemini"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/DanielSuo117/velocitai.git",
+        "copy": "cp -r skills/save-verify-strategy ~/.claude/skills/save-verify-strategy",
+        "raw": "https://raw.githubusercontent.com/DanielSuo117/velocitai/dfcca7e835727886bf4d5e02994803a3a6c41bc5/skills/save-verify-strategy/SKILL.md",
+        "saveAs": "~/.claude/skills/save-verify-strategy/SKILL.md",
+        "marketplace": "/plugin marketplace add DanielSuo117/velocitai"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:537d02f23450c40d7e12c957b740623e9a89e4b10f9dcf69a7ca8f23491166f3",
+      "bytes": 3307,
+      "wordCount": 211,
+      "repoLicense": "MIT",
+      "commit": "dfcca7e835727886bf4d5e02994803a3a6c41bc5",
+      "branch": "main",
+      "body": "---\nname: save-verify-strategy\ndescription: 表单保存后验证（Toast / 重定向 / 数据对比 / 富文本清空）。触发：保存验证、toast、重定向检测、Meta+A、保存成功判断。\n---\n\n# 表单保存验证策略\n\n---\n\n## 一、macOS 富文本编辑器全选\n\nmacOS 上富文本编辑器的全选按键差异（Control+A 无效）→\n[references/macos-select-all.md](./references/macos-select-all.md)\n\n## 二、保存后验证策略：三级选择\n\n| 保存后行为 | 验证方式 | 可靠性 | 适用场景 |\n|-----------|---------|--------|---------|\n| 显示 Toast | `is_visible(toast_locator)` — 必须在 networkidle 后**立即**检测 | 低（2-3s 消失） | 有明确 Toast 的场景 |\n| 页面重定向 | 检测编辑页特征元素消失 `wait_for(state=\"hidden\")` | 中（持久状态） | 保存后自动跳转的场景 |\n| 无 UI 反馈 | 写入标记数据 → 重新打开 → 读取对比 | 高（数据级验证） | 无 Toast、不确定是否重定向 |\n\n**原则**：三级可组合使用。优先用持久状态变更，Toast 仅作辅助。\n\n### 2.1 Toast 时序陷阱\n\n`click_save()` 方法中的 `wait_for_timeout()` 会消耗 Toast 存活时间。**必须**在 networkidle 后立即检测 Toast，不能先等待再检测。\n\n❌ 反例：\n\n```python\ndef click_save(self):\n    self.click(self.SAVE_BTN)\n    self.page.wait_for_load_state(\"networkidle\")\n    self.page.wait_for_timeout(3000)   # Toast 在这 3s 内出现又消失了\n\n# 调用方\nassert page.is_visible(toast)          # Toast 已消失，永远 False\n```\n\n✅ 正例：\n\n```python\ndef click_save(self):\n    self.click(self.SAVE_BTN)\n    self.page.wait_for_load_state(\"networkidle\")\n    # 不加额外等待 — 让调用方立即检测 Toast\n\n# 调用方\nis_ok = page.is_visible(toast, timeout=10000)   # 立即开始等 Toast\npage.wait_for_timeout(3000)                      # 检测完再等页面稳定\n```\n\n### 2.2 重定向检测\n\n保存后页面可能重定向离开编辑页。通过检测编辑页**特征元素消失**来确认保存成功：\n\n```python\ndef is_save_success(self) -> bool:\n    \"\"\"编辑页 header 消失 = 保存成功并已离开编辑页\"\"\"\n    try:\n        self.page.locator(self.EDIT_PAGE_HEADER).first.wait_for(\n            state=\"hidden\", timeout=15000\n        )\n        return True\n    except Exception:\n        return False\n```\n\n### 2.3 重定向目的地不可假设\n\n保存后的重定向目的地可能因**导航上下文**不同而异（直接 URL 访问 vs SPA 内跳转 vs 新 tab 中操作）。不要断言重定向到某个特定页面。\n\n❌ 反例：\n\n```python\n# 假设保存后一定重定向到首页\nredirected_home = HomePage(page)\nassert redirected_home.is_page_loaded()   # 实际可能跳到其他页面\n```\n\n✅ 正例：\n\n```python\n# 只验证离开了编辑页，不假设去了哪里\nassert edit_page.is_save_success()        # 编辑页 header 消失 = 保存成功\n```\n\n---\n\n## 三、多 tab 保存后：关闭旧 tab，从原始 tab 重入\n\n保存动作发生在新开 tab 中时的处理 →\n[references/multi-tab-reentry.md](./references/multi-tab-reentry.md)\n\n## 四、数据对比验证模式（最终验证）\n\n保存前后做数据比对的实现方式 →\n[references/data-comparison.md](./references/data-comparison.md)\n",
+      "bodyMd": "# 表单保存验证策略\n\n---\n\n## 一、macOS 富文本编辑器全选\n\nmacOS 上富文本编辑器的全选按键差异（Control+A 无效）→\n[references/macos-select-all.md](./references/macos-select-all.md)\n\n## 二、保存后验证策略：三级选择\n\n| 保存后行为 | 验证方式 | 可靠性 | 适用场景 |\n|-----------|---------|--------|---------|\n| 显示 Toast | `is_visible(toast_locator)` — 必须在 networkidle 后**立即**检测 | 低（2-3s 消失） | 有明确 Toast 的场景 |\n| 页面重定向 | 检测编辑页特征元素消失 `wait_for(state=\"hidden\")` | 中（持久状态） | 保存后自动跳转的场景 |\n| 无 UI 反馈 | 写入标记数据 → 重新打开 → 读取对比 | 高（数据级验证） | 无 Toast、不确定是否重定向 |\n\n**原则**：三级可组合使用。优先用持久状态变更，Toast 仅作辅助。\n\n### 2.1 Toast 时序陷阱\n\n`click_save()` 方法中的 `wait_for_timeout()` 会消耗 Toast 存活时间。**必须**在 networkidle 后立即检测 Toast，不能先等待再检测。\n\n❌ 反例：\n\n```python\ndef click_save(self):\n    self.click(self.SAVE_BTN)\n    self.page.wait_for_load_state(\"networkidle\")\n    self.page.wait_for_timeout(3000)   # Toast 在这 3s 内出现又消失了\n\n# 调用方\nassert page.is_visible(toast)          # Toast 已消失，永远 False\n```\n\n✅ 正例：\n\n```python\ndef click_save(self):\n    self.click(self.SAVE_BTN)\n    self.page.wait_for_load_state(\"networkidle\")\n    # 不加额外等待 — 让调用方立即检测 Toast\n\n# 调用方\nis_ok = page.is_visible(toast, timeout=10000)   # 立即开始等 Toast\npage.wait_for_timeout(3000)                      # 检测完再等页面稳定\n```\n\n### 2.2 重定向检测\n\n保存后页面可能重定向离开编辑页。通过检测编辑页**特征元素消失**来确认保存成功：\n\n```python\ndef is_save_success(self) -> bool:\n    \"\"\"编辑页 header 消失 = 保存成功并已离开编辑页\"\"\"\n    try:\n        self.page.locator(self.EDIT_PAGE_HEADER).first.wait_for(\n            state=\"hidden\", timeout=15000\n        )\n        return True\n    except Exception:\n        return False\n```\n\n### 2.3 重定向目的地不可假设\n\n保存后的重定向目的地可能因**导航上下文**不同而异（直接 URL 访问 vs SPA 内跳转 vs 新 tab 中操作）。不要断言重定向到某个特定页面。\n\n❌ 反例：\n\n```python\n# 假设保存后一定重定向到首页\nredirected_home = HomePage(page)\nassert redirected_home.is_page_loaded()   # 实际可能跳到其他页面\n```\n\n✅ 正例：\n\n```python\n# 只验证离开了编辑页，不假设去了哪里\nassert edit_page.is_save_success()        # 编辑页 header 消失 = 保存成功\n```\n\n---\n\n## 三、多 tab 保存后：关闭旧 tab，从原始 tab 重入\n\n保存动作发生在新开 tab 中时的处理 →\n[references/multi-tab-reentry.md](./references/multi-tab-reentry.md)\n\n## 四、数据对比验证模式（最终验证）\n\n保存前后做数据比对的实现方式 →\n[references/data-comparison.md](./references/data-comparison.md)\n"
+    },
+    {
+      "slug": "selector-self-heal",
+      "name": "selector-self-heal",
+      "dir": "skills/selector-self-heal",
+      "path": "skills/selector-self-heal/SKILL.md",
+      "desc": "复核运行期自愈提案并写回 PageObject。触发：选择器失效、定位符漂移、自愈提案、proposals.jsonl、用例误报不通过。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "gemini"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "python3",
+          "playwright"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/DanielSuo117/velocitai.git",
+        "copy": "cp -r skills/selector-self-heal ~/.claude/skills/selector-self-heal",
+        "raw": "https://raw.githubusercontent.com/DanielSuo117/velocitai/dfcca7e835727886bf4d5e02994803a3a6c41bc5/skills/selector-self-heal/SKILL.md",
+        "saveAs": "~/.claude/skills/selector-self-heal/SKILL.md",
+        "marketplace": "/plugin marketplace add DanielSuo117/velocitai"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:7b055c1c28b3fa2d8638e8d15b8fad04488d44de4eecdaee04cfbafb8e245d9e",
+      "bytes": 3316,
+      "wordCount": 178,
+      "repoLicense": "MIT",
+      "commit": "dfcca7e835727886bf4d5e02994803a3a6c41bc5",
+      "branch": "main",
+      "body": "---\nname: selector-self-heal\ndescription: 复核运行期自愈提案并写回 PageObject。触发：选择器失效、定位符漂移、自愈提案、proposals.jsonl、用例误报不通过。\n---\n\n# 选择器自愈 — 复核与写回\n\n## 适用场景\n\n- 带 `--self-heal=on|strict` 跑完回归后，终端汇总里出现「选择器自愈」段落\n- 用例失败但功能实际正常，怀疑是定位符过期而非真实缺陷\n- 需要把运行期的临时修复固化回源码\n\n**不适用**：首次编写定位符（用 locator-replacer）；页面真的少了元素（那是真缺陷，不是漂移）。\n\n---\n\n## 机制分工\n\n运行期只做两件事：找出可用的替代定位符让用例继续，并把提案写进\n`reports/self-heal/proposals.jsonl`。**运行期绝不改源码。**\n写回是本 skill 的职责，且要经人确认与落库闸门。\n\n这条分界不是洁癖。测试进程里自动改源码，意味着一次跑飞的回归可以静默重写\n整个 PageObject 层，而改动淹没在测试输出里没人看见。\n\n---\n\n## 复核流程\n\n### 1. 读提案\n\n```bash\npython3 -c \"import json;[print(json.dumps(json.loads(l),ensure_ascii=False,indent=2)) for l in open('reports/self-heal/proposals.jsonl')]\"\n```\n\n每条提案含：`intent`（常量名、原选择器、注释说明、历史指纹）、\n`candidates`（全部候选及置信度与理由）、`chosen`（运行期实际采用者，可能为 null）。\n\n### 2. 逐条判定\n\n| 现象 | 结论 |\n|------|------|\n| `chosen` 为 null，且候选列表为空 | 元素真的不在了 → **真缺陷**，不要写回，去查功能 |\n| `chosen` 的 strategy 是 `testid` 或 `id` | 锚点稳定 → 可写回 |\n| `chosen` 的 strategy 是 `text` | 文案改动即失效 → 写回前先找有没有 testid 可用 |\n| `chosen` 的 strategy 是 `stable-class` | 样式重构即失效 → 优先向前端要 testid |\n| 同一常量反复出现在提案里 | 该定位符本身选得不好 → 重新设计，别反复打补丁 |\n\n**触发**：`chosen` 非 null 但 `intent` 的指纹字段全为 null 时，必须人工确认——\n没有历史指纹意味着判定只依赖注释说明，证据比平时弱。\n\n### 3. 写回\n\n写回目标是 PageObject 类顶部的定位符常量，**只改选择器字符串，不动常量名**：\n\n```python\n# 改前\nLOGIN_BUTTON = \"#login-btn\"          # P0: 登录按钮\n# 改后\nLOGIN_BUTTON = '[data-testid=\"login-submit\"]'   # P0: 登录按钮\n```\n\n常量名是全项目引用点，改名会波及所有用例；注释是下次自愈的意图来源，\n删掉等于自断依据。\n\n### 4. 收尾\n\n- 写回后重跑该用例，不带 `--self-heal`，确认真绿\n- 确认后清空 `proposals.jsonl`，避免旧提案被反复复核\n- 若修改涉及定位策略的通用经验，按自我进化机制沉淀（先过落库闸门）\n\n---\n\n## 禁止事项\n\n- 不要把 `chosen` 为 null 的提案「想办法修好」——那是真缺陷的信号\n- 不要为了让用例变绿而放宽 `MIN_CONFIDENCE`\n- 不要批量写回：逐条看 strategy 与 confidence，低置信的宁可留着人工处理\n\n相关：[自愈边界规则](../../rules/playwright/self-healing-boundaries.md) ·\n[locator-replacer](../locator-replacer/) · [落库闸门](../../rules/agent-behavior/evolution-gate.md)\n",
+      "bodyMd": "# 选择器自愈 — 复核与写回\n\n## 适用场景\n\n- 带 `--self-heal=on|strict` 跑完回归后，终端汇总里出现「选择器自愈」段落\n- 用例失败但功能实际正常，怀疑是定位符过期而非真实缺陷\n- 需要把运行期的临时修复固化回源码\n\n**不适用**：首次编写定位符（用 locator-replacer）；页面真的少了元素（那是真缺陷，不是漂移）。\n\n---\n\n## 机制分工\n\n运行期只做两件事：找出可用的替代定位符让用例继续，并把提案写进\n`reports/self-heal/proposals.jsonl`。**运行期绝不改源码。**\n写回是本 skill 的职责，且要经人确认与落库闸门。\n\n这条分界不是洁癖。测试进程里自动改源码，意味着一次跑飞的回归可以静默重写\n整个 PageObject 层，而改动淹没在测试输出里没人看见。\n\n---\n\n## 复核流程\n\n### 1. 读提案\n\n```bash\npython3 -c \"import json;[print(json.dumps(json.loads(l),ensure_ascii=False,indent=2)) for l in open('reports/self-heal/proposals.jsonl')]\"\n```\n\n每条提案含：`intent`（常量名、原选择器、注释说明、历史指纹）、\n`candidates`（全部候选及置信度与理由）、`chosen`（运行期实际采用者，可能为 null）。\n\n### 2. 逐条判定\n\n| 现象 | 结论 |\n|------|------|\n| `chosen` 为 null，且候选列表为空 | 元素真的不在了 → **真缺陷**，不要写回，去查功能 |\n| `chosen` 的 strategy 是 `testid` 或 `id` | 锚点稳定 → 可写回 |\n| `chosen` 的 strategy 是 `text` | 文案改动即失效 → 写回前先找有没有 testid 可用 |\n| `chosen` 的 strategy 是 `stable-class` | 样式重构即失效 → 优先向前端要 testid |\n| 同一常量反复出现在提案里 | 该定位符本身选得不好 → 重新设计，别反复打补丁 |\n\n**触发**：`chosen` 非 null 但 `intent` 的指纹字段全为 null 时，必须人工确认——\n没有历史指纹意味着判定只依赖注释说明，证据比平时弱。\n\n### 3. 写回\n\n写回目标是 PageObject 类顶部的定位符常量，**只改选择器字符串，不动常量名**：\n\n```python\n# 改前\nLOGIN_BUTTON = \"#login-btn\"          # P0: 登录按钮\n# 改后\nLOGIN_BUTTON = '[data-testid=\"login-submit\"]'   # P0: 登录按钮\n```\n\n常量名是全项目引用点，改名会波及所有用例；注释是下次自愈的意图来源，\n删掉等于自断依据。\n\n### 4. 收尾\n\n- 写回后重跑该用例，不带 `--self-heal`，确认真绿\n- 确认后清空 `proposals.jsonl`，避免旧提案被反复复核\n- 若修改涉及定位策略的通用经验，按自我进化机制沉淀（先过落库闸门）\n\n---\n\n## 禁止事项\n\n- 不要把 `chosen` 为 null 的提案「想办法修好」——那是真缺陷的信号\n- 不要为了让用例变绿而放宽 `MIN_CONFIDENCE`\n- 不要批量写回：逐条看 strategy 与 confidence，低置信的宁可留着人工处理\n\n相关：[自愈边界规则](../../rules/playwright/self-healing-boundaries.md) ·\n[locator-replacer](../locator-replacer/) · [落库闸门](../../rules/agent-behavior/evolution-gate.md)\n"
+    },
+    {
+      "slug": "test-runner",
+      "name": "test-runner",
+      "dir": "skills/test-runner",
+      "path": "skills/test-runner/SKILL.md",
+      "desc": "运行 pytest + 结构化分析失败原因。触发：运行测试、跑测试、run test、pytest、失败分析、allure。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "gemini"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "pip",
+          "playwright"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/DanielSuo117/velocitai.git",
+        "copy": "cp -r skills/test-runner ~/.claude/skills/test-runner",
+        "raw": "https://raw.githubusercontent.com/DanielSuo117/velocitai/dfcca7e835727886bf4d5e02994803a3a6c41bc5/skills/test-runner/SKILL.md",
+        "saveAs": "~/.claude/skills/test-runner/SKILL.md",
+        "marketplace": "/plugin marketplace add DanielSuo117/velocitai"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:acc9f32225443d6583dcbd455e0a011ed937af847191538fc920adb5e1652e1f",
+      "bytes": 2221,
+      "wordCount": 145,
+      "repoLicense": "MIT",
+      "commit": "dfcca7e835727886bf4d5e02994803a3a6c41bc5",
+      "branch": "main",
+      "body": "---\nname: test-runner\ndescription: 运行 pytest + 结构化分析失败原因。触发：运行测试、跑测试、run test、pytest、失败分析、allure。\n---\n\n# Test Runner — 运行测试与结果分析\n\n> **⚠️ 运行前必须向用户确认 `--env`**（见 [agent-behavior.md](../../rules/agent-behavior/agent-behavior.md) P0.2）。\n> 即使 `config/settings.py::DEFAULT_ENV=\"prod\"`、即使下方示例写 `--env=<pre|prod>`（示例 ≠ 默认值），仍必须问用户。\n\n## 运行前准备\n\n```bash\n# 确认虚拟环境已激活\nsource .venv/bin/activate\n\n# 确认依赖已安装\npip list | grep -E \"playwright|pytest|allure\"\n```\n\n---\n\n## 运行模式\n\n所有测试均基于真实环境（URL + token）运行。\n\n### 模式 1: 单个 story（调试 / 定位符验证）\n\n**场景：** 替换定位符后验证、调试单个页面回归点\n\n```bash\n# 对应角色\npytest framework/tests/<role>/test_<role>_flow.py --env=<pre|prod> -v -k \"test_xxx\"\n# 对应角色\npytest framework/tests/<role>/test_<role>_home.py --env=<pre|prod> -v -k \"test_<case_name>\"\n```\n\n### 模式 2: 按角色 / 全量回归\n\n**场景：** 发版前验证、完整回归\n\n```bash\n# <角色A>全量\npytest framework/tests/<roleA>/ --env=<pre|prod>\n# <角色B>全量\npytest framework/tests/<roleB>/ --env=<pre|prod>\n# 全量\npytest framework/tests/ --env=<pre|prod>\n```\n\n### 查看 Allure 报告\n\n```bash\n# 启动报告服务器查看（运行完测试后直接可用）\nallure serve reports/allure-results\n\n# 生成静态报告（可部署）\nallure generate reports/allure-results -o reports/allure-report --clean\n```\n\n---\n\n## 结果分析\n\n### pytest 输出解读\n\n```\ntests/test_xxx.py::TestXxx::test_method PASSED    → 通过\ntests/test_xxx.py::TestXxx::test_method FAILED    → 失败（需分析）\ntests/test_xxx.py::TestXxx::test_method ERROR     → fixture/setup 异常\ntests/test_xxx.py::TestXxx::test_method SKIPPED   → 跳过\n```\n\n### 失败分类与处理\n\n拿到失败输出后按症状查表，对号入座 →\n[references/failure-triage.md](./references/failure-triage.md)\n\n## 结果摘要模板\n\n向用户汇报运行结果时套用 →\n[references/report-template.md](./references/report-template.md)\n",
+      "bodyMd": "# Test Runner — 运行测试与结果分析\n\n> **⚠️ 运行前必须向用户确认 `--env`**（见 [agent-behavior.md](../../rules/agent-behavior/agent-behavior.md) P0.2）。\n> 即使 `config/settings.py::DEFAULT_ENV=\"prod\"`、即使下方示例写 `--env=<pre|prod>`（示例 ≠ 默认值），仍必须问用户。\n\n## 运行前准备\n\n```bash\n# 确认虚拟环境已激活\nsource .venv/bin/activate\n\n# 确认依赖已安装\npip list | grep -E \"playwright|pytest|allure\"\n```\n\n---\n\n## 运行模式\n\n所有测试均基于真实环境（URL + token）运行。\n\n### 模式 1: 单个 story（调试 / 定位符验证）\n\n**场景：** 替换定位符后验证、调试单个页面回归点\n\n```bash\n# 对应角色\npytest framework/tests/<role>/test_<role>_flow.py --env=<pre|prod> -v -k \"test_xxx\"\n# 对应角色\npytest framework/tests/<role>/test_<role>_home.py --env=<pre|prod> -v -k \"test_<case_name>\"\n```\n\n### 模式 2: 按角色 / 全量回归\n\n**场景：** 发版前验证、完整回归\n\n```bash\n# <角色A>全量\npytest framework/tests/<roleA>/ --env=<pre|prod>\n# <角色B>全量\npytest framework/tests/<roleB>/ --env=<pre|prod>\n# 全量\npytest framework/tests/ --env=<pre|prod>\n```\n\n### 查看 Allure 报告\n\n```bash\n# 启动报告服务器查看（运行完测试后直接可用）\nallure serve reports/allure-results\n\n# 生成静态报告（可部署）\nallure generate reports/allure-results -o reports/allure-report --clean\n```\n\n---\n\n## 结果分析\n\n### pytest 输出解读\n\n```\ntests/test_xxx.py::TestXxx::test_method PASSED    → 通过\ntests/test_xxx.py::TestXxx::test_method FAILED    → 失败（需分析）\ntests/test_xxx.py::TestXxx::test_method ERROR     → fixture/setup 异常\ntests/test_xxx.py::TestXxx::test_method SKIPPED   → 跳过\n```\n\n### 失败分类与处理\n\n拿到失败输出后按症状查表，对号入座 →\n[references/failure-triage.md](./references/failure-triage.md)\n\n## 结果摘要模板\n\n向用户汇报运行结果时套用 →\n[references/report-template.md](./references/report-template.md)\n"
+    },
+    {
+      "slug": "wait-strategy",
+      "name": "wait-strategy",
+      "dir": "skills/wait-strategy",
+      "path": "skills/wait-strategy/SKILL.md",
+      "desc": "隐式等待为主、显式等待仅慢路径。触发：等待策略、timeout、wait、隐式等待、显式等待。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "gemini"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "playwright"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/DanielSuo117/velocitai.git",
+        "copy": "cp -r skills/wait-strategy ~/.claude/skills/wait-strategy",
+        "raw": "https://raw.githubusercontent.com/DanielSuo117/velocitai/dfcca7e835727886bf4d5e02994803a3a6c41bc5/skills/wait-strategy/SKILL.md",
+        "saveAs": "~/.claude/skills/wait-strategy/SKILL.md",
+        "marketplace": "/plugin marketplace add DanielSuo117/velocitai"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:a919357ab724de0299402f153a92ebc82cb285d8b0156e39552399e9b047e72d",
+      "bytes": 3925,
+      "wordCount": 296,
+      "repoLicense": "MIT",
+      "commit": "dfcca7e835727886bf4d5e02994803a3a6c41bc5",
+      "branch": "main",
+      "body": "---\nname: wait-strategy\ndescription: 隐式等待为主、显式等待仅慢路径。触发：等待策略、timeout、wait、隐式等待、显式等待。\n---\n\n# 等待策略 — 隐式等待为主，显式等待为辅\n\n## 核心原则\n\n**隐式等待覆盖 99% 场景，显式等待仅用于已知的慢路径。**\n\n---\n\n## 一、隐式等待（默认，全局生效）\n\n### 什么是隐式等待\n\n通过 `page.set_default_timeout(ms)` 在 page 创建后立即设置。此后该 page 上所有 Playwright 操作（`click`、`fill`、`locator.wait_for`、`is_visible` 等）自动等待元素就绪，超时前持续重试，无需逐个调用指定 timeout。\n\n### 配置位置\n\n隐式等待的超时时长统一声明在配置文件中（如 `DEFAULT_TIMEOUT` 常量），在 fixture 层注入到每个 page 实例：\n\n```python\n# 配置文件\nDEFAULT_TIMEOUT = 15000   # 15 秒，兼顾网络波动\n\n# fixture 层（function 级 / class 级均需设置）\npage = context.new_page()\npage.set_default_timeout(DEFAULT_TIMEOUT)\n```\n\n### 推荐时长\n\n| 环境 | 推荐值 | 说明 |\n|------|--------|------|\n| 内网 / CI | 10000 (10s) | 网络稳定，无需长等 |\n| 外网 / 生产 | 15000 (15s) | 兼顾偶发网络波动 |\n| 弱网测试 | 20000~30000 | 专项弱网场景 |\n\n---\n\n## 二、显式等待（仅用于特殊场景）\n\n### 什么时候用\n\n| 场景 | 原因 | 做法 |\n|------|------|------|\n| 大文件上传 / 导入 | 服务器处理耗时远超常规页面操作 | `self.is_visible(LOCATOR, timeout=60000)` |\n| 长轮询 / 异步任务回调 | 后端处理完才刷新前端状态 | `page.locator(...).wait_for(state=\"visible\", timeout=30000)` |\n| 第三方服务跳转 | OAuth / 支付等外部页面响应不可控 | `page.wait_for_url(\"**/callback**\", timeout=30000)` |\n| 首次冷启动 | 服务刚部署、首次请求慢 | 对首个导航操作单独加大 timeout |\n\n### 使用方式\n\n在**调用处**传入显式 timeout，覆盖隐式默认值：\n\n```python\n# BasePage 封装方法支持 timeout 参数\ndef is_visible(self, locator, timeout=DEFAULT_TIMEOUT) -> bool:\n    ...\n\n# 用例中：仅对已知慢操作显式指定\ndef test_upload_large_file(self):\n    self.page_obj.click_upload()\n    assert self.page_obj.is_visible(\n        self.page_obj.UPLOAD_SUCCESS_INDICATOR,\n        timeout=60000   # 显式等待 60 秒，仅此一处\n    ), \"大文件上传超时\"\n```\n\n### 禁止事项\n\n- **禁止 `time.sleep()` 硬等待** — Playwright 的自动等待机制已覆盖，硬等待浪费时间且不可靠\n- **禁止给每个操作都加显式 timeout** — 这等于放弃了隐式等待的统一管理优势\n- **禁止在 PageObject 方法内部硬编码超长 timeout** — 超时值应由调用方（用例层）按场景决定\n\n---\n\n## 三、`wait_for_load_state` 与隐式等待的关系\n\n`page.wait_for_load_state(\"networkidle\")` 是**导航级等待**，与元素级隐式等待互补，不冲突：\n\n| 等待类型 | 作用层级 | 触发时机 | 受 `set_default_timeout` 控制 |\n|----------|---------|---------|------------------------------|\n| `wait_for_load_state` | 导航 / 网络 | 页面跳转、AJAX 批量请求后 | 受 `set_default_navigation_timeout` 控制 |\n| 隐式等待 | 元素 | 每次元素操作前 | 是 |\n\n推荐模式：\n\n```python\ndef click_navigate_to_target(self):\n    self.click(self.TARGET_LINK)\n    self.page.wait_for_load_state(\"networkidle\")  # 等网络请求完成\n    # 之后的 is_visible / click 等操作由隐式等待兜底\n```\n\n---\n\n## 检查清单\n\n- [ ] 全局 `DEFAULT_TIMEOUT` 已在配置文件统一声明\n- [ ] 所有 page fixture（function 级 / class 级）均调用了 `page.set_default_timeout()`\n- [ ] PageObject 业务方法中无 `time.sleep()`\n- [ ] 显式 timeout 仅出现在已知慢路径的调用处，而非 PageObject 内部\n- [ ] PageObject 的 `is_visible()` 等方法保留 `timeout` 参数供调用方覆盖\n",
+      "bodyMd": "# 等待策略 — 隐式等待为主，显式等待为辅\n\n## 核心原则\n\n**隐式等待覆盖 99% 场景，显式等待仅用于已知的慢路径。**\n\n---\n\n## 一、隐式等待（默认，全局生效）\n\n### 什么是隐式等待\n\n通过 `page.set_default_timeout(ms)` 在 page 创建后立即设置。此后该 page 上所有 Playwright 操作（`click`、`fill`、`locator.wait_for`、`is_visible` 等）自动等待元素就绪，超时前持续重试，无需逐个调用指定 timeout。\n\n### 配置位置\n\n隐式等待的超时时长统一声明在配置文件中（如 `DEFAULT_TIMEOUT` 常量），在 fixture 层注入到每个 page 实例：\n\n```python\n# 配置文件\nDEFAULT_TIMEOUT = 15000   # 15 秒，兼顾网络波动\n\n# fixture 层（function 级 / class 级均需设置）\npage = context.new_page()\npage.set_default_timeout(DEFAULT_TIMEOUT)\n```\n\n### 推荐时长\n\n| 环境 | 推荐值 | 说明 |\n|------|--------|------|\n| 内网 / CI | 10000 (10s) | 网络稳定，无需长等 |\n| 外网 / 生产 | 15000 (15s) | 兼顾偶发网络波动 |\n| 弱网测试 | 20000~30000 | 专项弱网场景 |\n\n---\n\n## 二、显式等待（仅用于特殊场景）\n\n### 什么时候用\n\n| 场景 | 原因 | 做法 |\n|------|------|------|\n| 大文件上传 / 导入 | 服务器处理耗时远超常规页面操作 | `self.is_visible(LOCATOR, timeout=60000)` |\n| 长轮询 / 异步任务回调 | 后端处理完才刷新前端状态 | `page.locator(...).wait_for(state=\"visible\", timeout=30000)` |\n| 第三方服务跳转 | OAuth / 支付等外部页面响应不可控 | `page.wait_for_url(\"**/callback**\", timeout=30000)` |\n| 首次冷启动 | 服务刚部署、首次请求慢 | 对首个导航操作单独加大 timeout |\n\n### 使用方式\n\n在**调用处**传入显式 timeout，覆盖隐式默认值：\n\n```python\n# BasePage 封装方法支持 timeout 参数\ndef is_visible(self, locator, timeout=DEFAULT_TIMEOUT) -> bool:\n    ...\n\n# 用例中：仅对已知慢操作显式指定\ndef test_upload_large_file(self):\n    self.page_obj.click_upload()\n    assert self.page_obj.is_visible(\n        self.page_obj.UPLOAD_SUCCESS_INDICATOR,\n        timeout=60000   # 显式等待 60 秒，仅此一处\n    ), \"大文件上传超时\"\n```\n\n### 禁止事项\n\n- **禁止 `time.sleep()` 硬等待** — Playwright 的自动等待机制已覆盖，硬等待浪费时间且不可靠\n- **禁止给每个操作都加显式 timeout** — 这等于放弃了隐式等待的统一管理优势\n- **禁止在 PageObject 方法内部硬编码超长 timeout** — 超时值应由调用方（用例层）按场景决定\n\n---\n\n## 三、`wait_for_load_state` 与隐式等待的关系\n\n`page.wait_for_load_state(\"networkidle\")` 是**导航级等待**，与元素级隐式等待互补，不冲突：\n\n| 等待类型 | 作用层级 | 触发时机 | 受 `set_default_timeout` 控制 |\n|----------|---------|---------|------------------------------|\n| `wait_for_load_state` | 导航 / 网络 | 页面跳转、AJAX 批量请求后 | 受 `set_default_navigation_timeout` 控制 |\n| 隐式等待 | 元素 | 每次元素操作前 | 是 |\n\n推荐模式：\n\n```python\ndef click_navigate_to_target(self):\n    self.click(self.TARGET_LINK)\n    self.page.wait_for_load_state(\"networkidle\")  # 等网络请求完成\n    # 之后的 is_visible / click 等操作由隐式等待兜底\n```\n\n---\n\n## 检查清单\n\n- [ ] 全局 `DEFAULT_TIMEOUT` 已在配置文件统一声明\n- [ ] 所有 page fixture（function 级 / class 级）均调用了 `page.set_default_timeout()`\n- [ ] PageObject 业务方法中无 `time.sleep()`\n- [ ] 显式 timeout 仅出现在已知慢路径的调用处，而非 PageObject 内部\n- [ ] PageObject 的 `is_visible()` 等方法保留 `timeout` 参数供调用方覆盖\n"
+    }
+  ]
+}

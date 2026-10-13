@@ -1,0 +1,54 @@
+{
+  "repo": "AxiosLeo/node-orm-mysql",
+  "commit": "b844f80e00012dbd707081e1ff7b90724f358317",
+  "branch": "main",
+  "fetchedAt": "2026-10-13T06:59:07.232Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "skills",
+      "name": "orm-mysql-usage",
+      "dir": "skills",
+      "path": "skills/SKILL.md",
+      "desc": "Build MySQL queries, perform CRUD operations, and manage transactions using @axiosleo/orm-mysql. Use when writing database queries, building where conditions, inserting/updating/deleting rows, managing transactions, or working with the ORM query builder in this project.",
+      "descZh": "",
+      "triggers": [
+        "writing database queries",
+        "man"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "npm",
+          "mysql"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/AxiosLeo/node-orm-mysql.git",
+        "copy": "cp -r skills ~/.claude/skills/skills",
+        "raw": "https://raw.githubusercontent.com/AxiosLeo/node-orm-mysql/b844f80e00012dbd707081e1ff7b90724f358317/skills/SKILL.md",
+        "saveAs": "~/.claude/skills/skills/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:47609cd4411114bb420233da683668c9299fc6c7ecb2f03a6f8f2dfe771c475b",
+      "bytes": 4363,
+      "wordCount": 483,
+      "repoLicense": "MIT",
+      "commit": "b844f80e00012dbd707081e1ff7b90724f358317",
+      "branch": "main",
+      "body": "---\nname: orm-mysql-usage\ndescription: Build MySQL queries, perform CRUD operations, and manage transactions using @axiosleo/orm-mysql. Use when writing database queries, building where conditions, inserting/updating/deleting rows, managing transactions, or working with the ORM query builder in this project.\n---\n\n# @axiosleo/orm-mysql Usage Guide\n\n## Installation\n\n```bash\nnpm install @axiosleo/orm-mysql\n```\n\n## Setup\n\n### Create a Connection\n\n```javascript\nconst { createClient, QueryHandler } = require(\"@axiosleo/orm-mysql\");\n\nconst conn = createClient({\n  host: \"localhost\",\n  port: 3306,\n  user: \"root\",\n  password: \"password\",\n  database: \"my_db\",\n});\n\nconst db = new QueryHandler(conn);\n```\n\n### Create a Connection Pool (recommended for production)\n\n```javascript\nconst { createPool, QueryHandler } = require(\"@axiosleo/orm-mysql\");\n\nconst pool = createPool({\n  host: \"localhost\",\n  port: 3306,\n  user: \"root\",\n  password: \"password\",\n  database: \"my_db\",\n  connectionLimit: 10,\n});\n\nconst db = new QueryHandler(pool);\n```\n\n### Using MySQLClient\n\n```javascript\nconst { MySQLClient } = require(\"@axiosleo/orm-mysql\");\n\nconst client = new MySQLClient({\n  host: \"localhost\",\n  port: 3306,\n  user: \"root\",\n  password: \"password\",\n  database: \"my_db\",\n}, null, \"pool\"); // \"default\" | \"promise\" | \"pool\"\n\nconst rows = await client.table(\"users\").select();\nawait client.close();\n```\n\n## Class Hierarchy\n\n```\nQueryCondition      -- where clauses (where, whereIn, whereLike, whereBetween...)\n  └── Query         -- query building (table, attr, join, orderBy, limit, page...)\n        └── QueryOperator          -- execution (select, find, insert, update, delete...)\n              └── TransactionOperator  -- adds append() for row locking\n```\n\n- `QueryHandler` wraps a connection/pool and creates `QueryOperator` via `.table(name)`\n- `TransactionHandler` wraps a promise connection and creates `TransactionOperator` via `.table(name)`\n\n## Quick Start\n\n```javascript\nconst db = new QueryHandler(conn);\n\n// SELECT\nconst users = await db.table(\"users\")\n  .where(\"age\", \">\", 18)\n  .orderBy(\"name\", \"asc\")\n  .limit(10)\n  .select(\"id\", \"name\", \"age\");\n\n// INSERT\nawait db.table(\"users\").insert({ name: \"Joe\", age: 25 });\n\n// UPDATE\nawait db.table(\"users\").where(\"id\", 1).update({ age: 26 });\n\n// DELETE\nawait db.table(\"users\").where(\"id\", 1).delete();\n\n// COUNT\nconst total = await db.table(\"users\").where(\"age\", \">\", 18).count();\n// IMPORTANT: for paginated lists, reuse the SAME builder for count() and select() -- see pagination.md\n\n// FIND single row\nconst user = await db.table(\"users\").where(\"id\", 1).find();\n```\n\n## Dry Run with notExec()\n\nCall `notExec()` before any CRUD method to get a `Builder` object with `.sql` and `.values` instead of executing:\n\n```javascript\nconst builder = await db.table(\"users\")\n  .where(\"age\", \">\", 18)\n  .notExec()\n  .select(\"id\", \"name\");\n\nconsole.log(builder.sql);    // \"SELECT `id`, `name` FROM `users` WHERE `age` > ?\"\nconsole.log(builder.values); // [18]\n```\n\n## Reference Files\n\n| Scenario | File |\n|----------|------|\n| Building queries (table, join, orderBy, limit, groupBy, attr) | [query-building.md](query-building.md) |\n| Where conditions (where, whereIn, whereLike, whereBetween...) | [where-conditions.md](where-conditions.md) |\n| CRUD operations (select, find, count, insert, update, delete, incrBy, upsertRow) | [crud-operations.md](crud-operations.md) |\n| Pagination (reuse the same builder for count() and select(), avoid duplicated where clauses) | [pagination.md](pagination.md) |\n| Transactions (beginTransaction, commit, rollback, FOR UPDATE) | [transactions.md](transactions.md) |\n\n## Hooks\n\nRegister pre/post hooks for query operations:\n\n```javascript\nconst { Hook } = require(\"@axiosleo/orm-mysql\");\n\nHook.pre(async (options) => {\n  console.log(\"Before:\", options.operator, options.tables);\n}, { table: \"users\", opt: \"insert\" });\n\nHook.post(async (options, result) => {\n  console.log(\"After:\", result);\n}, { table: \"users\", opt: \"insert\" });\n```\n\n## Schema Helpers\n\n```javascript\nconst exists = await db.existTable(\"users\");\nconst dbExists = await db.existDatabase(\"my_db\");\nconst fields = await db.getTableFields(\"my_db\", \"users\", \"COLUMN_NAME\", \"DATA_TYPE\");\n```\n\n## Raw SQL\n\n```javascript\nconst result = await db.query({ sql: \"SELECT * FROM users WHERE id = ?\", values: [1] });\n```\n",
+      "bodyMd": "# @axiosleo/orm-mysql Usage Guide\n\n## Installation\n\n```bash\nnpm install @axiosleo/orm-mysql\n```\n\n## Setup\n\n### Create a Connection\n\n```javascript\nconst { createClient, QueryHandler } = require(\"@axiosleo/orm-mysql\");\n\nconst conn = createClient({\n  host: \"localhost\",\n  port: 3306,\n  user: \"root\",\n  password: \"password\",\n  database: \"my_db\",\n});\n\nconst db = new QueryHandler(conn);\n```\n\n### Create a Connection Pool (recommended for production)\n\n```javascript\nconst { createPool, QueryHandler } = require(\"@axiosleo/orm-mysql\");\n\nconst pool = createPool({\n  host: \"localhost\",\n  port: 3306,\n  user: \"root\",\n  password: \"password\",\n  database: \"my_db\",\n  connectionLimit: 10,\n});\n\nconst db = new QueryHandler(pool);\n```\n\n### Using MySQLClient\n\n```javascript\nconst { MySQLClient } = require(\"@axiosleo/orm-mysql\");\n\nconst client = new MySQLClient({\n  host: \"localhost\",\n  port: 3306,\n  user: \"root\",\n  password: \"password\",\n  database: \"my_db\",\n}, null, \"pool\"); // \"default\" | \"promise\" | \"pool\"\n\nconst rows = await client.table(\"users\").select();\nawait client.close();\n```\n\n## Class Hierarchy\n\n```\nQueryCondition      -- where clauses (where, whereIn, whereLike, whereBetween...)\n  └── Query         -- query building (table, attr, join, orderBy, limit, page...)\n        └── QueryOperator          -- execution (select, find, insert, update, delete...)\n              └── TransactionOperator  -- adds append() for row locking\n```\n\n- `QueryHandler` wraps a connection/pool and creates `QueryOperator` via `.table(name)`\n- `TransactionHandler` wraps a promise connection and creates `TransactionOperator` via `.table(name)`\n\n## Quick Start\n\n```javascript\nconst db = new QueryHandler(conn);\n\n// SELECT\nconst users = await db.table(\"users\")\n  .where(\"age\", \">\", 18)\n  .orderBy(\"name\", \"asc\")\n  .limit(10)\n  .select(\"id\", \"name\", \"age\");\n\n// INSERT\nawait db.table(\"users\").insert({ name: \"Joe\", age: 25 });\n\n// UPDATE\nawait db.table(\"users\").where(\"id\", 1).update({ age: 26 });\n\n// DELETE\nawait db.table(\"users\").where(\"id\", 1).delete();\n\n// COUNT\nconst total = await db.table(\"users\").where(\"age\", \">\", 18).count();\n// IMPORTANT: for paginated lists, reuse the SAME builder for count() and select() -- see pagination.md\n\n// FIND single row\nconst user = await db.table(\"users\").where(\"id\", 1).find();\n```\n\n## Dry Run with notExec()\n\nCall `notExec()` before any CRUD method to get a `Builder` object with `.sql` and `.values` instead of executing:\n\n```javascript\nconst builder = await db.table(\"users\")\n  .where(\"age\", \">\", 18)\n  .notExec()\n  .select(\"id\", \"name\");\n\nconsole.log(builder.sql);    // \"SELECT `id`, `name` FROM `users` WHERE `age` > ?\"\nconsole.log(builder.values); // [18]\n```\n\n## Reference Files\n\n| Scenario | File |\n|----------|------|\n| Building queries (table, join, orderBy, limit, groupBy, attr) | [query-building.md](query-building.md) |\n| Where conditions (where, whereIn, whereLike, whereBetween...) | [where-conditions.md](where-conditions.md) |\n| CRUD operations (select, find, count, insert, update, delete, incrBy, upsertRow) | [crud-operations.md](crud-operations.md) |\n| Pagination (reuse the same builder for count() and select(), avoid duplicated where clauses) | [pagination.md](pagination.md) |\n| Transactions (beginTransaction, commit, rollback, FOR UPDATE) | [transactions.md](transactions.md) |\n\n## Hooks\n\nRegister pre/post hooks for query operations:\n\n```javascript\nconst { Hook } = require(\"@axiosleo/orm-mysql\");\n\nHook.pre(async (options) => {\n  console.log(\"Before:\", options.operator, options.tables);\n}, { table: \"users\", opt: \"insert\" });\n\nHook.post(async (options, result) => {\n  console.log(\"After:\", result);\n}, { table: \"users\", opt: \"insert\" });\n```\n\n## Schema Helpers\n\n```javascript\nconst exists = await db.existTable(\"users\");\nconst dbExists = await db.existDatabase(\"my_db\");\nconst fields = await db.getTableFields(\"my_db\", \"users\", \"COLUMN_NAME\", \"DATA_TYPE\");\n```\n\n## Raw SQL\n\n```javascript\nconst result = await db.query({ sql: \"SELECT * FROM users WHERE id = ?\", values: [1] });\n```\n"
+    }
+  ]
+}
