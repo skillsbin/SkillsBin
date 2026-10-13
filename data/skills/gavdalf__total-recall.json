@@ -2,7 +2,7 @@
   "repo": "gavdalf/total-recall",
   "commit": "437ab3656ecdf52c7ed0c3ee63a3cdae68d5b90f",
   "branch": "main",
-  "fetchedAt": "2026-10-13T04:49:36.197Z",
+  "fetchedAt": "2026-10-13T05:35:25.598Z",
   "parseFail": 0,
   "skills": [
     {
@@ -10,7 +10,7 @@
       "name": "total-recall",
       "dir": "",
       "path": "SKILL.md",
-      "desc": "Enable memory search on observations.md for cross-session recall",
+      "desc": "The only memory skill that watches on its own. No database. No vectors. No manual saves. Just an LLM observer that compresses your conversations into prioritised notes, consolidates when they grow, and recovers anything missed. Five layers of redundancy, zero maintenance. ~$0.00/month (using free-tier models). While other memory skills ask you to remember to remember, this one just pays attention.",
       "descZh": "",
       "triggers": [],
       "version": "",
@@ -24,10 +24,7 @@
       "requires": {
         "apiKey": true,
         "network": true,
-        "bins": [
-          "curl",
-          "jq"
-        ]
+        "bins": []
       },
       "install": {
         "clone": "git clone --depth 1 https://github.com/gavdalf/total-recall.git",

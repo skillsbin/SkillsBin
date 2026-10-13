@@ -1,6 +1,6 @@
 {
   "$comment": "中文摘要覆盖层——本站撰写的中文简介的唯一来源。采集会重建 data/skills/<id>.json 并清空 skill 级 descZh，因此每轮采集后由 scripts/apply-desczh.mjs 重新套用（sync.yml 已接入）。键：repos 用 owner/repo；skills 用 owner/repo/skill-slug。内容由人工/会话模型撰写，不自动翻译，未收录的不写（页面回落到所属仓库的中文简介）。",
-  "updatedAt": "2026-10-13T05:10:00Z",
+  "updatedAt": "2026-10-13T05:36:58Z",
   "repos": {
     "obra/superpowers": "一套 agentic skill 框架与软件开发方法论：把「先想清楚再动手」的流程固化进 Claude Code 等 agent，避免一上来就写代码。",
     "affaan-m/ECC": "agent 运行框架的性能优化系统，把 skills、指令本能、记忆、安全与研究优先的开发流程打包给 Claude Code / Codex。",
@@ -83,7 +83,6 @@
     "alibaba/nacos": "动态服务发现、配置与服务管理平台，用于构建云原生应用。",
     "davila7/claude-code-templates": "配置与监控 Claude Code 的 CLI 工具，附带大量模板。",
     "crazyguitar/pysheeet": "Python 速查表合集，以 skill 形式接入便于随手查阅。",
-    "dgiot/dgiot": "开源工业物联网平台，支持 300+ 协议，主打快速部署。",
     "antvis/L7": "大规模 WebGL 地理空间数据可视化分析引擎。",
     "upstash/ratelimit-js": "面向 serverless 运行时的限流库。",
     "tanweai/wooyun-legacy": "乌云漏洞库（WooYun Legacy）的 Claude Code skill，用于安全研究时检索历史漏洞资料。",
@@ -97,7 +96,6 @@
     "WJZ-P/gemini-skill": "通过浏览器实现的 Gemini 画图 MCP 与 skill，可在支持 MCP 的 agent 中使用。",
     "DenisSergeevitch/repo-task-proof-loop": "规范驱动的编码工作流，配合子 agent 生成与验证实现。",
     "Quantco/dataframely": "声明式的数据框校验库。",
-    "ahmadawais/ramadan-cli": "查询全球斋月封斋与开斋时间的命令行工具。",
     "ECNU-ICALK/AutoSkill": "经验驱动的技能自进化研究项目：让 agent 在使用中累积并迭代技能。",
     "cas-bigdatalab/piflow": "支持 Spark 的大数据流处理引擎。",
     "OrRon/EpicInfographics": "让 agent 生成精美信息图的轻量 skill。",
@@ -147,7 +145,6 @@
     "tinyhumansai/tiny.place": "面向自主 agent 的社交与经济层。",
     "buluslan/review-analyzer-skill": "电商评论深度分析：22 维标签体系 + 14 章洞察报告 + 6 套主题看板（中文）。",
     "sendaifun/skills": "Solana 相关 skills 的公开市场，供 agent 学习与调用。",
-    "TammyTan516/relationship-training-skill": "关系沟通训练技能：练习在健康关系中正确表达情绪与爱意（中文）。",
     "legioncodeinc/honeycomb": "解决「agent 跨会话、跨工具健忘」的问题：把决策记录下来并在需要时找回。",
     "IanShaw027/wemp-operator": "微信公众号自动化运营 skill：内容采集、数据分析与互动管理（中文）。",
     "numman-ali/zai-cli": "Z.AI 能力的 MCP 原生命令行工具：视觉分析、网页搜索与读取、GitHub 仓库探索。",
@@ -171,7 +168,6 @@
     "ujjwalredd/Dopamine": "受多巴胺机制启发的 agent 技能：按反馈调整投入力度，优先给出最小可行解。",
     "PostHog/skills": "PostHog 官方的 agent skills（建设中）。",
     "Sunwood-ai-labs/SourceSage": "仓库分析 CLI：把源码树转成 AI 友好的 Markdown 文档。",
-    "luofengmacheng/algorithms": "算法学习笔记（中文）。",
     "ComeOnOliver/skillshub": "agent skills 注册中心：一次 API 调用返回合适的技能，节省上下文 token。",
     "cangtianhuang/humanizer-academic-zh": "中文学术论文去 AI 痕迹的提示词技能，轻量、省 token、开箱即用。",
     "chentao326/teacher-skill": "AI 老师技能：支持学情诊断、分级教学与名师风格模仿（中文）。",
@@ -182,7 +178,6 @@
     "timvw/wt": "Go 编写的轻量 Git worktree 助手。",
     "Equilateral-AI/equilateral-agents-open-core": "生产级多 agent 编排框架，面向企业开发自动化。",
     "raveeshbhalla/dspy-gepa-logger": "DSPy / GEPA 实验的日志与追踪工具。",
-    "agenticnotetaking/eidos": "规范驱动开发插件：让意图与实现保持同步。",
     "fuwenhao12/academic-ref-inserter": "学术参考文献插入技能，减少手动整理引用的时间。",
     "btachinardi/church": "代码质量「圣殿」：10 个纯粹主义子 agent + 10 条整改命令，专治脏代码。",
     "vigorX777/x-ai-topic-selector": "抓取 X（推特）推文并按多维指标 + AI 分析生成选题推荐报告（中文）。",
@@ -222,7 +217,24 @@
     "ai-freer/fortune-skill": "中文传统命理技能：八字与紫微斗数排盘，适用于多种 agent 平台。",
     "powerofjinbo/phdtaketaketake": "以人脉连接强度（而非 h-index）匹配 PhD 导师的定量打分工具。",
     "AppsVortex/arness": "Claude Code 的结构化工作流：从最初的想法一路推到生产部署。",
-    "databricks-solutions/consort": "用多角色 agent + 规格驱动 + 测试驱动，让 AI 写出的代码保持整洁与正确。"
+    "databricks-solutions/consort": "用多角色 agent + 规格驱动 + 测试驱动，让 AI 写出的代码保持整洁与正确。",
+    "aashaexo/soundshuman": "反「AI 腔」写作工具箱：把文稿改写成人类编辑的笔触（41 类套路清单 + 语感校准），附带机器可校验的规则包与零依赖扫描 CLI，可整仓审计并在 CI 卡口。",
+    "amanning3390/deepswarm": "任务无关的并行编排器：为批量任务并发拉起 N 个 API worker，自动优化并发数与错峰启动，并把规划与执行分层委派给不同档位的模型。",
+    "willseltzer/claude-handoff": "生成交接文档，让任意 AI 编码 agent 接着你的活儿干：写下目标、已完成与未完成、失败过的路、关键决策及理由，以及下一步怎么继续。",
+    "SemineChen/yueban-image-to-code": "把 UI 截图按 750px 画板做像素级还原为 HTML/CSS/JS，并从中导出透明 PNG 切图；原图是唯一视觉源，不重绘、不重排、不用相似素材顶替。"
   },
-  "skills": {}
+  "skills": {
+    "mvanhorn/last30days-skill/last30days": "「最近 30 天」主题调研：跨 Reddit / X / YouTube / TikTok / Hacker News / Polymarket 抓公开讨论与互动数据，汇总成带出处的结论，并自带数据源健康检查。",
+    "MadsLorentzen/ai-job-search/job-application-assistant": "求职申请助手：评估职位与简历的匹配度、按岗位定制简历、撰写求职信，并给出面试准备要点。",
+    "anthropics/claude-plugins-official/skill-creator": "创建与迭代 skill 本身：从需求拆出 SKILL.md 结构、写好触发描述、改进已有 skill 并做效果评估。",
+    "D4Vinci/Scrapling/scrapling-skill": "用 Scrapling 抓网页：绕过 Cloudflare Turnstile 等反爬、隐身无头浏览、Spiders 爬虫框架、自适应解析与 JS 渲染；内置的 web_fetch 抓不动时改用它。",
+    "rtk-ai/rtk/rtk-tdd": "给 Rust 开发强上 TDD：实现 / 测试 / 重构 / 修 bug 时自动触发，按 anyhow、thiserror、cfg(test) 与 Arrange-Act-Assert 给出符合 Rust 习惯的测试写法。",
+    "upstash/context7/context7-mcp": "接上 Context7 MCP，让 AI 编辑器在回答库 / 框架 / SDK 用法之前先取到当前版本的官方文档与示例代码，缓解模型只记得旧版 API 的问题。",
+    "blader/humanizer/humanizer": "把「AI 腔」改写成人的笔触：识别 not-X-but-Y 对仗、一句话收尾、三段式排比、滥用破折号、浮夸营销词等套路，逐句去味但不改原意。",
+    "cathrynlavery/diagram-design/diagram-design": "生成编辑部风格的图表：架构图、流程图、时序图、状态机、ER 图、时间线、泳道图、象限图、雷达图等 44 种类型，输出自包含的 HTML + SVG。",
+    "alibaba/open-code-review/open-code-review": "用阿里开源的 ocr CLI 做 AI 代码审查：审本次改动、审 PR、审 staged / unstaged 变更或某次提交，产出定位到行的评论并可自动打补丁。",
+    "agno-agi/agno/code-review": "仓库自带的代码审查 skill：先跑 lint 与风格检查，再按最佳实践逐条指出问题。",
+    "anthropics/skills/pdf": "官方 PDF 处理 skill：读取与提取文字表格、合并拆分页面、填写表单、加水印、加密解密等，凡涉及 PDF 都该先看它。",
+    "browser-use/browser-use/browser-use": "通过 CDP 直接操控浏览器：网页自动化、抓取、测试与截图，也能操作本地站点和应用。"
+  }
 }

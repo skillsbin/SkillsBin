@@ -80,6 +80,9 @@ const repos = items
     const zhFromSkill = skills.find((s) => s.descZh)?.descZh || '';
     return { ...it, descZh: it.descZh || zhFromSkill, skills, commit: d.commit || null, branch: d.branch || null, parseFail: d.parseFail || 0 };
   })
+  // 只渲染有 skill 的仓库：0 skill 的仓库页是个空壳（对用户没价值、对 SEO 是薄内容）。
+  // crawl 主循环已把「本轮采到 0 个」的摘出索引，这里再兜住历史遗留数据。
+  .filter((r) => r.skills.length > 0)
   .sort((a, b) => b.quality.score - a.quality.score || b.stars - a.stars);
 
 const byId = new Map(repos.map((r) => [r.id, r]));
@@ -165,10 +168,65 @@ function filterSidebar() {
 }
 
 /* ---------- 3.1 首页 ---------- */
-const featured = withPages.filter(({ repo }) => repo.quality.tier === 'featured').slice(0, 12);
-const heroSkills = featured.length >= 6 ? featured : withPages.slice(0, 12);
+/* 精选区**按仓库去重**：同一仓库有几十个 skill 且质量分相同的情况很常见，
+ * 不去重时首页会被同一个仓库刷满（且卡片文案因共享仓库摘要而逐字重复）。 */
+/* 代表 skill：一个仓库往往有几十个 skill，直接取第一个会挑到边角料
+ * （例：firecrawl 按字母序第一个是 firecrawl-build-interact，而它只是「怎么用」）。
+ * 三层优先级：
+ *   1) 与仓库同名/同 slug（browser-use → browser-use）
+ *   2) 仓库名的同名前缀，**越短越通用**（firecrawl → firecrawl-build 而非 firecrawl-build-scrape）
+ *   3) 都没有语义线索时，取描述最完整者，长度上限 240 字符（防止把整篇说明塞进 description 的胜出）
+ */
+const normKey = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+function repSkill(r) {
+  const list = r.skills || [];
+  if (!list.length) return null;
+  // 人工钉死优先（沿用三层合并：data/curated.json 或 data/seed.json 里写
+  // "owner/repo": { "hero": "<slug>" }）。自动规则对「仓库里没有同名 skill」只能猜，
+  // 猜不准的重点仓库（如 Anthropic 官方插件库，33 个插件没有一个是「主角」）用这个字段指定。
+  if (r.hero) {
+    const hit = list.find((s) => s.slug === r.hero);
+    if (hit) return hit;
+    console.warn(`⚠ curated.hero 指向的 skill 不存在：${r.owner}/${r.repo} → ${r.hero}（已回退自动规则）`);
+  }
+  const rn = normKey(r.repo);
+  const rank = list.map((s) => {
+    const sn = normKey(s.name);
+    const sl = normKey(s.slug);
+    const same = !!rn && (sn === rn || sl === rn);
+    const kin = !!rn && (sn.startsWith(rn) || sl.startsWith(rn) || rn.startsWith(sn) || rn.startsWith(sl));
+    return {
+      s,
+      tier: same ? 2 : kin ? 1 : 0,
+      descLen: Math.min(String(s.desc || '').length, 240),
+      slugLen: (s.slug || '').length,
+    };
+  });
+  rank.sort(
+    (a, b) =>
+      b.tier - a.tier ||
+      (a.tier === 1 ? a.slugLen - b.slugLen : b.descLen - a.descLen) ||
+      a.slugLen - b.slugLen
+  );
+  return rank[0].s;
+}
+const onePerRepo = (list, n) => {
+  const seen = new Set();
+  const out = [];
+  for (const { repo } of list) {
+    if (seen.has(repo.id)) continue;
+    seen.add(repo.id);
+    out.push(repo);
+    if (out.length >= n) break;
+  }
+  return out;
+};
+const featuredRepos = onePerRepo(withPages.filter(({ repo }) => repo.quality.tier === 'featured'), 12);
+const heroRepos = featuredRepos.length >= 6 ? featuredRepos : onePerRepo(withPages, 12);
+const heroSkills = heroRepos.map((repo) => ({ repo, skill: repSkill(repo) })).filter((x) => x.skill);
 const latest = [...repos].sort((a, b) => Date.parse(b.verifiedAt) - Date.parse(a.verifiedAt)).slice(0, 8);
 const catCount = tally(repos, (r) => r.category);
+const catTotal = CATEGORY_ORDER.filter((c) => catCount[c]).length;
 const hostCount = tally(repos.flatMap((r) => r.hosts.map((h) => ({ h }))), (x) => x.h);
 
 const homeContent = `
@@ -229,7 +287,7 @@ const homeContent = `
 writePage('/index.html',
   layout({
     site: SITE, title: '', base: '',
-    description: `聚合 GitHub 上的 Agent Skill：收录 ${repos.length} 个仓库、${allSkills.length} 个 skill，按 Claude Code / Cursor / Cline / Codex 等宿主与八大用途归类，一键复制安装方式。`,
+    description: `聚合 GitHub 上的 Agent Skill：收录 ${repos.length} 个仓库、${allSkills.length} 个 skill，按 Claude Code / Cursor / Cline / Codex 等宿主与 ${catTotal} 类用途归类，一键复制安装方式。`,
     canonical: `${ORIGIN}/`, content: homeContent, active: '',
     jsonld: [
       { '@context': 'https://schema.org', '@type': 'WebSite', name: SITE.name, alternateName: SITE.nameZh, url: `${ORIGIN}/`, inLanguage: 'zh-CN', description: SITE.tagline,
@@ -676,7 +734,10 @@ const clientIndex = {
   // data.js 每个页面都会加载：长描述在这里截断（完整版在 HTML 与明细层里）。
   // 1707 条全量描述会把索引撑到 1 MB；截到 220 字符后约减半，搜索命中几乎不受影响。
   skills: allSkills.map(({ repo: r, skill: s }) => ({
-    name: s.name, slug: s.slug, o: r.owner, n: r.repo, d: clip(s.desc, 220), dz: clip(s.descZh, 220),
+    name: s.name, slug: s.slug, o: r.owner, n: r.repo, d: clip(s.desc, 220),
+    // dz：skill 级中文摘要；skill 级没有就回落仓库级，并用 zr 标出「这段是仓库简介」，
+    // 让搜索页/客户端卡片与 SSR 卡片口径一致（templates.mjs skillCard 同一规则）。
+    dz: clip(s.descZh || r.descZh, 220), zr: !s.descZh && r.descZh ? 1 : 0,
     tg: (s.triggers || []).slice(0, 6), hosts: r.hosts, cat: r.category, u: SKILL_URL(r, s),
     q: r.quality.score, tier: r.quality.tier, st: r.stars, key: s.requires?.apiKey ? 1 : 0, net: s.requires?.network ? 1 : 0,
   })),
@@ -701,27 +762,42 @@ for (const need of ['css/style.css', 'js/app.js', 'img/favicon.svg', 'img/og.png
   if (!existsSync(join(OUT, 'assets', need))) missingAssets.push(`assets/${need} 未拷贝`);
 }
 
-// llms.txt：分类目录，控制在 300 行内，每分类最多 30 条
-const LL = [];
+// llms.txt：分类目录，总行数控制在 LLMAX 内，每分类条目按剩余预算平摊。
+// 早期是「每分类固定 30 条」——8 个分类刚好塞满 300 行；扩到 13 个分类后
+// 全局截断会把末尾的「使用方式」块整段切掉。改成先保头尾、再分预算。
 const LLMAX = PR.llmsMaxLines ?? 300;
-const LLCAT = PR.llmsPerCategory ?? 30;
-LL.push(`# ${SITE.name}（${SITE.nameZh}）`, '', `> ${SITE.tagline}`, `> 自动采集、校验并归类 GitHub 上的 Agent Skill（SKILL.md 规范），按用途分类与宿主兼容筛选，`, `> 提供一键复制安装方式。数据每 12 小时更新，仅做数据聚合，所有 Skill 版权归原仓库作者所有。`, '');
-LL.push(`收录 ${repos.length} 个仓库 / ${allSkills.length} 个 skill。最近更新：${(index.generatedAt || '').slice(0, 10)}`, '');
-LL.push('## 目录');
-for (const c of CATEGORY_ORDER) if (catCount[c]) LL.push(`- ${c}：${ORIGIN}/c/${catMeta(c).slug}/ — ${catMeta(c).intro.slice(0, 42)}`);
-LL.push('');
-for (const c of CATEGORY_ORDER) {
-  const list = withPages.filter(({ repo }) => repo.category === c).slice(0, LLCAT);
+const LL_HEAD = [
+  `# ${SITE.name}（${SITE.nameZh}）`,
+  '',
+  `> ${SITE.tagline}`,
+  `> 自动采集、校验并归类 GitHub 上的 Agent Skill（SKILL.md 规范），按用途分类与宿主兼容筛选，`,
+  `> 提供一键复制安装方式。数据每 12 小时更新，仅做数据聚合，所有 Skill 版权归原仓库作者所有。`,
+  '',
+  `收录 ${repos.length} 个仓库 / ${allSkills.length} 个 skill。最近更新：${(index.generatedAt || '').slice(0, 10)}`,
+  '',
+  '## 目录',
+  ...CATEGORY_ORDER.filter((c) => catCount[c]).map((c) => `- ${c}：${ORIGIN}/c/${catMeta(c).slug}/ — ${catMeta(c).intro.slice(0, 42)}`),
+  '',
+];
+const LL_FOOT = [
+  '## 使用方式',
+  `- 站点索引：${ORIGIN}/skills/`,
+  `- 全量数据：${ORIGIN}/llms-full.txt`,
+  `- 提交收录：${ORIGIN}/submit/`,
+  `- 联系：${SITE.mail}`,
+];
+const llCats = CATEGORY_ORDER.filter((c) => catCount[c]);
+// 每个分类占 2 行开销（标题 + 空行），剩余行数平摊给条目，且至少给 3 条
+const llPerCat = Math.max(3, Math.floor((Math.max(llCats.length * 3, LLMAX - LL_HEAD.length - LL_FOOT.length) - llCats.length * 2) / llCats.length));
+const LL = [...LL_HEAD];
+for (const c of llCats) {
+  const list = withPages.filter(({ repo }) => repo.category === c).slice(0, llPerCat);
   if (!list.length) continue;
   LL.push(`## ${c}`);
   for (const { repo: r, skill: s } of list) LL.push(`- [${s.name}](${ORIGIN}${SKILL_URL(r, s)}) — ${(s.descZh || s.desc).slice(0, 80)} · host: ${r.hosts.join(', ')} · ${licenseLabel(s.license || r.license) || 'license unknown'}`);
   LL.push('');
 }
-LL.push('## 使用方式');
-LL.push(`- 站点索引：${ORIGIN}/skills/`);
-LL.push(`- 全量数据：${ORIGIN}/llms-full.txt`);
-LL.push(`- 提交收录：${ORIGIN}/submit/`);
-LL.push(`- 联系：${SITE.mail}`);
+LL.push(...LL_FOOT);
 writeFileSync(join(OUT, 'llms.txt'), LL.slice(0, LLMAX).join('\n') + '\n', 'utf8');
 
 writeFileSync(

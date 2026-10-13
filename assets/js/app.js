@@ -153,8 +153,11 @@
 
   /* ============================ 6. 卡片渲染（搜索页用） ============================ */
   function skillCardHtml(s) {
+    /* dz 已在构建期做过「skill 级 → 仓库级」回落；zr=1 表示这段中文是仓库简介而非 skill 专述 */
     var summary = s.dz || s.d;
-    var zh = !!s.dz;
+    var mark = s.dz
+      ? (s.zr ? '<span class="dot"></span><span title="该 skill 尚无单独撰写的中文摘要，此处展示所属仓库的简介">仓库简介</span>' : '')
+      : '<span class="dot"></span><span>原文</span>';
     return '<a class="card" href="' + base + s.u + '">' +
       '<div class="card-title"><svg class="icon" aria-hidden="true"><use href="#i-box"></use></svg><span>' + esc(s.name) + '</span></div>' +
       '<div class="card-desc">' + esc(summary) + '</div>' +
@@ -162,7 +165,7 @@
         (s.tier === 'featured' ? '<span class="badge featured"><svg class="icon" aria-hidden="true"><use href="#i-sparkles"></use></svg>精选</span>' : '') +
         '<span>' + esc(s.o) + '/' + esc(s.n) + '</span><span class="dot"></span>' +
         '<span><svg class="icon" aria-hidden="true"><use href="#i-star"></use></svg> ' + fmtNum(s.st) + '</span>' +
-        (!zh ? '<span class="dot"></span><span>原文</span>' : '') +
+        mark +
       '</div>' +
       '<div class="card-meta">' + hostsOf(s).slice(0, 3).map(function (h) {
         return '<span class="badge host">' + esc(hostLabel(h)) + '</span>';

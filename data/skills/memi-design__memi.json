@@ -2,61 +2,11 @@
   "repo": "memi-design/memi",
   "commit": "0317aca532012c127518dc567c5a787fda298d85",
   "branch": "main",
-  "fetchedAt": "2026-10-13T04:51:24.367Z",
+  "fetchedAt": "2026-10-13T05:36:24.611Z",
   "parseFail": 0,
   "skills": [
     {
       "slug": "memoire-design-tooling",
-      "name": "memoire-design-tooling",
-      "dir": "agent-kits/codex/memoire-design-tooling",
-      "path": "agent-kits/codex/memoire-design-tooling/SKILL.md",
-      "desc": "Use when a task spans interface understanding, design-system memory, UI audits, design CI, Figma, shadcn or Tailwind code generation, research, or agent design workflows and needs the correct Memi capability selected.",
-      "descZh": "",
-      "triggers": [
-        "design-system memory",
-        "UI audits",
-        "design CI",
-        "Figma"
-      ],
-      "version": "",
-      "license": "MIT",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": true,
-        "bins": [
-          "npm",
-          "npx",
-          "make"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/memi-design/memi.git",
-        "copy": "cp -r agent-kits/codex/memoire-design-tooling ~/.claude/skills/memoire-design-tooling",
-        "raw": "https://raw.githubusercontent.com/memi-design/memi/0317aca532012c127518dc567c5a787fda298d85/agent-kits/codex/memoire-design-tooling/SKILL.md",
-        "saveAs": "~/.claude/skills/memoire-design-tooling/SKILL.md",
-        "marketplace": "/plugin marketplace add memi-design/memi"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:70150e979a3321b202af7680da784343cec9f75adad3a21ced728f1a7e367fd5",
-      "bytes": 3288,
-      "wordCount": 372,
-      "repoLicense": "MIT",
-      "commit": "0317aca532012c127518dc567c5a787fda298d85",
-      "branch": "main",
-      "body": "---\nname: memoire-design-tooling\ndescription: Use when a task spans interface understanding, design-system memory, UI audits, design CI, Figma, shadcn or Tailwind code generation, research, or agent design workflows and needs the correct Memi capability selected.\n---\n\n# Memi Design Tooling\n\nMemi gives coding agents repository-specific interface evidence before they edit UI. Start with the smallest workflow that answers the task; Figma, global installation, and a daemon are optional.\n\n## Choose A Workflow\n\n- Before reviewing or changing frontend UI: use `audit-frontend-design`.\n- Before building from an existing product system: use `remember-design-system`.\n- When adding deterministic pull-request gates: use `enforce-design-ci`.\n- For native SwiftUI, SwiftData, App Intents, or Apple-platform verification: use `build-swiftui-interface`.\n- For Figma, research, scaffolding, registry publishing, or multi-agent work: continue below.\n\nInstall one focused skill directly:\n\n```bash\nnpx skills add memi-design/memi --skill audit-frontend-design\n```\n\nThis workflow targets published beta **2.8.0-beta.2**. Use `npx -y @memi-design/cli@2.8.0-beta.2 --version` to verify the exact package; a local `memi` must report that same version before these recipes run. The independent stable compatibility baseline is **2.7.9**. See [current release state](https://github.com/memi-design/memi/blob/main/docs/CURRENT_RELEASE.md) and [known limitations](https://github.com/memi-design/memi/blob/main/docs/trust/KNOWN_LIMITATIONS.md). npm availability alone does not establish native-binary success.\n\n## Compact Preflight\n\n```bash\nmemi agent brief . --frontend --intent \"<interface task>\" --max-bytes 16384 --json\n```\n\nRead cited source files when the bounded brief lacks necessary evidence. Optional `--design-evidence design/selected-node.json` accepts normalized Figma/Paper data supplied by the harness; missing mappings and verification stay explicit.\n\n## Local Checks And MCP\n\n```bash\nmemi diagnose . --json --no-write --fail-on none\nmemi diagnose . --receipt-only --fail-on none\nmemi --profile locked mcp start --no-figma\n```\n\nLocked MCP exposes four read tools: prepare_frontend_brief, prepare_design_agent_brief, prepare_apple_design_brief, and diagnose_app_quality. The frontend tool supplies actual repository evidence. Many legacy CLI and write tools remain unavailable; capability grants do not unlock deferred command paths. Keep connector calls, project edits, and browser execution in the harness's reviewed workflow.\n\nReuse local components and tokens according to the consumer project's conventions. Source-bearing JSON is working context; receipt-only is a separate metadata output. See docs/FRONTEND_WORKFLOW.md for the beta evidence schema and actual verification flow.\n\n## Evidence Contract\n\n1. Read local instructions and existing product-system files first.\n2. Collect the minimum evidence that can change the implementation.\n3. Cite `file:line` findings and existing components or tokens.\n4. Make scoped edits.\n5. Re-run the same deterministic checks.\n6. Report commands, artifacts, files changed, and remaining assumptions.\n\nDo not claim visual correctness from source checks alone. When rendered behavior matters, verify the actual route at desktop and mobile viewports.\n",
-      "bodyMd": "# Memi Design Tooling\n\nMemi gives coding agents repository-specific interface evidence before they edit UI. Start with the smallest workflow that answers the task; Figma, global installation, and a daemon are optional.\n\n## Choose A Workflow\n\n- Before reviewing or changing frontend UI: use `audit-frontend-design`.\n- Before building from an existing product system: use `remember-design-system`.\n- When adding deterministic pull-request gates: use `enforce-design-ci`.\n- For native SwiftUI, SwiftData, App Intents, or Apple-platform verification: use `build-swiftui-interface`.\n- For Figma, research, scaffolding, registry publishing, or multi-agent work: continue below.\n\nInstall one focused skill directly:\n\n```bash\nnpx skills add memi-design/memi --skill audit-frontend-design\n```\n\nThis workflow targets published beta **2.8.0-beta.2**. Use `npx -y @memi-design/cli@2.8.0-beta.2 --version` to verify the exact package; a local `memi` must report that same version before these recipes run. The independent stable compatibility baseline is **2.7.9**. See [current release state](https://github.com/memi-design/memi/blob/main/docs/CURRENT_RELEASE.md) and [known limitations](https://github.com/memi-design/memi/blob/main/docs/trust/KNOWN_LIMITATIONS.md). npm availability alone does not establish native-binary success.\n\n## Compact Preflight\n\n```bash\nmemi agent brief . --frontend --intent \"<interface task>\" --max-bytes 16384 --json\n```\n\nRead cited source files when the bounded brief lacks necessary evidence. Optional `--design-evidence design/selected-node.json` accepts normalized Figma/Paper data supplied by the harness; missing mappings and verification stay explicit.\n\n## Local Checks And MCP\n\n```bash\nmemi diagnose . --json --no-write --fail-on none\nmemi diagnose . --receipt-only --fail-on none\nmemi --profile locked mcp start --no-figma\n```\n\nLocked MCP exposes four read tools: prepare_frontend_brief, prepare_design_agent_brief, prepare_apple_design_brief, and diagnose_app_quality. The frontend tool supplies actual repository evidence. Many legacy CLI and write tools remain unavailable; capability grants do not unlock deferred command paths. Keep connector calls, project edits, and browser execution in the harness's reviewed workflow.\n\nReuse local components and tokens according to the consumer project's conventions. Source-bearing JSON is working context; receipt-only is a separate metadata output. See docs/FRONTEND_WORKFLOW.md for the beta evidence schema and actual verification flow.\n\n## Evidence Contract\n\n1. Read local instructions and existing product-system files first.\n2. Collect the minimum evidence that can change the implementation.\n3. Cite `file:line` findings and existing components or tokens.\n4. Make scoped edits.\n5. Re-run the same deterministic checks.\n6. Report commands, artifacts, files changed, and remaining assumptions.\n\nDo not claim visual correctness from source checks alone. When rendered behavior matters, verify the actual route at desktop and mobile viewports.\n"
-    },
-    {
-      "slug": "memoire-design-tooling-2",
       "name": "memoire-design-tooling",
       "dir": "agent-kits/grok-build/memoire-design-tooling",
       "path": "agent-kits/grok-build/memoire-design-tooling/SKILL.md",
@@ -89,9 +39,9 @@
       },
       "install": {
         "clone": "git clone --depth 1 https://github.com/memi-design/memi.git",
-        "copy": "cp -r agent-kits/grok-build/memoire-design-tooling ~/.claude/skills/memoire-design-tooling-2",
+        "copy": "cp -r agent-kits/grok-build/memoire-design-tooling ~/.claude/skills/memoire-design-tooling",
         "raw": "https://raw.githubusercontent.com/memi-design/memi/0317aca532012c127518dc567c5a787fda298d85/agent-kits/grok-build/memoire-design-tooling/SKILL.md",
-        "saveAs": "~/.claude/skills/memoire-design-tooling-2/SKILL.md",
+        "saveAs": "~/.claude/skills/memoire-design-tooling/SKILL.md",
         "marketplace": "/plugin marketplace add memi-design/memi"
       },
       "bodyInline": true,
@@ -106,7 +56,7 @@
       "bodyMd": "# Memi Design Tooling\n\nMemi gives coding agents repository-specific interface evidence before they edit UI. Start with the smallest workflow that answers the task; Figma, global installation, and a daemon are optional.\n\n## Choose A Workflow\n\n- Before reviewing or changing frontend UI: use `audit-frontend-design`.\n- Before building from an existing product system: use `remember-design-system`.\n- When adding deterministic pull-request gates: use `enforce-design-ci`.\n- For native SwiftUI, SwiftData, App Intents, or Apple-platform verification: use `build-swiftui-interface`.\n- For Figma, research, scaffolding, registry publishing, or multi-agent work: continue below.\n\nInstall one focused skill directly:\n\n```bash\nnpx skills add memi-design/memi --skill audit-frontend-design\n```\n\nThis skill requires the reviewed 2.8 frontend contract. Check `memi --version` and npm registry availability first. If the beta is unpublished, use a reviewed local build; after publication, use the exact verified beta version. npm stable remains 2.7.9.\n\n## Compact Preflight\n\n```bash\nmemi agent brief . --frontend --intent \"<interface task>\" --max-bytes 16384 --json\n```\n\nRead cited source files when the bounded brief lacks necessary evidence. Optional `--design-evidence design/selected-node.json` accepts normalized Figma/Paper data supplied by the harness; missing mappings and verification stay explicit.\n\n## Local Checks And MCP\n\n```bash\nmemi diagnose . --json --no-write --fail-on none\nmemi diagnose . --receipt-only --fail-on none\nmemi --profile locked mcp start --no-figma\n```\n\nLocked MCP exposes four read tools: prepare_frontend_brief, prepare_design_agent_brief, prepare_apple_design_brief, and diagnose_app_quality. The frontend tool supplies actual repository evidence. Many legacy CLI and write tools remain unavailable; capability grants do not unlock deferred command paths. Keep connector calls, project edits, and browser execution in the harness's reviewed workflow.\n\nReuse local components and tokens according to the consumer project's conventions. Source-bearing JSON is working context; receipt-only is a separate metadata output. See docs/FRONTEND_WORKFLOW.md for the candidate evidence schema and actual verification flow.\n\n## Evidence Contract\n\n1. Read local instructions and existing product-system files first.\n2. Collect the minimum evidence that can change the implementation.\n3. Cite `file:line` findings and existing components or tokens.\n4. Make scoped edits.\n5. Re-run the same deterministic checks.\n6. Report commands, artifacts, files changed, and remaining assumptions.\n\nDo not claim visual correctness from source checks alone. When rendered behavior matters, verify the actual route at desktop and mobile viewports.\n\nGrok Build reference links are in [REFERENCES.md](REFERENCES.md). Older examples there do not override this candidate capability contract.\n"
     },
     {
-      "slug": "memoire-design-tooling-3",
+      "slug": "memoire-design-tooling-2",
       "name": "memoire-design-tooling",
       "dir": "agent-kits/hermes/memoire-design-tooling",
       "path": "agent-kits/hermes/memoire-design-tooling/SKILL.md",
@@ -140,9 +90,9 @@
       },
       "install": {
         "clone": "git clone --depth 1 https://github.com/memi-design/memi.git",
-        "copy": "cp -r agent-kits/hermes/memoire-design-tooling ~/.claude/skills/memoire-design-tooling-3",
+        "copy": "cp -r agent-kits/hermes/memoire-design-tooling ~/.claude/skills/memoire-design-tooling-2",
         "raw": "https://raw.githubusercontent.com/memi-design/memi/0317aca532012c127518dc567c5a787fda298d85/agent-kits/hermes/memoire-design-tooling/SKILL.md",
-        "saveAs": "~/.claude/skills/memoire-design-tooling-3/SKILL.md",
+        "saveAs": "~/.claude/skills/memoire-design-tooling-2/SKILL.md",
         "marketplace": "/plugin marketplace add memi-design/memi"
       },
       "bodyInline": true,
@@ -157,7 +107,7 @@
       "bodyMd": "# Memi Design Tooling\n\nMemi gives coding agents repository-specific interface evidence before they edit UI. Start with the smallest workflow that answers the task; Figma, global installation, and a daemon are optional.\n\n## Choose A Workflow\n\n- Before reviewing or changing frontend UI: use `audit-frontend-design`.\n- Before building from an existing product system: use `remember-design-system`.\n- When adding deterministic pull-request gates: use `enforce-design-ci`.\n- For native SwiftUI, SwiftData, App Intents, or Apple-platform verification: use `build-swiftui-interface`.\n- For Figma, research, scaffolding, registry publishing, or multi-agent work: continue below.\n\nInstall one focused skill directly:\n\n```bash\nnpx skills add memi-design/memi --skill audit-frontend-design\n```\n\nThis workflow targets published beta **2.8.0-beta.2**. Use `npx -y @memi-design/cli@2.8.0-beta.2 --version` to verify the exact package; a local `memi` must report that same version before these recipes run. The independent stable compatibility baseline is **2.7.9**. See [current release state](https://github.com/memi-design/memi/blob/main/docs/CURRENT_RELEASE.md) and [known limitations](https://github.com/memi-design/memi/blob/main/docs/trust/KNOWN_LIMITATIONS.md). npm availability alone does not establish native-binary success.\n\n## Compact Preflight\n\n```bash\nmemi agent brief . --frontend --intent \"<interface task>\" --max-bytes 16384 --json\n```\n\nRead cited source files when the bounded brief lacks necessary evidence. Optional `--design-evidence design/selected-node.json` accepts normalized Figma/Paper data supplied by the harness; missing mappings and verification stay explicit.\n\n## Local Checks And MCP\n\n```bash\nmemi diagnose . --json --no-write --fail-on none\nmemi diagnose . --receipt-only --fail-on none\nmemi --profile locked mcp start --no-figma\n```\n\nLocked MCP exposes four read tools: prepare_frontend_brief, prepare_design_agent_brief, prepare_apple_design_brief, and diagnose_app_quality. The frontend tool supplies actual repository evidence. Many legacy CLI and write tools remain unavailable; capability grants do not unlock deferred command paths. Keep connector calls, project edits, and browser execution in the harness's reviewed workflow.\n\nReuse local components and tokens according to the consumer project's conventions. Source-bearing JSON is working context; receipt-only is a separate metadata output. See docs/FRONTEND_WORKFLOW.md for the beta evidence schema and actual verification flow.\n\n## Evidence Contract\n\n1. Read local instructions and existing product-system files first.\n2. Collect the minimum evidence that can change the implementation.\n3. Cite `file:line` findings and existing components or tokens.\n4. Make scoped edits.\n5. Re-run the same deterministic checks.\n6. Report commands, artifacts, files changed, and remaining assumptions.\n\nDo not claim visual correctness from source checks alone. When rendered behavior matters, verify the actual route at desktop and mobile viewports.\n"
     },
     {
-      "slug": "memoire-design-tooling-4",
+      "slug": "memoire-design-tooling-3",
       "name": "memoire-design-tooling",
       "dir": "agent-kits/mirror/hermes/memoire-design-tooling",
       "path": "agent-kits/mirror/hermes/memoire-design-tooling/SKILL.md",
@@ -191,9 +141,9 @@
       },
       "install": {
         "clone": "git clone --depth 1 https://github.com/memi-design/memi.git",
-        "copy": "cp -r agent-kits/mirror/hermes/memoire-design-tooling ~/.claude/skills/memoire-design-tooling-4",
+        "copy": "cp -r agent-kits/mirror/hermes/memoire-design-tooling ~/.claude/skills/memoire-design-tooling-3",
         "raw": "https://raw.githubusercontent.com/memi-design/memi/0317aca532012c127518dc567c5a787fda298d85/agent-kits/mirror/hermes/memoire-design-tooling/SKILL.md",
-        "saveAs": "~/.claude/skills/memoire-design-tooling-4/SKILL.md",
+        "saveAs": "~/.claude/skills/memoire-design-tooling-3/SKILL.md",
         "marketplace": "/plugin marketplace add memi-design/memi"
       },
       "bodyInline": true,
@@ -208,7 +158,7 @@
       "bodyMd": "# Memi Design Tooling\n\nMemi gives coding agents repository-specific interface evidence before they edit UI. Start with the smallest workflow that answers the task; Figma, global installation, and a daemon are optional.\n\n## Choose A Workflow\n\n- Before reviewing or changing frontend UI: use `audit-frontend-design`.\n- Before building from an existing product system: use `remember-design-system`.\n- When adding deterministic pull-request gates: use `enforce-design-ci`.\n- For native SwiftUI, SwiftData, App Intents, or Apple-platform verification: use `build-swiftui-interface`.\n- For Figma, research, scaffolding, registry publishing, or multi-agent work: continue below.\n\nInstall one focused skill directly:\n\n```bash\nnpx skills add memi-design/memi --skill audit-frontend-design\n```\n\nThis skill requires the reviewed 2.8 frontend contract. Check `memi --version` and npm registry availability first. If the beta is unpublished, use a reviewed local build; after publication, use the exact verified beta version. npm stable remains 2.7.9.\n\n## Compact Preflight\n\n```bash\nmemi agent brief . --frontend --intent \"<interface task>\" --max-bytes 16384 --json\n```\n\nRead cited source files when the bounded brief lacks necessary evidence. Optional `--design-evidence design/selected-node.json` accepts normalized Figma/Paper data supplied by the harness; missing mappings and verification stay explicit.\n\n## Local Checks And MCP\n\n```bash\nmemi diagnose . --json --no-write --fail-on none\nmemi diagnose . --receipt-only --fail-on none\nmemi --profile locked mcp start --no-figma\n```\n\nLocked MCP exposes four read tools: prepare_frontend_brief, prepare_design_agent_brief, prepare_apple_design_brief, and diagnose_app_quality. The frontend tool supplies actual repository evidence. Many legacy CLI and write tools remain unavailable; capability grants do not unlock deferred command paths. Keep connector calls, project edits, and browser execution in the harness's reviewed workflow.\n\nReuse local components and tokens according to the consumer project's conventions. Source-bearing JSON is working context; receipt-only is a separate metadata output. See docs/FRONTEND_WORKFLOW.md for the candidate evidence schema and actual verification flow.\n\n## Evidence Contract\n\n1. Read local instructions and existing product-system files first.\n2. Collect the minimum evidence that can change the implementation.\n3. Cite `file:line` findings and existing components or tokens.\n4. Make scoped edits.\n5. Re-run the same deterministic checks.\n6. Report commands, artifacts, files changed, and remaining assumptions.\n\nDo not claim visual correctness from source checks alone. When rendered behavior matters, verify the actual route at desktop and mobile viewports.\n"
     },
     {
-      "slug": "memoire-design-tooling-5",
+      "slug": "memoire-design-tooling-4",
       "name": "memoire-design-tooling",
       "dir": "agent-kits/mirror/openclaw/memoire-design-tooling",
       "path": "agent-kits/mirror/openclaw/memoire-design-tooling/SKILL.md",
@@ -244,9 +194,9 @@
       },
       "install": {
         "clone": "git clone --depth 1 https://github.com/memi-design/memi.git",
-        "copy": "cp -r agent-kits/mirror/openclaw/memoire-design-tooling ~/.claude/skills/memoire-design-tooling-5",
+        "copy": "cp -r agent-kits/mirror/openclaw/memoire-design-tooling ~/.claude/skills/memoire-design-tooling-4",
         "raw": "https://raw.githubusercontent.com/memi-design/memi/0317aca532012c127518dc567c5a787fda298d85/agent-kits/mirror/openclaw/memoire-design-tooling/SKILL.md",
-        "saveAs": "~/.claude/skills/memoire-design-tooling-5/SKILL.md",
+        "saveAs": "~/.claude/skills/memoire-design-tooling-4/SKILL.md",
         "marketplace": "/plugin marketplace add memi-design/memi"
       },
       "bodyInline": true,
@@ -261,7 +211,7 @@
       "bodyMd": "# Memi Design Tooling\n\nMemi gives coding agents repository-specific interface evidence before they edit UI. Start with the smallest workflow that answers the task; Figma, global installation, and a daemon are optional.\n\n## Choose A Workflow\n\n- Before reviewing or changing frontend UI: use `audit-frontend-design`.\n- Before building from an existing product system: use `remember-design-system`.\n- When adding deterministic pull-request gates: use `enforce-design-ci`.\n- For native SwiftUI, SwiftData, App Intents, or Apple-platform verification: use `build-swiftui-interface`.\n- For Figma, research, scaffolding, registry publishing, or multi-agent work: continue below.\n\nInstall one focused skill directly:\n\n```bash\nnpx skills add memi-design/memi --skill audit-frontend-design\n```\n\nThis skill requires the reviewed 2.8 frontend contract. Check `memi --version` and npm registry availability first. If the beta is unpublished, use a reviewed local build; after publication, use the exact verified beta version. npm stable remains 2.7.9.\n\n## Compact Preflight\n\n```bash\nmemi agent brief . --frontend --intent \"<interface task>\" --max-bytes 16384 --json\n```\n\nRead cited source files when the bounded brief lacks necessary evidence. Optional `--design-evidence design/selected-node.json` accepts normalized Figma/Paper data supplied by the harness; missing mappings and verification stay explicit.\n\n## Local Checks And MCP\n\n```bash\nmemi diagnose . --json --no-write --fail-on none\nmemi diagnose . --receipt-only --fail-on none\nmemi --profile locked mcp start --no-figma\n```\n\nLocked MCP exposes four read tools: prepare_frontend_brief, prepare_design_agent_brief, prepare_apple_design_brief, and diagnose_app_quality. The frontend tool supplies actual repository evidence. Many legacy CLI and write tools remain unavailable; capability grants do not unlock deferred command paths. Keep connector calls, project edits, and browser execution in the harness's reviewed workflow.\n\nReuse local components and tokens according to the consumer project's conventions. Source-bearing JSON is working context; receipt-only is a separate metadata output. See docs/FRONTEND_WORKFLOW.md for the candidate evidence schema and actual verification flow.\n\n## Evidence Contract\n\n1. Read local instructions and existing product-system files first.\n2. Collect the minimum evidence that can change the implementation.\n3. Cite `file:line` findings and existing components or tokens.\n4. Make scoped edits.\n5. Re-run the same deterministic checks.\n6. Report commands, artifacts, files changed, and remaining assumptions.\n\nDo not claim visual correctness from source checks alone. When rendered behavior matters, verify the actual route at desktop and mobile viewports.\n"
     },
     {
-      "slug": "memoire-design-tooling-6",
+      "slug": "memoire-design-tooling-5",
       "name": "memoire-design-tooling",
       "dir": "agent-kits/openclaw/memoire-design-tooling",
       "path": "agent-kits/openclaw/memoire-design-tooling/SKILL.md",
@@ -296,9 +246,9 @@
       },
       "install": {
         "clone": "git clone --depth 1 https://github.com/memi-design/memi.git",
-        "copy": "cp -r agent-kits/openclaw/memoire-design-tooling ~/.claude/skills/memoire-design-tooling-6",
+        "copy": "cp -r agent-kits/openclaw/memoire-design-tooling ~/.claude/skills/memoire-design-tooling-5",
         "raw": "https://raw.githubusercontent.com/memi-design/memi/0317aca532012c127518dc567c5a787fda298d85/agent-kits/openclaw/memoire-design-tooling/SKILL.md",
-        "saveAs": "~/.claude/skills/memoire-design-tooling-6/SKILL.md",
+        "saveAs": "~/.claude/skills/memoire-design-tooling-5/SKILL.md",
         "marketplace": "/plugin marketplace add memi-design/memi"
       },
       "bodyInline": true,
@@ -313,7 +263,7 @@
       "bodyMd": "# Memi Design Tooling\n\nMemi gives coding agents repository-specific interface evidence before they edit UI. Start with the smallest workflow that answers the task; Figma, global installation, and a daemon are optional.\n\n## Choose A Workflow\n\n- Before reviewing or changing frontend UI: use `audit-frontend-design`.\n- Before building from an existing product system: use `remember-design-system`.\n- When adding deterministic pull-request gates: use `enforce-design-ci`.\n- For native SwiftUI, SwiftData, App Intents, or Apple-platform verification: use `build-swiftui-interface`.\n- For Figma, research, scaffolding, registry publishing, or multi-agent work: continue below.\n\nInstall one focused skill directly:\n\n```bash\nnpx skills add memi-design/memi --skill audit-frontend-design\n```\n\nThis workflow targets published beta **2.8.0-beta.2**. Use `npx -y @memi-design/cli@2.8.0-beta.2 --version` to verify the exact package; a local `memi` must report that same version before these recipes run. The independent stable compatibility baseline is **2.7.9**. See [current release state](https://github.com/memi-design/memi/blob/main/docs/CURRENT_RELEASE.md) and [known limitations](https://github.com/memi-design/memi/blob/main/docs/trust/KNOWN_LIMITATIONS.md). npm availability alone does not establish native-binary success.\n\n## Compact Preflight\n\n```bash\nmemi agent brief . --frontend --intent \"<interface task>\" --max-bytes 16384 --json\n```\n\nRead cited source files when the bounded brief lacks necessary evidence. Optional `--design-evidence design/selected-node.json` accepts normalized Figma/Paper data supplied by the harness; missing mappings and verification stay explicit.\n\n## Local Checks And MCP\n\n```bash\nmemi diagnose . --json --no-write --fail-on none\nmemi diagnose . --receipt-only --fail-on none\nmemi --profile locked mcp start --no-figma\n```\n\nLocked MCP exposes four read tools: prepare_frontend_brief, prepare_design_agent_brief, prepare_apple_design_brief, and diagnose_app_quality. The frontend tool supplies actual repository evidence. Many legacy CLI and write tools remain unavailable; capability grants do not unlock deferred command paths. Keep connector calls, project edits, and browser execution in the harness's reviewed workflow.\n\nReuse local components and tokens according to the consumer project's conventions. Source-bearing JSON is working context; receipt-only is a separate metadata output. See docs/FRONTEND_WORKFLOW.md for the beta evidence schema and actual verification flow.\n\n## Evidence Contract\n\n1. Read local instructions and existing product-system files first.\n2. Collect the minimum evidence that can change the implementation.\n3. Cite `file:line` findings and existing components or tokens.\n4. Make scoped edits.\n5. Re-run the same deterministic checks.\n6. Report commands, artifacts, files changed, and remaining assumptions.\n\nDo not claim visual correctness from source checks alone. When rendered behavior matters, verify the actual route at desktop and mobile viewports.\n"
     },
     {
-      "slug": "memoire-design-tooling-7",
+      "slug": "memoire-design-tooling-6",
       "name": "memoire-design-tooling",
       "dir": "agent-kits/opencode/memoire-design-tooling",
       "path": "agent-kits/opencode/memoire-design-tooling/SKILL.md",
@@ -347,9 +297,9 @@
       },
       "install": {
         "clone": "git clone --depth 1 https://github.com/memi-design/memi.git",
-        "copy": "cp -r agent-kits/opencode/memoire-design-tooling ~/.claude/skills/memoire-design-tooling-7",
+        "copy": "cp -r agent-kits/opencode/memoire-design-tooling ~/.claude/skills/memoire-design-tooling-6",
         "raw": "https://raw.githubusercontent.com/memi-design/memi/0317aca532012c127518dc567c5a787fda298d85/agent-kits/opencode/memoire-design-tooling/SKILL.md",
-        "saveAs": "~/.claude/skills/memoire-design-tooling-7/SKILL.md",
+        "saveAs": "~/.claude/skills/memoire-design-tooling-6/SKILL.md",
         "marketplace": "/plugin marketplace add memi-design/memi"
       },
       "bodyInline": true,
@@ -365,486 +315,6 @@
     },
     {
       "slug": "audit-frontend-design",
-      "name": "audit-frontend-design",
-      "dir": "plugins/memi-claude/skills/audit-frontend-design",
-      "path": "plugins/memi-claude/skills/audit-frontend-design/SKILL.md",
-      "desc": "Use when reviewing or changing a React, Next.js, Tailwind, or shadcn interface and you need evidence-backed findings for accessibility, hierarchy, tokens, states, and responsive design before editing code.",
-      "descZh": "",
-      "triggers": [
-        "reviewing",
-        "changing a React",
-        "Next"
-      ],
-      "version": "",
-      "license": "MIT",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": true,
-        "bins": [
-          "npm",
-          "npx"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/memi-design/memi.git",
-        "copy": "cp -r plugins/memi-claude/skills/audit-frontend-design ~/.claude/skills/audit-frontend-design",
-        "raw": "https://raw.githubusercontent.com/memi-design/memi/0317aca532012c127518dc567c5a787fda298d85/plugins/memi-claude/skills/audit-frontend-design/SKILL.md",
-        "saveAs": "~/.claude/skills/audit-frontend-design/SKILL.md",
-        "marketplace": "/plugin marketplace add memi-design/memi"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:d4193ec959b00731dda56f6dca0402d9cd7463c4ea3243b13310e2dfccbaf6b7",
-      "bytes": 2237,
-      "wordCount": 276,
-      "repoLicense": "MIT",
-      "commit": "0317aca532012c127518dc567c5a787fda298d85",
-      "branch": "main",
-      "body": "---\nname: audit-frontend-design\ndescription: Use when reviewing or changing a React, Next.js, Tailwind, or shadcn interface and you need evidence-backed findings for accessibility, hierarchy, tokens, states, and responsive design before editing code.\n---\n\n# Audit Frontend Design\n\nAudit the real source tree before proposing UI changes. Memi's checks are deterministic and file-anchored; no Figma connection or background process is required.\n\nThis workflow targets published beta **2.8.0-beta.2**. Use `npx -y @memi-design/cli@2.8.0-beta.2 --version` to verify the exact package; a local `memi` must report that same version before these recipes run. The independent stable compatibility baseline is **2.7.9**. See [current release state](https://github.com/memi-design/memi/blob/main/docs/CURRENT_RELEASE.md) and [known limitations](https://github.com/memi-design/memi/blob/main/docs/trust/KNOWN_LIMITATIONS.md). npm availability alone does not establish native-binary success.\n\n## Run The Audit\n\nFrom the repository root:\n\n```bash\nmemi diagnose . --json --no-write --fail-on none\n```\n\nFor UX behavior and visual craft detail, run only the relevant follow-up:\n\n```bash\nmemi ux audit . --json --no-write\nmemi craft audit . --json --no-write\n```\n\nA supplied screenshot is context, not proof that Memi performed pixel analysis. Use the harness browser or image tools for actual rendered checks. Use `memi diagnose . --receipt-only --fail-on none` when the output must exclude source content.\n\n## Workflow\n\n1. Read repository instructions and identify the requested route or component.\n2. Run `diagnose` before broad UI edits.\n3. Group findings by user impact, not by checker name.\n4. Verify each proposed fix against the cited file and local design tokens.\n5. Implement only fixes relevant to the user's request.\n6. Re-run the same command and report assessed quality, category coverage, scan omissions, and remaining findings.\n\n## Output\n\nLead with actionable findings:\n\n| Priority | Evidence | Change |\n| --- | --- | --- |\n| High | `path/to/file.tsx:line` and rule id | Specific code-level fix |\n\nInclude the command run, before/after score, files changed, and unresolved risks. Never replace source evidence with generic taste advice.\n",
-      "bodyMd": "# Audit Frontend Design\n\nAudit the real source tree before proposing UI changes. Memi's checks are deterministic and file-anchored; no Figma connection or background process is required.\n\nThis workflow targets published beta **2.8.0-beta.2**. Use `npx -y @memi-design/cli@2.8.0-beta.2 --version` to verify the exact package; a local `memi` must report that same version before these recipes run. The independent stable compatibility baseline is **2.7.9**. See [current release state](https://github.com/memi-design/memi/blob/main/docs/CURRENT_RELEASE.md) and [known limitations](https://github.com/memi-design/memi/blob/main/docs/trust/KNOWN_LIMITATIONS.md). npm availability alone does not establish native-binary success.\n\n## Run The Audit\n\nFrom the repository root:\n\n```bash\nmemi diagnose . --json --no-write --fail-on none\n```\n\nFor UX behavior and visual craft detail, run only the relevant follow-up:\n\n```bash\nmemi ux audit . --json --no-write\nmemi craft audit . --json --no-write\n```\n\nA supplied screenshot is context, not proof that Memi performed pixel analysis. Use the harness browser or image tools for actual rendered checks. Use `memi diagnose . --receipt-only --fail-on none` when the output must exclude source content.\n\n## Workflow\n\n1. Read repository instructions and identify the requested route or component.\n2. Run `diagnose` before broad UI edits.\n3. Group findings by user impact, not by checker name.\n4. Verify each proposed fix against the cited file and local design tokens.\n5. Implement only fixes relevant to the user's request.\n6. Re-run the same command and report assessed quality, category coverage, scan omissions, and remaining findings.\n\n## Output\n\nLead with actionable findings:\n\n| Priority | Evidence | Change |\n| --- | --- | --- |\n| High | `path/to/file.tsx:line` and rule id | Specific code-level fix |\n\nInclude the command run, before/after score, files changed, and unresolved risks. Never replace source evidence with generic taste advice.\n"
-    },
-    {
-      "slug": "build-swiftui-interface",
-      "name": "build-swiftui-interface",
-      "dir": "plugins/memi-claude/skills/build-swiftui-interface",
-      "path": "plugins/memi-claude/skills/build-swiftui-interface/SKILL.md",
-      "desc": "Use when a coding agent must design, scaffold, implement, or verify an iOS or macOS SwiftUI interface with Apple-platform state, accessibility, availability, testing, and Xcode evidence.",
-      "descZh": "",
-      "triggers": [
-        "scaffold",
-        "implement",
-        "verify an iOS",
-        "macOS SwiftUI interfa"
-      ],
-      "version": "",
-      "license": "MIT",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": true,
-        "bins": [
-          "npm",
-          "npx"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/memi-design/memi.git",
-        "copy": "cp -r plugins/memi-claude/skills/build-swiftui-interface ~/.claude/skills/build-swiftui-interface",
-        "raw": "https://raw.githubusercontent.com/memi-design/memi/0317aca532012c127518dc567c5a787fda298d85/plugins/memi-claude/skills/build-swiftui-interface/SKILL.md",
-        "saveAs": "~/.claude/skills/build-swiftui-interface/SKILL.md",
-        "marketplace": "/plugin marketplace add memi-design/memi"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:779572259d41ac4cd68c6c552f5cc9d8e897b290a2d25e62fd155850378e6b8d",
-      "bytes": 3298,
-      "wordCount": 397,
-      "repoLicense": "MIT",
-      "commit": "0317aca532012c127518dc567c5a787fda298d85",
-      "branch": "main",
-      "body": "---\nname: build-swiftui-interface\ndescription: Use when a coding agent must design, scaffold, implement, or verify an iOS or macOS SwiftUI interface with Apple-platform state, accessibility, availability, testing, and Xcode evidence.\n---\n\n# Build SwiftUI Interface\n\nUse this as Apple-platform design and verification guidance. Pair it with an installed host's Apple-platform tools when simulator, profiling, App Intents, or detailed framework guidance is needed.\n\n## 2.8 beta availability\n\nThis workflow targets published beta **2.8.0-beta.2**. Use `npx -y @memi-design/cli@2.8.0-beta.2 --version` to verify the exact package; a local `memi` must report that same version before these recipes run. The independent stable compatibility baseline is **2.7.9**. See [current release state](https://github.com/memi-design/memi/blob/main/docs/CURRENT_RELEASE.md) and [known limitations](https://github.com/memi-design/memi/blob/main/docs/trust/KNOWN_LIMITATIONS.md). npm availability alone does not establish native-binary success.\n\nMemi's `ios brief` and `ios scaffold` commands are unavailable in 2.8.0-beta.1 and 2.8.0-beta.2, including preview and write modes. Capability grants do not enable them. This skill does not provide an automatic SwiftUI scaffolding pipeline.\n\nWith the exact beta running `memi --profile locked mcp start --no-figma`, the host may call the read-only `prepare_apple_design_brief` tool:\n\n```json\n{\"intent\":\"Review the feature contract\",\"platform\":\"ios\",\"detail\":\"compact\"}\n```\n\n`platform` accepts `ios` or `macos`. This tool prepares guidance without running Xcode or writing files; it does not inspect native source or replace project verification.\n\nInspect the actual project: deployment target, Swift language mode, shared schemes, local components, assets, navigation, state ownership, test targets, and nearby implementation patterns. Prepare the feature contract with the coding host using that evidence, and review proposed paths and source before writing. Preserve the repository's project-generation workflow.\n\nThe supported `memi agent brief . --json` command can provide general project context; it is not an equivalent Apple-platform brief or proof that SwiftUI was analyzed. Memi's frontend checks do not establish native UI correctness.\n\n## Implementation rules\n\n1. Reuse local SwiftUI components and semantic assets before adding primitives.\n2. Keep state ownership narrow; keep I/O and expensive work out of `body`.\n3. Define loading, empty, populated, error, Dynamic Type, VoiceOver, reduced-motion, and dark-appearance states.\n4. Gate newer APIs. Liquid Glass requires an iOS 26+ branch and a behaviorally equivalent fallback.\n5. Treat June 2026 APIs by their documented availability; do not invent an iOS version label.\n6. Preserve the existing architecture and project-generation workflow.\n\n## Verification receipt\n\nRun the repository's canonical commands. When none exist, discover shared schemes and explicit destinations with `xcodebuild -list -json` and `xcrun simctl list devices available`, then build and test the smallest target.\n\nReport exact commands, files, deployment assumptions, simulator flow, accessibility states, and anything not executed. A source review is not simulator proof, and a simulator build is not signing or App Store proof.\n",
-      "bodyMd": "# Build SwiftUI Interface\n\nUse this as Apple-platform design and verification guidance. Pair it with an installed host's Apple-platform tools when simulator, profiling, App Intents, or detailed framework guidance is needed.\n\n## 2.8 beta availability\n\nThis workflow targets published beta **2.8.0-beta.2**. Use `npx -y @memi-design/cli@2.8.0-beta.2 --version` to verify the exact package; a local `memi` must report that same version before these recipes run. The independent stable compatibility baseline is **2.7.9**. See [current release state](https://github.com/memi-design/memi/blob/main/docs/CURRENT_RELEASE.md) and [known limitations](https://github.com/memi-design/memi/blob/main/docs/trust/KNOWN_LIMITATIONS.md). npm availability alone does not establish native-binary success.\n\nMemi's `ios brief` and `ios scaffold` commands are unavailable in 2.8.0-beta.1 and 2.8.0-beta.2, including preview and write modes. Capability grants do not enable them. This skill does not provide an automatic SwiftUI scaffolding pipeline.\n\nWith the exact beta running `memi --profile locked mcp start --no-figma`, the host may call the read-only `prepare_apple_design_brief` tool:\n\n```json\n{\"intent\":\"Review the feature contract\",\"platform\":\"ios\",\"detail\":\"compact\"}\n```\n\n`platform` accepts `ios` or `macos`. This tool prepares guidance without running Xcode or writing files; it does not inspect native source or replace project verification.\n\nInspect the actual project: deployment target, Swift language mode, shared schemes, local components, assets, navigation, state ownership, test targets, and nearby implementation patterns. Prepare the feature contract with the coding host using that evidence, and review proposed paths and source before writing. Preserve the repository's project-generation workflow.\n\nThe supported `memi agent brief . --json` command can provide general project context; it is not an equivalent Apple-platform brief or proof that SwiftUI was analyzed. Memi's frontend checks do not establish native UI correctness.\n\n## Implementation rules\n\n1. Reuse local SwiftUI components and semantic assets before adding primitives.\n2. Keep state ownership narrow; keep I/O and expensive work out of `body`.\n3. Define loading, empty, populated, error, Dynamic Type, VoiceOver, reduced-motion, and dark-appearance states.\n4. Gate newer APIs. Liquid Glass requires an iOS 26+ branch and a behaviorally equivalent fallback.\n5. Treat June 2026 APIs by their documented availability; do not invent an iOS version label.\n6. Preserve the existing architecture and project-generation workflow.\n\n## Verification receipt\n\nRun the repository's canonical commands. When none exist, discover shared schemes and explicit destinations with `xcodebuild -list -json` and `xcrun simctl list devices available`, then build and test the smallest target.\n\nReport exact commands, files, deployment assumptions, simulator flow, accessibility states, and anything not executed. A source review is not simulator proof, and a simulator build is not signing or App Store proof.\n"
-    },
-    {
-      "slug": "enforce-design-ci",
-      "name": "enforce-design-ci",
-      "dir": "plugins/memi-claude/skills/enforce-design-ci",
-      "path": "plugins/memi-claude/skills/enforce-design-ci/SKILL.md",
-      "desc": "Use when a repository needs deterministic pull-request checks for new accessibility, design-token, component-structure, responsive, and UI-state regressions with file-level evidence.",
-      "descZh": "",
-      "triggers": [
-        "design-token"
-      ],
-      "version": "",
-      "license": "MIT",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": true,
-        "bins": [
-          "npm",
-          "npx"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/memi-design/memi.git",
-        "copy": "cp -r plugins/memi-claude/skills/enforce-design-ci ~/.claude/skills/enforce-design-ci",
-        "raw": "https://raw.githubusercontent.com/memi-design/memi/0317aca532012c127518dc567c5a787fda298d85/plugins/memi-claude/skills/enforce-design-ci/SKILL.md",
-        "saveAs": "~/.claude/skills/enforce-design-ci/SKILL.md",
-        "marketplace": "/plugin marketplace add memi-design/memi"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:a26ff95f0717933ddd0b3932da57b86e2a8ba1d75dc4cee80efb48321b96cbad",
-      "bytes": 2164,
-      "wordCount": 236,
-      "repoLicense": "MIT",
-      "commit": "0317aca532012c127518dc567c5a787fda298d85",
-      "branch": "main",
-      "body": "---\nname: enforce-design-ci\ndescription: Use when a repository needs deterministic pull-request checks for new accessibility, design-token, component-structure, responsive, and UI-state regressions with file-level evidence.\n---\n\n# Enforce Design CI\n\nAdd a reviewable design-quality gate that runs without an LLM. Memi writes a policy, baseline, universal agent skill, SARIF, and human-readable report artifacts.\n\nThis workflow targets published beta **2.8.0-beta.2**. Use `npx -y @memi-design/cli@2.8.0-beta.2 --version` to verify the exact package; a local `memi` must report that same version before these recipes run. The independent stable compatibility baseline is **2.7.9**. See [current release state](https://github.com/memi-design/memi/blob/main/docs/CURRENT_RELEASE.md) and [known limitations](https://github.com/memi-design/memi/blob/main/docs/trust/KNOWN_LIMITATIONS.md). npm availability alone does not establish native-binary success.\n\n## Existing project setup\n\nBeta initialization is unavailable. Use an existing reviewed policy and baseline; this skill does not invoke legacy setup commands. Review project changes before committing them.\n\n## Verify Locally\n\n```bash\nmemi --profile connected --allow project-write --allow source-content-persistence --allow shell ci . --no-scope --report --json\n```\n\nThe command may exit nonzero when findings exceed the configured gate. Treat that as a quality result, not a tool crash.\n\n## Add GitHub Actions\n\nUse the pinned major action in `.github/workflows/design.yml`:\n\n```yaml\nname: Design CI\non: [pull_request]\njobs:\n  design:\n    runs-on: ubuntu-latest\n    permissions:\n      contents: read\n      security-events: write\n    steps:\n      - uses: actions/checkout@v4\n        with:\n          fetch-depth: 0\n      - uses: memi-design/memi@v2\n        with:\n          version: \"2.7.9\"\n```\n\n## Completion Criteria\n\n- Policy and baseline are reviewed and committed.\n- Local CI produces SARIF and a design-health report.\n- The workflow passes on unchanged accepted debt and fails on a seeded regression.\n- The final handoff names the gate threshold, suppressed baseline count, active findings, and artifact paths.\n",
-      "bodyMd": "# Enforce Design CI\n\nAdd a reviewable design-quality gate that runs without an LLM. Memi writes a policy, baseline, universal agent skill, SARIF, and human-readable report artifacts.\n\nThis workflow targets published beta **2.8.0-beta.2**. Use `npx -y @memi-design/cli@2.8.0-beta.2 --version` to verify the exact package; a local `memi` must report that same version before these recipes run. The independent stable compatibility baseline is **2.7.9**. See [current release state](https://github.com/memi-design/memi/blob/main/docs/CURRENT_RELEASE.md) and [known limitations](https://github.com/memi-design/memi/blob/main/docs/trust/KNOWN_LIMITATIONS.md). npm availability alone does not establish native-binary success.\n\n## Existing project setup\n\nBeta initialization is unavailable. Use an existing reviewed policy and baseline; this skill does not invoke legacy setup commands. Review project changes before committing them.\n\n## Verify Locally\n\n```bash\nmemi --profile connected --allow project-write --allow source-content-persistence --allow shell ci . --no-scope --report --json\n```\n\nThe command may exit nonzero when findings exceed the configured gate. Treat that as a quality result, not a tool crash.\n\n## Add GitHub Actions\n\nUse the pinned major action in `.github/workflows/design.yml`:\n\n```yaml\nname: Design CI\non: [pull_request]\njobs:\n  design:\n    runs-on: ubuntu-latest\n    permissions:\n      contents: read\n      security-events: write\n    steps:\n      - uses: actions/checkout@v4\n        with:\n          fetch-depth: 0\n      - uses: memi-design/memi@v2\n        with:\n          version: \"2.7.9\"\n```\n\n## Completion Criteria\n\n- Policy and baseline are reviewed and committed.\n- Local CI produces SARIF and a design-health report.\n- The workflow passes on unchanged accepted debt and fails on a seeded regression.\n- The final handoff names the gate threshold, suppressed baseline count, active findings, and artifact paths.\n"
-    },
-    {
-      "slug": "memoire-design-tooling-8",
-      "name": "memoire-design-tooling",
-      "dir": "plugins/memi-claude/skills/memoire-design-tooling",
-      "path": "plugins/memi-claude/skills/memoire-design-tooling/SKILL.md",
-      "desc": "Use when a task spans interface understanding, design-system memory, UI audits, design CI, Figma, shadcn or Tailwind code generation, research, or agent design workflows and needs the correct Memi capability selected.",
-      "descZh": "",
-      "triggers": [
-        "design-system memory",
-        "UI audits",
-        "design CI",
-        "Figma"
-      ],
-      "version": "",
-      "license": "MIT",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": true,
-        "bins": [
-          "npm",
-          "npx",
-          "make"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/memi-design/memi.git",
-        "copy": "cp -r plugins/memi-claude/skills/memoire-design-tooling ~/.claude/skills/memoire-design-tooling-8",
-        "raw": "https://raw.githubusercontent.com/memi-design/memi/0317aca532012c127518dc567c5a787fda298d85/plugins/memi-claude/skills/memoire-design-tooling/SKILL.md",
-        "saveAs": "~/.claude/skills/memoire-design-tooling-8/SKILL.md",
-        "marketplace": "/plugin marketplace add memi-design/memi"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:70150e979a3321b202af7680da784343cec9f75adad3a21ced728f1a7e367fd5",
-      "bytes": 3288,
-      "wordCount": 372,
-      "repoLicense": "MIT",
-      "commit": "0317aca532012c127518dc567c5a787fda298d85",
-      "branch": "main",
-      "body": "---\nname: memoire-design-tooling\ndescription: Use when a task spans interface understanding, design-system memory, UI audits, design CI, Figma, shadcn or Tailwind code generation, research, or agent design workflows and needs the correct Memi capability selected.\n---\n\n# Memi Design Tooling\n\nMemi gives coding agents repository-specific interface evidence before they edit UI. Start with the smallest workflow that answers the task; Figma, global installation, and a daemon are optional.\n\n## Choose A Workflow\n\n- Before reviewing or changing frontend UI: use `audit-frontend-design`.\n- Before building from an existing product system: use `remember-design-system`.\n- When adding deterministic pull-request gates: use `enforce-design-ci`.\n- For native SwiftUI, SwiftData, App Intents, or Apple-platform verification: use `build-swiftui-interface`.\n- For Figma, research, scaffolding, registry publishing, or multi-agent work: continue below.\n\nInstall one focused skill directly:\n\n```bash\nnpx skills add memi-design/memi --skill audit-frontend-design\n```\n\nThis workflow targets published beta **2.8.0-beta.2**. Use `npx -y @memi-design/cli@2.8.0-beta.2 --version` to verify the exact package; a local `memi` must report that same version before these recipes run. The independent stable compatibility baseline is **2.7.9**. See [current release state](https://github.com/memi-design/memi/blob/main/docs/CURRENT_RELEASE.md) and [known limitations](https://github.com/memi-design/memi/blob/main/docs/trust/KNOWN_LIMITATIONS.md). npm availability alone does not establish native-binary success.\n\n## Compact Preflight\n\n```bash\nmemi agent brief . --frontend --intent \"<interface task>\" --max-bytes 16384 --json\n```\n\nRead cited source files when the bounded brief lacks necessary evidence. Optional `--design-evidence design/selected-node.json` accepts normalized Figma/Paper data supplied by the harness; missing mappings and verification stay explicit.\n\n## Local Checks And MCP\n\n```bash\nmemi diagnose . --json --no-write --fail-on none\nmemi diagnose . --receipt-only --fail-on none\nmemi --profile locked mcp start --no-figma\n```\n\nLocked MCP exposes four read tools: prepare_frontend_brief, prepare_design_agent_brief, prepare_apple_design_brief, and diagnose_app_quality. The frontend tool supplies actual repository evidence. Many legacy CLI and write tools remain unavailable; capability grants do not unlock deferred command paths. Keep connector calls, project edits, and browser execution in the harness's reviewed workflow.\n\nReuse local components and tokens according to the consumer project's conventions. Source-bearing JSON is working context; receipt-only is a separate metadata output. See docs/FRONTEND_WORKFLOW.md for the beta evidence schema and actual verification flow.\n\n## Evidence Contract\n\n1. Read local instructions and existing product-system files first.\n2. Collect the minimum evidence that can change the implementation.\n3. Cite `file:line` findings and existing components or tokens.\n4. Make scoped edits.\n5. Re-run the same deterministic checks.\n6. Report commands, artifacts, files changed, and remaining assumptions.\n\nDo not claim visual correctness from source checks alone. When rendered behavior matters, verify the actual route at desktop and mobile viewports.\n",
-      "bodyMd": "# Memi Design Tooling\n\nMemi gives coding agents repository-specific interface evidence before they edit UI. Start with the smallest workflow that answers the task; Figma, global installation, and a daemon are optional.\n\n## Choose A Workflow\n\n- Before reviewing or changing frontend UI: use `audit-frontend-design`.\n- Before building from an existing product system: use `remember-design-system`.\n- When adding deterministic pull-request gates: use `enforce-design-ci`.\n- For native SwiftUI, SwiftData, App Intents, or Apple-platform verification: use `build-swiftui-interface`.\n- For Figma, research, scaffolding, registry publishing, or multi-agent work: continue below.\n\nInstall one focused skill directly:\n\n```bash\nnpx skills add memi-design/memi --skill audit-frontend-design\n```\n\nThis workflow targets published beta **2.8.0-beta.2**. Use `npx -y @memi-design/cli@2.8.0-beta.2 --version` to verify the exact package; a local `memi` must report that same version before these recipes run. The independent stable compatibility baseline is **2.7.9**. See [current release state](https://github.com/memi-design/memi/blob/main/docs/CURRENT_RELEASE.md) and [known limitations](https://github.com/memi-design/memi/blob/main/docs/trust/KNOWN_LIMITATIONS.md). npm availability alone does not establish native-binary success.\n\n## Compact Preflight\n\n```bash\nmemi agent brief . --frontend --intent \"<interface task>\" --max-bytes 16384 --json\n```\n\nRead cited source files when the bounded brief lacks necessary evidence. Optional `--design-evidence design/selected-node.json` accepts normalized Figma/Paper data supplied by the harness; missing mappings and verification stay explicit.\n\n## Local Checks And MCP\n\n```bash\nmemi diagnose . --json --no-write --fail-on none\nmemi diagnose . --receipt-only --fail-on none\nmemi --profile locked mcp start --no-figma\n```\n\nLocked MCP exposes four read tools: prepare_frontend_brief, prepare_design_agent_brief, prepare_apple_design_brief, and diagnose_app_quality. The frontend tool supplies actual repository evidence. Many legacy CLI and write tools remain unavailable; capability grants do not unlock deferred command paths. Keep connector calls, project edits, and browser execution in the harness's reviewed workflow.\n\nReuse local components and tokens according to the consumer project's conventions. Source-bearing JSON is working context; receipt-only is a separate metadata output. See docs/FRONTEND_WORKFLOW.md for the beta evidence schema and actual verification flow.\n\n## Evidence Contract\n\n1. Read local instructions and existing product-system files first.\n2. Collect the minimum evidence that can change the implementation.\n3. Cite `file:line` findings and existing components or tokens.\n4. Make scoped edits.\n5. Re-run the same deterministic checks.\n6. Report commands, artifacts, files changed, and remaining assumptions.\n\nDo not claim visual correctness from source checks alone. When rendered behavior matters, verify the actual route at desktop and mobile viewports.\n"
-    },
-    {
-      "slug": "remember-design-system",
-      "name": "remember-design-system",
-      "dir": "plugins/memi-claude/skills/remember-design-system",
-      "path": "plugins/memi-claude/skills/remember-design-system/SKILL.md",
-      "desc": "Use when an agent is about to build or refactor interface code and needs a compact, repository-specific brief covering existing tokens, components, routes, conventions, and verification commands.",
-      "descZh": "",
-      "triggers": [
-        "repository-spec"
-      ],
-      "version": "",
-      "license": "MIT",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": true,
-        "bins": [
-          "node",
-          "npm",
-          "npx"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/memi-design/memi.git",
-        "copy": "cp -r plugins/memi-claude/skills/remember-design-system ~/.claude/skills/remember-design-system",
-        "raw": "https://raw.githubusercontent.com/memi-design/memi/0317aca532012c127518dc567c5a787fda298d85/plugins/memi-claude/skills/remember-design-system/SKILL.md",
-        "saveAs": "~/.claude/skills/remember-design-system/SKILL.md",
-        "marketplace": "/plugin marketplace add memi-design/memi"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:0e2373e1d954cc600b2d9da5001a3b6a2fa8d11cd7dbe3a5635c7a7a14ed5749",
-      "bytes": 2340,
-      "wordCount": 285,
-      "repoLicense": "MIT",
-      "commit": "0317aca532012c127518dc567c5a787fda298d85",
-      "branch": "main",
-      "body": "---\nname: remember-design-system\ndescription: Use when an agent is about to build or refactor interface code and needs a compact, repository-specific brief covering existing tokens, components, routes, conventions, and verification commands.\n---\n\n# Remember The Design System\n\nBuild design context from the repository instead of guessing from the prompt. This is a preflight for UI work, not a request to redesign the product.\n\nThis workflow targets published beta **2.8.0-beta.2**. Use `npx -y @memi-design/cli@2.8.0-beta.2 --version` to verify the exact package; a local `memi` must report that same version before these recipes run. The independent stable compatibility baseline is **2.7.9**. See [current release state](https://github.com/memi-design/memi/blob/main/docs/CURRENT_RELEASE.md) and [known limitations](https://github.com/memi-design/memi/blob/main/docs/trust/KNOWN_LIMITATIONS.md). npm availability alone does not establish native-binary success.\n\n## Build The Brief\n\nTranslate the user's task into a short intent, then run from the repository root:\n\n```bash\nmemi agent brief . --frontend --intent \"<user's interface task>\" --max-bytes 16384 --json\n```\n\nThe frontend brief already includes bounded token and story evidence. For a selected Figma or Paper node, use the harness connector and supply its normalized evidence:\n\n```bash\nmemi agent brief . --frontend --intent \"<task>\" --design-evidence design/selected-node.json --json\n```\n\n## Apply The Memory\n\n1. Prefer existing components and the project's conventions. Do not impose a new component library or CSS framework.\n2. Map every new component to atom, molecule, organism, template, or page.\n3. Reuse semantic CSS variables and Tailwind theme tokens. Do not introduce raw hex values when a token exists.\n4. Preserve route, state, loading, empty, error, focus, and responsive behavior identified by the brief.\n5. Resolve stale/conflicting mappings and missing required props before editing. Read cited source files when the bounded brief omits needed details.\n6. Treat inferred story IDs and host-supplied mappings as evidence, not rendered verification. Run the actual project tests.\n\n## Handoff\n\nBefore editing, state the components and tokens you will reuse. After editing, cite files changed, evidence followed, checks run, and any design assumptions that remain.\n",
-      "bodyMd": "# Remember The Design System\n\nBuild design context from the repository instead of guessing from the prompt. This is a preflight for UI work, not a request to redesign the product.\n\nThis workflow targets published beta **2.8.0-beta.2**. Use `npx -y @memi-design/cli@2.8.0-beta.2 --version` to verify the exact package; a local `memi` must report that same version before these recipes run. The independent stable compatibility baseline is **2.7.9**. See [current release state](https://github.com/memi-design/memi/blob/main/docs/CURRENT_RELEASE.md) and [known limitations](https://github.com/memi-design/memi/blob/main/docs/trust/KNOWN_LIMITATIONS.md). npm availability alone does not establish native-binary success.\n\n## Build The Brief\n\nTranslate the user's task into a short intent, then run from the repository root:\n\n```bash\nmemi agent brief . --frontend --intent \"<user's interface task>\" --max-bytes 16384 --json\n```\n\nThe frontend brief already includes bounded token and story evidence. For a selected Figma or Paper node, use the harness connector and supply its normalized evidence:\n\n```bash\nmemi agent brief . --frontend --intent \"<task>\" --design-evidence design/selected-node.json --json\n```\n\n## Apply The Memory\n\n1. Prefer existing components and the project's conventions. Do not impose a new component library or CSS framework.\n2. Map every new component to atom, molecule, organism, template, or page.\n3. Reuse semantic CSS variables and Tailwind theme tokens. Do not introduce raw hex values when a token exists.\n4. Preserve route, state, loading, empty, error, focus, and responsive behavior identified by the brief.\n5. Resolve stale/conflicting mappings and missing required props before editing. Read cited source files when the bounded brief omits needed details.\n6. Treat inferred story IDs and host-supplied mappings as evidence, not rendered verification. Run the actual project tests.\n\n## Handoff\n\nBefore editing, state the components and tokens you will reuse. After editing, cite files changed, evidence followed, checks run, and any design assumptions that remain.\n"
-    },
-    {
-      "slug": "audit-frontend-design-2",
-      "name": "audit-frontend-design",
-      "dir": "plugins/memoire/skills/audit-frontend-design",
-      "path": "plugins/memoire/skills/audit-frontend-design/SKILL.md",
-      "desc": "Use when reviewing or changing a React, Next.js, Tailwind, or shadcn interface and you need evidence-backed findings for accessibility, hierarchy, tokens, states, and responsive design before editing code.",
-      "descZh": "",
-      "triggers": [
-        "reviewing",
-        "changing a React",
-        "Next"
-      ],
-      "version": "",
-      "license": "MIT",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": true,
-        "bins": [
-          "npm",
-          "npx"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/memi-design/memi.git",
-        "copy": "cp -r plugins/memoire/skills/audit-frontend-design ~/.claude/skills/audit-frontend-design-2",
-        "raw": "https://raw.githubusercontent.com/memi-design/memi/0317aca532012c127518dc567c5a787fda298d85/plugins/memoire/skills/audit-frontend-design/SKILL.md",
-        "saveAs": "~/.claude/skills/audit-frontend-design-2/SKILL.md",
-        "marketplace": "/plugin marketplace add memi-design/memi"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:d4193ec959b00731dda56f6dca0402d9cd7463c4ea3243b13310e2dfccbaf6b7",
-      "bytes": 2237,
-      "wordCount": 276,
-      "repoLicense": "MIT",
-      "commit": "0317aca532012c127518dc567c5a787fda298d85",
-      "branch": "main",
-      "body": "---\nname: audit-frontend-design\ndescription: Use when reviewing or changing a React, Next.js, Tailwind, or shadcn interface and you need evidence-backed findings for accessibility, hierarchy, tokens, states, and responsive design before editing code.\n---\n\n# Audit Frontend Design\n\nAudit the real source tree before proposing UI changes. Memi's checks are deterministic and file-anchored; no Figma connection or background process is required.\n\nThis workflow targets published beta **2.8.0-beta.2**. Use `npx -y @memi-design/cli@2.8.0-beta.2 --version` to verify the exact package; a local `memi` must report that same version before these recipes run. The independent stable compatibility baseline is **2.7.9**. See [current release state](https://github.com/memi-design/memi/blob/main/docs/CURRENT_RELEASE.md) and [known limitations](https://github.com/memi-design/memi/blob/main/docs/trust/KNOWN_LIMITATIONS.md). npm availability alone does not establish native-binary success.\n\n## Run The Audit\n\nFrom the repository root:\n\n```bash\nmemi diagnose . --json --no-write --fail-on none\n```\n\nFor UX behavior and visual craft detail, run only the relevant follow-up:\n\n```bash\nmemi ux audit . --json --no-write\nmemi craft audit . --json --no-write\n```\n\nA supplied screenshot is context, not proof that Memi performed pixel analysis. Use the harness browser or image tools for actual rendered checks. Use `memi diagnose . --receipt-only --fail-on none` when the output must exclude source content.\n\n## Workflow\n\n1. Read repository instructions and identify the requested route or component.\n2. Run `diagnose` before broad UI edits.\n3. Group findings by user impact, not by checker name.\n4. Verify each proposed fix against the cited file and local design tokens.\n5. Implement only fixes relevant to the user's request.\n6. Re-run the same command and report assessed quality, category coverage, scan omissions, and remaining findings.\n\n## Output\n\nLead with actionable findings:\n\n| Priority | Evidence | Change |\n| --- | --- | --- |\n| High | `path/to/file.tsx:line` and rule id | Specific code-level fix |\n\nInclude the command run, before/after score, files changed, and unresolved risks. Never replace source evidence with generic taste advice.\n",
-      "bodyMd": "# Audit Frontend Design\n\nAudit the real source tree before proposing UI changes. Memi's checks are deterministic and file-anchored; no Figma connection or background process is required.\n\nThis workflow targets published beta **2.8.0-beta.2**. Use `npx -y @memi-design/cli@2.8.0-beta.2 --version` to verify the exact package; a local `memi` must report that same version before these recipes run. The independent stable compatibility baseline is **2.7.9**. See [current release state](https://github.com/memi-design/memi/blob/main/docs/CURRENT_RELEASE.md) and [known limitations](https://github.com/memi-design/memi/blob/main/docs/trust/KNOWN_LIMITATIONS.md). npm availability alone does not establish native-binary success.\n\n## Run The Audit\n\nFrom the repository root:\n\n```bash\nmemi diagnose . --json --no-write --fail-on none\n```\n\nFor UX behavior and visual craft detail, run only the relevant follow-up:\n\n```bash\nmemi ux audit . --json --no-write\nmemi craft audit . --json --no-write\n```\n\nA supplied screenshot is context, not proof that Memi performed pixel analysis. Use the harness browser or image tools for actual rendered checks. Use `memi diagnose . --receipt-only --fail-on none` when the output must exclude source content.\n\n## Workflow\n\n1. Read repository instructions and identify the requested route or component.\n2. Run `diagnose` before broad UI edits.\n3. Group findings by user impact, not by checker name.\n4. Verify each proposed fix against the cited file and local design tokens.\n5. Implement only fixes relevant to the user's request.\n6. Re-run the same command and report assessed quality, category coverage, scan omissions, and remaining findings.\n\n## Output\n\nLead with actionable findings:\n\n| Priority | Evidence | Change |\n| --- | --- | --- |\n| High | `path/to/file.tsx:line` and rule id | Specific code-level fix |\n\nInclude the command run, before/after score, files changed, and unresolved risks. Never replace source evidence with generic taste advice.\n"
-    },
-    {
-      "slug": "build-swiftui-interface-2",
-      "name": "build-swiftui-interface",
-      "dir": "plugins/memoire/skills/build-swiftui-interface",
-      "path": "plugins/memoire/skills/build-swiftui-interface/SKILL.md",
-      "desc": "Use when a coding agent must design, scaffold, implement, or verify an iOS or macOS SwiftUI interface with Apple-platform state, accessibility, availability, testing, and Xcode evidence.",
-      "descZh": "",
-      "triggers": [
-        "scaffold",
-        "implement",
-        "verify an iOS",
-        "macOS SwiftUI interfa"
-      ],
-      "version": "",
-      "license": "MIT",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": true,
-        "bins": [
-          "npm",
-          "npx"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/memi-design/memi.git",
-        "copy": "cp -r plugins/memoire/skills/build-swiftui-interface ~/.claude/skills/build-swiftui-interface-2",
-        "raw": "https://raw.githubusercontent.com/memi-design/memi/0317aca532012c127518dc567c5a787fda298d85/plugins/memoire/skills/build-swiftui-interface/SKILL.md",
-        "saveAs": "~/.claude/skills/build-swiftui-interface-2/SKILL.md",
-        "marketplace": "/plugin marketplace add memi-design/memi"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:779572259d41ac4cd68c6c552f5cc9d8e897b290a2d25e62fd155850378e6b8d",
-      "bytes": 3298,
-      "wordCount": 397,
-      "repoLicense": "MIT",
-      "commit": "0317aca532012c127518dc567c5a787fda298d85",
-      "branch": "main",
-      "body": "---\nname: build-swiftui-interface\ndescription: Use when a coding agent must design, scaffold, implement, or verify an iOS or macOS SwiftUI interface with Apple-platform state, accessibility, availability, testing, and Xcode evidence.\n---\n\n# Build SwiftUI Interface\n\nUse this as Apple-platform design and verification guidance. Pair it with an installed host's Apple-platform tools when simulator, profiling, App Intents, or detailed framework guidance is needed.\n\n## 2.8 beta availability\n\nThis workflow targets published beta **2.8.0-beta.2**. Use `npx -y @memi-design/cli@2.8.0-beta.2 --version` to verify the exact package; a local `memi` must report that same version before these recipes run. The independent stable compatibility baseline is **2.7.9**. See [current release state](https://github.com/memi-design/memi/blob/main/docs/CURRENT_RELEASE.md) and [known limitations](https://github.com/memi-design/memi/blob/main/docs/trust/KNOWN_LIMITATIONS.md). npm availability alone does not establish native-binary success.\n\nMemi's `ios brief` and `ios scaffold` commands are unavailable in 2.8.0-beta.1 and 2.8.0-beta.2, including preview and write modes. Capability grants do not enable them. This skill does not provide an automatic SwiftUI scaffolding pipeline.\n\nWith the exact beta running `memi --profile locked mcp start --no-figma`, the host may call the read-only `prepare_apple_design_brief` tool:\n\n```json\n{\"intent\":\"Review the feature contract\",\"platform\":\"ios\",\"detail\":\"compact\"}\n```\n\n`platform` accepts `ios` or `macos`. This tool prepares guidance without running Xcode or writing files; it does not inspect native source or replace project verification.\n\nInspect the actual project: deployment target, Swift language mode, shared schemes, local components, assets, navigation, state ownership, test targets, and nearby implementation patterns. Prepare the feature contract with the coding host using that evidence, and review proposed paths and source before writing. Preserve the repository's project-generation workflow.\n\nThe supported `memi agent brief . --json` command can provide general project context; it is not an equivalent Apple-platform brief or proof that SwiftUI was analyzed. Memi's frontend checks do not establish native UI correctness.\n\n## Implementation rules\n\n1. Reuse local SwiftUI components and semantic assets before adding primitives.\n2. Keep state ownership narrow; keep I/O and expensive work out of `body`.\n3. Define loading, empty, populated, error, Dynamic Type, VoiceOver, reduced-motion, and dark-appearance states.\n4. Gate newer APIs. Liquid Glass requires an iOS 26+ branch and a behaviorally equivalent fallback.\n5. Treat June 2026 APIs by their documented availability; do not invent an iOS version label.\n6. Preserve the existing architecture and project-generation workflow.\n\n## Verification receipt\n\nRun the repository's canonical commands. When none exist, discover shared schemes and explicit destinations with `xcodebuild -list -json` and `xcrun simctl list devices available`, then build and test the smallest target.\n\nReport exact commands, files, deployment assumptions, simulator flow, accessibility states, and anything not executed. A source review is not simulator proof, and a simulator build is not signing or App Store proof.\n",
-      "bodyMd": "# Build SwiftUI Interface\n\nUse this as Apple-platform design and verification guidance. Pair it with an installed host's Apple-platform tools when simulator, profiling, App Intents, or detailed framework guidance is needed.\n\n## 2.8 beta availability\n\nThis workflow targets published beta **2.8.0-beta.2**. Use `npx -y @memi-design/cli@2.8.0-beta.2 --version` to verify the exact package; a local `memi` must report that same version before these recipes run. The independent stable compatibility baseline is **2.7.9**. See [current release state](https://github.com/memi-design/memi/blob/main/docs/CURRENT_RELEASE.md) and [known limitations](https://github.com/memi-design/memi/blob/main/docs/trust/KNOWN_LIMITATIONS.md). npm availability alone does not establish native-binary success.\n\nMemi's `ios brief` and `ios scaffold` commands are unavailable in 2.8.0-beta.1 and 2.8.0-beta.2, including preview and write modes. Capability grants do not enable them. This skill does not provide an automatic SwiftUI scaffolding pipeline.\n\nWith the exact beta running `memi --profile locked mcp start --no-figma`, the host may call the read-only `prepare_apple_design_brief` tool:\n\n```json\n{\"intent\":\"Review the feature contract\",\"platform\":\"ios\",\"detail\":\"compact\"}\n```\n\n`platform` accepts `ios` or `macos`. This tool prepares guidance without running Xcode or writing files; it does not inspect native source or replace project verification.\n\nInspect the actual project: deployment target, Swift language mode, shared schemes, local components, assets, navigation, state ownership, test targets, and nearby implementation patterns. Prepare the feature contract with the coding host using that evidence, and review proposed paths and source before writing. Preserve the repository's project-generation workflow.\n\nThe supported `memi agent brief . --json` command can provide general project context; it is not an equivalent Apple-platform brief or proof that SwiftUI was analyzed. Memi's frontend checks do not establish native UI correctness.\n\n## Implementation rules\n\n1. Reuse local SwiftUI components and semantic assets before adding primitives.\n2. Keep state ownership narrow; keep I/O and expensive work out of `body`.\n3. Define loading, empty, populated, error, Dynamic Type, VoiceOver, reduced-motion, and dark-appearance states.\n4. Gate newer APIs. Liquid Glass requires an iOS 26+ branch and a behaviorally equivalent fallback.\n5. Treat June 2026 APIs by their documented availability; do not invent an iOS version label.\n6. Preserve the existing architecture and project-generation workflow.\n\n## Verification receipt\n\nRun the repository's canonical commands. When none exist, discover shared schemes and explicit destinations with `xcodebuild -list -json` and `xcrun simctl list devices available`, then build and test the smallest target.\n\nReport exact commands, files, deployment assumptions, simulator flow, accessibility states, and anything not executed. A source review is not simulator proof, and a simulator build is not signing or App Store proof.\n"
-    },
-    {
-      "slug": "enforce-design-ci-2",
-      "name": "enforce-design-ci",
-      "dir": "plugins/memoire/skills/enforce-design-ci",
-      "path": "plugins/memoire/skills/enforce-design-ci/SKILL.md",
-      "desc": "Use when a repository needs deterministic pull-request checks for new accessibility, design-token, component-structure, responsive, and UI-state regressions with file-level evidence.",
-      "descZh": "",
-      "triggers": [
-        "design-token"
-      ],
-      "version": "",
-      "license": "MIT",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": true,
-        "bins": [
-          "npm",
-          "npx"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/memi-design/memi.git",
-        "copy": "cp -r plugins/memoire/skills/enforce-design-ci ~/.claude/skills/enforce-design-ci-2",
-        "raw": "https://raw.githubusercontent.com/memi-design/memi/0317aca532012c127518dc567c5a787fda298d85/plugins/memoire/skills/enforce-design-ci/SKILL.md",
-        "saveAs": "~/.claude/skills/enforce-design-ci-2/SKILL.md",
-        "marketplace": "/plugin marketplace add memi-design/memi"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:a26ff95f0717933ddd0b3932da57b86e2a8ba1d75dc4cee80efb48321b96cbad",
-      "bytes": 2164,
-      "wordCount": 236,
-      "repoLicense": "MIT",
-      "commit": "0317aca532012c127518dc567c5a787fda298d85",
-      "branch": "main",
-      "body": "---\nname: enforce-design-ci\ndescription: Use when a repository needs deterministic pull-request checks for new accessibility, design-token, component-structure, responsive, and UI-state regressions with file-level evidence.\n---\n\n# Enforce Design CI\n\nAdd a reviewable design-quality gate that runs without an LLM. Memi writes a policy, baseline, universal agent skill, SARIF, and human-readable report artifacts.\n\nThis workflow targets published beta **2.8.0-beta.2**. Use `npx -y @memi-design/cli@2.8.0-beta.2 --version` to verify the exact package; a local `memi` must report that same version before these recipes run. The independent stable compatibility baseline is **2.7.9**. See [current release state](https://github.com/memi-design/memi/blob/main/docs/CURRENT_RELEASE.md) and [known limitations](https://github.com/memi-design/memi/blob/main/docs/trust/KNOWN_LIMITATIONS.md). npm availability alone does not establish native-binary success.\n\n## Existing project setup\n\nBeta initialization is unavailable. Use an existing reviewed policy and baseline; this skill does not invoke legacy setup commands. Review project changes before committing them.\n\n## Verify Locally\n\n```bash\nmemi --profile connected --allow project-write --allow source-content-persistence --allow shell ci . --no-scope --report --json\n```\n\nThe command may exit nonzero when findings exceed the configured gate. Treat that as a quality result, not a tool crash.\n\n## Add GitHub Actions\n\nUse the pinned major action in `.github/workflows/design.yml`:\n\n```yaml\nname: Design CI\non: [pull_request]\njobs:\n  design:\n    runs-on: ubuntu-latest\n    permissions:\n      contents: read\n      security-events: write\n    steps:\n      - uses: actions/checkout@v4\n        with:\n          fetch-depth: 0\n      - uses: memi-design/memi@v2\n        with:\n          version: \"2.7.9\"\n```\n\n## Completion Criteria\n\n- Policy and baseline are reviewed and committed.\n- Local CI produces SARIF and a design-health report.\n- The workflow passes on unchanged accepted debt and fails on a seeded regression.\n- The final handoff names the gate threshold, suppressed baseline count, active findings, and artifact paths.\n",
-      "bodyMd": "# Enforce Design CI\n\nAdd a reviewable design-quality gate that runs without an LLM. Memi writes a policy, baseline, universal agent skill, SARIF, and human-readable report artifacts.\n\nThis workflow targets published beta **2.8.0-beta.2**. Use `npx -y @memi-design/cli@2.8.0-beta.2 --version` to verify the exact package; a local `memi` must report that same version before these recipes run. The independent stable compatibility baseline is **2.7.9**. See [current release state](https://github.com/memi-design/memi/blob/main/docs/CURRENT_RELEASE.md) and [known limitations](https://github.com/memi-design/memi/blob/main/docs/trust/KNOWN_LIMITATIONS.md). npm availability alone does not establish native-binary success.\n\n## Existing project setup\n\nBeta initialization is unavailable. Use an existing reviewed policy and baseline; this skill does not invoke legacy setup commands. Review project changes before committing them.\n\n## Verify Locally\n\n```bash\nmemi --profile connected --allow project-write --allow source-content-persistence --allow shell ci . --no-scope --report --json\n```\n\nThe command may exit nonzero when findings exceed the configured gate. Treat that as a quality result, not a tool crash.\n\n## Add GitHub Actions\n\nUse the pinned major action in `.github/workflows/design.yml`:\n\n```yaml\nname: Design CI\non: [pull_request]\njobs:\n  design:\n    runs-on: ubuntu-latest\n    permissions:\n      contents: read\n      security-events: write\n    steps:\n      - uses: actions/checkout@v4\n        with:\n          fetch-depth: 0\n      - uses: memi-design/memi@v2\n        with:\n          version: \"2.7.9\"\n```\n\n## Completion Criteria\n\n- Policy and baseline are reviewed and committed.\n- Local CI produces SARIF and a design-health report.\n- The workflow passes on unchanged accepted debt and fails on a seeded regression.\n- The final handoff names the gate threshold, suppressed baseline count, active findings, and artifact paths.\n"
-    },
-    {
-      "slug": "memoire-design-tooling-9",
-      "name": "memoire-design-tooling",
-      "dir": "plugins/memoire/skills/memoire-design-tooling",
-      "path": "plugins/memoire/skills/memoire-design-tooling/SKILL.md",
-      "desc": "Use when a task spans interface understanding, design-system memory, UI audits, design CI, Figma, shadcn or Tailwind code generation, research, or agent design workflows and needs the correct Memi capability selected.",
-      "descZh": "",
-      "triggers": [
-        "design-system memory",
-        "UI audits",
-        "design CI",
-        "Figma"
-      ],
-      "version": "",
-      "license": "MIT",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": true,
-        "bins": [
-          "npm",
-          "npx",
-          "make"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/memi-design/memi.git",
-        "copy": "cp -r plugins/memoire/skills/memoire-design-tooling ~/.claude/skills/memoire-design-tooling-9",
-        "raw": "https://raw.githubusercontent.com/memi-design/memi/0317aca532012c127518dc567c5a787fda298d85/plugins/memoire/skills/memoire-design-tooling/SKILL.md",
-        "saveAs": "~/.claude/skills/memoire-design-tooling-9/SKILL.md",
-        "marketplace": "/plugin marketplace add memi-design/memi"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:70150e979a3321b202af7680da784343cec9f75adad3a21ced728f1a7e367fd5",
-      "bytes": 3288,
-      "wordCount": 372,
-      "repoLicense": "MIT",
-      "commit": "0317aca532012c127518dc567c5a787fda298d85",
-      "branch": "main",
-      "body": "---\nname: memoire-design-tooling\ndescription: Use when a task spans interface understanding, design-system memory, UI audits, design CI, Figma, shadcn or Tailwind code generation, research, or agent design workflows and needs the correct Memi capability selected.\n---\n\n# Memi Design Tooling\n\nMemi gives coding agents repository-specific interface evidence before they edit UI. Start with the smallest workflow that answers the task; Figma, global installation, and a daemon are optional.\n\n## Choose A Workflow\n\n- Before reviewing or changing frontend UI: use `audit-frontend-design`.\n- Before building from an existing product system: use `remember-design-system`.\n- When adding deterministic pull-request gates: use `enforce-design-ci`.\n- For native SwiftUI, SwiftData, App Intents, or Apple-platform verification: use `build-swiftui-interface`.\n- For Figma, research, scaffolding, registry publishing, or multi-agent work: continue below.\n\nInstall one focused skill directly:\n\n```bash\nnpx skills add memi-design/memi --skill audit-frontend-design\n```\n\nThis workflow targets published beta **2.8.0-beta.2**. Use `npx -y @memi-design/cli@2.8.0-beta.2 --version` to verify the exact package; a local `memi` must report that same version before these recipes run. The independent stable compatibility baseline is **2.7.9**. See [current release state](https://github.com/memi-design/memi/blob/main/docs/CURRENT_RELEASE.md) and [known limitations](https://github.com/memi-design/memi/blob/main/docs/trust/KNOWN_LIMITATIONS.md). npm availability alone does not establish native-binary success.\n\n## Compact Preflight\n\n```bash\nmemi agent brief . --frontend --intent \"<interface task>\" --max-bytes 16384 --json\n```\n\nRead cited source files when the bounded brief lacks necessary evidence. Optional `--design-evidence design/selected-node.json` accepts normalized Figma/Paper data supplied by the harness; missing mappings and verification stay explicit.\n\n## Local Checks And MCP\n\n```bash\nmemi diagnose . --json --no-write --fail-on none\nmemi diagnose . --receipt-only --fail-on none\nmemi --profile locked mcp start --no-figma\n```\n\nLocked MCP exposes four read tools: prepare_frontend_brief, prepare_design_agent_brief, prepare_apple_design_brief, and diagnose_app_quality. The frontend tool supplies actual repository evidence. Many legacy CLI and write tools remain unavailable; capability grants do not unlock deferred command paths. Keep connector calls, project edits, and browser execution in the harness's reviewed workflow.\n\nReuse local components and tokens according to the consumer project's conventions. Source-bearing JSON is working context; receipt-only is a separate metadata output. See docs/FRONTEND_WORKFLOW.md for the beta evidence schema and actual verification flow.\n\n## Evidence Contract\n\n1. Read local instructions and existing product-system files first.\n2. Collect the minimum evidence that can change the implementation.\n3. Cite `file:line` findings and existing components or tokens.\n4. Make scoped edits.\n5. Re-run the same deterministic checks.\n6. Report commands, artifacts, files changed, and remaining assumptions.\n\nDo not claim visual correctness from source checks alone. When rendered behavior matters, verify the actual route at desktop and mobile viewports.\n",
-      "bodyMd": "# Memi Design Tooling\n\nMemi gives coding agents repository-specific interface evidence before they edit UI. Start with the smallest workflow that answers the task; Figma, global installation, and a daemon are optional.\n\n## Choose A Workflow\n\n- Before reviewing or changing frontend UI: use `audit-frontend-design`.\n- Before building from an existing product system: use `remember-design-system`.\n- When adding deterministic pull-request gates: use `enforce-design-ci`.\n- For native SwiftUI, SwiftData, App Intents, or Apple-platform verification: use `build-swiftui-interface`.\n- For Figma, research, scaffolding, registry publishing, or multi-agent work: continue below.\n\nInstall one focused skill directly:\n\n```bash\nnpx skills add memi-design/memi --skill audit-frontend-design\n```\n\nThis workflow targets published beta **2.8.0-beta.2**. Use `npx -y @memi-design/cli@2.8.0-beta.2 --version` to verify the exact package; a local `memi` must report that same version before these recipes run. The independent stable compatibility baseline is **2.7.9**. See [current release state](https://github.com/memi-design/memi/blob/main/docs/CURRENT_RELEASE.md) and [known limitations](https://github.com/memi-design/memi/blob/main/docs/trust/KNOWN_LIMITATIONS.md). npm availability alone does not establish native-binary success.\n\n## Compact Preflight\n\n```bash\nmemi agent brief . --frontend --intent \"<interface task>\" --max-bytes 16384 --json\n```\n\nRead cited source files when the bounded brief lacks necessary evidence. Optional `--design-evidence design/selected-node.json` accepts normalized Figma/Paper data supplied by the harness; missing mappings and verification stay explicit.\n\n## Local Checks And MCP\n\n```bash\nmemi diagnose . --json --no-write --fail-on none\nmemi diagnose . --receipt-only --fail-on none\nmemi --profile locked mcp start --no-figma\n```\n\nLocked MCP exposes four read tools: prepare_frontend_brief, prepare_design_agent_brief, prepare_apple_design_brief, and diagnose_app_quality. The frontend tool supplies actual repository evidence. Many legacy CLI and write tools remain unavailable; capability grants do not unlock deferred command paths. Keep connector calls, project edits, and browser execution in the harness's reviewed workflow.\n\nReuse local components and tokens according to the consumer project's conventions. Source-bearing JSON is working context; receipt-only is a separate metadata output. See docs/FRONTEND_WORKFLOW.md for the beta evidence schema and actual verification flow.\n\n## Evidence Contract\n\n1. Read local instructions and existing product-system files first.\n2. Collect the minimum evidence that can change the implementation.\n3. Cite `file:line` findings and existing components or tokens.\n4. Make scoped edits.\n5. Re-run the same deterministic checks.\n6. Report commands, artifacts, files changed, and remaining assumptions.\n\nDo not claim visual correctness from source checks alone. When rendered behavior matters, verify the actual route at desktop and mobile viewports.\n"
-    },
-    {
-      "slug": "remember-design-system-2",
-      "name": "remember-design-system",
-      "dir": "plugins/memoire/skills/remember-design-system",
-      "path": "plugins/memoire/skills/remember-design-system/SKILL.md",
-      "desc": "Use when an agent is about to build or refactor interface code and needs a compact, repository-specific brief covering existing tokens, components, routes, conventions, and verification commands.",
-      "descZh": "",
-      "triggers": [
-        "repository-spec"
-      ],
-      "version": "",
-      "license": "MIT",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": true,
-        "bins": [
-          "node",
-          "npm",
-          "npx"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/memi-design/memi.git",
-        "copy": "cp -r plugins/memoire/skills/remember-design-system ~/.claude/skills/remember-design-system-2",
-        "raw": "https://raw.githubusercontent.com/memi-design/memi/0317aca532012c127518dc567c5a787fda298d85/plugins/memoire/skills/remember-design-system/SKILL.md",
-        "saveAs": "~/.claude/skills/remember-design-system-2/SKILL.md",
-        "marketplace": "/plugin marketplace add memi-design/memi"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:0e2373e1d954cc600b2d9da5001a3b6a2fa8d11cd7dbe3a5635c7a7a14ed5749",
-      "bytes": 2340,
-      "wordCount": 285,
-      "repoLicense": "MIT",
-      "commit": "0317aca532012c127518dc567c5a787fda298d85",
-      "branch": "main",
-      "body": "---\nname: remember-design-system\ndescription: Use when an agent is about to build or refactor interface code and needs a compact, repository-specific brief covering existing tokens, components, routes, conventions, and verification commands.\n---\n\n# Remember The Design System\n\nBuild design context from the repository instead of guessing from the prompt. This is a preflight for UI work, not a request to redesign the product.\n\nThis workflow targets published beta **2.8.0-beta.2**. Use `npx -y @memi-design/cli@2.8.0-beta.2 --version` to verify the exact package; a local `memi` must report that same version before these recipes run. The independent stable compatibility baseline is **2.7.9**. See [current release state](https://github.com/memi-design/memi/blob/main/docs/CURRENT_RELEASE.md) and [known limitations](https://github.com/memi-design/memi/blob/main/docs/trust/KNOWN_LIMITATIONS.md). npm availability alone does not establish native-binary success.\n\n## Build The Brief\n\nTranslate the user's task into a short intent, then run from the repository root:\n\n```bash\nmemi agent brief . --frontend --intent \"<user's interface task>\" --max-bytes 16384 --json\n```\n\nThe frontend brief already includes bounded token and story evidence. For a selected Figma or Paper node, use the harness connector and supply its normalized evidence:\n\n```bash\nmemi agent brief . --frontend --intent \"<task>\" --design-evidence design/selected-node.json --json\n```\n\n## Apply The Memory\n\n1. Prefer existing components and the project's conventions. Do not impose a new component library or CSS framework.\n2. Map every new component to atom, molecule, organism, template, or page.\n3. Reuse semantic CSS variables and Tailwind theme tokens. Do not introduce raw hex values when a token exists.\n4. Preserve route, state, loading, empty, error, focus, and responsive behavior identified by the brief.\n5. Resolve stale/conflicting mappings and missing required props before editing. Read cited source files when the bounded brief omits needed details.\n6. Treat inferred story IDs and host-supplied mappings as evidence, not rendered verification. Run the actual project tests.\n\n## Handoff\n\nBefore editing, state the components and tokens you will reuse. After editing, cite files changed, evidence followed, checks run, and any design assumptions that remain.\n",
-      "bodyMd": "# Remember The Design System\n\nBuild design context from the repository instead of guessing from the prompt. This is a preflight for UI work, not a request to redesign the product.\n\nThis workflow targets published beta **2.8.0-beta.2**. Use `npx -y @memi-design/cli@2.8.0-beta.2 --version` to verify the exact package; a local `memi` must report that same version before these recipes run. The independent stable compatibility baseline is **2.7.9**. See [current release state](https://github.com/memi-design/memi/blob/main/docs/CURRENT_RELEASE.md) and [known limitations](https://github.com/memi-design/memi/blob/main/docs/trust/KNOWN_LIMITATIONS.md). npm availability alone does not establish native-binary success.\n\n## Build The Brief\n\nTranslate the user's task into a short intent, then run from the repository root:\n\n```bash\nmemi agent brief . --frontend --intent \"<user's interface task>\" --max-bytes 16384 --json\n```\n\nThe frontend brief already includes bounded token and story evidence. For a selected Figma or Paper node, use the harness connector and supply its normalized evidence:\n\n```bash\nmemi agent brief . --frontend --intent \"<task>\" --design-evidence design/selected-node.json --json\n```\n\n## Apply The Memory\n\n1. Prefer existing components and the project's conventions. Do not impose a new component library or CSS framework.\n2. Map every new component to atom, molecule, organism, template, or page.\n3. Reuse semantic CSS variables and Tailwind theme tokens. Do not introduce raw hex values when a token exists.\n4. Preserve route, state, loading, empty, error, focus, and responsive behavior identified by the brief.\n5. Resolve stale/conflicting mappings and missing required props before editing. Read cited source files when the bounded brief omits needed details.\n6. Treat inferred story IDs and host-supplied mappings as evidence, not rendered verification. Run the actual project tests.\n\n## Handoff\n\nBefore editing, state the components and tokens you will reuse. After editing, cite files changed, evidence followed, checks run, and any design assumptions that remain.\n"
-    },
-    {
-      "slug": "audit-frontend-design-3",
       "name": "audit-frontend-design",
       "dir": "skills/audit-frontend-design",
       "path": "skills/audit-frontend-design/SKILL.md",
@@ -875,9 +345,9 @@
       },
       "install": {
         "clone": "git clone --depth 1 https://github.com/memi-design/memi.git",
-        "copy": "cp -r skills/audit-frontend-design ~/.claude/skills/audit-frontend-design-3",
+        "copy": "cp -r skills/audit-frontend-design ~/.claude/skills/audit-frontend-design",
         "raw": "https://raw.githubusercontent.com/memi-design/memi/0317aca532012c127518dc567c5a787fda298d85/skills/audit-frontend-design/SKILL.md",
-        "saveAs": "~/.claude/skills/audit-frontend-design-3/SKILL.md",
+        "saveAs": "~/.claude/skills/audit-frontend-design/SKILL.md",
         "marketplace": "/plugin marketplace add memi-design/memi"
       },
       "bodyInline": true,
@@ -892,7 +362,7 @@
       "bodyMd": "# Audit Frontend Design\n\nAudit the real source tree before proposing UI changes. Memi's checks are deterministic and file-anchored; no Figma connection or background process is required.\n\nThis workflow targets published beta **2.8.0-beta.2**. Use `npx -y @memi-design/cli@2.8.0-beta.2 --version` to verify the exact package; a local `memi` must report that same version before these recipes run. The independent stable compatibility baseline is **2.7.9**. See [current release state](https://github.com/memi-design/memi/blob/main/docs/CURRENT_RELEASE.md) and [known limitations](https://github.com/memi-design/memi/blob/main/docs/trust/KNOWN_LIMITATIONS.md). npm availability alone does not establish native-binary success.\n\n## Run The Audit\n\nFrom the repository root:\n\n```bash\nmemi diagnose . --json --no-write --fail-on none\n```\n\nFor UX behavior and visual craft detail, run only the relevant follow-up:\n\n```bash\nmemi ux audit . --json --no-write\nmemi craft audit . --json --no-write\n```\n\nA supplied screenshot is context, not proof that Memi performed pixel analysis. Use the harness browser or image tools for actual rendered checks. Use `memi diagnose . --receipt-only --fail-on none` when the output must exclude source content.\n\n## Workflow\n\n1. Read repository instructions and identify the requested route or component.\n2. Run `diagnose` before broad UI edits.\n3. Group findings by user impact, not by checker name.\n4. Verify each proposed fix against the cited file and local design tokens.\n5. Implement only fixes relevant to the user's request.\n6. Re-run the same command and report assessed quality, category coverage, scan omissions, and remaining findings.\n\n## Output\n\nLead with actionable findings:\n\n| Priority | Evidence | Change |\n| --- | --- | --- |\n| High | `path/to/file.tsx:line` and rule id | Specific code-level fix |\n\nInclude the command run, before/after score, files changed, and unresolved risks. Never replace source evidence with generic taste advice.\n"
     },
     {
-      "slug": "build-swiftui-interface-3",
+      "slug": "build-swiftui-interface",
       "name": "build-swiftui-interface",
       "dir": "skills/build-swiftui-interface",
       "path": "skills/build-swiftui-interface/SKILL.md",
@@ -924,9 +394,9 @@
       },
       "install": {
         "clone": "git clone --depth 1 https://github.com/memi-design/memi.git",
-        "copy": "cp -r skills/build-swiftui-interface ~/.claude/skills/build-swiftui-interface-3",
+        "copy": "cp -r skills/build-swiftui-interface ~/.claude/skills/build-swiftui-interface",
         "raw": "https://raw.githubusercontent.com/memi-design/memi/0317aca532012c127518dc567c5a787fda298d85/skills/build-swiftui-interface/SKILL.md",
-        "saveAs": "~/.claude/skills/build-swiftui-interface-3/SKILL.md",
+        "saveAs": "~/.claude/skills/build-swiftui-interface/SKILL.md",
         "marketplace": "/plugin marketplace add memi-design/memi"
       },
       "bodyInline": true,
@@ -941,7 +411,7 @@
       "bodyMd": "# Build SwiftUI Interface\n\nUse this as Apple-platform design and verification guidance. Pair it with an installed host's Apple-platform tools when simulator, profiling, App Intents, or detailed framework guidance is needed.\n\n## 2.8 beta availability\n\nThis workflow targets published beta **2.8.0-beta.2**. Use `npx -y @memi-design/cli@2.8.0-beta.2 --version` to verify the exact package; a local `memi` must report that same version before these recipes run. The independent stable compatibility baseline is **2.7.9**. See [current release state](https://github.com/memi-design/memi/blob/main/docs/CURRENT_RELEASE.md) and [known limitations](https://github.com/memi-design/memi/blob/main/docs/trust/KNOWN_LIMITATIONS.md). npm availability alone does not establish native-binary success.\n\nMemi's `ios brief` and `ios scaffold` commands are unavailable in 2.8.0-beta.1 and 2.8.0-beta.2, including preview and write modes. Capability grants do not enable them. This skill does not provide an automatic SwiftUI scaffolding pipeline.\n\nWith the exact beta running `memi --profile locked mcp start --no-figma`, the host may call the read-only `prepare_apple_design_brief` tool:\n\n```json\n{\"intent\":\"Review the feature contract\",\"platform\":\"ios\",\"detail\":\"compact\"}\n```\n\n`platform` accepts `ios` or `macos`. This tool prepares guidance without running Xcode or writing files; it does not inspect native source or replace project verification.\n\nInspect the actual project: deployment target, Swift language mode, shared schemes, local components, assets, navigation, state ownership, test targets, and nearby implementation patterns. Prepare the feature contract with the coding host using that evidence, and review proposed paths and source before writing. Preserve the repository's project-generation workflow.\n\nThe supported `memi agent brief . --json` command can provide general project context; it is not an equivalent Apple-platform brief or proof that SwiftUI was analyzed. Memi's frontend checks do not establish native UI correctness.\n\n## Implementation rules\n\n1. Reuse local SwiftUI components and semantic assets before adding primitives.\n2. Keep state ownership narrow; keep I/O and expensive work out of `body`.\n3. Define loading, empty, populated, error, Dynamic Type, VoiceOver, reduced-motion, and dark-appearance states.\n4. Gate newer APIs. Liquid Glass requires an iOS 26+ branch and a behaviorally equivalent fallback.\n5. Treat June 2026 APIs by their documented availability; do not invent an iOS version label.\n6. Preserve the existing architecture and project-generation workflow.\n\n## Verification receipt\n\nRun the repository's canonical commands. When none exist, discover shared schemes and explicit destinations with `xcodebuild -list -json` and `xcrun simctl list devices available`, then build and test the smallest target.\n\nReport exact commands, files, deployment assumptions, simulator flow, accessibility states, and anything not executed. A source review is not simulator proof, and a simulator build is not signing or App Store proof.\n"
     },
     {
-      "slug": "enforce-design-ci-3",
+      "slug": "enforce-design-ci",
       "name": "enforce-design-ci",
       "dir": "skills/enforce-design-ci",
       "path": "skills/enforce-design-ci/SKILL.md",
@@ -970,9 +440,9 @@
       },
       "install": {
         "clone": "git clone --depth 1 https://github.com/memi-design/memi.git",
-        "copy": "cp -r skills/enforce-design-ci ~/.claude/skills/enforce-design-ci-3",
+        "copy": "cp -r skills/enforce-design-ci ~/.claude/skills/enforce-design-ci",
         "raw": "https://raw.githubusercontent.com/memi-design/memi/0317aca532012c127518dc567c5a787fda298d85/skills/enforce-design-ci/SKILL.md",
-        "saveAs": "~/.claude/skills/enforce-design-ci-3/SKILL.md",
+        "saveAs": "~/.claude/skills/enforce-design-ci/SKILL.md",
         "marketplace": "/plugin marketplace add memi-design/memi"
       },
       "bodyInline": true,
@@ -987,7 +457,7 @@
       "bodyMd": "# Enforce Design CI\n\nAdd a reviewable design-quality gate that runs without an LLM. Memi writes a policy, baseline, universal agent skill, SARIF, and human-readable report artifacts.\n\nThis workflow targets published beta **2.8.0-beta.2**. Use `npx -y @memi-design/cli@2.8.0-beta.2 --version` to verify the exact package; a local `memi` must report that same version before these recipes run. The independent stable compatibility baseline is **2.7.9**. See [current release state](https://github.com/memi-design/memi/blob/main/docs/CURRENT_RELEASE.md) and [known limitations](https://github.com/memi-design/memi/blob/main/docs/trust/KNOWN_LIMITATIONS.md). npm availability alone does not establish native-binary success.\n\n## Existing project setup\n\nBeta initialization is unavailable. Use an existing reviewed policy and baseline; this skill does not invoke legacy setup commands. Review project changes before committing them.\n\n## Verify Locally\n\n```bash\nmemi --profile connected --allow project-write --allow source-content-persistence --allow shell ci . --no-scope --report --json\n```\n\nThe command may exit nonzero when findings exceed the configured gate. Treat that as a quality result, not a tool crash.\n\n## Add GitHub Actions\n\nUse the pinned major action in `.github/workflows/design.yml`:\n\n```yaml\nname: Design CI\non: [pull_request]\njobs:\n  design:\n    runs-on: ubuntu-latest\n    permissions:\n      contents: read\n      security-events: write\n    steps:\n      - uses: actions/checkout@v4\n        with:\n          fetch-depth: 0\n      - uses: memi-design/memi@v2\n        with:\n          version: \"2.7.9\"\n```\n\n## Completion Criteria\n\n- Policy and baseline are reviewed and committed.\n- Local CI produces SARIF and a design-health report.\n- The workflow passes on unchanged accepted debt and fails on a seeded regression.\n- The final handoff names the gate threshold, suppressed baseline count, active findings, and artifact paths.\n"
     },
     {
-      "slug": "memoire-design-tooling-10",
+      "slug": "memoire-design-tooling-7",
       "name": "memoire-design-tooling",
       "dir": "skills/memoire-design-tooling",
       "path": "skills/memoire-design-tooling/SKILL.md",
@@ -1020,9 +490,9 @@
       },
       "install": {
         "clone": "git clone --depth 1 https://github.com/memi-design/memi.git",
-        "copy": "cp -r skills/memoire-design-tooling ~/.claude/skills/memoire-design-tooling-10",
+        "copy": "cp -r skills/memoire-design-tooling ~/.claude/skills/memoire-design-tooling-7",
         "raw": "https://raw.githubusercontent.com/memi-design/memi/0317aca532012c127518dc567c5a787fda298d85/skills/memoire-design-tooling/SKILL.md",
-        "saveAs": "~/.claude/skills/memoire-design-tooling-10/SKILL.md",
+        "saveAs": "~/.claude/skills/memoire-design-tooling-7/SKILL.md",
         "marketplace": "/plugin marketplace add memi-design/memi"
       },
       "bodyInline": true,
@@ -1037,7 +507,7 @@
       "bodyMd": "# Memi Design Tooling\n\nMemi gives coding agents repository-specific interface evidence before they edit UI. Start with the smallest workflow that answers the task; Figma, global installation, and a daemon are optional.\n\n## Choose A Workflow\n\n- Before reviewing or changing frontend UI: use `audit-frontend-design`.\n- Before building from an existing product system: use `remember-design-system`.\n- When adding deterministic pull-request gates: use `enforce-design-ci`.\n- For native SwiftUI, SwiftData, App Intents, or Apple-platform verification: use `build-swiftui-interface`.\n- For Figma, research, scaffolding, registry publishing, or multi-agent work: continue below.\n\nInstall one focused skill directly:\n\n```bash\nnpx skills add memi-design/memi --skill audit-frontend-design\n```\n\nThis workflow targets published beta **2.8.0-beta.2**. Use `npx -y @memi-design/cli@2.8.0-beta.2 --version` to verify the exact package; a local `memi` must report that same version before these recipes run. The independent stable compatibility baseline is **2.7.9**. See [current release state](https://github.com/memi-design/memi/blob/main/docs/CURRENT_RELEASE.md) and [known limitations](https://github.com/memi-design/memi/blob/main/docs/trust/KNOWN_LIMITATIONS.md). npm availability alone does not establish native-binary success.\n\n## Compact Preflight\n\n```bash\nmemi agent brief . --frontend --intent \"<interface task>\" --max-bytes 16384 --json\n```\n\nRead cited source files when the bounded brief lacks necessary evidence. Optional `--design-evidence design/selected-node.json` accepts normalized Figma/Paper data supplied by the harness; missing mappings and verification stay explicit.\n\n## Local Checks And MCP\n\n```bash\nmemi diagnose . --json --no-write --fail-on none\nmemi diagnose . --receipt-only --fail-on none\nmemi --profile locked mcp start --no-figma\n```\n\nLocked MCP exposes four read tools: prepare_frontend_brief, prepare_design_agent_brief, prepare_apple_design_brief, and diagnose_app_quality. The frontend tool supplies actual repository evidence. Many legacy CLI and write tools remain unavailable; capability grants do not unlock deferred command paths. Keep connector calls, project edits, and browser execution in the harness's reviewed workflow.\n\nReuse local components and tokens according to the consumer project's conventions. Source-bearing JSON is working context; receipt-only is a separate metadata output. See docs/FRONTEND_WORKFLOW.md for the beta evidence schema and actual verification flow.\n\n## Evidence Contract\n\n1. Read local instructions and existing product-system files first.\n2. Collect the minimum evidence that can change the implementation.\n3. Cite `file:line` findings and existing components or tokens.\n4. Make scoped edits.\n5. Re-run the same deterministic checks.\n6. Report commands, artifacts, files changed, and remaining assumptions.\n\nDo not claim visual correctness from source checks alone. When rendered behavior matters, verify the actual route at desktop and mobile viewports.\n"
     },
     {
-      "slug": "remember-design-system-3",
+      "slug": "remember-design-system",
       "name": "remember-design-system",
       "dir": "skills/remember-design-system",
       "path": "skills/remember-design-system/SKILL.md",
@@ -1067,9 +537,9 @@
       },
       "install": {
         "clone": "git clone --depth 1 https://github.com/memi-design/memi.git",
-        "copy": "cp -r skills/remember-design-system ~/.claude/skills/remember-design-system-3",
+        "copy": "cp -r skills/remember-design-system ~/.claude/skills/remember-design-system",
         "raw": "https://raw.githubusercontent.com/memi-design/memi/0317aca532012c127518dc567c5a787fda298d85/skills/remember-design-system/SKILL.md",
-        "saveAs": "~/.claude/skills/remember-design-system-3/SKILL.md",
+        "saveAs": "~/.claude/skills/remember-design-system/SKILL.md",
         "marketplace": "/plugin marketplace add memi-design/memi"
       },
       "bodyInline": true,

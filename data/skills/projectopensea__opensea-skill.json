@@ -2,7 +2,7 @@
   "repo": "ProjectOpenSea/opensea-skill",
   "commit": "42418c8dc305784bd67bb19e39796d37eb3bafc4",
   "branch": "main",
-  "fetchedAt": "2026-10-13T04:51:09.768Z",
+  "fetchedAt": "2026-10-13T05:37:08.384Z",
   "parseFail": 0,
   "skills": [
     {
@@ -10,7 +10,7 @@
       "name": "opensea",
       "dir": "",
       "path": "SKILL.md",
-      "desc": "API key for all OpenSea services",
+      "desc": "Query NFT and token data, trade NFTs on Seaport, swap ERC20 tokens via DEX aggregator, configure wallet signing providers, and build/register/gate AI agent tools on Base. Covers the full OpenSea developer surface across CLI, MCP server, shell scripts, and SDK. Pick the right sub-skill using the routing table below, then read that sub-skill's SKILL.md for operational detail.",
       "descZh": "",
       "triggers": [],
       "version": "",
@@ -23,7 +23,7 @@
         "mcp"
       ],
       "requires": {
-        "apiKey": true,
+        "apiKey": false,
         "network": true,
         "bins": [
           "node",
@@ -33,9 +33,9 @@
         ]
       },
       "install": {
-        "clone": "git clone --depth 1 https://github.com/ProjectOpenSea/opensea-skill.git",
+        "clone": "git clone --depth 1 https://github.com/projectopensea/opensea-skill.git",
         "copy": "",
-        "raw": "https://raw.githubusercontent.com/ProjectOpenSea/opensea-skill/42418c8dc305784bd67bb19e39796d37eb3bafc4/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/projectopensea/opensea-skill/42418c8dc305784bd67bb19e39796d37eb3bafc4/SKILL.md",
         "saveAs": "~/.claude/skills/opensea/SKILL.md",
         "marketplace": ""
       },
@@ -55,7 +55,7 @@
       "name": "opensea-api",
       "dir": "opensea-api",
       "path": "opensea-api/SKILL.md",
-      "desc": "Optional EVM private key used locally for headless SIWE login; never sent to OpenSea",
+      "desc": "Query OpenSea marketplace data via the official CLI, SDK, MCP server, or shell scripts. Get floor prices, collection stats, NFT details, token data, trending collections, drops, events, search, favorites, profile and collection settings, and other wallet-scoped operations. For trading use opensea-marketplace, for token swaps use opensea-swaps.",
       "descZh": "",
       "triggers": [],
       "version": "",
@@ -79,9 +79,9 @@
         ]
       },
       "install": {
-        "clone": "git clone --depth 1 https://github.com/ProjectOpenSea/opensea-skill.git",
+        "clone": "git clone --depth 1 https://github.com/projectopensea/opensea-skill.git",
         "copy": "cp -r opensea-api ~/.claude/skills/opensea-api",
-        "raw": "https://raw.githubusercontent.com/ProjectOpenSea/opensea-skill/42418c8dc305784bd67bb19e39796d37eb3bafc4/opensea-api/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/projectopensea/opensea-skill/42418c8dc305784bd67bb19e39796d37eb3bafc4/opensea-api/SKILL.md",
         "saveAs": "~/.claude/skills/opensea-api/SKILL.md",
         "marketplace": ""
       },
@@ -101,7 +101,7 @@
       "name": "opensea-marketplace",
       "dir": "opensea-marketplace",
       "path": "opensea-marketplace/SKILL.md",
-      "desc": "API key for all OpenSea services",
+      "desc": "Buy and sell NFTs through OpenSea on EVM chains and Solana. Fulfill listings, accept or create offers, cancel orders, make cross-chain purchases, and sweep listings. Requires wallet signing; for read-only queries use opensea-api instead.",
       "descZh": "",
       "triggers": [],
       "version": "",
@@ -124,9 +124,9 @@
         ]
       },
       "install": {
-        "clone": "git clone --depth 1 https://github.com/ProjectOpenSea/opensea-skill.git",
+        "clone": "git clone --depth 1 https://github.com/projectopensea/opensea-skill.git",
         "copy": "cp -r opensea-marketplace ~/.claude/skills/opensea-marketplace",
-        "raw": "https://raw.githubusercontent.com/ProjectOpenSea/opensea-skill/42418c8dc305784bd67bb19e39796d37eb3bafc4/opensea-marketplace/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/projectopensea/opensea-skill/42418c8dc305784bd67bb19e39796d37eb3bafc4/opensea-marketplace/SKILL.md",
         "saveAs": "~/.claude/skills/opensea-marketplace/SKILL.md",
         "marketplace": ""
       },
@@ -146,7 +146,7 @@
       "name": "opensea-swaps",
       "dir": "opensea-swaps",
       "path": "opensea-swaps/SKILL.md",
-      "desc": "API key for all OpenSea services",
+      "desc": "Swap ERC20 tokens across supported chains via OpenSea's cross-chain DEX aggregator. Get quotes with optimal routing, check token balances, and execute swaps. For NFT trading use opensea-marketplace, for querying token data use opensea-api.",
       "descZh": "",
       "triggers": [],
       "version": "",
@@ -168,9 +168,9 @@
         ]
       },
       "install": {
-        "clone": "git clone --depth 1 https://github.com/ProjectOpenSea/opensea-skill.git",
+        "clone": "git clone --depth 1 https://github.com/projectopensea/opensea-skill.git",
         "copy": "cp -r opensea-swaps ~/.claude/skills/opensea-swaps",
-        "raw": "https://raw.githubusercontent.com/ProjectOpenSea/opensea-skill/42418c8dc305784bd67bb19e39796d37eb3bafc4/opensea-swaps/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/projectopensea/opensea-skill/42418c8dc305784bd67bb19e39796d37eb3bafc4/opensea-swaps/SKILL.md",
         "saveAs": "~/.claude/skills/opensea-swaps/SKILL.md",
         "marketplace": ""
       },
@@ -190,7 +190,7 @@
       "name": "opensea-tool-sdk",
       "dir": "opensea-tool-sdk",
       "path": "opensea-tool-sdk/SKILL.md",
-      "desc": "RPC URL for Base mainnet (default https://mainnet.base.org)",
+      "desc": "Build, register, and gate AI-callable tool endpoints using the OpenSea Tool Registry (ERC-8257) on Base. Scaffold HTTPS tools with JSON Schema interfaces, register them onchain, gate access via NFT ownership, subscriptions, trait gating, or x402 pay-per-call (USDC), and call gated tools. For querying OpenSea marketplace data use opensea-api instead.",
       "descZh": "",
       "triggers": [],
       "version": "",
@@ -213,9 +213,9 @@
         ]
       },
       "install": {
-        "clone": "git clone --depth 1 https://github.com/ProjectOpenSea/opensea-skill.git",
+        "clone": "git clone --depth 1 https://github.com/projectopensea/opensea-skill.git",
         "copy": "cp -r opensea-tool-sdk ~/.claude/skills/opensea-tool-sdk",
-        "raw": "https://raw.githubusercontent.com/ProjectOpenSea/opensea-skill/42418c8dc305784bd67bb19e39796d37eb3bafc4/opensea-tool-sdk/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/projectopensea/opensea-skill/42418c8dc305784bd67bb19e39796d37eb3bafc4/opensea-tool-sdk/SKILL.md",
         "saveAs": "~/.claude/skills/opensea-tool-sdk/SKILL.md",
         "marketplace": ""
       },
@@ -235,7 +235,7 @@
       "name": "opensea-wallet",
       "dir": "opensea-wallet",
       "path": "opensea-wallet/SKILL.md",
-      "desc": "Bankr API key for HTTP-based agent wallet signing",
+      "desc": "Set up and configure wallet signing providers for OpenSea transactions. Supports Privy, Turnkey, Fireblocks, Bankr, and local private keys. Required for executing trades (opensea-marketplace) and token swaps (opensea-swaps).",
       "descZh": "",
       "triggers": [],
       "version": "",
@@ -255,9 +255,9 @@
         ]
       },
       "install": {
-        "clone": "git clone --depth 1 https://github.com/ProjectOpenSea/opensea-skill.git",
+        "clone": "git clone --depth 1 https://github.com/projectopensea/opensea-skill.git",
         "copy": "cp -r opensea-wallet ~/.claude/skills/opensea-wallet",
-        "raw": "https://raw.githubusercontent.com/ProjectOpenSea/opensea-skill/42418c8dc305784bd67bb19e39796d37eb3bafc4/opensea-wallet/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/projectopensea/opensea-skill/42418c8dc305784bd67bb19e39796d37eb3bafc4/opensea-wallet/SKILL.md",
         "saveAs": "~/.claude/skills/opensea-wallet/SKILL.md",
         "marketplace": ""
       },

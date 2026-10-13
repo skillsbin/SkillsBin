@@ -219,11 +219,14 @@ export function licenseLabel(l) {
   return isSpdxLike(s) ? s : '见仓库许可';
 }
 
-/** skill 卡片 */
+/** skill 卡片
+ *  中文摘要优先取 skill 级（owner/repo/slug 粒度）；skill 级未撰写时回落仓库级，
+ *  这样卡片对中文读者仍有意义，但要用「仓库简介」标记出粒度差异，不能冒充 skill 级摘要。 */
 export function skillCard(item, skill, base = '') {
   const href = `${base}/skills/${item.owner}/${item.repo}/${skill.slug}/`;
-  const summary = skill.descZh || skill.desc;
-  const isZh = !!skill.descZh;
+  const skillZh = skill.descZh || '';
+  const repoZh = skillZh ? '' : item.descZh || '';
+  const summary = skillZh || repoZh || skill.desc || item.desc || '（未填写描述）';
   return `<a class="card" href="${href}">
   <div class="card-title"><svg class="icon" aria-hidden="true"><use href="#i-box"></use></svg><span>${esc(skill.name)}</span></div>
   <div class="card-desc">${esc(summary)}</div>
@@ -232,7 +235,8 @@ export function skillCard(item, skill, base = '') {
     <span>${esc(item.owner)}/${esc(item.repo)}</span>
     <span class="dot"></span>
     <span><svg class="icon" aria-hidden="true"><use href="#i-star"></use></svg> ${fmtNum(item.stars)}</span>
-    ${!isZh ? '<span class="dot"></span><span>原文</span>' : ''}
+    ${repoZh ? '<span class="dot"></span><span title="该 skill 尚无单独撰写的中文摘要，此处展示所属仓库的简介">仓库简介</span>' : ''}
+    ${!skillZh && !repoZh ? '<span class="dot"></span><span>原文</span>' : ''}
   </div>
   <div class="card-meta">${item.hosts.slice(0, 3).map((h) => `<span class="badge host">${esc(hostMeta(h).label)}</span>`).join('')}</div>
 </a>`;

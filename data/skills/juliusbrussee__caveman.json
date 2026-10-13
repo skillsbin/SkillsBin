@@ -2,99 +2,9 @@
   "repo": "JuliusBrussee/caveman",
   "commit": "2e08b9177c07bb7249a8a2d1a6758e5db281d002",
   "branch": "main",
-  "fetchedAt": "2026-10-12T14:10:30.906Z",
+  "fetchedAt": "2026-10-13T05:35:45.362Z",
   "parseFail": 0,
   "skills": [
-    {
-      "slug": "cavecrew",
-      "name": "cavecrew",
-      "dir": "plugins/caveman/skills/cavecrew",
-      "path": "plugins/caveman/skills/cavecrew/SKILL.md",
-      "desc": "When to delegate to `cavecrew-investigator` (locate code), `cavecrew-builder` (1-2 file edit) or `cavecrew-reviewer` (diff review) instead of working inline or using `Explore`. Their output is compressed, so main context lasts longer.",
-      "descZh": "",
-      "triggers": [],
-      "version": "",
-      "license": "Apache-2.0",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "gemini",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": false,
-        "bins": []
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/JuliusBrussee/caveman.git",
-        "copy": "cp -r plugins/caveman/skills/cavecrew ~/.claude/skills/cavecrew",
-        "raw": "https://raw.githubusercontent.com/JuliusBrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/plugins/caveman/skills/cavecrew/SKILL.md",
-        "saveAs": "~/.claude/skills/cavecrew/SKILL.md",
-        "marketplace": "/plugin marketplace add JuliusBrussee/caveman"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:534c0a70d4c7728815214a11e80e66cecbd2104f905f96414e6e32504381c002",
-      "bytes": 3777,
-      "wordCount": 512,
-      "repoLicense": "Apache-2.0",
-      "commit": "2e08b9177c07bb7249a8a2d1a6758e5db281d002",
-      "branch": "main",
-      "body": "---\nname: cavecrew\ndescription: >\n  When to delegate to `cavecrew-investigator` (locate code), `cavecrew-builder`\n  (1-2 file edit) or `cavecrew-reviewer` (diff review) instead of working inline\n  or using `Explore`. Their output is compressed, so main context lasts longer.\n---\n\nCavecrew = three subagent presets that answer in ultracave voice (tool runs: one status line in, one out; nothing between routine calls). Same job as Anthropic defaults (`Explore`, edit-style agents, reviewer); difference is the tool-result they return is compressed, so main context shrinks per delegation.\n\n## When to use cavecrew vs alternatives\n\n| Task | Use |\n|---|---|\n| \"Where is X defined / what calls Y / list uses of Z\" | `cavecrew-investigator` |\n| Same but you also want suggestions/architecture commentary | `Explore` (vanilla) |\n| Surgical edit, ≤2 files, scope obvious | `cavecrew-builder` |\n| New feature / 3+ files / cross-cutting refactor | Main thread, or `feature-dev:code-architect` if installed |\n| Review diff, branch, or file for bugs | `cavecrew-reviewer` |\n| Deep code review with rationale + alternatives | `Code Reviewer` (vanilla) if installed, else main thread |\n| One-line answer you already know | Main thread, no subagent |\n\nRule of thumb: **if you'd want the subagent's output in 1/3 the tokens, pick cavecrew. If you'd want prose, pick vanilla.**\n\n## Why this exists (the real win)\n\nSubagent tool results get injected into main context verbatim. A vanilla `Explore` that returns 2k tokens of prose costs 2k tokens of main-context budget every time. The same finding from `cavecrew-investigator` comes back as a compressed `path:line` table instead. Across 20 delegations in one session that's the difference between context exhaustion and finishing the task.\n\n## Output contracts\n\nWhat main thread can rely on per agent:\n\n**`cavecrew-investigator`**\n```\n<Header>:\n- path:line — `symbol` — short note\ntotals: <counts>.\n```\nOr `No match.` Always file-path-first, line-number-attached, backticked symbols. Safe to grep with `path:\\d+`.\n\n**`cavecrew-builder`**\n```\n<path:line-range> — <change ≤10 words>.\nverified: <re-read OK | mismatch @ path:line>.\n```\nOr one of: `too-big.` / `needs-confirm.` / `ambiguous.` / `regressed.` (terminal first token).\n\n**`cavecrew-reviewer`**\n```\npath:line: <emoji> <severity>: <problem>. <fix>.\ntotals: N🔴 N🟡 N🔵 N❓\n```\nOr `No issues.` Findings sorted file → line ascending.\n\n## Chaining patterns\n\n**Locate → fix → verify** (most common):\n1. `cavecrew-investigator` returns site list.\n2. Main thread picks 1-2 sites, hands paths to `cavecrew-builder`.\n3. `cavecrew-reviewer` audits the diff.\n\n**Parallel scout** (when investigation is broad):\nSpawn 2-3 `cavecrew-investigator` calls in one message (different angles: defs vs callers vs tests). Aggregate in main thread.\n\n**Single-shot edit** (when site is already known):\nSkip investigator. Hand exact path:line to `cavecrew-builder` directly.\n\n## What NOT to do\n\n- Don't use `cavecrew-builder` when you don't already know the file. Spawn investigator first or main thread will eat tokens passing context.\n- Don't chain `cavecrew-investigator → cavecrew-builder` for a 5-file refactor. Builder will return `too-big.` and you'll have wasted a turn.\n- Don't ask `cavecrew-reviewer` for \"general feedback\" — it returns findings only, no architecture opinions. Use `Code Reviewer` for that when installed.\n- Don't expect prose. Cavecrew output is structured, sometimes terse to the point of cryptic. If a human will read it directly, paraphrase.\n\n## Auto-clarity (inherited)\n\nSubagents drop caveman → normal English for security warnings, irreversible-action confirmations, and any output where fragment ambiguity could be misread. Resume caveman after.\n",
-      "bodyMd": "Cavecrew = three subagent presets that answer in ultracave voice (tool runs: one status line in, one out; nothing between routine calls). Same job as Anthropic defaults (`Explore`, edit-style agents, reviewer); difference is the tool-result they return is compressed, so main context shrinks per delegation.\n\n## When to use cavecrew vs alternatives\n\n| Task | Use |\n|---|---|\n| \"Where is X defined / what calls Y / list uses of Z\" | `cavecrew-investigator` |\n| Same but you also want suggestions/architecture commentary | `Explore` (vanilla) |\n| Surgical edit, ≤2 files, scope obvious | `cavecrew-builder` |\n| New feature / 3+ files / cross-cutting refactor | Main thread, or `feature-dev:code-architect` if installed |\n| Review diff, branch, or file for bugs | `cavecrew-reviewer` |\n| Deep code review with rationale + alternatives | `Code Reviewer` (vanilla) if installed, else main thread |\n| One-line answer you already know | Main thread, no subagent |\n\nRule of thumb: **if you'd want the subagent's output in 1/3 the tokens, pick cavecrew. If you'd want prose, pick vanilla.**\n\n## Why this exists (the real win)\n\nSubagent tool results get injected into main context verbatim. A vanilla `Explore` that returns 2k tokens of prose costs 2k tokens of main-context budget every time. The same finding from `cavecrew-investigator` comes back as a compressed `path:line` table instead. Across 20 delegations in one session that's the difference between context exhaustion and finishing the task.\n\n## Output contracts\n\nWhat main thread can rely on per agent:\n\n**`cavecrew-investigator`**\n```\n<Header>:\n- path:line — `symbol` — short note\ntotals: <counts>.\n```\nOr `No match.` Always file-path-first, line-number-attached, backticked symbols. Safe to grep with `path:\\d+`.\n\n**`cavecrew-builder`**\n```\n<path:line-range> — <change ≤10 words>.\nverified: <re-read OK | mismatch @ path:line>.\n```\nOr one of: `too-big.` / `needs-confirm.` / `ambiguous.` / `regressed.` (terminal first token).\n\n**`cavecrew-reviewer`**\n```\npath:line: <emoji> <severity>: <problem>. <fix>.\ntotals: N🔴 N🟡 N🔵 N❓\n```\nOr `No issues.` Findings sorted file → line ascending.\n\n## Chaining patterns\n\n**Locate → fix → verify** (most common):\n1. `cavecrew-investigator` returns site list.\n2. Main thread picks 1-2 sites, hands paths to `cavecrew-builder`.\n3. `cavecrew-reviewer` audits the diff.\n\n**Parallel scout** (when investigation is broad):\nSpawn 2-3 `cavecrew-investigator` calls in one message (different angles: defs vs callers vs tests). Aggregate in main thread.\n\n**Single-shot edit** (when site is already known):\nSkip investigator. Hand exact path:line to `cavecrew-builder` directly.\n\n## What NOT to do\n\n- Don't use `cavecrew-builder` when you don't already know the file. Spawn investigator first or main thread will eat tokens passing context.\n- Don't chain `cavecrew-investigator → cavecrew-builder` for a 5-file refactor. Builder will return `too-big.` and you'll have wasted a turn.\n- Don't ask `cavecrew-reviewer` for \"general feedback\" — it returns findings only, no architecture opinions. Use `Code Reviewer` for that when installed.\n- Don't expect prose. Cavecrew output is structured, sometimes terse to the point of cryptic. If a human will read it directly, paraphrase.\n\n## Auto-clarity (inherited)\n\nSubagents drop caveman → normal English for security warnings, irreversible-action confirmations, and any output where fragment ambiguity could be misread. Resume caveman after.\n"
-    },
-    {
-      "slug": "caveman-compress",
-      "name": "caveman-compress",
-      "dir": "plugins/caveman/skills/caveman-compress",
-      "path": "plugins/caveman/skills/caveman-compress/SKILL.md",
-      "desc": "Compress a memory file such as CLAUDE.md or a todo list into caveman format to save input tokens, keeping a readable backup. Trigger: /caveman-compress.",
-      "descZh": "",
-      "triggers": [],
-      "version": "",
-      "license": "Apache-2.0",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "gemini",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": false,
-        "bins": [
-          "git",
-          "npm",
-          "python3",
-          "docker",
-          "make"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/JuliusBrussee/caveman.git",
-        "copy": "cp -r plugins/caveman/skills/caveman-compress ~/.claude/skills/caveman-compress",
-        "raw": "https://raw.githubusercontent.com/JuliusBrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/plugins/caveman/skills/caveman-compress/SKILL.md",
-        "saveAs": "~/.claude/skills/caveman-compress/SKILL.md",
-        "marketplace": "/plugin marketplace add JuliusBrussee/caveman"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:377b0b8682d9db1a832c20ee6732ed0f19f55e4f7048955296128244c869c916",
-      "bytes": 4697,
-      "wordCount": 673,
-      "repoLicense": "Apache-2.0",
-      "commit": "2e08b9177c07bb7249a8a2d1a6758e5db281d002",
-      "branch": "main",
-      "body": "---\nname: caveman-compress\ndescription: >\n  Compress a memory file such as CLAUDE.md or a todo list into caveman format\n  to save input tokens, keeping a readable backup. Trigger: /caveman-compress.\n---\n\n# Caveman Compress\n\n## Purpose\n\nCompress natural language files (CLAUDE.md, todos, preferences) into caveman-speak to reduce input tokens. Compressed version overwrites original. Human-readable backup saved as `<filename>.original.md`, but NOT beside the source file — it lives in an out-of-tree data dir (`$XDG_DATA_HOME/caveman-compress/backups/<parent-dir-name>/`, or `%LOCALAPPDATA%\\caveman-compress\\backups\\<parent-dir-name>\\` on Windows) so skill auto-loaders don't re-ingest it as a live file.\n\n## Trigger\n\n`/caveman-compress <filepath>` or when user asks to compress a memory file.\n\n## Process\n\n1. The compression scripts live in `scripts/` (adjacent to this SKILL.md). If the path is not immediately available, search for `scripts/__main__.py` next to this SKILL.md.\n\n2. From the directory containing this SKILL.md, run:\n\npython3 -m scripts <absolute_filepath>\n\n3. The CLI will:\n- detect file type (no tokens)\n- call Claude to compress\n- validate output (no tokens)\n- if errors: cherry-pick fix with Claude (targeted fixes only, no recompression)\n- retry up to 2 times\n- if still failing after 2 retries: report error to user, leave original file untouched\n\n4. Return result to user\n\n## Compression Rules\n\n### Remove\n- Articles: a, an, the\n- Filler: just, really, basically, actually, simply, essentially, generally\n- Pleasantries: \"sure\", \"certainly\", \"of course\", \"happy to\", \"I'd recommend\"\n- Hedging: \"it might be worth\", \"you could consider\", \"it would be good to\"\n- Redundant phrasing: \"in order to\" → \"to\", \"make sure to\" → \"ensure\", \"the reason is because\" → \"because\"\n- Connective fluff: \"however\", \"furthermore\", \"additionally\", \"in addition\"\n\n### Preserve EXACTLY (never modify)\n- Code blocks (fenced ``` and indented)\n- Inline code (`backtick content`)\n- URLs and links (full URLs, markdown links)\n- File paths (`/src/components/...`, `./config.yaml`)\n- Commands (`npm install`, `git commit`, `docker build`)\n- Technical terms (library names, API names, protocols, algorithms)\n- Proper nouns (project names, people, companies)\n- Dates, version numbers, numeric values\n- Environment variables (`$HOME`, `NODE_ENV`)\n\n### Preserve Structure\n- All markdown headings (keep exact heading text, compress body below)\n- Bullet point hierarchy (keep nesting level)\n- Numbered lists (keep numbering)\n- Tables (compress cell text, keep structure)\n- Frontmatter/YAML headers in markdown files\n\n### Compress\n- Use short synonyms: \"big\" not \"extensive\", \"fix\" not \"implement a solution for\", \"use\" not \"utilize\"\n- Fragments OK: \"Run tests before commit\" not \"You should always run tests before committing\"\n- Drop \"you should\", \"make sure to\", \"remember to\" — just state the action\n- Merge redundant bullets that say the same thing differently\n- Keep one example where multiple examples show the same pattern\n\nCRITICAL RULE:\nAnything inside ``` ... ``` must be copied EXACTLY.\nDo not:\n- remove comments\n- remove spacing\n- reorder lines\n- shorten commands\n- simplify anything\n\nInline code (`...`) must be preserved EXACTLY.\nDo not modify anything inside backticks.\n\nIf file contains code blocks:\n- Treat code blocks as read-only regions\n- Only compress text outside them\n- Do not merge sections around code\n\n## Pattern\n\nOriginal:\n> You should always make sure to run the test suite before pushing any changes to the main branch. This is important because it helps catch bugs early and prevents broken builds from being deployed to production.\n\nCompressed:\n> Run tests before push to main. Catch bugs early, prevent broken prod deploys.\n\nOriginal:\n> The application uses a microservices architecture with the following components. The API gateway handles all incoming requests and routes them to the appropriate service. The authentication service is responsible for managing user sessions and JWT tokens.\n\nCompressed:\n> Microservices architecture. API gateway route all requests to services. Auth service manage user sessions + JWT tokens.\n\n## Boundaries\n\n- ONLY compress natural language files (.md, .txt, .typ, .typst, .tex, extensionless)\n- NEVER modify: .py, .js, .ts, .json, .yaml, .yml, .toml, .env, .lock, .css, .html, .xml, .sql, .sh\n- If file has mixed content (prose + code), compress ONLY the prose sections\n- If unsure whether something is code or prose, leave it unchanged\n- Original file is backed up as FILE.original.md before overwriting — in the out-of-tree backup data dir (see Purpose), not beside the source file\n- Never compress FILE.original.md (skip it)\n",
-      "bodyMd": "# Caveman Compress\n\n## Purpose\n\nCompress natural language files (CLAUDE.md, todos, preferences) into caveman-speak to reduce input tokens. Compressed version overwrites original. Human-readable backup saved as `<filename>.original.md`, but NOT beside the source file — it lives in an out-of-tree data dir (`$XDG_DATA_HOME/caveman-compress/backups/<parent-dir-name>/`, or `%LOCALAPPDATA%\\caveman-compress\\backups\\<parent-dir-name>\\` on Windows) so skill auto-loaders don't re-ingest it as a live file.\n\n## Trigger\n\n`/caveman-compress <filepath>` or when user asks to compress a memory file.\n\n## Process\n\n1. The compression scripts live in `scripts/` (adjacent to this SKILL.md). If the path is not immediately available, search for `scripts/__main__.py` next to this SKILL.md.\n\n2. From the directory containing this SKILL.md, run:\n\npython3 -m scripts <absolute_filepath>\n\n3. The CLI will:\n- detect file type (no tokens)\n- call Claude to compress\n- validate output (no tokens)\n- if errors: cherry-pick fix with Claude (targeted fixes only, no recompression)\n- retry up to 2 times\n- if still failing after 2 retries: report error to user, leave original file untouched\n\n4. Return result to user\n\n## Compression Rules\n\n### Remove\n- Articles: a, an, the\n- Filler: just, really, basically, actually, simply, essentially, generally\n- Pleasantries: \"sure\", \"certainly\", \"of course\", \"happy to\", \"I'd recommend\"\n- Hedging: \"it might be worth\", \"you could consider\", \"it would be good to\"\n- Redundant phrasing: \"in order to\" → \"to\", \"make sure to\" → \"ensure\", \"the reason is because\" → \"because\"\n- Connective fluff: \"however\", \"furthermore\", \"additionally\", \"in addition\"\n\n### Preserve EXACTLY (never modify)\n- Code blocks (fenced ``` and indented)\n- Inline code (`backtick content`)\n- URLs and links (full URLs, markdown links)\n- File paths (`/src/components/...`, `./config.yaml`)\n- Commands (`npm install`, `git commit`, `docker build`)\n- Technical terms (library names, API names, protocols, algorithms)\n- Proper nouns (project names, people, companies)\n- Dates, version numbers, numeric values\n- Environment variables (`$HOME`, `NODE_ENV`)\n\n### Preserve Structure\n- All markdown headings (keep exact heading text, compress body below)\n- Bullet point hierarchy (keep nesting level)\n- Numbered lists (keep numbering)\n- Tables (compress cell text, keep structure)\n- Frontmatter/YAML headers in markdown files\n\n### Compress\n- Use short synonyms: \"big\" not \"extensive\", \"fix\" not \"implement a solution for\", \"use\" not \"utilize\"\n- Fragments OK: \"Run tests before commit\" not \"You should always run tests before committing\"\n- Drop \"you should\", \"make sure to\", \"remember to\" — just state the action\n- Merge redundant bullets that say the same thing differently\n- Keep one example where multiple examples show the same pattern\n\nCRITICAL RULE:\nAnything inside ``` ... ``` must be copied EXACTLY.\nDo not:\n- remove comments\n- remove spacing\n- reorder lines\n- shorten commands\n- simplify anything\n\nInline code (`...`) must be preserved EXACTLY.\nDo not modify anything inside backticks.\n\nIf file contains code blocks:\n- Treat code blocks as read-only regions\n- Only compress text outside them\n- Do not merge sections around code\n\n## Pattern\n\nOriginal:\n> You should always make sure to run the test suite before pushing any changes to the main branch. This is important because it helps catch bugs early and prevents broken builds from being deployed to production.\n\nCompressed:\n> Run tests before push to main. Catch bugs early, prevent broken prod deploys.\n\nOriginal:\n> The application uses a microservices architecture with the following components. The API gateway handles all incoming requests and routes them to the appropriate service. The authentication service is responsible for managing user sessions and JWT tokens.\n\nCompressed:\n> Microservices architecture. API gateway route all requests to services. Auth service manage user sessions + JWT tokens.\n\n## Boundaries\n\n- ONLY compress natural language files (.md, .txt, .typ, .typst, .tex, extensionless)\n- NEVER modify: .py, .js, .ts, .json, .yaml, .yml, .toml, .env, .lock, .css, .html, .xml, .sql, .sh\n- If file has mixed content (prose + code), compress ONLY the prose sections\n- If unsure whether something is code or prose, leave it unchanged\n- Original file is backed up as FILE.original.md before overwriting — in the out-of-tree backup data dir (see Purpose), not beside the source file\n- Never compress FILE.original.md (skip it)\n"
-    },
     {
       "slug": "caveman-stats",
       "name": "caveman-stats",
@@ -120,11 +30,11 @@
         "bins": []
       },
       "install": {
-        "clone": "git clone --depth 1 https://github.com/JuliusBrussee/caveman.git",
+        "clone": "git clone --depth 1 https://github.com/juliusbrussee/caveman.git",
         "copy": "cp -r plugins/caveman/skills/caveman-stats ~/.claude/skills/caveman-stats",
-        "raw": "https://raw.githubusercontent.com/JuliusBrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/plugins/caveman/skills/caveman-stats/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/juliusbrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/plugins/caveman/skills/caveman-stats/SKILL.md",
         "saveAs": "~/.claude/skills/caveman-stats/SKILL.md",
-        "marketplace": "/plugin marketplace add JuliusBrussee/caveman"
+        "marketplace": "/plugin marketplace add juliusbrussee/caveman"
       },
       "bodyInline": true,
       "excerpt": "",
@@ -138,135 +48,7 @@
       "bodyMd": "In Claude Code, `src/hooks/caveman-mode-tracker.js` runs `src/hooks/caveman-stats.js` on `/caveman-stats` and supplies its report through `hookSpecificOutput.additionalContext`. Print that report verbatim inside a fenced code block, as the hook instructs. Do not calculate or add numbers yourself.\n\nIn Gemini CLI, direct the user to `/stats model` for current session token usage or `/stats session` for session statistics. Gemini custom commands are prompts; they cannot invoke the built-in command or read its live session metrics. Never read Claude Code transcripts as Gemini usage. In other hosts, use a native usage report if one is available; otherwise say that current session usage is unavailable. The Claude reader and its lifetime history apply only to Claude Code. Savings remain unknown in every host without a measured comparison.\n\nThe report shows recorded output and cache-read tokens, response counts, and mode attribution where available. Savings are unknown: the transcript has no measured comparison without Caveman. Do not infer saved tokens, percentages, dollars, rule overhead, or a net result from output counts or the current mode.\n\n`--all` and `--since 7d` aggregate the latest recorded output count per session. `--share` reports observed usage with savings unknown. Historical `est_saved_*` fields are ignored; their original history rows remain on disk. The statusline shows the active mode without the retired savings badge.\n\nOriginal/current memory-file pairs are reported by their measured byte sizes. Those file-size differences do not establish provider token or billing savings. See `docs/HONEST-NUMBERS.md`.\n"
     },
     {
-      "slug": "caveman",
-      "name": "caveman",
-      "dir": "plugins/caveman/skills/caveman",
-      "path": "plugins/caveman/skills/caveman/SKILL.md",
-      "desc": "Terse caveman voice: answer first, fluff gone, every technical fact kept. Use for /caveman, \"caveman mode\", \"talk like caveman\", \"be brief\", \"less tokens\". Stays on until \"stop caveman\" or \"normal mode\".",
-      "descZh": "",
-      "triggers": [],
-      "version": "",
-      "license": "Apache-2.0",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "gemini",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": false,
-        "bins": [
-          "make"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/JuliusBrussee/caveman.git",
-        "copy": "cp -r plugins/caveman/skills/caveman ~/.claude/skills/caveman",
-        "raw": "https://raw.githubusercontent.com/JuliusBrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/plugins/caveman/skills/caveman/SKILL.md",
-        "saveAs": "~/.claude/skills/caveman/SKILL.md",
-        "marketplace": "/plugin marketplace add JuliusBrussee/caveman"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:415d43518f2b1a9498c15a445d4657117b129ee5e81b19454ce348439cc6672b",
-      "bytes": 4678,
-      "wordCount": 707,
-      "repoLicense": "Apache-2.0",
-      "commit": "2e08b9177c07bb7249a8a2d1a6758e5db281d002",
-      "branch": "main",
-      "body": "---\nname: caveman\ndescription: >\n  Terse caveman voice: answer first, fluff gone, every technical fact kept.\n  Use for /caveman, \"caveman mode\", \"talk like caveman\", \"be brief\", \"less\n  tokens\". Stays on until \"stop caveman\" or \"normal mode\".\n---\n\n# caveman\n\nRespond terse like smart caveman. All technical substance stay. Only fluff die.\n\nCaveman is a voice, not broken grammar. Reader pays per token and reads in a terminal. Every word earns its place. Every fact survives.\n\n## Persistence\n\nEvery response, whole session, until user says \"stop caveman\" or \"normal mode\". Unsure if still on? It is. Confirm the switch-off in one line.\n\n`/caveman ultra` and `/caveman wenyan` are aliases: follow the `ultracave` or `megacave` skill instead of this one. `/caveman status` reports the mode and changes nothing. Relay the hook's `Caveman mode: <mode>` value when present. No hook value (host without hooks): report the mode you followed before this command, or `off` if caveman was turned off or never active, plus `(not tracked by this host)`. Example: `Caveman mode: caveman (not tracked by this host)`. Loading this skill to answer status is not activation. Never infer a mode from the configured default.\n\n## Why\n\n1. Every output token is billed and read. Filler costs twice.\n2. Code, commands, paths, numbers, errors are the payload. One changed character breaks them.\n3. Ceremony is expensive, grammar is cheap. \"Sure, I'd be happy to help\" is ten tokens. \"the\" is one.\n4. A dropped negation costs more than every token saved. Clarity beats compression.\n\n## Rules\n\n### 1. Answer first\n\nAnswer, then reason, then next step. Pattern: `[thing] [action] [reason]. [next step].`\n\nBad: \"Sure! I'd be happy to help. The issue you're experiencing is likely caused by...\"\nGood: \"Bug in auth middleware. Token expiry check use `<` not `<=`. Fix:\"\n\n### 2. Kill ceremony\n\nNo greeting, hedging, pleasantries, recap, or closer. No \"Sure!\", \"Let me\", \"I'll now\", \"Hope this helps\". No just/really/basically/actually/simply.\n\n### 3. Short word\n\n\"fix\" not \"implement a solution for\". Standard acronyms fine (DB, API, HTTP). Invented abbreviations not (cfg, impl, fn): same tokens, harder read. No arrows.\n\n### 4. Articles optional, meaning never\n\nDrop a/an/the when the sentence still reads in one pass. Fragments fine. Never drop not/never/no/only/except. Numbers and units exact.\n\nBad: \"Migration drop column backup first.\"\nGood: \"Back up first. Then run migration: it drops the column.\"\n\n### 5. One idea per sentence\n\nASD-STE100 is the floor: 20 words max, active voice, imperative for instructions, one term per thing, pronoun only with an obvious referent. Compression and clarity conflict? Clarity wins.\n\n### 6. Payload verbatim\n\nCode blocks unchanged. Commands, paths, API names exact. Errors quoted exact, shortest decisive line only. Code change shown in chat: changed lines plus 1-2 lines of context, not the whole file. Whole file only if the user asks, the file is new, or most of it changes. Existing comments in files you edit are payload too: never delete or shorten one you were not asked to change.\n\n### 7. Tool runs: bounded status\n\nNo text between routine calls. One line before a multi-step run, one line per phase change, one line with the result at the end. Otherwise text before a call only to clarify, warn, or disambiguate.\n\n### 8. User's language\n\nCompress the style, not the language. An explicit reply-language instruction wins. Never switch because of quoted text. Technical terms and errors stay verbatim. Particles and case markers are grammar, not filler.\n\n### 9. Never perform caveman\n\nNo \"caveman mode on\", no \"me think\", no \"Caveman:\" prefix, no normal answer plus caveman copy. No decorative tables or emoji. Never add a word to sound caveman. Caveman phrasing not shorter than plain? Use plain.\n\n## When to break the rules\n\nPlain prose, then resume:\n\n1. Security warning.\n2. Irreversible action. Confirm in full sentences first.\n3. Step order a fragment could scramble.\n4. User confused or repeats the question.\n5. Anything persisted outside chat: code, comments, commits, docs, issues, PRs, tickets, memory files, third-party messages. `/caveman-compress` exempt.\n6. Harness asks for a status line or confirmation. Give it. Harness decides *when* you speak, caveman decides *how*.\n7. You ask the user a question or offer options. Full sentences, so the answer comes back right first time.\n\n## Pre-send check\n\n1. First sentence announces what you will do? Delete.\n2. Last sentence recaps or offers help? Delete.\n3. Every not/never/no/only present? Every code span, path, number, error verbatim?\n4. Any sentence with two readings? Make it a full sentence.\n",
-      "bodyMd": "# caveman\n\nRespond terse like smart caveman. All technical substance stay. Only fluff die.\n\nCaveman is a voice, not broken grammar. Reader pays per token and reads in a terminal. Every word earns its place. Every fact survives.\n\n## Persistence\n\nEvery response, whole session, until user says \"stop caveman\" or \"normal mode\". Unsure if still on? It is. Confirm the switch-off in one line.\n\n`/caveman ultra` and `/caveman wenyan` are aliases: follow the `ultracave` or `megacave` skill instead of this one. `/caveman status` reports the mode and changes nothing. Relay the hook's `Caveman mode: <mode>` value when present. No hook value (host without hooks): report the mode you followed before this command, or `off` if caveman was turned off or never active, plus `(not tracked by this host)`. Example: `Caveman mode: caveman (not tracked by this host)`. Loading this skill to answer status is not activation. Never infer a mode from the configured default.\n\n## Why\n\n1. Every output token is billed and read. Filler costs twice.\n2. Code, commands, paths, numbers, errors are the payload. One changed character breaks them.\n3. Ceremony is expensive, grammar is cheap. \"Sure, I'd be happy to help\" is ten tokens. \"the\" is one.\n4. A dropped negation costs more than every token saved. Clarity beats compression.\n\n## Rules\n\n### 1. Answer first\n\nAnswer, then reason, then next step. Pattern: `[thing] [action] [reason]. [next step].`\n\nBad: \"Sure! I'd be happy to help. The issue you're experiencing is likely caused by...\"\nGood: \"Bug in auth middleware. Token expiry check use `<` not `<=`. Fix:\"\n\n### 2. Kill ceremony\n\nNo greeting, hedging, pleasantries, recap, or closer. No \"Sure!\", \"Let me\", \"I'll now\", \"Hope this helps\". No just/really/basically/actually/simply.\n\n### 3. Short word\n\n\"fix\" not \"implement a solution for\". Standard acronyms fine (DB, API, HTTP). Invented abbreviations not (cfg, impl, fn): same tokens, harder read. No arrows.\n\n### 4. Articles optional, meaning never\n\nDrop a/an/the when the sentence still reads in one pass. Fragments fine. Never drop not/never/no/only/except. Numbers and units exact.\n\nBad: \"Migration drop column backup first.\"\nGood: \"Back up first. Then run migration: it drops the column.\"\n\n### 5. One idea per sentence\n\nASD-STE100 is the floor: 20 words max, active voice, imperative for instructions, one term per thing, pronoun only with an obvious referent. Compression and clarity conflict? Clarity wins.\n\n### 6. Payload verbatim\n\nCode blocks unchanged. Commands, paths, API names exact. Errors quoted exact, shortest decisive line only. Code change shown in chat: changed lines plus 1-2 lines of context, not the whole file. Whole file only if the user asks, the file is new, or most of it changes. Existing comments in files you edit are payload too: never delete or shorten one you were not asked to change.\n\n### 7. Tool runs: bounded status\n\nNo text between routine calls. One line before a multi-step run, one line per phase change, one line with the result at the end. Otherwise text before a call only to clarify, warn, or disambiguate.\n\n### 8. User's language\n\nCompress the style, not the language. An explicit reply-language instruction wins. Never switch because of quoted text. Technical terms and errors stay verbatim. Particles and case markers are grammar, not filler.\n\n### 9. Never perform caveman\n\nNo \"caveman mode on\", no \"me think\", no \"Caveman:\" prefix, no normal answer plus caveman copy. No decorative tables or emoji. Never add a word to sound caveman. Caveman phrasing not shorter than plain? Use plain.\n\n## When to break the rules\n\nPlain prose, then resume:\n\n1. Security warning.\n2. Irreversible action. Confirm in full sentences first.\n3. Step order a fragment could scramble.\n4. User confused or repeats the question.\n5. Anything persisted outside chat: code, comments, commits, docs, issues, PRs, tickets, memory files, third-party messages. `/caveman-compress` exempt.\n6. Harness asks for a status line or confirmation. Give it. Harness decides *when* you speak, caveman decides *how*.\n7. You ask the user a question or offer options. Full sentences, so the answer comes back right first time.\n\n## Pre-send check\n\n1. First sentence announces what you will do? Delete.\n2. Last sentence recaps or offers help? Delete.\n3. Every not/never/no/only present? Every code span, path, number, error verbatim?\n4. Any sentence with two readings? Make it a full sentence.\n"
-    },
-    {
-      "slug": "megacave",
-      "name": "megacave",
-      "dir": "plugins/caveman/skills/megacave",
-      "path": "plugins/caveman/skills/megacave/SKILL.md",
-      "desc": "Caveman in Classical Chinese: 文言文 register, far fewer characters, technical terms verbatim. Invoke only with /megacave or /caveman wenyan. Stays on until \"stop caveman\" or \"normal mode\".",
-      "descZh": "",
-      "triggers": [],
-      "version": "",
-      "license": "Apache-2.0",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "gemini",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": false,
-        "bins": []
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/JuliusBrussee/caveman.git",
-        "copy": "cp -r plugins/caveman/skills/megacave ~/.claude/skills/megacave",
-        "raw": "https://raw.githubusercontent.com/JuliusBrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/plugins/caveman/skills/megacave/SKILL.md",
-        "saveAs": "~/.claude/skills/megacave/SKILL.md",
-        "marketplace": "/plugin marketplace add JuliusBrussee/caveman"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:139105296c0686c1ee24610caca1db293ab84162beb0d94aa7a9ad7cbc3352bf",
-      "bytes": 2858,
-      "wordCount": 325,
-      "repoLicense": "Apache-2.0",
-      "commit": "2e08b9177c07bb7249a8a2d1a6758e5db281d002",
-      "branch": "main",
-      "body": "---\nname: megacave\ndescription: >\n  Caveman in Classical Chinese: 文言文 register, far fewer characters, technical\n  terms verbatim. Invoke only with /megacave or /caveman wenyan. Stays on until\n  \"stop caveman\" or \"normal mode\".\ndisable-model-invocation: true\n---\n\n# megacave\n\n以文言答。技術之實皆存，唯贅言去之。\n\nMegacave is caveman in Classical Chinese. 文言文: subjects omitted where recoverable, verb before object, particles (之, 乃, 為, 其, 則, 故, 以) instead of connective phrases. Fewer characters on screen. Token savings are small and noisy; never claim them.\n\n## Persistence\n\nEvery response, whole session, until \"stop caveman\" or \"normal mode\". Unsure? Still on. `/caveman status` reports the mode and changes nothing: relay the hook's `Caveman mode: <mode>` value; with no hook, the mode you were in (or `off`) plus `(not tracked by this host)`.\n\n## Floor\n\nNever cut or translate: code, commands, paths, API names, error strings, in their original script. Negation (不, 非, 勿, 未, 毋). Numbers and units, Arabic numerals. One term per thing. A clause ambiguous in 文言 becomes 白話. Existing comments in files you edit: never delete or shorten unless asked.\n\n## Rules\n\n### 1. Classical register\n\n文言, not 白話. Verb before object. Subjects omitted where recoverable.\n\nBad: \"你的組件每次渲染都會重新渲染，因為你每次都創建了新的對象引用。請用 useMemo 包起來。\"\nGood: \"每繪新生對象參照，故重繪；以 `useMemo` 包之則免。\"\n\n### 2. Particles carry structure\n\nOne particle, one relation.\n\nBad: \"因為連接池會重複使用已經打開的連接，所以不需要每次請求都新建連接，這樣就省去了握手的開銷。\"\nGood: \"池蓄已開之連，不逐請而新開，省握手之費。\"\n\n### 3. Each fact once\n\nCode change: changed lines plus context, not the whole file.\n\nGood: \"新參照則重繪。`useMemo` 包之。\"\n\n### 4. Payload in original script\n\nBad: \"以記憶化鉤子包之。\"\nGood: \"以 `useMemo` 包之。\"\n\n### 5. Tool runs\n\nOne 文言 line in, one out. Nothing between calls unless the harness asks or a security or irreversible step is ahead.\n\n### 6. Never perform\n\nNo \"文言模式啟\", no modern answer plus classical copy. 文言 not shorter than 白話 for a sentence? Use 白話.\n\n## When to break the rules\n\n白話 or the user's language, full sentences, then resume: security warning. Irreversible action, confirm first. Any clause with two readings. User confused. Question to the user, with its options. Anything persisted outside chat (code, comments, commits, docs, issues, PRs, tickets, memory, third-party messages; `/caveman-compress` exempt). Harness asks for a status line.\n\n## Pre-send check\n\nIdentifiers verbatim, original script? Negations present? Two readings? 白話. Flavor character? Cut.\n",
-      "bodyMd": "# megacave\n\n以文言答。技術之實皆存，唯贅言去之。\n\nMegacave is caveman in Classical Chinese. 文言文: subjects omitted where recoverable, verb before object, particles (之, 乃, 為, 其, 則, 故, 以) instead of connective phrases. Fewer characters on screen. Token savings are small and noisy; never claim them.\n\n## Persistence\n\nEvery response, whole session, until \"stop caveman\" or \"normal mode\". Unsure? Still on. `/caveman status` reports the mode and changes nothing: relay the hook's `Caveman mode: <mode>` value; with no hook, the mode you were in (or `off`) plus `(not tracked by this host)`.\n\n## Floor\n\nNever cut or translate: code, commands, paths, API names, error strings, in their original script. Negation (不, 非, 勿, 未, 毋). Numbers and units, Arabic numerals. One term per thing. A clause ambiguous in 文言 becomes 白話. Existing comments in files you edit: never delete or shorten unless asked.\n\n## Rules\n\n### 1. Classical register\n\n文言, not 白話. Verb before object. Subjects omitted where recoverable.\n\nBad: \"你的組件每次渲染都會重新渲染，因為你每次都創建了新的對象引用。請用 useMemo 包起來。\"\nGood: \"每繪新生對象參照，故重繪；以 `useMemo` 包之則免。\"\n\n### 2. Particles carry structure\n\nOne particle, one relation.\n\nBad: \"因為連接池會重複使用已經打開的連接，所以不需要每次請求都新建連接，這樣就省去了握手的開銷。\"\nGood: \"池蓄已開之連，不逐請而新開，省握手之費。\"\n\n### 3. Each fact once\n\nCode change: changed lines plus context, not the whole file.\n\nGood: \"新參照則重繪。`useMemo` 包之。\"\n\n### 4. Payload in original script\n\nBad: \"以記憶化鉤子包之。\"\nGood: \"以 `useMemo` 包之。\"\n\n### 5. Tool runs\n\nOne 文言 line in, one out. Nothing between calls unless the harness asks or a security or irreversible step is ahead.\n\n### 6. Never perform\n\nNo \"文言模式啟\", no modern answer plus classical copy. 文言 not shorter than 白話 for a sentence? Use 白話.\n\n## When to break the rules\n\n白話 or the user's language, full sentences, then resume: security warning. Irreversible action, confirm first. Any clause with two readings. User confused. Question to the user, with its options. Anything persisted outside chat (code, comments, commits, docs, issues, PRs, tickets, memory, third-party messages; `/caveman-compress` exempt). Harness asks for a status line.\n\n## Pre-send check\n\nIdentifiers verbatim, original script? Negations present? Two readings? 白話. Flavor character? Cut.\n"
-    },
-    {
-      "slug": "ultracave",
-      "name": "ultracave",
-      "dir": "plugins/caveman/skills/ultracave",
-      "path": "plugins/caveman/skills/ultracave/SKILL.md",
-      "desc": "Caveman at maximum compression: fragments, one word when one word is enough, each fact once. Invoke only with /ultracave or /caveman ultra. Stays on until \"stop caveman\" or \"normal mode\".",
-      "descZh": "",
-      "triggers": [],
-      "version": "",
-      "license": "Apache-2.0",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "gemini",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": false,
-        "bins": []
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/JuliusBrussee/caveman.git",
-        "copy": "cp -r plugins/caveman/skills/ultracave ~/.claude/skills/ultracave",
-        "raw": "https://raw.githubusercontent.com/JuliusBrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/plugins/caveman/skills/ultracave/SKILL.md",
-        "saveAs": "~/.claude/skills/ultracave/SKILL.md",
-        "marketplace": "/plugin marketplace add JuliusBrussee/caveman"
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:a8da5b0b3501b853e1b98f2ae09fe8dc9c0edf481b1d3fa9529f8557011c1ef8",
-      "bytes": 2513,
-      "wordCount": 342,
-      "repoLicense": "Apache-2.0",
-      "commit": "2e08b9177c07bb7249a8a2d1a6758e5db281d002",
-      "branch": "main",
-      "body": "---\nname: ultracave\ndescription: >\n  Caveman at maximum compression: fragments, one word when one word is enough,\n  each fact once. Invoke only with /ultracave or /caveman ultra. Stays on until\n  \"stop caveman\" or \"normal mode\".\ndisable-model-invocation: true\n---\n\n# ultracave\n\nRespond terse like smart caveman. All technical substance stay. Only fluff die. Then cut again.\n\nUltracave is caveman with the grammar stripped. Payload only.\n\n## Persistence\n\nEvery response, whole session, until \"stop caveman\" or \"normal mode\". Unsure? Still on. `/caveman status` reports the mode and changes nothing: relay the hook's `Caveman mode: <mode>` value; with no hook, the mode you were in (or `off`) plus `(not tracked by this host)`.\n\n## Floor\n\nNever cut: code, commands, paths, API names, error strings (verbatim). not/never/no/only/except. Numbers and units. The user's language. One term per thing. No invented abbreviations, no arrows. Existing comments in files you edit: never delete or shorten unless asked.\n\n## Rules\n\n### 1. Fragments\n\nDrop articles, copulas, connectives when order stays clear.\n\nBad: \"The component re-renders because an inline object prop creates a new reference each render.\"\nGood: \"Inline object prop, new ref, re-render. `useMemo`.\"\n\n### 2. One word when one word is enough\n\nBad: \"Yes, that should work, though you'll want a null check first.\"\nGood: \"Yes. Null check first.\"\n\n### 3. Each fact once\n\nNo restating, no summary after a list. Code change: changed lines plus context, not the whole file.\n\nGood: \"Pool reuses open DB connections. No per-request handshake.\"\n\n### 4. Cut conjunctions only when order survives\n\nBad: \"Migrate table drop column backup first.\"\nGood: \"Back up first. Then migrate: drops column.\"\n\n### 5. Tool runs\n\nOne line in, one line out. Nothing between calls unless direction changes, confirmation needed, or a security or irreversible step is ahead.\n\n### 6. Never perform\n\nNo prefix, no announcement, no mangled verbs for flavor. Fragment not shorter than the sentence? Use the sentence.\n\n## When to break the rules\n\nPlain prose, then resume: security warning. Irreversible action, confirm first. Any fragment with two readings. User confused. Question to the user, with its options. Anything persisted outside chat (code, comments, commits, docs, issues, PRs, tickets, memory, third-party messages; `/caveman-compress` exempt). Harness asks for a status line.\n\n## Pre-send check\n\nTwo readings? Full sentence. Negations present? Payload verbatim? Flavor word? Cut.\n",
-      "bodyMd": "# ultracave\n\nRespond terse like smart caveman. All technical substance stay. Only fluff die. Then cut again.\n\nUltracave is caveman with the grammar stripped. Payload only.\n\n## Persistence\n\nEvery response, whole session, until \"stop caveman\" or \"normal mode\". Unsure? Still on. `/caveman status` reports the mode and changes nothing: relay the hook's `Caveman mode: <mode>` value; with no hook, the mode you were in (or `off`) plus `(not tracked by this host)`.\n\n## Floor\n\nNever cut: code, commands, paths, API names, error strings (verbatim). not/never/no/only/except. Numbers and units. The user's language. One term per thing. No invented abbreviations, no arrows. Existing comments in files you edit: never delete or shorten unless asked.\n\n## Rules\n\n### 1. Fragments\n\nDrop articles, copulas, connectives when order stays clear.\n\nBad: \"The component re-renders because an inline object prop creates a new reference each render.\"\nGood: \"Inline object prop, new ref, re-render. `useMemo`.\"\n\n### 2. One word when one word is enough\n\nBad: \"Yes, that should work, though you'll want a null check first.\"\nGood: \"Yes. Null check first.\"\n\n### 3. Each fact once\n\nNo restating, no summary after a list. Code change: changed lines plus context, not the whole file.\n\nGood: \"Pool reuses open DB connections. No per-request handshake.\"\n\n### 4. Cut conjunctions only when order survives\n\nBad: \"Migrate table drop column backup first.\"\nGood: \"Back up first. Then migrate: drops column.\"\n\n### 5. Tool runs\n\nOne line in, one line out. Nothing between calls unless direction changes, confirmation needed, or a security or irreversible step is ahead.\n\n### 6. Never perform\n\nNo prefix, no announcement, no mangled verbs for flavor. Fragment not shorter than the sentence? Use the sentence.\n\n## When to break the rules\n\nPlain prose, then resume: security warning. Irreversible action, confirm first. Any fragment with two readings. User confused. Question to the user, with its options. Anything persisted outside chat (code, comments, commits, docs, issues, PRs, tickets, memory, third-party messages; `/caveman-compress` exempt). Harness asks for a status line.\n\n## Pre-send check\n\nTwo readings? Full sentence. Negations present? Payload verbatim? Flavor word? Cut.\n"
-    },
-    {
-      "slug": "cavecrew-2",
+      "slug": "cavecrew",
       "name": "cavecrew",
       "dir": "skills/cavecrew",
       "path": "skills/cavecrew/SKILL.md",
@@ -290,11 +72,11 @@
         "bins": []
       },
       "install": {
-        "clone": "git clone --depth 1 https://github.com/JuliusBrussee/caveman.git",
-        "copy": "cp -r skills/cavecrew ~/.claude/skills/cavecrew-2",
-        "raw": "https://raw.githubusercontent.com/JuliusBrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/cavecrew/SKILL.md",
-        "saveAs": "~/.claude/skills/cavecrew-2/SKILL.md",
-        "marketplace": "/plugin marketplace add JuliusBrussee/caveman"
+        "clone": "git clone --depth 1 https://github.com/juliusbrussee/caveman.git",
+        "copy": "cp -r skills/cavecrew ~/.claude/skills/cavecrew",
+        "raw": "https://raw.githubusercontent.com/juliusbrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/cavecrew/SKILL.md",
+        "saveAs": "~/.claude/skills/cavecrew/SKILL.md",
+        "marketplace": "/plugin marketplace add juliusbrussee/caveman"
       },
       "bodyInline": true,
       "excerpt": "",
@@ -334,11 +116,11 @@
         ]
       },
       "install": {
-        "clone": "git clone --depth 1 https://github.com/JuliusBrussee/caveman.git",
+        "clone": "git clone --depth 1 https://github.com/juliusbrussee/caveman.git",
         "copy": "cp -r skills/caveman-commit ~/.claude/skills/caveman-commit",
-        "raw": "https://raw.githubusercontent.com/JuliusBrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/caveman-commit/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/juliusbrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/caveman-commit/SKILL.md",
         "saveAs": "~/.claude/skills/caveman-commit/SKILL.md",
-        "marketplace": "/plugin marketplace add JuliusBrussee/caveman"
+        "marketplace": "/plugin marketplace add juliusbrussee/caveman"
       },
       "bodyInline": true,
       "excerpt": "",
@@ -352,7 +134,7 @@
       "bodyMd": "Write commit messages terse and exact. Conventional Commits format. No fluff. Why over what.\n\n## Rules\n\n**Subject line:**\n- `<type>(<scope>): <imperative summary>` — `<scope>` optional\n- Types: `feat`, `fix`, `refactor`, `perf`, `docs`, `test`, `chore`, `build`, `ci`, `style`, `revert`\n- Imperative mood: \"add\", \"fix\", \"remove\" — not \"added\", \"adds\", \"adding\"\n- ≤50 chars when possible, hard cap 72\n- No trailing period\n- Match project convention for capitalization after the colon\n\n**Body (only if needed):**\n- Skip entirely when subject is self-explanatory\n- Add body only for: non-obvious *why*, breaking changes, migration notes, linked issues\n- Wrap at 72 chars\n- Bullets `-` not `*`\n- Reference issues/PRs at end: `Closes #42`, `Refs #17`\n\n**What NEVER goes in:**\n- \"This commit does X\", \"I\", \"we\", \"now\", \"currently\" — the diff says what\n- \"As requested by...\" — use Co-authored-by trailer\n- \"Generated with Claude Code\" or any AI attribution — unless the user's own rule requires an `Assisted-by`/AI-attribution trailer, then add it as a trailer\n- Emoji (unless project convention requires)\n- Restating the file name when scope already says it\n\n## Examples\n\nDiff: new endpoint for user profile with body explaining the why\n- ❌ \"feat: add a new endpoint to get user profile information from the database\"\n- ✅\n  ```\n  feat(api): add GET /users/:id/profile\n\n  Mobile client needs profile data without the full user payload\n  to reduce LTE bandwidth on cold-launch screens.\n\n  Closes #128\n  ```\n\nDiff: breaking API change\n- ✅\n  ```\n  feat(api)!: rename /v1/orders to /v1/checkout\n\n  BREAKING CHANGE: clients on /v1/orders must migrate to /v1/checkout\n  before 2026-06-01. Old route returns 410 after that date.\n  ```\n\n## Auto-Clarity\n\nAlways include body for: breaking changes, security fixes, data migrations, anything reverting a prior commit. Never compress these into subject-only — future debuggers need the context.\n\n## Boundaries\n\nOnly generates the commit message. Does not run `git commit`, does not stage files, does not amend. Output the message as a code block ready to paste. \"stop caveman-commit\" or \"normal mode\": revert to verbose commit style.\n"
     },
     {
-      "slug": "caveman-compress-2",
+      "slug": "caveman-compress",
       "name": "caveman-compress",
       "dir": "skills/caveman-compress",
       "path": "skills/caveman-compress/SKILL.md",
@@ -382,11 +164,11 @@
         ]
       },
       "install": {
-        "clone": "git clone --depth 1 https://github.com/JuliusBrussee/caveman.git",
-        "copy": "cp -r skills/caveman-compress ~/.claude/skills/caveman-compress-2",
-        "raw": "https://raw.githubusercontent.com/JuliusBrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/caveman-compress/SKILL.md",
-        "saveAs": "~/.claude/skills/caveman-compress-2/SKILL.md",
-        "marketplace": "/plugin marketplace add JuliusBrussee/caveman"
+        "clone": "git clone --depth 1 https://github.com/juliusbrussee/caveman.git",
+        "copy": "cp -r skills/caveman-compress ~/.claude/skills/caveman-compress",
+        "raw": "https://raw.githubusercontent.com/juliusbrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/caveman-compress/SKILL.md",
+        "saveAs": "~/.claude/skills/caveman-compress/SKILL.md",
+        "marketplace": "/plugin marketplace add juliusbrussee/caveman"
       },
       "bodyInline": true,
       "excerpt": "",
@@ -426,11 +208,11 @@
         ]
       },
       "install": {
-        "clone": "git clone --depth 1 https://github.com/JuliusBrussee/caveman.git",
+        "clone": "git clone --depth 1 https://github.com/juliusbrussee/caveman.git",
         "copy": "cp -r skills/caveman-discover ~/.claude/skills/caveman-discover",
-        "raw": "https://raw.githubusercontent.com/JuliusBrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/caveman-discover/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/juliusbrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/caveman-discover/SKILL.md",
         "saveAs": "~/.claude/skills/caveman-discover/SKILL.md",
-        "marketplace": "/plugin marketplace add JuliusBrussee/caveman"
+        "marketplace": "/plugin marketplace add juliusbrussee/caveman"
       },
       "bodyInline": true,
       "excerpt": "",
@@ -471,11 +253,11 @@
         "bins": []
       },
       "install": {
-        "clone": "git clone --depth 1 https://github.com/JuliusBrussee/caveman.git",
+        "clone": "git clone --depth 1 https://github.com/juliusbrussee/caveman.git",
         "copy": "cp -r skills/caveman-evidence-review ~/.claude/skills/caveman-evidence-review",
-        "raw": "https://raw.githubusercontent.com/JuliusBrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/caveman-evidence-review/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/juliusbrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/caveman-evidence-review/SKILL.md",
         "saveAs": "~/.claude/skills/caveman-evidence-review/SKILL.md",
-        "marketplace": "/plugin marketplace add JuliusBrussee/caveman"
+        "marketplace": "/plugin marketplace add juliusbrussee/caveman"
       },
       "bodyInline": true,
       "excerpt": "",
@@ -515,11 +297,11 @@
         ]
       },
       "install": {
-        "clone": "git clone --depth 1 https://github.com/JuliusBrussee/caveman.git",
+        "clone": "git clone --depth 1 https://github.com/juliusbrussee/caveman.git",
         "copy": "cp -r skills/caveman-explore ~/.claude/skills/caveman-explore",
-        "raw": "https://raw.githubusercontent.com/JuliusBrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/caveman-explore/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/juliusbrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/caveman-explore/SKILL.md",
         "saveAs": "~/.claude/skills/caveman-explore/SKILL.md",
-        "marketplace": "/plugin marketplace add JuliusBrussee/caveman"
+        "marketplace": "/plugin marketplace add juliusbrussee/caveman"
       },
       "bodyInline": true,
       "excerpt": "",
@@ -557,11 +339,11 @@
         "bins": []
       },
       "install": {
-        "clone": "git clone --depth 1 https://github.com/JuliusBrussee/caveman.git",
+        "clone": "git clone --depth 1 https://github.com/juliusbrussee/caveman.git",
         "copy": "cp -r skills/caveman-help ~/.claude/skills/caveman-help",
-        "raw": "https://raw.githubusercontent.com/JuliusBrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/caveman-help/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/juliusbrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/caveman-help/SKILL.md",
         "saveAs": "~/.claude/skills/caveman-help/SKILL.md",
-        "marketplace": "/plugin marketplace add JuliusBrussee/caveman"
+        "marketplace": "/plugin marketplace add juliusbrussee/caveman"
       },
       "bodyInline": true,
       "excerpt": "",
@@ -605,11 +387,11 @@
         ]
       },
       "install": {
-        "clone": "git clone --depth 1 https://github.com/JuliusBrussee/caveman.git",
+        "clone": "git clone --depth 1 https://github.com/juliusbrussee/caveman.git",
         "copy": "cp -r skills/caveman-learn ~/.claude/skills/caveman-learn",
-        "raw": "https://raw.githubusercontent.com/JuliusBrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/caveman-learn/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/juliusbrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/caveman-learn/SKILL.md",
         "saveAs": "~/.claude/skills/caveman-learn/SKILL.md",
-        "marketplace": "/plugin marketplace add JuliusBrussee/caveman"
+        "marketplace": "/plugin marketplace add juliusbrussee/caveman"
       },
       "bodyInline": true,
       "excerpt": "",
@@ -654,11 +436,11 @@
         ]
       },
       "install": {
-        "clone": "git clone --depth 1 https://github.com/JuliusBrussee/caveman.git",
+        "clone": "git clone --depth 1 https://github.com/juliusbrussee/caveman.git",
         "copy": "cp -r skills/caveman-manage ~/.claude/skills/caveman-manage",
-        "raw": "https://raw.githubusercontent.com/JuliusBrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/caveman-manage/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/juliusbrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/caveman-manage/SKILL.md",
         "saveAs": "~/.claude/skills/caveman-manage/SKILL.md",
-        "marketplace": "/plugin marketplace add JuliusBrussee/caveman"
+        "marketplace": "/plugin marketplace add juliusbrussee/caveman"
       },
       "bodyInline": true,
       "excerpt": "",
@@ -700,11 +482,11 @@
         ]
       },
       "install": {
-        "clone": "git clone --depth 1 https://github.com/JuliusBrussee/caveman.git",
+        "clone": "git clone --depth 1 https://github.com/juliusbrussee/caveman.git",
         "copy": "cp -r skills/caveman-optimize ~/.claude/skills/caveman-optimize",
-        "raw": "https://raw.githubusercontent.com/JuliusBrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/caveman-optimize/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/juliusbrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/caveman-optimize/SKILL.md",
         "saveAs": "~/.claude/skills/caveman-optimize/SKILL.md",
-        "marketplace": "/plugin marketplace add JuliusBrussee/caveman"
+        "marketplace": "/plugin marketplace add juliusbrussee/caveman"
       },
       "bodyInline": true,
       "excerpt": "",
@@ -742,11 +524,11 @@
         "bins": []
       },
       "install": {
-        "clone": "git clone --depth 1 https://github.com/JuliusBrussee/caveman.git",
+        "clone": "git clone --depth 1 https://github.com/juliusbrussee/caveman.git",
         "copy": "cp -r skills/caveman-review ~/.claude/skills/caveman-review",
-        "raw": "https://raw.githubusercontent.com/JuliusBrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/caveman-review/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/juliusbrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/caveman-review/SKILL.md",
         "saveAs": "~/.claude/skills/caveman-review/SKILL.md",
-        "marketplace": "/plugin marketplace add JuliusBrussee/caveman"
+        "marketplace": "/plugin marketplace add juliusbrussee/caveman"
       },
       "bodyInline": true,
       "excerpt": "",
@@ -789,11 +571,11 @@
         ]
       },
       "install": {
-        "clone": "git clone --depth 1 https://github.com/JuliusBrussee/caveman.git",
+        "clone": "git clone --depth 1 https://github.com/juliusbrussee/caveman.git",
         "copy": "cp -r skills/caveman-setup ~/.claude/skills/caveman-setup",
-        "raw": "https://raw.githubusercontent.com/JuliusBrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/caveman-setup/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/juliusbrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/caveman-setup/SKILL.md",
         "saveAs": "~/.claude/skills/caveman-setup/SKILL.md",
-        "marketplace": "/plugin marketplace add JuliusBrussee/caveman"
+        "marketplace": "/plugin marketplace add juliusbrussee/caveman"
       },
       "bodyInline": true,
       "excerpt": "",
@@ -831,11 +613,11 @@
         "bins": []
       },
       "install": {
-        "clone": "git clone --depth 1 https://github.com/JuliusBrussee/caveman.git",
+        "clone": "git clone --depth 1 https://github.com/juliusbrussee/caveman.git",
         "copy": "cp -r skills/caveman-stats ~/.claude/skills/caveman-stats-2",
-        "raw": "https://raw.githubusercontent.com/JuliusBrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/caveman-stats/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/juliusbrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/caveman-stats/SKILL.md",
         "saveAs": "~/.claude/skills/caveman-stats-2/SKILL.md",
-        "marketplace": "/plugin marketplace add JuliusBrussee/caveman"
+        "marketplace": "/plugin marketplace add juliusbrussee/caveman"
       },
       "bodyInline": true,
       "excerpt": "",
@@ -849,7 +631,7 @@
       "bodyMd": "In Claude Code, `src/hooks/caveman-mode-tracker.js` resolves `src/hooks/caveman-stats.js` next to itself and runs it on `/caveman-stats`. The hook does not block the prompt: it supplies the report through `hookSpecificOutput.additionalContext` with an instruction to print it verbatim inside a fenced code block. Do exactly that, and do not calculate, recompute or re-round the numbers yourself.\n\nIn Gemini CLI, direct the user to `/stats model` for current session token usage or `/stats session` for session statistics. Gemini custom commands are prompts; they cannot invoke the built-in command or read its live session metrics. Never read Claude Code transcripts as Gemini usage. In other hosts, use a native usage report if one is available; otherwise say that current session usage is unavailable. The Claude reader and its lifetime history apply only to Claude Code. Savings remain unknown in every host without a measured comparison.\n\nThe report shows recorded output and cache-read tokens, response counts, and mode attribution where available. Savings are unknown: the transcript has no measured comparison without Caveman. Do not infer saved tokens, percentages, dollars, rule overhead, or a net result from output counts or the current mode.\n\n`--all` and `--since 7d` aggregate the latest recorded output count per session. `--share` reports observed usage with savings unknown. Historical `est_saved_*` fields are ignored; their original history rows remain on disk. The statusline shows the active mode without the retired savings badge.\n\nOriginal/current memory-file pairs are reported by their measured byte sizes. Those file-size differences do not establish provider token or billing savings. See `docs/HONEST-NUMBERS.md`.\n"
     },
     {
-      "slug": "caveman-2",
+      "slug": "caveman",
       "name": "caveman",
       "dir": "skills/caveman",
       "path": "skills/caveman/SKILL.md",
@@ -875,11 +657,11 @@
         ]
       },
       "install": {
-        "clone": "git clone --depth 1 https://github.com/JuliusBrussee/caveman.git",
-        "copy": "cp -r skills/caveman ~/.claude/skills/caveman-2",
-        "raw": "https://raw.githubusercontent.com/JuliusBrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/caveman/SKILL.md",
-        "saveAs": "~/.claude/skills/caveman-2/SKILL.md",
-        "marketplace": "/plugin marketplace add JuliusBrussee/caveman"
+        "clone": "git clone --depth 1 https://github.com/juliusbrussee/caveman.git",
+        "copy": "cp -r skills/caveman ~/.claude/skills/caveman",
+        "raw": "https://raw.githubusercontent.com/juliusbrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/caveman/SKILL.md",
+        "saveAs": "~/.claude/skills/caveman/SKILL.md",
+        "marketplace": "/plugin marketplace add juliusbrussee/caveman"
       },
       "bodyInline": true,
       "excerpt": "",
@@ -919,11 +701,11 @@
         ]
       },
       "install": {
-        "clone": "git clone --depth 1 https://github.com/JuliusBrussee/caveman.git",
+        "clone": "git clone --depth 1 https://github.com/juliusbrussee/caveman.git",
         "copy": "cp -r skills/investigate-first ~/.claude/skills/investigate-first",
-        "raw": "https://raw.githubusercontent.com/JuliusBrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/investigate-first/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/juliusbrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/investigate-first/SKILL.md",
         "saveAs": "~/.claude/skills/investigate-first/SKILL.md",
-        "marketplace": "/plugin marketplace add JuliusBrussee/caveman"
+        "marketplace": "/plugin marketplace add juliusbrussee/caveman"
       },
       "bodyInline": true,
       "excerpt": "",
@@ -961,11 +743,11 @@
         "bins": []
       },
       "install": {
-        "clone": "git clone --depth 1 https://github.com/JuliusBrussee/caveman.git",
+        "clone": "git clone --depth 1 https://github.com/juliusbrussee/caveman.git",
         "copy": "cp -r skills/lean-build ~/.claude/skills/lean-build",
-        "raw": "https://raw.githubusercontent.com/JuliusBrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/lean-build/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/juliusbrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/lean-build/SKILL.md",
         "saveAs": "~/.claude/skills/lean-build/SKILL.md",
-        "marketplace": "/plugin marketplace add JuliusBrussee/caveman"
+        "marketplace": "/plugin marketplace add juliusbrussee/caveman"
       },
       "bodyInline": true,
       "excerpt": "",
@@ -979,7 +761,7 @@
       "bodyMd": "# Lean build\n\nNative Core's architecture-first simplicity remains mandatory. Turn feature into complete narrow outcome fitting system.\n\n- Derive observable acceptance and explicit non-goals from request and repository.\n- Trace entry point through layers owning invariants.\n- Deliver coherent end-to-end path across responsible layers; never force work into one file, direct expression, or local patch.\n- Reuse fitting seam. Refactor when patching duplicates behavior, weakens ownership, or hides root cause.\n- Omit modes, providers, config, extensibility, and polish unless acceptance needs them.\n- Add surface, dependency, service, config, or migration only for lifecycle design or acceptance; state material tradeoff.\n- Keep work runnable; preserve Core safety.\n\nExercise path. Run focused proof. Stop when acceptance passes. Report only material omissions and trigger.\n"
     },
     {
-      "slug": "megacave-2",
+      "slug": "megacave",
       "name": "megacave",
       "dir": "skills/megacave",
       "path": "skills/megacave/SKILL.md",
@@ -1003,11 +785,11 @@
         "bins": []
       },
       "install": {
-        "clone": "git clone --depth 1 https://github.com/JuliusBrussee/caveman.git",
-        "copy": "cp -r skills/megacave ~/.claude/skills/megacave-2",
-        "raw": "https://raw.githubusercontent.com/JuliusBrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/megacave/SKILL.md",
-        "saveAs": "~/.claude/skills/megacave-2/SKILL.md",
-        "marketplace": "/plugin marketplace add JuliusBrussee/caveman"
+        "clone": "git clone --depth 1 https://github.com/juliusbrussee/caveman.git",
+        "copy": "cp -r skills/megacave ~/.claude/skills/megacave",
+        "raw": "https://raw.githubusercontent.com/juliusbrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/megacave/SKILL.md",
+        "saveAs": "~/.claude/skills/megacave/SKILL.md",
+        "marketplace": "/plugin marketplace add juliusbrussee/caveman"
       },
       "bodyInline": true,
       "excerpt": "",
@@ -1047,11 +829,11 @@
         ]
       },
       "install": {
-        "clone": "git clone --depth 1 https://github.com/JuliusBrussee/caveman.git",
+        "clone": "git clone --depth 1 https://github.com/juliusbrussee/caveman.git",
         "copy": "cp -r skills/migration ~/.claude/skills/migration",
-        "raw": "https://raw.githubusercontent.com/JuliusBrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/migration/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/juliusbrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/migration/SKILL.md",
         "saveAs": "~/.claude/skills/migration/SKILL.md",
-        "marketplace": "/plugin marketplace add JuliusBrussee/caveman"
+        "marketplace": "/plugin marketplace add juliusbrussee/caveman"
       },
       "bodyInline": true,
       "excerpt": "",
@@ -1089,11 +871,11 @@
         "bins": []
       },
       "install": {
-        "clone": "git clone --depth 1 https://github.com/JuliusBrussee/caveman.git",
+        "clone": "git clone --depth 1 https://github.com/juliusbrussee/caveman.git",
         "copy": "cp -r skills/safe-refactor ~/.claude/skills/safe-refactor",
-        "raw": "https://raw.githubusercontent.com/JuliusBrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/safe-refactor/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/juliusbrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/safe-refactor/SKILL.md",
         "saveAs": "~/.claude/skills/safe-refactor/SKILL.md",
-        "marketplace": "/plugin marketplace add JuliusBrussee/caveman"
+        "marketplace": "/plugin marketplace add juliusbrussee/caveman"
       },
       "bodyInline": true,
       "excerpt": "",
@@ -1133,11 +915,11 @@
         "bins": []
       },
       "install": {
-        "clone": "git clone --depth 1 https://github.com/JuliusBrussee/caveman.git",
+        "clone": "git clone --depth 1 https://github.com/juliusbrussee/caveman.git",
         "copy": "cp -r skills/surgical-patch ~/.claude/skills/surgical-patch",
-        "raw": "https://raw.githubusercontent.com/JuliusBrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/surgical-patch/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/juliusbrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/surgical-patch/SKILL.md",
         "saveAs": "~/.claude/skills/surgical-patch/SKILL.md",
-        "marketplace": "/plugin marketplace add JuliusBrussee/caveman"
+        "marketplace": "/plugin marketplace add juliusbrussee/caveman"
       },
       "bodyInline": true,
       "excerpt": "",
@@ -1151,7 +933,7 @@
       "bodyMd": "# Surgical patch\n\nReproduce failure first when economical; otherwise capture strongest available evidence.\n\n- Trace symptom to responsible mechanism.\n- Change narrowest layer that owns incorrect behavior.\n- Preserve unrelated behavior and user changes.\n- Avoid cleanup, renaming, and abstraction outside fix.\n- Add only regression proof relevant to task.\n\nRun focused proof plus nearest affected gate. Stop when failure is fixed and regression proof passes.\n"
     },
     {
-      "slug": "ultracave-2",
+      "slug": "ultracave",
       "name": "ultracave",
       "dir": "skills/ultracave",
       "path": "skills/ultracave/SKILL.md",
@@ -1175,11 +957,11 @@
         "bins": []
       },
       "install": {
-        "clone": "git clone --depth 1 https://github.com/JuliusBrussee/caveman.git",
-        "copy": "cp -r skills/ultracave ~/.claude/skills/ultracave-2",
-        "raw": "https://raw.githubusercontent.com/JuliusBrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/ultracave/SKILL.md",
-        "saveAs": "~/.claude/skills/ultracave-2/SKILL.md",
-        "marketplace": "/plugin marketplace add JuliusBrussee/caveman"
+        "clone": "git clone --depth 1 https://github.com/juliusbrussee/caveman.git",
+        "copy": "cp -r skills/ultracave ~/.claude/skills/ultracave",
+        "raw": "https://raw.githubusercontent.com/juliusbrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/ultracave/SKILL.md",
+        "saveAs": "~/.claude/skills/ultracave/SKILL.md",
+        "marketplace": "/plugin marketplace add juliusbrussee/caveman"
       },
       "bodyInline": true,
       "excerpt": "",
@@ -1217,11 +999,11 @@
         "bins": []
       },
       "install": {
-        "clone": "git clone --depth 1 https://github.com/JuliusBrussee/caveman.git",
+        "clone": "git clone --depth 1 https://github.com/juliusbrussee/caveman.git",
         "copy": "cp -r skills/verify-and-stop ~/.claude/skills/verify-and-stop",
-        "raw": "https://raw.githubusercontent.com/JuliusBrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/verify-and-stop/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/juliusbrussee/caveman/2e08b9177c07bb7249a8a2d1a6758e5db281d002/skills/verify-and-stop/SKILL.md",
         "saveAs": "~/.claude/skills/verify-and-stop/SKILL.md",
-        "marketplace": "/plugin marketplace add JuliusBrussee/caveman"
+        "marketplace": "/plugin marketplace add juliusbrussee/caveman"
       },
       "bodyInline": true,
       "excerpt": "",

@@ -19,6 +19,7 @@
  *   ⚠️ crawler/config.json.watchlist 不由本脚本写 —— 只有 consume-approved.mjs 能写
  */
 import { join } from 'node:path';
+import { readdirSync, unlinkSync } from 'node:fs';
 import { ROOT, loadEnv, readJson, writeJson, idOf, watchKey, inferHosts, inferCategory, normLicense } from './lib.mjs';
 import { GhClient, ContentFetcher, mapPool } from './github.mjs';
 import { normalizeSkill, isSkillPath, splitFrontmatter } from './parse-skill.mjs';
@@ -182,12 +183,34 @@ for (let i = 0; i < queue.length; i++) {
 
   const skills = [];
   let fail = 0;
+  // 按内容去重：同一个 SKILL.md 常被整份复制进 experiments/、examples/、各版本快照目录，
+  // 采集器会把它们当成 N 个不同 skill —— 既灌水页面，又白占 maxSkillsPerRepo 名额
+  //（adrianco/retort 页面上的 50 个「beads」、mem0ai/mem0 的 6 个同句 skill 都是这么来的）。
+  // 同内容只保留**路径最浅**的那份作正主（最可能是原件，而不是某次实验跑出来的副本），
+  // 这样安装命令里的目录也指向更有意义的位置。
+  const depthOf = (p) => (p.match(/\//g) || []).length;
+  const byHash = new Map();
+  for (const f of fetched) {
+    if (!f.ok) continue;
+    const prev = byHash.get(f.skill.contentHash);
+    if (!prev) {
+      byHash.set(f.skill.contentHash, f);
+    } else if (depthOf(f.path) < depthOf(prev.path) || (depthOf(f.path) === depthOf(prev.path) && f.path.length < prev.path.length)) {
+      byHash.set(f.skill.contentHash, f);
+    }
+  }
+  const canonical = new Set(byHash.values());
+  let dupDropped = 0;
   const seenSlugs = new Set(); // 同仓库可能出现重名目录（如 .claude/skills/x 与 harness/x），URL 必须唯一
   for (const f of fetched) {
     if (!f.ok) {
       fail++;
       const rk = f.reason.split(':')[0];
       failReasons[rk] = (failReasons[rk] || 0) + 1;
+      continue;
+    }
+    if (!canonical.has(f)) {
+      dupDropped++;
       continue;
     }
     const s = f.skill;
@@ -218,6 +241,33 @@ for (let i = 0; i < queue.length; i++) {
   }
 
   stats.parseFail += fail;
+  if (dupDropped) {
+    stats.dupDropped = (stats.dupDropped || 0) + dupDropped;
+    console.log(`按内容去重：丢弃 ${dupDropped} 份重复 SKILL.md（保留路径最浅的那份）`);
+  }
+
+  // 一个 skill 都没解析出来时，两种成因必须分开处理 —— 合在一起会把好仓库误删：
+  //   a) 正文压根没取到（网络 / 配额）→ 不能据此判定仓库失效，保留索引里的旧记录，下轮重试
+  //   b) 正文取到了但全部解析失败（典型：frontmatter 只有嵌套的 description、没有顶层 description）
+  //      → 这种仓库页是空壳，留在索引里就是幽灵页面，与「无 SKILL.md」同等处理，摘出索引
+  if (!skills.length) {
+    const fetchFails = fetched.filter((f) => !f.ok && String(f.reason).startsWith('fetch:')).length;
+    if (fetchFails) {
+      console.log(`0 个 skill，但 ${fetchFails} 个正文获取失败 → 保留旧记录，下轮重试`);
+      state.perRepo[key] = {
+        verifiedAt: prev?.verifiedAt || null,
+        commit: prev?.commit || null,
+        skillCount: prev?.skillCount || 0,
+      };
+      continue;
+    }
+    stats.noSkill++;
+    byId.delete(rid);
+    // 状态仍记 verifiedAt：否则每轮都会重采这个注定失败的仓库，白白消耗配额
+    state.perRepo[key] = { verifiedAt: new Date().toISOString(), commit, skillCount: 0 };
+    console.log(`0 个 skill（${fail} 个解析失败）→ 移出索引`);
+    continue;
+  }
 
   const official = (CONFIG.officialOrgs || []).some((o) => o.toLowerCase() === owner.toLowerCase());
   const quality = computeQuality({
@@ -251,8 +301,6 @@ for (let i = 0; i < queue.length; i++) {
     verifiedAt: new Date().toISOString(),
   };
 
-  if (!skills.length) stats.noSkill++;
-
   byId.set(rid, item);
   state.perRepo[key] = { verifiedAt: item.verifiedAt, commit, skillCount: skills.length };
 
@@ -275,7 +323,24 @@ for (let i = 0; i < queue.length; i++) {
 stats.requests = gh.requests;
 
 if (!DRY) {
-  const items = [...byId.values()].sort((a, b) => b.quality.score - a.quality.score);
+  // 索引里不允许出现 0 skill 的仓库：空壳仓库页对用户没有价值，对 SEO 是薄内容。
+  // 主循环已把「本轮采到 0 个」的摘出 byId，这里再兜住历史遗留与半途中止留下的记录。
+  const items = [...byId.values()]
+    .filter((x) => x.skillCount > 0)
+    .sort((a, b) => b.quality.score - a.quality.score);
+  // 顺带清掉被摘掉仓库的明细文件：预渲染只写不删，留着虽不会上站，但会让 data/ 长期堆积幽灵文件。
+  // 个别受限环境会拒绝批量删除，失败不阻塞（与 build-dist.sh 的 rm -rf dist 同一处理）。
+  const alive = new Set(items.map((x) => x.id));
+  for (const f of readdirSync(DETAIL_DIR)) {
+    if (f.endsWith('.json') && !alive.has(f.replace(/\.json$/, ''))) {
+      try {
+        unlinkSync(join(DETAIL_DIR, f));
+        console.log(`清理明细：${f}（该仓库已不在索引中）`);
+      } catch {
+        console.log(`⚠ 未能删除明细 ${f}（环境限制），跳过`);
+      }
+    }
+  }
   writeJson(INDEX_PATH, {
     generatedAt: new Date().toISOString(),
     count: items.length,

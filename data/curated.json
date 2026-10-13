@@ -1,0 +1,9 @@
+{
+  "$comment": "人工精品覆盖层。三层合并：LIVE(采集) > CURATED(本文件) > SEED(data/seed.json)，字段级，上层非空覆盖下层。键为 owner/repo（小写）。skill 级覆盖写在 __skills__ 下，键为 owner/repo/slug（小写）。hero 字段：指定首页「精选」区用该仓库的哪个 skill 作为代表（填 slug）—— 自动规则（同名 > 同名前缀 > 描述最完整）对「仓库里没有同名 skill」的情况只能猜，猜不准的重点仓库用这个字段钉死。",
+  "anthropics/claude-plugins-official": {
+    "hero": "skill-creator"
+  },
+  "madslorentzen/ai-job-search": {
+    "hero": "job-application-assistant"
+  }
+}

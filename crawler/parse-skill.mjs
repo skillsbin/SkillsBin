@@ -49,7 +49,16 @@ export function parseFrontmatterBlock(raw) {
       i++;
       continue;
     }
-    const m = line.match(/^([A-Za-z0-9_.\- ]+):\s*(.*)$/);
+    // 缩进行 = 嵌套结构（inputs: / metadata: / hooks: 的下一层），不是顶层键。
+    // 曾经的键名正则把空格也算进键名字符集，于是 `    description:` 被当成顶层
+    // description 并**覆盖**掉真正的 skill 简介 —— firecrawl/firecrawl 的 5 个
+    // skill 简介全变成「Optional base URL for self-hosted Firecrawl deployments.」
+    // （那是 inputs[].description 的值）就是这么来的。嵌套行一律跳过。
+    if (/^\s/.test(line)) {
+      i++;
+      continue;
+    }
+    const m = line.match(/^([A-Za-z0-9_.\-]+):\s*(.*)$/);
     if (!m) {
       error = error || `无法解析的行: ${line.slice(0, 60)}`;
       i++;
@@ -95,8 +104,10 @@ export function parseFrontmatterBlock(raw) {
       if (/^\s*-\s+/.test(next)) {
         const items = [];
         let k = i + 1;
-        while (k < lines.length && /^\s*-\s+/.test(lines[k])) {
-          items.push(unquote(lines[k].replace(/^\s*-\s+/, '')));
+        // 列表项的**续行**（更深的缩进）也是该列表的一部分，必须一并吃掉，
+        // 否则会被主循环当成顶层键（`inputs:` 下每一项的 `description:` 同理）。
+        while (k < lines.length && (/^\s*-\s+/.test(lines[k]) || /^\s+\S/.test(lines[k]))) {
+          if (/^\s*-\s+/.test(lines[k])) items.push(unquote(lines[k].replace(/^\s*-\s+/, '')));
           k++;
         }
         data[nk] = items;
