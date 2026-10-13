@@ -11,7 +11,7 @@
       "dir": ".agents/skills/sentry-triage",
       "path": ".agents/skills/sentry-triage/SKILL.md",
       "desc": "Triage WorldMonitor Sentry issues — classify unresolved events as noise, already-fixed, product bugs, or needs-human; optionally ship a tested fix. Use when the user says triage Sentry, pastes a WORLDMONITOR-* ID or sentry.io URL, or asks to investigate production errors.",
-      "descZh": "",
+      "descZh": "把旧版 Claude 命令 `.claude/commands/sentry-triage.md` 迁成 Cursor Agent Skill，用于 Sentry 问题分诊。",
       "triggers": [
         "sentry"
       ],
@@ -57,7 +57,7 @@
       "dir": ".agents/skills/verify-worldmonitor",
       "path": ".agents/skills/verify-worldmonitor/SKILL.md",
       "desc": "Verify WorldMonitor dashboard behavior with existing browser tests or a scoped manual drive. Use for panels, map layers, settings, search, country briefs, boot, or dashboard screenshots.",
-      "descZh": "",
+      "descZh": "验证 WorldMonitor 主界面：跑在 `/dashboard` 的 Vite/TypeScript SPA。",
       "triggers": [],
       "version": "",
       "license": "AGPL-3.0",
@@ -103,7 +103,7 @@
       "dir": "public/.well-known/agent-skills/research-stocks",
       "path": "public/.well-known/agent-skills/research-stocks/SKILL.md",
       "desc": "Read current stock research, technical backtests, saved analyses or saved backtests. Use for a named ticker or watchlist research history; preserve source dates, model limitations and risk factors.",
-      "descZh": "",
+      "descZh": "研究个股、查看技术回测，或回看已保存的研究。",
       "triggers": [],
       "version": "1",
       "license": "AGPL-3.0",
@@ -143,7 +143,7 @@
       "dir": "public/.well-known/agent-skills/scan-cyber-threats",
       "path": "public/.well-known/agent-skills/scan-cyber-threats/SKILL.md",
       "desc": "Retrieve active cyber-threat intelligence — malware IOCs, C2 infrastructure, and CISA known-exploited vulnerabilities — filterable by type, source, and severity. Use when the user asks about current cyber threats, IOCs, or actively exploited CVEs.",
-      "descZh": "",
+      "descZh": "实时网络威胁活动：恶意软件 IOC 等。",
       "triggers": [
         "IOCs",
         "actively exploited CVEs"
@@ -189,7 +189,7 @@
       "dir": "public/.well-known/agent-skills/trace-trade-flows",
       "path": "public/.well-known/agent-skills/trace-trade-flows/SKILL.md",
       "desc": "Retrieve strategic UN Comtrade commodity flows with anomaly flags. Use when the user asks who trades a critical commodity, which flows changed sharply, or how trade exposure is shifting.",
-      "descZh": "",
+      "descZh": "战略大宗商品流向：原油、LNG、黄金、半导体。",
       "triggers": [
         "how trade e"
       ],
@@ -234,7 +234,7 @@
       "dir": "public/.well-known/agent-skills/track-climate-hazards",
       "path": "public/.well-known/agent-skills/track-climate-hazards/SKILL.md",
       "desc": "Retrieve climate-relevant disaster events, anomalies, and climate news. Use when the user asks about floods, cyclones, droughts, heatwaves, wildfires, or climate disruption.",
-      "descZh": "",
+      "descZh": "当前气候相关灾害、灾害事件与环境风险。",
       "triggers": [
         "cyclones",
         "droughts",
@@ -283,7 +283,7 @@
       "dir": "public/.well-known/agent-skills/track-conflict-events",
       "path": "public/.well-known/agent-skills/track-conflict-events/SKILL.md",
       "desc": "Retrieve geolocated armed-conflict events (UCDP) with parties, fatality estimates, and violence type, filterable by country and date range. Use when the user asks about recent fighting, attacks, or conflict activity in a country or region.",
-      "descZh": "",
+      "descZh": "近期武装冲突活动：在哪里打、谁在打。",
       "triggers": [
         "attacks",
         "region"
@@ -329,7 +329,7 @@
       "dir": "public/.well-known/agent-skills/track-earthquakes",
       "path": "public/.well-known/agent-skills/track-earthquakes/SKILL.md",
       "desc": "Retrieve recent earthquakes (USGS) with magnitude, depth, location, and a concern score that flags proximity to nuclear test sites. Use when the user asks about recent seismic activity or whether an earthquake was natural.",
-      "descZh": "",
+      "descZh": "近期地震：位置、震级、深度。",
       "triggers": [],
       "version": "1",
       "license": "AGPL-3.0",
@@ -372,7 +372,7 @@
       "dir": "public/.well-known/agent-skills/track-military-flights",
       "path": "public/.well-known/agent-skills/track-military-flights/SKILL.md",
       "desc": "Retrieve tracked military aircraft positions (OpenSky + Wingbits) with callsign, type, operator, altitude, and activity clusters, filterable by bounding box, operator, and aircraft type. Use when the user asks about military air activity in a region.",
-      "descZh": "",
+      "descZh": "军用航空活动：有哪些军机在飞。",
       "triggers": [],
       "version": "1",
       "license": "AGPL-3.0",
@@ -415,7 +415,7 @@
       "dir": "public/.well-known/agent-skills/track-tariff-trends",
       "path": "public/.well-known/agent-skills/track-tariff-trends/SKILL.md",
       "desc": "Retrieve a country's average applied tariff over time — the MFN rate on all products, or the rate it applies on goods from one partner and/or in one product group — plus the optional US effective tariff rate. Use when the user asks how a country's tariffs have changed, or what it charges another country on average. For one product between two countries, use lookup-bilateral-tariff.",
-      "descZh": "",
+      "descZh": "某国平均关税（MFN 适用税率）的历时演变。",
       "triggers": [],
       "version": "3",
       "license": "AGPL-3.0",
@@ -458,7 +458,7 @@
       "dir": "public/.well-known/agent-skills/track-unrest-events",
       "path": "public/.well-known/agent-skills/track-unrest-events/SKILL.md",
       "desc": "Retrieve seeded protest, riot, strike, and civil unrest events. Use when the user asks whether social unrest is occurring in a country or over a recent time window.",
-      "descZh": "",
+      "descZh": "抗议、骚乱、罢工与示威等社会动荡。",
       "triggers": [],
       "version": "1",
       "license": "AGPL-3.0",
@@ -502,7 +502,7 @@
       "dir": "public/.well-known/agent-skills/track-vessel-traffic",
       "path": "public/.well-known/agent-skills/track-vessel-traffic/SKILL.md",
       "desc": "Retrieve a point-in-time AIS vessel-traffic snapshot with disruption candidates and optional tanker overlay, filterable by bounding box. Use when the user asks what ships are in an area, or whether maritime traffic is disrupted.",
-      "descZh": "",
+      "descZh": "区域实时航运：船舶位置、暗船（关闭 AIS）。",
       "triggers": [],
       "version": "1",
       "license": "AGPL-3.0",
@@ -545,7 +545,7 @@
       "dir": "skills/assess-energy-shock",
       "path": "skills/assess-energy-shock/SKILL.md",
       "desc": "Model oil or gas supply shock exposure for a country and chokepoint. Use when the user asks how an energy disruption could affect fuel supply, strategic cover, or product deficits.",
-      "descZh": "",
+      "descZh": "能源冲击情景评估，如「霍尔木兹海峡若关闭会怎样」。",
       "triggers": [
         "strategic cover",
         "produ"
@@ -593,7 +593,7 @@
       "dir": "skills/check-airport-delays",
       "path": "skills/check-airport-delays/SKILL.md",
       "desc": "Retrieve current airport delay and cancellation alerts worldwide — delay type, severity, average delay minutes, and affected-flight percentages per airport. Use when the user asks whether an airport is delayed, disrupted, or experiencing cancellations.",
-      "descZh": "",
+      "descZh": "机场是否延误、延误到什么程度。",
       "triggers": [
         "disrupted"
       ],
@@ -638,7 +638,7 @@
       "dir": "skills/check-chokepoint-status",
       "path": "skills/check-chokepoint-status/SKILL.md",
       "desc": "Retrieve live disruption status for the 13 monitored maritime chokepoints (Suez, Hormuz, Malacca, Bab el-Mandeb, Panama, and more). Use when the user asks whether a strait or canal is disrupted, congested, or safe for shipping right now.",
-      "descZh": "",
+      "descZh": "海上咽喉要道的当前状态与中断情况。",
       "triggers": [
         "canal is disrupted",
         "congested",
@@ -685,7 +685,7 @@
       "dir": "skills/check-country-risk",
       "path": "skills/check-country-risk/SKILL.md",
       "desc": "Retrieve composite country risk intelligence — Country Instability Index (CII), travel advisory level, and active sanctions exposure — for one country by ISO code. Use when the user asks how risky or unstable a country is right now.",
-      "descZh": "",
+      "descZh": "国家当前风险与不稳定性（国家不稳定指数）。",
       "triggers": [
         "the user asks how risky"
       ],
@@ -730,7 +730,7 @@
       "dir": "skills/check-forecast-signals",
       "path": "skills/check-forecast-signals/SKILL.md",
       "desc": "Retrieve probabilistic forecasts and their scorecard context. Use when the user asks what World Monitor is forecasting, how probabilities shifted, or how calibrated the forecasts are.",
-      "descZh": "",
+      "descZh": "当前概率性预测与情景概率。",
       "triggers": [
         "how calibra"
       ],
@@ -775,7 +775,7 @@
       "dir": "skills/check-sanctions-pressure",
       "path": "skills/check-sanctions-pressure/SKILL.md",
       "desc": "Retrieve normalized OFAC sanctions pressure — designation summaries, recent additions, and per-country/per-program aggregates including sanctioned vessels and aircraft. Use when the user asks which countries or programs face sanctions pressure, or what was recently designated.",
-      "descZh": "",
+      "descZh": "制裁压力：近期 OFAC 指定与被波及国家。",
       "triggers": [
         "what was recently de"
       ],
@@ -820,7 +820,7 @@
       "dir": "skills/compare-macro-history",
       "path": "skills/compare-macro-history/SKILL.md",
       "desc": "Compare CPI, interest rates and sovereign yield histories from seeded official reports. Use for inflation or rate trends; preserve country provenance, index base, frequency, yield measure and missing readings.",
-      "descZh": "",
+      "descZh": "通胀、政策利率与主权收益率的历时对比。",
       "triggers": [],
       "version": "1",
       "license": "AGPL-3.0",
@@ -860,7 +860,7 @@
       "dir": "skills/fetch-country-brief",
       "path": "skills/fetch-country-brief/SKILL.md",
       "desc": "Open the WorldMonitor country interface in a UI-capable MCP host. Use the text assessment endpoint for explicit text-only requests or clients without embedded UI.",
-      "descZh": "",
+      "descZh": "取某国简报（在 ChatGPT 等 MCP Apps 宿主里调 `open_country_brief`）。",
       "triggers": [],
       "version": "2",
       "license": "AGPL-3.0",
@@ -903,7 +903,7 @@
       "dir": "skills/fetch-news-digest",
       "path": "skills/fetch-news-digest/SKILL.md",
       "desc": "Retrieve the pre-aggregated digest of World Monitor's curated news feeds, bucketed by category, with per-article threat classification and alert flags. Use when the user asks what's in the news right now, wants headlines by topic, or needs a current-events sweep.",
-      "descZh": "",
+      "descZh": "新闻摘要：总体头条与分类热点。",
       "triggers": [
         "wants headlines by topic",
         "needs a current-e"
@@ -949,7 +949,7 @@
       "dir": "skills/fetch-resilience-score",
       "path": "skills/fetch-resilience-score/SKILL.md",
       "desc": "Retrieve the composite country resilience score (0-100) and its domain/pillar breakdown for a single country. Use when the user asks how resilient a country is, or wants its numeric resilience score, trend, or per-domain breakdown.",
-      "descZh": "",
+      "descZh": "某国韧性指数与数值评分。",
       "triggers": [
         "trend",
         "or"
@@ -995,7 +995,7 @@
       "dir": "skills/get-market-quotes",
       "path": "skills/get-market-quotes/SKILL.md",
       "desc": "Retrieve real-time equity, index, and ETF quotes with price, change, and sparkline history. Use when the user asks for current market prices, how a ticker is doing, or a quick market snapshot.",
-      "descZh": "",
+      "descZh": "当前行情价格：单个代码或一组代码。",
       "triggers": [
         "how a ticker is doing",
         "a quick market snapshot"
@@ -1041,7 +1041,7 @@
       "dir": "skills/get-prediction-markets",
       "path": "skills/get-prediction-markets/SKILL.md",
       "desc": "Retrieve active prediction-market contracts (Polymarket) with live yes-price probabilities, volume, and close dates, filterable by category or keyword. Use when the user asks what the market odds are on a geopolitical, economic, or election outcome.",
-      "descZh": "",
+      "descZh": "预测市场的群众定价概率（「X 的概率是多少」）。",
       "triggers": [
         "economic",
         "election outcome"
@@ -1087,7 +1087,7 @@
       "dir": "skills/lookup-bilateral-tariff",
       "path": "skills/lookup-bilateral-tariff/SKILL.md",
       "desc": "Look up the applied tariff on one HS6 product imported by one country from another (MFN, partner-specific preferential, and the best available applied rate), from UNCTAD TRAINS via World Bank WITS. Use when the user asks what duty a specific product pays between two specific countries.",
-      "descZh": "",
+      "descZh": "某产品（6 位 HS 编码）在某国需缴的关税。",
       "triggers": [],
       "version": "1",
       "license": "AGPL-3.0",
@@ -1130,7 +1130,7 @@
       "dir": "skills/lookup-us-import-duty",
       "path": "skills/lookup-us-import-duty/SKILL.md",
       "desc": "Look up the current US import duty on one HTS product from one country — the HTS column rate (MFN, trade-agreement or column 2) plus the Section 301 and 232 duties in chapter 99 — from the live USITC Harmonized Tariff Schedule. Use when the user asks what the US charges today on a product from a specific country, including China tariffs and other additional duties.",
-      "descZh": "",
+      "descZh": "美国今天对某产品（6 位或 8 位编码）征收的关税。",
       "triggers": [
         "including Ch"
       ],
@@ -1175,7 +1175,7 @@
       "dir": "skills/monitor-energy-disruptions",
       "path": "skills/monitor-energy-disruptions/SKILL.md",
       "desc": "Retrieve the curated energy disruption event log for pipelines and storage facilities. Use when the user asks what energy assets are disrupted, sanctioned, offline, or under watch.",
-      "descZh": "",
+      "descZh": "油气管道与能源供应中断事件。",
       "triggers": [
         "sanctioned",
         "offline",
@@ -1222,7 +1222,7 @@
       "dir": "skills/monitor-health-alerts",
       "path": "skills/monitor-health-alerts/SKILL.md",
       "desc": "Retrieve disease outbreak alerts and PM2.5 air-quality health warnings. Use when the user asks about current public-health risks in a country, city, or region.",
-      "descZh": "",
+      "descZh": "是否有活跃的疾病暴发与公共卫生警报。",
       "triggers": [
         "city",
         "region"
@@ -1268,7 +1268,7 @@
       "dir": "skills/monitor-internet-outages",
       "path": "skills/monitor-internet-outages/SKILL.md",
       "desc": "Retrieve detected internet outages (Cloudflare Radar) with country, cause, severity, and time bounds. Use when the user asks whether a country's internet is down, throttled, or experiencing a shutdown.",
-      "descZh": "",
+      "descZh": "互联网连通中断：国家级关停与区域性故障。",
       "triggers": [
         "throttled",
         "experiencing a shutdown"
@@ -1314,7 +1314,7 @@
       "dir": "skills/monitor-supply-chain-stress",
       "path": "skills/monitor-supply-chain-stress/SKILL.md",
       "desc": "Retrieve current shipping market stress from carrier and freight indicators. Use when the user asks whether supply chains or container shipping are under pressure right now.",
-      "descZh": "",
+      "descZh": "整体航运压力与承运市场紧张度。",
       "triggers": [],
       "version": "1",
       "license": "AGPL-3.0",
@@ -1357,7 +1357,7 @@
       "dir": "skills/monitor-webcams",
       "path": "skills/monitor-webcams/SKILL.md",
       "desc": "Discover live webcams in a map viewport and resolve thumbnails or player URLs. Use when the user asks for visual context near a location, route, border, port, or city.",
-      "descZh": "",
+      "descZh": "事件、基础设施或咽喉要道附近的实时画面。",
       "triggers": [
         "route",
         "border",

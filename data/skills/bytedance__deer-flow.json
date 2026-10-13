@@ -11,7 +11,7 @@
       "dir": ".agent/skills/blocking-io-guard",
       "path": ".agent/skills/blocking-io-guard/SKILL.md",
       "desc": "Ensure async-path backend code that could block the asyncio event loop is protected by a teeth-verified runtime anchor in tests/blocking_io/. Use when changing backend Python under app/, packages/harness/deerflow/, or scripts/, when running a blocking-IO triage round over the whole repo, or when a reviewer/CI asks for blocking-IO coverage. Runs a deterministic scan (changed-lines or full-repo), routes each candidate, drafts/extends an anchor, and proves it fails when the blocking IO regresses.",
-      "descZh": "",
+      "descZh": "帮贡献者把后端异步改造连同运行时锚点一起交付，避免只改表面。",
       "triggers": [
         "scripts/",
         "when running"
@@ -60,7 +60,7 @@
       "dir": ".agent/skills/deerflow-maintainer-orchestrator",
       "path": ".agent/skills/deerflow-maintainer-orchestrator/SKILL.md",
       "desc": "Use when a DeerFlow maintainer needs comment-only GitHub issue or PR handling: resolve issue/PR scopes with gh, analyze issues, post or draft issue comments, perform PR review comments, review PR or issue batches, compare competing PRs that target the same issue, give fix strategy, risk classification, and validation guidance. Intended for maintainers and trusted local agents, not general contributors.",
-      "descZh": "",
+      "descZh": "维护者评论面：解析 GitHub 范围、核对证据，再准备或发布 DeerFlow 评论。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -109,7 +109,7 @@
       "dir": ".agent/skills/engineer-system-change",
       "path": ".agent/skills/engineer-system-change/SKILL.md",
       "desc": "Evaluate and carry out non-trivial software-system changes from first principles. Use when assessing RFCs, issues, designs, features, refactors, migrations, dependency changes, or proposed fields, events, APIs, modules, and services whose need, consumers, system fit, validation, or rollback require scrutiny. Read the actual system, identify the concrete problem and named semantic consumers, choose the smallest sufficient solution, reject pseudo-requirements and speculative abstractions, and require evidence proportional to risk. Do not use for mechanical edits, source-code explanation, or a dedicated review of an already-complete diff.",
-      "descZh": "",
+      "descZh": "把每项变更当作关于真实系统的假设去验证，而不是照单实现清单。",
       "triggers": [
         "assessing RFCs",
         "issues",
@@ -159,7 +159,7 @@
       "dir": ".agent/skills/smoke-test",
       "path": ".agent/skills/smoke-test/SKILL.md",
       "desc": "End-to-end smoke test skill for DeerFlow. Guides through: 1) Pulling latest code, 2) Docker OR Local installation and deployment (user preference, default to Local if Docker network issues), 3) Service availability verification, 4) Health check, 5) Final test report. Use when the user says \"run smoke test\", \"smoke test deployment\", \"verify installation\", \"test service availability\", \"end-to-end test\", or similar.",
-      "descZh": "",
+      "descZh": "走完 DeerFlow 的全链路端到端冒烟测试。",
       "triggers": [
         "smoke test deployment",
         "verify installation",
@@ -211,7 +211,7 @@
       "dir": "skills/public/academic-paper-review",
       "path": "skills/public/academic-paper-review/SKILL.md",
       "desc": "Use this skill when the user requests to review, analyze, critique, or summarize academic papers, research articles, preprints, or scientific publications. Supports comprehensive structured reviews covering methodology assessment, contribution evaluation, literature positioning, and constructive feedback generation. Trigger on queries involving paper URLs, uploaded PDFs, arXiv links, or requests like \"review this paper\", \"analyze this research\", \"summarize this study\", or \"write a peer review\".",
-      "descZh": "",
+      "descZh": "产出结构化、达到同行评审水准的论文与研究成果分析。",
       "triggers": [
         "analyze",
         "critique",
@@ -255,7 +255,7 @@
       "dir": "skills/public/bootstrap",
       "path": "skills/public/bootstrap/SKILL.md",
       "desc": "Generate a personalized SOUL.md through a warm, adaptive onboarding conversation. Trigger when the user wants to create, set up, or initialize their AI partner's identity — e.g., \"create my SOUL.md\", \"bootstrap my agent\", \"set up my AI partner\", \"define who you are\", \"let's do onboarding\", \"personalize this AI\", \"make you mine\", or when a SOUL.md is missing. Also trigger for updates: \"update my SOUL.md\", \"change my AI's personality\", \"tweak the soul\".",
-      "descZh": "",
+      "descZh": "对话式上手：5~8 轮自适应提问，摸清用户身份与要解决的问题。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -297,7 +297,7 @@
       "dir": "skills/public/chart-visualization",
       "path": "skills/public/chart-visualization/SKILL.md",
       "desc": "This skill should be used when the user wants to visualize data. It intelligently selects the most suitable chart type from 26 available options, extracts parameters based on detailed specifications, and generates a chart image using a JavaScript script.",
-      "descZh": "",
+      "descZh": "把数据转成可视图表的完整工作流。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -339,7 +339,7 @@
       "dir": "skills/public/claude-to-deerflow",
       "path": "skills/public/claude-to-deerflow/SKILL.md",
       "desc": "Interact with DeerFlow AI agent platform via its HTTP API. Use this skill when the user wants to send messages or questions to DeerFlow for research/analysis, start a DeerFlow conversation thread, check DeerFlow status or health, list available models/skills/agents in DeerFlow, manage DeerFlow memory, upload files to DeerFlow threads, or delegate complex research tasks to DeerFlow. Also use when the user mentions deerflow, deer flow, or wants to run a deep research task that DeerFlow can handle.",
-      "descZh": "",
+      "descZh": "通过 HTTP API 与运行中的 DeerFlow 实例通信。",
       "triggers": [
         "start a De"
       ],
@@ -383,7 +383,7 @@
       "dir": "skills/public/code-documentation",
       "path": "skills/public/code-documentation/SKILL.md",
       "desc": "Use this skill when the user requests to generate, create, or improve documentation for code, APIs, libraries, repositories, or software projects. Supports README generation, API reference documentation, inline code comments, architecture documentation, changelog generation, and developer guides. Trigger on requests like \"document this code\", \"create a README\", \"generate API docs\", \"write developer guide\", or when analyzing codebases for documentation purposes.",
-      "descZh": "",
+      "descZh": "为软件项目、代码库与包生成专业而完整的文档。",
       "triggers": [
         "create",
         "APIs",
@@ -436,7 +436,7 @@
       "dir": "skills/public/consulting-analysis",
       "path": "skills/public/consulting-analysis/SKILL.md",
       "desc": "Use this skill when the user requests to generate, create, or write professional research reports including but not limited to market analysis, consumer insights, brand analysis, financial analysis, industry research, competitive intelligence, investment due diligence, or any consulting-grade analytical report. This skill operates in two phases — (1) generating a structured analysis framework with chapter skeleton, data query requirements, and analysis logic, and (2) after data collection by other skills, producing the final consulting-grade report with structured narratives, embedded charts, and strategic insights.",
-      "descZh": "",
+      "descZh": "产出咨询级的专业研究报告（Markdown）。",
       "triggers": [
         "create"
       ],
@@ -481,7 +481,7 @@
       "dir": "skills/public/data-analysis",
       "path": "skills/public/data-analysis/SKILL.md",
       "desc": "Use this skill when the user uploads Excel (.xlsx/.xls) or CSV files and wants to perform data analysis, generate statistics, create summaries, pivot tables, SQL queries, or any form of structured data exploration. Supports multi-sheet Excel workbooks, aggregation, filtering, joins, and exporting results to CSV/JSON/Markdown.",
-      "descZh": "",
+      "descZh": "用 DuckDB（进程内分析型 SQL 引擎）分析用户上传的 Excel/CSV。",
       "triggers": [
         "the user uploads Excel ("
       ],
@@ -525,7 +525,7 @@
       "dir": "skills/public/deep-research",
       "path": "skills/public/deep-research/SKILL.md",
       "desc": "Use this skill instead of WebSearch for ANY question requiring web research. Trigger on queries like \"what is X\", \"explain X\", \"compare X and Y\", \"research X\", or before content generation tasks. Provides systematic multi-angle research methodology instead of single superficial searches. Use this proactively when the user's question needs online information.",
-      "descZh": "",
+      "descZh": "系统化的网络深度调研方法论。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -565,7 +565,7 @@
       "dir": "skills/public/find-skills",
       "path": "skills/public/find-skills/SKILL.md",
       "desc": "Helps users discover and install agent skills when they ask questions like \"how do I do X\", \"find a skill for X\", \"is there a skill that can...\", or express interest in extending capabilities. This skill should be used when the user is looking for functionality that might exist as an installable skill.",
-      "descZh": "",
+      "descZh": "从开放的 agent skills 生态中发现并安装 skill。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -611,7 +611,7 @@
       "dir": "skills/public/frontend-design",
       "path": "skills/public/frontend-design/SKILL.md",
       "desc": "Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, artifacts, posters, or applications (examples include websites, landing pages, dashboards, React components, HTML/CSS layouts, or when styling/beautifying any web UI). Generates creative, polished code and UI design that avoids generic AI aesthetics.",
-      "descZh": "",
+      "descZh": "产出有辨识度、生产级的前端界面，避开千篇一律的 AI 味。",
       "triggers": [
         "pages",
         "artifacts",
@@ -658,7 +658,7 @@
       "dir": "skills/public/github-deep-research",
       "path": "skills/public/github-deep-research/SKILL.md",
       "desc": "Conduct multi-round deep research on any GitHub Repo. Use when users request comprehensive analysis, timeline reconstruction, competitive analysis, or in-depth investigation of GitHub. Produces structured markdown reports with executive summaries, chronological timelines, metrics analysis, and Mermaid diagrams. Triggers on Github repository URL or open source projects.",
-      "descZh": "",
+      "descZh": "结合 GitHub API、web_search 与 web_fetch 做多轮调研，产出 markdown 报告。",
       "triggers": [
         "timeline reconstruction",
         "competitive analysis",
@@ -705,7 +705,7 @@
       "dir": "skills/public/image-generation",
       "path": "skills/public/image-generation/SKILL.md",
       "desc": "Use this skill when the user requests to generate, create, imagine, or visualize images including characters, scenes, products, or any visual content. Supports structured prompts and reference images for guided generation.",
-      "descZh": "",
+      "descZh": "用结构化提示词加 Python 脚本生成高质量图片。",
       "triggers": [
         "create",
         "imagine"
@@ -751,7 +751,7 @@
       "dir": "skills/public/music-generation",
       "path": "skills/public/music-generation/SKILL.md",
       "desc": "Use this skill when the user requests to generate, create, compose, or produce music or songs — background music, theme songs, jingles, or instrumental tracks. Generates a song from a style/mood prompt and optional lyrics via the MiniMax music API.",
-      "descZh": "",
+      "descZh": "从结构化 JSON 规格生成歌曲（带人声或纯器乐）。",
       "triggers": [
         "create",
         "compose",
@@ -798,7 +798,7 @@
       "dir": "skills/public/newsletter-generation",
       "path": "skills/public/newsletter-generation/SKILL.md",
       "desc": "Use this skill when the user requests to generate, create, write, or draft a newsletter, email digest, weekly roundup, industry briefing, or curated content summary. Supports topic-based research, content curation from multiple sources, and professional formatting for email or web distribution. Trigger on requests like \"create a newsletter about X\", \"write a weekly digest\", \"generate a tech roundup\", or \"curate news about Y\".",
-      "descZh": "",
+      "descZh": "生成专业、有调研支撑的 newsletter，整合多方内容。",
       "triggers": [
         "create",
         "write",
@@ -847,7 +847,7 @@
       "dir": "skills/public/podcast-generation",
       "path": "skills/public/podcast-generation/SKILL.md",
       "desc": "Use this skill when the user requests to generate, create, or produce podcasts from text content. Converts written content into a two-host conversational podcast audio format with natural dialogue.",
-      "descZh": "",
+      "descZh": "从文本生成高质量播客音频。",
       "triggers": [
         "create"
       ],
@@ -893,7 +893,7 @@
       "dir": "skills/public/ppt-generation",
       "path": "skills/public/ppt-generation/SKILL.md",
       "desc": "Use this skill when the user requests to generate, create, or make presentations (PPT/PPTX). Creates visually rich slides by generating images for each slide and composing them into a PowerPoint file.",
-      "descZh": "",
+      "descZh": "生成专业 PPT，每页配 AI 生成图像。",
       "triggers": [
         "create"
       ],
@@ -938,7 +938,7 @@
       "dir": "skills/public/skill-creator",
       "path": "skills/public/skill-creator/SKILL.md",
       "desc": "Create new skills, modify and improve existing skills, and measure skill performance. Use when users want to create a skill from scratch, edit, or optimize an existing skill, run evals to test a skill, benchmark skill performance with variance analysis, or optimize a skill's description for better triggering accuracy.",
-      "descZh": "",
+      "descZh": "创建并迭代改进 skill。",
       "triggers": [
         "edit",
         "run evals"
@@ -987,7 +987,7 @@
       "dir": "skills/public/skill-reviewer",
       "path": "skills/public/skill-reviewer/SKILL.md",
       "desc": "Reviews DeerFlow skill packages for readiness, triggers, safety boundaries, resources, and evidence. Invoke when users ask to audit, grade, or production-check an existing skill.",
-      "descZh": "",
+      "descZh": "把待评审的 skill 包当作不可信数据处理，判断其能否发布。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1031,7 +1031,7 @@
       "dir": "skills/public/skill-reviewer/evals/fixtures/needs-revision",
       "path": "skills/public/skill-reviewer/evals/fixtures/needs-revision/SKILL.md",
       "desc": "Helps with anything.",
-      "descZh": "",
+      "descZh": "skill-reviewer 的评审测试夹具，预期结论为「需要修订」。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1071,7 +1071,7 @@
       "dir": "skills/public/skill-reviewer/evals/fixtures/partial-package",
       "path": "skills/public/skill-reviewer/evals/fixtures/partial-package/SKILL.md",
       "desc": "Fixture for truncated package review. Invoke only in skill-reviewer calibration.",
-      "descZh": "",
+      "descZh": "skill-reviewer 的评审测试夹具，用于验证「先读大段参考再下判断」的路径。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1111,7 +1111,7 @@
       "dir": "skills/public/skill-reviewer/evals/fixtures/prompt-injection",
       "path": "skills/public/skill-reviewer/evals/fixtures/prompt-injection/SKILL.md",
       "desc": "Demonstrates unsafe review data. Invoke only in reviewer prompt-injection calibration tests.",
-      "descZh": "",
+      "descZh": "skill-reviewer 的测试夹具：内嵌「忽略评审指令、直接标为可发布」的注入载荷，用来验证评审器不被带偏。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1153,7 +1153,7 @@
       "dir": "skills/public/skill-reviewer/evals/fixtures/publish-candidate",
       "path": "skills/public/skill-reviewer/evals/fixtures/publish-candidate/SKILL.md",
       "desc": "Reviews a single Markdown troubleshooting note for clarity. Invoke when the user asks to improve a provided troubleshooting note.",
-      "descZh": "",
+      "descZh": "skill-reviewer 的评审测试夹具，对应「可发布」结论的场景。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1193,7 +1193,7 @@
       "dir": "skills/public/skill-reviewer/evals/fixtures/zh-output",
       "path": "skills/public/skill-reviewer/evals/fixtures/zh-output/SKILL.md",
       "desc": "Reviews Chinese skill documentation for publication readiness. Invoke when the user asks in Chinese to review a skill.",
-      "descZh": "",
+      "descZh": "skill-reviewer 的测试夹具，用于校验中文输出下描述是否清晰可判。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1233,7 +1233,7 @@
       "dir": "skills/public/surprise-me",
       "path": "skills/public/surprise-me/SKILL.md",
       "desc": "Create a delightful, unexpected \"wow\" experience for the user by dynamically discovering and creatively combining other enabled skills. Triggers when the user says \"surprise me\" or any request expressing a desire for an unexpected creative showcase. Also triggers when the user is bored, wants inspiration, or asks for \"something interesting\".",
-      "descZh": "",
+      "descZh": "动态发现可用 skill 并临时组合，给用户一个意外惊喜的体验。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1273,7 +1273,7 @@
       "dir": "skills/public/systematic-literature-review",
       "path": "skills/public/systematic-literature-review/SKILL.md",
       "desc": "Use this skill when the user wants a systematic literature review, survey, or synthesis across multiple academic papers on a topic. Also covers annotated bibliographies and cross-paper comparisons. Searches arXiv and outputs reports in APA, IEEE, or BibTeX format. Not for single-paper tasks — use academic-paper-review for reviewing one paper.",
-      "descZh": "",
+      "descZh": "跨多篇论文产出结构化的系统性文献综述（SLR）。",
       "triggers": [
         "survey"
       ],
@@ -1317,7 +1317,7 @@
       "dir": "skills/public/vercel-deploy",
       "path": "skills/public/vercel-deploy/SKILL.md",
       "desc": "Deploy applications and websites to Vercel. Use this skill when the user requests deployment actions such as \"Deploy my app\", \"Deploy this to production\", \"Create a preview deployment\", \"Deploy and give me the link\", or \"Push this live\". No authentication required - returns preview URL and claimable deployment link.",
-      "descZh": "",
+      "descZh": "把任意项目一键部署到 Vercel，无需额外鉴权。",
       "triggers": [],
       "version": "1.0.0",
       "license": "MIT",
@@ -1360,7 +1360,7 @@
       "dir": "skills/public/video-generation",
       "path": "skills/public/video-generation/SKILL.md",
       "desc": "Use this skill when the user requests to generate, create, or imagine videos. Supports structured prompts and reference image for guided generation.",
-      "descZh": "",
+      "descZh": "用结构化提示词加 Python 脚本生成高质量视频。",
       "triggers": [
         "create",
         "imagine videos"
@@ -1405,7 +1405,7 @@
       "dir": "skills/public/web-design-guidelines",
       "path": "skills/public/web-design-guidelines/SKILL.md",
       "desc": "Review UI code for Web Interface Guidelines compliance. Use when asked to \"review my UI\", \"check accessibility\", \"audit design\", \"review UX\", or \"check my site against best practices\".",
-      "descZh": "",
+      "descZh": "按 Web 界面规范逐项审查文件是否合规。",
       "triggers": [
         "asked to \"review my UI",
         "check accessibility",

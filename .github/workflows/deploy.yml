@@ -14,6 +14,11 @@ on:
       - 'assets/**'
       - 'scripts/**'
       - 'crawler/config.json'
+      # data/** 也要触发：中文摘要覆盖层（data/desczh.json）与纠错后的明细层
+      # 只改数据、不动代码，若这里不列，纯数据推送就不会重建发布 —— 页面会停在旧内容。
+      # sync.yml 自己的提交用的是 GITHUB_TOKEN，不会触发本工作流（GitHub 有意抑制），
+      # 所以不存在「CI 提交数据 → 又触发一次部署」的循环。
+      - 'data/**'
       - '.github/workflows/deploy.yml'
   workflow_dispatch:
 

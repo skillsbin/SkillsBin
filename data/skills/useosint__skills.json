@@ -11,7 +11,7 @@
       "dir": "skills/dig-through-data-brokers",
       "path": "skills/dig-through-data-brokers/SKILL.md",
       "desc": "Use people-search aggregators and primary public records to find addresses, phone numbers, relatives, age and background on a person, and to audit and remove your own exposure. Covers Spokeo, BeenVerified, Whitepages, TruePeopleSearch, FastPeopleSearch, That'sThem, Radaris, Intelius and Pipl, plus voter files and county court and property records. Use when running a people search or reverse address lookup, tracing a debtor or missing person, building a subject's address history, or removing yourself from broker sites. Applies to skip tracing and debt recovery, asset investigation, executive protection, and personal exposure audits. Explains the FCRA limits that bar broker data from employment, tenancy, insurance and credit decisions, and the GDPR position. Reference at useosint.com/skills/dig-through-data-brokers.",
-      "descZh": "",
+      "descZh": "人肉搜索站点转售的是公共记录、营销数据与泄露数据的混合物——按这个结构去查。",
       "triggers": [
         "running a people search",
         "reverse address lookup",
@@ -60,7 +60,7 @@
       "dir": "skills/find-anyone",
       "path": "skills/find-anyone/SKILL.md",
       "desc": "Build a sourced, corroborated profile of a named individual from public records, social platforms, professional networks, court and property filings, licensing boards, patents, papers and obituaries — anchoring the name to a second selector first so you never fuse two people into one dossier. Use when asked to find, identify, background-check or profile a person, verify someone's claimed employment or credentials, or locate a missing or hard-to-reach individual. Applies to counterparty and investor due diligence, fraud and asset investigation, journalism, skip tracing, missing persons, pre-employment integrity checks on fiduciary roles, and self-exposure audits. Reference at useosint.com/skills/find-anyone.",
-      "descZh": "",
+      "descZh": "把一个名字变成有出处的具体人物画像；这件事 20% 是找，80% 是核。",
       "triggers": [
         "asked to find",
         "identify",
@@ -107,7 +107,7 @@
       "dir": "skills/find-exposed-servers",
       "path": "skills/find-exposed-servers/SKILL.md",
       "desc": "Find internet-exposed hosts, ports, services and devices using third-party internet-scan data instead of touching the target. Covers Shodan and Censys query syntax, service banners, favicon-hash and TLS-certificate pivots, origin-IP discovery behind Cloudflare or a CDN, and exposed databases, dashboards, cameras and ICS devices. Use when asked what a company has exposed to the internet, to check open ports on an IP or netblock, or to write a Shodan filter query. Applies to external attack-surface management, third-party and vendor security review, M&A technical diligence, and pre-engagement reconnaissance. Reference at useosint.com/skills/find-exposed-servers.",
-      "descZh": "",
+      "descZh": "全网扫描器早已扫过你的目标——直接查它们的结果，比自己扫便宜得多。",
       "triggers": [
         "netblock"
       ],
@@ -154,7 +154,7 @@
       "dir": "skills/find-hidden-subdomains",
       "path": "skills/find-hidden-subdomains/SKILL.md",
       "desc": "Enumerate an organisation's subdomains and sibling domains from Certificate Transparency logs and passive DNS, without sending traffic to the target. Covers crt.sh and CT log queries, certificate SAN fields, subfinder and amass, and newly issued TLS certificates. Use when looking for staging, dev, admin or VPN hosts, mapping the full hostname footprint of a domain, or spotting infrastructure a company forgot it had. Applies to attack-surface mapping, vendor and supply-chain security review, brand-infringement discovery, and M&A technical diligence. Reference at useosint.com/skills/find-hidden-subdomains.",
-      "descZh": "",
+      "descZh": "组织自己都忘了的资产才最值得找，其中大多数不会被常规枚举发现。",
       "triggers": [
         "looking for staging",
         "dev",
@@ -203,7 +203,7 @@
       "dir": "skills/find-leaks-in-the-wild",
       "path": "skills/find-leaks-in-the-wild/SKILL.md",
       "desc": "Find leaked or mentioned selectors circulating in pastes, leak forums, Telegram channels and dump markets, and judge whether a claimed leak is genuine or a recycled combolist. Covers paste aggregators, site: searches over paste hosts, channel indexes and leak-search services. Use when checking whether a name, email, domain or credential is circulating, verifying a breach claim made against your organisation, or setting up ongoing leak monitoring. Applies to incident response and breach triage, threat intelligence, brand and executive protection, and extortion-claim validation. Reference at useosint.com/skills/find-leaks-in-the-wild.",
-      "descZh": "",
+      "descZh": "这是数据在被任何索引收录之前最先出现的地方。",
       "triggers": [
         "checking whether a name",
         "email",
@@ -250,7 +250,7 @@
       "dir": "skills/find-the-original-image",
       "path": "skills/find-the-original-image/SKILL.md",
       "desc": "Reverse image search across Yandex, Google Lens, Bing Visual Search, TinEye and Baidu to find where a picture came from and who published it first. Use when reverse image searching, identifying a photo, face, logo, product, uniform or building, tracing a profile picture or avatar, finding the oldest copy of an image, checking whether a photo is stock or a repost, or reverse-searching a video by keyframes. Applies to romance and investment scam investigation, fake-profile and synthetic-identity detection, disinformation and media verification, counterfeit and brand-infringement work, and insurance claim review. Reference at useosint.com/skills/find-the-original-image.",
-      "descZh": "",
+      "descZh": "目标几乎从来不是「找到匹配」，而是找到**最早的发布源**。",
       "triggers": [
         "reverse image searching",
         "identifying a photo",
@@ -301,7 +301,7 @@
       "dir": "skills/follow-the-crypto",
       "path": "skills/follow-the-crypto/SKILL.md",
       "desc": "Trace cryptocurrency addresses and transactions on public blockchains using block explorers including Etherscan, Blockchair, mempool.space and Blockscout. Covers common-input clustering, ENS resolution, exchange deposit addresses, mixers, CoinJoin, Tornado-style pools, cross-chain bridges, and OFAC sanctions screening. Use when following a Bitcoin or Ethereum wallet, investigating where a ransom or scam payment went, or checking an address against sanctions listings. Applies to ransomware incident response, AML and sanctions compliance, fraud recovery and asset tracing, and financial-crime investigation. Reference at useosint.com/skills/follow-the-crypto.",
-      "descZh": "",
+      "descZh": "公链是假名而非匿名：每笔转账都永久留痕。",
       "triggers": [
         "following a Bitcoin",
         "Ethereum wallet",
@@ -345,7 +345,7 @@
       "dir": "skills/geolocate-from-pixels",
       "path": "skills/geolocate-from-pixels/SKILL.md",
       "desc": "Geolocate and chronolocate a photo or video from visual evidence alone — plate and phone number formats, road markings, utility poles, bollards, signage typefaces, architecture and vegetation for place; shadow direction and length with SunCalc for time and date. Use when asked where or when a picture was taken, to verify a claimed location without GPS or EXIF, or to match a scene against Google Earth, Street View, Yandex Panoramas, Mapillary or KartaView. Applies to GEOINT and conflict monitoring, insurance and claims verification, journalism fact-checking, and evidence review. Reference at useosint.com/skills/geolocate-from-pixels.",
-      "descZh": "",
+      "descZh": "每张户外照片里往往都藏着足以定位的信息。",
       "triggers": [
         "asked where",
         "when a picture was taken",
@@ -392,7 +392,7 @@
       "dir": "skills/google-like-a-spy",
       "path": "skills/google-like-a-spy/SKILL.md",
       "desc": "Craft advanced search-engine queries and Google dorks to surface hidden files, documents and mentions. Covers site:, filetype:, inurl:, intitle:, intext: and before:/after: operators, verbatim search, exposed directory listings, config files, backups and open S3 buckets, and the operator differences between Google, Bing, DuckDuckGo and Yandex. Use when building a Google dork, hunting a leaked document, or searching paste sites and document repositories for a name, email or selector. Applies to data-exposure audits, pre-engagement reconnaissance, competitive and regulatory research, and insider-leak investigation. Reference at useosint.com/skills/google-like-a-spy.",
-      "descZh": "",
+      "descZh": "把搜索框当成对已抓取索引的过滤器来用，代价是看不到未收录的内容。",
       "triggers": [
         "building a Google dork"
       ],
@@ -437,7 +437,7 @@
       "dir": "skills/graph-the-network",
       "path": "skills/graph-the-network/SKILL.md",
       "desc": "Build an entity-relationship link-analysis graph of an investigation — nodes, typed edges carrying source and confidence, aliases, and temporal validity — to expose shared infrastructure, bridging nodes and the real principal behind a frontman. Covers Maltego, Neo4j and Cypher, Gephi, centrality and community detection, and entity resolution. Use when an investigation has outgrown a list and needs a graph, or when asked how a set of people, companies and domains connect. Applies to fraud-ring and shell-network detection, AML and sanctions-evasion analysis, and complex corporate-structure work. Reference at useosint.com/skills/graph-the-network.",
-      "descZh": "",
+      "descZh": "30 个选择器的列表与 30 个选择器的图，信息量完全不同。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -480,7 +480,7 @@
       "dir": "skills/hunt-a-handle",
       "path": "skills/hunt-a-handle/SKILL.md",
       "desc": "Enumerate a username across hundreds of platforms with sherlock, maigret and WhatsMyName, then correlate and confirm which accounts genuinely belong to the same person. Use for username OSINT and handle enumeration, \"find all accounts for this username\", cross-platform account correlation, nickname and screen-name pivots, or turning a handle into a real name. Applies to fraud and synthetic-identity investigation, recruitment and marketplace scam checks, trust-and-safety enforcement, insider-threat work, and personal exposure audits. Reference at useosint.com/skills/hunt-a-handle.",
-      "descZh": "",
+      "descZh": "用户名复用是 OSINT 里最便宜的强链接：一个字符串，到处验证。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -520,7 +520,7 @@
       "dir": "skills/investigate-anything",
       "path": "skills/investigate-anything/SKILL.md",
       "desc": "Start-here router and tradecraft baseline for any investigation into a person, company, domain, image or selector. Sets authorised scope, turns a vague request into an answerable intelligence question, writes a collection plan, picks the right workflow for the starting selector, and applies source grading and competing-hypothesis discipline. Use for \"investigate this person or company\", \"do OSINT on X\", \"where do I start\", or any open-source intelligence, due diligence, background or attribution task. Applies across due diligence, fraud, threat intelligence, journalism and compliance. Reference at useosint.com/skills/investigate-anything.",
-      "descZh": "",
+      "descZh": "调查的总入口：下游每一步都比「本该先动脑的那步」更快。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -562,7 +562,7 @@
       "dir": "skills/investigate-without-getting-made",
       "path": "skills/investigate-without-getting-made/SKILL.md",
       "desc": "Investigator OPSEC — threat-model who might notice you, control your attribution surface across IP, ASN, browser and TLS fingerprint, timing and logged-in accounts, separate research identity from real identity, build and age a sockpuppet research persona, and choose between VPN, residential proxy and Tor. Use when setting up a research account, avoiding tipping off a subject, worrying about LinkedIn profile-view leakage, needing a burner phone or email, or hardening a research VM or browser profile. Applies to covert due diligence, insider-threat investigation, source protection in journalism, and law-enforcement online work. Reference at useosint.com/skills/investigate-without-getting-made.",
-      "descZh": "",
+      "descZh": "采集是双向的——多数调查员暴露不是因为手法高明。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -604,7 +604,7 @@
       "dir": "skills/is-this-photo-real",
       "path": "skills/is-this-photo-real/SKILL.md",
       "desc": "Verify whether an image or video is authentic, original and correctly captioned — provenance checks, error level analysis, noise and JPEG compression analysis, clone and copy-move detection, lighting and shadow consistency, C2PA Content Credentials, deepfake and AI-generation tells, and the honest limits of AI-detector tools. Use when fact-checking a photo or video, checking for a deepfake or AI-generated image, spotting manipulation, or testing whether footage is recycled or miscaptioned. Applies to KYC and onboarding fraud, insurance claim review, disinformation analysis, and evidence admissibility. Reference at useosint.com/skills/is-this-photo-real.",
-      "descZh": "",
+      "descZh": "核验顺序就是全部：**先查来源，最后才看像素**。",
       "triggers": [
         "fact-checking a photo",
         "video",
@@ -652,7 +652,7 @@
       "dir": "skills/pattern-of-life-from-socials",
       "path": "skills/pattern-of-life-from-socials/SKILL.md",
       "desc": "Deep-dive a subject's social media presence — profile metadata, follower and mutual network, content analysis, and posting-time pattern of life across Instagram, Facebook, X/Twitter, TikTok, LinkedIn, Reddit, Telegram and Discord. Use when profiling a social account, mapping someone's associates, inferring a subject's timezone or routine from their posts, or archiving a profile before it is deleted. Applies to threat assessment and executive protection, insider-threat investigation, pre-litigation research, and personal exposure audits — with explicit limits on profiling uninvolved third parties. Reference at useosint.com/skills/pattern-of-life-from-socials.",
-      "descZh": "",
+      "descZh": "从散落的公开帖子还原「人在哪、什么时候在哪」的生活模式。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -695,7 +695,7 @@
       "dir": "skills/read-deleted-pages",
       "path": "skills/read-deleted-pages/SKILL.md",
       "desc": "Recover deleted, edited or historical web content using the Wayback Machine and its CDX API, archive.today, Common Crawl and Memento/Timetravel. Use when a page is deleted, changed or 404s, checking what a site used to say, finding old team or staff pages, prior pricing, removed posts, pre-redaction wording or old contact details, enumerating every archived URL for a domain, or preserving evidence before it disappears. Applies to litigation and evidence preservation, regulatory and disclosure review, due diligence on a company's history, and journalism. Reference at useosint.com/skills/read-deleted-pages.",
-      "descZh": "",
+      "descZh": "存档之所以可行，是因为删除总是发布之后的决定。",
       "triggers": [
         "a page is deleted",
         "changed",
@@ -745,7 +745,7 @@
       "dir": "skills/recon-a-domain-passively",
       "path": "skills/recon-a-domain-passively/SKILL.md",
       "desc": "End-to-end passive reconnaissance for a domain, website or IP — builds an asset inventory covering registration, DNS, subdomains, infrastructure, tech stack, history and ownership without sending a single packet to the target. Use when asked to research or profile a domain or website, map what an organisation runs, or investigate a suspicious site without alerting its operator. Applies to vendor and third-party risk assessment, attack-surface review, M&A technical diligence, phishing and fraud-site investigation, and pre-engagement scoping. Reference at useosint.com/skills/recon-a-domain-passively.",
-      "descZh": "",
+      "descZh": "从一个域名推出一份站得住脚的组织互联网资产地图（被动方式）。",
       "triggers": [
         "asked to research",
         "profile a domain",
@@ -792,7 +792,7 @@
       "dir": "skills/secrets-in-file-metadata",
       "path": "skills/secrets-in-file-metadata/SKILL.md",
       "desc": "Extract and interpret embedded file metadata with exiftool — EXIF GPS coordinates, camera make, model and serial, DateTimeOriginal and CreateDate timestamps, XMP and IPTC fields, and Office and PDF properties such as Author, Company, LastModifiedBy, template paths and revision counts. Use when reading EXIF from a photo, checking who really wrote a document, dating a file, fingerprinting a camera or phone, or investigating provenance in JPEG, HEIC, RAW, MP4, DOCX, XLSX or PDF. Applies to document-provenance disputes, insider-leak attribution, evidence handling, and pre-publication redaction checks. Reference at useosint.com/skills/secrets-in-file-metadata.",
-      "descZh": "",
+      "descZh": "调查里最快的线索常常就藏在文件内部：精确到 6 位的 GPS 等。",
       "triggers": [
         "dating a file",
         "fingerprin"
@@ -839,7 +839,7 @@
       "dir": "skills/secrets-in-git-history",
       "path": "skills/secrets-in-git-history/SKILL.md",
       "desc": "Mine GitHub, GitLab and git history for identities, infrastructure and leaked credentials using commit author emails, GitHub code search, the commit .patch endpoint, trufflehog, gitleaks, git log pickaxe and full-ref history scans. Use when investigating a developer or organisation on GitHub, finding leaked API keys, AWS keys or tokens in code, enumerating org members and their personal repos, or recovering secrets deleted from HEAD but still present in history or forks. Applies to software supply-chain risk, credential exposure response, M&A technical diligence, and insider-threat investigation. Reference at useosint.com/skills/secrets-in-git-history.",
-      "descZh": "",
+      "descZh": "一个仓库是三种情报产物：真实邮箱的人员名单、内部路径与历史凭证。",
       "triggers": [
         "organisation on GitHub",
         "finding leaked API keys",
@@ -889,7 +889,7 @@
       "dir": "skills/track-planes-and-ships",
       "path": "skills/track-planes-and-ships/SKILL.md",
       "desc": "Track aircraft and vessels from public ADS-B and AIS broadcasts using ADS-B Exchange, Flightradar24, FlightAware, MarineTraffic, VesselFinder and Equasis. Use when following a tail number or flight, looking up an ICAO 24-bit hex code, registration or callsign, tracing a ship by IMO number or MMSI, checking a flag of convenience or port-call history, finding who owns a private jet or vessel, or analysing AIS gaps and dark-fleet behaviour. Applies to sanctions-evasion detection, trade and supply-chain compliance, asset tracing and recovery, and investigative journalism. Reference at useosint.com/skills/track-planes-and-ships.",
-      "descZh": "",
+      "descZh": "飞机与船舶靠广播自报身份，志愿者用廉价接收机把它们收集起来。",
       "triggers": [
         "following a tail number",
         "flight",
@@ -934,7 +934,7 @@
       "dir": "skills/useosint",
       "path": "skills/useosint/SKILL.md",
       "desc": "Entry point for open-source intelligence, investigation and verification work. Routes any identifier — a name, phone number, email address, username, domain, company, photo, crypto address, tail number or IMO — to the right investigation workflow, after setting an authorised scope. Use when asked to investigate, research, verify, vet, check out, look up, background-check, trace, attribute or find someone or something; when a request involves due diligence, KYC or KYB, counterparty or vendor risk, sanctions and PEP screening, AML, fraud, business email compromise, verifying a supplier before payment, recruitment or marketplace scams, insider threat, executive protection, attack-surface review, journalism or fact-checking; or when someone asks \"who is this\", \"who owns this\", \"is this real\", \"where did this come from\" or \"where do I start\". Reference at useosint.com/skills.",
-      "descZh": "",
+      "descZh": "调查工作的路由器：按手上握有的选择器选对应流程。",
       "triggers": [
         "asked to investigate",
         "research",
@@ -983,7 +983,7 @@
       "dir": "skills/what-an-email-reveals",
       "path": "skills/what-an-email-reveals/SKILL.md",
       "desc": "Investigate an email address — MX and syntactic validation, Gravatar lookup, corporate email-format inference, breach exposure, and full mail-header analysis covering the Received chain, Message-ID and SPF, DKIM and DMARC results. Use for email OSINT, verifying whether an address exists, finding accounts registered to it, guessing a company's email format, or tracing where a suspicious message actually came from. Applies to business email compromise and invoice-fraud investigation, phishing triage, vendor-payment verification, and pre-engagement research. Reference at useosint.com/skills/what-an-email-reveals.",
-      "descZh": "",
+      "descZh": "邮箱通常是调查中价值最高的选择器：它把多个身份串在一起。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1023,7 +1023,7 @@
       "dir": "skills/what-leaked-about-you",
       "path": "skills/what-leaked-about-you/SKILL.md",
       "desc": "Check and interpret data-breach exposure for an email, username, phone or name using Have I Been Pwned, the Pwned Passwords k-anonymity range API, DeHashed, IntelX and Snusbase. Use when checking breach or leak exposure, finding which services an account was registered with, interpreting a combolist or credential dump, assessing credential compromise, or auditing your own leaked personal data. Applies to incident response and account-takeover triage, executive and VIP protection, pre-employment and vendor risk screening, and personal privacy audits. Reference at useosint.com/skills/what-leaked-about-you.",
-      "descZh": "",
+      "descZh": "泄露数据回答了别处问不出来的问题：你到底注册过哪些服务。",
       "triggers": [
         "checking breach",
         "leak exposure"
@@ -1066,7 +1066,7 @@
       "dir": "skills/where-was-this-taken",
       "path": "skills/where-was-this-taken/SKILL.md",
       "desc": "End-to-end workflow to establish where and when a photo or video was captured and whether it is authentic — evidentiary handling, metadata extraction, reverse image search for provenance, visual geolocation, chronolocation from shadows, and manipulation checks, ending in a location finding with a stated confidence radius. Use when asked to verify where an image was taken, confirm or refute a claimed location or date, or authenticate media before relying on it. Applies to insurance claims, litigation evidence, disinformation analysis, and conflict and human-rights documentation. Reference at useosint.com/skills/where-was-this-taken.",
-      "descZh": "",
+      "descZh": "输入图片/视频文件或链接，输出带置信度的位置。",
       "triggers": [
         "confirm",
         "date",
@@ -1113,7 +1113,7 @@
       "dir": "skills/who-owns-this-domain",
       "path": "skills/who-owns-this-domain/SKILL.md",
       "desc": "Establish who registered and who operates a domain using WHOIS, RDAP and DNS. Use when running a whois lookup, querying RDAP, digging A, AAAA, MX, NS, TXT, SOA or CAA records, reading SPF includes, DKIM selectors or DMARC rua addresses, finding the registrar, registrant or nameservers, doing reverse DNS, PTR, ASN or netblock lookups, or hunting historical WHOIS and passive DNS. Applies to phishing and brand-abuse takedown, domain-dispute and UDRP evidence, vendor verification before payment, and infrastructure attribution. Reference at useosint.com/skills/who-owns-this-domain.",
-      "descZh": "",
+      "descZh": "注册数据告诉你谁买了这个名字，DNS 告诉你谁在真正运行它。",
       "triggers": [
         "running a whois lookup",
         "querying RDAP",
@@ -1166,7 +1166,7 @@
       "dir": "skills/who-really-owns-it",
       "path": "skills/who-really-owns-it/SKILL.md",
       "desc": "Research companies, directors, shareholders and ultimate beneficial ownership in official corporate registries, filings and offshore datasets — OpenCorporates, UK Companies House and the PSC register, SEC EDGAR, US Secretary of State registries, EU business registers, GLEIF LEI records, OpenOwnership, OpenSanctions and the ICIJ Offshore Leaks database. Use when asked who owns or controls a company, to find a person's other directorships, or to unpick a group structure. Applies to KYB and UBO verification, AML and sanctions screening, nominee and shell-company detection, procurement integrity, and M&A diligence. Reference at useosint.com/skills/who-really-owns-it.",
-      "descZh": "",
+      "descZh": "登记信息把品牌变成有编号、日期与地址的法律实体。",
       "triggers": [
         "asked who owns",
         "controls a company",
@@ -1213,7 +1213,7 @@
       "dir": "skills/whose-number-is-this",
       "path": "skills/whose-number-is-this/SKILL.md",
       "desc": "Investigate a phone number — E.164 normalisation with libphonenumber, phoneinfoga scanning, carrier and line-type identification, VoIP and burner detection, messaging-app registration checks, and reverse-lookup and caller-ID sources. Use for phone OSINT and reverse phone lookup, \"who owns this number\", identifying a burner or VoIP number, or checking whether a number is registered on WhatsApp, Telegram or Signal. Applies to vishing and business email compromise investigation, verifying a counterparty before sending payment, recruitment and marketplace scam checks, and fraud triage. Reference at useosint.com/skills/whose-number-is-this.",
-      "descZh": "",
+      "descZh": "电话号码是强选择器：获取成本高、难以更换。",
       "triggers": [],
       "version": "",
       "license": "MIT",
@@ -1253,7 +1253,7 @@
       "dir": "skills/write-the-intel-brief",
       "path": "skills/write-the-intel-brief/SKILL.md",
       "desc": "Turn findings into a defensible intelligence product — BLUF key judgements, standardised estimative probability language, per-claim sourcing with timestamps and archived copies, separated observation, inference and assessment, documented negative findings and gaps, chain of custody and hashing, and redaction of uninvolved parties. Use when writing an intelligence report, due-diligence memo, evidence pack or executive summary, or when asked to write up an investigation so it survives challenge. Applies to regulated compliance reporting, litigation and disclosure, board and investment committee reporting, and law-enforcement referral. Reference at useosint.com/skills/write-the-intel-brief.",
-      "descZh": "",
+      "descZh": "报告是调查中唯一会被别人看到的部分，所以它本身就是一项技能。",
       "triggers": [
         "due-diligence memo",
         "evidence pack",
@@ -1301,7 +1301,7 @@
       "dir": "skills/x-ray-a-company",
       "path": "skills/x-ray-a-company/SKILL.md",
       "desc": "Corporate due-diligence workflow — resolve a brand or website to its registered legal entity, map group structure and beneficial ownership, profile officers and directors, enumerate the digital estate, and screen litigation, insolvency, procurement, sanctions, PEP and adverse media. Use when asked to check out, vet or research a company, verify a supplier or counterparty before signing or paying, or assess whether a business is real. Applies to vendor and third-party risk, KYC and KYB onboarding, M&A and investor diligence, procurement integrity, and shell-company assessment. Reference at useosint.com/skills/x-ray-a-company.",
-      "descZh": "",
+      "descZh": "从一个品牌、网站或发票，产出一份站得住脚的公司画像。",
       "triggers": [
         "asked to check out",
         "vet",

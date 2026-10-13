@@ -11,7 +11,7 @@
       "dir": "claude-mem-cursor/skills/install",
       "path": "claude-mem-cursor/skills/install/SKILL.md",
       "desc": "Use this when setting up claude-mem on Cursor: local or remote worker, local host-login observer or remote cmem.ai inference.",
-      "descZh": "",
+      "descZh": "安装 Grok Bot 侧的钩子集成（与 Grok Bot 绑定，不依赖其他 IDE）。",
       "triggers": [
         "remote worker",
         "remo"
@@ -58,7 +58,7 @@
       "dir": "claude-mem-cursor/skills/mem-search",
       "path": "claude-mem-cursor/skills/mem-search/SKILL.md",
       "desc": "Use this when the user asks to search memory, \"did we already solve this?\", \"how did we do X last time?\", or wants work from previous sessions.",
-      "descZh": "",
+      "descZh": "分层检索记忆：先按 ID 过滤再取完整 observation，不要一上来就拉原文。",
       "triggers": [],
       "version": "",
       "license": "Apache-2.0",
@@ -102,7 +102,7 @@
       "dir": "claude-mem-grok-bot/skills/host-observer",
       "path": "claude-mem-grok-bot/skills/host-observer/SKILL.md",
       "desc": "Use this when fulfilling claude-mem observer jobs on Grok Bot: reply only skip_summary or one full observation XML, never prose.",
-      "descZh": "",
+      "descZh": "扮演 claude-mem 生成循环里的模型：以 OpenRouter HTTP agent 打到本地 shim。",
       "triggers": [
         "one full obser"
       ],
@@ -146,7 +146,7 @@
       "dir": "claude-mem-grok-bot/skills/install",
       "path": "claude-mem-grok-bot/skills/install/SKILL.md",
       "desc": "Use this when setting up claude-mem on Grok Bot: local worker plus CMEM Pro observer (default), optional host-login observer, or remote cmem.ai. No Cursor required.",
-      "descZh": "",
+      "descZh": "安装 Cursor 侧集成（Grok Bot 没有 session-start / file-read / tool-use 钩子）。",
       "triggers": [
         "optional"
       ],
@@ -192,7 +192,7 @@
       "dir": "cowork/skills/agent-cost-report",
       "path": "cowork/skills/agent-cost-report/SKILL.md",
       "desc": "Believable agent cost report for any period, default the last 7 full days PT, not counting today. Measured tokens from Claude Code transcripts priced at OpenRouter list prices (ESTIMATED), measured provider spend when a sanctioned source exists, note-taker cost separate, Timing-style HTML/PDF plus report.json, line-items.csv, evidence.json.",
-      "descZh": "",
+      "descZh": "用 `scripts/` 流水线（transcript → token → 成本）产出 Claude Code 用量成本报告。",
       "triggers": [],
       "version": "",
       "license": "Apache-2.0",
@@ -249,7 +249,7 @@
       "dir": "cowork/skills/mem-search",
       "path": "cowork/skills/mem-search/SKILL.md",
       "desc": "This skill should be used when the user asks to \"search memory\", \"what do you remember about X\", \"check claude-mem\", \"mem search\", \"find past observations\", \"what did we do last session\", or wants prior-session context about a project, decision, file, or task. Searches the user's Claude-Mem (cmem.ai) memory.",
-      "descZh": "",
+      "descZh": "在 cmem.ai 上检索用户的持久记忆。",
       "triggers": [],
       "version": "",
       "license": "Apache-2.0",
@@ -293,7 +293,7 @@
       "dir": "cowork/skills/mem-setup",
       "path": "cowork/skills/mem-setup/SKILL.md",
       "desc": "This skill should be used when the user asks to \"set up claude-mem\", \"pair claude-mem\", \"connect cmem\", \"add my cmem key\", \"set up cloud sync in Cowork\", or provides cmem.ai Connect values (sync token, user id, SyncHub URL) for this plugin. Configures the claude-mem-cowork plugin credentials.",
-      "descZh": "",
+      "descZh": "用用户自己的 cmem.ai 凭据配置本插件，让钩子能正常工作。",
       "triggers": [],
       "version": "",
       "license": "Apache-2.0",
@@ -338,7 +338,7 @@
       "dir": "plugin/skills/babysit",
       "path": "plugin/skills/babysit/SKILL.md",
       "desc": "Watch a pull request or review cycle until it is ready to merge. Use when asked to babysit, monitor, or keep checking PR comments, reviews, and CI until all actionable issues are resolved.",
-      "descZh": "",
+      "descZh": "守着一个 PR 直到它真的干净为止——一轮检查过了不算完。",
       "triggers": [
         "asked to babysit",
         "monitor",
@@ -389,7 +389,7 @@
       "dir": "plugin/skills/ccs-align",
       "path": "plugin/skills/ccs-align/SKILL.md",
       "desc": "Run the CCS Align seat's hourly breathing cycle — prove the local claude-mem worker is healthy, pull needle observations through search → timeline → get_observations, land them in a seat-owned middle cache via atomic grab → append → filter exclude-marks → replace, manage exclude marks, and walk house → project → seat rules to detect conflicts (SHADOW_HOUSE, DENY_ALLOW, DRIFT, CLOCK_HEADER) with an append-only rules-report.md. Use when asked to run CCS Align, breathe the alignment seat, refresh the middle cache, exclude or restore an observation, walk rules, check rules conflicts, or check the Worker Watch board.",
-      "descZh": "",
+      "descZh": "「常设席位」而非全局规划者：每小时与相关方对话一次完成对齐。",
       "triggers": [
         "asked to run CCS Align",
         "refresh the middle cache",
@@ -441,7 +441,7 @@
       "dir": "plugin/skills/cloud-sync",
       "path": "plugin/skills/cloud-sync/SKILL.md",
       "desc": "Set up or check claude-mem cloud sync with cmem.ai Pro. Use when the user says \"set up cloud sync\", \"sync my memories\", \"cmem pro\", \"cloud backup\", \"sync status\", or wants their memory database backed up or synced to their cmem.ai account.",
-      "descZh": "",
+      "descZh": "已安装的 worker 通过 SyncHub 同步：一个客户端、一份持久状态。",
       "triggers": [
         "sync my memories",
         "cmem pro",
@@ -496,7 +496,7 @@
       "dir": "plugin/skills/design-is",
       "path": "plugin/skills/design-is/SKILL.md",
       "desc": "Audit a design against Dieter Rams' ten \"Good design is...\" principles, then hand off a /make-plan prompt for one of three outcomes — new design, refine design, or redesign. Use when the user says \"audit this design\", \"design review\", \"check this UI against Rams\", \"is this UI good\", \"critique this design\", \"design audit\", or asks for a critique that should lead to a plan.",
-      "descZh": "",
+      "descZh": "常规 UI 代码评审走 `/review`；本 skill 面向设计本身。",
       "triggers": [
         "design review",
         "is this"
@@ -543,7 +543,7 @@
       "dir": "plugin/skills/do",
       "path": "plugin/skills/do/SKILL.md",
       "desc": "Execute a phased implementation plan using subagents. Use when asked to execute, run, or carry out a plan — especially one created by make-plan.",
-      "descZh": "",
+      "descZh": "编排者角色：派子 agent 执行全部工作，自己不亲自动手。",
       "triggers": [
         "asked to execute",
         "run"
@@ -588,7 +588,7 @@
       "dir": "plugin/skills/handoff",
       "path": "plugin/skills/handoff/SKILL.md",
       "desc": "Generate a HANDOFF.md that captures goal, current state, files touched, failed attempts, and next steps — so a fresh Claude session can continue exactly where this one left off. Use when sessions are getting long, Claude keeps retrying the same broken solution, or the user wants to step away and resume later.",
-      "descZh": "",
+      "descZh": "生成结构化 `HANDOFF.md`，让全新的 Claude 会话拿到接着干所需的一切。",
       "triggers": [
         "the user wan"
       ],
@@ -634,7 +634,7 @@
       "dir": "plugin/skills/how-it-works",
       "path": "plugin/skills/how-it-works/SKILL.md",
       "desc": "Explain how claude-mem captures observations, when memory injection kicks in, and where data lives. Use when the user asks \"how does claude-mem work?\" or \"what is this thing doing?\".",
-      "descZh": "",
+      "descZh": "讲清机制：每次 Read/Edit/Bash 都变成一条压缩 observation 并入库。",
       "triggers": [],
       "version": "",
       "license": "Apache-2.0",
@@ -678,7 +678,7 @@
       "dir": "plugin/skills/knowledge-agent",
       "path": "plugin/skills/knowledge-agent/SKILL.md",
       "desc": "Build and query AI-powered knowledge bases from claude-mem observations. Use when users want to create focused \"brains\" from their observation history, ask questions about past work patterns, or compile expertise on specific topics.",
-      "descZh": "",
+      "descZh": "基于 claude-mem 的 observation 构建并查询 AI 知识库。",
       "triggers": [
         "ask questions about"
       ],
@@ -722,7 +722,7 @@
       "dir": "plugin/skills/learn-codebase",
       "path": "plugin/skills/learn-codebase/SKILL.md",
       "desc": "Prime a codebase by reading every source file in full. Use when starting work on a new or unfamiliar project, or when the user asks to \"learn the codebase\", \"read the codebase\", \"prime\", or \"get up to speed\".",
-      "descZh": "",
+      "descZh": "系统而彻底地通读代码库以快速上手。",
       "triggers": [
         "starting work on a new",
         "unfamiliar project"
@@ -769,7 +769,7 @@
       "dir": "plugin/skills/make-plan",
       "path": "plugin/skills/make-plan/SKILL.md",
       "desc": "Create a detailed, phased implementation plan with documentation discovery. Use when asked to plan a feature, task, or multi-step implementation — especially before executing with do.",
-      "descZh": "",
+      "descZh": "编排者角色：产出分阶段、可连续执行的 LLM 友好计划。",
       "triggers": [
         "asked to plan a feature",
         "task"
@@ -816,7 +816,7 @@
       "dir": "plugin/skills/mem-search",
       "path": "plugin/skills/mem-search/SKILL.md",
       "desc": "Search claude-mem persistent cross-session memory through enforced progressive disclosure. Use for previous decisions, solutions, work history, and before saving your own durable notes.",
-      "descZh": "",
+      "descZh": "所有记忆检索统一用 `mem_search`；本地与远端 MCP 暴露同一套能力。",
       "triggers": [],
       "version": "",
       "license": "Apache-2.0",
@@ -858,7 +858,7 @@
       "dir": "plugin/skills/mode-creator",
       "path": "plugin/skills/mode-creator/SKILL.md",
       "desc": "Interactively create, install, activate, and verify custom claude-mem modes, including domain-specific observation types, concept tags, optional Telegram alerts, bot setup, worker restart, and startup-context verification. Use this whenever someone asks to customize what claude-mem remembers, create or change a mode, track domain-specific notes, add observation types or tags, or send Telegram notifications for particular memories—even if they do not use the word \"mode.\"",
-      "descZh": "",
+      "descZh": "创建真正好用的笔记体系（不只是合法 JSON）：先访谈用户再给方案。",
       "triggers": [
         "create",
         "change a mode",
@@ -909,7 +909,7 @@
       "dir": "plugin/skills/oh-my-issues",
       "path": "plugin/skills/oh-my-issues/SKILL.md",
       "desc": "Cluster a GitHub issue backlog by root cause into a small set of plan-master issues, redirect children with a standardized comment, and bundle architectural-fix PRs that close clusters atomically. Use when an issue tracker has accumulated dozens of reports that share underlying defects, when asked to triage / consolidate / cluster / dedupe issues, when asked to build a plan series or roadmap from open issues, or when routing a new incoming bug into an existing plan.",
-      "descZh": "",
+      "descZh": "把 issue 积压变成路线图——issue 是症状数据，不是工作单元。",
       "triggers": [
         "when ask"
       ],
@@ -958,7 +958,7 @@
       "dir": "plugin/skills/pathfinder",
       "path": "plugin/skills/pathfinder/SKILL.md",
       "desc": "Map a codebase into feature-grouped flowcharts, identify duplicated concerns across features, and propose a unified architecture. Use when asked to \"find the ideal path,\" unify duplicated systems, or audit architecture before a refactor. Emits a proposed unified flowchart plus per-system /make-plan prompts.",
-      "descZh": "",
+      "descZh": "编排者角色：把代码库映射成分功能的流程图，并找出重复概念。",
       "triggers": [
         "unify duplicated systems"
       ],
@@ -1005,7 +1005,7 @@
       "dir": "plugin/skills/screenpipe",
       "path": "plugin/skills/screenpipe/SKILL.md",
       "desc": "Search screen and audio history recorded by Screenpipe and optionally save selected context into claude-mem. Use when the user asks to recall desktop activity, a meeting, or something seen in another app through Screenpipe.",
-      "descZh": "",
+      "descZh": "把 Screenpipe 的屏幕上下文引入当前任务。",
       "triggers": [
         "a meeting"
       ],
@@ -1052,7 +1052,7 @@
       "dir": "plugin/skills/smart-explore",
       "path": "plugin/skills/smart-explore/SKILL.md",
       "desc": "Token-optimized structural code search using tree-sitter AST parsing. Use instead of reading full files when you need to understand code structure, find functions, or explore a codebase efficiently.",
-      "descZh": "",
+      "descZh": "用 AST 解析做结构化代码探索，覆盖默认的探索行为。",
       "triggers": [],
       "version": "",
       "license": "Apache-2.0",
@@ -1099,7 +1099,7 @@
       "dir": "plugin/skills/standup",
       "path": "plugin/skills/standup/SKILL.md",
       "desc": "Facilitate a read-only standup across git worktrees, branches, or PRs to compare changes and produce one consolidation plan.",
-      "descZh": "",
+      "descZh": "站会主持人：汇总每个 git worktree（以及相关 PR）的进展。",
       "triggers": [],
       "version": "1.0.0",
       "license": "Apache-2.0",
@@ -1153,7 +1153,7 @@
       "dir": "plugin/skills/timeline-report",
       "path": "plugin/skills/timeline-report/SKILL.md",
       "desc": "Generate a \"Journey Into [Project]\" narrative report analyzing a project's entire development history from claude-mem's timeline. Use when asked for a timeline report, project history analysis, development journey, or full project report.",
-      "descZh": "",
+      "descZh": "基于 claude-mem 生成项目开发史的完整叙述分析。",
       "triggers": [
         "project history analysis",
         "development journey",
@@ -1204,7 +1204,7 @@
       "dir": "plugin/skills/version-bump",
       "path": "plugin/skills/version-bump/SKILL.md",
       "desc": "Automated semantic versioning and release workflow for Claude Code plugins. Handles version increments across package.json, marketplace.json, plugin.json manifests, build verification, git tagging, GitHub releases, and changelog generation. Ends with the agent running npm publish itself using the maintainer's npm token.",
-      "descZh": "",
+      "descZh": "升版本前先规划并写好详细的发版说明。",
       "triggers": [],
       "version": "",
       "license": "Apache-2.0",
@@ -1253,7 +1253,7 @@
       "dir": "plugin/skills/weekly-digests",
       "path": "plugin/skills/weekly-digests/SKILL.md",
       "desc": "Generate a serial week-by-week narrative digest of a project's full claude-mem timeline. Splits the timeline into per-ISO-week files, then runs one consecutive subagent per week — each receiving the prior week's carry-forward block — to produce one chapter per ISO week of data. Use when asked for \"weekly digests\", \"week-by-week story\", \"serial timeline\", or \"narrative chapters\" of a project's history.",
-      "descZh": "",
+      "descZh": "产出多章节连载式的项目记忆周刊。",
       "triggers": [
         "week-by-week story",
         "serial timeline",
@@ -1305,7 +1305,7 @@
       "dir": "plugin/skills/what-the",
       "path": "plugin/skills/what-the/SKILL.md",
       "desc": "What the? Use when the user wants a plain-English breakdown of something technical — the who, what, where, why, and when.",
-      "descZh": "",
+      "descZh": "用大白话解释某个东西的人、事、地、因、时。",
       "triggers": [
         "what",
         "where",
@@ -1351,7 +1351,7 @@
       "dir": "plugin/skills/wowerpoint",
       "path": "plugin/skills/wowerpoint/SKILL.md",
       "desc": "Turn one document into a kawaii NotebookLM slide-deck PDF. Use for \"wowerpoint this\", \"make a deck about <file>\", \"turn this report into slides\", or any request to render a single document as shareable narrative slides.",
-      "descZh": "",
+      "descZh": "一份文档进、一份 PDF 出，只做幻灯片（同引擎的视频与播客效果明显更差）。",
       "triggers": [],
       "version": "",
       "license": "Apache-2.0",
