@@ -1,8 +1,8 @@
 {
   "repo": "agno-agi/agno",
-  "commit": "1f2aac51eb28dc9c0970836d3b7ae046bae81bbb",
+  "commit": "00497422d4a386d93ab3b45c1a11faf42fcc932f",
   "branch": "main",
-  "fetchedAt": "2026-10-13T12:20:18.311Z",
+  "fetchedAt": "2026-10-14T12:31:20.959Z",
   "parseFail": 1,
   "skills": [
     {
@@ -30,7 +30,7 @@
       "install": {
         "clone": "git clone --depth 1 https://github.com/agno-agi/agno.git",
         "copy": "cp -r cookbook/02_agents/16_skills/sample_skills/code-review ~/.claude/skills/code-review",
-        "raw": "https://raw.githubusercontent.com/agno-agi/agno/1f2aac51eb28dc9c0970836d3b7ae046bae81bbb/cookbook/02_agents/16_skills/sample_skills/code-review/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/agno-agi/agno/00497422d4a386d93ab3b45c1a11faf42fcc932f/cookbook/02_agents/16_skills/sample_skills/code-review/SKILL.md",
         "saveAs": "~/.claude/skills/code-review/SKILL.md",
         "marketplace": ""
       },
@@ -40,7 +40,7 @@
       "bytes": 1262,
       "wordCount": 149,
       "repoLicense": "Apache-2.0",
-      "commit": "1f2aac51eb28dc9c0970836d3b7ae046bae81bbb",
+      "commit": "00497422d4a386d93ab3b45c1a11faf42fcc932f",
       "branch": "main",
       "body": "---\nname: code-review\ndescription: Code review assistance with linting, style checking, and best practices\nlicense: Apache-2.0\nmetadata:\n  version: \"1.0.0\"\n  author: agno-team\n  tags: [\"quality\", \"review\", \"linting\"]\n---\n# Code Review Skill\n\nYou are a code review assistant. When reviewing code, follow these steps:\n\n## Review Process\n1. **Check Style**: Reference the style guide using `get_skill_reference(\"code-review\", \"style-guide.md\")`\n2. **Run Style Check**: Use `get_skill_script(\"code-review\", \"check_style.py\")` for automated style checking\n3. **Look for Issues**: Identify potential bugs, security issues, and performance problems\n4. **Provide Feedback**: Give structured feedback with severity levels\n\n## Feedback Format\n- **Critical**: Must fix before merge (security vulnerabilities, bugs that cause crashes)\n- **Important**: Should fix, but not blocking (performance issues, code smells)\n- **Suggestion**: Nice to have improvements (naming, documentation, minor refactoring)\n\n## Review Checklist\n- [ ] Code follows naming conventions\n- [ ] No hardcoded secrets or credentials\n- [ ] Error handling is appropriate\n- [ ] Functions are not too long (< 50 lines)\n- [ ] No obvious security vulnerabilities\n- [ ] Tests are included for new functionality\n",
       "bodyMd": "# Code Review Skill\n\nYou are a code review assistant. When reviewing code, follow these steps:\n\n## Review Process\n1. **Check Style**: Reference the style guide using `get_skill_reference(\"code-review\", \"style-guide.md\")`\n2. **Run Style Check**: Use `get_skill_script(\"code-review\", \"check_style.py\")` for automated style checking\n3. **Look for Issues**: Identify potential bugs, security issues, and performance problems\n4. **Provide Feedback**: Give structured feedback with severity levels\n\n## Feedback Format\n- **Critical**: Must fix before merge (security vulnerabilities, bugs that cause crashes)\n- **Important**: Should fix, but not blocking (performance issues, code smells)\n- **Suggestion**: Nice to have improvements (naming, documentation, minor refactoring)\n\n## Review Checklist\n- [ ] Code follows naming conventions\n- [ ] No hardcoded secrets or credentials\n- [ ] Error handling is appropriate\n- [ ] Functions are not too long (< 50 lines)\n- [ ] No obvious security vulnerabilities\n- [ ] Tests are included for new functionality\n"
@@ -72,7 +72,7 @@
       "install": {
         "clone": "git clone --depth 1 https://github.com/agno-agi/agno.git",
         "copy": "cp -r cookbook/02_agents/16_skills/sample_skills/git-workflow ~/.claude/skills/git-workflow",
-        "raw": "https://raw.githubusercontent.com/agno-agi/agno/1f2aac51eb28dc9c0970836d3b7ae046bae81bbb/cookbook/02_agents/16_skills/sample_skills/git-workflow/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/agno-agi/agno/00497422d4a386d93ab3b45c1a11faf42fcc932f/cookbook/02_agents/16_skills/sample_skills/git-workflow/SKILL.md",
         "saveAs": "~/.claude/skills/git-workflow/SKILL.md",
         "marketplace": ""
       },
@@ -82,7 +82,7 @@
       "bytes": 2207,
       "wordCount": 279,
       "repoLicense": "Apache-2.0",
-      "commit": "1f2aac51eb28dc9c0970836d3b7ae046bae81bbb",
+      "commit": "00497422d4a386d93ab3b45c1a11faf42fcc932f",
       "branch": "main",
       "body": "---\nname: git-workflow\ndescription: Git workflow guidance for commits, branches, and pull requests\nlicense: Apache-2.0\nmetadata:\n  version: \"1.0.0\"\n  author: agno-team\n  tags: [\"git\", \"version-control\", \"workflow\"]\n---\n# Git Workflow Skill\n\nYou are a Git workflow assistant. Help users with commits, branches, and pull requests following best practices.\n\n## Commit Message Guidelines\n\nFor commit message generation and validation, use `get_skill_script(\"git-workflow\", \"commit_message.py\")`.\n\n### Format\n```\n<type>(<scope>): <subject>\n\n<body>\n\n<footer>\n```\n\n### Types\n- **feat**: New feature\n- **fix**: Bug fix\n- **docs**: Documentation only\n- **style**: Formatting, no code change\n- **refactor**: Code change that neither fixes a bug nor adds a feature\n- **perf**: Performance improvement\n- **test**: Adding or updating tests\n- **chore**: Maintenance tasks\n\n### Examples\n```\nfeat(auth): add OAuth2 login support\n\nImplemented OAuth2 authentication flow with Google and GitHub providers.\nAdded token refresh mechanism and session management.\n\nCloses #123\n```\n\n```\nfix(api): handle null response from external service\n\nAdded null check before processing response data to prevent\nNullPointerException when external service returns empty response.\n\nFixes #456\n```\n\n## Branch Naming\n\n### Format\n```\n<type>/<ticket-id>-<short-description>\n```\n\n### Examples\n- `feature/AUTH-123-oauth-login`\n- `fix/BUG-456-null-pointer`\n- `chore/TECH-789-update-deps`\n\n## Pull Request Guidelines\n\n### Title\nFollow commit message format for the title.\n\n### Description Template\n```markdown\n## Summary\nBrief description of what this PR does.\n\n## Changes\n- Change 1\n- Change 2\n\n## Testing\nHow was this tested?\n\n## Checklist\n- [ ] Tests added/updated\n- [ ] Documentation updated\n- [ ] No breaking changes\n```\n\n## Common Commands\n\n### Starting Work\n```bash\ngit checkout main\ngit pull origin main\ngit checkout -b feature/TICKET-123-description\n```\n\n### Committing\n```bash\ngit add -p  # Interactive staging\ngit commit -m \"type(scope): description\"\n```\n\n### Updating Branch\n```bash\ngit fetch origin\ngit rebase origin/main\n```\n\n### Creating PR\n```bash\ngit push -u origin feature/TICKET-123-description\n# Then create PR on GitHub/GitLab\n```\n",
       "bodyMd": "# Git Workflow Skill\n\nYou are a Git workflow assistant. Help users with commits, branches, and pull requests following best practices.\n\n## Commit Message Guidelines\n\nFor commit message generation and validation, use `get_skill_script(\"git-workflow\", \"commit_message.py\")`.\n\n### Format\n```\n<type>(<scope>): <subject>\n\n<body>\n\n<footer>\n```\n\n### Types\n- **feat**: New feature\n- **fix**: Bug fix\n- **docs**: Documentation only\n- **style**: Formatting, no code change\n- **refactor**: Code change that neither fixes a bug nor adds a feature\n- **perf**: Performance improvement\n- **test**: Adding or updating tests\n- **chore**: Maintenance tasks\n\n### Examples\n```\nfeat(auth): add OAuth2 login support\n\nImplemented OAuth2 authentication flow with Google and GitHub providers.\nAdded token refresh mechanism and session management.\n\nCloses #123\n```\n\n```\nfix(api): handle null response from external service\n\nAdded null check before processing response data to prevent\nNullPointerException when external service returns empty response.\n\nFixes #456\n```\n\n## Branch Naming\n\n### Format\n```\n<type>/<ticket-id>-<short-description>\n```\n\n### Examples\n- `feature/AUTH-123-oauth-login`\n- `fix/BUG-456-null-pointer`\n- `chore/TECH-789-update-deps`\n\n## Pull Request Guidelines\n\n### Title\nFollow commit message format for the title.\n\n### Description Template\n```markdown\n## Summary\nBrief description of what this PR does.\n\n## Changes\n- Change 1\n- Change 2\n\n## Testing\nHow was this tested?\n\n## Checklist\n- [ ] Tests added/updated\n- [ ] Documentation updated\n- [ ] No breaking changes\n```\n\n## Common Commands\n\n### Starting Work\n```bash\ngit checkout main\ngit pull origin main\ngit checkout -b feature/TICKET-123-description\n```\n\n### Committing\n```bash\ngit add -p  # Interactive staging\ngit commit -m \"type(scope): description\"\n```\n\n### Updating Branch\n```bash\ngit fetch origin\ngit rebase origin/main\n```\n\n### Creating PR\n```bash\ngit push -u origin feature/TICKET-123-description\n# Then create PR on GitHub/GitLab\n```\n"
@@ -114,7 +114,7 @@
       "install": {
         "clone": "git clone --depth 1 https://github.com/agno-agi/agno.git",
         "copy": "cp -r cookbook/05_agent_os/23_skills/sample_skills/system-info ~/.claude/skills/system-info",
-        "raw": "https://raw.githubusercontent.com/agno-agi/agno/1f2aac51eb28dc9c0970836d3b7ae046bae81bbb/cookbook/05_agent_os/23_skills/sample_skills/system-info/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/agno-agi/agno/00497422d4a386d93ab3b45c1a11faf42fcc932f/cookbook/05_agent_os/23_skills/sample_skills/system-info/SKILL.md",
         "saveAs": "~/.claude/skills/system-info/SKILL.md",
         "marketplace": ""
       },
@@ -124,7 +124,7 @@
       "bytes": 1200,
       "wordCount": 134,
       "repoLicense": "Apache-2.0",
-      "commit": "1f2aac51eb28dc9c0970836d3b7ae046bae81bbb",
+      "commit": "00497422d4a386d93ab3b45c1a11faf42fcc932f",
       "branch": "main",
       "body": "---\nname: system-info\ndescription: Inspect the host operating system, Python runtime, and local files\nlicense: MIT\nmetadata:\n  version: \"1.0.0\"\n  author: agno\n---\n# System Info Skill\n\nUse this skill when the user asks about the host running the AgentOS process or\nneeds a directory inventory from that host.\n\n## Available scripts\n\n- `get_system_info.py` returns the hostname, operating system, architecture,\n  Python version and executable, processor, and current UTC time.\n- `list_directory.py` lists the direct children of a directory. It accepts one\n  optional path argument and defaults to the skill directory.\n\n## Execution\n\nLoad these instructions before choosing a script. Execute a script through the\nskill tool and inspect its structured result:\n\n```python\nget_skill_script(\n    skill_name=\"system-info\",\n    script_path=\"get_system_info.py\",\n    execute=True,\n)\n```\n\nTo list a directory:\n\n```python\nget_skill_script(\n    skill_name=\"system-info\",\n    script_path=\"list_directory.py\",\n    execute=True,\n    args=[\".\"],\n)\n```\n\nOnly use data parsed from `stdout` when `returncode` is `0`. If execution\nreturns a nonzero code, report `stderr` or the JSON error instead of inferring\nthe result.\n",
       "bodyMd": "# System Info Skill\n\nUse this skill when the user asks about the host running the AgentOS process or\nneeds a directory inventory from that host.\n\n## Available scripts\n\n- `get_system_info.py` returns the hostname, operating system, architecture,\n  Python version and executable, processor, and current UTC time.\n- `list_directory.py` lists the direct children of a directory. It accepts one\n  optional path argument and defaults to the skill directory.\n\n## Execution\n\nLoad these instructions before choosing a script. Execute a script through the\nskill tool and inspect its structured result:\n\n```python\nget_skill_script(\n    skill_name=\"system-info\",\n    script_path=\"get_system_info.py\",\n    execute=True,\n)\n```\n\nTo list a directory:\n\n```python\nget_skill_script(\n    skill_name=\"system-info\",\n    script_path=\"list_directory.py\",\n    execute=True,\n    args=[\".\"],\n)\n```\n\nOnly use data parsed from `stdout` when `returncode` is `0`. If execution\nreturns a nonzero code, report `stderr` or the JSON error instead of inferring\nthe result.\n"
