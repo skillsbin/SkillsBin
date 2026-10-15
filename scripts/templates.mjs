@@ -311,6 +311,8 @@ export function layout({
 <link rel="stylesheet" href="${base}/assets/css/style.css">
 <script>try{var t=localStorage.getItem('sb-theme');if(t)document.documentElement.dataset.theme=t;else if(matchMedia('(prefers-color-scheme:dark)').matches)document.documentElement.dataset.theme='dark'}catch(e){}</script>
 ${ld}
+<!-- 统计：Umami (h57k.com) -->
+<script defer src="https://h57k.com/script.js" data-website-id="8dbed28d-7314-4705-a89b-b05919c6f6e9"></script>
 </head>
 <body data-base="${attr(base)}">
 <svg style="display:none" aria-hidden="true"><defs>${ICON_SPRITE}</defs></svg>
