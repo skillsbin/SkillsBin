@@ -1,8 +1,8 @@
 {
   "repo": "adrianco/retort",
-  "commit": "839aa9bb9d91326173edc88f236d11adda20c23d",
+  "commit": "775d1248b58c325b66f9cc8f50c7d7aacbd631ae",
   "branch": "main",
-  "fetchedAt": "2026-10-15T12:33:11.242Z",
+  "fetchedAt": "2026-10-16T12:31:52.619Z",
   "parseFail": 0,
   "skills": [
     {
@@ -32,7 +32,7 @@
       "install": {
         "clone": "git clone --depth 1 https://github.com/adrianco/retort.git",
         "copy": "cp -r experiments/adrianco/experiment-6/runs/language=go_model=claude-opus-4-7_tooling=beads/rep1/.agents/skills/beads ~/.claude/skills/beads",
-        "raw": "https://raw.githubusercontent.com/adrianco/retort/839aa9bb9d91326173edc88f236d11adda20c23d/experiments/adrianco/experiment-6/runs/language=go_model=claude-opus-4-7_tooling=beads/rep1/.agents/skills/beads/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/adrianco/retort/775d1248b58c325b66f9cc8f50c7d7aacbd631ae/experiments/adrianco/experiment-6/runs/language=go_model=claude-opus-4-7_tooling=beads/rep1/.agents/skills/beads/SKILL.md",
         "saveAs": "~/.claude/skills/beads/SKILL.md",
         "marketplace": ""
       },
@@ -42,7 +42,7 @@
       "bytes": 2146,
       "wordCount": 284,
       "repoLicense": "Apache-2.0",
-      "commit": "839aa9bb9d91326173edc88f236d11adda20c23d",
+      "commit": "775d1248b58c325b66f9cc8f50c7d7aacbd631ae",
       "branch": "main",
       "body": "---\nname: beads\ndescription: Use when working in a repository that uses bd or Beads for durable project task tracking, issue dependencies, blocker management, multi-session handoff, or shared work memory. Trigger when the user asks to find ready work, claim or close tasks, create follow-up work, inspect blockers, recover project context, or choose between local planning and persistent project tracking.\n---\n\n# Beads\n\nUse Beads as the shared project task system. Local plans, scratch files, and personal memories are useful, but they are not the durable source of truth for project work.\n\n## First Step\n\nRun:\n\n```bash\nbd prime\n```\n\nIf that prints nothing, check whether the repository has an active Beads workspace:\n\n```bash\nbd where\n```\n\n## Preferred Route\n\nUse the `bd` CLI when shell access is available. It is the most compact and direct Beads interface.\n\n## Core CLI Workflow\n\n1. Find work:\n\n```bash\nbd ready\nbd list --status=open\nbd list --status=in_progress\n```\n\n2. Inspect before editing:\n\n```bash\nbd show <id>\n```\n\n3. Claim work atomically:\n\n```bash\nbd update <id> --claim\n```\n\n4. Create durable follow-up work when implementation reveals new tasks:\n\n```bash\nbd create \"Short title\" --description=\"Why this exists and what needs to be done\" --type=task --priority=2\n```\n\n5. Close completed work:\n\n```bash\nbd close <id> --reason=\"Completed\"\n```\n\n## What Belongs In Beads\n\nUse Beads for:\n\n- shared project tasks\n- blockers and dependencies\n- discovered follow-up work\n- work that must survive thread reset, compaction, or handoff\n- status that another person or agent should be able to resume\n\nUse agent-local planning tools only for the current turn's execution checklist. Do not treat them as shared project state.\n\n## Rules\n\n- Do not create markdown TODO files as the source of truth when Beads is available.\n- Do not use `bd edit`; it opens an interactive editor. Use `bd update` flags instead.\n- Prefer `--json` when parsing `bd` output programmatically.\n- If hooks are installed, `bd prime` may already be injected. Run it manually when context is missing.\n- Do not auto-close or mutate tasks unless the work is actually complete.\n",
       "bodyMd": "# Beads\n\nUse Beads as the shared project task system. Local plans, scratch files, and personal memories are useful, but they are not the durable source of truth for project work.\n\n## First Step\n\nRun:\n\n```bash\nbd prime\n```\n\nIf that prints nothing, check whether the repository has an active Beads workspace:\n\n```bash\nbd where\n```\n\n## Preferred Route\n\nUse the `bd` CLI when shell access is available. It is the most compact and direct Beads interface.\n\n## Core CLI Workflow\n\n1. Find work:\n\n```bash\nbd ready\nbd list --status=open\nbd list --status=in_progress\n```\n\n2. Inspect before editing:\n\n```bash\nbd show <id>\n```\n\n3. Claim work atomically:\n\n```bash\nbd update <id> --claim\n```\n\n4. Create durable follow-up work when implementation reveals new tasks:\n\n```bash\nbd create \"Short title\" --description=\"Why this exists and what needs to be done\" --type=task --priority=2\n```\n\n5. Close completed work:\n\n```bash\nbd close <id> --reason=\"Completed\"\n```\n\n## What Belongs In Beads\n\nUse Beads for:\n\n- shared project tasks\n- blockers and dependencies\n- discovered follow-up work\n- work that must survive thread reset, compaction, or handoff\n- status that another person or agent should be able to resume\n\nUse agent-local planning tools only for the current turn's execution checklist. Do not treat them as shared project state.\n\n## Rules\n\n- Do not create markdown TODO files as the source of truth when Beads is available.\n- Do not use `bd edit`; it opens an interactive editor. Use `bd update` flags instead.\n- Prefer `--json` when parsing `bd` output programmatically.\n- If hooks are installed, `bd prime` may already be injected. Run it manually when context is missing.\n- Do not auto-close or mutate tasks unless the work is actually complete.\n"
