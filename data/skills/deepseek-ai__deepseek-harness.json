@@ -2,9 +2,56 @@
   "repo": "deepseek-ai/deepseek-harness",
   "commit": "687f282e8625c6b8d11ff58211a90524be2e4317",
   "branch": "master",
-  "fetchedAt": "2026-10-20T12:37:05.521Z",
-  "parseFail": 1,
+  "fetchedAt": "2026-10-21T12:40:12.528Z",
+  "parseFail": 0,
   "skills": [
+    {
+      "slug": "agent-experience",
+      "name": "agent-experience",
+      "dir": ".agents/skills/agent-experience",
+      "path": ".agents/skills/agent-experience/SKILL.md",
+      "desc": "Use when writing or changing a model-facing tool definition (name, description, parameter schema, or its system-prompt section), and when designing skills, context loading, or multi-step workflows, to make information discoverable and use context efficiently.",
+      "descZh": "",
+      "triggers": [
+        "writing",
+        "description",
+        "parameter schema"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/deepseek-ai/deepseek-harness.git",
+        "copy": "cp -r .agents/skills/agent-experience ~/.claude/skills/agent-experience",
+        "raw": "https://raw.githubusercontent.com/deepseek-ai/deepseek-harness/687f282e8625c6b8d11ff58211a90524be2e4317/.agents/skills/agent-experience/SKILL.md",
+        "saveAs": "~/.claude/skills/agent-experience/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:1244928710cb7e399325c416e80312037d4da249559a09fe289515cc66ee1752",
+      "bytes": 2093,
+      "wordCount": 265,
+      "repoLicense": "MIT",
+      "commit": "687f282e8625c6b8d11ff58211a90524be2e4317",
+      "branch": "master",
+      "body": "---\nname: agent-experience\ndescription: Use when writing or changing a model-facing tool definition (name, description, parameter schema, or its system-prompt section), and when designing skills, context loading, or multi-step workflows, to make information discoverable and use context efficiently.\n---\n\n- **Start with minimal context:** expose purpose, available actions, and constraints first; load detailed instructions when needed.\n- **Make discovery explicit:** every deferred resource needs a clear description and a reliable way to retrieve it.\n- **Keep critical constraints visible:** permissions, destructive effects, and required validation should appear before the relevant action.\n- **Prefer bounded outputs:** return concise results with identifiers or paths for retrieving details; avoid dumping entire logs or documents.\n- **Use locality:** include a bounded amount of likely needed adjacent context with an operation’s result. For example, deliver a thread reply with a few preceding messages. Mark omissions and truncation explicitly, and provide a way to retrieve more.\n- **Evaluate total work:** saving context is useful only if it does not cause more searches, repeated reads, or mistakes.\n\n## Tool definitions\n\n- **Delete obvious constraints.** Omit rules the model learns from the call result, such as a missing file failing to read or a failed send not being delivered.\n- **Describe behavior, not implementation.** State what the tool does and returns; omit internal mechanisms, output markers the model sees in results, and enforcement details.\n- **Put parameter rules on the parameter.** Defaults, ranges, pairing, and when-to-set rules belong in that parameter's description or schema; a description that varies with configuration usually means the varying part belongs to a parameter.\n- **Say each fact once.** Do not repeat the tool definition in its system-prompt section, a parameter description in the tool description, or one tool's rules in another tool.\n- **Measure the change.** Compare first-turn prompt tokens before and after a tool-definition change.\n",
+      "bodyMd": "- **Start with minimal context:** expose purpose, available actions, and constraints first; load detailed instructions when needed.\n- **Make discovery explicit:** every deferred resource needs a clear description and a reliable way to retrieve it.\n- **Keep critical constraints visible:** permissions, destructive effects, and required validation should appear before the relevant action.\n- **Prefer bounded outputs:** return concise results with identifiers or paths for retrieving details; avoid dumping entire logs or documents.\n- **Use locality:** include a bounded amount of likely needed adjacent context with an operation’s result. For example, deliver a thread reply with a few preceding messages. Mark omissions and truncation explicitly, and provide a way to retrieve more.\n- **Evaluate total work:** saving context is useful only if it does not cause more searches, repeated reads, or mistakes.\n\n## Tool definitions\n\n- **Delete obvious constraints.** Omit rules the model learns from the call result, such as a missing file failing to read or a failed send not being delivered.\n- **Describe behavior, not implementation.** State what the tool does and returns; omit internal mechanisms, output markers the model sees in results, and enforcement details.\n- **Put parameter rules on the parameter.** Defaults, ranges, pairing, and when-to-set rules belong in that parameter's description or schema; a description that varies with configuration usually means the varying part belongs to a parameter.\n- **Say each fact once.** Do not repeat the tool definition in its system-prompt section, a parameter description in the tool description, or one tool's rules in another tool.\n- **Measure the change.** Compare first-turn prompt tokens before and after a tool-definition change.\n"
+    },
     {
       "slug": "cordis-styling-nitpicking",
       "name": "cordis-styling-nitpicking",
@@ -868,53 +915,6 @@
       "branch": "master",
       "body": "---\nname: preview-tour\ndescription: Inspect the bundled Preview workspace and its deterministic Session examples.\n---\n\n# Preview tour\n\nRead the workspace files, inspect the tool gallery, open both subagent histories, and load the earlier conversation page.\n",
       "bodyMd": "# Preview tour\n\nRead the workspace files, inspect the tool gallery, open both subagent histories, and load the earlier conversation page.\n"
-    },
-    {
-      "slug": "agent-experience",
-      "name": "agent-experience",
-      "dir": "packages/preset/agent-preset/skills/agent-experience",
-      "path": "packages/preset/agent-preset/skills/agent-experience/SKILL.md",
-      "desc": "Use when writing or changing a model-facing tool definition (name, description, parameter schema, or its system-prompt section), and when designing skills, context loading, or multi-step workflows, to make information discoverable and use context efficiently.",
-      "descZh": "",
-      "triggers": [
-        "writing",
-        "description",
-        "parameter schema"
-      ],
-      "version": "",
-      "license": "MIT",
-      "allowedTools": [],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "codex",
-        "mcp"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": false,
-        "bins": [
-          "make"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/deepseek-ai/deepseek-harness.git",
-        "copy": "cp -r packages/preset/agent-preset/skills/agent-experience ~/.claude/skills/agent-experience",
-        "raw": "https://raw.githubusercontent.com/deepseek-ai/deepseek-harness/687f282e8625c6b8d11ff58211a90524be2e4317/packages/preset/agent-preset/skills/agent-experience/SKILL.md",
-        "saveAs": "~/.claude/skills/agent-experience/SKILL.md",
-        "marketplace": ""
-      },
-      "bodyInline": true,
-      "excerpt": "",
-      "contentHash": "sha256:1244928710cb7e399325c416e80312037d4da249559a09fe289515cc66ee1752",
-      "bytes": 2093,
-      "wordCount": 265,
-      "repoLicense": "MIT",
-      "commit": "687f282e8625c6b8d11ff58211a90524be2e4317",
-      "branch": "master",
-      "body": "---\nname: agent-experience\ndescription: Use when writing or changing a model-facing tool definition (name, description, parameter schema, or its system-prompt section), and when designing skills, context loading, or multi-step workflows, to make information discoverable and use context efficiently.\n---\n\n- **Start with minimal context:** expose purpose, available actions, and constraints first; load detailed instructions when needed.\n- **Make discovery explicit:** every deferred resource needs a clear description and a reliable way to retrieve it.\n- **Keep critical constraints visible:** permissions, destructive effects, and required validation should appear before the relevant action.\n- **Prefer bounded outputs:** return concise results with identifiers or paths for retrieving details; avoid dumping entire logs or documents.\n- **Use locality:** include a bounded amount of likely needed adjacent context with an operation’s result. For example, deliver a thread reply with a few preceding messages. Mark omissions and truncation explicitly, and provide a way to retrieve more.\n- **Evaluate total work:** saving context is useful only if it does not cause more searches, repeated reads, or mistakes.\n\n## Tool definitions\n\n- **Delete obvious constraints.** Omit rules the model learns from the call result, such as a missing file failing to read or a failed send not being delivered.\n- **Describe behavior, not implementation.** State what the tool does and returns; omit internal mechanisms, output markers the model sees in results, and enforcement details.\n- **Put parameter rules on the parameter.** Defaults, ranges, pairing, and when-to-set rules belong in that parameter's description or schema; a description that varies with configuration usually means the varying part belongs to a parameter.\n- **Say each fact once.** Do not repeat the tool definition in its system-prompt section, a parameter description in the tool description, or one tool's rules in another tool.\n- **Measure the change.** Compare first-turn prompt tokens before and after a tool-definition change.\n",
-      "bodyMd": "- **Start with minimal context:** expose purpose, available actions, and constraints first; load detailed instructions when needed.\n- **Make discovery explicit:** every deferred resource needs a clear description and a reliable way to retrieve it.\n- **Keep critical constraints visible:** permissions, destructive effects, and required validation should appear before the relevant action.\n- **Prefer bounded outputs:** return concise results with identifiers or paths for retrieving details; avoid dumping entire logs or documents.\n- **Use locality:** include a bounded amount of likely needed adjacent context with an operation’s result. For example, deliver a thread reply with a few preceding messages. Mark omissions and truncation explicitly, and provide a way to retrieve more.\n- **Evaluate total work:** saving context is useful only if it does not cause more searches, repeated reads, or mistakes.\n\n## Tool definitions\n\n- **Delete obvious constraints.** Omit rules the model learns from the call result, such as a missing file failing to read or a failed send not being delivered.\n- **Describe behavior, not implementation.** State what the tool does and returns; omit internal mechanisms, output markers the model sees in results, and enforcement details.\n- **Put parameter rules on the parameter.** Defaults, ranges, pairing, and when-to-set rules belong in that parameter's description or schema; a description that varies with configuration usually means the varying part belongs to a parameter.\n- **Say each fact once.** Do not repeat the tool definition in its system-prompt section, a parameter description in the tool description, or one tool's rules in another tool.\n- **Measure the change.** Compare first-turn prompt tokens before and after a tool-definition change.\n"
     },
     {
       "slug": "cordis-composition-reference",
