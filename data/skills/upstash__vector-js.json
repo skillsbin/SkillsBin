@@ -1,8 +1,8 @@
 {
   "repo": "upstash/vector-js",
-  "commit": "ad3ad721a1d5035c5a891830174cbba8bcd9d10d",
+  "commit": "c5d703a985cd5ed249b0e69e7a6ee58d0116dc00",
   "branch": "master",
-  "fetchedAt": "2026-10-26T14:41:30.818Z",
+  "fetchedAt": "2026-10-27T12:41:36.311Z",
   "parseFail": 0,
   "skills": [
     {
@@ -33,7 +33,7 @@
       "install": {
         "clone": "git clone --depth 1 https://github.com/upstash/vector-js.git",
         "copy": "cp -r skills ~/.claude/skills/skills",
-        "raw": "https://raw.githubusercontent.com/upstash/vector-js/ad3ad721a1d5035c5a891830174cbba8bcd9d10d/skills/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/upstash/vector-js/c5d703a985cd5ed249b0e69e7a6ee58d0116dc00/skills/SKILL.md",
         "saveAs": "~/.claude/skills/skills/SKILL.md",
         "marketplace": ""
       },
@@ -43,7 +43,7 @@
       "bytes": 1443,
       "wordCount": 156,
       "repoLicense": "MIT",
-      "commit": "ad3ad721a1d5035c5a891830174cbba8bcd9d10d",
+      "commit": "c5d703a985cd5ed249b0e69e7a6ee58d0116dc00",
       "branch": "master",
       "body": "---\nname: upstash-vector-js\ndescription: Provides quick-start guidance and a unified entry point for Vector features, SDK usage, and integrations. Use when users ask how to work with Vector, its TS SDK, features, or supported frameworks.\n---\n\n# Vector Documentation Skill\n\n## Quick Start\n\nVector is a high‑performance vector database for storing, querying, and managing vector embeddings.\n\nBasic workflow:\n\n- Install the Vector TS SDK.\n- Connect to a Vector instance.\n- Upsert vectors, query them, and manage namespaces.\n\nExample (TypeScript):\n\n```ts\nimport { Index } from \"@upstash/vector\";\nconst index = new Index({\n  url: process.env.UPSTASH_VECTOR_REST_URL!,\n  token: process.env.UPSTASH_VECTOR_REST_TOKEN!,\n});\n\nawait index.upsert([{ id: \"1\", vector: [0.1, 0.2], metadata: { tag: \"example\" } }]);\n\nconst results = await index.query({\n  vector: [0.1, 0.2],\n  topK: 5,\n});\n```\n\nFor full usage, refer to the linked skill files below.\n\n## Other Skill Files\n\n### TS SDK Reference\n\n- `sdk-methods`: Explains SDK commands: delete, fetch, info, query, range, reset, resumable-query, upsert\n\n### Features\n\n- `features/namespaces`: Explains namespaces and dataset organization.\n- `features/index-structure`: Covers hybrid and sparse index structures.\n- `features/filtering-and-metadata`: Details metadata storage and server-side filtering.\n\nUse these files for deeper guidance on SDK usage, advanced configurations, algorithms, and integrations.\n",
       "bodyMd": "# Vector Documentation Skill\n\n## Quick Start\n\nVector is a high‑performance vector database for storing, querying, and managing vector embeddings.\n\nBasic workflow:\n\n- Install the Vector TS SDK.\n- Connect to a Vector instance.\n- Upsert vectors, query them, and manage namespaces.\n\nExample (TypeScript):\n\n```ts\nimport { Index } from \"@upstash/vector\";\nconst index = new Index({\n  url: process.env.UPSTASH_VECTOR_REST_URL!,\n  token: process.env.UPSTASH_VECTOR_REST_TOKEN!,\n});\n\nawait index.upsert([{ id: \"1\", vector: [0.1, 0.2], metadata: { tag: \"example\" } }]);\n\nconst results = await index.query({\n  vector: [0.1, 0.2],\n  topK: 5,\n});\n```\n\nFor full usage, refer to the linked skill files below.\n\n## Other Skill Files\n\n### TS SDK Reference\n\n- `sdk-methods`: Explains SDK commands: delete, fetch, info, query, range, reset, resumable-query, upsert\n\n### Features\n\n- `features/namespaces`: Explains namespaces and dataset organization.\n- `features/index-structure`: Covers hybrid and sparse index structures.\n- `features/filtering-and-metadata`: Details metadata storage and server-side filtering.\n\nUse these files for deeper guidance on SDK usage, advanced configurations, algorithms, and integrations.\n"
