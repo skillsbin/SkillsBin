@@ -1,11 +1,18 @@
 # ============================================================
 # SkillsBin — 定时采集 + 发布（12 小时一轮）
 # ------------------------------------------------------------
-# 与 GetHub 的差异：
-#   · 本站没有「发现层自动开候选 PR」——那部分（open-review-pr.mjs）属于阶段 3，
-#     上线前本文件只做「采集 → 提交数据 → 构建预渲染 → 发布 Pages」。
-#   · 发布在同一个 run 内完成：本工作流的 push 用 GITHUB_TOKEN，
-#     GitHub 不会因它再触发 deploy.yml，所以不能指望那条链路。
+# 流程：发现层找候选 → 采集既有队列 → 提交数据 → 构建预渲染 → 发布 Pages，
+#      并把新候选开成审核 PR（人工 Merge = 采纳收录）。
+#
+# 关键（2026-11-09 修复）：发现层此前从未在 CI 里跑过 ——
+#   crawl.mjs 只认 config.watchlist，而 watchlist 只能由审核并入，
+#   于是采集队列永远固定在 400 条，发现层找到的新仓库全被丢弃，
+#   站点内容从 2026-10-13 起就停止增长（repos 338 → 340 走了 27 天）。
+#   现在每轮都跑 discover.mjs（写 pending.json）+ open-review-pr.mjs（开审核 PR），
+#   人 Merge 一次就多一批仓库进队列。
+#
+# 发布在同一个 run 内完成：本工作流的 push 用 GITHUB_TOKEN，
+# GitHub 不会因它再触发 deploy.yml，所以不能指望那条链路。
 #
 # 依赖的仓库 Secrets：
 #   GH_PAT                  fine-grained PAT（5000 次/小时；不配则回退 GITHUB_TOKEN 的 1000 次/小时）
@@ -30,6 +37,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write   # 开/更新候选审核 PR 需要
 
 concurrency:
   group: sync-data
@@ -54,6 +62,10 @@ jobs:
 
       # 2) 采集。断点续采由 data/sync-state.json 的 cursor 承载；
       #    raw.githubusercontent.com 在 Actions 上可达 → 正文 0 配额。
+      #    ⚠️ 站点长期不涨新的根因：发现层从未在 CI 里跑过 ——
+      #    crawl.mjs 只认 config.watchlist，而 watchlist 只能由审核并入，
+      #    于是队列永远是固定的 400 条，发现层找到的新仓库全被丢弃。
+      #    现在把发现层接进来（放在采集之后，避免抢采集的配额预算）。
       - name: Crawl skills
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
@@ -65,6 +77,14 @@ jobs:
           else
             node crawler/crawl.mjs --no-discover
           fi
+
+      # 2.4) 发现层：主动搜 GitHub 找新仓库 → 写进待审队列（不上线）。
+      #      独立脚本、单独配额，与采集的 watchlist 队列互不干扰。
+      #      代码搜索配额 10 次/分钟，故每轮只跑有限的次数。
+      - name: Discover new repositories
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+        run: node crawler/discover.mjs
 
       # 2.5) 套用中文摘要覆盖层（data/desczh.json 是唯一来源）。
       #      采集会重建 data/skills/<id>.json 并把 skill 级 descZh 清空，
@@ -91,6 +111,38 @@ jobs:
             git rebase "origin/$BR" || { git rebase --abort; git merge -X ours --no-edit "origin/$BR"; }
             git push
             echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # 4) 待审候选 → 生成审核 PR 的标题/正文（只改工作区的 config.json）
+      - name: Prepare candidate review PR
+        id: cand
+        run: node crawler/open-review-pr.mjs
+
+      # 5) 把这份「采纳 diff」推到临时分支并开/更新 PR，等人在 GitHub 上 Merge 或 Close。
+      #    没有这一步，发现层找到的候选就只能永远堆在 pending.json 里 ——
+      #    站点内容不涨，正是因为候选从没有变成 watchlist 条目。
+      - name: Open or update candidate review PR
+        if: steps.cand.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: crawl/candidates
+          TITLE: ${{ steps.cand.outputs.title }}
+          BODY: ${{ steps.cand.outputs.body }}
+          BASE: ${{ github.event.repository.default_branch || 'main' }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email  "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$BRANCH"
+          git add crawler/config.json
+          git commit -m "$TITLE"
+          git push -f origin "$BRANCH"
+          PR=$(gh pr list --state open --head "$BRANCH" --json number --jq '.[0].number' || true)
+          if [ -n "$PR" ]; then
+            gh pr edit "$PR" --title "$TITLE" --body-file "$BODY"
+            echo "已更新候选审核 PR #$PR"
+          else
+            gh pr create --base "$BASE" --head "$BRANCH" --title "$TITLE" --body-file "$BODY"
+            echo "已创建候选审核 PR"
           fi
 
   deploy-cloudflare:

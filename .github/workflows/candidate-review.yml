@@ -1,0 +1,71 @@
+# ============================================================
+# SkillsBin — 候选审核 PR 的收尾
+# ------------------------------------------------------------
+# 发现层开出的「候选待审 PR」，审核人在 GitHub 上操作：
+#   · Merge  → 采纳，watchlist 生效，随后 sync.yml 自动采集上线
+#   · Close  → 拒收，本工作流把该 PR 想采纳的仓库写进
+#              crawler/candidates/rejected.json，60 天内不再出现在待审队列
+# 两种情况下都会顺手删掉临时分支 crawl/candidates，保持仓库整洁。
+#
+# 前置：仓库 Settings → Actions → General =
+#   Workflow permissions: Read and write
+#   勾选 Allow GitHub Actions to create and approve pull requests
+# ============================================================
+
+name: candidate-review
+
+on:
+  pull_request_target:
+    types: [closed]
+    paths:
+      - 'crawler/config.json'
+      - 'crawler/candidates/**'
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout base branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.ref }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Record rejection (only when closed without merge)
+        id: reject
+        if: github.event.pull_request.merged == false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: node crawler/mark-candidates-rejected.mjs
+
+      - name: Commit rejection list
+        if: steps.reject.outputs.changed == 'true'
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add crawler/candidates/rejected.json
+          git commit -m "chore(discover): 拒收 PR #${PR_NUMBER} 的采集候选"
+          git push
+
+      - name: Delete temporary candidate branch
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: ${{ steps.reject.outputs.branch || github.event.pull_request.head.ref }}
+          REPO: ${{ github.repository }}
+        run: |
+          if [ -n "$BRANCH" ] && [ "$BRANCH" != "${{ github.event.pull_request.base.ref }}" ]; then
+            gh api -X DELETE "repos/$REPO/git/refs/heads/$BRANCH" \
+              && echo "已删除分支 $BRANCH" \
+              || echo "分支 $BRANCH 不存在或已删除，跳过"
+          fi
