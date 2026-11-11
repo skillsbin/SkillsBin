@@ -1,8 +1,8 @@
 {
   "repo": "mksglu/context-mode",
-  "commit": "3a3ef7d53c9a30ef05d8f1b009afbcf8d9c6d0a2",
+  "commit": "9cd90eac190fb420e5a74aa8d0ae7513b7d728d2",
   "branch": "main",
-  "fetchedAt": "2026-11-10T00:46:12.440Z",
+  "fetchedAt": "2026-11-11T00:45:47.715Z",
   "parseFail": 0,
   "skills": [
     {
@@ -39,7 +39,7 @@
       "install": {
         "clone": "git clone --depth 1 https://github.com/mksglu/context-mode.git",
         "copy": "cp -r .claude/skills/release ~/.claude/skills/release",
-        "raw": "https://raw.githubusercontent.com/mksglu/context-mode/3a3ef7d53c9a30ef05d8f1b009afbcf8d9c6d0a2/.claude/skills/release/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/mksglu/context-mode/9cd90eac190fb420e5a74aa8d0ae7513b7d728d2/.claude/skills/release/SKILL.md",
         "saveAs": "~/.claude/skills/release/SKILL.md",
         "marketplace": "/plugin marketplace add mksglu/context-mode"
       },
@@ -49,7 +49,7 @@
       "bytes": 2786,
       "wordCount": 433,
       "repoLicense": "",
-      "commit": "3a3ef7d53c9a30ef05d8f1b009afbcf8d9c6d0a2",
+      "commit": "9cd90eac190fb420e5a74aa8d0ae7513b7d728d2",
       "branch": "main",
       "body": "---\nname: release\ndescription: Release context-mode v2 from the v2 branch. Runs the checks and the live test, shows the next version and notes, then starts the release workflow and watches it.\ndisable-model-invocation: true\n---\nRelease context-mode v2 (ADR-0013). Starting the skill is the approval for this release; the preview in step 6 is for information, not a second approval. Stop and report at the first step that fails; do not retry a failed step with a different method.\n\n1. Check the start state. Run `git branch --show-current` and `git status --porcelain`. The branch must be `v2` and the tree must be clean; if not, stop and report what is dirty. Run `gh auth status` and `git pull --ff-only`.\n2. Run the E2E cases: `node e2e/cases/run.mjs`. If a row is `FAIL`, stop and report the failing case ids.\n3. Run the v1 KEEP-PASS unit tests (GS4). `npm ci` installs the dev toolchain only (ADR-0013 \"Trust boundary\"); users never run npm. Then run `npx vitest run`. If one of the 131 tracked tests fails, stop and show its name.\n4. Run the live test: `node e2e/live/run.mjs --all` (Sonnet 5, effort low, ADR-0017) and show its table. If a row is `FAIL`, stop. Then update the live-skip streak in `e2e/live/skip-streak.json` (`{ \"streak\": <n> }`): if the table has one or more `SKIPPED` rows, add 1 to `streak`; if it has none, reset it to 0. If the file changed, commit it on `v2` and push. If `streak` is now `LIVE_SKIP_LIMIT` (3) or more, refuse to continue: report which cases were skipped and the note on each row.\n5. v1 migration checkpoint (GS10). The cases `e2e/live/cases/v1-migration-*.json` ran in step 4 (their `covers` paths include `v1-transition`, so `--all` selects them). Do not run them again; confirm each one is `PASS` in the step 4 table, and stop if one is not.\n6. Preview. Run `node scripts/release/plan.mjs --dry-run`. Show the owner the next version and the release notes. If it says there is nothing to release, stop.\n7. Start the release: `gh workflow run release.yml --ref v2 -f sha=$(git rev-parse HEAD)`.\n8. Follow the new run with `gh run watch` and report each job status as it changes. At the end, report in one short table: version, release commit on `release`, GitHub Release URL, live test (passed, or skipped), and the smoke-install result per agent.\n\n`skip-live`: if the owner types `/release skip-live`, skip steps 4 and 5 (the streak file does not change) and in step 6 run `node scripts/release/plan.mjs --dry-run --skip-live`, so the release notes carry the line \"Live E2E skipped for this release.\" Say in the final report that the live test was skipped.\n\nThis skill never runs these one-time steps: switching the marketplace to `ref: \"release\"`, adding workflows to `main`, and `npm deprecate`. Ask the owner about each one separately.\n",
       "bodyMd": "Release context-mode v2 (ADR-0013). Starting the skill is the approval for this release; the preview in step 6 is for information, not a second approval. Stop and report at the first step that fails; do not retry a failed step with a different method.\n\n1. Check the start state. Run `git branch --show-current` and `git status --porcelain`. The branch must be `v2` and the tree must be clean; if not, stop and report what is dirty. Run `gh auth status` and `git pull --ff-only`.\n2. Run the E2E cases: `node e2e/cases/run.mjs`. If a row is `FAIL`, stop and report the failing case ids.\n3. Run the v1 KEEP-PASS unit tests (GS4). `npm ci` installs the dev toolchain only (ADR-0013 \"Trust boundary\"); users never run npm. Then run `npx vitest run`. If one of the 131 tracked tests fails, stop and show its name.\n4. Run the live test: `node e2e/live/run.mjs --all` (Sonnet 5, effort low, ADR-0017) and show its table. If a row is `FAIL`, stop. Then update the live-skip streak in `e2e/live/skip-streak.json` (`{ \"streak\": <n> }`): if the table has one or more `SKIPPED` rows, add 1 to `streak`; if it has none, reset it to 0. If the file changed, commit it on `v2` and push. If `streak` is now `LIVE_SKIP_LIMIT` (3) or more, refuse to continue: report which cases were skipped and the note on each row.\n5. v1 migration checkpoint (GS10). The cases `e2e/live/cases/v1-migration-*.json` ran in step 4 (their `covers` paths include `v1-transition`, so `--all` selects them). Do not run them again; confirm each one is `PASS` in the step 4 table, and stop if one is not.\n6. Preview. Run `node scripts/release/plan.mjs --dry-run`. Show the owner the next version and the release notes. If it says there is nothing to release, stop.\n7. Start the release: `gh workflow run release.yml --ref v2 -f sha=$(git rev-parse HEAD)`.\n8. Follow the new run with `gh run watch` and report each job status as it changes. At the end, report in one short table: version, release commit on `release`, GitHub Release URL, live test (passed, or skipped), and the smoke-install result per agent.\n\n`skip-live`: if the owner types `/release skip-live`, skip steps 4 and 5 (the streak file does not change) and in step 6 run `node scripts/release/plan.mjs --dry-run --skip-live`, so the release notes carry the line \"Live E2E skipped for this release.\" Say in the final report that the live test was skipped.\n\nThis skill never runs these one-time steps: switching the marketplace to `ref: \"release\"`, adding workflows to `main`, and `npm deprecate`. Ask the owner about each one separately.\n"
@@ -82,7 +82,7 @@
       "install": {
         "clone": "git clone --depth 1 https://github.com/mksglu/context-mode.git",
         "copy": "cp -r plugins/claude-code/codex/skills/ctx-doctor ~/.claude/skills/ctx-doctor",
-        "raw": "https://raw.githubusercontent.com/mksglu/context-mode/3a3ef7d53c9a30ef05d8f1b009afbcf8d9c6d0a2/plugins/claude-code/codex/skills/ctx-doctor/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/mksglu/context-mode/9cd90eac190fb420e5a74aa8d0ae7513b7d728d2/plugins/claude-code/codex/skills/ctx-doctor/SKILL.md",
         "saveAs": "~/.claude/skills/ctx-doctor/SKILL.md",
         "marketplace": "/plugin marketplace add mksglu/context-mode"
       },
@@ -92,7 +92,7 @@
       "bytes": 269,
       "wordCount": 23,
       "repoLicense": "",
-      "commit": "3a3ef7d53c9a30ef05d8f1b009afbcf8d9c6d0a2",
+      "commit": "9cd90eac190fb420e5a74aa8d0ae7513b7d728d2",
       "branch": "main",
       "body": "---\nname: ctx-doctor\ndescription: Check that context-mode is installed and working, as a table.\ndisable-model-invocation: true\n---\nCall the mcp__context_mode__ctx_doctor tool and show its table to the user unchanged. If a row failed, list the fixes it names, in order.\n",
       "bodyMd": "Call the mcp__context_mode__ctx_doctor tool and show its table to the user unchanged. If a row failed, list the fixes it names, in order.\n"
@@ -125,7 +125,7 @@
       "install": {
         "clone": "git clone --depth 1 https://github.com/mksglu/context-mode.git",
         "copy": "cp -r plugins/claude-code/codex/skills/ctx-stats ~/.claude/skills/ctx-stats",
-        "raw": "https://raw.githubusercontent.com/mksglu/context-mode/3a3ef7d53c9a30ef05d8f1b009afbcf8d9c6d0a2/plugins/claude-code/codex/skills/ctx-stats/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/mksglu/context-mode/9cd90eac190fb420e5a74aa8d0ae7513b7d728d2/plugins/claude-code/codex/skills/ctx-stats/SKILL.md",
         "saveAs": "~/.claude/skills/ctx-stats/SKILL.md",
         "marketplace": "/plugin marketplace add mksglu/context-mode"
       },
@@ -135,7 +135,7 @@
       "bytes": 341,
       "wordCount": 35,
       "repoLicense": "",
-      "commit": "3a3ef7d53c9a30ef05d8f1b009afbcf8d9c6d0a2",
+      "commit": "9cd90eac190fb420e5a74aa8d0ae7513b7d728d2",
       "branch": "main",
       "body": "---\nname: ctx-stats\ndescription: Show how much context context-mode saved, as a detailed report.\ndisable-model-invocation: true\n---\nCall the mcp__context_mode__ctx_stats tool and show the text block of its reply to the user unchanged, inside a code block so the columns stay aligned. Add one sentence under it that names the largest saving.\n",
       "bodyMd": "Call the mcp__context_mode__ctx_stats tool and show the text block of its reply to the user unchanged, inside a code block so the columns stay aligned. Add one sentence under it that names the largest saving.\n"
@@ -168,7 +168,7 @@
       "install": {
         "clone": "git clone --depth 1 https://github.com/mksglu/context-mode.git",
         "copy": "cp -r plugins/claude-code/codex/skills/ctx-upgrade ~/.claude/skills/ctx-upgrade",
-        "raw": "https://raw.githubusercontent.com/mksglu/context-mode/3a3ef7d53c9a30ef05d8f1b009afbcf8d9c6d0a2/plugins/claude-code/codex/skills/ctx-upgrade/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/mksglu/context-mode/9cd90eac190fb420e5a74aa8d0ae7513b7d728d2/plugins/claude-code/codex/skills/ctx-upgrade/SKILL.md",
         "saveAs": "~/.claude/skills/ctx-upgrade/SKILL.md",
         "marketplace": "/plugin marketplace add mksglu/context-mode"
       },
@@ -178,7 +178,7 @@
       "bytes": 298,
       "wordCount": 28,
       "repoLicense": "",
-      "commit": "3a3ef7d53c9a30ef05d8f1b009afbcf8d9c6d0a2",
+      "commit": "9cd90eac190fb420e5a74aa8d0ae7513b7d728d2",
       "branch": "main",
       "body": "---\nname: ctx-upgrade\ndescription: Update context-mode to the latest release.\ndisable-model-invocation: true\n---\nCall the mcp__context_mode__ctx_upgrade tool and show its table to the user. Then call mcp__context_mode__ctx_doctor and show its table. If a restart is needed, say so in one sentence.\n",
       "bodyMd": "Call the mcp__context_mode__ctx_upgrade tool and show its table to the user. Then call mcp__context_mode__ctx_doctor and show its table. If a restart is needed, say so in one sentence.\n"
@@ -211,7 +211,7 @@
       "install": {
         "clone": "git clone --depth 1 https://github.com/mksglu/context-mode.git",
         "copy": "cp -r plugins/claude-code/skills/ctx-doctor ~/.claude/skills/ctx-doctor-2",
-        "raw": "https://raw.githubusercontent.com/mksglu/context-mode/3a3ef7d53c9a30ef05d8f1b009afbcf8d9c6d0a2/plugins/claude-code/skills/ctx-doctor/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/mksglu/context-mode/9cd90eac190fb420e5a74aa8d0ae7513b7d728d2/plugins/claude-code/skills/ctx-doctor/SKILL.md",
         "saveAs": "~/.claude/skills/ctx-doctor-2/SKILL.md",
         "marketplace": "/plugin marketplace add mksglu/context-mode"
       },
@@ -221,7 +221,7 @@
       "bytes": 353,
       "wordCount": 27,
       "repoLicense": "",
-      "commit": "3a3ef7d53c9a30ef05d8f1b009afbcf8d9c6d0a2",
+      "commit": "9cd90eac190fb420e5a74aa8d0ae7513b7d728d2",
       "branch": "main",
       "body": "---\nname: ctx-doctor\ndescription: Check that context-mode is installed and working, as a table.\ndisable-model-invocation: true\n---\nCall the mcp__plugin_context-mode_context-mode__ctx_doctor or mcp_context-mode_ctx_doctor or mcp__context-mode__ctx_doctor tool and show its table to the user unchanged. If a row failed, list the fixes it names, in order.\n",
       "bodyMd": "Call the mcp__plugin_context-mode_context-mode__ctx_doctor or mcp_context-mode_ctx_doctor or mcp__context-mode__ctx_doctor tool and show its table to the user unchanged. If a row failed, list the fixes it names, in order.\n"
@@ -254,7 +254,7 @@
       "install": {
         "clone": "git clone --depth 1 https://github.com/mksglu/context-mode.git",
         "copy": "cp -r plugins/claude-code/skills/ctx-stats ~/.claude/skills/ctx-stats-2",
-        "raw": "https://raw.githubusercontent.com/mksglu/context-mode/3a3ef7d53c9a30ef05d8f1b009afbcf8d9c6d0a2/plugins/claude-code/skills/ctx-stats/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/mksglu/context-mode/9cd90eac190fb420e5a74aa8d0ae7513b7d728d2/plugins/claude-code/skills/ctx-stats/SKILL.md",
         "saveAs": "~/.claude/skills/ctx-stats-2/SKILL.md",
         "marketplace": "/plugin marketplace add mksglu/context-mode"
       },
@@ -264,7 +264,7 @@
       "bytes": 423,
       "wordCount": 39,
       "repoLicense": "",
-      "commit": "3a3ef7d53c9a30ef05d8f1b009afbcf8d9c6d0a2",
+      "commit": "9cd90eac190fb420e5a74aa8d0ae7513b7d728d2",
       "branch": "main",
       "body": "---\nname: ctx-stats\ndescription: Show how much context context-mode saved, as a detailed report.\ndisable-model-invocation: true\n---\nCall the mcp__plugin_context-mode_context-mode__ctx_stats or mcp_context-mode_ctx_stats or mcp__context-mode__ctx_stats tool and show the text block of its reply to the user unchanged, inside a code block so the columns stay aligned. Add one sentence under it that names the largest saving.\n",
       "bodyMd": "Call the mcp__plugin_context-mode_context-mode__ctx_stats or mcp_context-mode_ctx_stats or mcp__context-mode__ctx_stats tool and show the text block of its reply to the user unchanged, inside a code block so the columns stay aligned. Add one sentence under it that names the largest saving.\n"
@@ -297,7 +297,7 @@
       "install": {
         "clone": "git clone --depth 1 https://github.com/mksglu/context-mode.git",
         "copy": "cp -r plugins/claude-code/skills/ctx-upgrade ~/.claude/skills/ctx-upgrade-2",
-        "raw": "https://raw.githubusercontent.com/mksglu/context-mode/3a3ef7d53c9a30ef05d8f1b009afbcf8d9c6d0a2/plugins/claude-code/skills/ctx-upgrade/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/mksglu/context-mode/9cd90eac190fb420e5a74aa8d0ae7513b7d728d2/plugins/claude-code/skills/ctx-upgrade/SKILL.md",
         "saveAs": "~/.claude/skills/ctx-upgrade-2/SKILL.md",
         "marketplace": "/plugin marketplace add mksglu/context-mode"
       },
@@ -307,7 +307,7 @@
       "bytes": 468,
       "wordCount": 36,
       "repoLicense": "",
-      "commit": "3a3ef7d53c9a30ef05d8f1b009afbcf8d9c6d0a2",
+      "commit": "9cd90eac190fb420e5a74aa8d0ae7513b7d728d2",
       "branch": "main",
       "body": "---\nname: ctx-upgrade\ndescription: Update context-mode to the latest release.\ndisable-model-invocation: true\n---\nCall the mcp__plugin_context-mode_context-mode__ctx_upgrade or mcp_context-mode_ctx_upgrade or mcp__context-mode__ctx_upgrade tool and show its table to the user. Then call mcp__plugin_context-mode_context-mode__ctx_doctor or mcp_context-mode_ctx_doctor or mcp__context-mode__ctx_doctor and show its table. If a restart is needed, say so in one sentence.\n",
       "bodyMd": "Call the mcp__plugin_context-mode_context-mode__ctx_upgrade or mcp_context-mode_ctx_upgrade or mcp__context-mode__ctx_upgrade tool and show its table to the user. Then call mcp__plugin_context-mode_context-mode__ctx_doctor or mcp_context-mode_ctx_doctor or mcp__context-mode__ctx_doctor and show its table. If a restart is needed, say so in one sentence.\n"
@@ -340,7 +340,7 @@
       "install": {
         "clone": "git clone --depth 1 https://github.com/mksglu/context-mode.git",
         "copy": "cp -r skills/ctx-doctor ~/.claude/skills/ctx-doctor-3",
-        "raw": "https://raw.githubusercontent.com/mksglu/context-mode/3a3ef7d53c9a30ef05d8f1b009afbcf8d9c6d0a2/skills/ctx-doctor/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/mksglu/context-mode/9cd90eac190fb420e5a74aa8d0ae7513b7d728d2/skills/ctx-doctor/SKILL.md",
         "saveAs": "~/.claude/skills/ctx-doctor-3/SKILL.md",
         "marketplace": "/plugin marketplace add mksglu/context-mode"
       },
@@ -350,7 +350,7 @@
       "bytes": 250,
       "wordCount": 23,
       "repoLicense": "",
-      "commit": "3a3ef7d53c9a30ef05d8f1b009afbcf8d9c6d0a2",
+      "commit": "9cd90eac190fb420e5a74aa8d0ae7513b7d728d2",
       "branch": "main",
       "body": "---\nname: ctx-doctor\ndescription: Check that context-mode is installed and working, as a table.\ndisable-model-invocation: true\n---\nCall the ctx_doctor tool and show its table to the user unchanged. If a row failed, list the fixes it names, in order.\n",
       "bodyMd": "Call the ctx_doctor tool and show its table to the user unchanged. If a row failed, list the fixes it names, in order.\n"
@@ -383,7 +383,7 @@
       "install": {
         "clone": "git clone --depth 1 https://github.com/mksglu/context-mode.git",
         "copy": "cp -r skills/ctx-stats ~/.claude/skills/ctx-stats-3",
-        "raw": "https://raw.githubusercontent.com/mksglu/context-mode/3a3ef7d53c9a30ef05d8f1b009afbcf8d9c6d0a2/skills/ctx-stats/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/mksglu/context-mode/9cd90eac190fb420e5a74aa8d0ae7513b7d728d2/skills/ctx-stats/SKILL.md",
         "saveAs": "~/.claude/skills/ctx-stats-3/SKILL.md",
         "marketplace": "/plugin marketplace add mksglu/context-mode"
       },
@@ -393,7 +393,7 @@
       "bytes": 322,
       "wordCount": 35,
       "repoLicense": "",
-      "commit": "3a3ef7d53c9a30ef05d8f1b009afbcf8d9c6d0a2",
+      "commit": "9cd90eac190fb420e5a74aa8d0ae7513b7d728d2",
       "branch": "main",
       "body": "---\nname: ctx-stats\ndescription: Show how much context context-mode saved, as a detailed report.\ndisable-model-invocation: true\n---\nCall the ctx_stats tool and show the text block of its reply to the user unchanged, inside a code block so the columns stay aligned. Add one sentence under it that names the largest saving.\n",
       "bodyMd": "Call the ctx_stats tool and show the text block of its reply to the user unchanged, inside a code block so the columns stay aligned. Add one sentence under it that names the largest saving.\n"
@@ -426,7 +426,7 @@
       "install": {
         "clone": "git clone --depth 1 https://github.com/mksglu/context-mode.git",
         "copy": "cp -r skills/ctx-upgrade ~/.claude/skills/ctx-upgrade-3",
-        "raw": "https://raw.githubusercontent.com/mksglu/context-mode/3a3ef7d53c9a30ef05d8f1b009afbcf8d9c6d0a2/skills/ctx-upgrade/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/mksglu/context-mode/9cd90eac190fb420e5a74aa8d0ae7513b7d728d2/skills/ctx-upgrade/SKILL.md",
         "saveAs": "~/.claude/skills/ctx-upgrade-3/SKILL.md",
         "marketplace": "/plugin marketplace add mksglu/context-mode"
       },
@@ -436,7 +436,7 @@
       "bytes": 260,
       "wordCount": 28,
       "repoLicense": "",
-      "commit": "3a3ef7d53c9a30ef05d8f1b009afbcf8d9c6d0a2",
+      "commit": "9cd90eac190fb420e5a74aa8d0ae7513b7d728d2",
       "branch": "main",
       "body": "---\nname: ctx-upgrade\ndescription: Update context-mode to the latest release.\ndisable-model-invocation: true\n---\nCall the ctx_upgrade tool and show its table to the user. Then call ctx_doctor and show its table. If a restart is needed, say so in one sentence.\n",
       "bodyMd": "Call the ctx_upgrade tool and show its table to the user. Then call ctx_doctor and show its table. If a restart is needed, say so in one sentence.\n"
