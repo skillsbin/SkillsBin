@@ -1,8 +1,8 @@
 {
   "repo": "infiniflow/ragflow",
-  "commit": "03b0c0ae04ab30e44796b927a3c0229b1a440358",
+  "commit": "f9a53a3779a12b5abb8a254ec9384c2af7fae4b4",
   "branch": "main",
-  "fetchedAt": "2026-11-12T19:37:17.326Z",
+  "fetchedAt": "2026-11-13T19:17:31.663Z",
   "parseFail": 0,
   "skills": [
     {
@@ -37,7 +37,7 @@
       "install": {
         "clone": "git clone --depth 1 https://github.com/infiniflow/ragflow.git",
         "copy": "cp -r .agents/skills/go-naming ~/.claude/skills/go-naming",
-        "raw": "https://raw.githubusercontent.com/infiniflow/ragflow/03b0c0ae04ab30e44796b927a3c0229b1a440358/.agents/skills/go-naming/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/infiniflow/ragflow/f9a53a3779a12b5abb8a254ec9384c2af7fae4b4/.agents/skills/go-naming/SKILL.md",
         "saveAs": "~/.claude/skills/go-naming/SKILL.md",
         "marketplace": ""
       },
@@ -47,10 +47,58 @@
       "bytes": 381,
       "wordCount": 7,
       "repoLicense": "Apache-2.0",
-      "commit": "03b0c0ae04ab30e44796b927a3c0229b1a440358",
+      "commit": "f9a53a3779a12b5abb8a254ec9384c2af7fae4b4",
       "branch": "main",
       "body": "---\nname: go-naming\ndescription: Go naming conventions and best practices. Use this skill when working with Go code and need to name packages, files, directories, structs, interfaces, functions, variables, or constants. Provides comprehensive naming guidelines following Go community standards.\n---\n\nStrictly follow the naming conventions in [rules/named.md](../../rules/named.md)\n",
       "bodyMd": "Strictly follow the naming conventions in [rules/named.md](../../rules/named.md)\n"
+    },
+    {
+      "slug": "react-doctor",
+      "name": "react-doctor",
+      "dir": ".agents/skills/react-doctor",
+      "path": ".agents/skills/react-doctor/SKILL.md",
+      "desc": "Use when finishing a feature, fixing a bug, before committing React code, or when the user types `/doctor`, asks to scan, triage, or clean up React diagnostics. Covers lint, accessibility, bundle size, architecture. Includes a regression check and a full local-triage workflow that fetches the canonical playbook.",
+      "descZh": "",
+      "triggers": [
+        "finishing a feature",
+        "fixing a bug",
+        "when the user types `/"
+      ],
+      "version": "1.2.0",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "git",
+          "curl",
+          "npx"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/infiniflow/ragflow.git",
+        "copy": "cp -r .agents/skills/react-doctor ~/.claude/skills/react-doctor",
+        "raw": "https://raw.githubusercontent.com/infiniflow/ragflow/f9a53a3779a12b5abb8a254ec9384c2af7fae4b4/.agents/skills/react-doctor/SKILL.md",
+        "saveAs": "~/.claude/skills/react-doctor/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:ded3d7d7b77626e5308e028733fddab0b586ea513e2e73eafc94ba56afb4160b",
+      "bytes": 5919,
+      "wordCount": 732,
+      "repoLicense": "Apache-2.0",
+      "commit": "f9a53a3779a12b5abb8a254ec9384c2af7fae4b4",
+      "branch": "main",
+      "body": "---\nname: react-doctor\ndescription: Use when finishing a feature, fixing a bug, before committing React code, or when the user types `/doctor`, asks to scan, triage, or clean up React diagnostics. Covers lint, accessibility, bundle size, architecture. Includes a regression check and a full local-triage workflow that fetches the canonical playbook.\nversion: \"1.2.0\"\n---\n\n# React Doctor\n\nScans React codebases for security, performance, correctness, and architecture issues. Outputs a 0–100 health score.\n\n## After making React code changes:\n\nRun `npx react-doctor@latest --verbose --scope changed` and check the score did not regress.\n\nIf the score dropped, fix the regressions before committing.\n\n## For general cleanup or code improvement:\n\nRun `npx react-doctor@latest --verbose` (the default `--scope full`) to scan the full codebase. Fix issues by severity — errors first, then warnings.\n\n## For a focused UI design audit:\n\nRun `npx react-doctor@latest design --verbose`. This selects only design-tagged UI composition, typography, interaction, accessibility, and motion rules, including focused rules that remain opt-in during a general health scan.\n\n## For runtime performance problems:\n\nRun `npx react-doctor@latest scan <url> --format json` in an interactive terminal. React Doctor opens an isolated system Chrome profile, records a DevTools trace while the user reproduces the slow interaction, and flashes purple outlines with component names as React renders. It stops when they press Enter. Read the structured summary first, then inspect the returned local `.json.gz` trace for CPU, browser, and React component evidence.\n\nIf the user needs their authenticated browser state, use `--cdp <remote-debugging-url>`. This requires Chrome to already be running with remote debugging. Never ask for cookies or copy the user's browser profile. Treat the trace as sensitive local application data and never upload it without explicit permission.\n\n## /doctor — full local triage workflow\n\nWhen the user types `/doctor`, says \"run react doctor\", or asks for a full triage / cleanup pass (not just a regression check), fetch the canonical local-triage playbook and follow every step in it:\n\n```bash\ncurl --fail --silent --show-error \\\n  --header 'Cache-Control: no-cache' \\\n  https://www.react.doctor/prompts/react-doctor-agent.md\n```\n\nThe playbook is the single source of truth — a scan → filter → triage → fix → validate loop that edits the working tree directly (never commits, never opens PRs). Updating the prompt at its source updates every agent on its next fetch — no skill reinstall needed.\n\nPair it with the matching per-rule prompts at `https://www.react.doctor/prompts/rules/<plugin>/<rule>.md` (fetched on demand inside the playbook) so each fix uses the canonical, reviewer-tested recipe.\n\nUse `--scope contextual --base origin/main` when a team wants existing findings\nin the code it is editing. Rules can select an element, function, file, or an\nexplicit set of related nodes. For `exhaustive-deps`, edits in the hook call or a\nresolved local callback can surface a finding on an unchanged dependency array.\nRules without wider ownership keep changed-line filtering.\n\n## Configuring or explaining rules\n\nWhen the user wants to understand a rule, disagrees with one, or wants to disable / tune which rules run (not fix code), read [references/explain.md](references/explain.md) and follow it. Start with `npx react-doctor@latest rules explain <rule>`, then apply the narrowest control via `npx react-doctor@latest rules disable|set|category|ignore-tag …`, which edits your `doctor.config.*` (or `package.json#reactDoctor`).\n\n## Command\n\n```bash\nnpx react-doctor@latest --verbose --scope changed\n```\n\n| Flag                 | Purpose                                                                                 |\n| -------------------- | --------------------------------------------------------------------------------------- |\n| `.`                  | Scan current directory                                                                  |\n| `--verbose`          | Show affected files and line numbers per rule                                           |\n| `--scope changed`    | Only report issues introduced vs the base branch (default: full)                        |\n| `--scope contextual` | Report findings in modified functions, JSX elements, or files, as selected by each rule |\n| `--scope lines`      | Only report issues on the changed lines                                                 |\n| `--score`            | Output only the numeric score                                                           |\n| `design`             | Run only the focused UI design diagnostics                                              |\n\n### Reuse a base scan\n\nSave a complete `--json` scan, then pass `--baseline base-report.json` to report only new findings. This also works with `--scope changed`. Use the same version and rules for both scans. Findings are grouped by rule and file path, following Git renames. Only increases in each group's count are reported; groups without an increase skip location matching. Fingerprints, message similarity, and Git-adjusted line distance select the added findings. Formatting and edits that keep the same counts report no new findings. Saved reports must use the same `textComponents`, `rawTextWrapperComponents`, and `respectInlineDisables` settings. Regenerate the base report after changing these settings, or use a Git comparison. Older reports without fingerprints or `sourceFilterConfigHash` must be regenerated.\n\n### GitLab warning status\n\nFor GitLab CI, `--warning-exit-code 123` returns `123` for non-blocking warnings. Pair it with `allow_failure: { exit_codes: 123 }`. Errors still return `1`. Accepts integers from `2` to `255`. `--blocking warning` still returns `1`. `--blocking none` or `--score` skips this warning signal.\n",
+      "bodyMd": "# React Doctor\n\nScans React codebases for security, performance, correctness, and architecture issues. Outputs a 0–100 health score.\n\n## After making React code changes:\n\nRun `npx react-doctor@latest --verbose --scope changed` and check the score did not regress.\n\nIf the score dropped, fix the regressions before committing.\n\n## For general cleanup or code improvement:\n\nRun `npx react-doctor@latest --verbose` (the default `--scope full`) to scan the full codebase. Fix issues by severity — errors first, then warnings.\n\n## For a focused UI design audit:\n\nRun `npx react-doctor@latest design --verbose`. This selects only design-tagged UI composition, typography, interaction, accessibility, and motion rules, including focused rules that remain opt-in during a general health scan.\n\n## For runtime performance problems:\n\nRun `npx react-doctor@latest scan <url> --format json` in an interactive terminal. React Doctor opens an isolated system Chrome profile, records a DevTools trace while the user reproduces the slow interaction, and flashes purple outlines with component names as React renders. It stops when they press Enter. Read the structured summary first, then inspect the returned local `.json.gz` trace for CPU, browser, and React component evidence.\n\nIf the user needs their authenticated browser state, use `--cdp <remote-debugging-url>`. This requires Chrome to already be running with remote debugging. Never ask for cookies or copy the user's browser profile. Treat the trace as sensitive local application data and never upload it without explicit permission.\n\n## /doctor — full local triage workflow\n\nWhen the user types `/doctor`, says \"run react doctor\", or asks for a full triage / cleanup pass (not just a regression check), fetch the canonical local-triage playbook and follow every step in it:\n\n```bash\ncurl --fail --silent --show-error \\\n  --header 'Cache-Control: no-cache' \\\n  https://www.react.doctor/prompts/react-doctor-agent.md\n```\n\nThe playbook is the single source of truth — a scan → filter → triage → fix → validate loop that edits the working tree directly (never commits, never opens PRs). Updating the prompt at its source updates every agent on its next fetch — no skill reinstall needed.\n\nPair it with the matching per-rule prompts at `https://www.react.doctor/prompts/rules/<plugin>/<rule>.md` (fetched on demand inside the playbook) so each fix uses the canonical, reviewer-tested recipe.\n\nUse `--scope contextual --base origin/main` when a team wants existing findings\nin the code it is editing. Rules can select an element, function, file, or an\nexplicit set of related nodes. For `exhaustive-deps`, edits in the hook call or a\nresolved local callback can surface a finding on an unchanged dependency array.\nRules without wider ownership keep changed-line filtering.\n\n## Configuring or explaining rules\n\nWhen the user wants to understand a rule, disagrees with one, or wants to disable / tune which rules run (not fix code), read [references/explain.md](references/explain.md) and follow it. Start with `npx react-doctor@latest rules explain <rule>`, then apply the narrowest control via `npx react-doctor@latest rules disable|set|category|ignore-tag …`, which edits your `doctor.config.*` (or `package.json#reactDoctor`).\n\n## Command\n\n```bash\nnpx react-doctor@latest --verbose --scope changed\n```\n\n| Flag                 | Purpose                                                                                 |\n| -------------------- | --------------------------------------------------------------------------------------- |\n| `.`                  | Scan current directory                                                                  |\n| `--verbose`          | Show affected files and line numbers per rule                                           |\n| `--scope changed`    | Only report issues introduced vs the base branch (default: full)                        |\n| `--scope contextual` | Report findings in modified functions, JSX elements, or files, as selected by each rule |\n| `--scope lines`      | Only report issues on the changed lines                                                 |\n| `--score`            | Output only the numeric score                                                           |\n| `design`             | Run only the focused UI design diagnostics                                              |\n\n### Reuse a base scan\n\nSave a complete `--json` scan, then pass `--baseline base-report.json` to report only new findings. This also works with `--scope changed`. Use the same version and rules for both scans. Findings are grouped by rule and file path, following Git renames. Only increases in each group's count are reported; groups without an increase skip location matching. Fingerprints, message similarity, and Git-adjusted line distance select the added findings. Formatting and edits that keep the same counts report no new findings. Saved reports must use the same `textComponents`, `rawTextWrapperComponents`, and `respectInlineDisables` settings. Regenerate the base report after changing these settings, or use a Git comparison. Older reports without fingerprints or `sourceFilterConfigHash` must be regenerated.\n\n### GitLab warning status\n\nFor GitLab CI, `--warning-exit-code 123` returns `123` for non-blocking warnings. Pair it with `allow_failure: { exit_codes: 123 }`. Errors still return `1`. Accepts integers from `2` to `255`. `--blocking warning` still returns `1`. `--blocking none` or `--score` skips this warning signal.\n"
     }
   ]
 }
