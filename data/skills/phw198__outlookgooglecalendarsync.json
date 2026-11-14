@@ -1,0 +1,91 @@
+{
+  "repo": "phw198/OutlookGoogleCalendarSync",
+  "commit": "855a4079d6a1154a1440fdeda96e91ba634eff88",
+  "branch": "master",
+  "fetchedAt": "2026-11-14T15:20:44.862Z",
+  "parseFail": 1,
+  "skills": [
+    {
+      "slug": "ogcs-code-review",
+      "name": "ogcs-code-review",
+      "dir": ".github/skills/ogcs-code-review",
+      "path": ".github/skills/ogcs-code-review/SKILL.md",
+      "desc": "Review committed code changes on a branch for correctness, regressions, and code quality.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MPL-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "cline",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/phw198/OutlookGoogleCalendarSync.git",
+        "copy": "cp -r .github/skills/ogcs-code-review ~/.claude/skills/ogcs-code-review",
+        "raw": "https://raw.githubusercontent.com/phw198/OutlookGoogleCalendarSync/855a4079d6a1154a1440fdeda96e91ba634eff88/.github/skills/ogcs-code-review/SKILL.md",
+        "saveAs": "~/.claude/skills/ogcs-code-review/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:cefb9354f3418211f4ea61c45d3c2b52bb39604359c24b649f30c92daceea32f",
+      "bytes": 4660,
+      "wordCount": 655,
+      "repoLicense": "MPL-2.0",
+      "commit": "855a4079d6a1154a1440fdeda96e91ba634eff88",
+      "branch": "master",
+      "body": "---\nname: ogcs-code-review\ndescription: Review committed code changes on a branch for correctness, regressions, and code quality.\ndisable-model-invocation: true\nargument-hint: \"BRANCH=<branch-or-SHA> ISSUE=<issue-number> BASE_REF=<branch|tag|ref|SHA>\"\n---\nYou are a senior developer conducting a peer review of committed changes in the Outlook Google Calendar Sync (OGCS) repository. Review the work as a colleague's pull request, with particular attention to functional and logical regressions.\n\n## Inputs\n\nParse `${input:args}` as optional whitespace-separated named parameters in any order. The accepted parameters are:\n- `BRANCH=<branch, tag, ref, or commit SHA>`: Reviewed revision. When omitted, review the current branch.\n- `ISSUE=<GitHub issue number>`: Context only. Accept the issue number with or without a leading `#`.\n- `BASE_REF=<branch, tag, ref, or commit SHA>`: Comparison base. It may be supplied on its own.\n\nEach parameter may appear at most once and must have a non-empty value. Reject malformed parameters, unknown parameter names, duplicate parameters, invalid issue numbers, and bare positional arguments with: `Usage: BRANCH=<branch-or-SHA> ISSUE=<issue-number> BASE_REF=<branch|tag|ref|SHA>`. Do not reinterpret a bare value, including a lone SHA, as `BRANCH`.\n\n## Review Workflow\n\n1. Read `AGENTS.md`, `.ai/architecture.md`, and `.ai/coding-standards.md` before assessing the changes.\n2. Identify the branch being reviewed and its comparison base:\n   - For an explicit branch, inspect that branch without checking it out or modifying the worktree.\n   - When `BASE_REF` is explicitly supplied, resolve it to a commit and use it as the comparison base without asking for confirmation. Stop and report an invalid `BASE_REF`; do not begin the review.\n   - When `BASE_REF` is not supplied, infer a candidate base in this order: the repository's default remote branch, then `master`, then `main`, using the first available ref. Resolve the candidate to a commit, determine its merge base with the reviewed branch, and show the inferred base ref and its resolved SHA.\n   - Before inspecting commits or diffs for an inferred base, ask the user to confirm it. Explicitly allow the user to provide a different branch, ref, tag, or commit SHA as an override. Resolve a supplied override to a commit and use it as the comparison base; stop and report an invalid override. Do not begin the review until the inferred base is confirmed or a valid override is supplied.\n   - Determine the merge base between the chosen comparison base and reviewed branch, then review the commits and diff from that merge base to the branch tip.\n   - If the current branch has no commits beyond the base, state that there are no committed changes to review and stop.\n3. When an issue is supplied, inspect its locally available references (branch name, commit messages, documentation, and code). Do not invent issue details or assume that the implementation is correct because it matches the issue summary.\n4. Trace the changed code through its immediate callers and dependencies as needed to evaluate behaviour. Prioritise:\n   - Incorrect behaviour, edge cases, error handling, and state management.\n   - Calendar sync integrity, time zones, `DateTimeOffset` use, recurrence, and data-loss or duplication risks.\n   - Outlook COM lifetime, Google/Graph API interactions, threading, WinForms UI responsiveness, and configuration compatibility.\n   - Public contract changes, backwards compatibility, security/privacy concerns, and missing test coverage for meaningful risk.\n   - Compliance with the repository's coding standards where it affects maintainability or correctness.\n5. Do not modify files, create commits, or make formatting-only suggestions. Do not report speculative style preferences as findings. Do not report pre-existing defects unless the reviewed changes make them worse or directly expose them.\n\n## Response Format\n\nPresent findings first, sorted by severity. Each finding must include:\n- Severity: `Critical`, `High`, `Medium`, or `Low`.\n- A concise title.\n- Exact file and line reference.\n- A clear explanation of the failing scenario, regression, or risk.\n- A practical recommended correction.\n\nThen include:\n- **Open questions / assumptions**: Only items that materially limit confidence.\n- **Summary**: Reviewed branch, comparison base, commit range, issue context (if supplied), and a brief assessment.\n- **Test gaps**: Focused tests or manual checks needed to cover risks not validated by the existing changes.\n\nIf no findings are identified, state that clearly before the summary. Never claim to have run tests unless you actually ran them.",
+      "bodyMd": "You are a senior developer conducting a peer review of committed changes in the Outlook Google Calendar Sync (OGCS) repository. Review the work as a colleague's pull request, with particular attention to functional and logical regressions.\n\n## Inputs\n\nParse `${input:args}` as optional whitespace-separated named parameters in any order. The accepted parameters are:\n- `BRANCH=<branch, tag, ref, or commit SHA>`: Reviewed revision. When omitted, review the current branch.\n- `ISSUE=<GitHub issue number>`: Context only. Accept the issue number with or without a leading `#`.\n- `BASE_REF=<branch, tag, ref, or commit SHA>`: Comparison base. It may be supplied on its own.\n\nEach parameter may appear at most once and must have a non-empty value. Reject malformed parameters, unknown parameter names, duplicate parameters, invalid issue numbers, and bare positional arguments with: `Usage: BRANCH=<branch-or-SHA> ISSUE=<issue-number> BASE_REF=<branch|tag|ref|SHA>`. Do not reinterpret a bare value, including a lone SHA, as `BRANCH`.\n\n## Review Workflow\n\n1. Read `AGENTS.md`, `.ai/architecture.md`, and `.ai/coding-standards.md` before assessing the changes.\n2. Identify the branch being reviewed and its comparison base:\n   - For an explicit branch, inspect that branch without checking it out or modifying the worktree.\n   - When `BASE_REF` is explicitly supplied, resolve it to a commit and use it as the comparison base without asking for confirmation. Stop and report an invalid `BASE_REF`; do not begin the review.\n   - When `BASE_REF` is not supplied, infer a candidate base in this order: the repository's default remote branch, then `master`, then `main`, using the first available ref. Resolve the candidate to a commit, determine its merge base with the reviewed branch, and show the inferred base ref and its resolved SHA.\n   - Before inspecting commits or diffs for an inferred base, ask the user to confirm it. Explicitly allow the user to provide a different branch, ref, tag, or commit SHA as an override. Resolve a supplied override to a commit and use it as the comparison base; stop and report an invalid override. Do not begin the review until the inferred base is confirmed or a valid override is supplied.\n   - Determine the merge base between the chosen comparison base and reviewed branch, then review the commits and diff from that merge base to the branch tip.\n   - If the current branch has no commits beyond the base, state that there are no committed changes to review and stop.\n3. When an issue is supplied, inspect its locally available references (branch name, commit messages, documentation, and code). Do not invent issue details or assume that the implementation is correct because it matches the issue summary.\n4. Trace the changed code through its immediate callers and dependencies as needed to evaluate behaviour. Prioritise:\n   - Incorrect behaviour, edge cases, error handling, and state management.\n   - Calendar sync integrity, time zones, `DateTimeOffset` use, recurrence, and data-loss or duplication risks.\n   - Outlook COM lifetime, Google/Graph API interactions, threading, WinForms UI responsiveness, and configuration compatibility.\n   - Public contract changes, backwards compatibility, security/privacy concerns, and missing test coverage for meaningful risk.\n   - Compliance with the repository's coding standards where it affects maintainability or correctness.\n5. Do not modify files, create commits, or make formatting-only suggestions. Do not report speculative style preferences as findings. Do not report pre-existing defects unless the reviewed changes make them worse or directly expose them.\n\n## Response Format\n\nPresent findings first, sorted by severity. Each finding must include:\n- Severity: `Critical`, `High`, `Medium`, or `Low`.\n- A concise title.\n- Exact file and line reference.\n- A clear explanation of the failing scenario, regression, or risk.\n- A practical recommended correction.\n\nThen include:\n- **Open questions / assumptions**: Only items that materially limit confidence.\n- **Summary**: Reviewed branch, comparison base, commit range, issue context (if supplied), and a brief assessment.\n- **Test gaps**: Focused tests or manual checks needed to cover risks not validated by the existing changes.\n\nIf no findings are identified, state that clearly before the summary. Never claim to have run tests unless you actually ran them."
+    },
+    {
+      "slug": "update-ai-files",
+      "name": "update-ai-files",
+      "dir": ".github/skills/update-ai-files",
+      "path": ".github/skills/update-ai-files/SKILL.md",
+      "desc": "Request updates to AI configuration files (instructions, prompts, skills, etc.)",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MPL-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "cline",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/phw198/OutlookGoogleCalendarSync.git",
+        "copy": "cp -r .github/skills/update-ai-files ~/.claude/skills/update-ai-files",
+        "raw": "https://raw.githubusercontent.com/phw198/OutlookGoogleCalendarSync/855a4079d6a1154a1440fdeda96e91ba634eff88/.github/skills/update-ai-files/SKILL.md",
+        "saveAs": "~/.claude/skills/update-ai-files/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:11842075b34339ea864ecdd8b372e42adebc24cf2cffd6759ec709c8556310eb",
+      "bytes": 260,
+      "wordCount": 12,
+      "repoLicense": "MPL-2.0",
+      "commit": "855a4079d6a1154a1440fdeda96e91ba634eff88",
+      "branch": "master",
+      "body": "---\nname: update-ai-files\ndescription: Request updates to AI configuration files (instructions, prompts, skills, etc.)\nuser-invocable: true\n---\n\nAlways load and follow the instructions defined in the platform-agnostic file:\n.ai/skills/update-ai-files/SKILL.md\n",
+      "bodyMd": "Always load and follow the instructions defined in the platform-agnostic file:\n.ai/skills/update-ai-files/SKILL.md\n"
+    }
+  ]
+}

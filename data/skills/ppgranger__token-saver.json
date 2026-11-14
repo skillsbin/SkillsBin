@@ -1,0 +1,61 @@
+{
+  "repo": "ppgranger/token-saver",
+  "commit": "bc058577e6e0c6581525f63e3bde963db4229130",
+  "branch": "main",
+  "fetchedAt": "2026-11-14T15:22:15.857Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "token-saver-config",
+      "name": "token-saver-config",
+      "dir": "skills/token-saver-config",
+      "path": "skills/token-saver-config/SKILL.md",
+      "desc": "Configure and diagnose token-saver compression settings. Use when the user asks about adjusting compression levels, checking processor status, debugging hook issues, or reviewing savings statistics.",
+      "descZh": "",
+      "triggers": [
+        "debugging hoo"
+      ],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git",
+          "npm",
+          "bun",
+          "python",
+          "python3",
+          "pip",
+          "docker",
+          "kubectl"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ppgranger/token-saver.git",
+        "copy": "cp -r skills/token-saver-config ~/.claude/skills/token-saver-config",
+        "raw": "https://raw.githubusercontent.com/ppgranger/token-saver/bc058577e6e0c6581525f63e3bde963db4229130/skills/token-saver-config/SKILL.md",
+        "saveAs": "~/.claude/skills/token-saver-config/SKILL.md",
+        "marketplace": "/plugin marketplace add ppgranger/token-saver"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:15a1f5cccb4de37cf84183ccad19be57246644a0046124ab26c83262d16325f4",
+      "bytes": 4111,
+      "wordCount": 479,
+      "repoLicense": "Apache-2.0",
+      "commit": "bc058577e6e0c6581525f63e3bde963db4229130",
+      "branch": "main",
+      "body": "---\nname: token-saver-config\ndescription: \"Configure and diagnose token-saver compression settings. Use when the user asks about adjusting compression levels, checking processor status, debugging hook issues, or reviewing savings statistics.\"\n---\n\n# Token-Saver Configuration & Diagnostics\n\n## Check Status\nRun `token-saver stats` to see lifetime and per-command compression statistics. Add `--json` for machine-readable output.\n\n## Check Why a Specific Command Was (or Wasn't) Compressed\nThere is no `token-saver config` subcommand — use `explain` and `benchmark` instead:\n\n```bash\ntoken-saver explain \"git status\"          # routing decision: compressible? which processor? why excluded?\ntoken-saver benchmark \"npm install\" --dry-run   # measure compression without replacing real output\n```\n\n## Configuration\nSettings are read in this order (later wins): built-in defaults → `~/.token-saver/config.json` → a project-level `.token-saver.json` found by walking up from cwd → `TOKEN_SAVER_*` environment variables. There is no CLI subcommand to write these files — edit `~/.token-saver/config.json` directly, or set an environment variable.\n\nThe most commonly adjusted settings and their actual defaults:\n- `enabled` (bool, default `true`): master on/off switch.\n- `min_input_length` (int, default `1`): minimum output length in characters before compression is attempted.\n- `min_compression_ratio` (float, default `0.0`): a compression result below this fraction is discarded and the original output is returned instead.\n- `wrap_timeout` (int, default `300`): max seconds a wrapped command may run before being killed.\n- `chars_per_token` (int, default `4`): used only to estimate token counts for display (stats, benchmark) — not part of compression itself.\n- `disabled_processors` (list, default `[]`): processor names (e.g. `\"docker\"`, `\"kubectl\"`) to turn off entirely.\n- `max_output_bytes` (int, default `10_000_000`): hard cap on output length before compression even runs.\n\nExample `~/.token-saver/config.json`:\n```json\n{\n  \"min_compression_ratio\": 0.1,\n  \"disabled_processors\": [\"docker\"]\n}\n```\n\nEquivalent environment variables: `TOKEN_SAVER_MIN_COMPRESSION_RATIO=0.1`, `TOKEN_SAVER_DISABLED_PROCESSORS=docker`.\n\n**Security note:** `user_processors_dir`, `disabled_processors`, and `redaction_allowlist` can only be set via the global `~/.token-saver/config.json` or an environment variable — never via a project-level `.token-saver.json` (that file is auto-discovered from any directory you `cd` into, so it is not trusted with these).\n\nSee `src/config.py`'s `_DEFAULTS` dict for the full, authoritative list of settings — this file lists only the ones users actually tune.\n\n## Debug Mode\nSet `TOKEN_SAVER_DEBUG=true` to enable debug logging to `~/.token-saver/hook.log` (or `%APPDATA%\\token-saver\\hook.log` on Windows).\n\n## Supported Processors\n36 specialized processors, auto-discovered from `src/processors/`: git, gh (GitHub CLI), docker, kubectl, helm, terraform, pulumi, cdktf, ansible, nix, mise, npm/pip/cargo/go/maven/gradle/bun, package listing, python install, test runners (pytest, jest, go test, cargo test, …), lint output (eslint, ruff, pylint, clippy, …), build output, cloud CLIs (aws, gcloud, az), database queries, file listings, file content, environment/system info, network tools (curl, wget), search (grep, find, ripgrep), structured logs, syslog, ssh, jq/yq, act, just — plus a generic fallback for everything else.\n\n## Troubleshooting\nIf compression isn't working:\n1. Check that `python3` (3.10+) is available in your PATH.\n2. Run `token-saver explain \"<the command>\"` to see the routing decision and why it was or wasn't wrapped.\n3. Set `TOKEN_SAVER_DEBUG=true`, trigger a compressible command, then check `~/.token-saver/hook.log` for errors.\n4. Verify the hook itself responds correctly:\n   ```bash\n   echo '{\"tool_name\":\"Bash\",\"tool_input\":{\"command\":\"git status\"}}' | python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/hook_pretool.py\"\n   ```\n   A working hook prints a JSON object with `hookSpecificOutput.updatedInput.command` rewritten to invoke `wrap.py`.\n",
+      "bodyMd": "# Token-Saver Configuration & Diagnostics\n\n## Check Status\nRun `token-saver stats` to see lifetime and per-command compression statistics. Add `--json` for machine-readable output.\n\n## Check Why a Specific Command Was (or Wasn't) Compressed\nThere is no `token-saver config` subcommand — use `explain` and `benchmark` instead:\n\n```bash\ntoken-saver explain \"git status\"          # routing decision: compressible? which processor? why excluded?\ntoken-saver benchmark \"npm install\" --dry-run   # measure compression without replacing real output\n```\n\n## Configuration\nSettings are read in this order (later wins): built-in defaults → `~/.token-saver/config.json` → a project-level `.token-saver.json` found by walking up from cwd → `TOKEN_SAVER_*` environment variables. There is no CLI subcommand to write these files — edit `~/.token-saver/config.json` directly, or set an environment variable.\n\nThe most commonly adjusted settings and their actual defaults:\n- `enabled` (bool, default `true`): master on/off switch.\n- `min_input_length` (int, default `1`): minimum output length in characters before compression is attempted.\n- `min_compression_ratio` (float, default `0.0`): a compression result below this fraction is discarded and the original output is returned instead.\n- `wrap_timeout` (int, default `300`): max seconds a wrapped command may run before being killed.\n- `chars_per_token` (int, default `4`): used only to estimate token counts for display (stats, benchmark) — not part of compression itself.\n- `disabled_processors` (list, default `[]`): processor names (e.g. `\"docker\"`, `\"kubectl\"`) to turn off entirely.\n- `max_output_bytes` (int, default `10_000_000`): hard cap on output length before compression even runs.\n\nExample `~/.token-saver/config.json`:\n```json\n{\n  \"min_compression_ratio\": 0.1,\n  \"disabled_processors\": [\"docker\"]\n}\n```\n\nEquivalent environment variables: `TOKEN_SAVER_MIN_COMPRESSION_RATIO=0.1`, `TOKEN_SAVER_DISABLED_PROCESSORS=docker`.\n\n**Security note:** `user_processors_dir`, `disabled_processors`, and `redaction_allowlist` can only be set via the global `~/.token-saver/config.json` or an environment variable — never via a project-level `.token-saver.json` (that file is auto-discovered from any directory you `cd` into, so it is not trusted with these).\n\nSee `src/config.py`'s `_DEFAULTS` dict for the full, authoritative list of settings — this file lists only the ones users actually tune.\n\n## Debug Mode\nSet `TOKEN_SAVER_DEBUG=true` to enable debug logging to `~/.token-saver/hook.log` (or `%APPDATA%\\token-saver\\hook.log` on Windows).\n\n## Supported Processors\n36 specialized processors, auto-discovered from `src/processors/`: git, gh (GitHub CLI), docker, kubectl, helm, terraform, pulumi, cdktf, ansible, nix, mise, npm/pip/cargo/go/maven/gradle/bun, package listing, python install, test runners (pytest, jest, go test, cargo test, …), lint output (eslint, ruff, pylint, clippy, …), build output, cloud CLIs (aws, gcloud, az), database queries, file listings, file content, environment/system info, network tools (curl, wget), search (grep, find, ripgrep), structured logs, syslog, ssh, jq/yq, act, just — plus a generic fallback for everything else.\n\n## Troubleshooting\nIf compression isn't working:\n1. Check that `python3` (3.10+) is available in your PATH.\n2. Run `token-saver explain \"<the command>\"` to see the routing decision and why it was or wasn't wrapped.\n3. Set `TOKEN_SAVER_DEBUG=true`, trigger a compressible command, then check `~/.token-saver/hook.log` for errors.\n4. Verify the hook itself responds correctly:\n   ```bash\n   echo '{\"tool_name\":\"Bash\",\"tool_input\":{\"command\":\"git status\"}}' | python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/hook_pretool.py\"\n   ```\n   A working hook prints a JSON object with `hookSpecificOutput.updatedInput.command` rewritten to invoke `wrap.py`.\n"
+    }
+  ]
+}

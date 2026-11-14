@@ -1,0 +1,48 @@
+{
+  "repo": "FahrenheitResearch/hermes-weather-plugin",
+  "commit": "d474493ef4ffeefabad9dbf0188f72bce3b47b67",
+  "branch": "main",
+  "fetchedAt": "2026-11-14T15:23:26.881Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "weather-plugin",
+      "name": "weather-plugin",
+      "dir": "",
+      "path": "skill.md",
+      "desc": "Guide for using the weather plugin — data queries, radar imagery, model maps, and meteorological calculations",
+      "descZh": "",
+      "triggers": [],
+      "version": "2.0.0",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/FahrenheitResearch/hermes-weather-plugin.git",
+        "copy": "",
+        "raw": "https://raw.githubusercontent.com/FahrenheitResearch/hermes-weather-plugin/d474493ef4ffeefabad9dbf0188f72bce3b47b67/skill.md",
+        "saveAs": "~/.claude/skills/weather-plugin/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:887d5feedb098291821f17a3712dde80de07faf8b29ccb0926d01402731c560c",
+      "bytes": 3728,
+      "wordCount": 464,
+      "repoLicense": "",
+      "commit": "d474493ef4ffeefabad9dbf0188f72bce3b47b67",
+      "branch": "main",
+      "body": "---\nname: weather-plugin\ndescription: Guide for using the weather plugin — data queries, radar imagery, model maps, and meteorological calculations\nversion: 2.0.0\nmetadata:\n  hermes:\n    tags: [weather, radar, forecast, meteorology]\n    category: weather\n---\n\n# Weather Plugin Usage Guide\n\nYou have 12 weather tools. Prefer lightweight data tools and only use images when asked.\n\n## Tool Selection\n\n**\"How's the weather in [place]?\"** → `wx_conditions`\n**\"What's the forecast?\"** → `wx_forecast`\n**\"Any warnings/watches?\"** → `wx_alerts`\n**\"Show me the radar\"** → `wx_radar_image`\n**\"Show me CAPE/temperature/wind map\"** → `wx_model_image` (use comma-separated vars: `\"cape,helicity,uh,srh\"` for multiple in ONE call)\n**\"What's the severe weather outlook?\"** → `wx_severe`\n**\"Weather in Tokyo/London/etc\"** → `wx_global` (worldwide)\n**\"Calculate dewpoint/wind chill/LCL\"** → `wx_calc`\n**\"Is there a tornado threat?\"** → `wx_severe` first, then `wx_model_image --var cape` or `--var helicity` for visual\n**\"What does the HRRR show?\"** → `wx_model_image` with appropriate var\n**\"Show me the 18z HRRR\"** → `wx_model_image` with `cycle: 18`\n**\"Sounding at a point\"** → `wx_sounding`\n\n## IMPORTANT: Only these 12 tools exist\n\n`wx_conditions`, `wx_forecast`, `wx_alerts`, `wx_metar`, `wx_brief`, `wx_global`, `wx_severe`, `wx_radar_image`, `wx_model_image`, `wx_storm_image`, `wx_calc`, `wx_sounding`\n\nDo NOT try to call any other tool names.\n\n## Rules\n\n1. **Start lightweight.** Use `wx_conditions` or `wx_brief` before heavier tools.\n2. **Images only when asked.** Don't call image tools unless the user wants to SEE something.\n3. **US vs international.** Use `wx_global` for non-US locations.\n4. **Calculations are verified.** `wx_calc` uses metrust — 205 Rust-backed functions verified against MetPy.\n5. **Don't stack redundant calls.** `wx_brief` already includes conditions + forecast + alerts.\n6. **BATCH model images.** NEVER call wx_model_image multiple times for different variables. Use comma-separated vars in ONE call: `\"cape,helicity,uh,srh\"`. This generates all images at once.\n7. **Severe weather package.** For severe weather analysis, use: `var: \"cape,helicity,uh,srh\"` — one call, 4 images.\n8. **ZOOM to threat area.** When the user asks about a specific region (e.g., \"Indiana to New York\"), ALWAYS pass lat/lon and radius_km to zoom in. Don't show full CONUS when they asked about a corridor. Examples:\n   - \"Ohio Valley\" → `lat: 39.5, lon: -83, radius_km: 400`\n   - \"Indiana to New York\" → `lat: 40.5, lon: -77, radius_km: 500`\n   - \"Texas\" → `lat: 31.5, lon: -99, radius_km: 500`\n   - \"Southeast\" → `lat: 33, lon: -85, radius_km: 600`\n   - \"Great Plains\" → `lat: 38, lon: -99, radius_km: 600`\n   Use your geographic knowledge to pick appropriate center + radius.\n\n## wx_calc Examples\n\n- Dewpoint: `{\"function\": \"dewpoint_from_relative_humidity\", \"args\": {\"temperature\": \"30 degC\", \"relative_humidity\": \"65 percent\"}}`\n- Wind chill: `{\"function\": \"wind_chill\", \"args\": {\"temperature\": \"-5 degC\", \"speed\": \"30 km/hr\"}}`\n- Heat index: `{\"function\": \"heat_index\", \"args\": {\"temperature\": \"95 degF\", \"relative_humidity\": \"60 percent\"}}`\n- LCL: `{\"function\": \"lcl\", \"args\": {\"pressure\": \"1000 hPa\", \"temperature\": \"30 degC\", \"dewpoint\": \"20 degC\"}}`\n\n## Image Tools\n\n`wx_radar_image` and `wx_model_image` return PNG file paths in JSON.\n\nFor radar: provide NEXRAD site ID (KRTX=Portland, KTLX=OKC, KLOT=Chicago) or lat/lon. Default 1024px, 200km range, 10dBZ noise filter.\n\nFor model images: specify variable (cape, refl, temp, dewpoint, rh, gust, helicity, uh, precip, mslp, heights_500, jet, srh). Add lat/lon + radius_km to zoom. Use cycle parameter for specific model runs.\n",
+      "bodyMd": "# Weather Plugin Usage Guide\n\nYou have 12 weather tools. Prefer lightweight data tools and only use images when asked.\n\n## Tool Selection\n\n**\"How's the weather in [place]?\"** → `wx_conditions`\n**\"What's the forecast?\"** → `wx_forecast`\n**\"Any warnings/watches?\"** → `wx_alerts`\n**\"Show me the radar\"** → `wx_radar_image`\n**\"Show me CAPE/temperature/wind map\"** → `wx_model_image` (use comma-separated vars: `\"cape,helicity,uh,srh\"` for multiple in ONE call)\n**\"What's the severe weather outlook?\"** → `wx_severe`\n**\"Weather in Tokyo/London/etc\"** → `wx_global` (worldwide)\n**\"Calculate dewpoint/wind chill/LCL\"** → `wx_calc`\n**\"Is there a tornado threat?\"** → `wx_severe` first, then `wx_model_image --var cape` or `--var helicity` for visual\n**\"What does the HRRR show?\"** → `wx_model_image` with appropriate var\n**\"Show me the 18z HRRR\"** → `wx_model_image` with `cycle: 18`\n**\"Sounding at a point\"** → `wx_sounding`\n\n## IMPORTANT: Only these 12 tools exist\n\n`wx_conditions`, `wx_forecast`, `wx_alerts`, `wx_metar`, `wx_brief`, `wx_global`, `wx_severe`, `wx_radar_image`, `wx_model_image`, `wx_storm_image`, `wx_calc`, `wx_sounding`\n\nDo NOT try to call any other tool names.\n\n## Rules\n\n1. **Start lightweight.** Use `wx_conditions` or `wx_brief` before heavier tools.\n2. **Images only when asked.** Don't call image tools unless the user wants to SEE something.\n3. **US vs international.** Use `wx_global` for non-US locations.\n4. **Calculations are verified.** `wx_calc` uses metrust — 205 Rust-backed functions verified against MetPy.\n5. **Don't stack redundant calls.** `wx_brief` already includes conditions + forecast + alerts.\n6. **BATCH model images.** NEVER call wx_model_image multiple times for different variables. Use comma-separated vars in ONE call: `\"cape,helicity,uh,srh\"`. This generates all images at once.\n7. **Severe weather package.** For severe weather analysis, use: `var: \"cape,helicity,uh,srh\"` — one call, 4 images.\n8. **ZOOM to threat area.** When the user asks about a specific region (e.g., \"Indiana to New York\"), ALWAYS pass lat/lon and radius_km to zoom in. Don't show full CONUS when they asked about a corridor. Examples:\n   - \"Ohio Valley\" → `lat: 39.5, lon: -83, radius_km: 400`\n   - \"Indiana to New York\" → `lat: 40.5, lon: -77, radius_km: 500`\n   - \"Texas\" → `lat: 31.5, lon: -99, radius_km: 500`\n   - \"Southeast\" → `lat: 33, lon: -85, radius_km: 600`\n   - \"Great Plains\" → `lat: 38, lon: -99, radius_km: 600`\n   Use your geographic knowledge to pick appropriate center + radius.\n\n## wx_calc Examples\n\n- Dewpoint: `{\"function\": \"dewpoint_from_relative_humidity\", \"args\": {\"temperature\": \"30 degC\", \"relative_humidity\": \"65 percent\"}}`\n- Wind chill: `{\"function\": \"wind_chill\", \"args\": {\"temperature\": \"-5 degC\", \"speed\": \"30 km/hr\"}}`\n- Heat index: `{\"function\": \"heat_index\", \"args\": {\"temperature\": \"95 degF\", \"relative_humidity\": \"60 percent\"}}`\n- LCL: `{\"function\": \"lcl\", \"args\": {\"pressure\": \"1000 hPa\", \"temperature\": \"30 degC\", \"dewpoint\": \"20 degC\"}}`\n\n## Image Tools\n\n`wx_radar_image` and `wx_model_image` return PNG file paths in JSON.\n\nFor radar: provide NEXRAD site ID (KRTX=Portland, KTLX=OKC, KLOT=Chicago) or lat/lon. Default 1024px, 200km range, 10dBZ noise filter.\n\nFor model images: specify variable (cape, refl, temp, dewpoint, rh, gust, helicity, uh, precip, mslp, heights_500, jet, srh). Add lat/lon + radius_km to zoom. Use cycle parameter for specific model runs.\n"
+    }
+  ]
+}

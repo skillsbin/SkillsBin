@@ -1,0 +1,726 @@
+{
+  "repo": "samurmaykrr/zqlz",
+  "commit": "d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13",
+  "branch": "main",
+  "fetchedAt": "2026-11-14T15:22:03.998Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "generate-component-documentation",
+      "name": "generate-component-documentation",
+      "dir": ".claude/skills/generate-component-documentation",
+      "path": ".claude/skills/generate-component-documentation/SKILL.md",
+      "desc": "Generate documentation for new components. Use when writing docs, documenting components, or creating component documentation.",
+      "descZh": "",
+      "triggers": [
+        "writing docs",
+        "documenting components"
+      ],
+      "version": "",
+      "license": "GPL-3.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "gemini",
+        "mcp",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/samurmaykrr/zqlz.git",
+        "copy": "cp -r .claude/skills/generate-component-documentation ~/.claude/skills/generate-component-documentation",
+        "raw": "https://raw.githubusercontent.com/samurmaykrr/zqlz/d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13/.claude/skills/generate-component-documentation/SKILL.md",
+        "saveAs": "~/.claude/skills/generate-component-documentation/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:530e193246cb2f4dde71437e6c391ea90cd7719db65ab3110108589ab1305414",
+      "bytes": 806,
+      "wordCount": 79,
+      "repoLicense": "GPL-3.0",
+      "commit": "d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13",
+      "branch": "main",
+      "body": "---\nname: generate-component-documentation\ndescription: Generate documentation for new components. Use when writing docs, documenting components, or creating component documentation.\n---\n\n## Instructions\n\nWhen generating documentation for a new component:\n\n1. **Follow existing patterns**: Use the documentation styles found in the `docs` folder (examples: `button.md`, `accordion.md`, etc.)\n2. **Reference implementations**: Base the documentation on the same-named story implementation in `crates/story/src/stories`\n3. **API references**: Use markdown `code` blocks with links to docs.rs for component API references when applicable\n\n## Examples\n\nThe generated documentation should include:\n- Component description and purpose\n- Props/API documentation\n- Usage examples\n- Visual examples (if applicable)\n",
+      "bodyMd": "## Instructions\n\nWhen generating documentation for a new component:\n\n1. **Follow existing patterns**: Use the documentation styles found in the `docs` folder (examples: `button.md`, `accordion.md`, etc.)\n2. **Reference implementations**: Base the documentation on the same-named story implementation in `crates/story/src/stories`\n3. **API references**: Use markdown `code` blocks with links to docs.rs for component API references when applicable\n\n## Examples\n\nThe generated documentation should include:\n- Component description and purpose\n- Props/API documentation\n- Usage examples\n- Visual examples (if applicable)\n"
+    },
+    {
+      "slug": "generate-component-story",
+      "name": "generate-component-story",
+      "dir": ".claude/skills/generate-component-story",
+      "path": ".claude/skills/generate-component-story/SKILL.md",
+      "desc": "Create story examples for components. Use when writing stories, creating examples, or demonstrating component usage.",
+      "descZh": "",
+      "triggers": [
+        "writing stories",
+        "creating examples"
+      ],
+      "version": "",
+      "license": "GPL-3.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "gemini",
+        "mcp",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/samurmaykrr/zqlz.git",
+        "copy": "cp -r .claude/skills/generate-component-story ~/.claude/skills/generate-component-story",
+        "raw": "https://raw.githubusercontent.com/samurmaykrr/zqlz/d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13/.claude/skills/generate-component-story/SKILL.md",
+        "saveAs": "~/.claude/skills/generate-component-story/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:e2f3b32391855612eb6c3f58671f0a539f5568ed0af9283e9d03bcef88a9d7aa",
+      "bytes": 711,
+      "wordCount": 73,
+      "repoLicense": "GPL-3.0",
+      "commit": "d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13",
+      "branch": "main",
+      "body": "---\nname: generate-component-story\ndescription: Create story examples for components. Use when writing stories, creating examples, or demonstrating component usage.\n---\n\n## Instructions\n\nWhen creating component stories:\n\n1. **Follow existing patterns**: Base stories on the styles found in `crates/story/src/stories` (examples: `tabs_story.rs`, `group_box_story.rs`, etc.)\n2. **Use sections**: Organize the story with `section!` calls for each major part\n3. **Comprehensive coverage**: Include all options, variants, and usage examples of the component\n\n## Examples\n\nA typical story structure includes:\n- Basic usage examples\n- Different variants and states\n- Interactive examples\n- Edge cases and error states\n",
+      "bodyMd": "## Instructions\n\nWhen creating component stories:\n\n1. **Follow existing patterns**: Base stories on the styles found in `crates/story/src/stories` (examples: `tabs_story.rs`, `group_box_story.rs`, etc.)\n2. **Use sections**: Organize the story with `section!` calls for each major part\n3. **Comprehensive coverage**: Include all options, variants, and usage examples of the component\n\n## Examples\n\nA typical story structure includes:\n- Basic usage examples\n- Different variants and states\n- Interactive examples\n- Edge cases and error states\n"
+    },
+    {
+      "slug": "github-pull-request-description",
+      "name": "github-pull-request-description",
+      "dir": ".claude/skills/github-pull-request-description",
+      "path": ".claude/skills/github-pull-request-description/SKILL.md",
+      "desc": "Write a description to description GitHub Pull Request.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "GPL-3.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "gemini",
+        "mcp",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/samurmaykrr/zqlz.git",
+        "copy": "cp -r .claude/skills/github-pull-request-description ~/.claude/skills/github-pull-request-description",
+        "raw": "https://raw.githubusercontent.com/samurmaykrr/zqlz/d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13/.claude/skills/github-pull-request-description/SKILL.md",
+        "saveAs": "~/.claude/skills/github-pull-request-description/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:5ab737db2026aa405b33b1d126699d898f83234618ac27ad654ad2654bd6d0f3",
+      "bytes": 1487,
+      "wordCount": 217,
+      "repoLicense": "GPL-3.0",
+      "commit": "d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13",
+      "branch": "main",
+      "body": "---\nname: github-pull-request-description\ndescription: Write a description to description GitHub Pull Request.\n---\n\n## Description\n\nWe less than 150 words description for a PR changes, including new features, bug fixes, and improvements. And if there have APIs break changes (Only `crates/ui` changes) we should have a section called `## Breaking Changes` to list them clearly.\n\n## Breaking changes description\n\nWhen a pull request introduces breaking changes to a codebase, it's important to clearly communicate these changes to users and developers who rely on the code. A well-written breaking changes description helps ensure that everyone understands what has changed, why it has changed, and how to adapt to the new version.\n\nWe can get the changes from the PR diff and summarize them in a clear and concise manner. Aim to provide a clear APIs changes for users to follow.\n\n### Format\n\nWe pefer the following format for breaking changes descriptions:\n\n1. Use bullet list for each breaking change item.\n2. Each item should have title and a code block showing the old and new usage by use `diff`.\n3. Use `## Breaking Changes` as the section title.\n4. Use english language.\n\n**For example:**\n\n````md\n## Breaking Changes\n\n- Added `id` parameter to `Sidebar::new`.\n\n```diff\n- Sidebar::new()\n+ Sidebar::new(\"sidebar\")\n```\n\n- Removed the `left` and `right` methods; use `side` instead.\n  > Default is left.\n\n```diff\n- Sidebar::right()\n+ Sidebar::new(\"sidebar\").side(Side::Right)\n```\n````\n",
+      "bodyMd": "## Description\n\nWe less than 150 words description for a PR changes, including new features, bug fixes, and improvements. And if there have APIs break changes (Only `crates/ui` changes) we should have a section called `## Breaking Changes` to list them clearly.\n\n## Breaking changes description\n\nWhen a pull request introduces breaking changes to a codebase, it's important to clearly communicate these changes to users and developers who rely on the code. A well-written breaking changes description helps ensure that everyone understands what has changed, why it has changed, and how to adapt to the new version.\n\nWe can get the changes from the PR diff and summarize them in a clear and concise manner. Aim to provide a clear APIs changes for users to follow.\n\n### Format\n\nWe pefer the following format for breaking changes descriptions:\n\n1. Use bullet list for each breaking change item.\n2. Each item should have title and a code block showing the old and new usage by use `diff`.\n3. Use `## Breaking Changes` as the section title.\n4. Use english language.\n\n**For example:**\n\n````md\n## Breaking Changes\n\n- Added `id` parameter to `Sidebar::new`.\n\n```diff\n- Sidebar::new()\n+ Sidebar::new(\"sidebar\")\n```\n\n- Removed the `left` and `right` methods; use `side` instead.\n  > Default is left.\n\n```diff\n- Sidebar::right()\n+ Sidebar::new(\"sidebar\").side(Side::Right)\n```\n````\n"
+    },
+    {
+      "slug": "gpui-action",
+      "name": "gpui-action",
+      "dir": ".claude/skills/gpui-action",
+      "path": ".claude/skills/gpui-action/SKILL.md",
+      "desc": "Action definitions and keyboard shortcuts in GPUI. Use when implementing actions, keyboard shortcuts, or key bindings.",
+      "descZh": "",
+      "triggers": [
+        "implementing actions",
+        "keyboard shortcuts",
+        "key bindings"
+      ],
+      "version": "",
+      "license": "GPL-3.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "gemini",
+        "mcp",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/samurmaykrr/zqlz.git",
+        "copy": "cp -r .claude/skills/gpui-action ~/.claude/skills/gpui-action",
+        "raw": "https://raw.githubusercontent.com/samurmaykrr/zqlz/d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13/.claude/skills/gpui-action/SKILL.md",
+        "saveAs": "~/.claude/skills/gpui-action/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:e434560e9121dd3f216e4481187e089a317b648161e2fd7865be62ea248169cb",
+      "bytes": 3894,
+      "wordCount": 412,
+      "repoLicense": "GPL-3.0",
+      "commit": "d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13",
+      "branch": "main",
+      "body": "---\nname: gpui-action\ndescription: Action definitions and keyboard shortcuts in GPUI. Use when implementing actions, keyboard shortcuts, or key bindings.\n---\n\n## Overview\n\nActions provide declarative keyboard-driven UI interactions in GPUI.\n\n**Key Concepts:**\n- Define actions with `actions!` macro or `#[derive(Action)]`\n- Bind keys with `cx.bind_keys()`\n- Handle with `.on_action()` on elements\n- Context-aware via `key_context()`\n\n## Quick Start\n\n### Simple Actions\n\n```rust\nuse gpui::actions;\n\nactions!(editor, [MoveUp, MoveDown, Save, Quit]);\n\nconst CONTEXT: &str = \"Editor\";\n\npub fn init(cx: &mut App) {\n    cx.bind_keys([\n        KeyBinding::new(\"up\", MoveUp, Some(CONTEXT)),\n        KeyBinding::new(\"down\", MoveDown, Some(CONTEXT)),\n        KeyBinding::new(\"cmd-s\", Save, Some(CONTEXT)),\n        KeyBinding::new(\"cmd-q\", Quit, Some(CONTEXT)),\n    ]);\n}\n\nimpl Render for Editor {\n    fn render(&mut self, _: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {\n        div()\n            .key_context(CONTEXT)\n            .on_action(cx.listener(Self::move_up))\n            .on_action(cx.listener(Self::move_down))\n            .on_action(cx.listener(Self::save))\n    }\n}\n\nimpl Editor {\n    fn move_up(&mut self, _: &MoveUp, cx: &mut Context<Self>) {\n        // Handle move up\n        cx.notify();\n    }\n\n    fn move_down(&mut self, _: &MoveDown, cx: &mut Context<Self>) {\n        cx.notify();\n    }\n\n    fn save(&mut self, _: &Save, cx: &mut Context<Self>) {\n        // Save logic\n        cx.notify();\n    }\n}\n```\n\n### Actions with Parameters\n\n```rust\n#[derive(Clone, PartialEq, Action, Deserialize)]\n#[action(namespace = editor)]\npub struct InsertText {\n    pub text: String,\n}\n\n#[derive(Action, Clone, PartialEq, Eq, Deserialize)]\n#[action(namespace = editor, no_json)]\npub struct Digit(pub u8);\n\ncx.bind_keys([\n    KeyBinding::new(\"0\", Digit(0), Some(CONTEXT)),\n    KeyBinding::new(\"1\", Digit(1), Some(CONTEXT)),\n    // ...\n]);\n\nimpl Editor {\n    fn on_digit(&mut self, action: &Digit, cx: &mut Context<Self>) {\n        self.insert_digit(action.0, cx);\n    }\n}\n```\n\n## Key Formats\n\n```rust\n// Modifiers\n\"cmd-s\"         // Command (macOS) / Ctrl (Windows/Linux)\n\"ctrl-c\"        // Control\n\"alt-f\"         // Alt\n\"shift-tab\"     // Shift\n\"cmd-ctrl-f\"    // Multiple modifiers\n\n// Keys\n\"a-z\", \"0-9\"    // Letters and numbers\n\"f1-f12\"        // Function keys\n\"up\", \"down\", \"left\", \"right\"\n\"enter\", \"escape\", \"space\", \"tab\"\n\"backspace\", \"delete\"\n\"-\", \"=\", \"[\", \"]\", etc.  // Special characters\n```\n\n## Action Naming\n\nPrefer verb-noun pattern:\n\n```rust\nactions!([\n    OpenFile,      // ✅ Good\n    CloseWindow,   // ✅ Good\n    ToggleSidebar, // ✅ Good\n    Save,          // ✅ Good (common exception)\n]);\n```\n\n## Context-Aware Bindings\n\n```rust\nconst EDITOR_CONTEXT: &str = \"Editor\";\nconst MODAL_CONTEXT: &str = \"Modal\";\n\n// Same key, different contexts\ncx.bind_keys([\n    KeyBinding::new(\"escape\", CloseModal, Some(MODAL_CONTEXT)),\n    KeyBinding::new(\"escape\", ClearSelection, Some(EDITOR_CONTEXT)),\n]);\n\n// Set context on element\ndiv()\n    .key_context(EDITOR_CONTEXT)\n    .child(editor_content)\n```\n\n## Best Practices\n\n### ✅ Use Contexts\n\n```rust\n// ✅ Good: Context-aware\ndiv()\n    .key_context(\"MyComponent\")\n    .on_action(cx.listener(Self::handle))\n```\n\n### ✅ Name Actions Clearly\n\n```rust\n// ✅ Good: Clear intent\nactions!([\n    SaveDocument,\n    CloseTab,\n    TogglePreview,\n]);\n```\n\n### ✅ Handle with Listeners\n\n```rust\n// ✅ Good: Proper handler naming\nimpl MyComponent {\n    fn on_action_save(&mut self, _: &Save, cx: &mut Context<Self>) {\n        // Handle save\n        cx.notify();\n    }\n}\n\ndiv().on_action(cx.listener(Self::on_action_save))\n```\n\n## Reference Documentation\n\n- **Complete Guide**: See [reference.md](references/reference.md)\n  - Action definition, keybinding, dispatch\n  - Focus-based routing, best practices\n  - Performance, accessibility\n",
+      "bodyMd": "## Overview\n\nActions provide declarative keyboard-driven UI interactions in GPUI.\n\n**Key Concepts:**\n- Define actions with `actions!` macro or `#[derive(Action)]`\n- Bind keys with `cx.bind_keys()`\n- Handle with `.on_action()` on elements\n- Context-aware via `key_context()`\n\n## Quick Start\n\n### Simple Actions\n\n```rust\nuse gpui::actions;\n\nactions!(editor, [MoveUp, MoveDown, Save, Quit]);\n\nconst CONTEXT: &str = \"Editor\";\n\npub fn init(cx: &mut App) {\n    cx.bind_keys([\n        KeyBinding::new(\"up\", MoveUp, Some(CONTEXT)),\n        KeyBinding::new(\"down\", MoveDown, Some(CONTEXT)),\n        KeyBinding::new(\"cmd-s\", Save, Some(CONTEXT)),\n        KeyBinding::new(\"cmd-q\", Quit, Some(CONTEXT)),\n    ]);\n}\n\nimpl Render for Editor {\n    fn render(&mut self, _: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {\n        div()\n            .key_context(CONTEXT)\n            .on_action(cx.listener(Self::move_up))\n            .on_action(cx.listener(Self::move_down))\n            .on_action(cx.listener(Self::save))\n    }\n}\n\nimpl Editor {\n    fn move_up(&mut self, _: &MoveUp, cx: &mut Context<Self>) {\n        // Handle move up\n        cx.notify();\n    }\n\n    fn move_down(&mut self, _: &MoveDown, cx: &mut Context<Self>) {\n        cx.notify();\n    }\n\n    fn save(&mut self, _: &Save, cx: &mut Context<Self>) {\n        // Save logic\n        cx.notify();\n    }\n}\n```\n\n### Actions with Parameters\n\n```rust\n#[derive(Clone, PartialEq, Action, Deserialize)]\n#[action(namespace = editor)]\npub struct InsertText {\n    pub text: String,\n}\n\n#[derive(Action, Clone, PartialEq, Eq, Deserialize)]\n#[action(namespace = editor, no_json)]\npub struct Digit(pub u8);\n\ncx.bind_keys([\n    KeyBinding::new(\"0\", Digit(0), Some(CONTEXT)),\n    KeyBinding::new(\"1\", Digit(1), Some(CONTEXT)),\n    // ...\n]);\n\nimpl Editor {\n    fn on_digit(&mut self, action: &Digit, cx: &mut Context<Self>) {\n        self.insert_digit(action.0, cx);\n    }\n}\n```\n\n## Key Formats\n\n```rust\n// Modifiers\n\"cmd-s\"         // Command (macOS) / Ctrl (Windows/Linux)\n\"ctrl-c\"        // Control\n\"alt-f\"         // Alt\n\"shift-tab\"     // Shift\n\"cmd-ctrl-f\"    // Multiple modifiers\n\n// Keys\n\"a-z\", \"0-9\"    // Letters and numbers\n\"f1-f12\"        // Function keys\n\"up\", \"down\", \"left\", \"right\"\n\"enter\", \"escape\", \"space\", \"tab\"\n\"backspace\", \"delete\"\n\"-\", \"=\", \"[\", \"]\", etc.  // Special characters\n```\n\n## Action Naming\n\nPrefer verb-noun pattern:\n\n```rust\nactions!([\n    OpenFile,      // ✅ Good\n    CloseWindow,   // ✅ Good\n    ToggleSidebar, // ✅ Good\n    Save,          // ✅ Good (common exception)\n]);\n```\n\n## Context-Aware Bindings\n\n```rust\nconst EDITOR_CONTEXT: &str = \"Editor\";\nconst MODAL_CONTEXT: &str = \"Modal\";\n\n// Same key, different contexts\ncx.bind_keys([\n    KeyBinding::new(\"escape\", CloseModal, Some(MODAL_CONTEXT)),\n    KeyBinding::new(\"escape\", ClearSelection, Some(EDITOR_CONTEXT)),\n]);\n\n// Set context on element\ndiv()\n    .key_context(EDITOR_CONTEXT)\n    .child(editor_content)\n```\n\n## Best Practices\n\n### ✅ Use Contexts\n\n```rust\n// ✅ Good: Context-aware\ndiv()\n    .key_context(\"MyComponent\")\n    .on_action(cx.listener(Self::handle))\n```\n\n### ✅ Name Actions Clearly\n\n```rust\n// ✅ Good: Clear intent\nactions!([\n    SaveDocument,\n    CloseTab,\n    TogglePreview,\n]);\n```\n\n### ✅ Handle with Listeners\n\n```rust\n// ✅ Good: Proper handler naming\nimpl MyComponent {\n    fn on_action_save(&mut self, _: &Save, cx: &mut Context<Self>) {\n        // Handle save\n        cx.notify();\n    }\n}\n\ndiv().on_action(cx.listener(Self::on_action_save))\n```\n\n## Reference Documentation\n\n- **Complete Guide**: See [reference.md](references/reference.md)\n  - Action definition, keybinding, dispatch\n  - Focus-based routing, best practices\n  - Performance, accessibility\n"
+    },
+    {
+      "slug": "gpui-async",
+      "name": "gpui-async",
+      "dir": ".claude/skills/gpui-async",
+      "path": ".claude/skills/gpui-async/SKILL.md",
+      "desc": "Async operations and background tasks in GPUI. Use when working with async, spawn, background tasks, or concurrent operations. Essential for handling async I/O, long-running computations, and coordinating between foreground UI updates and background work.",
+      "descZh": "",
+      "triggers": [
+        "working with async",
+        "spawn",
+        "background tasks",
+        "concurrent operations"
+      ],
+      "version": "",
+      "license": "GPL-3.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "gemini",
+        "mcp",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/samurmaykrr/zqlz.git",
+        "copy": "cp -r .claude/skills/gpui-async ~/.claude/skills/gpui-async",
+        "raw": "https://raw.githubusercontent.com/samurmaykrr/zqlz/d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13/.claude/skills/gpui-async/SKILL.md",
+        "saveAs": "~/.claude/skills/gpui-async/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:603e0892004e5a2a423689528e0deee9880a059e6f333e72ff1a3c2ce1d0649a",
+      "bytes": 4299,
+      "wordCount": 447,
+      "repoLicense": "GPL-3.0",
+      "commit": "d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13",
+      "branch": "main",
+      "body": "---\nname: gpui-async\ndescription: Async operations and background tasks in GPUI. Use when working with async, spawn, background tasks, or concurrent operations. Essential for handling async I/O, long-running computations, and coordinating between foreground UI updates and background work.\n---\n\n## Overview\n\nGPUI provides integrated async runtime for foreground UI updates and background computation.\n\n**Key Concepts:**\n- **Foreground tasks**: UI thread, can update entities (`cx.spawn`)\n- **Background tasks**: Worker threads, CPU-intensive work (`cx.background_spawn`)\n- All entity updates happen on foreground thread\n\n## Quick Start\n\n### Foreground Tasks (UI Updates)\n\n```rust\nimpl MyComponent {\n    fn fetch_data(&mut self, cx: &mut Context<Self>) {\n        let entity = cx.entity().downgrade();\n\n        cx.spawn(async move |cx| {\n            // Runs on UI thread, can await and update entities\n            let data = fetch_from_api().await;\n\n            entity.update(cx, |state, cx| {\n                state.data = Some(data);\n                cx.notify();\n            }).ok();\n        }).detach();\n    }\n}\n```\n\n### Background Tasks (Heavy Work)\n\n```rust\nimpl MyComponent {\n    fn process_file(&mut self, cx: &mut Context<Self>) {\n        let entity = cx.entity().downgrade();\n\n        cx.background_spawn(async move {\n            // Runs on background thread, CPU-intensive\n            let result = heavy_computation().await;\n            result\n        })\n        .then(cx.spawn(move |result, cx| {\n            // Back to foreground to update UI\n            entity.update(cx, |state, cx| {\n                state.result = result;\n                cx.notify();\n            }).ok();\n        }))\n        .detach();\n    }\n}\n```\n\n### Task Management\n\n```rust\nstruct MyView {\n    _task: Task<()>,  // Prefix with _ if stored but not accessed\n}\n\nimpl MyView {\n    fn new(cx: &mut Context<Self>) -> Self {\n        let entity = cx.entity().downgrade();\n\n        let _task = cx.spawn(async move |cx| {\n            // Task automatically cancelled when dropped\n            loop {\n                tokio::time::sleep(Duration::from_secs(1)).await;\n                entity.update(cx, |state, cx| {\n                    state.tick();\n                    cx.notify();\n                }).ok();\n            }\n        });\n\n        Self { _task }\n    }\n}\n```\n\n## Core Patterns\n\n### 1. Async Data Fetching\n\n```rust\ncx.spawn(async move |cx| {\n    let data = fetch_data().await?;\n    entity.update(cx, |state, cx| {\n        state.data = Some(data);\n        cx.notify();\n    })?;\n    Ok::<_, anyhow::Error>(())\n}).detach();\n```\n\n### 2. Background Computation + UI Update\n\n```rust\ncx.background_spawn(async move {\n    heavy_work()\n})\n.then(cx.spawn(move |result, cx| {\n    entity.update(cx, |state, cx| {\n        state.result = result;\n        cx.notify();\n    }).ok();\n}))\n.detach();\n```\n\n### 3. Periodic Tasks\n\n```rust\ncx.spawn(async move |cx| {\n    loop {\n        tokio::time::sleep(Duration::from_secs(5)).await;\n        // Update every 5 seconds\n    }\n}).detach();\n```\n\n### 4. Task Cancellation\n\nTasks are automatically cancelled when dropped. Store in struct to keep alive.\n\n## Common Pitfalls\n\n### ❌ Don't: Update entities from background tasks\n\n```rust\n// ❌ Wrong: Can't update entities from background thread\ncx.background_spawn(async move {\n    entity.update(cx, |state, cx| { // Compile error!\n        state.data = data;\n    });\n});\n```\n\n### ✅ Do: Use foreground task or chain\n\n```rust\n// ✅ Correct: Chain with foreground task\ncx.background_spawn(async move { data })\n    .then(cx.spawn(move |data, cx| {\n        entity.update(cx, |state, cx| {\n            state.data = data;\n            cx.notify();\n        }).ok();\n    }))\n    .detach();\n```\n\n## Reference Documentation\n\n### Complete Guides\n- **API Reference**: See [api-reference.md](references/api-reference.md)\n  - Task types, spawning methods, contexts\n  - Executors, cancellation, error handling\n\n- **Patterns**: See [patterns.md](references/patterns.md)\n  - Data fetching, background processing\n  - Polling, debouncing, parallel tasks\n  - Pattern selection guide\n\n- **Best Practices**: See [best-practices.md](references/best-practices.md)\n  - Error handling, cancellation\n  - Performance optimization, testing\n  - Common pitfalls and solutions\n",
+      "bodyMd": "## Overview\n\nGPUI provides integrated async runtime for foreground UI updates and background computation.\n\n**Key Concepts:**\n- **Foreground tasks**: UI thread, can update entities (`cx.spawn`)\n- **Background tasks**: Worker threads, CPU-intensive work (`cx.background_spawn`)\n- All entity updates happen on foreground thread\n\n## Quick Start\n\n### Foreground Tasks (UI Updates)\n\n```rust\nimpl MyComponent {\n    fn fetch_data(&mut self, cx: &mut Context<Self>) {\n        let entity = cx.entity().downgrade();\n\n        cx.spawn(async move |cx| {\n            // Runs on UI thread, can await and update entities\n            let data = fetch_from_api().await;\n\n            entity.update(cx, |state, cx| {\n                state.data = Some(data);\n                cx.notify();\n            }).ok();\n        }).detach();\n    }\n}\n```\n\n### Background Tasks (Heavy Work)\n\n```rust\nimpl MyComponent {\n    fn process_file(&mut self, cx: &mut Context<Self>) {\n        let entity = cx.entity().downgrade();\n\n        cx.background_spawn(async move {\n            // Runs on background thread, CPU-intensive\n            let result = heavy_computation().await;\n            result\n        })\n        .then(cx.spawn(move |result, cx| {\n            // Back to foreground to update UI\n            entity.update(cx, |state, cx| {\n                state.result = result;\n                cx.notify();\n            }).ok();\n        }))\n        .detach();\n    }\n}\n```\n\n### Task Management\n\n```rust\nstruct MyView {\n    _task: Task<()>,  // Prefix with _ if stored but not accessed\n}\n\nimpl MyView {\n    fn new(cx: &mut Context<Self>) -> Self {\n        let entity = cx.entity().downgrade();\n\n        let _task = cx.spawn(async move |cx| {\n            // Task automatically cancelled when dropped\n            loop {\n                tokio::time::sleep(Duration::from_secs(1)).await;\n                entity.update(cx, |state, cx| {\n                    state.tick();\n                    cx.notify();\n                }).ok();\n            }\n        });\n\n        Self { _task }\n    }\n}\n```\n\n## Core Patterns\n\n### 1. Async Data Fetching\n\n```rust\ncx.spawn(async move |cx| {\n    let data = fetch_data().await?;\n    entity.update(cx, |state, cx| {\n        state.data = Some(data);\n        cx.notify();\n    })?;\n    Ok::<_, anyhow::Error>(())\n}).detach();\n```\n\n### 2. Background Computation + UI Update\n\n```rust\ncx.background_spawn(async move {\n    heavy_work()\n})\n.then(cx.spawn(move |result, cx| {\n    entity.update(cx, |state, cx| {\n        state.result = result;\n        cx.notify();\n    }).ok();\n}))\n.detach();\n```\n\n### 3. Periodic Tasks\n\n```rust\ncx.spawn(async move |cx| {\n    loop {\n        tokio::time::sleep(Duration::from_secs(5)).await;\n        // Update every 5 seconds\n    }\n}).detach();\n```\n\n### 4. Task Cancellation\n\nTasks are automatically cancelled when dropped. Store in struct to keep alive.\n\n## Common Pitfalls\n\n### ❌ Don't: Update entities from background tasks\n\n```rust\n// ❌ Wrong: Can't update entities from background thread\ncx.background_spawn(async move {\n    entity.update(cx, |state, cx| { // Compile error!\n        state.data = data;\n    });\n});\n```\n\n### ✅ Do: Use foreground task or chain\n\n```rust\n// ✅ Correct: Chain with foreground task\ncx.background_spawn(async move { data })\n    .then(cx.spawn(move |data, cx| {\n        entity.update(cx, |state, cx| {\n            state.data = data;\n            cx.notify();\n        }).ok();\n    }))\n    .detach();\n```\n\n## Reference Documentation\n\n### Complete Guides\n- **API Reference**: See [api-reference.md](references/api-reference.md)\n  - Task types, spawning methods, contexts\n  - Executors, cancellation, error handling\n\n- **Patterns**: See [patterns.md](references/patterns.md)\n  - Data fetching, background processing\n  - Polling, debouncing, parallel tasks\n  - Pattern selection guide\n\n- **Best Practices**: See [best-practices.md](references/best-practices.md)\n  - Error handling, cancellation\n  - Performance optimization, testing\n  - Common pitfalls and solutions\n"
+    },
+    {
+      "slug": "gpui-context",
+      "name": "gpui-context",
+      "dir": ".claude/skills/gpui-context",
+      "path": ".claude/skills/gpui-context/SKILL.md",
+      "desc": "Context management in GPUI including App, Window, and AsyncApp. Use when working with contexts, entity updates, or window operations. Different context types provide different capabilities for UI rendering, entity management, and async operations.",
+      "descZh": "",
+      "triggers": [
+        "working with contexts",
+        "entity updates",
+        "window operations"
+      ],
+      "version": "",
+      "license": "GPL-3.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "gemini",
+        "mcp",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/samurmaykrr/zqlz.git",
+        "copy": "cp -r .claude/skills/gpui-context ~/.claude/skills/gpui-context",
+        "raw": "https://raw.githubusercontent.com/samurmaykrr/zqlz/d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13/.claude/skills/gpui-context/SKILL.md",
+        "saveAs": "~/.claude/skills/gpui-context/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:9376d72f3e71c7e2252d93c6f4ed568dc17651d4d33b6e5f3d141c13f702f90c",
+      "bytes": 3446,
+      "wordCount": 379,
+      "repoLicense": "GPL-3.0",
+      "commit": "d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13",
+      "branch": "main",
+      "body": "---\nname: gpui-context\ndescription: Context management in GPUI including App, Window, and AsyncApp. Use when working with contexts, entity updates, or window operations. Different context types provide different capabilities for UI rendering, entity management, and async operations.\n---\n\n## Overview\n\nGPUI uses different context types for different scenarios:\n\n**Context Types:**\n- **`App`**: Global app state, entity creation\n- **`Window`**: Window-specific operations, painting, layout\n- **`Context<T>`**: Entity-specific context for component `T`\n- **`AsyncApp`**: Async context for foreground tasks\n- **`AsyncWindowContext`**: Async context with window access\n\n## Quick Start\n\n### Context<T> - Component Context\n\n```rust\nimpl MyComponent {\n    fn update_state(&mut self, cx: &mut Context<Self>) {\n        self.value = 42;\n        cx.notify(); // Trigger re-render\n\n        // Spawn async task\n        cx.spawn(async move |cx| {\n            // Async work\n        }).detach();\n\n        // Get current entity\n        let entity = cx.entity();\n    }\n}\n```\n\n### App - Global Context\n\n```rust\nfn main() {\n    let app = Application::new();\n    app.run(|cx: &mut App| {\n        // Create entities\n        let entity = cx.new(|cx| MyState::default());\n\n        // Open windows\n        cx.open_window(WindowOptions::default(), |window, cx| {\n            cx.new(|cx| Root::new(view, window, cx))\n        });\n    });\n}\n```\n\n### Window - Window Context\n\n```rust\nimpl Render for MyView {\n    fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {\n        // Window operations\n        let is_focused = window.is_window_focused();\n        let bounds = window.bounds();\n\n        div().child(\"Content\")\n    }\n}\n```\n\n### AsyncApp - Async Context\n\n```rust\ncx.spawn(async move |cx: &mut AsyncApp| {\n    let data = fetch_data().await;\n\n    entity.update(cx, |state, inner_cx| {\n        state.data = data;\n        inner_cx.notify();\n    }).ok();\n}).detach();\n```\n\n## Common Operations\n\n### Entity Operations\n\n```rust\n// Create entity\nlet entity = cx.new(|cx| MyState::default());\n\n// Update entity\nentity.update(cx, |state, cx| {\n    state.value = 42;\n    cx.notify();\n});\n\n// Read entity\nlet value = entity.read(cx).value;\n```\n\n### Notifications and Events\n\n```rust\n// Trigger re-render\ncx.notify();\n\n// Emit event\ncx.emit(MyEvent::Updated);\n\n// Observe entity\ncx.observe(&entity, |this, observed, cx| {\n    // React to changes\n}).detach();\n\n// Subscribe to events\ncx.subscribe(&entity, |this, source, event, cx| {\n    // Handle event\n}).detach();\n```\n\n### Window Operations\n\n```rust\n// Window state\nlet focused = window.is_window_focused();\nlet bounds = window.bounds();\nlet scale = window.scale_factor();\n\n// Close window\nwindow.remove_window();\n```\n\n### Async Operations\n\n```rust\n// Spawn foreground task\ncx.spawn(async move |cx| {\n    // Async work with entity access\n}).detach();\n\n// Spawn background task\ncx.background_spawn(async move {\n    // Heavy computation\n}).detach();\n```\n\n## Context Hierarchy\n\n```\nApp (Global)\n  └─ Window (Per-window)\n       └─ Context<T> (Per-component)\n            └─ AsyncApp (In async tasks)\n                 └─ AsyncWindowContext (Async + Window)\n```\n\n## Reference Documentation\n\n- **API Reference**: See [api-reference.md](references/api-reference.md)\n  - Complete context API, methods, conversions\n  - Entity operations, window operations\n  - Async contexts, best practices\n",
+      "bodyMd": "## Overview\n\nGPUI uses different context types for different scenarios:\n\n**Context Types:**\n- **`App`**: Global app state, entity creation\n- **`Window`**: Window-specific operations, painting, layout\n- **`Context<T>`**: Entity-specific context for component `T`\n- **`AsyncApp`**: Async context for foreground tasks\n- **`AsyncWindowContext`**: Async context with window access\n\n## Quick Start\n\n### Context<T> - Component Context\n\n```rust\nimpl MyComponent {\n    fn update_state(&mut self, cx: &mut Context<Self>) {\n        self.value = 42;\n        cx.notify(); // Trigger re-render\n\n        // Spawn async task\n        cx.spawn(async move |cx| {\n            // Async work\n        }).detach();\n\n        // Get current entity\n        let entity = cx.entity();\n    }\n}\n```\n\n### App - Global Context\n\n```rust\nfn main() {\n    let app = Application::new();\n    app.run(|cx: &mut App| {\n        // Create entities\n        let entity = cx.new(|cx| MyState::default());\n\n        // Open windows\n        cx.open_window(WindowOptions::default(), |window, cx| {\n            cx.new(|cx| Root::new(view, window, cx))\n        });\n    });\n}\n```\n\n### Window - Window Context\n\n```rust\nimpl Render for MyView {\n    fn render(&mut self, window: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {\n        // Window operations\n        let is_focused = window.is_window_focused();\n        let bounds = window.bounds();\n\n        div().child(\"Content\")\n    }\n}\n```\n\n### AsyncApp - Async Context\n\n```rust\ncx.spawn(async move |cx: &mut AsyncApp| {\n    let data = fetch_data().await;\n\n    entity.update(cx, |state, inner_cx| {\n        state.data = data;\n        inner_cx.notify();\n    }).ok();\n}).detach();\n```\n\n## Common Operations\n\n### Entity Operations\n\n```rust\n// Create entity\nlet entity = cx.new(|cx| MyState::default());\n\n// Update entity\nentity.update(cx, |state, cx| {\n    state.value = 42;\n    cx.notify();\n});\n\n// Read entity\nlet value = entity.read(cx).value;\n```\n\n### Notifications and Events\n\n```rust\n// Trigger re-render\ncx.notify();\n\n// Emit event\ncx.emit(MyEvent::Updated);\n\n// Observe entity\ncx.observe(&entity, |this, observed, cx| {\n    // React to changes\n}).detach();\n\n// Subscribe to events\ncx.subscribe(&entity, |this, source, event, cx| {\n    // Handle event\n}).detach();\n```\n\n### Window Operations\n\n```rust\n// Window state\nlet focused = window.is_window_focused();\nlet bounds = window.bounds();\nlet scale = window.scale_factor();\n\n// Close window\nwindow.remove_window();\n```\n\n### Async Operations\n\n```rust\n// Spawn foreground task\ncx.spawn(async move |cx| {\n    // Async work with entity access\n}).detach();\n\n// Spawn background task\ncx.background_spawn(async move {\n    // Heavy computation\n}).detach();\n```\n\n## Context Hierarchy\n\n```\nApp (Global)\n  └─ Window (Per-window)\n       └─ Context<T> (Per-component)\n            └─ AsyncApp (In async tasks)\n                 └─ AsyncWindowContext (Async + Window)\n```\n\n## Reference Documentation\n\n- **API Reference**: See [api-reference.md](references/api-reference.md)\n  - Complete context API, methods, conversions\n  - Entity operations, window operations\n  - Async contexts, best practices\n"
+    },
+    {
+      "slug": "gpui-element",
+      "name": "gpui-element",
+      "dir": ".claude/skills/gpui-element",
+      "path": ".claude/skills/gpui-element/SKILL.md",
+      "desc": "Implementing custom elements using GPUI's low-level Element API (vs. high-level Render/RenderOnce APIs). Use when you need maximum control over layout, prepaint, and paint phases for complex, performance-critical custom UI components that cannot be achieved with Render/RenderOnce traits.",
+      "descZh": "",
+      "triggers": [
+        "prepaint",
+        "performance"
+      ],
+      "version": "",
+      "license": "GPL-3.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "gemini",
+        "mcp",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "node"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/samurmaykrr/zqlz.git",
+        "copy": "cp -r .claude/skills/gpui-element ~/.claude/skills/gpui-element",
+        "raw": "https://raw.githubusercontent.com/samurmaykrr/zqlz/d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13/.claude/skills/gpui-element/SKILL.md",
+        "saveAs": "~/.claude/skills/gpui-element/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:073ac502d938339ff80d939a04e0019f304dd13a30cca58a2fec112f091ed047",
+      "bytes": 4538,
+      "wordCount": 464,
+      "repoLicense": "GPL-3.0",
+      "commit": "d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13",
+      "branch": "main",
+      "body": "---\nname: gpui-element\ndescription: Implementing custom elements using GPUI's low-level Element API (vs. high-level Render/RenderOnce APIs). Use when you need maximum control over layout, prepaint, and paint phases for complex, performance-critical custom UI components that cannot be achieved with Render/RenderOnce traits.\n---\n\n## When to Use\n\nUse the low-level `Element` trait when:\n- Need fine-grained control over layout calculation\n- Building complex, performance-critical components\n- Implementing custom layout algorithms (masonry, circular, etc.)\n- High-level `Render`/`RenderOnce` APIs are insufficient\n\n**Prefer `Render`/`RenderOnce` for:** Simple components, standard layouts, declarative UI\n\n## Quick Start\n\nThe `Element` trait provides direct control over three rendering phases:\n\n```rust\nimpl Element for MyElement {\n    type RequestLayoutState = MyLayoutState;  // Data passed to later phases\n    type PrepaintState = MyPaintState;        // Data for painting\n\n    fn id(&self) -> Option<ElementId> {\n        Some(self.id.clone())\n    }\n\n    fn source_location(&self) -> Option<&'static std::panic::Location<'static>> {\n        None\n    }\n\n    // Phase 1: Calculate sizes and positions\n    fn request_layout(&mut self, .., window: &mut Window, cx: &mut App)\n        -> (LayoutId, Self::RequestLayoutState)\n    {\n        let layout_id = window.request_layout(\n            Style { size: size(px(200.), px(100.)), ..default() },\n            vec![],\n            cx\n        );\n        (layout_id, MyLayoutState { /* ... */ })\n    }\n\n    // Phase 2: Create hitboxes, prepare for painting\n    fn prepaint(&mut self, .., bounds: Bounds<Pixels>, layout: &mut Self::RequestLayoutState,\n                window: &mut Window, cx: &mut App) -> Self::PrepaintState\n    {\n        let hitbox = window.insert_hitbox(bounds, HitboxBehavior::Normal);\n        MyPaintState { hitbox }\n    }\n\n    // Phase 3: Render and handle interactions\n    fn paint(&mut self, .., bounds: Bounds<Pixels>, layout: &mut Self::RequestLayoutState,\n             paint_state: &mut Self::PrepaintState, window: &mut Window, cx: &mut App)\n    {\n        window.paint_quad(paint_quad(bounds, Corners::all(px(4.)), cx.theme().background));\n\n        window.on_mouse_event({\n            let hitbox = paint_state.hitbox.clone();\n            move |event: &MouseDownEvent, phase, window, cx| {\n                if hitbox.is_hovered(window) && phase.bubble() {\n                    // Handle interaction\n                    cx.stop_propagation();\n                }\n            }\n        });\n    }\n}\n\n// Enable element to be used as child\nimpl IntoElement for MyElement {\n    type Element = Self;\n    fn into_element(self) -> Self::Element { self }\n}\n```\n\n## Core Concepts\n\n### Three-Phase Rendering\n\n1. **request_layout**: Calculate sizes and positions, return layout ID and state\n2. **prepaint**: Create hitboxes, compute final bounds, prepare for painting\n3. **paint**: Render element, set up interactions (mouse events, cursor styles)\n\n### State Flow\n\n```\nRequestLayoutState → PrepaintState → paint\n```\n\nState flows in one direction through associated types, passed as mutable references between phases.\n\n### Key Operations\n\n- **Layout**: `window.request_layout(style, children, cx)` - Create layout node\n- **Hitboxes**: `window.insert_hitbox(bounds, behavior)` - Create interaction area\n- **Painting**: `window.paint_quad(...)` - Render visual content\n- **Events**: `window.on_mouse_event(handler)` - Handle user input\n\n## Reference Documentation\n\n### Complete API Documentation\n- **Element Trait API**: See [api-reference.md](references/api-reference.md)\n  - Associated types, methods, parameters, return values\n  - Hitbox system, event handling, cursor styles\n\n### Implementation Guides\n- **Examples**: See [examples.md](references/examples.md)\n  - Simple text element with highlighting\n  - Interactive element with selection\n  - Complex element with child management\n\n- **Best Practices**: See [best-practices.md](references/best-practices.md)\n  - State management, performance optimization\n  - Interaction handling, layout strategies\n  - Error handling, testing, common pitfalls\n\n- **Common Patterns**: See [patterns.md](references/patterns.md)\n  - Text rendering, container, interactive, composite, scrollable patterns\n  - Pattern selection guide\n\n- **Advanced Patterns**: See [advanced-patterns.md](references/advanced-patterns.md)\n  - Custom layout algorithms (masonry, circular)\n  - Element composition with traits\n  - Async updates, memoization, virtual lists\n",
+      "bodyMd": "## When to Use\n\nUse the low-level `Element` trait when:\n- Need fine-grained control over layout calculation\n- Building complex, performance-critical components\n- Implementing custom layout algorithms (masonry, circular, etc.)\n- High-level `Render`/`RenderOnce` APIs are insufficient\n\n**Prefer `Render`/`RenderOnce` for:** Simple components, standard layouts, declarative UI\n\n## Quick Start\n\nThe `Element` trait provides direct control over three rendering phases:\n\n```rust\nimpl Element for MyElement {\n    type RequestLayoutState = MyLayoutState;  // Data passed to later phases\n    type PrepaintState = MyPaintState;        // Data for painting\n\n    fn id(&self) -> Option<ElementId> {\n        Some(self.id.clone())\n    }\n\n    fn source_location(&self) -> Option<&'static std::panic::Location<'static>> {\n        None\n    }\n\n    // Phase 1: Calculate sizes and positions\n    fn request_layout(&mut self, .., window: &mut Window, cx: &mut App)\n        -> (LayoutId, Self::RequestLayoutState)\n    {\n        let layout_id = window.request_layout(\n            Style { size: size(px(200.), px(100.)), ..default() },\n            vec![],\n            cx\n        );\n        (layout_id, MyLayoutState { /* ... */ })\n    }\n\n    // Phase 2: Create hitboxes, prepare for painting\n    fn prepaint(&mut self, .., bounds: Bounds<Pixels>, layout: &mut Self::RequestLayoutState,\n                window: &mut Window, cx: &mut App) -> Self::PrepaintState\n    {\n        let hitbox = window.insert_hitbox(bounds, HitboxBehavior::Normal);\n        MyPaintState { hitbox }\n    }\n\n    // Phase 3: Render and handle interactions\n    fn paint(&mut self, .., bounds: Bounds<Pixels>, layout: &mut Self::RequestLayoutState,\n             paint_state: &mut Self::PrepaintState, window: &mut Window, cx: &mut App)\n    {\n        window.paint_quad(paint_quad(bounds, Corners::all(px(4.)), cx.theme().background));\n\n        window.on_mouse_event({\n            let hitbox = paint_state.hitbox.clone();\n            move |event: &MouseDownEvent, phase, window, cx| {\n                if hitbox.is_hovered(window) && phase.bubble() {\n                    // Handle interaction\n                    cx.stop_propagation();\n                }\n            }\n        });\n    }\n}\n\n// Enable element to be used as child\nimpl IntoElement for MyElement {\n    type Element = Self;\n    fn into_element(self) -> Self::Element { self }\n}\n```\n\n## Core Concepts\n\n### Three-Phase Rendering\n\n1. **request_layout**: Calculate sizes and positions, return layout ID and state\n2. **prepaint**: Create hitboxes, compute final bounds, prepare for painting\n3. **paint**: Render element, set up interactions (mouse events, cursor styles)\n\n### State Flow\n\n```\nRequestLayoutState → PrepaintState → paint\n```\n\nState flows in one direction through associated types, passed as mutable references between phases.\n\n### Key Operations\n\n- **Layout**: `window.request_layout(style, children, cx)` - Create layout node\n- **Hitboxes**: `window.insert_hitbox(bounds, behavior)` - Create interaction area\n- **Painting**: `window.paint_quad(...)` - Render visual content\n- **Events**: `window.on_mouse_event(handler)` - Handle user input\n\n## Reference Documentation\n\n### Complete API Documentation\n- **Element Trait API**: See [api-reference.md](references/api-reference.md)\n  - Associated types, methods, parameters, return values\n  - Hitbox system, event handling, cursor styles\n\n### Implementation Guides\n- **Examples**: See [examples.md](references/examples.md)\n  - Simple text element with highlighting\n  - Interactive element with selection\n  - Complex element with child management\n\n- **Best Practices**: See [best-practices.md](references/best-practices.md)\n  - State management, performance optimization\n  - Interaction handling, layout strategies\n  - Error handling, testing, common pitfalls\n\n- **Common Patterns**: See [patterns.md](references/patterns.md)\n  - Text rendering, container, interactive, composite, scrollable patterns\n  - Pattern selection guide\n\n- **Advanced Patterns**: See [advanced-patterns.md](references/advanced-patterns.md)\n  - Custom layout algorithms (masonry, circular)\n  - Element composition with traits\n  - Async updates, memoization, virtual lists\n"
+    },
+    {
+      "slug": "gpui-entity",
+      "name": "gpui-entity",
+      "dir": ".claude/skills/gpui-entity",
+      "path": ".claude/skills/gpui-entity/SKILL.md",
+      "desc": "Entity management and state handling in GPUI. Use when working with entities, managing component state, coordinating between components, handling async operations with state updates, or implementing reactive patterns. Entities provide safe concurrent access to application state.",
+      "descZh": "",
+      "triggers": [
+        "working with entities",
+        "managing component state",
+        "handling"
+      ],
+      "version": "",
+      "license": "GPL-3.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "gemini",
+        "mcp",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/samurmaykrr/zqlz.git",
+        "copy": "cp -r .claude/skills/gpui-entity ~/.claude/skills/gpui-entity",
+        "raw": "https://raw.githubusercontent.com/samurmaykrr/zqlz/d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13/.claude/skills/gpui-entity/SKILL.md",
+        "saveAs": "~/.claude/skills/gpui-entity/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:cb1387db83d470ef66a392eaa78295e5a615e0749bdd6ea360dfe2da2949626a",
+      "bytes": 4494,
+      "wordCount": 529,
+      "repoLicense": "GPL-3.0",
+      "commit": "d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13",
+      "branch": "main",
+      "body": "---\nname: gpui-entity\ndescription: Entity management and state handling in GPUI. Use when working with entities, managing component state, coordinating between components, handling async operations with state updates, or implementing reactive patterns. Entities provide safe concurrent access to application state.\n---\n\n## Overview\n\nAn `Entity<T>` is a handle to state of type `T`, providing safe access and updates.\n\n**Key Methods:**\n- `entity.read(cx)` → `&T` - Read-only access\n- `entity.read_with(cx, |state, cx| ...)` → `R` - Read with closure\n- `entity.update(cx, |state, cx| ...)` → `R` - Mutable update\n- `entity.downgrade()` → `WeakEntity<T>` - Create weak reference\n- `entity.entity_id()` → `EntityId` - Unique identifier\n\n**Entity Types:**\n- **`Entity<T>`**: Strong reference (increases ref count)\n- **`WeakEntity<T>`**: Weak reference (doesn't prevent cleanup, returns `Result`)\n\n## Quick Start\n\n### Creating and Using Entities\n\n```rust\n// Create entity\nlet counter = cx.new(|cx| Counter { count: 0 });\n\n// Read state\nlet count = counter.read(cx).count;\n\n// Update state\ncounter.update(cx, |state, cx| {\n    state.count += 1;\n    cx.notify(); // Trigger re-render\n});\n\n// Weak reference (for closures/callbacks)\nlet weak = counter.downgrade();\nlet _ = weak.update(cx, |state, cx| {\n    state.count += 1;\n    cx.notify();\n});\n```\n\n### In Components\n\n```rust\nstruct MyComponent {\n    shared_state: Entity<SharedData>,\n}\n\nimpl MyComponent {\n    fn new(cx: &mut App) -> Entity<Self> {\n        let shared = cx.new(|_| SharedData::default());\n\n        cx.new(|cx| Self {\n            shared_state: shared,\n        })\n    }\n\n    fn update_shared(&mut self, cx: &mut Context<Self>) {\n        self.shared_state.update(cx, |state, cx| {\n            state.value = 42;\n            cx.notify();\n        });\n    }\n}\n```\n\n### Async Operations\n\n```rust\nimpl MyComponent {\n    fn fetch_data(&mut self, cx: &mut Context<Self>) {\n        let weak_self = cx.entity().downgrade();\n\n        cx.spawn(async move |cx| {\n            let data = fetch_from_api().await;\n\n            // Update entity safely\n            let _ = weak_self.update(cx, |state, cx| {\n                state.data = Some(data);\n                cx.notify();\n            });\n        }).detach();\n    }\n}\n```\n\n## Core Principles\n\n### Always Use Weak References in Closures\n\n```rust\n// ✅ Good: Weak reference prevents retain cycles\nlet weak = cx.entity().downgrade();\ncallback(move || {\n    let _ = weak.update(cx, |state, cx| cx.notify());\n});\n\n// ❌ Bad: Strong reference may cause memory leak\nlet strong = cx.entity();\ncallback(move || {\n    strong.update(cx, |state, cx| cx.notify());\n});\n```\n\n### Use Inner Context\n\n```rust\n// ✅ Good: Use inner cx from closure\nentity.update(cx, |state, inner_cx| {\n    inner_cx.notify(); // Correct\n});\n\n// ❌ Bad: Use outer cx (multiple borrow error)\nentity.update(cx, |state, inner_cx| {\n    cx.notify(); // Wrong!\n});\n```\n\n### Avoid Nested Updates\n\n```rust\n// ✅ Good: Sequential updates\nentity1.update(cx, |state, cx| { /* ... */ });\nentity2.update(cx, |state, cx| { /* ... */ });\n\n// ❌ Bad: Nested updates (may panic)\nentity1.update(cx, |_, cx| {\n    entity2.update(cx, |_, cx| { /* ... */ });\n});\n```\n\n## Common Use Cases\n\n1. **Component State**: Internal state that needs reactivity\n2. **Shared State**: State shared between multiple components\n3. **Parent-Child**: Coordinating between related components (use weak refs)\n4. **Async State**: Managing state that changes from async operations\n5. **Observations**: Reacting to changes in other entities\n\n## Reference Documentation\n\n### Complete API Documentation\n- **Entity API**: See [api-reference.md](references/api-reference.md)\n  - Entity types, methods, lifecycle\n  - Context methods, async operations\n  - Error handling, type conversions\n\n### Implementation Guides\n- **Patterns**: See [patterns.md](references/patterns.md)\n  - Model-view separation, state management\n  - Cross-entity communication, async operations\n  - Observer pattern, event subscription\n  - Pattern selection guide\n\n- **Best Practices**: See [best-practices.md](references/best-practices.md)\n  - Avoiding common pitfalls, memory leaks\n  - Performance optimization, batching updates\n  - Lifecycle management, cleanup\n  - Async best practices, testing\n\n- **Advanced Patterns**: See [advanced.md](references/advanced.md)\n  - Entity collections, registry pattern\n  - Debounced/throttled updates, state machines\n  - Entity snapshots, transactions, pools\n",
+      "bodyMd": "## Overview\n\nAn `Entity<T>` is a handle to state of type `T`, providing safe access and updates.\n\n**Key Methods:**\n- `entity.read(cx)` → `&T` - Read-only access\n- `entity.read_with(cx, |state, cx| ...)` → `R` - Read with closure\n- `entity.update(cx, |state, cx| ...)` → `R` - Mutable update\n- `entity.downgrade()` → `WeakEntity<T>` - Create weak reference\n- `entity.entity_id()` → `EntityId` - Unique identifier\n\n**Entity Types:**\n- **`Entity<T>`**: Strong reference (increases ref count)\n- **`WeakEntity<T>`**: Weak reference (doesn't prevent cleanup, returns `Result`)\n\n## Quick Start\n\n### Creating and Using Entities\n\n```rust\n// Create entity\nlet counter = cx.new(|cx| Counter { count: 0 });\n\n// Read state\nlet count = counter.read(cx).count;\n\n// Update state\ncounter.update(cx, |state, cx| {\n    state.count += 1;\n    cx.notify(); // Trigger re-render\n});\n\n// Weak reference (for closures/callbacks)\nlet weak = counter.downgrade();\nlet _ = weak.update(cx, |state, cx| {\n    state.count += 1;\n    cx.notify();\n});\n```\n\n### In Components\n\n```rust\nstruct MyComponent {\n    shared_state: Entity<SharedData>,\n}\n\nimpl MyComponent {\n    fn new(cx: &mut App) -> Entity<Self> {\n        let shared = cx.new(|_| SharedData::default());\n\n        cx.new(|cx| Self {\n            shared_state: shared,\n        })\n    }\n\n    fn update_shared(&mut self, cx: &mut Context<Self>) {\n        self.shared_state.update(cx, |state, cx| {\n            state.value = 42;\n            cx.notify();\n        });\n    }\n}\n```\n\n### Async Operations\n\n```rust\nimpl MyComponent {\n    fn fetch_data(&mut self, cx: &mut Context<Self>) {\n        let weak_self = cx.entity().downgrade();\n\n        cx.spawn(async move |cx| {\n            let data = fetch_from_api().await;\n\n            // Update entity safely\n            let _ = weak_self.update(cx, |state, cx| {\n                state.data = Some(data);\n                cx.notify();\n            });\n        }).detach();\n    }\n}\n```\n\n## Core Principles\n\n### Always Use Weak References in Closures\n\n```rust\n// ✅ Good: Weak reference prevents retain cycles\nlet weak = cx.entity().downgrade();\ncallback(move || {\n    let _ = weak.update(cx, |state, cx| cx.notify());\n});\n\n// ❌ Bad: Strong reference may cause memory leak\nlet strong = cx.entity();\ncallback(move || {\n    strong.update(cx, |state, cx| cx.notify());\n});\n```\n\n### Use Inner Context\n\n```rust\n// ✅ Good: Use inner cx from closure\nentity.update(cx, |state, inner_cx| {\n    inner_cx.notify(); // Correct\n});\n\n// ❌ Bad: Use outer cx (multiple borrow error)\nentity.update(cx, |state, inner_cx| {\n    cx.notify(); // Wrong!\n});\n```\n\n### Avoid Nested Updates\n\n```rust\n// ✅ Good: Sequential updates\nentity1.update(cx, |state, cx| { /* ... */ });\nentity2.update(cx, |state, cx| { /* ... */ });\n\n// ❌ Bad: Nested updates (may panic)\nentity1.update(cx, |_, cx| {\n    entity2.update(cx, |_, cx| { /* ... */ });\n});\n```\n\n## Common Use Cases\n\n1. **Component State**: Internal state that needs reactivity\n2. **Shared State**: State shared between multiple components\n3. **Parent-Child**: Coordinating between related components (use weak refs)\n4. **Async State**: Managing state that changes from async operations\n5. **Observations**: Reacting to changes in other entities\n\n## Reference Documentation\n\n### Complete API Documentation\n- **Entity API**: See [api-reference.md](references/api-reference.md)\n  - Entity types, methods, lifecycle\n  - Context methods, async operations\n  - Error handling, type conversions\n\n### Implementation Guides\n- **Patterns**: See [patterns.md](references/patterns.md)\n  - Model-view separation, state management\n  - Cross-entity communication, async operations\n  - Observer pattern, event subscription\n  - Pattern selection guide\n\n- **Best Practices**: See [best-practices.md](references/best-practices.md)\n  - Avoiding common pitfalls, memory leaks\n  - Performance optimization, batching updates\n  - Lifecycle management, cleanup\n  - Async best practices, testing\n\n- **Advanced Patterns**: See [advanced.md](references/advanced.md)\n  - Entity collections, registry pattern\n  - Debounced/throttled updates, state machines\n  - Entity snapshots, transactions, pools\n"
+    },
+    {
+      "slug": "gpui-event",
+      "name": "gpui-event",
+      "dir": ".claude/skills/gpui-event",
+      "path": ".claude/skills/gpui-event/SKILL.md",
+      "desc": "Event handling and subscriptions in GPUI. Use when implementing events, observers, or event-driven patterns. Supports custom events, entity observations, and event subscriptions for coordinating between components.",
+      "descZh": "",
+      "triggers": [
+        "implementing events",
+        "observers",
+        "event-driven patterns"
+      ],
+      "version": "",
+      "license": "GPL-3.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "gemini",
+        "mcp",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/samurmaykrr/zqlz.git",
+        "copy": "cp -r .claude/skills/gpui-event ~/.claude/skills/gpui-event",
+        "raw": "https://raw.githubusercontent.com/samurmaykrr/zqlz/d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13/.claude/skills/gpui-event/SKILL.md",
+        "saveAs": "~/.claude/skills/gpui-event/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:034e7fd22a9dad82c444a82c8c77c74667ee3f40c7ee020c2bfaa1344360d989",
+      "bytes": 4014,
+      "wordCount": 408,
+      "repoLicense": "GPL-3.0",
+      "commit": "d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13",
+      "branch": "main",
+      "body": "---\nname: gpui-event\ndescription: Event handling and subscriptions in GPUI. Use when implementing events, observers, or event-driven patterns. Supports custom events, entity observations, and event subscriptions for coordinating between components.\n---\n\n## Overview\n\nGPUI provides event system for component coordination:\n\n**Event Mechanisms:**\n- **Custom Events**: Define and emit type-safe events\n- **Observations**: React to entity state changes\n- **Subscriptions**: Listen to events from other entities\n- **Global Events**: App-wide event handling\n\n## Quick Start\n\n### Define and Emit Events\n\n```rust\n#[derive(Clone)]\nenum MyEvent {\n    DataUpdated(String),\n    ActionTriggered,\n}\n\nimpl MyComponent {\n    fn update_data(&mut self, data: String, cx: &mut Context<Self>) {\n        self.data = data.clone();\n\n        // Emit event\n        cx.emit(MyEvent::DataUpdated(data));\n        cx.notify();\n    }\n}\n```\n\n### Subscribe to Events\n\n```rust\nimpl Listener {\n    fn new(source: Entity<MyComponent>, cx: &mut App) -> Entity<Self> {\n        cx.new(|cx| {\n            // Subscribe to events\n            cx.subscribe(&source, |this, emitter, event: &MyEvent, cx| {\n                match event {\n                    MyEvent::DataUpdated(data) => {\n                        this.handle_update(data.clone(), cx);\n                    }\n                    MyEvent::ActionTriggered => {\n                        this.handle_action(cx);\n                    }\n                }\n            }).detach();\n\n            Self { source }\n        })\n    }\n}\n```\n\n### Observe Entity Changes\n\n```rust\nimpl Observer {\n    fn new(target: Entity<Target>, cx: &mut App) -> Entity<Self> {\n        cx.new(|cx| {\n            // Observe entity for any changes\n            cx.observe(&target, |this, observed, cx| {\n                // Called when observed.update() calls cx.notify()\n                println!(\"Target changed\");\n                cx.notify();\n            }).detach();\n\n            Self { target }\n        })\n    }\n}\n```\n\n## Common Patterns\n\n### 1. Parent-Child Communication\n\n```rust\n// Parent emits events\nimpl Parent {\n    fn notify_children(&mut self, cx: &mut Context<Self>) {\n        cx.emit(ParentEvent::Updated);\n        cx.notify();\n    }\n}\n\n// Children subscribe\nimpl Child {\n    fn new(parent: Entity<Parent>, cx: &mut App) -> Entity<Self> {\n        cx.new(|cx| {\n            cx.subscribe(&parent, |this, parent, event, cx| {\n                this.handle_parent_event(event, cx);\n            }).detach();\n\n            Self { parent }\n        })\n    }\n}\n```\n\n### 2. Global Event Broadcasting\n\n```rust\nstruct EventBus {\n    listeners: Vec<WeakEntity<dyn Listener>>,\n}\n\nimpl EventBus {\n    fn broadcast(&mut self, event: GlobalEvent, cx: &mut Context<Self>) {\n        self.listeners.retain(|weak| {\n            weak.update(cx, |listener, cx| {\n                listener.on_event(&event, cx);\n            }).is_ok()\n        });\n    }\n}\n```\n\n### 3. Observer Pattern\n\n```rust\ncx.observe(&entity, |this, observed, cx| {\n    // React to any state change\n    let state = observed.read(cx);\n    this.sync_with_state(state, cx);\n}).detach();\n```\n\n## Best Practices\n\n### ✅ Detach Subscriptions\n\n```rust\n// ✅ Detach to keep alive\ncx.subscribe(&entity, |this, source, event, cx| {\n    // Handle event\n}).detach();\n```\n\n### ✅ Clean Event Types\n\n```rust\n#[derive(Clone)]\nenum AppEvent {\n    DataChanged { id: usize, value: String },\n    ActionPerformed(ActionType),\n    Error(String),\n}\n```\n\n### ❌ Avoid Event Loops\n\n```rust\n// ❌ Don't create mutual subscriptions\nentity1.subscribe(entity2) → emits event\nentity2.subscribe(entity1) → emits event → infinite loop!\n```\n\n## Reference Documentation\n\n- **API Reference**: See [api-reference.md](references/api-reference.md)\n  - Event definition, emission, subscriptions\n  - Observations, global events\n  - Subscription lifecycle\n\n- **Patterns**: See [patterns.md](references/patterns.md)\n  - Event-driven architectures\n  - Communication patterns\n  - Best practices and pitfalls\n",
+      "bodyMd": "## Overview\n\nGPUI provides event system for component coordination:\n\n**Event Mechanisms:**\n- **Custom Events**: Define and emit type-safe events\n- **Observations**: React to entity state changes\n- **Subscriptions**: Listen to events from other entities\n- **Global Events**: App-wide event handling\n\n## Quick Start\n\n### Define and Emit Events\n\n```rust\n#[derive(Clone)]\nenum MyEvent {\n    DataUpdated(String),\n    ActionTriggered,\n}\n\nimpl MyComponent {\n    fn update_data(&mut self, data: String, cx: &mut Context<Self>) {\n        self.data = data.clone();\n\n        // Emit event\n        cx.emit(MyEvent::DataUpdated(data));\n        cx.notify();\n    }\n}\n```\n\n### Subscribe to Events\n\n```rust\nimpl Listener {\n    fn new(source: Entity<MyComponent>, cx: &mut App) -> Entity<Self> {\n        cx.new(|cx| {\n            // Subscribe to events\n            cx.subscribe(&source, |this, emitter, event: &MyEvent, cx| {\n                match event {\n                    MyEvent::DataUpdated(data) => {\n                        this.handle_update(data.clone(), cx);\n                    }\n                    MyEvent::ActionTriggered => {\n                        this.handle_action(cx);\n                    }\n                }\n            }).detach();\n\n            Self { source }\n        })\n    }\n}\n```\n\n### Observe Entity Changes\n\n```rust\nimpl Observer {\n    fn new(target: Entity<Target>, cx: &mut App) -> Entity<Self> {\n        cx.new(|cx| {\n            // Observe entity for any changes\n            cx.observe(&target, |this, observed, cx| {\n                // Called when observed.update() calls cx.notify()\n                println!(\"Target changed\");\n                cx.notify();\n            }).detach();\n\n            Self { target }\n        })\n    }\n}\n```\n\n## Common Patterns\n\n### 1. Parent-Child Communication\n\n```rust\n// Parent emits events\nimpl Parent {\n    fn notify_children(&mut self, cx: &mut Context<Self>) {\n        cx.emit(ParentEvent::Updated);\n        cx.notify();\n    }\n}\n\n// Children subscribe\nimpl Child {\n    fn new(parent: Entity<Parent>, cx: &mut App) -> Entity<Self> {\n        cx.new(|cx| {\n            cx.subscribe(&parent, |this, parent, event, cx| {\n                this.handle_parent_event(event, cx);\n            }).detach();\n\n            Self { parent }\n        })\n    }\n}\n```\n\n### 2. Global Event Broadcasting\n\n```rust\nstruct EventBus {\n    listeners: Vec<WeakEntity<dyn Listener>>,\n}\n\nimpl EventBus {\n    fn broadcast(&mut self, event: GlobalEvent, cx: &mut Context<Self>) {\n        self.listeners.retain(|weak| {\n            weak.update(cx, |listener, cx| {\n                listener.on_event(&event, cx);\n            }).is_ok()\n        });\n    }\n}\n```\n\n### 3. Observer Pattern\n\n```rust\ncx.observe(&entity, |this, observed, cx| {\n    // React to any state change\n    let state = observed.read(cx);\n    this.sync_with_state(state, cx);\n}).detach();\n```\n\n## Best Practices\n\n### ✅ Detach Subscriptions\n\n```rust\n// ✅ Detach to keep alive\ncx.subscribe(&entity, |this, source, event, cx| {\n    // Handle event\n}).detach();\n```\n\n### ✅ Clean Event Types\n\n```rust\n#[derive(Clone)]\nenum AppEvent {\n    DataChanged { id: usize, value: String },\n    ActionPerformed(ActionType),\n    Error(String),\n}\n```\n\n### ❌ Avoid Event Loops\n\n```rust\n// ❌ Don't create mutual subscriptions\nentity1.subscribe(entity2) → emits event\nentity2.subscribe(entity1) → emits event → infinite loop!\n```\n\n## Reference Documentation\n\n- **API Reference**: See [api-reference.md](references/api-reference.md)\n  - Event definition, emission, subscriptions\n  - Observations, global events\n  - Subscription lifecycle\n\n- **Patterns**: See [patterns.md](references/patterns.md)\n  - Event-driven architectures\n  - Communication patterns\n  - Best practices and pitfalls\n"
+    },
+    {
+      "slug": "gpui-focus-handle",
+      "name": "gpui-focus-handle",
+      "dir": ".claude/skills/gpui-focus-handle",
+      "path": ".claude/skills/gpui-focus-handle/SKILL.md",
+      "desc": "Focus management and keyboard navigation in GPUI. Use when handling focus, focus handles, or keyboard navigation. Enables keyboard-driven interfaces with proper focus tracking and navigation between focusable elements.",
+      "descZh": "",
+      "triggers": [
+        "handling focus",
+        "focus handles",
+        "keyboard navigation"
+      ],
+      "version": "",
+      "license": "GPL-3.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "gemini",
+        "mcp",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/samurmaykrr/zqlz.git",
+        "copy": "cp -r .claude/skills/gpui-focus-handle ~/.claude/skills/gpui-focus-handle",
+        "raw": "https://raw.githubusercontent.com/samurmaykrr/zqlz/d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13/.claude/skills/gpui-focus-handle/SKILL.md",
+        "saveAs": "~/.claude/skills/gpui-focus-handle/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:3d46fa1301b8219bef983c4eb783898e84624d5a2232ae8ab0a41bf15e032aed",
+      "bytes": 5248,
+      "wordCount": 517,
+      "repoLicense": "GPL-3.0",
+      "commit": "d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13",
+      "branch": "main",
+      "body": "---\nname: gpui-focus-handle\ndescription: Focus management and keyboard navigation in GPUI. Use when handling focus, focus handles, or keyboard navigation. Enables keyboard-driven interfaces with proper focus tracking and navigation between focusable elements.\n---\n\n## Overview\n\nGPUI's focus system enables keyboard navigation and focus management.\n\n**Key Concepts:**\n- **FocusHandle**: Reference to focusable element\n- **Focus tracking**: Current focused element\n- **Keyboard navigation**: Tab/Shift-Tab between elements\n- **Focus events**: on_focus, on_blur\n\n## Quick Start\n\n### Creating Focus Handles\n\n```rust\nstruct FocusableComponent {\n    focus_handle: FocusHandle,\n}\n\nimpl FocusableComponent {\n    fn new(cx: &mut Context<Self>) -> Self {\n        Self {\n            focus_handle: cx.focus_handle(),\n        }\n    }\n}\n```\n\n### Making Elements Focusable\n\n```rust\nimpl Render for FocusableComponent {\n    fn render(&mut self, _: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {\n        div()\n            .track_focus(&self.focus_handle)\n            .on_action(cx.listener(Self::on_enter))\n            .child(\"Focusable content\")\n    }\n\n    fn on_enter(&mut self, _: &Enter, cx: &mut Context<Self>) {\n        // Handle Enter key when focused\n        cx.notify();\n    }\n}\n```\n\n### Focus Management\n\n```rust\nimpl MyComponent {\n    fn focus(&mut self, cx: &mut Context<Self>) {\n        self.focus_handle.focus(cx);\n    }\n\n    fn is_focused(&self, cx: &App) -> bool {\n        self.focus_handle.is_focused(cx)\n    }\n\n    fn blur(&mut self, cx: &mut Context<Self>) {\n        cx.blur();\n    }\n}\n```\n\n## Focus Events\n\n### Handling Focus Changes\n\n```rust\nimpl Render for MyInput {\n    fn render(&mut self, _: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {\n        let is_focused = self.focus_handle.is_focused(cx);\n\n        div()\n            .track_focus(&self.focus_handle)\n            .on_focus(cx.listener(|this, _event, cx| {\n                this.on_focus(cx);\n            }))\n            .on_blur(cx.listener(|this, _event, cx| {\n                this.on_blur(cx);\n            }))\n            .when(is_focused, |el| {\n                el.bg(cx.theme().focused_background)\n            })\n            .child(self.render_content())\n    }\n}\n\nimpl MyInput {\n    fn on_focus(&mut self, cx: &mut Context<Self>) {\n        // Handle focus gained\n        cx.notify();\n    }\n\n    fn on_blur(&mut self, cx: &mut Context<Self>) {\n        // Handle focus lost\n        cx.notify();\n    }\n}\n```\n\n## Keyboard Navigation\n\n### Tab Order\n\nElements with `track_focus()` automatically participate in Tab navigation.\n\n```rust\ndiv()\n    .child(\n        input1.track_focus(&focus1)  // Tab order: 1\n    )\n    .child(\n        input2.track_focus(&focus2)  // Tab order: 2\n    )\n    .child(\n        input3.track_focus(&focus3)  // Tab order: 3\n    )\n```\n\n### Focus Within Containers\n\n```rust\nimpl Container {\n    fn focus_first(&mut self, cx: &mut Context<Self>) {\n        if let Some(first) = self.children.first() {\n            first.update(cx, |child, cx| {\n                child.focus_handle.focus(cx);\n            });\n        }\n    }\n\n    fn focus_next(&mut self, cx: &mut Context<Self>) {\n        // Custom focus navigation logic\n    }\n}\n```\n\n## Common Patterns\n\n### 1. Auto-focus on Mount\n\n```rust\nimpl MyDialog {\n    fn new(cx: &mut Context<Self>) -> Self {\n        let focus_handle = cx.focus_handle();\n\n        // Focus when created\n        focus_handle.focus(cx);\n\n        Self { focus_handle }\n    }\n}\n```\n\n### 2. Focus Trap (Modal)\n\n```rust\nimpl Modal {\n    fn render(&mut self, _: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {\n        div()\n            .track_focus(&self.focus_handle)\n            .on_key_down(cx.listener(|this, event: &KeyDownEvent, cx| {\n                if event.key == Key::Tab {\n                    // Keep focus within modal\n                    this.focus_next_in_modal(cx);\n                    cx.stop_propagation();\n                }\n            }))\n            .child(self.render_content())\n    }\n}\n```\n\n### 3. Conditional Focus\n\n```rust\nimpl Searchable {\n    fn render(&mut self, _: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {\n        div()\n            .track_focus(&self.focus_handle)\n            .when(self.search_active, |el| {\n                el.on_mount(cx.listener(|this, _, cx| {\n                    this.focus_handle.focus(cx);\n                }))\n            })\n            .child(self.search_input())\n    }\n}\n```\n\n## Best Practices\n\n### ✅ Track Focus on Interactive Elements\n\n```rust\n// ✅ Good: Track focus for keyboard interaction\ninput()\n    .track_focus(&self.focus_handle)\n    .on_action(cx.listener(Self::on_enter))\n```\n\n### ✅ Provide Visual Focus Indicators\n\n```rust\nlet is_focused = self.focus_handle.is_focused(cx);\n\ndiv()\n    .when(is_focused, |el| {\n        el.border_color(cx.theme().focused_border)\n    })\n```\n\n### ❌ Don't: Forget to Track Focus\n\n```rust\n// ❌ Bad: No track_focus, keyboard navigation won't work\ndiv()\n    .on_action(cx.listener(Self::on_enter))\n```\n\n## Reference Documentation\n\n- **API Reference**: See [api-reference.md](references/api-reference.md)\n  - FocusHandle API, focus management\n  - Events, keyboard navigation\n  - Best practices\n",
+      "bodyMd": "## Overview\n\nGPUI's focus system enables keyboard navigation and focus management.\n\n**Key Concepts:**\n- **FocusHandle**: Reference to focusable element\n- **Focus tracking**: Current focused element\n- **Keyboard navigation**: Tab/Shift-Tab between elements\n- **Focus events**: on_focus, on_blur\n\n## Quick Start\n\n### Creating Focus Handles\n\n```rust\nstruct FocusableComponent {\n    focus_handle: FocusHandle,\n}\n\nimpl FocusableComponent {\n    fn new(cx: &mut Context<Self>) -> Self {\n        Self {\n            focus_handle: cx.focus_handle(),\n        }\n    }\n}\n```\n\n### Making Elements Focusable\n\n```rust\nimpl Render for FocusableComponent {\n    fn render(&mut self, _: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {\n        div()\n            .track_focus(&self.focus_handle)\n            .on_action(cx.listener(Self::on_enter))\n            .child(\"Focusable content\")\n    }\n\n    fn on_enter(&mut self, _: &Enter, cx: &mut Context<Self>) {\n        // Handle Enter key when focused\n        cx.notify();\n    }\n}\n```\n\n### Focus Management\n\n```rust\nimpl MyComponent {\n    fn focus(&mut self, cx: &mut Context<Self>) {\n        self.focus_handle.focus(cx);\n    }\n\n    fn is_focused(&self, cx: &App) -> bool {\n        self.focus_handle.is_focused(cx)\n    }\n\n    fn blur(&mut self, cx: &mut Context<Self>) {\n        cx.blur();\n    }\n}\n```\n\n## Focus Events\n\n### Handling Focus Changes\n\n```rust\nimpl Render for MyInput {\n    fn render(&mut self, _: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {\n        let is_focused = self.focus_handle.is_focused(cx);\n\n        div()\n            .track_focus(&self.focus_handle)\n            .on_focus(cx.listener(|this, _event, cx| {\n                this.on_focus(cx);\n            }))\n            .on_blur(cx.listener(|this, _event, cx| {\n                this.on_blur(cx);\n            }))\n            .when(is_focused, |el| {\n                el.bg(cx.theme().focused_background)\n            })\n            .child(self.render_content())\n    }\n}\n\nimpl MyInput {\n    fn on_focus(&mut self, cx: &mut Context<Self>) {\n        // Handle focus gained\n        cx.notify();\n    }\n\n    fn on_blur(&mut self, cx: &mut Context<Self>) {\n        // Handle focus lost\n        cx.notify();\n    }\n}\n```\n\n## Keyboard Navigation\n\n### Tab Order\n\nElements with `track_focus()` automatically participate in Tab navigation.\n\n```rust\ndiv()\n    .child(\n        input1.track_focus(&focus1)  // Tab order: 1\n    )\n    .child(\n        input2.track_focus(&focus2)  // Tab order: 2\n    )\n    .child(\n        input3.track_focus(&focus3)  // Tab order: 3\n    )\n```\n\n### Focus Within Containers\n\n```rust\nimpl Container {\n    fn focus_first(&mut self, cx: &mut Context<Self>) {\n        if let Some(first) = self.children.first() {\n            first.update(cx, |child, cx| {\n                child.focus_handle.focus(cx);\n            });\n        }\n    }\n\n    fn focus_next(&mut self, cx: &mut Context<Self>) {\n        // Custom focus navigation logic\n    }\n}\n```\n\n## Common Patterns\n\n### 1. Auto-focus on Mount\n\n```rust\nimpl MyDialog {\n    fn new(cx: &mut Context<Self>) -> Self {\n        let focus_handle = cx.focus_handle();\n\n        // Focus when created\n        focus_handle.focus(cx);\n\n        Self { focus_handle }\n    }\n}\n```\n\n### 2. Focus Trap (Modal)\n\n```rust\nimpl Modal {\n    fn render(&mut self, _: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {\n        div()\n            .track_focus(&self.focus_handle)\n            .on_key_down(cx.listener(|this, event: &KeyDownEvent, cx| {\n                if event.key == Key::Tab {\n                    // Keep focus within modal\n                    this.focus_next_in_modal(cx);\n                    cx.stop_propagation();\n                }\n            }))\n            .child(self.render_content())\n    }\n}\n```\n\n### 3. Conditional Focus\n\n```rust\nimpl Searchable {\n    fn render(&mut self, _: &mut Window, cx: &mut Context<Self>) -> impl IntoElement {\n        div()\n            .track_focus(&self.focus_handle)\n            .when(self.search_active, |el| {\n                el.on_mount(cx.listener(|this, _, cx| {\n                    this.focus_handle.focus(cx);\n                }))\n            })\n            .child(self.search_input())\n    }\n}\n```\n\n## Best Practices\n\n### ✅ Track Focus on Interactive Elements\n\n```rust\n// ✅ Good: Track focus for keyboard interaction\ninput()\n    .track_focus(&self.focus_handle)\n    .on_action(cx.listener(Self::on_enter))\n```\n\n### ✅ Provide Visual Focus Indicators\n\n```rust\nlet is_focused = self.focus_handle.is_focused(cx);\n\ndiv()\n    .when(is_focused, |el| {\n        el.border_color(cx.theme().focused_border)\n    })\n```\n\n### ❌ Don't: Forget to Track Focus\n\n```rust\n// ❌ Bad: No track_focus, keyboard navigation won't work\ndiv()\n    .on_action(cx.listener(Self::on_enter))\n```\n\n## Reference Documentation\n\n- **API Reference**: See [api-reference.md](references/api-reference.md)\n  - FocusHandle API, focus management\n  - Events, keyboard navigation\n  - Best practices\n"
+    },
+    {
+      "slug": "gpui-global",
+      "name": "gpui-global",
+      "dir": ".claude/skills/gpui-global",
+      "path": ".claude/skills/gpui-global/SKILL.md",
+      "desc": "Global state management in GPUI. Use when implementing global state, app-wide configuration, or shared resources.",
+      "descZh": "",
+      "triggers": [
+        "app-wide configuration",
+        "shared resources"
+      ],
+      "version": "",
+      "license": "GPL-3.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "gemini",
+        "mcp",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/samurmaykrr/zqlz.git",
+        "copy": "cp -r .claude/skills/gpui-global ~/.claude/skills/gpui-global",
+        "raw": "https://raw.githubusercontent.com/samurmaykrr/zqlz/d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13/.claude/skills/gpui-global/SKILL.md",
+        "saveAs": "~/.claude/skills/gpui-global/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:f92e37b6a903e5c6f7064f6428bb5ba2d876adf91a308f6bad95b8957e218c2f",
+      "bytes": 4119,
+      "wordCount": 463,
+      "repoLicense": "GPL-3.0",
+      "commit": "d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13",
+      "branch": "main",
+      "body": "---\nname: gpui-global\ndescription: Global state management in GPUI. Use when implementing global state, app-wide configuration, or shared resources.\n---\n\n## Overview\n\nGlobal state in GPUI provides app-wide shared data accessible from any context.\n\n**Key Trait**: `Global` - Implement on types to make them globally accessible\n\n## Quick Start\n\n### Define Global State\n\n```rust\nuse gpui::Global;\n\n#[derive(Clone)]\nstruct AppSettings {\n    theme: Theme,\n    language: String,\n}\n\nimpl Global for AppSettings {}\n```\n\n### Set and Access Globals\n\n```rust\nfn main() {\n    let app = Application::new();\n    app.run(|cx: &mut App| {\n        // Set global\n        cx.set_global(AppSettings {\n            theme: Theme::Dark,\n            language: \"en\".to_string(),\n        });\n\n        // Access global (read-only)\n        let settings = cx.global::<AppSettings>();\n        println!(\"Theme: {:?}\", settings.theme);\n    });\n}\n```\n\n### Update Globals\n\n```rust\nimpl MyComponent {\n    fn change_theme(&mut self, new_theme: Theme, cx: &mut Context<Self>) {\n        cx.update_global::<AppSettings, _>(|settings, cx| {\n            settings.theme = new_theme;\n            // Global updates don't trigger automatic notifications\n            // Manually notify components that care\n        });\n\n        cx.notify(); // Re-render this component\n    }\n}\n```\n\n## Common Use Cases\n\n### 1. App Configuration\n\n```rust\n#[derive(Clone)]\nstruct AppConfig {\n    api_endpoint: String,\n    max_retries: u32,\n    timeout: Duration,\n}\n\nimpl Global for AppConfig {}\n\n// Set once at startup\ncx.set_global(AppConfig {\n    api_endpoint: \"https://api.example.com\".to_string(),\n    max_retries: 3,\n    timeout: Duration::from_secs(30),\n});\n\n// Access anywhere\nlet config = cx.global::<AppConfig>();\n```\n\n### 2. Feature Flags\n\n```rust\n#[derive(Clone)]\nstruct FeatureFlags {\n    enable_beta_features: bool,\n    enable_analytics: bool,\n}\n\nimpl Global for FeatureFlags {}\n\nimpl MyComponent {\n    fn render_beta_feature(&self, cx: &App) -> Option<impl IntoElement> {\n        let flags = cx.global::<FeatureFlags>();\n\n        if flags.enable_beta_features {\n            Some(div().child(\"Beta feature\"))\n        } else {\n            None\n        }\n    }\n}\n```\n\n### 3. Shared Services\n\n```rust\n#[derive(Clone)]\nstruct ServiceRegistry {\n    http_client: Arc<HttpClient>,\n    logger: Arc<Logger>,\n}\n\nimpl Global for ServiceRegistry {}\n\nimpl MyComponent {\n    fn fetch_data(&mut self, cx: &mut Context<Self>) {\n        let registry = cx.global::<ServiceRegistry>();\n        let client = registry.http_client.clone();\n\n        cx.spawn(async move |cx| {\n            let data = client.get(\"api/data\").await?;\n            // Process data...\n            Ok::<_, anyhow::Error>(())\n        }).detach();\n    }\n}\n```\n\n## Best Practices\n\n### ✅ Use Arc for Shared Resources\n\n```rust\n#[derive(Clone)]\nstruct GlobalState {\n    database: Arc<Database>,  // Cheap to clone\n    cache: Arc<RwLock<Cache>>,\n}\n\nimpl Global for GlobalState {}\n```\n\n### ✅ Immutable by Default\n\nGlobals are read-only by default. Use interior mutability when needed:\n\n```rust\n#[derive(Clone)]\nstruct Counter {\n    count: Arc<AtomicUsize>,\n}\n\nimpl Global for Counter {}\n\nimpl Counter {\n    fn increment(&self) {\n        self.count.fetch_add(1, Ordering::SeqCst);\n    }\n\n    fn get(&self) -> usize {\n        self.count.load(Ordering::SeqCst)\n    }\n}\n```\n\n### ❌ Don't: Overuse Globals\n\n```rust\n// ❌ Bad: Too many globals\ncx.set_global(UserState { ... });\ncx.set_global(CartState { ... });\ncx.set_global(CheckoutState { ... });\n\n// ✅ Good: Use entities for component state\nlet user_entity = cx.new(|_| UserState { ... });\n```\n\n## When to Use\n\n**Use Globals for:**\n- App-wide configuration\n- Feature flags\n- Shared services (HTTP client, logger)\n- Read-only reference data\n\n**Use Entities for:**\n- Component-specific state\n- State that changes frequently\n- State that needs notifications\n\n## Reference Documentation\n\n- **API Reference**: See [api-reference.md](references/api-reference.md)\n  - Global trait, set_global, update_global\n  - Interior mutability patterns\n  - Best practices and anti-patterns\n",
+      "bodyMd": "## Overview\n\nGlobal state in GPUI provides app-wide shared data accessible from any context.\n\n**Key Trait**: `Global` - Implement on types to make them globally accessible\n\n## Quick Start\n\n### Define Global State\n\n```rust\nuse gpui::Global;\n\n#[derive(Clone)]\nstruct AppSettings {\n    theme: Theme,\n    language: String,\n}\n\nimpl Global for AppSettings {}\n```\n\n### Set and Access Globals\n\n```rust\nfn main() {\n    let app = Application::new();\n    app.run(|cx: &mut App| {\n        // Set global\n        cx.set_global(AppSettings {\n            theme: Theme::Dark,\n            language: \"en\".to_string(),\n        });\n\n        // Access global (read-only)\n        let settings = cx.global::<AppSettings>();\n        println!(\"Theme: {:?}\", settings.theme);\n    });\n}\n```\n\n### Update Globals\n\n```rust\nimpl MyComponent {\n    fn change_theme(&mut self, new_theme: Theme, cx: &mut Context<Self>) {\n        cx.update_global::<AppSettings, _>(|settings, cx| {\n            settings.theme = new_theme;\n            // Global updates don't trigger automatic notifications\n            // Manually notify components that care\n        });\n\n        cx.notify(); // Re-render this component\n    }\n}\n```\n\n## Common Use Cases\n\n### 1. App Configuration\n\n```rust\n#[derive(Clone)]\nstruct AppConfig {\n    api_endpoint: String,\n    max_retries: u32,\n    timeout: Duration,\n}\n\nimpl Global for AppConfig {}\n\n// Set once at startup\ncx.set_global(AppConfig {\n    api_endpoint: \"https://api.example.com\".to_string(),\n    max_retries: 3,\n    timeout: Duration::from_secs(30),\n});\n\n// Access anywhere\nlet config = cx.global::<AppConfig>();\n```\n\n### 2. Feature Flags\n\n```rust\n#[derive(Clone)]\nstruct FeatureFlags {\n    enable_beta_features: bool,\n    enable_analytics: bool,\n}\n\nimpl Global for FeatureFlags {}\n\nimpl MyComponent {\n    fn render_beta_feature(&self, cx: &App) -> Option<impl IntoElement> {\n        let flags = cx.global::<FeatureFlags>();\n\n        if flags.enable_beta_features {\n            Some(div().child(\"Beta feature\"))\n        } else {\n            None\n        }\n    }\n}\n```\n\n### 3. Shared Services\n\n```rust\n#[derive(Clone)]\nstruct ServiceRegistry {\n    http_client: Arc<HttpClient>,\n    logger: Arc<Logger>,\n}\n\nimpl Global for ServiceRegistry {}\n\nimpl MyComponent {\n    fn fetch_data(&mut self, cx: &mut Context<Self>) {\n        let registry = cx.global::<ServiceRegistry>();\n        let client = registry.http_client.clone();\n\n        cx.spawn(async move |cx| {\n            let data = client.get(\"api/data\").await?;\n            // Process data...\n            Ok::<_, anyhow::Error>(())\n        }).detach();\n    }\n}\n```\n\n## Best Practices\n\n### ✅ Use Arc for Shared Resources\n\n```rust\n#[derive(Clone)]\nstruct GlobalState {\n    database: Arc<Database>,  // Cheap to clone\n    cache: Arc<RwLock<Cache>>,\n}\n\nimpl Global for GlobalState {}\n```\n\n### ✅ Immutable by Default\n\nGlobals are read-only by default. Use interior mutability when needed:\n\n```rust\n#[derive(Clone)]\nstruct Counter {\n    count: Arc<AtomicUsize>,\n}\n\nimpl Global for Counter {}\n\nimpl Counter {\n    fn increment(&self) {\n        self.count.fetch_add(1, Ordering::SeqCst);\n    }\n\n    fn get(&self) -> usize {\n        self.count.load(Ordering::SeqCst)\n    }\n}\n```\n\n### ❌ Don't: Overuse Globals\n\n```rust\n// ❌ Bad: Too many globals\ncx.set_global(UserState { ... });\ncx.set_global(CartState { ... });\ncx.set_global(CheckoutState { ... });\n\n// ✅ Good: Use entities for component state\nlet user_entity = cx.new(|_| UserState { ... });\n```\n\n## When to Use\n\n**Use Globals for:**\n- App-wide configuration\n- Feature flags\n- Shared services (HTTP client, logger)\n- Read-only reference data\n\n**Use Entities for:**\n- Component-specific state\n- State that changes frequently\n- State that needs notifications\n\n## Reference Documentation\n\n- **API Reference**: See [api-reference.md](references/api-reference.md)\n  - Global trait, set_global, update_global\n  - Interior mutability patterns\n  - Best practices and anti-patterns\n"
+    },
+    {
+      "slug": "gpui-layout-and-style",
+      "name": "gpui-layout-and-style",
+      "dir": ".claude/skills/gpui-layout-and-style",
+      "path": ".claude/skills/gpui-layout-and-style/SKILL.md",
+      "desc": "Layout and styling in GPUI. Use when styling components, layout systems, or CSS-like properties.",
+      "descZh": "",
+      "triggers": [
+        "styling components",
+        "layout systems",
+        "CSS-like properties"
+      ],
+      "version": "",
+      "license": "GPL-3.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "gemini",
+        "mcp",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/samurmaykrr/zqlz.git",
+        "copy": "cp -r .claude/skills/gpui-layout-and-style ~/.claude/skills/gpui-layout-and-style",
+        "raw": "https://raw.githubusercontent.com/samurmaykrr/zqlz/d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13/.claude/skills/gpui-layout-and-style/SKILL.md",
+        "saveAs": "~/.claude/skills/gpui-layout-and-style/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:202c825c68fbebddcd8181a287827f2ab12b3d07d476101f201157107f385c5b",
+      "bytes": 3327,
+      "wordCount": 311,
+      "repoLicense": "GPL-3.0",
+      "commit": "d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13",
+      "branch": "main",
+      "body": "---\nname: gpui-layout-and-style\ndescription: Layout and styling in GPUI. Use when styling components, layout systems, or CSS-like properties.\n---\n\n## Overview\n\nGPUI provides CSS-like styling with Rust type safety.\n\n**Key Concepts:**\n- Flexbox layout system\n- Styled trait for chaining styles\n- Size units: `px()`, `rems()`, `relative()`\n- Colors, borders, shadows\n\n## Quick Start\n\n### Basic Styling\n\n```rust\nuse gpui::*;\n\ndiv()\n    .w(px(200.))\n    .h(px(100.))\n    .bg(rgb(0x2196F3))\n    .text_color(rgb(0xFFFFFF))\n    .rounded(px(8.))\n    .p(px(16.))\n    .child(\"Styled content\")\n```\n\n### Flexbox Layout\n\n```rust\ndiv()\n    .flex()\n    .flex_row()  // or flex_col() for column\n    .gap(px(8.))\n    .items_center()\n    .justify_between()\n    .children([\n        div().child(\"Item 1\"),\n        div().child(\"Item 2\"),\n        div().child(\"Item 3\"),\n    ])\n```\n\n### Size Units\n\n```rust\ndiv()\n    .w(px(200.))           // Pixels\n    .h(rems(10.))          // Relative to font size\n    .w(relative(0.5))      // 50% of parent\n    .min_w(px(100.))\n    .max_w(px(400.))\n```\n\n## Common Patterns\n\n### Centered Content\n\n```rust\ndiv()\n    .flex()\n    .items_center()\n    .justify_center()\n    .size_full()\n    .child(\"Centered\")\n```\n\n### Card Layout\n\n```rust\ndiv()\n    .w(px(300.))\n    .bg(cx.theme().surface)\n    .rounded(px(8.))\n    .shadow_md()\n    .p(px(16.))\n    .gap(px(12.))\n    .flex()\n    .flex_col()\n    .child(heading())\n    .child(content())\n```\n\n### Responsive Spacing\n\n```rust\ndiv()\n    .p(px(16.))           // Padding all sides\n    .px(px(20.))          // Padding horizontal\n    .py(px(12.))          // Padding vertical\n    .pt(px(8.))           // Padding top\n    .gap(px(8.))          // Gap between children\n```\n\n## Styling Methods\n\n### Dimensions\n\n```rust\n.w(px(200.))              // Width\n.h(px(100.))              // Height\n.size(px(200.))           // Width and height\n.min_w(px(100.))          // Min width\n.max_w(px(400.))          // Max width\n```\n\n### Colors\n\n```rust\n.bg(rgb(0x2196F3))        // Background\n.text_color(rgb(0xFFFFFF)) // Text color\n.border_color(rgb(0x000000)) // Border color\n```\n\n### Borders\n\n```rust\n.border(px(1.))           // Border width\n.rounded(px(8.))          // Border radius\n.rounded_t(px(8.))        // Top corners\n.border_color(rgb(0x000000))\n```\n\n### Spacing\n\n```rust\n.p(px(16.))               // Padding\n.m(px(8.))                // Margin\n.gap(px(8.))              // Gap between flex children\n```\n\n### Flexbox\n\n```rust\n.flex()                   // Enable flexbox\n.flex_row()               // Row direction\n.flex_col()               // Column direction\n.items_center()           // Align items center\n.justify_between()        // Space between items\n.flex_grow()              // Grow to fill space\n```\n\n## Theme Integration\n\n```rust\ndiv()\n    .bg(cx.theme().surface)\n    .text_color(cx.theme().foreground)\n    .border_color(cx.theme().border)\n    .when(is_hovered, |el| {\n        el.bg(cx.theme().hover)\n    })\n```\n\n## Conditional Styling\n\n```rust\ndiv()\n    .when(is_active, |el| {\n        el.bg(cx.theme().primary)\n    })\n    .when_some(optional_color, |el, color| {\n        el.bg(color)\n    })\n```\n\n## Reference Documentation\n\n- **Complete Guide**: See [reference.md](references/reference.md)\n  - All styling methods\n  - Layout strategies\n  - Theming, responsive design\n",
+      "bodyMd": "## Overview\n\nGPUI provides CSS-like styling with Rust type safety.\n\n**Key Concepts:**\n- Flexbox layout system\n- Styled trait for chaining styles\n- Size units: `px()`, `rems()`, `relative()`\n- Colors, borders, shadows\n\n## Quick Start\n\n### Basic Styling\n\n```rust\nuse gpui::*;\n\ndiv()\n    .w(px(200.))\n    .h(px(100.))\n    .bg(rgb(0x2196F3))\n    .text_color(rgb(0xFFFFFF))\n    .rounded(px(8.))\n    .p(px(16.))\n    .child(\"Styled content\")\n```\n\n### Flexbox Layout\n\n```rust\ndiv()\n    .flex()\n    .flex_row()  // or flex_col() for column\n    .gap(px(8.))\n    .items_center()\n    .justify_between()\n    .children([\n        div().child(\"Item 1\"),\n        div().child(\"Item 2\"),\n        div().child(\"Item 3\"),\n    ])\n```\n\n### Size Units\n\n```rust\ndiv()\n    .w(px(200.))           // Pixels\n    .h(rems(10.))          // Relative to font size\n    .w(relative(0.5))      // 50% of parent\n    .min_w(px(100.))\n    .max_w(px(400.))\n```\n\n## Common Patterns\n\n### Centered Content\n\n```rust\ndiv()\n    .flex()\n    .items_center()\n    .justify_center()\n    .size_full()\n    .child(\"Centered\")\n```\n\n### Card Layout\n\n```rust\ndiv()\n    .w(px(300.))\n    .bg(cx.theme().surface)\n    .rounded(px(8.))\n    .shadow_md()\n    .p(px(16.))\n    .gap(px(12.))\n    .flex()\n    .flex_col()\n    .child(heading())\n    .child(content())\n```\n\n### Responsive Spacing\n\n```rust\ndiv()\n    .p(px(16.))           // Padding all sides\n    .px(px(20.))          // Padding horizontal\n    .py(px(12.))          // Padding vertical\n    .pt(px(8.))           // Padding top\n    .gap(px(8.))          // Gap between children\n```\n\n## Styling Methods\n\n### Dimensions\n\n```rust\n.w(px(200.))              // Width\n.h(px(100.))              // Height\n.size(px(200.))           // Width and height\n.min_w(px(100.))          // Min width\n.max_w(px(400.))          // Max width\n```\n\n### Colors\n\n```rust\n.bg(rgb(0x2196F3))        // Background\n.text_color(rgb(0xFFFFFF)) // Text color\n.border_color(rgb(0x000000)) // Border color\n```\n\n### Borders\n\n```rust\n.border(px(1.))           // Border width\n.rounded(px(8.))          // Border radius\n.rounded_t(px(8.))        // Top corners\n.border_color(rgb(0x000000))\n```\n\n### Spacing\n\n```rust\n.p(px(16.))               // Padding\n.m(px(8.))                // Margin\n.gap(px(8.))              // Gap between flex children\n```\n\n### Flexbox\n\n```rust\n.flex()                   // Enable flexbox\n.flex_row()               // Row direction\n.flex_col()               // Column direction\n.items_center()           // Align items center\n.justify_between()        // Space between items\n.flex_grow()              // Grow to fill space\n```\n\n## Theme Integration\n\n```rust\ndiv()\n    .bg(cx.theme().surface)\n    .text_color(cx.theme().foreground)\n    .border_color(cx.theme().border)\n    .when(is_hovered, |el| {\n        el.bg(cx.theme().hover)\n    })\n```\n\n## Conditional Styling\n\n```rust\ndiv()\n    .when(is_active, |el| {\n        el.bg(cx.theme().primary)\n    })\n    .when_some(optional_color, |el, color| {\n        el.bg(color)\n    })\n```\n\n## Reference Documentation\n\n- **Complete Guide**: See [reference.md](references/reference.md)\n  - All styling methods\n  - Layout strategies\n  - Theming, responsive design\n"
+    },
+    {
+      "slug": "gpui-style-guide",
+      "name": "gpui-style-guide",
+      "dir": ".claude/skills/gpui-style-guide",
+      "path": ".claude/skills/gpui-style-guide/SKILL.md",
+      "desc": "GPUI Component project style guide based on gpui-component code patterns. Use when writing new components, reviewing code, or ensuring consistency with existing gpui-component implementations. Covers component structure, trait implementations, naming conventions, and API patterns observed in the actual codebase.",
+      "descZh": "",
+      "triggers": [
+        "writing new components",
+        "reviewing code"
+      ],
+      "version": "",
+      "license": "GPL-3.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "gemini",
+        "mcp",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/samurmaykrr/zqlz.git",
+        "copy": "cp -r .claude/skills/gpui-style-guide ~/.claude/skills/gpui-style-guide",
+        "raw": "https://raw.githubusercontent.com/samurmaykrr/zqlz/d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13/.claude/skills/gpui-style-guide/SKILL.md",
+        "saveAs": "~/.claude/skills/gpui-style-guide/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:9af1a9cefe2eac4ee65ce8de6ea75ff91a2a5a5476b8dc47edc387b463c42feb",
+      "bytes": 11690,
+      "wordCount": 1355,
+      "repoLicense": "GPL-3.0",
+      "commit": "d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13",
+      "branch": "main",
+      "body": "---\nname: gpui-style-guide\ndescription: GPUI Component project style guide based on gpui-component code patterns. Use when writing new components, reviewing code, or ensuring consistency with existing gpui-component implementations. Covers component structure, trait implementations, naming conventions, and API patterns observed in the actual codebase.\n---\n\n## Overview\n\nCode style guide derived from gpui-component implementation patterns.\n\n**Based on**: Analysis of Button, Checkbox, Input, Select, and other components in crates/ui\n\n## Component Structure\n\n### Basic Component Pattern\n\n```rust\nuse gpui::{\n    div, prelude::FluentBuilder as _, AnyElement, App, Div, ElementId,\n    InteractiveElement, IntoElement, ParentElement, RenderOnce,\n    StatefulInteractiveElement, StyleRefinement, Styled, Window,\n};\n\n#[derive(IntoElement)]\npub struct MyComponent {\n    id: ElementId,\n    base: Div,\n    style: StyleRefinement,\n\n    // Configuration fields\n    size: Size,\n    disabled: bool,\n    selected: bool,\n\n    // Content fields\n    label: Option<Text>,\n    children: Vec<AnyElement>,\n\n    // Callbacks (use Rc for Clone)\n    on_click: Option<Rc<dyn Fn(&ClickEvent, &mut Window, &mut App) + 'static>>,\n}\n\nimpl MyComponent {\n    pub fn new(id: impl Into<ElementId>) -> Self {\n        Self {\n            id: id.into(),\n            base: div(),\n            style: StyleRefinement::default(),\n            size: Size::default(),\n            disabled: false,\n            selected: false,\n            label: None,\n            children: Vec::new(),\n            on_click: None,\n        }\n    }\n\n    // Builder methods\n    pub fn label(mut self, label: impl Into<Text>) -> Self {\n        self.label = Some(label.into());\n        self\n    }\n\n    pub fn on_click(mut self, handler: impl Fn(&ClickEvent, &mut Window, &mut App) + 'static) -> Self {\n        self.on_click = Some(Rc::new(handler));\n        self\n    }\n}\n\nimpl InteractiveElement for MyComponent {\n    fn interactivity(&mut self) -> &mut gpui::Interactivity {\n        self.base.interactivity()\n    }\n}\n\nimpl StatefulInteractiveElement for MyComponent {}\n\nimpl Styled for MyComponent {\n    fn style(&mut self) -> &mut StyleRefinement {\n        &mut self.style\n    }\n}\n\nimpl RenderOnce for MyComponent {\n    fn render(self, window: &mut Window, cx: &mut App) -> impl IntoElement {\n        // Implementation\n        self.base\n    }\n}\n```\n\n### Stateful Component Pattern\n\n```rust\n#[derive(IntoElement)]\npub struct Select {\n    state: Entity<SelectState>,\n    style: StyleRefinement,\n    size: Size,\n    // ...\n}\n\npub struct SelectState {\n    open: bool,\n    selected_index: Option<usize>,\n    // ...\n}\n\nimpl Select {\n    pub fn new(state: &Entity<SelectState>) -> Self {\n        Self {\n            state: state.clone(),\n            size: Size::default(),\n            style: StyleRefinement::default(),\n        }\n    }\n}\n```\n\n## Trait Implementations\n\n### Sizable\n\n```rust\nimpl Sizable for MyComponent {\n    fn with_size(mut self, size: impl Into<Size>) -> Self {\n        self.size = size.into();\n        self\n    }\n}\n```\n\n### Selectable\n\n```rust\nimpl Selectable for MyComponent {\n    fn selected(mut self, selected: bool) -> Self {\n        self.selected = selected;\n        self\n    }\n\n    fn is_selected(&self) -> bool {\n        self.selected\n    }\n}\n```\n\n### Disableable\n\n```rust\nimpl Disableable for MyComponent {\n    fn disabled(mut self, disabled: bool) -> Self {\n        self.disabled = disabled;\n        self\n    }\n\n    fn is_disabled(&self) -> bool {\n        self.disabled\n    }\n}\n```\n\n## Variant Patterns\n\n### Enum Variants\n\n```rust\n#[derive(Clone, Copy, PartialEq, Eq, Default, Debug)]\npub enum ButtonVariant {\n    Primary,\n    #[default]\n    Secondary,\n    Danger,\n    Success,\n    Warning,\n    Ghost,\n    Link,\n}\n```\n\n### Trait-Based Variant API\n\n```rust\npub trait ButtonVariants: Sized {\n    fn with_variant(self, variant: ButtonVariant) -> Self;\n\n    /// With the primary style for the Button.\n    fn primary(self) -> Self {\n        self.with_variant(ButtonVariant::Primary)\n    }\n\n    /// With the danger style for the Button.\n    fn danger(self) -> Self {\n        self.with_variant(ButtonVariant::Danger)\n    }\n\n    // ... more variants\n}\n```\n\n### Custom Variant Pattern\n\n```rust\n#[derive(Clone, Copy, PartialEq, Eq, Debug)]\npub struct ButtonCustomVariant {\n    color: Hsla,\n    foreground: Hsla,\n    border: Hsla,\n    hover: Hsla,\n    active: Hsla,\n    shadow: bool,\n}\n\nimpl ButtonCustomVariant {\n    pub fn new(cx: &App) -> Self {\n        Self {\n            color: cx.theme().transparent,\n            foreground: cx.theme().foreground,\n            // ...\n            shadow: false,\n        }\n    }\n\n    pub fn color(mut self, color: Hsla) -> Self {\n        self.color = color;\n        self\n    }\n\n    // ... more builder methods\n}\n```\n\n## Action and Keybinding Patterns\n\n### Context Constant\n\n```rust\nconst CONTEXT: &str = \"Select\";\n```\n\n### Init Function\n\n```rust\npub(crate) fn init(cx: &mut App) {\n    cx.bind_keys([\n        KeyBinding::new(\"up\", SelectUp, Some(CONTEXT)),\n        KeyBinding::new(\"down\", SelectDown, Some(CONTEXT)),\n        KeyBinding::new(\"enter\", Confirm { secondary: false }, Some(CONTEXT)),\n        KeyBinding::new(\"escape\", Cancel, Some(CONTEXT)),\n    ])\n}\n```\n\n### Action Usage\n\n```rust\nuse crate::actions::{Cancel, Confirm, SelectDown, SelectUp};\n\ndiv()\n    .key_context(CONTEXT)\n    .on_action(cx.listener(Self::on_action_select_up))\n    .on_action(cx.listener(Self::on_action_confirm))\n```\n\n## Trait Definitions\n\n### Item Traits\n\n```rust\npub trait SelectItem: Clone {\n    type Value: Clone;\n\n    fn title(&self) -> SharedString;\n\n    fn display_title(&self) -> Option<AnyElement> {\n        None\n    }\n\n    fn render(&self, _: &mut Window, _: &mut App) -> impl IntoElement {\n        self.title().into_element()\n    }\n\n    fn value(&self) -> &Self::Value;\n\n    fn matches(&self, query: &str) -> bool {\n        self.title().to_lowercase().contains(&query.to_lowercase())\n    }\n}\n```\n\n### Implement for Common Types\n\n```rust\nimpl SelectItem for String {\n    type Value = Self;\n\n    fn title(&self) -> SharedString {\n        SharedString::from(self.to_string())\n    }\n\n    fn value(&self) -> &Self::Value {\n        &self\n    }\n}\n\nimpl SelectItem for SharedString { /* ... */ }\nimpl SelectItem for &'static str { /* ... */ }\n```\n\n## Icon Pattern\n\n### IconNamed Trait\n\n```rust\npub trait IconNamed {\n    fn path(self) -> SharedString;\n}\n\nimpl<T: IconNamed> From<T> for Icon {\n    fn from(value: T) -> Self {\n        Icon::build(value)\n    }\n}\n```\n\n### IconName Enum\n\n```rust\n#[derive(IntoElement, Clone)]\npub enum IconName {\n    ArrowDown,\n    ArrowUp,\n    Check,\n    Close,\n    // ... all icon names\n}\n```\n\n## Documentation Patterns\n\n### Component Documentation\n\n```rust\n/// A Checkbox element.\n#[derive(IntoElement)]\npub struct Checkbox { }\n```\n\n### Method Documentation\n\n```rust\nimpl Checkbox {\n    /// Create a new Checkbox with the given id.\n    pub fn new(id: impl Into<ElementId>) -> Self { }\n\n    /// Set the label for the checkbox.\n    pub fn label(mut self, label: impl Into<Text>) -> Self { }\n\n    /// Set the click handler for the checkbox.\n    ///\n    /// The `&bool` parameter indicates the new checked state after the click.\n    pub fn on_click(mut self, handler: impl Fn(&bool, &mut Window, &mut App) + 'static) -> Self { }\n}\n```\n\n## Import Organization Pattern\n\n```rust\n// 1. External crate imports\nuse std::rc::Rc;\n\n// 2. Crate imports\nuse crate::{\n    ActiveTheme, Disableable, FocusableExt, Icon, IconName,\n    Selectable, Sizable, Size, StyledExt,\n};\n\n// 3. GPUI imports\nuse gpui::{\n    div, prelude::FluentBuilder as _, px, relative, rems,\n    AnyElement, App, Div, ElementId, InteractiveElement,\n    IntoElement, ParentElement, RenderOnce,\n    StatefulInteractiveElement, StyleRefinement, Styled, Window,\n};\n```\n\n## Field Organization\n\n```rust\npub struct Component {\n    // 1. Identity\n    id: ElementId,\n    base: Div,\n    style: StyleRefinement,\n\n    // 2. Configuration\n    size: Size,\n    disabled: bool,\n    selected: bool,\n    tab_stop: bool,\n    tab_index: isize,\n\n    // 3. Content/children\n    label: Option<Text>,\n    children: Vec<AnyElement>,\n    prefix: Option<AnyElement>,\n    suffix: Option<AnyElement>,\n\n    // 4. Callbacks (last)\n    on_click: Option<Rc<dyn Fn(Args, &mut Window, &mut App) + 'static>>,\n}\n```\n\n## Common Patterns\n\n### Optional Elements\n\n```rust\npub fn prefix(mut self, prefix: impl IntoElement) -> Self {\n    self.prefix = Some(prefix.into_any_element());\n    self\n}\n```\n\n### Callback Patterns\n\n```rust\n// Pattern 1: Event parameter first\npub fn on_click(mut self, handler: impl Fn(&ClickEvent, &mut Window, &mut App) + 'static) -> Self {\n    self.on_click = Some(Rc::new(handler));\n    self\n}\n\n// Pattern 2: State parameter\npub fn on_change(mut self, handler: impl Fn(&bool, &mut Window, &mut App) + 'static) -> Self {\n    self.on_change = Some(Rc::new(handler));\n    self\n}\n```\n\n### Static Handler Functions\n\n```rust\nfn handle_click(\n    on_click: &Option<Rc<dyn Fn(&bool, &mut Window, &mut App) + 'static>>,\n    checked: bool,\n    window: &mut Window,\n    cx: &mut App,\n) {\n    let new_checked = !checked;\n    if let Some(f) = on_click {\n        (f)(&new_checked, window, cx);\n    }\n}\n```\n\n### Boolean Methods\n\n```rust\n// Enable/disable patterns\npub fn cleanable(mut self, cleanable: bool) -> Self {\n    self.cleanable = cleanable;\n    self\n}\n\n// Toggle methods (no parameter)\npub fn mask_toggle(mut self) -> Self {\n    self.mask_toggle = true;\n    self\n}\n```\n\n## Size Methods\n\n### Size Trait\n\n```rust\nimpl Sizable for Component {\n    fn with_size(mut self, size: impl Into<Size>) -> Self {\n        self.size = size.into();\n        self\n    }\n}\n```\n\n### Convenience Size Methods (from StyleSized trait)\n\nComponents get `.xsmall()`, `.small()`, `.medium()`, `.large()` automatically via `StyleSized` trait.\n\n## Rendering Patterns\n\n### RenderOnce Pattern\n\n```rust\nimpl RenderOnce for MyComponent {\n    fn render(self, window: &mut Window, cx: &mut App) -> impl IntoElement {\n        let (width, height) = self.size.input_size();\n\n        self.base\n            .id(self.id)\n            .flex()\n            .items_center()\n            .gap(px(8.))\n            .min_w(width)\n            .h(height)\n            .when(self.disabled, |this| {\n                this.opacity(0.5).cursor_not_allowed()\n            })\n            .children(self.children)\n    }\n}\n```\n\n## Theme Usage\n\n```rust\n// Access theme colors\ncx.theme().surface\ncx.theme().foreground\ncx.theme().border\ncx.theme().primary\ncx.theme().transparent\n\n// Use in components\ndiv()\n    .bg(cx.theme().surface)\n    .text_color(cx.theme().foreground)\n    .border_color(cx.theme().border)\n```\n\n## Reference Documentation\n\n- **Component Examples**: See [component-examples.md](references/component-examples.md)\n  - Full component implementations\n  - Common patterns in action\n\n- **Trait Patterns**: See [trait-patterns.md](references/trait-patterns.md)\n  - Detailed trait implementation guides\n  - Custom trait design patterns\n\n## Quick Checklist\n\nWhen creating a new component in crates/ui:\n\n- [ ] `#[derive(IntoElement)]` on struct\n- [ ] Include `id: ElementId`, `base: Div`, `style: StyleRefinement`\n- [ ] Implement `InteractiveElement`, `StatefulInteractiveElement`, `Styled`\n- [ ] Implement `RenderOnce` trait\n- [ ] Implement `Sizable` if component has sizes\n- [ ] Implement `Selectable` if component can be selected\n- [ ] Implement `Disableable` if component can be disabled\n- [ ] Use `Rc<dyn Fn>` for callbacks\n- [ ] Use `Option<AnyElement>` for optional child elements\n- [ ] Import `prelude::FluentBuilder as _`\n- [ ] Use theme colors via `cx.theme()`\n- [ ] Follow field organization pattern\n",
+      "bodyMd": "## Overview\n\nCode style guide derived from gpui-component implementation patterns.\n\n**Based on**: Analysis of Button, Checkbox, Input, Select, and other components in crates/ui\n\n## Component Structure\n\n### Basic Component Pattern\n\n```rust\nuse gpui::{\n    div, prelude::FluentBuilder as _, AnyElement, App, Div, ElementId,\n    InteractiveElement, IntoElement, ParentElement, RenderOnce,\n    StatefulInteractiveElement, StyleRefinement, Styled, Window,\n};\n\n#[derive(IntoElement)]\npub struct MyComponent {\n    id: ElementId,\n    base: Div,\n    style: StyleRefinement,\n\n    // Configuration fields\n    size: Size,\n    disabled: bool,\n    selected: bool,\n\n    // Content fields\n    label: Option<Text>,\n    children: Vec<AnyElement>,\n\n    // Callbacks (use Rc for Clone)\n    on_click: Option<Rc<dyn Fn(&ClickEvent, &mut Window, &mut App) + 'static>>,\n}\n\nimpl MyComponent {\n    pub fn new(id: impl Into<ElementId>) -> Self {\n        Self {\n            id: id.into(),\n            base: div(),\n            style: StyleRefinement::default(),\n            size: Size::default(),\n            disabled: false,\n            selected: false,\n            label: None,\n            children: Vec::new(),\n            on_click: None,\n        }\n    }\n\n    // Builder methods\n    pub fn label(mut self, label: impl Into<Text>) -> Self {\n        self.label = Some(label.into());\n        self\n    }\n\n    pub fn on_click(mut self, handler: impl Fn(&ClickEvent, &mut Window, &mut App) + 'static) -> Self {\n        self.on_click = Some(Rc::new(handler));\n        self\n    }\n}\n\nimpl InteractiveElement for MyComponent {\n    fn interactivity(&mut self) -> &mut gpui::Interactivity {\n        self.base.interactivity()\n    }\n}\n\nimpl StatefulInteractiveElement for MyComponent {}\n\nimpl Styled for MyComponent {\n    fn style(&mut self) -> &mut StyleRefinement {\n        &mut self.style\n    }\n}\n\nimpl RenderOnce for MyComponent {\n    fn render(self, window: &mut Window, cx: &mut App) -> impl IntoElement {\n        // Implementation\n        self.base\n    }\n}\n```\n\n### Stateful Component Pattern\n\n```rust\n#[derive(IntoElement)]\npub struct Select {\n    state: Entity<SelectState>,\n    style: StyleRefinement,\n    size: Size,\n    // ...\n}\n\npub struct SelectState {\n    open: bool,\n    selected_index: Option<usize>,\n    // ...\n}\n\nimpl Select {\n    pub fn new(state: &Entity<SelectState>) -> Self {\n        Self {\n            state: state.clone(),\n            size: Size::default(),\n            style: StyleRefinement::default(),\n        }\n    }\n}\n```\n\n## Trait Implementations\n\n### Sizable\n\n```rust\nimpl Sizable for MyComponent {\n    fn with_size(mut self, size: impl Into<Size>) -> Self {\n        self.size = size.into();\n        self\n    }\n}\n```\n\n### Selectable\n\n```rust\nimpl Selectable for MyComponent {\n    fn selected(mut self, selected: bool) -> Self {\n        self.selected = selected;\n        self\n    }\n\n    fn is_selected(&self) -> bool {\n        self.selected\n    }\n}\n```\n\n### Disableable\n\n```rust\nimpl Disableable for MyComponent {\n    fn disabled(mut self, disabled: bool) -> Self {\n        self.disabled = disabled;\n        self\n    }\n\n    fn is_disabled(&self) -> bool {\n        self.disabled\n    }\n}\n```\n\n## Variant Patterns\n\n### Enum Variants\n\n```rust\n#[derive(Clone, Copy, PartialEq, Eq, Default, Debug)]\npub enum ButtonVariant {\n    Primary,\n    #[default]\n    Secondary,\n    Danger,\n    Success,\n    Warning,\n    Ghost,\n    Link,\n}\n```\n\n### Trait-Based Variant API\n\n```rust\npub trait ButtonVariants: Sized {\n    fn with_variant(self, variant: ButtonVariant) -> Self;\n\n    /// With the primary style for the Button.\n    fn primary(self) -> Self {\n        self.with_variant(ButtonVariant::Primary)\n    }\n\n    /// With the danger style for the Button.\n    fn danger(self) -> Self {\n        self.with_variant(ButtonVariant::Danger)\n    }\n\n    // ... more variants\n}\n```\n\n### Custom Variant Pattern\n\n```rust\n#[derive(Clone, Copy, PartialEq, Eq, Debug)]\npub struct ButtonCustomVariant {\n    color: Hsla,\n    foreground: Hsla,\n    border: Hsla,\n    hover: Hsla,\n    active: Hsla,\n    shadow: bool,\n}\n\nimpl ButtonCustomVariant {\n    pub fn new(cx: &App) -> Self {\n        Self {\n            color: cx.theme().transparent,\n            foreground: cx.theme().foreground,\n            // ...\n            shadow: false,\n        }\n    }\n\n    pub fn color(mut self, color: Hsla) -> Self {\n        self.color = color;\n        self\n    }\n\n    // ... more builder methods\n}\n```\n\n## Action and Keybinding Patterns\n\n### Context Constant\n\n```rust\nconst CONTEXT: &str = \"Select\";\n```\n\n### Init Function\n\n```rust\npub(crate) fn init(cx: &mut App) {\n    cx.bind_keys([\n        KeyBinding::new(\"up\", SelectUp, Some(CONTEXT)),\n        KeyBinding::new(\"down\", SelectDown, Some(CONTEXT)),\n        KeyBinding::new(\"enter\", Confirm { secondary: false }, Some(CONTEXT)),\n        KeyBinding::new(\"escape\", Cancel, Some(CONTEXT)),\n    ])\n}\n```\n\n### Action Usage\n\n```rust\nuse crate::actions::{Cancel, Confirm, SelectDown, SelectUp};\n\ndiv()\n    .key_context(CONTEXT)\n    .on_action(cx.listener(Self::on_action_select_up))\n    .on_action(cx.listener(Self::on_action_confirm))\n```\n\n## Trait Definitions\n\n### Item Traits\n\n```rust\npub trait SelectItem: Clone {\n    type Value: Clone;\n\n    fn title(&self) -> SharedString;\n\n    fn display_title(&self) -> Option<AnyElement> {\n        None\n    }\n\n    fn render(&self, _: &mut Window, _: &mut App) -> impl IntoElement {\n        self.title().into_element()\n    }\n\n    fn value(&self) -> &Self::Value;\n\n    fn matches(&self, query: &str) -> bool {\n        self.title().to_lowercase().contains(&query.to_lowercase())\n    }\n}\n```\n\n### Implement for Common Types\n\n```rust\nimpl SelectItem for String {\n    type Value = Self;\n\n    fn title(&self) -> SharedString {\n        SharedString::from(self.to_string())\n    }\n\n    fn value(&self) -> &Self::Value {\n        &self\n    }\n}\n\nimpl SelectItem for SharedString { /* ... */ }\nimpl SelectItem for &'static str { /* ... */ }\n```\n\n## Icon Pattern\n\n### IconNamed Trait\n\n```rust\npub trait IconNamed {\n    fn path(self) -> SharedString;\n}\n\nimpl<T: IconNamed> From<T> for Icon {\n    fn from(value: T) -> Self {\n        Icon::build(value)\n    }\n}\n```\n\n### IconName Enum\n\n```rust\n#[derive(IntoElement, Clone)]\npub enum IconName {\n    ArrowDown,\n    ArrowUp,\n    Check,\n    Close,\n    // ... all icon names\n}\n```\n\n## Documentation Patterns\n\n### Component Documentation\n\n```rust\n/// A Checkbox element.\n#[derive(IntoElement)]\npub struct Checkbox { }\n```\n\n### Method Documentation\n\n```rust\nimpl Checkbox {\n    /// Create a new Checkbox with the given id.\n    pub fn new(id: impl Into<ElementId>) -> Self { }\n\n    /// Set the label for the checkbox.\n    pub fn label(mut self, label: impl Into<Text>) -> Self { }\n\n    /// Set the click handler for the checkbox.\n    ///\n    /// The `&bool` parameter indicates the new checked state after the click.\n    pub fn on_click(mut self, handler: impl Fn(&bool, &mut Window, &mut App) + 'static) -> Self { }\n}\n```\n\n## Import Organization Pattern\n\n```rust\n// 1. External crate imports\nuse std::rc::Rc;\n\n// 2. Crate imports\nuse crate::{\n    ActiveTheme, Disableable, FocusableExt, Icon, IconName,\n    Selectable, Sizable, Size, StyledExt,\n};\n\n// 3. GPUI imports\nuse gpui::{\n    div, prelude::FluentBuilder as _, px, relative, rems,\n    AnyElement, App, Div, ElementId, InteractiveElement,\n    IntoElement, ParentElement, RenderOnce,\n    StatefulInteractiveElement, StyleRefinement, Styled, Window,\n};\n```\n\n## Field Organization\n\n```rust\npub struct Component {\n    // 1. Identity\n    id: ElementId,\n    base: Div,\n    style: StyleRefinement,\n\n    // 2. Configuration\n    size: Size,\n    disabled: bool,\n    selected: bool,\n    tab_stop: bool,\n    tab_index: isize,\n\n    // 3. Content/children\n    label: Option<Text>,\n    children: Vec<AnyElement>,\n    prefix: Option<AnyElement>,\n    suffix: Option<AnyElement>,\n\n    // 4. Callbacks (last)\n    on_click: Option<Rc<dyn Fn(Args, &mut Window, &mut App) + 'static>>,\n}\n```\n\n## Common Patterns\n\n### Optional Elements\n\n```rust\npub fn prefix(mut self, prefix: impl IntoElement) -> Self {\n    self.prefix = Some(prefix.into_any_element());\n    self\n}\n```\n\n### Callback Patterns\n\n```rust\n// Pattern 1: Event parameter first\npub fn on_click(mut self, handler: impl Fn(&ClickEvent, &mut Window, &mut App) + 'static) -> Self {\n    self.on_click = Some(Rc::new(handler));\n    self\n}\n\n// Pattern 2: State parameter\npub fn on_change(mut self, handler: impl Fn(&bool, &mut Window, &mut App) + 'static) -> Self {\n    self.on_change = Some(Rc::new(handler));\n    self\n}\n```\n\n### Static Handler Functions\n\n```rust\nfn handle_click(\n    on_click: &Option<Rc<dyn Fn(&bool, &mut Window, &mut App) + 'static>>,\n    checked: bool,\n    window: &mut Window,\n    cx: &mut App,\n) {\n    let new_checked = !checked;\n    if let Some(f) = on_click {\n        (f)(&new_checked, window, cx);\n    }\n}\n```\n\n### Boolean Methods\n\n```rust\n// Enable/disable patterns\npub fn cleanable(mut self, cleanable: bool) -> Self {\n    self.cleanable = cleanable;\n    self\n}\n\n// Toggle methods (no parameter)\npub fn mask_toggle(mut self) -> Self {\n    self.mask_toggle = true;\n    self\n}\n```\n\n## Size Methods\n\n### Size Trait\n\n```rust\nimpl Sizable for Component {\n    fn with_size(mut self, size: impl Into<Size>) -> Self {\n        self.size = size.into();\n        self\n    }\n}\n```\n\n### Convenience Size Methods (from StyleSized trait)\n\nComponents get `.xsmall()`, `.small()`, `.medium()`, `.large()` automatically via `StyleSized` trait.\n\n## Rendering Patterns\n\n### RenderOnce Pattern\n\n```rust\nimpl RenderOnce for MyComponent {\n    fn render(self, window: &mut Window, cx: &mut App) -> impl IntoElement {\n        let (width, height) = self.size.input_size();\n\n        self.base\n            .id(self.id)\n            .flex()\n            .items_center()\n            .gap(px(8.))\n            .min_w(width)\n            .h(height)\n            .when(self.disabled, |this| {\n                this.opacity(0.5).cursor_not_allowed()\n            })\n            .children(self.children)\n    }\n}\n```\n\n## Theme Usage\n\n```rust\n// Access theme colors\ncx.theme().surface\ncx.theme().foreground\ncx.theme().border\ncx.theme().primary\ncx.theme().transparent\n\n// Use in components\ndiv()\n    .bg(cx.theme().surface)\n    .text_color(cx.theme().foreground)\n    .border_color(cx.theme().border)\n```\n\n## Reference Documentation\n\n- **Component Examples**: See [component-examples.md](references/component-examples.md)\n  - Full component implementations\n  - Common patterns in action\n\n- **Trait Patterns**: See [trait-patterns.md](references/trait-patterns.md)\n  - Detailed trait implementation guides\n  - Custom trait design patterns\n\n## Quick Checklist\n\nWhen creating a new component in crates/ui:\n\n- [ ] `#[derive(IntoElement)]` on struct\n- [ ] Include `id: ElementId`, `base: Div`, `style: StyleRefinement`\n- [ ] Implement `InteractiveElement`, `StatefulInteractiveElement`, `Styled`\n- [ ] Implement `RenderOnce` trait\n- [ ] Implement `Sizable` if component has sizes\n- [ ] Implement `Selectable` if component can be selected\n- [ ] Implement `Disableable` if component can be disabled\n- [ ] Use `Rc<dyn Fn>` for callbacks\n- [ ] Use `Option<AnyElement>` for optional child elements\n- [ ] Import `prelude::FluentBuilder as _`\n- [ ] Use theme colors via `cx.theme()`\n- [ ] Follow field organization pattern\n"
+    },
+    {
+      "slug": "gpui-test",
+      "name": "gpui-test",
+      "dir": ".claude/skills/gpui-test",
+      "path": ".claude/skills/gpui-test/SKILL.md",
+      "desc": "Writing tests for GPUI applications. Use when testing components, async operations, or UI behavior.",
+      "descZh": "",
+      "triggers": [
+        "testing components",
+        "async operations",
+        "UI behavior"
+      ],
+      "version": "",
+      "license": "GPL-3.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "gemini",
+        "mcp",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "convert"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/samurmaykrr/zqlz.git",
+        "copy": "cp -r .claude/skills/gpui-test ~/.claude/skills/gpui-test",
+        "raw": "https://raw.githubusercontent.com/samurmaykrr/zqlz/d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13/.claude/skills/gpui-test/SKILL.md",
+        "saveAs": "~/.claude/skills/gpui-test/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:6f71d1dc0dc09820cf4bddd09a6007087ca69e17c48e76b2c1e63a1e3582ee17",
+      "bytes": 2426,
+      "wordCount": 275,
+      "repoLicense": "GPL-3.0",
+      "commit": "d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13",
+      "branch": "main",
+      "body": "---\nname: gpui-test\ndescription: Writing tests for GPUI applications. Use when testing components, async operations, or UI behavior.\n---\n\n## Overview\n\nGPUI provides a comprehensive testing framework that allows you to test UI components, async operations, and distributed systems. Tests run on a single-threaded executor that provides deterministic execution and the ability to test complex async scenarios. GPUI tests use the `#[gpui::test]` attribute and work with `TestAppContext` for basic testing and `VisualTestContext` for window-dependent tests.\n\n### Rules\n\n- If test does not require windows or rendering, we can avoid use `[gpui::test]` and `TestAppContext`, just write simple rust test.\n\n## Core Testing Infrastructure\n\n### Test Attributes\n\n#### Basic Test\n\n```rust\n#[gpui::test]\nfn my_test(cx: &mut TestAppContext) {\n    // Test implementation\n}\n```\n\n#### Async Test\n\n```rust\n#[gpui::test]\nasync fn my_async_test(cx: &mut TestAppContext) {\n    // Async test implementation\n}\n```\n\n#### Property Test with Iterations\n\n```rust\n#[gpui::test(iterations = 10)]\nfn my_property_test(cx: &mut TestAppContext, mut rng: StdRng) {\n    // Property testing with random data\n}\n```\n\n### Test Contexts\n\n#### TestAppContext\n\n`TestAppContext` provides access to GPUI's core functionality without windows:\n\n```rust\n#[gpui::test]\nfn test_entity_operations(cx: &mut TestAppContext) {\n    // Create entities\n    let entity = cx.new(|cx| MyComponent::new(cx));\n\n    // Update entities\n    entity.update(cx, |component, cx| {\n        component.value = 42;\n        cx.notify();\n    });\n\n    // Read entities\n    let value = entity.read_with(cx, |component, _| component.value);\n    assert_eq!(value, 42);\n}\n```\n\n#### VisualTestContext\n\n`VisualTestContext` extends `TestAppContext` with window support:\n\n```rust\n#[gpui::test]\nfn test_with_window(cx: &mut TestAppContext) {\n    // Create window with component\n    let window = cx.update(|cx| {\n        cx.open_window(Default::default(), |_, cx| {\n            cx.new(|cx| MyComponent::new(cx))\n        }).unwrap()\n    });\n\n    // Convert to visual context\n    let mut cx = VisualTestContext::from_window(window.into(), cx);\n\n    // Access window and component\n    let component = window.root(&mut cx).unwrap();\n}\n```\n\n## Additional Resources\n\n- For detailed testing patterns and examples, see [reference.md](reference.md)\n- For best practices and running tests, see [examples.md](examples.md)\n",
+      "bodyMd": "## Overview\n\nGPUI provides a comprehensive testing framework that allows you to test UI components, async operations, and distributed systems. Tests run on a single-threaded executor that provides deterministic execution and the ability to test complex async scenarios. GPUI tests use the `#[gpui::test]` attribute and work with `TestAppContext` for basic testing and `VisualTestContext` for window-dependent tests.\n\n### Rules\n\n- If test does not require windows or rendering, we can avoid use `[gpui::test]` and `TestAppContext`, just write simple rust test.\n\n## Core Testing Infrastructure\n\n### Test Attributes\n\n#### Basic Test\n\n```rust\n#[gpui::test]\nfn my_test(cx: &mut TestAppContext) {\n    // Test implementation\n}\n```\n\n#### Async Test\n\n```rust\n#[gpui::test]\nasync fn my_async_test(cx: &mut TestAppContext) {\n    // Async test implementation\n}\n```\n\n#### Property Test with Iterations\n\n```rust\n#[gpui::test(iterations = 10)]\nfn my_property_test(cx: &mut TestAppContext, mut rng: StdRng) {\n    // Property testing with random data\n}\n```\n\n### Test Contexts\n\n#### TestAppContext\n\n`TestAppContext` provides access to GPUI's core functionality without windows:\n\n```rust\n#[gpui::test]\nfn test_entity_operations(cx: &mut TestAppContext) {\n    // Create entities\n    let entity = cx.new(|cx| MyComponent::new(cx));\n\n    // Update entities\n    entity.update(cx, |component, cx| {\n        component.value = 42;\n        cx.notify();\n    });\n\n    // Read entities\n    let value = entity.read_with(cx, |component, _| component.value);\n    assert_eq!(value, 42);\n}\n```\n\n#### VisualTestContext\n\n`VisualTestContext` extends `TestAppContext` with window support:\n\n```rust\n#[gpui::test]\nfn test_with_window(cx: &mut TestAppContext) {\n    // Create window with component\n    let window = cx.update(|cx| {\n        cx.open_window(Default::default(), |_, cx| {\n            cx.new(|cx| MyComponent::new(cx))\n        }).unwrap()\n    });\n\n    // Convert to visual context\n    let mut cx = VisualTestContext::from_window(window.into(), cx);\n\n    // Access window and component\n    let component = window.root(&mut cx).unwrap();\n}\n```\n\n## Additional Resources\n\n- For detailed testing patterns and examples, see [reference.md](reference.md)\n- For best practices and running tests, see [examples.md](examples.md)\n"
+    },
+    {
+      "slug": "new-component",
+      "name": "new-component",
+      "dir": ".claude/skills/new-component",
+      "path": ".claude/skills/new-component/SKILL.md",
+      "desc": "Create new GPUI components. Use when building components, writing UI elements, or creating new component implementations.",
+      "descZh": "",
+      "triggers": [
+        "building components",
+        "writing UI elements"
+      ],
+      "version": "",
+      "license": "GPL-3.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "gemini",
+        "mcp",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/samurmaykrr/zqlz.git",
+        "copy": "cp -r .claude/skills/new-component ~/.claude/skills/new-component",
+        "raw": "https://raw.githubusercontent.com/samurmaykrr/zqlz/d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13/.claude/skills/new-component/SKILL.md",
+        "saveAs": "~/.claude/skills/new-component/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:43e34f5f5e98b44ea8bb2f636e6c8b97809155b1658e74c88340f529e1ff9d51",
+      "bytes": 945,
+      "wordCount": 103,
+      "repoLicense": "GPL-3.0",
+      "commit": "d94a6133a8dc7d0d5a20524cbb9d1aa05e726d13",
+      "branch": "main",
+      "body": "---\nname: new-component\ndescription: Create new GPUI components. Use when building components, writing UI elements, or creating new component implementations.\n---\n\n## Instructions\n\nWhen creating new GPUI components:\n\n1. **Follow existing patterns**: Base implementation on components in `crates/ui/src` (examples: `Button`, `Select`)\n2. **Style consistency**: Follow existing component styles and Shadcn UI patterns\n3. **Component type decision**:\n   - Use stateless elements for simple components (like `Button`)\n   - Use stateful elements for complex components with data (like `Select` and `SelectState`)\n4. **API consistency**: Maintain the same API style as other elements\n5. **Documentation**: Create component documentation\n6. **Stories**: Write component stories in the story folder\n\n## Component Types\n\n- **Stateless**: Pure presentation components without internal state\n- **Stateful**: Components that manage their own state and data\n",
+      "bodyMd": "## Instructions\n\nWhen creating new GPUI components:\n\n1. **Follow existing patterns**: Base implementation on components in `crates/ui/src` (examples: `Button`, `Select`)\n2. **Style consistency**: Follow existing component styles and Shadcn UI patterns\n3. **Component type decision**:\n   - Use stateless elements for simple components (like `Button`)\n   - Use stateful elements for complex components with data (like `Select` and `SelectState`)\n4. **API consistency**: Maintain the same API style as other elements\n5. **Documentation**: Create component documentation\n6. **Stories**: Write component stories in the story folder\n\n## Component Types\n\n- **Stateless**: Pure presentation components without internal state\n- **Stateful**: Components that manage their own state and data\n"
+    }
+  ]
+}

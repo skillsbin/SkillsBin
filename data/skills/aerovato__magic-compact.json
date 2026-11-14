@@ -1,0 +1,50 @@
+{
+  "repo": "aerovato/magic-compact",
+  "commit": "679a2437468fc0eb1969249b0d8a34d6da772a4d",
+  "branch": "main",
+  "fetchedAt": "2026-11-14T15:22:11.229Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "magic-compact",
+      "name": "magic-compact",
+      "dir": "packages/claude-code-plugin/skills/magic-compact",
+      "path": "packages/claude-code-plugin/skills/magic-compact/SKILL.md",
+      "desc": "Compact this Claude Code session.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "BSD-3-Clause",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/aerovato/magic-compact.git",
+        "copy": "cp -r packages/claude-code-plugin/skills/magic-compact ~/.claude/skills/magic-compact",
+        "raw": "https://raw.githubusercontent.com/aerovato/magic-compact/679a2437468fc0eb1969249b0d8a34d6da772a4d/packages/claude-code-plugin/skills/magic-compact/SKILL.md",
+        "saveAs": "~/.claude/skills/magic-compact/SKILL.md",
+        "marketplace": "/plugin marketplace add aerovato/magic-compact"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:56230fbc3897b353ac8e2b05d3f24b8b9c1c51f11cc4ebd5f830dd4e8b9921ca",
+      "bytes": 345,
+      "wordCount": 32,
+      "repoLicense": "BSD-3-Clause",
+      "commit": "679a2437468fc0eb1969249b0d8a34d6da772a4d",
+      "branch": "main",
+      "body": "---\nname: magic-compact\ndescription: Compact this Claude Code session.\nargument-hint: \"[N]\"\ndisable-model-invocation: true\n---\n\nShim for `/magic-compact [N]`. If you see this instruction, the Magic Compact hook failed to intercept the command. Alert the user and suggest checking that the `claude-magic-compact` plugin is installed and enabled.\n",
+      "bodyMd": "Shim for `/magic-compact [N]`. If you see this instruction, the Magic Compact hook failed to intercept the command. Alert the user and suggest checking that the `claude-magic-compact` plugin is installed and enabled.\n"
+    }
+  ]
+}

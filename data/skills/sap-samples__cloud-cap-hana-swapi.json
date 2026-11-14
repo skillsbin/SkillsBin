@@ -1,0 +1,145 @@
+{
+  "repo": "SAP-samples/cloud-cap-hana-swapi",
+  "commit": "913fbded6f1889436e57e33e7469b9bd6a5332da",
+  "branch": "main",
+  "fetchedAt": "2026-11-14T15:22:55.110Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "load-and-test",
+      "name": "load-and-test",
+      "dir": ".claude/skills/load-and-test",
+      "path": ".claude/skills/load-and-test/SKILL.md",
+      "desc": "Rebuild CDS artifacts, reload SQLite fixture data, and run the full test suite. Use after schema or service changes.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "mcp",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "npm"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/SAP-samples/cloud-cap-hana-swapi.git",
+        "copy": "cp -r .claude/skills/load-and-test ~/.claude/skills/load-and-test",
+        "raw": "https://raw.githubusercontent.com/SAP-samples/cloud-cap-hana-swapi/913fbded6f1889436e57e33e7469b9bd6a5332da/.claude/skills/load-and-test/SKILL.md",
+        "saveAs": "~/.claude/skills/load-and-test/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:282455bad2c4cfae5ae7cb00389be39ac04127ca129470524b3d275b80698afb",
+      "bytes": 1021,
+      "wordCount": 125,
+      "repoLicense": "Apache-2.0",
+      "commit": "913fbded6f1889436e57e33e7469b9bd6a5332da",
+      "branch": "main",
+      "body": "---\nname: load-and-test\ndescription: Rebuild CDS artifacts, reload SQLite fixture data, and run the full test suite. Use after schema or service changes.\ndisable-model-invocation: true\n---\n\nRun the following commands **sequentially** from the `cap/` directory. Each step depends on the previous one succeeding.\n\n## Steps\n\n1. **Build CDS artifacts and typed models**\n   ```bash\n   cd cap && npm run build\n   ```\n   This runs `cds build` and regenerates `@cds-models/` via `@cap-js/cds-typer`.\n\n2. **Reload SQLite fixture data**\n   ```bash\n   cd cap && npm run load_sqlite\n   ```\n   Runs `convertData.js` with the SQLite profile to populate `db.sqlite`.\n\n3. **Run full test suite**\n   ```bash\n   cd cap && npm test\n   ```\n   Runs model + handler tests with a 60-second timeout.\n\n## Rules\n\n- **Stop on failure.** If any step fails, report the error immediately. Do not continue to the next step.\n- **Report results.** After all steps pass, summarize: build status, data load count, and test results (pass/fail/skip counts).\n",
+      "bodyMd": "Run the following commands **sequentially** from the `cap/` directory. Each step depends on the previous one succeeding.\n\n## Steps\n\n1. **Build CDS artifacts and typed models**\n   ```bash\n   cd cap && npm run build\n   ```\n   This runs `cds build` and regenerates `@cds-models/` via `@cap-js/cds-typer`.\n\n2. **Reload SQLite fixture data**\n   ```bash\n   cd cap && npm run load_sqlite\n   ```\n   Runs `convertData.js` with the SQLite profile to populate `db.sqlite`.\n\n3. **Run full test suite**\n   ```bash\n   cd cap && npm test\n   ```\n   Runs model + handler tests with a 60-second timeout.\n\n## Rules\n\n- **Stop on failure.** If any step fails, report the error immediately. Do not continue to the next step.\n- **Report results.** After all steps pass, summarize: build status, data load count, and test results (pass/fail/skip counts).\n"
+    },
+    {
+      "slug": "scrape-and-load",
+      "name": "scrape-and-load",
+      "dir": ".claude/skills/scrape-and-load",
+      "path": ".claude/skills/scrape-and-load/SKILL.md",
+      "desc": "Run the Wookieepedia scraper, convert data, load into SQLite, and verify with migration and full tests.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "mcp",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "npm",
+          "convert"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/SAP-samples/cloud-cap-hana-swapi.git",
+        "copy": "cp -r .claude/skills/scrape-and-load ~/.claude/skills/scrape-and-load",
+        "raw": "https://raw.githubusercontent.com/SAP-samples/cloud-cap-hana-swapi/913fbded6f1889436e57e33e7469b9bd6a5332da/.claude/skills/scrape-and-load/SKILL.md",
+        "saveAs": "~/.claude/skills/scrape-and-load/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:6e0102b8a160577b628c2f502848bae0ebecbae751e9bf1ef7642816fd8ba066",
+      "bytes": 1235,
+      "wordCount": 158,
+      "repoLicense": "Apache-2.0",
+      "commit": "913fbded6f1889436e57e33e7469b9bd6a5332da",
+      "branch": "main",
+      "body": "---\nname: scrape-and-load\ndescription: Run the Wookieepedia scraper, convert data, load into SQLite, and verify with migration and full tests.\ndisable-model-invocation: true\n---\n\nRun the full data pipeline **sequentially** from the `cap/` directory.\n\n## Steps\n\n1. **Scrape Star Wars data**\n   ```bash\n   cd cap && npm run scrape\n   ```\n   Uses committed cache by default (fast). If the user requests `--bypass-cache`, ask for explicit confirmation first, then run `npm run scrape:bypass-cache` instead.\n\n2. **Build CDS artifacts**\n   ```bash\n   cd cap && npm run build\n   ```\n\n3. **Load fixture data into SQLite**\n   ```bash\n   cd cap && npm run load_sqlite\n   ```\n\n4. **Run migration tests**\n   ```bash\n   cd cap && npm run test:migration\n   ```\n   Verifies data conversion logic and report generation.\n\n5. **Run full test suite**\n   ```bash\n   cd cap && npm test\n   ```\n\n## Rules\n\n- **Stop on failure.** If any step fails, report the error and do not continue.\n- **Cache-first by default.** Never bypass the scraper cache without user confirmation — fresh fetches hit Wookieepedia and take significantly longer.\n- **Report results.** Summarize each step's outcome: scrape stats, build status, load counts, and test pass/fail/skip.\n",
+      "bodyMd": "Run the full data pipeline **sequentially** from the `cap/` directory.\n\n## Steps\n\n1. **Scrape Star Wars data**\n   ```bash\n   cd cap && npm run scrape\n   ```\n   Uses committed cache by default (fast). If the user requests `--bypass-cache`, ask for explicit confirmation first, then run `npm run scrape:bypass-cache` instead.\n\n2. **Build CDS artifacts**\n   ```bash\n   cd cap && npm run build\n   ```\n\n3. **Load fixture data into SQLite**\n   ```bash\n   cd cap && npm run load_sqlite\n   ```\n\n4. **Run migration tests**\n   ```bash\n   cd cap && npm run test:migration\n   ```\n   Verifies data conversion logic and report generation.\n\n5. **Run full test suite**\n   ```bash\n   cd cap && npm test\n   ```\n\n## Rules\n\n- **Stop on failure.** If any step fails, report the error and do not continue.\n- **Cache-first by default.** Never bypass the scraper cache without user confirmation — fresh fetches hit Wookieepedia and take significantly longer.\n- **Report results.** Summarize each step's outcome: scrape stats, build status, load counts, and test pass/fail/skip.\n"
+    },
+    {
+      "slug": "cap-change-workflow",
+      "name": "cap-change-workflow",
+      "dir": ".github/skills/cap-change-workflow",
+      "path": ".github/skills/cap-change-workflow/SKILL.md",
+      "desc": "Use for end-to-end CAP change workflows: modify CDS/handlers, regenerate artifacts, and run a short verification checklist for this repository.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "mcp",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "npm"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/SAP-samples/cloud-cap-hana-swapi.git",
+        "copy": "cp -r .github/skills/cap-change-workflow ~/.claude/skills/cap-change-workflow",
+        "raw": "https://raw.githubusercontent.com/SAP-samples/cloud-cap-hana-swapi/913fbded6f1889436e57e33e7469b9bd6a5332da/.github/skills/cap-change-workflow/SKILL.md",
+        "saveAs": "~/.claude/skills/cap-change-workflow/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:c936f73c9e38cb441e557f9ccb85d401219dc4dc568f13c0a6c1364557f7bc53",
+      "bytes": 1606,
+      "wordCount": 172,
+      "repoLicense": "Apache-2.0",
+      "commit": "913fbded6f1889436e57e33e7469b9bd6a5332da",
+      "branch": "main",
+      "body": "---\r\nname: cap-change-workflow\r\ndescription: 'Use for end-to-end CAP change workflows: modify CDS/handlers, regenerate artifacts, and run a short verification checklist for this repository.'\r\nargument-hint: 'Describe the CAP change to implement and verify'\r\nuser-invocable: true\r\ndisable-model-invocation: false\r\n---\r\n\r\n# CAP Change Workflow\r\n\r\nUse this skill when implementing non-trivial CAP changes (CDS, services, handlers, annotations) and you want a consistent implementation + verification flow.\r\n\r\n## When to use\r\n\r\n- Adding/changing entities, associations, projections, or service exposure\r\n- Updating `cap/srv/*.js` handlers or event hooks\r\n- Regenerating build artifacts and validating basic runtime behavior\r\n\r\n## Procedure\r\n\r\n1. Clarify requested behavior and impacted files.\r\n2. If CDS is involved:\r\n   - Resolve definitions with cds-mcp first.\r\n   - Check CAP docs with cds-mcp before proposing CAP API/CLI syntax.\r\n3. Implement minimal changes in appropriate layer:\r\n   - `cap/db` for domain model\r\n   - `cap/srv/*-service.cds` for contracts\r\n   - `cap/srv/*-fiori.cds` for UI annotations\r\n   - `cap/srv/*.js` for runtime logic\r\n4. Rebuild artifacts in `cap/` (`npm run build`) when CDS changed.\r\n5. Run a compact verification checklist and report outcomes.\r\n6. Document risks, assumptions, and follow-ups.\r\n\r\n## Repository gotchas\r\n\r\n- After HANA deployment, generated folders can be cleared; run `npm run build` again.\r\n- SQLite local loading may hit `SQLITE_BUSY` with parallel loading.\r\n\r\n## Checklist template\r\n\r\nUse this checklist after implementation: `assets/change-checklist.md`.\r\n",
+      "bodyMd": "# CAP Change Workflow\r\n\r\nUse this skill when implementing non-trivial CAP changes (CDS, services, handlers, annotations) and you want a consistent implementation + verification flow.\r\n\r\n## When to use\r\n\r\n- Adding/changing entities, associations, projections, or service exposure\r\n- Updating `cap/srv/*.js` handlers or event hooks\r\n- Regenerating build artifacts and validating basic runtime behavior\r\n\r\n## Procedure\r\n\r\n1. Clarify requested behavior and impacted files.\r\n2. If CDS is involved:\r\n   - Resolve definitions with cds-mcp first.\r\n   - Check CAP docs with cds-mcp before proposing CAP API/CLI syntax.\r\n3. Implement minimal changes in appropriate layer:\r\n   - `cap/db` for domain model\r\n   - `cap/srv/*-service.cds` for contracts\r\n   - `cap/srv/*-fiori.cds` for UI annotations\r\n   - `cap/srv/*.js` for runtime logic\r\n4. Rebuild artifacts in `cap/` (`npm run build`) when CDS changed.\r\n5. Run a compact verification checklist and report outcomes.\r\n6. Document risks, assumptions, and follow-ups.\r\n\r\n## Repository gotchas\r\n\r\n- After HANA deployment, generated folders can be cleared; run `npm run build` again.\r\n- SQLite local loading may hit `SQLITE_BUSY` with parallel loading.\r\n\r\n## Checklist template\r\n\r\nUse this checklist after implementation: `assets/change-checklist.md`.\r\n"
+    }
+  ]
+}

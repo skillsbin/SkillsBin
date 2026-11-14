@@ -1,0 +1,54 @@
+{
+  "repo": "mitkox/megacode",
+  "commit": "41d1ce2259c1cab03e6a050d716ca8b04b47d156",
+  "branch": "main",
+  "fetchedAt": "2026-11-14T15:23:00.934Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "security-audit-rlm",
+      "name": "security-audit-rlm",
+      "dir": "",
+      "path": "SKILL.md",
+      "desc": "Run and troubleshoot privacy-preserving, local DSPy RLM security audits for large legacy .NET codebases. Use when asked to scan repositories for vulnerabilities, tune RLM/tool limits, fix truncation/stall issues, or produce actionable markdown/json audit outputs without loading entire codebases into model context.",
+      "descZh": "",
+      "triggers": [
+        "tune RLM/tool limits",
+        "fix truncation/stall"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "python",
+          "deno"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/mitkox/megacode.git",
+        "copy": "",
+        "raw": "https://raw.githubusercontent.com/mitkox/megacode/41d1ce2259c1cab03e6a050d716ca8b04b47d156/SKILL.md",
+        "saveAs": "~/.claude/skills/security-audit-rlm/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:0740abcafe2a0489b7664a6b274be3f5d1c61d1fe138577bce10004992a6d958",
+      "bytes": 2195,
+      "wordCount": 225,
+      "repoLicense": "MIT",
+      "commit": "41d1ce2259c1cab03e6a050d716ca8b04b47d156",
+      "branch": "main",
+      "body": "---\nname: security-audit-rlm\ndescription: Run and troubleshoot privacy-preserving, local DSPy RLM security audits for large legacy .NET codebases. Use when asked to scan repositories for vulnerabilities, tune RLM/tool limits, fix truncation/stall issues, or produce actionable markdown/json audit outputs without loading entire codebases into model context.\n---\n\n# Security Audit RLM\n\nUse this skill to operate `audit.py` as a tool-driven RLM workflow for large repositories.\n\nRepository: `https://github.com/mitkox/megacode`\n\n## Execute\n\n1. Verify prerequisites:\n   - `deno --version`\n   - model endpoint is reachable (default `http://localhost:8000/v1`)\n2. Run a baseline audit:\n   - `AUDIT_VERBOSE=1 python audit.py --source-root <repo-path>`\n3. Confirm outputs:\n   - `security_audit_report.md`\n   - `security_audit_metadata.json`\n   - `security_audit_manifest.jsonl`\n\n## Tune For Large Legacy Repos\n\n- Lower planner churn:\n  - `--max-iterations 8..12`\n  - `--rlm-max-llm-calls 60..100`\n- Bound REPL noise:\n  - `--rlm-max-output-chars 15000..30000`\n- Bound tool payloads:\n  - `--tool-max-lines 200..400`\n  - `--tool-max-chars 20000..40000`\n  - `--search-max-files 800..2000`\n  - `--search-max-matches 200..600`\n- Control runtime:\n  - `--timeout-seconds 600..1800`\n  - `--retries 1..2`\n\n## Operating Rules\n\n- Keep analysis local when privacy constraints require it.\n- Use RLM tool access, not full-context repository injection.\n- Keep intermediate output concise and deterministic.\n- Prioritize high-severity findings with file/line evidence and concrete fixes.\n\n## Troubleshooting\n\n- If run appears stalled:\n  - enable verbose mode\n  - reduce `--max-iterations`\n  - reduce `--rlm-max-output-chars`\n- If model truncates:\n  - raise `--lm-max-tokens` if backend supports it\n  - reduce tool output and iteration count\n- If path/file access errors appear in RLM steps:\n  - ensure tool-only repository access is used by the audit flow\n  - re-run after confirming current `audit.py` includes `list_manifest/read_file/search_pattern` tools\n\n## Deliverable Format\n\nEnsure report sections remain:\n\n1. Executive Summary\n2. Critical Findings (CRITICAL/HIGH)\n3. Other Findings (MEDIUM/LOW)\n4. Remediation\n",
+      "bodyMd": "# Security Audit RLM\n\nUse this skill to operate `audit.py` as a tool-driven RLM workflow for large repositories.\n\nRepository: `https://github.com/mitkox/megacode`\n\n## Execute\n\n1. Verify prerequisites:\n   - `deno --version`\n   - model endpoint is reachable (default `http://localhost:8000/v1`)\n2. Run a baseline audit:\n   - `AUDIT_VERBOSE=1 python audit.py --source-root <repo-path>`\n3. Confirm outputs:\n   - `security_audit_report.md`\n   - `security_audit_metadata.json`\n   - `security_audit_manifest.jsonl`\n\n## Tune For Large Legacy Repos\n\n- Lower planner churn:\n  - `--max-iterations 8..12`\n  - `--rlm-max-llm-calls 60..100`\n- Bound REPL noise:\n  - `--rlm-max-output-chars 15000..30000`\n- Bound tool payloads:\n  - `--tool-max-lines 200..400`\n  - `--tool-max-chars 20000..40000`\n  - `--search-max-files 800..2000`\n  - `--search-max-matches 200..600`\n- Control runtime:\n  - `--timeout-seconds 600..1800`\n  - `--retries 1..2`\n\n## Operating Rules\n\n- Keep analysis local when privacy constraints require it.\n- Use RLM tool access, not full-context repository injection.\n- Keep intermediate output concise and deterministic.\n- Prioritize high-severity findings with file/line evidence and concrete fixes.\n\n## Troubleshooting\n\n- If run appears stalled:\n  - enable verbose mode\n  - reduce `--max-iterations`\n  - reduce `--rlm-max-output-chars`\n- If model truncates:\n  - raise `--lm-max-tokens` if backend supports it\n  - reduce tool output and iteration count\n- If path/file access errors appear in RLM steps:\n  - ensure tool-only repository access is used by the audit flow\n  - re-run after confirming current `audit.py` includes `list_manifest/read_file/search_pattern` tools\n\n## Deliverable Format\n\nEnsure report sections remain:\n\n1. Executive Summary\n2. Critical Findings (CRITICAL/HIGH)\n3. Other Findings (MEDIUM/LOW)\n4. Remediation\n"
+    }
+  ]
+}

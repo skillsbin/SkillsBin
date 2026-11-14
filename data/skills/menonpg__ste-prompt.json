@@ -1,0 +1,54 @@
+{
+  "repo": "menonpg/ste-prompt",
+  "commit": "f59ae8de5497c81ece60e0a8fac11fe6a54d3777",
+  "branch": "master",
+  "fetchedAt": "2026-11-14T15:23:37.632Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "simplified-technical-english",
+      "name": "simplified-technical-english",
+      "dir": "skills/simplified-technical-english",
+      "path": "skills/simplified-technical-english/SKILL.md",
+      "desc": "Rewrite or write text in ASD-STE100 Simplified Technical English (STE) — a controlled language with short, active, unambiguous sentences and a one-meaning-per-word dictionary. Use when the user asks for STE, Simplified Technical English, clearer/unambiguous procedures, runbooks, or maintenance-manual-style instructions.",
+      "descZh": "",
+      "triggers": [
+        "the user asks for STE",
+        "runbo"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/menonpg/ste-prompt.git",
+        "copy": "cp -r skills/simplified-technical-english ~/.claude/skills/simplified-technical-english",
+        "raw": "https://raw.githubusercontent.com/menonpg/ste-prompt/f59ae8de5497c81ece60e0a8fac11fe6a54d3777/skills/simplified-technical-english/SKILL.md",
+        "saveAs": "~/.claude/skills/simplified-technical-english/SKILL.md",
+        "marketplace": "/plugin marketplace add menonpg/ste-prompt"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:eb152ad80eac6e7dda7b4eca7a40e5ca978ddb342b566ad478cb3efc66890713",
+      "bytes": 2249,
+      "wordCount": 314,
+      "repoLicense": "MIT",
+      "commit": "f59ae8de5497c81ece60e0a8fac11fe6a54d3777",
+      "branch": "master",
+      "body": "---\nname: simplified-technical-english\ndescription: Rewrite or write text in ASD-STE100 Simplified Technical English (STE) — a controlled language with short, active, unambiguous sentences and a one-meaning-per-word dictionary. Use when the user asks for STE, Simplified Technical English, clearer/unambiguous procedures, runbooks, or maintenance-manual-style instructions.\n---\n\n# Simplified Technical English (ASD-STE100)\n\nWrite the target text in ASD-STE100 Simplified Technical English (STE). STE is a\ncontrolled language. It makes text clear and hard to misread.\n\n## When to use\n\nUse STE for procedures, runbooks, agent step logs, API how-tos, and\ninstructions. Do NOT use STE for nuance, risk analysis, or research summaries;\nthere, the caveats are the content. Say when you step out of STE.\n\n## Rules\n\n1. Keep procedural sentences to 20 words or fewer. Keep descriptive sentences to\n   25 words or fewer.\n2. Write one instruction per sentence.\n3. Use the active voice.\n4. Use the present tense for instructions.\n5. Start each instruction with the command verb. Example: \"Remove the bolt.\"\n6. Use articles. Write \"the file,\" not \"file.\"\n7. Do not use a noun as a verb.\n8. Use the same word for the same thing every time. Do not use synonyms for\n   variety.\n9. Do not hedge. Remove \"might,\" \"could potentially,\" and \"in some cases\" unless\n   the uncertainty is a stated fact.\n10. Write one topic per paragraph. Put the topic sentence first. Use a vertical\n    list for more than three steps.\n\n## Approved words (one meaning each)\n\n- obey (not follow, for rules)\n- make sure (not ensure)\n- use (not utilize / leverage)\n- start / stop (not initiate / terminate)\n- remove (not strip out / get rid of)\n- help (not facilitate)\n- about (not approximately)\n- before / after (not prior to / subsequent to)\n- to (not in order to)\n- check (not verify)\n- change (not modify)\n- need (not require)\n- get (not obtain)\n- repair (not fix up)\n\nFor the full rule set, see [RULES.md](../../RULES.md). For more word\nsubstitutions, see [DICTIONARY.md](../../DICTIONARY.md). For before/after\nsamples, see [EXAMPLES.md](../../EXAMPLES.md).\n\nKeep all facts, numbers, code, and commands exact. Change only the language. Do\nnot add information. Do not remove any step.\n",
+      "bodyMd": "# Simplified Technical English (ASD-STE100)\n\nWrite the target text in ASD-STE100 Simplified Technical English (STE). STE is a\ncontrolled language. It makes text clear and hard to misread.\n\n## When to use\n\nUse STE for procedures, runbooks, agent step logs, API how-tos, and\ninstructions. Do NOT use STE for nuance, risk analysis, or research summaries;\nthere, the caveats are the content. Say when you step out of STE.\n\n## Rules\n\n1. Keep procedural sentences to 20 words or fewer. Keep descriptive sentences to\n   25 words or fewer.\n2. Write one instruction per sentence.\n3. Use the active voice.\n4. Use the present tense for instructions.\n5. Start each instruction with the command verb. Example: \"Remove the bolt.\"\n6. Use articles. Write \"the file,\" not \"file.\"\n7. Do not use a noun as a verb.\n8. Use the same word for the same thing every time. Do not use synonyms for\n   variety.\n9. Do not hedge. Remove \"might,\" \"could potentially,\" and \"in some cases\" unless\n   the uncertainty is a stated fact.\n10. Write one topic per paragraph. Put the topic sentence first. Use a vertical\n    list for more than three steps.\n\n## Approved words (one meaning each)\n\n- obey (not follow, for rules)\n- make sure (not ensure)\n- use (not utilize / leverage)\n- start / stop (not initiate / terminate)\n- remove (not strip out / get rid of)\n- help (not facilitate)\n- about (not approximately)\n- before / after (not prior to / subsequent to)\n- to (not in order to)\n- check (not verify)\n- change (not modify)\n- need (not require)\n- get (not obtain)\n- repair (not fix up)\n\nFor the full rule set, see [RULES.md](../../RULES.md). For more word\nsubstitutions, see [DICTIONARY.md](../../DICTIONARY.md). For before/after\nsamples, see [EXAMPLES.md](../../EXAMPLES.md).\n\nKeep all facts, numbers, code, and commands exact. Change only the language. Do\nnot add information. Do not remove any step.\n"
+    }
+  ]
+}
