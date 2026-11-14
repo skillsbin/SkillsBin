@@ -85,7 +85,18 @@ const failReasons = {};
 /* ------------------------------- 待采队列 ------------------------------- */
 let queue = [];
 if (ONLY) {
-  queue = [{ key: ONLY, owner: ONLY.split('/')[0], repo: ONLY.split('/')[1] }];
+  /* --only 支持逗号分隔的多个仓库。
+   * 候选审核 PR 合并后要精准补采那一批（可能上百个），单个 key 的写法不够用。
+   * 注意：这里不按 watchlist 顺序去重，但同一批 key 内部重复会被去掉。 */
+  const keys = String(ONLY).split(',').map((s) => s.trim()).filter(Boolean);
+  const seen = new Set();
+  queue = [];
+  for (const k of keys) {
+    const key = k.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    queue.push({ key, owner: k.split('/')[0], repo: k.split('/')[1] });
+  }
 } else {
   const wl = CONFIG.watchlist || [];
   const start = Number.isFinite(state.cursor) && state.cursor < wl.length ? state.cursor : 0;
