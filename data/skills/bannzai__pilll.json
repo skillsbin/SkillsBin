@@ -1,8 +1,8 @@
 {
   "repo": "bannzai/Pilll",
-  "commit": "18616a8bda5abce4f3b45044a63b5f6ad3658219",
+  "commit": "a1bc5c80d38294d7bf42d5c420dff703ec4614aa",
   "branch": "main",
-  "fetchedAt": "2026-11-15T18:34:55.760Z",
+  "fetchedAt": "2026-11-16T21:43:29.520Z",
   "parseFail": 0,
   "skills": [
     {
@@ -19,7 +19,6 @@
       "author": "",
       "metaExtra": {},
       "hosts": [
-        "claude-code",
         "cline",
         "codex",
         "cursor",
@@ -33,7 +32,7 @@
       "install": {
         "clone": "git clone --depth 1 https://github.com/bannzai/Pilll.git",
         "copy": "cp -r .claude/commands/flutter-pub-update ~/.claude/skills/flutter-pub-update",
-        "raw": "https://raw.githubusercontent.com/bannzai/Pilll/18616a8bda5abce4f3b45044a63b5f6ad3658219/.claude/commands/flutter-pub-update/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/bannzai/Pilll/a1bc5c80d38294d7bf42d5c420dff703ec4614aa/.claude/commands/flutter-pub-update/SKILL.md",
         "saveAs": "~/.claude/skills/flutter-pub-update/SKILL.md",
         "marketplace": ""
       },
@@ -43,58 +42,10 @@
       "bytes": 3714,
       "wordCount": 206,
       "repoLicense": "",
-      "commit": "18616a8bda5abce4f3b45044a63b5f6ad3658219",
+      "commit": "a1bc5c80d38294d7bf42d5c420dff703ec4614aa",
       "branch": "main",
       "body": "---\nname: flutter-pub-update\ndescription: Flutterプロジェクトのpubspec.yamlパッケージを更新するスキル。一括更新または指定パッケージ更新に対応。メジャーバージョン更新時は確認を挟み、更新前にpub.dev/GitHubでchangelogを確認して変更内容を報告する。$ARGUMENTSにパッケージ名を指定するか、--allで全パッケージ更新。\n---\n\n# Flutter Pub Update\n\n## Overview\n\nFlutterプロジェクトのpubspec.yaml依存パッケージを安全に更新するためのスキル。更新前に変更内容を確認し、メジャーバージョン変更時はユーザー確認を挟む。\n\n## 使用方法\n\n- `/flutter-pub-update パッケージ名` - 指定パッケージを更新\n- `/flutter-pub-update パッケージ1 パッケージ2` - 複数パッケージを更新\n- `/flutter-pub-update --all` - 全パッケージを一括更新\n\n## ワークフロー\n\n### Step 1: 現在の状態を確認\n\n```bash\nflutter pub outdated\n```\n\n出力から以下を把握:\n- Current: 現在のバージョン\n- Upgradable: pubspec.yaml制約内で更新可能なバージョン\n- Resolvable: 制約を変更すれば更新可能なバージョン\n- Latest: 最新バージョン\n\n### Step 2: 更新対象の特定\n\n**指定パッケージの場合**: $ARGUMENTSで指定されたパッケージのみ対象\n\n**--allの場合**: outdatedで表示された全パッケージを対象\n\n### Step 3: 各パッケージの更新差分を調査\n\n対象パッケージごとにWebFetchツールを使用して変更内容を確認:\n\n1. **pub.devのChangelogを確認**\n   - URL: `https://pub.dev/packages/{パッケージ名}/changelog`\n   - 現在バージョンから更新後バージョンまでの変更点を抽出\n\n2. **GitHubリリースノートを確認**（必要に応じて）\n   - pub.devのパッケージページからリポジトリURLを取得\n   - リリースノートで詳細な変更内容を確認\n\n3. **変更内容をまとめて報告**\n   - 新機能\n   - バグ修正\n   - Breaking Changes（重要）\n   - 非推奨になった機能\n\n### Step 4: メジャーバージョン更新の確認\n\nメジャーバージョンが変わる場合（例: 1.x.x → 2.x.x）:\n\n1. Breaking Changesを明確に提示\n2. 影響を受ける可能性のあるコードを説明\n3. AskUserQuestionツールで更新の承認を確認\n\n```\nこのパッケージはメジャーバージョンが変わります:\n- {パッケージ名}: {現在バージョン} → {新バージョン}\n\nBreaking Changes:\n- [変更内容1]\n- [変更内容2]\n\n更新を続行しますか？\n```\n\n### Step 5: パッケージの更新\n\n承認後、`flutter pub upgrade`コマンドを使用:\n\n**指定パッケージの更新:**\n```bash\nflutter pub upgrade パッケージ名\n```\n\n**メジャーバージョンを含む更新:**\n```bash\nflutter pub upgrade --major-versions パッケージ名\n```\n\n**全パッケージの更新:**\n```bash\nflutter pub upgrade\n```\n\n**全パッケージのメジャーバージョン更新:**\n```bash\nflutter pub upgrade --major-versions\n```\n\n### Step 6: 更新結果の報告\n\n更新完了後、以下を報告:\n\n```\n## 更新完了\n\n| パッケージ | 旧バージョン | 新バージョン | 変更種別 |\n|-----------|-------------|-------------|---------|\n| xxx       | 1.0.0       | 1.2.0       | Minor   |\n| yyy       | 2.0.0       | 3.0.0       | Major   |\n\n### 主な変更点\n- xxx: 新機能Aが追加\n- yyy: APIが変更（要確認）\n```\n\n## 注意事項\n\n- 自動生成ファイル（*.g.dart, *.freezed.dart）がある場合は`flutter pub run build_runner build --delete-conflicting-outputs`の実行を提案\n",
       "bodyMd": "# Flutter Pub Update\n\n## Overview\n\nFlutterプロジェクトのpubspec.yaml依存パッケージを安全に更新するためのスキル。更新前に変更内容を確認し、メジャーバージョン変更時はユーザー確認を挟む。\n\n## 使用方法\n\n- `/flutter-pub-update パッケージ名` - 指定パッケージを更新\n- `/flutter-pub-update パッケージ1 パッケージ2` - 複数パッケージを更新\n- `/flutter-pub-update --all` - 全パッケージを一括更新\n\n## ワークフロー\n\n### Step 1: 現在の状態を確認\n\n```bash\nflutter pub outdated\n```\n\n出力から以下を把握:\n- Current: 現在のバージョン\n- Upgradable: pubspec.yaml制約内で更新可能なバージョン\n- Resolvable: 制約を変更すれば更新可能なバージョン\n- Latest: 最新バージョン\n\n### Step 2: 更新対象の特定\n\n**指定パッケージの場合**: $ARGUMENTSで指定されたパッケージのみ対象\n\n**--allの場合**: outdatedで表示された全パッケージを対象\n\n### Step 3: 各パッケージの更新差分を調査\n\n対象パッケージごとにWebFetchツールを使用して変更内容を確認:\n\n1. **pub.devのChangelogを確認**\n   - URL: `https://pub.dev/packages/{パッケージ名}/changelog`\n   - 現在バージョンから更新後バージョンまでの変更点を抽出\n\n2. **GitHubリリースノートを確認**（必要に応じて）\n   - pub.devのパッケージページからリポジトリURLを取得\n   - リリースノートで詳細な変更内容を確認\n\n3. **変更内容をまとめて報告**\n   - 新機能\n   - バグ修正\n   - Breaking Changes（重要）\n   - 非推奨になった機能\n\n### Step 4: メジャーバージョン更新の確認\n\nメジャーバージョンが変わる場合（例: 1.x.x → 2.x.x）:\n\n1. Breaking Changesを明確に提示\n2. 影響を受ける可能性のあるコードを説明\n3. AskUserQuestionツールで更新の承認を確認\n\n```\nこのパッケージはメジャーバージョンが変わります:\n- {パッケージ名}: {現在バージョン} → {新バージョン}\n\nBreaking Changes:\n- [変更内容1]\n- [変更内容2]\n\n更新を続行しますか？\n```\n\n### Step 5: パッケージの更新\n\n承認後、`flutter pub upgrade`コマンドを使用:\n\n**指定パッケージの更新:**\n```bash\nflutter pub upgrade パッケージ名\n```\n\n**メジャーバージョンを含む更新:**\n```bash\nflutter pub upgrade --major-versions パッケージ名\n```\n\n**全パッケージの更新:**\n```bash\nflutter pub upgrade\n```\n\n**全パッケージのメジャーバージョン更新:**\n```bash\nflutter pub upgrade --major-versions\n```\n\n### Step 6: 更新結果の報告\n\n更新完了後、以下を報告:\n\n```\n## 更新完了\n\n| パッケージ | 旧バージョン | 新バージョン | 変更種別 |\n|-----------|-------------|-------------|---------|\n| xxx       | 1.0.0       | 1.2.0       | Minor   |\n| yyy       | 2.0.0       | 3.0.0       | Major   |\n\n### 主な変更点\n- xxx: 新機能Aが追加\n- yyy: APIが変更（要確認）\n```\n\n## 注意事項\n\n- 自動生成ファイル（*.g.dart, *.freezed.dart）がある場合は`flutter pub run build_runner build --delete-conflicting-outputs`の実行を提案\n"
-    },
-    {
-      "slug": "fix-dependabot-prs",
-      "name": "fix-dependabot-prs",
-      "dir": ".claude/skills/fix-dependabot-prs",
-      "path": ".claude/skills/fix-dependabot-prs/SKILL.md",
-      "desc": "dependabotから上がってきた複数のPRを一括で解決し、まとめPRを作成する。dependabotのPR対応を依頼された時に使用。",
-      "descZh": "",
-      "triggers": [],
-      "version": "",
-      "license": "",
-      "allowedTools": [
-        "Read, Bash(gh run:*), Bash(gh pr:*), Bash(git status:*), Bash(git push:*), Bash(git add:*), Bash(git commit:*), Bash(git cherry-pick:*), Bash(git merge:*), Bash(git fetch:*), Bash(git pull:*), Bash(git diff:*), Bash(git checkout:*), Bash(flutter:*), Bash(dart:*), Glob, Grep, Write"
-      ],
-      "author": "",
-      "metaExtra": {},
-      "hosts": [
-        "claude-code",
-        "cline",
-        "codex",
-        "cursor",
-        "gemini"
-      ],
-      "requires": {
-        "apiKey": false,
-        "network": false,
-        "bins": [
-          "git",
-          "gh"
-        ]
-      },
-      "install": {
-        "clone": "git clone --depth 1 https://github.com/bannzai/Pilll.git",
-        "copy": "cp -r .claude/skills/fix-dependabot-prs ~/.claude/skills/fix-dependabot-prs",
-        "raw": "https://raw.githubusercontent.com/bannzai/Pilll/18616a8bda5abce4f3b45044a63b5f6ad3658219/.claude/skills/fix-dependabot-prs/SKILL.md",
-        "saveAs": "~/.claude/skills/fix-dependabot-prs/SKILL.md",
-        "marketplace": ""
-      },
-      "bodyInline": false,
-      "excerpt": "",
-      "contentHash": "sha256:927d3e893fdb880fb79abc402bf0f5c2c305de1ae78bfb51084e14affd14389a",
-      "bytes": 3240,
-      "wordCount": 173,
-      "repoLicense": "",
-      "commit": "18616a8bda5abce4f3b45044a63b5f6ad3658219",
-      "branch": "main",
-      "body": "---\nname: fix-dependabot-prs\ndescription: dependabotから上がってきた複数のPRを一括で解決し、まとめPRを作成する。dependabotのPR対応を依頼された時に使用。\nallowed-tools: Read, Bash(gh run:*), Bash(gh pr:*), Bash(git status:*), Bash(git push:*), Bash(git add:*), Bash(git commit:*), Bash(git cherry-pick:*), Bash(git merge:*), Bash(git fetch:*), Bash(git pull:*), Bash(git diff:*), Bash(git checkout:*), Bash(flutter:*), Bash(dart:*), Glob, Grep, Write\n---\n\n# Dependabot PRまとめ解決スキル\n\ndependabotから上がってきた複数のPRを一括で解決し、まとめPRを作成します。\n\n## 実行手順\n\n### 1. dependabotのPR一覧を取得\n\n```bash\ngh pr list --author \"app/dependabot\" --state open\n```\n\n### 2. 各PRの状態を確認\n\n各PRについて以下を確認する:\n- PRの変更内容（`gh pr view <PR番号>`）\n- GitHub ActionsのCI結果（`gh pr checks <PR番号>`）\n- 差分内容（`gh pr diff <PR番号>`）\n\n### 3. まとめブランチを作成\n\n```bash\ngit fetch origin\ngit checkout -b chore/dependabot-updates-$(date +%Y%m%d%H%M%S) origin/main\n```\n\n### 4. 各PRの変更を取り込む\n\n各dependabot PRのブランチから変更を取り込む:\n\n```bash\n# 例: dependabot/npm_and_yarn/パッケージ名-バージョン のようなブランチ名\ngit fetch origin <dependabotブランチ名>\n# コミットハッシュは `gh pr view <PR番号> --json commits --jq '.commits[0].oid'` で取得できます\ngit cherry-pick <コミットハッシュ>\n# または\ngit merge origin/<dependabotブランチ名> --no-edit\n```\n\n### 5. 矛盾の解決\n\nPR同士で矛盾する変更がある場合:\n- 両方の変更を取り込むのが難しい場合は、片方を諦めてOK\n- 諦めた理由と背景は、後でまとめPRにコメントとして記載する\n\n### 6. コード生成の実行\n\ndependabot PRはCIのcodegenステップで落ちていることが多いため、必ず実行する:\n\n```bash\nflutter pub run build_runner build --delete-conflicting-outputs\ndart format lib\n```\n\n変更があればコミット:\n\n```bash\ngit add -A\ngit commit -m \"chore: run build_runner after dependency updates\"\n```\n\n### 7. ビルド・テストの確認\n\n```bash\nflutter analyze\nflutter test\n```\n\n### 8. まとめPRを作成\n\n`~/.agents/skills/commit-create-pr/SKILL.md` に従い、push・PR 作成を行う。\n本文には取り込んだ PR とバージョン変更、コード生成の更新内容、検証結果を記載する。\n除外した PR があれば、理由・背景・今後の対応も同じ本文にまとめる。\n\n### 9. 元のdependabot PRをクローズ\n\nまとめPRがマージされた後、元のdependabot PRをクローズする:\n\n```bash\ngh pr close <PR番号> --comment \"まとめPR #<まとめPR番号> で対応しました\"\n```\n\n## 注意点\n\n- dependabotのPRは作成時点でCIが落ちていることが多いので、必ずCI結果を確認する\n- Flutter/Dartプロジェクトでは`build_runner`の実行が必要なことが多い\n- 複数のパッケージ更新で依存関係が矛盾する場合は、無理に両方を取り込まず、片方を諦める判断も重要\n- 諦めた場合は必ず理由を記録する\n",
-      "bodyMd": "# Dependabot PRまとめ解決スキル\n\ndependabotから上がってきた複数のPRを一括で解決し、まとめPRを作成します。\n\n## 実行手順\n\n### 1. dependabotのPR一覧を取得\n\n```bash\ngh pr list --author \"app/dependabot\" --state open\n```\n\n### 2. 各PRの状態を確認\n\n各PRについて以下を確認する:\n- PRの変更内容（`gh pr view <PR番号>`）\n- GitHub ActionsのCI結果（`gh pr checks <PR番号>`）\n- 差分内容（`gh pr diff <PR番号>`）\n\n### 3. まとめブランチを作成\n\n```bash\ngit fetch origin\ngit checkout -b chore/dependabot-updates-$(date +%Y%m%d%H%M%S) origin/main\n```\n\n### 4. 各PRの変更を取り込む\n\n各dependabot PRのブランチから変更を取り込む:\n\n```bash\n# 例: dependabot/npm_and_yarn/パッケージ名-バージョン のようなブランチ名\ngit fetch origin <dependabotブランチ名>\n# コミットハッシュは `gh pr view <PR番号> --json commits --jq '.commits[0].oid'` で取得できます\ngit cherry-pick <コミットハッシュ>\n# または\ngit merge origin/<dependabotブランチ名> --no-edit\n```\n\n### 5. 矛盾の解決\n\nPR同士で矛盾する変更がある場合:\n- 両方の変更を取り込むのが難しい場合は、片方を諦めてOK\n- 諦めた理由と背景は、後でまとめPRにコメントとして記載する\n\n### 6. コード生成の実行\n\ndependabot PRはCIのcodegenステップで落ちていることが多いため、必ず実行する:\n\n```bash\nflutter pub run build_runner build --delete-conflicting-outputs\ndart format lib\n```\n\n変更があればコミット:\n\n```bash\ngit add -A\ngit commit -m \"chore: run build_runner after dependency updates\"\n```\n\n### 7. ビルド・テストの確認\n\n```bash\nflutter analyze\nflutter test\n```\n\n### 8. まとめPRを作成\n\n`~/.agents/skills/commit-create-pr/SKILL.md` に従い、push・PR 作成を行う。\n本文には取り込んだ PR とバージョン変更、コード生成の更新内容、検証結果を記載する。\n除外した PR があれば、理由・背景・今後の対応も同じ本文にまとめる。\n\n### 9. 元のdependabot PRをクローズ\n\nまとめPRがマージされた後、元のdependabot PRをクローズする:\n\n```bash\ngh pr close <PR番号> --comment \"まとめPR #<まとめPR番号> で対応しました\"\n```\n\n## 注意点\n\n- dependabotのPRは作成時点でCIが落ちていることが多いので、必ずCI結果を確認する\n- Flutter/Dartプロジェクトでは`build_runner`の実行が必要なことが多い\n- 複数のパッケージ更新で依存関係が矛盾する場合は、無理に両方を取り込まず、片方を諦める判断も重要\n- 諦めた場合は必ず理由を記録する\n"
     }
   ]
 }
