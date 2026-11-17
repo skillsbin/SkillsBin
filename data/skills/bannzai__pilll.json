@@ -1,8 +1,8 @@
 {
   "repo": "bannzai/Pilll",
-  "commit": "a1bc5c80d38294d7bf42d5c420dff703ec4614aa",
+  "commit": "7454da75e5af0d6637a575b0632d9ba915e07376",
   "branch": "main",
-  "fetchedAt": "2026-11-16T21:43:29.520Z",
+  "fetchedAt": "2026-11-17T20:33:52.044Z",
   "parseFail": 0,
   "skills": [
     {
@@ -32,7 +32,7 @@
       "install": {
         "clone": "git clone --depth 1 https://github.com/bannzai/Pilll.git",
         "copy": "cp -r .claude/commands/flutter-pub-update ~/.claude/skills/flutter-pub-update",
-        "raw": "https://raw.githubusercontent.com/bannzai/Pilll/a1bc5c80d38294d7bf42d5c420dff703ec4614aa/.claude/commands/flutter-pub-update/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/bannzai/Pilll/7454da75e5af0d6637a575b0632d9ba915e07376/.claude/commands/flutter-pub-update/SKILL.md",
         "saveAs": "~/.claude/skills/flutter-pub-update/SKILL.md",
         "marketplace": ""
       },
@@ -42,7 +42,7 @@
       "bytes": 3714,
       "wordCount": 206,
       "repoLicense": "",
-      "commit": "a1bc5c80d38294d7bf42d5c420dff703ec4614aa",
+      "commit": "7454da75e5af0d6637a575b0632d9ba915e07376",
       "branch": "main",
       "body": "---\nname: flutter-pub-update\ndescription: Flutterプロジェクトのpubspec.yamlパッケージを更新するスキル。一括更新または指定パッケージ更新に対応。メジャーバージョン更新時は確認を挟み、更新前にpub.dev/GitHubでchangelogを確認して変更内容を報告する。$ARGUMENTSにパッケージ名を指定するか、--allで全パッケージ更新。\n---\n\n# Flutter Pub Update\n\n## Overview\n\nFlutterプロジェクトのpubspec.yaml依存パッケージを安全に更新するためのスキル。更新前に変更内容を確認し、メジャーバージョン変更時はユーザー確認を挟む。\n\n## 使用方法\n\n- `/flutter-pub-update パッケージ名` - 指定パッケージを更新\n- `/flutter-pub-update パッケージ1 パッケージ2` - 複数パッケージを更新\n- `/flutter-pub-update --all` - 全パッケージを一括更新\n\n## ワークフロー\n\n### Step 1: 現在の状態を確認\n\n```bash\nflutter pub outdated\n```\n\n出力から以下を把握:\n- Current: 現在のバージョン\n- Upgradable: pubspec.yaml制約内で更新可能なバージョン\n- Resolvable: 制約を変更すれば更新可能なバージョン\n- Latest: 最新バージョン\n\n### Step 2: 更新対象の特定\n\n**指定パッケージの場合**: $ARGUMENTSで指定されたパッケージのみ対象\n\n**--allの場合**: outdatedで表示された全パッケージを対象\n\n### Step 3: 各パッケージの更新差分を調査\n\n対象パッケージごとにWebFetchツールを使用して変更内容を確認:\n\n1. **pub.devのChangelogを確認**\n   - URL: `https://pub.dev/packages/{パッケージ名}/changelog`\n   - 現在バージョンから更新後バージョンまでの変更点を抽出\n\n2. **GitHubリリースノートを確認**（必要に応じて）\n   - pub.devのパッケージページからリポジトリURLを取得\n   - リリースノートで詳細な変更内容を確認\n\n3. **変更内容をまとめて報告**\n   - 新機能\n   - バグ修正\n   - Breaking Changes（重要）\n   - 非推奨になった機能\n\n### Step 4: メジャーバージョン更新の確認\n\nメジャーバージョンが変わる場合（例: 1.x.x → 2.x.x）:\n\n1. Breaking Changesを明確に提示\n2. 影響を受ける可能性のあるコードを説明\n3. AskUserQuestionツールで更新の承認を確認\n\n```\nこのパッケージはメジャーバージョンが変わります:\n- {パッケージ名}: {現在バージョン} → {新バージョン}\n\nBreaking Changes:\n- [変更内容1]\n- [変更内容2]\n\n更新を続行しますか？\n```\n\n### Step 5: パッケージの更新\n\n承認後、`flutter pub upgrade`コマンドを使用:\n\n**指定パッケージの更新:**\n```bash\nflutter pub upgrade パッケージ名\n```\n\n**メジャーバージョンを含む更新:**\n```bash\nflutter pub upgrade --major-versions パッケージ名\n```\n\n**全パッケージの更新:**\n```bash\nflutter pub upgrade\n```\n\n**全パッケージのメジャーバージョン更新:**\n```bash\nflutter pub upgrade --major-versions\n```\n\n### Step 6: 更新結果の報告\n\n更新完了後、以下を報告:\n\n```\n## 更新完了\n\n| パッケージ | 旧バージョン | 新バージョン | 変更種別 |\n|-----------|-------------|-------------|---------|\n| xxx       | 1.0.0       | 1.2.0       | Minor   |\n| yyy       | 2.0.0       | 3.0.0       | Major   |\n\n### 主な変更点\n- xxx: 新機能Aが追加\n- yyy: APIが変更（要確認）\n```\n\n## 注意事項\n\n- 自動生成ファイル（*.g.dart, *.freezed.dart）がある場合は`flutter pub run build_runner build --delete-conflicting-outputs`の実行を提案\n",
       "bodyMd": "# Flutter Pub Update\n\n## Overview\n\nFlutterプロジェクトのpubspec.yaml依存パッケージを安全に更新するためのスキル。更新前に変更内容を確認し、メジャーバージョン変更時はユーザー確認を挟む。\n\n## 使用方法\n\n- `/flutter-pub-update パッケージ名` - 指定パッケージを更新\n- `/flutter-pub-update パッケージ1 パッケージ2` - 複数パッケージを更新\n- `/flutter-pub-update --all` - 全パッケージを一括更新\n\n## ワークフロー\n\n### Step 1: 現在の状態を確認\n\n```bash\nflutter pub outdated\n```\n\n出力から以下を把握:\n- Current: 現在のバージョン\n- Upgradable: pubspec.yaml制約内で更新可能なバージョン\n- Resolvable: 制約を変更すれば更新可能なバージョン\n- Latest: 最新バージョン\n\n### Step 2: 更新対象の特定\n\n**指定パッケージの場合**: $ARGUMENTSで指定されたパッケージのみ対象\n\n**--allの場合**: outdatedで表示された全パッケージを対象\n\n### Step 3: 各パッケージの更新差分を調査\n\n対象パッケージごとにWebFetchツールを使用して変更内容を確認:\n\n1. **pub.devのChangelogを確認**\n   - URL: `https://pub.dev/packages/{パッケージ名}/changelog`\n   - 現在バージョンから更新後バージョンまでの変更点を抽出\n\n2. **GitHubリリースノートを確認**（必要に応じて）\n   - pub.devのパッケージページからリポジトリURLを取得\n   - リリースノートで詳細な変更内容を確認\n\n3. **変更内容をまとめて報告**\n   - 新機能\n   - バグ修正\n   - Breaking Changes（重要）\n   - 非推奨になった機能\n\n### Step 4: メジャーバージョン更新の確認\n\nメジャーバージョンが変わる場合（例: 1.x.x → 2.x.x）:\n\n1. Breaking Changesを明確に提示\n2. 影響を受ける可能性のあるコードを説明\n3. AskUserQuestionツールで更新の承認を確認\n\n```\nこのパッケージはメジャーバージョンが変わります:\n- {パッケージ名}: {現在バージョン} → {新バージョン}\n\nBreaking Changes:\n- [変更内容1]\n- [変更内容2]\n\n更新を続行しますか？\n```\n\n### Step 5: パッケージの更新\n\n承認後、`flutter pub upgrade`コマンドを使用:\n\n**指定パッケージの更新:**\n```bash\nflutter pub upgrade パッケージ名\n```\n\n**メジャーバージョンを含む更新:**\n```bash\nflutter pub upgrade --major-versions パッケージ名\n```\n\n**全パッケージの更新:**\n```bash\nflutter pub upgrade\n```\n\n**全パッケージのメジャーバージョン更新:**\n```bash\nflutter pub upgrade --major-versions\n```\n\n### Step 6: 更新結果の報告\n\n更新完了後、以下を報告:\n\n```\n## 更新完了\n\n| パッケージ | 旧バージョン | 新バージョン | 変更種別 |\n|-----------|-------------|-------------|---------|\n| xxx       | 1.0.0       | 1.2.0       | Minor   |\n| yyy       | 2.0.0       | 3.0.0       | Major   |\n\n### 主な変更点\n- xxx: 新機能Aが追加\n- yyy: APIが変更（要確認）\n```\n\n## 注意事項\n\n- 自動生成ファイル（*.g.dart, *.freezed.dart）がある場合は`flutter pub run build_runner build --delete-conflicting-outputs`の実行を提案\n"
