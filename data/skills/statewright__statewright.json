@@ -1,8 +1,8 @@
 {
   "repo": "statewright/statewright",
-  "commit": "b70051d85b15e25ebb5df4fa554f0410bec16ba4",
+  "commit": "645ff2b9186fe95c611437a8b1c92acb1d99fd5d",
   "branch": "main",
-  "fetchedAt": "2026-11-17T20:33:34.942Z",
+  "fetchedAt": "2026-11-18T20:05:51.416Z",
   "parseFail": 1,
   "skills": [
     {
@@ -30,7 +30,7 @@
       "install": {
         "clone": "git clone --depth 1 https://github.com/statewright/statewright.git",
         "copy": "cp -r plugins/claude-code/skills/statewright ~/.claude/skills/statewright",
-        "raw": "https://raw.githubusercontent.com/statewright/statewright/b70051d85b15e25ebb5df4fa554f0410bec16ba4/plugins/claude-code/skills/statewright/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/statewright/statewright/645ff2b9186fe95c611437a8b1c92acb1d99fd5d/plugins/claude-code/skills/statewright/SKILL.md",
         "saveAs": "~/.claude/skills/statewright/SKILL.md",
         "marketplace": "/plugin marketplace add statewright/statewright"
       },
@@ -40,7 +40,7 @@
       "bytes": 1824,
       "wordCount": 228,
       "repoLicense": "",
-      "commit": "b70051d85b15e25ebb5df4fa554f0410bec16ba4",
+      "commit": "645ff2b9186fe95c611437a8b1c92acb1d99fd5d",
       "branch": "main",
       "body": "---\nname: statewright-workflows\ndescription: Start, stop, or manage Statewright workflows through the native workspace tools.\nuser-invocable: false\n---\n\nUse the installed native Statewright tools, not shell scripts or another MCP\nconnection. The user can open the Arbiter with `/statewright`.\n\nSelect only the advertised local/native server `statewright` for this terminal\nor Desktop conversation. Native tools may appear as\n`mcp__statewright__statewright_*`, `mcp__plugin_statewright_statewright__statewright_*`,\nor `statewright.statewright_*` in the UI; never invent an unavailable alias.\nDo not use `codex_apps.statewright_ai.*`, `mcp__codex_apps__statewright_*`, or the\nweb/marketplace Statewright connector, even for listing or status. It is a\nseparate session, not this native conversation's workflow, routing or approval\nowner. If local tools are missing or fail, report the exact local failure and\npark dependent workflow actions. Use supported local discovery/recovery only;\ndo not fall back to the web connector or infer live state from saved files.\n\nWhen the user requests a named workflow, call `statewright_connect` with its\nexact name. It connects or restores the current conversation and starts the\nrequested workflow when supported. A connection-required result is not a\nstarted workflow. Let the user finish sign-in and native approval; never answer\nan approval yourself or retry a refusal through another path.\n\nFollow the returned current state's tools and transitions. Read current state\nafter a transition; do not restart an active run. When the user asks to disable\nStatewright, call `statewright_deactivate`. Report connection, host permission,\nworkflow-policy and provider errors distinctly. A requested model is not proof\nof the model that answered; use the returned routing receipt when available.\n",
       "bodyMd": "Use the installed native Statewright tools, not shell scripts or another MCP\nconnection. The user can open the Arbiter with `/statewright`.\n\nSelect only the advertised local/native server `statewright` for this terminal\nor Desktop conversation. Native tools may appear as\n`mcp__statewright__statewright_*`, `mcp__plugin_statewright_statewright__statewright_*`,\nor `statewright.statewright_*` in the UI; never invent an unavailable alias.\nDo not use `codex_apps.statewright_ai.*`, `mcp__codex_apps__statewright_*`, or the\nweb/marketplace Statewright connector, even for listing or status. It is a\nseparate session, not this native conversation's workflow, routing or approval\nowner. If local tools are missing or fail, report the exact local failure and\npark dependent workflow actions. Use supported local discovery/recovery only;\ndo not fall back to the web connector or infer live state from saved files.\n\nWhen the user requests a named workflow, call `statewright_connect` with its\nexact name. It connects or restores the current conversation and starts the\nrequested workflow when supported. A connection-required result is not a\nstarted workflow. Let the user finish sign-in and native approval; never answer\nan approval yourself or retry a refusal through another path.\n\nFollow the returned current state's tools and transitions. Read current state\nafter a transition; do not restart an active run. When the user asks to disable\nStatewright, call `statewright_deactivate`. Report connection, host permission,\nworkflow-policy and provider errors distinctly. A requested model is not proof\nof the model that answered; use the returned routing receipt when available.\n"
@@ -70,7 +70,7 @@
       "install": {
         "clone": "git clone --depth 1 https://github.com/statewright/statewright.git",
         "copy": "cp -r plugins/codex/skills/statewright-native ~/.claude/skills/statewright-native",
-        "raw": "https://raw.githubusercontent.com/statewright/statewright/b70051d85b15e25ebb5df4fa554f0410bec16ba4/plugins/codex/skills/statewright-native/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/statewright/statewright/645ff2b9186fe95c611437a8b1c92acb1d99fd5d/plugins/codex/skills/statewright-native/SKILL.md",
         "saveAs": "~/.claude/skills/statewright-native/SKILL.md",
         "marketplace": "/plugin marketplace add statewright/statewright"
       },
@@ -80,7 +80,7 @@
       "bytes": 1505,
       "wordCount": 182,
       "repoLicense": "",
-      "commit": "b70051d85b15e25ebb5df4fa554f0410bec16ba4",
+      "commit": "645ff2b9186fe95c611437a8b1c92acb1d99fd5d",
       "branch": "main",
       "body": "---\nname: statewright-native\ndescription: Select the correct local Statewright MCP tools for workflow discovery, status, connection, transitions and recovery in Codex terminal or Desktop.\n---\n\nUse only the advertised local/native MCP server `statewright` for this\nconversation. Native tools may appear as `mcp__statewright__statewright_*`,\n`mcp__plugin_statewright_statewright__statewright_*`, or `statewright.statewright_*`\nin the UI. These are examples of host naming, not tools to invent if absent.\n\nDo not use `codex_apps.statewright_ai.*`, `mcp__codex_apps__statewright_*`, or the\nweb/marketplace Statewright connector here, including for workflow listing or\nstatus. The web connector owns a separate session; it cannot establish this\nnative conversation's workflow, model routing, permissions or approvals.\n\nIf the local tool is missing, fails, or requires login, report the exact local\nfailure and park dependent workflow actions. Use supported local tool discovery\nor recovery only; do not substitute the web connector, infer live state from\nsaved files, execute MCP names in a shell, or retry a denied operation elsewhere.\nLogin and approvals still require their normal explicit user action.\n\nDo not start a workflow merely because this skill was selected. When workflow\nwork is authorized, inspect local state and follow its allowed tools and exact\ntransitions. List local workflows before loading an exact user- or skill-selected\nname; do not guess a workflow or restart an already active run.\n",
       "bodyMd": "Use only the advertised local/native MCP server `statewright` for this\nconversation. Native tools may appear as `mcp__statewright__statewright_*`,\n`mcp__plugin_statewright_statewright__statewright_*`, or `statewright.statewright_*`\nin the UI. These are examples of host naming, not tools to invent if absent.\n\nDo not use `codex_apps.statewright_ai.*`, `mcp__codex_apps__statewright_*`, or the\nweb/marketplace Statewright connector here, including for workflow listing or\nstatus. The web connector owns a separate session; it cannot establish this\nnative conversation's workflow, model routing, permissions or approvals.\n\nIf the local tool is missing, fails, or requires login, report the exact local\nfailure and park dependent workflow actions. Use supported local tool discovery\nor recovery only; do not substitute the web connector, infer live state from\nsaved files, execute MCP names in a shell, or retry a denied operation elsewhere.\nLogin and approvals still require their normal explicit user action.\n\nDo not start a workflow merely because this skill was selected. When workflow\nwork is authorized, inspect local state and follow its allowed tools and exact\ntransitions. List local workflows before loading an exact user- or skill-selected\nname; do not guess a workflow or restart an already active run.\n"
