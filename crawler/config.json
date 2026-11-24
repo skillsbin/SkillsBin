@@ -576,7 +576,7 @@
   "$discover_comment": "发现层：GitHub Search 主动找仓库。mode=review 表示进候选队列等人工审，不直接上线。",
   "discover": {
     "enabled": true,
-    "mode": "review",
+    "mode": "auto",
     "queries": [
       "topic:claude-skills stars:>{minStars}",
       "topic:claude-code stars:>{minStars}",
@@ -605,7 +605,9 @@
     "codeQueryPages": 2,
     "codeSearchPerRun": 30,
     "codeEnrichLimit": 400,
-    "rejectRetryDays": 60
+    "rejectRetryDays": 60,
+    "autoVerifyLimit": 120,
+    "$mode_comment": "mode=auto：发现层候选先验证是否真含 skill 文件（SKILL.md / marketplace.json / .clinerules / AGENTS.md），通过的直接并入 watchlist 即刻上线，不通过的记入 rejected.json。review 模式则进 pending.json 等人工 Merge。"
   },
   "$review_comment": "收录校验口径的唯一来源，add-repo.mjs 与 review-submission.mjs 共用。minStars 由 150 下调到 30：站点上线后反馈「收录太少、分类空」，150 星门槛把中小仓库整体排除；30 星仍能过滤掉空壳/测试仓库，配合 requireSkillFile + maxInactiveMonths 保持质量。descMaxLen=1500 的由来：文档原定 400，实测拒掉 anthropics/skills 自身 40% 的 skill（8/20）；Anthropic 规范声明 1024，但其官方 claude-api 实为 1068，故留 1500 余量。校验通过的超长描述在展示层截断，不在此处拒收。",
   "review": {

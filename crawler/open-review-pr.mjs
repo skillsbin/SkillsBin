@@ -54,6 +54,16 @@ function setOutput(kv) {
 async function main() {
   const cfg = await readJson(CONFIG_FILE, null);
   if (!cfg) throw new Error('读不到 crawler/config.json');
+
+  /* auto 模式：发现层已直接收录（并入 watchlist），没有待审队列，
+   * 也不该开审核 PR —— 否则 PR 里是一堆「已经收录了」的条目，纯噪音。 */
+  const mode = (cfg.discover && cfg.discover.mode) || 'review';
+  if (mode === 'auto') {
+    log('发现层为 auto 模式（自动收录），无需审核 PR');
+    await setOutput({ changed: 'false', count: '0' });
+    return;
+  }
+
   const pending = await readJson(PENDING_FILE, { candidates: [] });
   const rejected = await readJson(REJECTED_FILE, { items: [] });
 
