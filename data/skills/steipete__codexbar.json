@@ -1,0 +1,145 @@
+{
+  "repo": "steipete/CodexBar",
+  "commit": "a26ca57b518667a659d69524c473af2735069612",
+  "branch": "main",
+  "fetchedAt": "2026-11-24T15:42:19.659Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "codexbar",
+      "name": "codexbar",
+      "dir": ".agents/skills/codexbar",
+      "path": ".agents/skills/codexbar/SKILL.md",
+      "desc": "CodexBar read. Provider usage, limits, credits, config health. JSON. No writes.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/steipete/CodexBar.git",
+        "copy": "cp -r .agents/skills/codexbar ~/.claude/skills/codexbar",
+        "raw": "https://raw.githubusercontent.com/steipete/CodexBar/a26ca57b518667a659d69524c473af2735069612/.agents/skills/codexbar/SKILL.md",
+        "saveAs": "~/.claude/skills/codexbar/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:41c14265e05743cf88414d0e2af25942a9f30f5edbe908ecdc830661ac6f3f78",
+      "bytes": 1278,
+      "wordCount": 145,
+      "repoLicense": "MIT",
+      "commit": "a26ca57b518667a659d69524c473af2735069612",
+      "branch": "main",
+      "body": "---\nname: codexbar\ndescription: \"CodexBar read. Provider usage, limits, credits, config health. JSON. No writes.\"\n---\n\n# CodexBar\n\nRead CodexBar. Never mutate config/auth.\n\n## Run\n\n```bash\nskill=\"${CODEX_HOME:-$HOME/.codex}/skills/codexbar\"\n\"$skill/scripts/codexbar\" doctor\n\"$skill/scripts/codexbar\" providers\n\"$skill/scripts/codexbar\" usage\n\"$skill/scripts/codexbar\" usage --provider codex\n\"$skill/scripts/codexbar\" usage --all\n```\n\nAll stdout: JSON. Upstream CodexBar shape kept. Less drift, fewer tokens.\n\n## Rules\n\n- Start `doctor` when install/config unknown.\n- `usage` reads enabled providers. Prefer this.\n- `usage --provider ID` reads one provider.\n- `usage --all` expensive; use only when needed.\n- Identities hidden by default. `--include-identities` only when user explicitly needs them.\n- Secrets always hidden.\n- Helper read-only: fixed allowlist only. No config writes, auth repair, enable/disable, key storage.\n- Timeout means upstream stuck. Narrow provider or raise `CODEXBAR_TIMEOUT` (default 120 seconds).\n\n## Binary\n\nAuto-find: `CODEXBAR_BIN`, PATH, app bundle, Homebrew cask. If missing: open CodexBar, Preferences > Advanced > Install CLI; or set `CODEXBAR_BIN`.\n\nEach stdout/stderr stream capped at 1 MiB while fully drained. Timeout kills process group.\n",
+      "bodyMd": "# CodexBar\n\nRead CodexBar. Never mutate config/auth.\n\n## Run\n\n```bash\nskill=\"${CODEX_HOME:-$HOME/.codex}/skills/codexbar\"\n\"$skill/scripts/codexbar\" doctor\n\"$skill/scripts/codexbar\" providers\n\"$skill/scripts/codexbar\" usage\n\"$skill/scripts/codexbar\" usage --provider codex\n\"$skill/scripts/codexbar\" usage --all\n```\n\nAll stdout: JSON. Upstream CodexBar shape kept. Less drift, fewer tokens.\n\n## Rules\n\n- Start `doctor` when install/config unknown.\n- `usage` reads enabled providers. Prefer this.\n- `usage --provider ID` reads one provider.\n- `usage --all` expensive; use only when needed.\n- Identities hidden by default. `--include-identities` only when user explicitly needs them.\n- Secrets always hidden.\n- Helper read-only: fixed allowlist only. No config writes, auth repair, enable/disable, key storage.\n- Timeout means upstream stuck. Narrow provider or raise `CODEXBAR_TIMEOUT` (default 120 seconds).\n\n## Binary\n\nAuto-find: `CODEXBAR_BIN`, PATH, app bundle, Homebrew cask. If missing: open CodexBar, Preferences > Advanced > Install CLI; or set `CODEXBAR_BIN`.\n\nEach stdout/stderr stream capped at 1 MiB while fully drained. Timeout kills process group.\n"
+    },
+    {
+      "slug": "qa-test",
+      "name": "qa-test",
+      "dir": ".agents/skills/qa-test",
+      "path": ".agents/skills/qa-test/SKILL.md",
+      "desc": "CodexBar live QA/e2e testing: run provider usage matrix checks, validate real app config, use Peekaboo for menu proof, use Browser Use/official docs for API spec or logged-in dashboard checks, and handle 1Password credentials safely.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": true,
+        "network": true,
+        "bins": [
+          "jq",
+          "playwright",
+          "make",
+          "rg"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/steipete/CodexBar.git",
+        "copy": "cp -r .agents/skills/qa-test ~/.claude/skills/qa-test",
+        "raw": "https://raw.githubusercontent.com/steipete/CodexBar/a26ca57b518667a659d69524c473af2735069612/.agents/skills/qa-test/SKILL.md",
+        "saveAs": "~/.claude/skills/qa-test/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:4265af12c0cf0bf514a7d4ddcb2df2593d1af34118a6e1b24671fd480dc2a8b9",
+      "bytes": 4928,
+      "wordCount": 586,
+      "repoLicense": "MIT",
+      "commit": "a26ca57b518667a659d69524c473af2735069612",
+      "branch": "main",
+      "body": "---\nname: qa-test\ndescription: \"CodexBar live QA/e2e testing: run provider usage matrix checks, validate real app config, use Peekaboo for menu proof, use Browser Use/official docs for API spec or logged-in dashboard checks, and handle 1Password credentials safely.\"\n---\n\n# CodexBar Live QA\n\nUse for live provider testing, release smoke tests, menu verification, or debugging “provider works/fails” reports.\n\n## Rules\n\n- Work from the CodexBar repo checkout.\n- Use the packaged CLI first: `CodexBar.app/Contents/Helpers/CodexBarCLI`.\n- Do not use `CodexBar.app/Contents/MacOS/codexbar`; that is the app binary and may appear to hang as a CLI.\n- Never run broad `env`, `set`, or secret regex dumps.\n- Use `$one-password` for secrets: all `op` commands inside one persistent tmux session, service account first, no raw secret output.\n- Treat browser-cookie/keychain flows as prompt-risky. Prefer CLI/API-token checks and `KeychainNoUIQuery`-safe tests unless the user explicitly requested live UI.\n- For current API behavior, browse official provider docs only.\n\n## CLI Matrix\n\nRun the bundled script:\n\n```bash\n.agents/skills/qa-test/scripts/live_provider_matrix.sh --enabled\n```\n\nUseful modes:\n\n```bash\n.agents/skills/qa-test/scripts/live_provider_matrix.sh --provider all\n.agents/skills/qa-test/scripts/live_provider_matrix.sh --providers openai,zai,deepseek\n.agents/skills/qa-test/scripts/live_provider_matrix.sh --default\n```\n\nInterpretation:\n\n- `--enabled` asks `CodexBarCLI config providers` for enabled providers, honoring `CODEXBAR_CONFIG` and default toggles.\n- `--default` runs the app-facing default command with no provider override.\n- `--provider all` forces every registered provider and is expected to fail for providers without sessions/keys.\n- A green app config needs `--enabled` and `--default` clean; `--provider all` is a discovery/triage tool.\n\n## Config QA\n\nValidate config:\n\n```bash\nCodexBar.app/Contents/Helpers/CodexBarCLI config validate\nstat -f '%Lp %N' \"$HOME/.codexbar/config.json\"\n```\n\nRedact config shape:\n\n```bash\njq '(.providers // []) |= map(.apiKey = (if .apiKey then \"<redacted>\" else .apiKey end) |\n  .secretKey = (if .secretKey then \"<redacted>\" else .secretKey end) |\n  .cookieHeader = (if .cookieHeader then \"<redacted>\" else .cookieHeader end) |\n  (if .id == \"stepfun\" and has(\"region\") then .region = \"<redacted>\" else . end) |\n  .tokenAccounts = (if .tokenAccounts then (.tokenAccounts | .accounts = (.accounts | map(.token = \"<redacted>\"))) else .tokenAccounts end))' \\\n  \"$HOME/.codexbar/config.json\"\n```\n\nBefore editing config, make a backup:\n\n```bash\ncp \"$HOME/.codexbar/config.json\" \"$HOME/.codexbar/config.pre-qa-$(date +%Y%m%d%H%M%S).json\"\nchmod 600 \"$HOME/.codexbar\"/config.pre-qa-*.json\n```\n\n## Live Menu QA\n\nUse Peekaboo after CLI checks:\n\n```bash\npkill -x CodexBar || pkill -f 'CodexBar.app/Contents/MacOS/CodexBar' || true\nopen -n \"$PWD/CodexBar.app\"\npeekaboo menu list-all --json | rg -i 'codexbar'\npeekaboo menu click-extra --title codexbar-merged --json\nscreencapture -x /tmp/codexbar-live-menu.png\n```\n\nCrop top-right menu if needed:\n\n```bash\nsips --cropToHeightWidth 900 340 --cropOffset 20 2650 /tmp/codexbar-live-menu.png \\\n  --out /tmp/codexbar-live-menu-crop.png >/dev/null\n```\n\nVerify visually with `view_image`. Confirm provider tabs/rows match enabled config and no failing provider dominates the first screen.\n\n## Browser Use\n\nUse `$browser-use` only when a logged-in dashboard, API key page, or provider docs need browser/profile state.\n\nExisting Chrome path:\n\n```bash\nmcporter call chrome-devtools.list_pages --args '{}' --output text\nmcporter call chrome-devtools.navigate_page --args '{\"url\":\"https://provider.example\"}' --output text\nmcporter call chrome-devtools.take_snapshot --args '{}' --output text\n```\n\nIf Browser Use is unavailable, say so and use web search for public official docs; do not substitute isolated Playwright for login/profile-dependent pages.\n\n## Fix Triage\n\n- Missing auth/session: configure key/session if available; otherwise leave provider disabled or report blocked auth.\n- Wrong provider API/spec: inspect official docs, then patch fetcher/settings/tests.\n- Provider key exists but live API rejects it: keep key stored if useful, disable provider if the menu would show a persistent error.\n- User-facing behavior changes need `CHANGELOG.md`.\n- Code fixes need focused tests, `make check`, `$autoreview`, and live CLI proof before landing.\n\n## Known CodexBar QA Notes\n\n- OpenAI Admin API key is the useful usage provider key. Project `OPENAI_API_KEY` values can fail legacy credit-balance fallback with 403.\n- Deepgram usage requires a key/project with Management API permissions; transcription-only keys can return 403.\n- Groq usage uses the Prometheus metrics API, not ordinary inference endpoints.\n- MiniMax pay-as-you-go API keys and Token Plan/Coding Plan keys are different; wrong key kind can leave usage unavailable.\n",
+      "bodyMd": "# CodexBar Live QA\n\nUse for live provider testing, release smoke tests, menu verification, or debugging “provider works/fails” reports.\n\n## Rules\n\n- Work from the CodexBar repo checkout.\n- Use the packaged CLI first: `CodexBar.app/Contents/Helpers/CodexBarCLI`.\n- Do not use `CodexBar.app/Contents/MacOS/codexbar`; that is the app binary and may appear to hang as a CLI.\n- Never run broad `env`, `set`, or secret regex dumps.\n- Use `$one-password` for secrets: all `op` commands inside one persistent tmux session, service account first, no raw secret output.\n- Treat browser-cookie/keychain flows as prompt-risky. Prefer CLI/API-token checks and `KeychainNoUIQuery`-safe tests unless the user explicitly requested live UI.\n- For current API behavior, browse official provider docs only.\n\n## CLI Matrix\n\nRun the bundled script:\n\n```bash\n.agents/skills/qa-test/scripts/live_provider_matrix.sh --enabled\n```\n\nUseful modes:\n\n```bash\n.agents/skills/qa-test/scripts/live_provider_matrix.sh --provider all\n.agents/skills/qa-test/scripts/live_provider_matrix.sh --providers openai,zai,deepseek\n.agents/skills/qa-test/scripts/live_provider_matrix.sh --default\n```\n\nInterpretation:\n\n- `--enabled` asks `CodexBarCLI config providers` for enabled providers, honoring `CODEXBAR_CONFIG` and default toggles.\n- `--default` runs the app-facing default command with no provider override.\n- `--provider all` forces every registered provider and is expected to fail for providers without sessions/keys.\n- A green app config needs `--enabled` and `--default` clean; `--provider all` is a discovery/triage tool.\n\n## Config QA\n\nValidate config:\n\n```bash\nCodexBar.app/Contents/Helpers/CodexBarCLI config validate\nstat -f '%Lp %N' \"$HOME/.codexbar/config.json\"\n```\n\nRedact config shape:\n\n```bash\njq '(.providers // []) |= map(.apiKey = (if .apiKey then \"<redacted>\" else .apiKey end) |\n  .secretKey = (if .secretKey then \"<redacted>\" else .secretKey end) |\n  .cookieHeader = (if .cookieHeader then \"<redacted>\" else .cookieHeader end) |\n  (if .id == \"stepfun\" and has(\"region\") then .region = \"<redacted>\" else . end) |\n  .tokenAccounts = (if .tokenAccounts then (.tokenAccounts | .accounts = (.accounts | map(.token = \"<redacted>\"))) else .tokenAccounts end))' \\\n  \"$HOME/.codexbar/config.json\"\n```\n\nBefore editing config, make a backup:\n\n```bash\ncp \"$HOME/.codexbar/config.json\" \"$HOME/.codexbar/config.pre-qa-$(date +%Y%m%d%H%M%S).json\"\nchmod 600 \"$HOME/.codexbar\"/config.pre-qa-*.json\n```\n\n## Live Menu QA\n\nUse Peekaboo after CLI checks:\n\n```bash\npkill -x CodexBar || pkill -f 'CodexBar.app/Contents/MacOS/CodexBar' || true\nopen -n \"$PWD/CodexBar.app\"\npeekaboo menu list-all --json | rg -i 'codexbar'\npeekaboo menu click-extra --title codexbar-merged --json\nscreencapture -x /tmp/codexbar-live-menu.png\n```\n\nCrop top-right menu if needed:\n\n```bash\nsips --cropToHeightWidth 900 340 --cropOffset 20 2650 /tmp/codexbar-live-menu.png \\\n  --out /tmp/codexbar-live-menu-crop.png >/dev/null\n```\n\nVerify visually with `view_image`. Confirm provider tabs/rows match enabled config and no failing provider dominates the first screen.\n\n## Browser Use\n\nUse `$browser-use` only when a logged-in dashboard, API key page, or provider docs need browser/profile state.\n\nExisting Chrome path:\n\n```bash\nmcporter call chrome-devtools.list_pages --args '{}' --output text\nmcporter call chrome-devtools.navigate_page --args '{\"url\":\"https://provider.example\"}' --output text\nmcporter call chrome-devtools.take_snapshot --args '{}' --output text\n```\n\nIf Browser Use is unavailable, say so and use web search for public official docs; do not substitute isolated Playwright for login/profile-dependent pages.\n\n## Fix Triage\n\n- Missing auth/session: configure key/session if available; otherwise leave provider disabled or report blocked auth.\n- Wrong provider API/spec: inspect official docs, then patch fetcher/settings/tests.\n- Provider key exists but live API rejects it: keep key stored if useful, disable provider if the menu would show a persistent error.\n- User-facing behavior changes need `CHANGELOG.md`.\n- Code fixes need focused tests, `make check`, `$autoreview`, and live CLI proof before landing.\n\n## Known CodexBar QA Notes\n\n- OpenAI Admin API key is the useful usage provider key. Project `OPENAI_API_KEY` values can fail legacy credit-balance fallback with 403.\n- Deepgram usage requires a key/project with Management API permissions; transcription-only keys can return 403.\n- Groq usage uses the Prometheus metrics API, not ordinary inference endpoints.\n- MiniMax pay-as-you-go API keys and Token Plan/Coding Plan keys are different; wrong key kind can leave usage unavailable.\n"
+    },
+    {
+      "slug": "release-codexbar",
+      "name": "release-codexbar",
+      "dir": ".agents/skills/release-codexbar",
+      "path": ".agents/skills/release-codexbar/SKILL.md",
+      "desc": "CodexBar release: versioning, notarization, appcast, Homebrew, post-release bump.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": true,
+        "network": true,
+        "bins": [
+          "git",
+          "python3",
+          "gh",
+          "brew"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/steipete/CodexBar.git",
+        "copy": "cp -r .agents/skills/release-codexbar ~/.claude/skills/release-codexbar",
+        "raw": "https://raw.githubusercontent.com/steipete/CodexBar/a26ca57b518667a659d69524c473af2735069612/.agents/skills/release-codexbar/SKILL.md",
+        "saveAs": "~/.claude/skills/release-codexbar/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:f2a3699e188804e502cea80d9220b189b2a3b455127f2584aa89ad5d4a279736",
+      "bytes": 5874,
+      "wordCount": 614,
+      "repoLicense": "MIT",
+      "commit": "a26ca57b518667a659d69524c473af2735069612",
+      "branch": "main",
+      "body": "---\nname: release-codexbar\ndescription: \"CodexBar release: versioning, notarization, appcast, Homebrew, post-release bump.\"\n---\n\n# CodexBar Release\n\nUse for releasing signed/notarized macOS apps, especially repos with Sparkle appcasts and Homebrew casks.\n\n## Start\n\n1. Work from the app repo unless asked otherwise.\n2. Check repo state, current version, latest tag/release, and release docs/scripts.\n3. Confirm `CHANGELOG.md` is complete, user-facing, deduped, and dated for the release.\n4. Prefer the repo release script; patch small script/test blockers instead of bypassing the release path.\n5. Never print key material. Keep 1Password references and local key paths as references only.\n6. Load `$release-private` if it exists before resolving Peter-owned credential locators.\n\n## Key Material\n\nUse `$one-password` for secret handling. `op` only in tmux/persistent shell; no broad `env`, `set`, `export -p`, or secret scans.\n\nKnown App Store Connect shape:\n\n- fields: `private_key_p8`, `key_id`, `issuer_id`\n- keep all three fields from the same 1Password item; do not mix with stale values from `~/.profile`\n- resolve Peter-owned item refs from `$release-private`\n\nKnown Sparkle key:\n\n- resolve the private key file from `$release-private`\n- pass as `SPARKLE_PRIVATE_KEY_FILE`\n\nSafe env file pattern:\n\n```text\nAPP_STORE_CONNECT_API_KEY_P8=<1Password ref from release-private>\nAPP_STORE_CONNECT_KEY_ID=<1Password ref from release-private>\nAPP_STORE_CONNECT_ISSUER_ID=<1Password ref from release-private>\nSPARKLE_PRIVATE_KEY_FILE=<path from release-private>\n```\n\nRun with `op run --account my.1password.com --env-file <file> -- <script>`, then delete the temp env file.\n\n## CodexBar\n\nPaths:\n\n- repo: `~/Projects/codexbar`\n- release script: `Scripts/release.sh`\n- signing/notarization: `Scripts/sign-and-notarize.sh`\n- appcast: `Scripts/make_appcast.sh`, `appcast.xml`\n- release assets: `CodexBar-macos-universal-<version>.zip`, `CodexBar-macos-universal-<version>.dSYM.zip`\n- packaged app: `CodexBar.app`\n- version file: `version.env`\n- changelog: `CHANGELOG.md`\n- Homebrew tap: `~/Projects/homebrew-tap`\n- cask: `~/Projects/homebrew-tap/Casks/codexbar.rb`\n- formula: `~/Projects/homebrew-tap/Formula/codexbar.rb`\n- CLI release workflow: `.github/workflows/release-cli.yml`\n\nNormal release:\n\n```bash\ntmux new-session -d -s codexbar-release 'op run --account my.1password.com --env-file /tmp/codexbar-release-op.env -- Scripts/release.sh'\ntmux attach -t codexbar-release\n```\n\nIf notarization fails with `401 Unauthenticated`, rerun using all three App Store Connect fields from the 1Password item above. Mismatched `key_id` / `issuer_id` from `~/.profile` can cause this.\n\nIf widget metadata generation times out, `CODEXBAR_WIDGET_METADATA_TIMEOUT_SECONDS=600` is a known-good floor.\n\nCodexBar CLI tarballs are not produced by `Scripts/release.sh` itself. The GitHub release event triggers `.github/workflows/release-cli.yml`, which builds and uploads:\n\n- `CodexBarCLI-v<version>-macos-arm64.tar.gz`\n- `CodexBarCLI-v<version>-macos-x86_64.tar.gz`\n- `CodexBarCLI-v<version>-linux-aarch64.tar.gz`\n- `CodexBarCLI-v<version>-linux-x86_64.tar.gz`\n- matching `.sha256` files\n\nIf the workflow fails only in `update-homebrew-tap` with GitHub API rate limiting, the CLI assets may already be uploaded. Verify assets live, then update `Formula/codexbar.rb` manually from the tarball checksums.\n\n## Verify\n\nRelease is not done until the published chain checks out:\n\n```bash\ngh release view v<VERSION> --json tagName,name,isDraft,isPrerelease,url,assets,body\nScripts/check-release-assets.sh v<VERSION>\npython3 - <<'PY'\nimport xml.etree.ElementTree as ET\nns={'sparkle':'http://www.andymatuschak.org/xml-namespaces/sparkle'}\nroot=ET.parse('appcast.xml').getroot()\nitem=root.find('channel').find('item')\nenc=item.find('enclosure')\nprint(item.findtext('title'))\nprint(item.findtext('sparkle:version', namespaces=ns))\nprint(item.findtext('sparkle:shortVersionString', namespaces=ns))\nprint(enc.attrib.get('url'))\nprint(enc.attrib.get('length'))\nprint(bool(enc.attrib.get('{http://www.andymatuschak.org/xml-namespaces/sparkle}edSignature')))\nPY\ncodesign --verify --deep --strict --verbose=2 CodexBar.app\nspctl --assess --type execute --verbose CodexBar.app\n```\n\nFor Homebrew:\n\n```bash\nshasum -a 256 CodexBar-macos-universal-<VERSION>.zip\ncd /Users/steipete/Projects/homebrew-tap\npython3 .github/scripts/update_formula.py --formula codexbar --tag v<VERSION> --repository steipete/CodexBar --artifact-template 'CodexBarCLI-{tag}-{target}.tar.gz' --target-aliases 'darwin_arm64=macos-arm64,darwin_amd64=macos-x86_64,linux_arm64=linux-aarch64,linux_amd64=linux-x86_64'\nbrew fetch --cask --force --retry codexbar\nbrew fetch --formula --force --retry steipete/tap/codexbar\n```\n\nUpdate the cask when app zip assets exist. Update the formula only when standalone CLI tarballs for that version exist.\n\nTap audit can be noisy from unrelated formulae; keep evidence specific to the app cask.\n\n## Closeout\n\n1. Create/push tag and GitHub release through the release script.\n2. Verify appcast points to the new GitHub release asset with signature and length.\n3. Update/push the Homebrew cask if the app zip changed.\n4. Bump the app repo to next patch `Unreleased`:\n   - `version.env`: next `MARKETING_VERSION`, next `BUILD_NUMBER`\n   - `CHANGELOG.md`: top `## <next> — Unreleased`\n5. Commit, push, then pull `--ff-only`.\n6. Restart the local app from the packaged bundle and verify the running bundle version.\n7. Check no release/notary/op temp sessions or temp env files remain.\n\nCodexBar restart:\n\n```bash\npkill -x CodexBar || pkill -f CodexBar.app || true\ncd \"$(git rev-parse --show-toplevel)\"\nopen -n CodexBar.app\n/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' CodexBar.app/Contents/Info.plist\n/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' CodexBar.app/Contents/Info.plist\n```\n",
+      "bodyMd": "# CodexBar Release\n\nUse for releasing signed/notarized macOS apps, especially repos with Sparkle appcasts and Homebrew casks.\n\n## Start\n\n1. Work from the app repo unless asked otherwise.\n2. Check repo state, current version, latest tag/release, and release docs/scripts.\n3. Confirm `CHANGELOG.md` is complete, user-facing, deduped, and dated for the release.\n4. Prefer the repo release script; patch small script/test blockers instead of bypassing the release path.\n5. Never print key material. Keep 1Password references and local key paths as references only.\n6. Load `$release-private` if it exists before resolving Peter-owned credential locators.\n\n## Key Material\n\nUse `$one-password` for secret handling. `op` only in tmux/persistent shell; no broad `env`, `set`, `export -p`, or secret scans.\n\nKnown App Store Connect shape:\n\n- fields: `private_key_p8`, `key_id`, `issuer_id`\n- keep all three fields from the same 1Password item; do not mix with stale values from `~/.profile`\n- resolve Peter-owned item refs from `$release-private`\n\nKnown Sparkle key:\n\n- resolve the private key file from `$release-private`\n- pass as `SPARKLE_PRIVATE_KEY_FILE`\n\nSafe env file pattern:\n\n```text\nAPP_STORE_CONNECT_API_KEY_P8=<1Password ref from release-private>\nAPP_STORE_CONNECT_KEY_ID=<1Password ref from release-private>\nAPP_STORE_CONNECT_ISSUER_ID=<1Password ref from release-private>\nSPARKLE_PRIVATE_KEY_FILE=<path from release-private>\n```\n\nRun with `op run --account my.1password.com --env-file <file> -- <script>`, then delete the temp env file.\n\n## CodexBar\n\nPaths:\n\n- repo: `~/Projects/codexbar`\n- release script: `Scripts/release.sh`\n- signing/notarization: `Scripts/sign-and-notarize.sh`\n- appcast: `Scripts/make_appcast.sh`, `appcast.xml`\n- release assets: `CodexBar-macos-universal-<version>.zip`, `CodexBar-macos-universal-<version>.dSYM.zip`\n- packaged app: `CodexBar.app`\n- version file: `version.env`\n- changelog: `CHANGELOG.md`\n- Homebrew tap: `~/Projects/homebrew-tap`\n- cask: `~/Projects/homebrew-tap/Casks/codexbar.rb`\n- formula: `~/Projects/homebrew-tap/Formula/codexbar.rb`\n- CLI release workflow: `.github/workflows/release-cli.yml`\n\nNormal release:\n\n```bash\ntmux new-session -d -s codexbar-release 'op run --account my.1password.com --env-file /tmp/codexbar-release-op.env -- Scripts/release.sh'\ntmux attach -t codexbar-release\n```\n\nIf notarization fails with `401 Unauthenticated`, rerun using all three App Store Connect fields from the 1Password item above. Mismatched `key_id` / `issuer_id` from `~/.profile` can cause this.\n\nIf widget metadata generation times out, `CODEXBAR_WIDGET_METADATA_TIMEOUT_SECONDS=600` is a known-good floor.\n\nCodexBar CLI tarballs are not produced by `Scripts/release.sh` itself. The GitHub release event triggers `.github/workflows/release-cli.yml`, which builds and uploads:\n\n- `CodexBarCLI-v<version>-macos-arm64.tar.gz`\n- `CodexBarCLI-v<version>-macos-x86_64.tar.gz`\n- `CodexBarCLI-v<version>-linux-aarch64.tar.gz`\n- `CodexBarCLI-v<version>-linux-x86_64.tar.gz`\n- matching `.sha256` files\n\nIf the workflow fails only in `update-homebrew-tap` with GitHub API rate limiting, the CLI assets may already be uploaded. Verify assets live, then update `Formula/codexbar.rb` manually from the tarball checksums.\n\n## Verify\n\nRelease is not done until the published chain checks out:\n\n```bash\ngh release view v<VERSION> --json tagName,name,isDraft,isPrerelease,url,assets,body\nScripts/check-release-assets.sh v<VERSION>\npython3 - <<'PY'\nimport xml.etree.ElementTree as ET\nns={'sparkle':'http://www.andymatuschak.org/xml-namespaces/sparkle'}\nroot=ET.parse('appcast.xml').getroot()\nitem=root.find('channel').find('item')\nenc=item.find('enclosure')\nprint(item.findtext('title'))\nprint(item.findtext('sparkle:version', namespaces=ns))\nprint(item.findtext('sparkle:shortVersionString', namespaces=ns))\nprint(enc.attrib.get('url'))\nprint(enc.attrib.get('length'))\nprint(bool(enc.attrib.get('{http://www.andymatuschak.org/xml-namespaces/sparkle}edSignature')))\nPY\ncodesign --verify --deep --strict --verbose=2 CodexBar.app\nspctl --assess --type execute --verbose CodexBar.app\n```\n\nFor Homebrew:\n\n```bash\nshasum -a 256 CodexBar-macos-universal-<VERSION>.zip\ncd /Users/steipete/Projects/homebrew-tap\npython3 .github/scripts/update_formula.py --formula codexbar --tag v<VERSION> --repository steipete/CodexBar --artifact-template 'CodexBarCLI-{tag}-{target}.tar.gz' --target-aliases 'darwin_arm64=macos-arm64,darwin_amd64=macos-x86_64,linux_arm64=linux-aarch64,linux_amd64=linux-x86_64'\nbrew fetch --cask --force --retry codexbar\nbrew fetch --formula --force --retry steipete/tap/codexbar\n```\n\nUpdate the cask when app zip assets exist. Update the formula only when standalone CLI tarballs for that version exist.\n\nTap audit can be noisy from unrelated formulae; keep evidence specific to the app cask.\n\n## Closeout\n\n1. Create/push tag and GitHub release through the release script.\n2. Verify appcast points to the new GitHub release asset with signature and length.\n3. Update/push the Homebrew cask if the app zip changed.\n4. Bump the app repo to next patch `Unreleased`:\n   - `version.env`: next `MARKETING_VERSION`, next `BUILD_NUMBER`\n   - `CHANGELOG.md`: top `## <next> — Unreleased`\n5. Commit, push, then pull `--ff-only`.\n6. Restart the local app from the packaged bundle and verify the running bundle version.\n7. Check no release/notary/op temp sessions or temp env files remain.\n\nCodexBar restart:\n\n```bash\npkill -x CodexBar || pkill -f CodexBar.app || true\ncd \"$(git rev-parse --show-toplevel)\"\nopen -n CodexBar.app\n/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' CodexBar.app/Contents/Info.plist\n/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' CodexBar.app/Contents/Info.plist\n```\n"
+    }
+  ]
+}

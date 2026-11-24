@@ -1,0 +1,54 @@
+{
+  "repo": "realgarit/fable-baton",
+  "commit": "74262e28adfa0b8f65575149d522607ecec8fda8",
+  "branch": "main",
+  "fetchedAt": "2026-11-24T15:41:47.967Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "baton-setup",
+      "name": "baton-setup",
+      "dir": "skills/baton-setup",
+      "path": "skills/baton-setup/SKILL.md",
+      "desc": "One-time setup and health check for fable-baton. Use when the user asks to set up, configure, verify, or troubleshoot fable-baton - sets the default model to \"best\" (Fable 5 with Opus fallback) in ~/.claude/settings.json and verifies the plugin is fully installed.",
+      "descZh": "",
+      "triggers": [
+        "configure",
+        "verify"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "jq"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/realgarit/fable-baton.git",
+        "copy": "cp -r skills/baton-setup ~/.claude/skills/baton-setup",
+        "raw": "https://raw.githubusercontent.com/realgarit/fable-baton/74262e28adfa0b8f65575149d522607ecec8fda8/skills/baton-setup/SKILL.md",
+        "saveAs": "~/.claude/skills/baton-setup/SKILL.md",
+        "marketplace": "/plugin marketplace add realgarit/fable-baton"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:cb2d1af85cfdbdc95370981d3f92aec9536f57a413998790db7a820b0fdd7c3a",
+      "bytes": 2818,
+      "wordCount": 395,
+      "repoLicense": "MIT",
+      "commit": "74262e28adfa0b8f65575149d522607ecec8fda8",
+      "branch": "main",
+      "body": "---\nname: baton-setup\ndescription: One-time setup and health check for fable-baton. Use when the user asks to set up, configure, verify, or troubleshoot fable-baton - sets the default model to \"best\" (Fable 5 with Opus fallback) in ~/.claude/settings.json and verifies the plugin is fully installed.\n---\n\n# baton-setup\n\nOne-time setup for fable-baton. Run each step in order. Never rewrite `~/.claude/settings.json` wholesale - edit only the named keys and preserve everything else.\n\n## Step 1 - Read current state\n\n1. Read `~/.claude/settings.json` (if missing, you will create a minimal one).\n2. Check `echo \"$CLAUDE_CODE_SUBAGENT_MODEL\"`. If set, warn the user: this variable silently overrides every agent's `model` frontmatter and defeats the tiering. Recommend unsetting it, but do not unset it yourself without approval.\n\n## Step 2 - Propose changes and get approval\n\nShow the user exactly what you will change before writing anything:\n\n| Key | Rule |\n|---|---|\n| `model` | If absent → set `\"best\"`. If present with a different value → ask: keep theirs, or switch to `\"best\"`? (`best` resolves to Fable 5 when the account has access, otherwise the latest Opus.) If already `\"best\"` → no change. |\n| `fallbackModel` | If absent → add `[\"opus\", \"sonnet\"]` (covers overload/unavailability). If present → leave it. |\n| `availableModels` | Only if the key already exists (it is an allowlist): ensure it contains `\"opus\"`, `\"sonnet\"`, `\"haiku\"`, and the chosen main-model value. If absent → do not add it. |\n\nBack up the file first: copy it to `~/.claude/settings.json.baton-backup-<YYYYMMDD-HHMMSS>` (skip if the file didn't exist).\n\n## Step 3 - Apply and validate\n\nApply the approved edits, then validate: `jq empty ~/.claude/settings.json` must exit 0 (or parse the JSON yourself if `jq` is unavailable).\n\nIf Claude Code rejects the `best` alias at startup (older versions), fall back to `\"opus\"` and suggest updating Claude Code.\n\n## Step 4 - Verify the install\n\n1. Confirm the four agents are available: scout, executor, architect, verifier (ask \"which subagent types are available?\" or check the Agent tool's list).\n2. Confirm the orchestration policy is present in context (it is injected at session start; in a session started before install it won't be - that's expected).\n3. Tell the user to restart their Claude Code session: agents and the model setting load at session start.\n\n## Step 5 - Report\n\nSummarize: what changed, what was skipped, where the backup is, and that a restart is needed.\n\n## Uninstall (on request)\n\n1. `/plugin uninstall fable-baton` removes the agents, hook, and this skill.\n2. In `~/.claude/settings.json`: restore `model` from the oldest `settings.json.baton-backup-*` file, or remove the key if the backup has none. Remove `fallbackModel` if the user doesn't want it.\n",
+      "bodyMd": "# baton-setup\n\nOne-time setup for fable-baton. Run each step in order. Never rewrite `~/.claude/settings.json` wholesale - edit only the named keys and preserve everything else.\n\n## Step 1 - Read current state\n\n1. Read `~/.claude/settings.json` (if missing, you will create a minimal one).\n2. Check `echo \"$CLAUDE_CODE_SUBAGENT_MODEL\"`. If set, warn the user: this variable silently overrides every agent's `model` frontmatter and defeats the tiering. Recommend unsetting it, but do not unset it yourself without approval.\n\n## Step 2 - Propose changes and get approval\n\nShow the user exactly what you will change before writing anything:\n\n| Key | Rule |\n|---|---|\n| `model` | If absent → set `\"best\"`. If present with a different value → ask: keep theirs, or switch to `\"best\"`? (`best` resolves to Fable 5 when the account has access, otherwise the latest Opus.) If already `\"best\"` → no change. |\n| `fallbackModel` | If absent → add `[\"opus\", \"sonnet\"]` (covers overload/unavailability). If present → leave it. |\n| `availableModels` | Only if the key already exists (it is an allowlist): ensure it contains `\"opus\"`, `\"sonnet\"`, `\"haiku\"`, and the chosen main-model value. If absent → do not add it. |\n\nBack up the file first: copy it to `~/.claude/settings.json.baton-backup-<YYYYMMDD-HHMMSS>` (skip if the file didn't exist).\n\n## Step 3 - Apply and validate\n\nApply the approved edits, then validate: `jq empty ~/.claude/settings.json` must exit 0 (or parse the JSON yourself if `jq` is unavailable).\n\nIf Claude Code rejects the `best` alias at startup (older versions), fall back to `\"opus\"` and suggest updating Claude Code.\n\n## Step 4 - Verify the install\n\n1. Confirm the four agents are available: scout, executor, architect, verifier (ask \"which subagent types are available?\" or check the Agent tool's list).\n2. Confirm the orchestration policy is present in context (it is injected at session start; in a session started before install it won't be - that's expected).\n3. Tell the user to restart their Claude Code session: agents and the model setting load at session start.\n\n## Step 5 - Report\n\nSummarize: what changed, what was skipped, where the backup is, and that a restart is needed.\n\n## Uninstall (on request)\n\n1. `/plugin uninstall fable-baton` removes the agents, hook, and this skill.\n2. In `~/.claude/settings.json`: restore `model` from the oldest `settings.json.baton-backup-*` file, or remove the key if the backup has none. Remove `fallbackModel` if the user doesn't want it.\n"
+    }
+  ]
+}

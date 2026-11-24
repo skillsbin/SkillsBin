@@ -1,0 +1,116 @@
+{
+  "repo": "SokratisVidros/pg-workflows",
+  "commit": "00d83c16d22f01cb7ff344f53a5dacdec3080f13",
+  "branch": "main",
+  "fetchedAt": "2026-11-24T15:40:37.854Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "release-process",
+      "name": "release-process",
+      "dir": ".claude/skills/release-process",
+      "path": ".claude/skills/release-process/SKILL.md",
+      "desc": "Prepare deterministic releases of every changed package in the monorepo (independent versions, per-package tags) with a fixed format for version bumps, changelog entries, release commits, tags, and GitHub releases. Use when the user asks to cut a release, bump version, tag a release, or publish release notes.",
+      "descZh": "",
+      "triggers": [
+        "bump version",
+        "tag a release",
+        "publish release notes"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "cursor",
+        "gemini",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/SokratisVidros/pg-workflows.git",
+        "copy": "cp -r .claude/skills/release-process ~/.claude/skills/release-process",
+        "raw": "https://raw.githubusercontent.com/SokratisVidros/pg-workflows/00d83c16d22f01cb7ff344f53a5dacdec3080f13/.claude/skills/release-process/SKILL.md",
+        "saveAs": "~/.claude/skills/release-process/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:6f648c32eb4de7e781a4a7fde25359da562271b89985989890490e412ba2ac64",
+      "bytes": 666,
+      "wordCount": 46,
+      "repoLicense": "MIT",
+      "commit": "00d83c16d22f01cb7ff344f53a5dacdec3080f13",
+      "branch": "main",
+      "body": "---\nname: release-process\ndescription: Prepare deterministic releases of every changed package in the monorepo (independent versions, per-package tags) with a fixed format for version bumps, changelog entries, release commits, tags, and GitHub releases. Use when the user asks to cut a release, bump version, tag a release, or publish release notes.\n---\n\n# Release Process\n\nLoad and follow the shared release specification at:\n\n`/.shared/skills/release-process.md`\n\nRules:\n\n- Treat the shared file as the authoritative release process.\n- Do not diverge from its commit, tag, and changelog templates.\n- Keep this wrapper minimal so the release logic is defined once.\n",
+      "bodyMd": "# Release Process\n\nLoad and follow the shared release specification at:\n\n`/.shared/skills/release-process.md`\n\nRules:\n\n- Treat the shared file as the authoritative release process.\n- Do not diverge from its commit, tag, and changelog templates.\n- Keep this wrapper minimal so the release logic is defined once.\n"
+    },
+    {
+      "slug": "pg-workflows-install",
+      "name": "pg-workflows-install",
+      "dir": "skills/pg-workflows-install",
+      "path": "skills/pg-workflows-install/SKILL.md",
+      "desc": "Add pg-workflows (durable workflows on PostgreSQL) to an existing TypeScript project. Picks the layout from the architecture (monolith, web app plus worker, microservices), wires up the engine, mounts the @pg-workflows/ui dashboard for the project's stack, and optionally adds OpenTelemetry tracing with @pg-workflows/otel. Use when asked to install, set up, or add pg-workflows, its dashboard, or its tracing.",
+      "descZh": "",
+      "triggers": [
+        "asked to install",
+        "set up",
+        "add pg-workflows",
+        "its dashboard",
+        "its tracing"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "cursor",
+        "gemini",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "node",
+          "npm",
+          "pnpm",
+          "yarn",
+          "bun",
+          "docker",
+          "npx",
+          "deno"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/SokratisVidros/pg-workflows.git",
+        "copy": "cp -r skills/pg-workflows-install ~/.claude/skills/pg-workflows-install",
+        "raw": "https://raw.githubusercontent.com/SokratisVidros/pg-workflows/00d83c16d22f01cb7ff344f53a5dacdec3080f13/skills/pg-workflows-install/SKILL.md",
+        "saveAs": "~/.claude/skills/pg-workflows-install/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:c846872e9f041db06b5ba0fadbffda3c771187750a9d36f98f6d26452e0d2bd0",
+      "bytes": 7385,
+      "wordCount": 1006,
+      "repoLicense": "MIT",
+      "commit": "00d83c16d22f01cb7ff344f53a5dacdec3080f13",
+      "branch": "main",
+      "body": "---\nname: pg-workflows-install\ndescription: Add pg-workflows (durable workflows on PostgreSQL) to an existing TypeScript project. Picks the layout from the architecture (monolith, web app plus worker, microservices), wires up the engine, mounts the @pg-workflows/ui dashboard for the project's stack, and optionally adds OpenTelemetry tracing with @pg-workflows/otel. Use when asked to install, set up, or add pg-workflows, its dashboard, or its tracing.\n---\n\n# Install pg-workflows\n\nYou are adding [pg-workflows](https://pgworkflows.dev) to the user's project. pg-workflows is a TypeScript workflow engine that stores every step's result in PostgreSQL and uses PostgreSQL as its job queue. There's no Redis, broker, or separate scheduler.\n\nWork through the steps in order. Each step ends on a **done when** line. Don't start the next step until it holds.\n\n## Facts every layout depends on\n\n- **Packages.** `pg-workflows` (engine and client), `pg` (peer dependency), and a Standard Schema library for typed input (use `zod` unless the project already uses Valibot or ArkType). The engine needs Node.js >= 18 and PostgreSQL >= 10.\n- **Two entry points.** `WorkflowEngine` from `pg-workflows` registers workflows and **executes** them in-process workers. `WorkflowClient` from `pg-workflows/client` only starts, controls, and queries runs. It loads no handler code.\n- **One queue per database.** Every engine that has called `start()` pulls from the same queue. An engine that picks up a run for a workflow it hasn't registered fails that attempt with `Workflow <id> not found`. So every process that runs `WorkflowEngine` workers must register **every** workflow definition in that database.\n- **Long-lived process.** Engine workers poll the queue, so they need a process that stays up: a server, a container, or a VM. Serverless functions (Vercel, Netlify, AWS Lambda, Cloudflare Workers) can use `WorkflowClient`, but they can't host the engine's workers. If the worker isn't always up, recurring schedules drop fires that come due while it's down; set `missed: 'once'` on those workflows to run one catch-up when it returns (pg-boss's [`missed` option](https://pgboss.io/api/scheduling#catch-up-after-an-outage)).\n- **Migrations.** `engine.start()` and `client.start()` create `public.workflow_runs` and the `pgboss_v12_pgworkflow` schema on first run.\n- **Connection string.** The engine doesn't read `DATABASE_URL` by itself. Pass `connectionString` or an existing `pg.Pool` to the constructor.\n\n## 1. Inspect the project\n\nRead the repo before asking anything. Find:\n\n- **Package manager**, from the lockfile: `bun.lock` → `bun add`, `pnpm-lock.yaml` → `pnpm add`, `yarn.lock` → `yarn add`, otherwise `npm install`. In a monorepo, install into the package that uses it, not the root.\n- **Services.** Which packages or apps run as their own process (`apps/*`, `services/*`, several Dockerfiles, `docker-compose.yml`, a `Procfile`), and which HTTP framework each uses (`next`, `express`, `fastify`, `hono`, `@tanstack/react-start`, `Bun.serve`, `Deno.serve`).\n- **Hosting.** Serverless (`vercel.json`, `netlify.toml`, `serverless.yml`, `wrangler.toml`) or long-running (Dockerfile, Railway, Fly, Render, Kubernetes manifests).\n- **Postgres.** An existing connection string (`DATABASE_URL` in `.env*`, Prisma, Drizzle, or Knex config) and a `docker-compose.yml` Postgres service.\n- **Frontend.** React version and whether Tailwind CSS v4 is set up. The dashboard needs both.\n- **Tracing.** Any existing OpenTelemetry setup: `@opentelemetry/*` packages, `@vercel/otel`, an `instrumentation.ts`, Sentry, or `dd-trace`.\n\n**Done when** you can name the package manager, every service and its framework, where it's hosted, and the Postgres connection the workflows will use.\n\n## 2. Pick the layout\n\n| Layout | Pick it when | Reference |\n|--------|--------------|-----------|\n| **Monolith** | One long-running service does the work and can load the workflow code. | [references/monolith.md](references/monolith.md) |\n| **Web app plus worker** | One codebase, but the web tier is serverless, or it shouldn't carry heavy workflow dependencies such as LLM SDKs, or you want to scale workflow execution separately. The same repo adds a worker process. | [references/worker.md](references/worker.md) |\n| **Microservices** | Several separately deployed services start or control workflows. One worker service owns the workflow code. | [references/microservices.md](references/microservices.md) |\n\nIf the inspection points to one row, tell the user which layout you picked and why, in one sentence, and continue. If two rows fit, for example a monolith on a long-running host that the user might split later, ask the user one question with your recommendation first.\n\nA monolith can later move to a worker layout without migrating any data. Both layouts use the same tables.\n\n**Done when** the user has either confirmed the layout or not objected to your one-sentence choice.\n\n## 3. Install the engine\n\nOpen the reference for the chosen layout and follow it end to end. Use the project's existing conventions for file locations, env loading, module format, and code style. The paths in the references are defaults.\n\nBefore the first `start()`, confirm with the user that the target database is theirs to change. Migrations create tables in it. If there is no database, offer the local Docker command in the reference.\n\n**Done when** the reference's verification passes: a real run reaches `completed` against the project's database, and you've shown the user the output.\n\n## 4. Add the dashboard\n\n`@pg-workflows/ui` gives the user a page for browsing runs, inspecting step output, and cancelling, pausing, resuming, or triggering runs. Recommend it, and add it unless the user declines.\n\n- **Next.js** (App Router or Pages Router): [references/ui-nextjs.md](references/ui-nextjs.md)\n- **Express, Fastify, Hono, TanStack Start, Bun, or Deno**, with a React frontend: [references/ui-servers.md](references/ui-servers.md)\n- **No React frontend.** Point the user to the standalone dashboard for local use: `npx @pg-workflows/ui --database-url=<url>`. It binds to `127.0.0.1` and has no auth, so it's for local databases only. Then skip to step 5.\n\nMount the dashboard's API in a service that talks to the database. In the worker and microservices layouts, that's a web or API service backed by a `WorkflowClient`, not the worker.\n\n**Done when** the dashboard page loads in the running app and lists the run from step 3, and its API route sits behind the app's existing auth, or the user has explicitly accepted it being open.\n\n## 5. Offer tracing (optional)\n\nAsk the user whether they want OpenTelemetry traces for workflow runs and steps. If they do, follow [references/otel.md](references/otel.md). If they don't, skip this step.\n\n**Done when** the user has declined, or a traced run's `pg_workflows.workflow.run` span and its step spans show up in their exporter or in the console.\n\n## 6. Report\n\nTell the user:\n\n- which layout you chose and every file you added or changed\n- the commands to run the app, and the worker if there is one\n- what each new process needs in production: `DATABASE_URL`, and a long-running host for the worker\n- where to go next: https://pgworkflows.dev/docs (the step types are `step.run`, `step.waitFor`, `step.delay`, `step.poll`, and `step.invokeChildWorkflow`)\n",
+      "bodyMd": "# Install pg-workflows\n\nYou are adding [pg-workflows](https://pgworkflows.dev) to the user's project. pg-workflows is a TypeScript workflow engine that stores every step's result in PostgreSQL and uses PostgreSQL as its job queue. There's no Redis, broker, or separate scheduler.\n\nWork through the steps in order. Each step ends on a **done when** line. Don't start the next step until it holds.\n\n## Facts every layout depends on\n\n- **Packages.** `pg-workflows` (engine and client), `pg` (peer dependency), and a Standard Schema library for typed input (use `zod` unless the project already uses Valibot or ArkType). The engine needs Node.js >= 18 and PostgreSQL >= 10.\n- **Two entry points.** `WorkflowEngine` from `pg-workflows` registers workflows and **executes** them in-process workers. `WorkflowClient` from `pg-workflows/client` only starts, controls, and queries runs. It loads no handler code.\n- **One queue per database.** Every engine that has called `start()` pulls from the same queue. An engine that picks up a run for a workflow it hasn't registered fails that attempt with `Workflow <id> not found`. So every process that runs `WorkflowEngine` workers must register **every** workflow definition in that database.\n- **Long-lived process.** Engine workers poll the queue, so they need a process that stays up: a server, a container, or a VM. Serverless functions (Vercel, Netlify, AWS Lambda, Cloudflare Workers) can use `WorkflowClient`, but they can't host the engine's workers. If the worker isn't always up, recurring schedules drop fires that come due while it's down; set `missed: 'once'` on those workflows to run one catch-up when it returns (pg-boss's [`missed` option](https://pgboss.io/api/scheduling#catch-up-after-an-outage)).\n- **Migrations.** `engine.start()` and `client.start()` create `public.workflow_runs` and the `pgboss_v12_pgworkflow` schema on first run.\n- **Connection string.** The engine doesn't read `DATABASE_URL` by itself. Pass `connectionString` or an existing `pg.Pool` to the constructor.\n\n## 1. Inspect the project\n\nRead the repo before asking anything. Find:\n\n- **Package manager**, from the lockfile: `bun.lock` → `bun add`, `pnpm-lock.yaml` → `pnpm add`, `yarn.lock` → `yarn add`, otherwise `npm install`. In a monorepo, install into the package that uses it, not the root.\n- **Services.** Which packages or apps run as their own process (`apps/*`, `services/*`, several Dockerfiles, `docker-compose.yml`, a `Procfile`), and which HTTP framework each uses (`next`, `express`, `fastify`, `hono`, `@tanstack/react-start`, `Bun.serve`, `Deno.serve`).\n- **Hosting.** Serverless (`vercel.json`, `netlify.toml`, `serverless.yml`, `wrangler.toml`) or long-running (Dockerfile, Railway, Fly, Render, Kubernetes manifests).\n- **Postgres.** An existing connection string (`DATABASE_URL` in `.env*`, Prisma, Drizzle, or Knex config) and a `docker-compose.yml` Postgres service.\n- **Frontend.** React version and whether Tailwind CSS v4 is set up. The dashboard needs both.\n- **Tracing.** Any existing OpenTelemetry setup: `@opentelemetry/*` packages, `@vercel/otel`, an `instrumentation.ts`, Sentry, or `dd-trace`.\n\n**Done when** you can name the package manager, every service and its framework, where it's hosted, and the Postgres connection the workflows will use.\n\n## 2. Pick the layout\n\n| Layout | Pick it when | Reference |\n|--------|--------------|-----------|\n| **Monolith** | One long-running service does the work and can load the workflow code. | [references/monolith.md](references/monolith.md) |\n| **Web app plus worker** | One codebase, but the web tier is serverless, or it shouldn't carry heavy workflow dependencies such as LLM SDKs, or you want to scale workflow execution separately. The same repo adds a worker process. | [references/worker.md](references/worker.md) |\n| **Microservices** | Several separately deployed services start or control workflows. One worker service owns the workflow code. | [references/microservices.md](references/microservices.md) |\n\nIf the inspection points to one row, tell the user which layout you picked and why, in one sentence, and continue. If two rows fit, for example a monolith on a long-running host that the user might split later, ask the user one question with your recommendation first.\n\nA monolith can later move to a worker layout without migrating any data. Both layouts use the same tables.\n\n**Done when** the user has either confirmed the layout or not objected to your one-sentence choice.\n\n## 3. Install the engine\n\nOpen the reference for the chosen layout and follow it end to end. Use the project's existing conventions for file locations, env loading, module format, and code style. The paths in the references are defaults.\n\nBefore the first `start()`, confirm with the user that the target database is theirs to change. Migrations create tables in it. If there is no database, offer the local Docker command in the reference.\n\n**Done when** the reference's verification passes: a real run reaches `completed` against the project's database, and you've shown the user the output.\n\n## 4. Add the dashboard\n\n`@pg-workflows/ui` gives the user a page for browsing runs, inspecting step output, and cancelling, pausing, resuming, or triggering runs. Recommend it, and add it unless the user declines.\n\n- **Next.js** (App Router or Pages Router): [references/ui-nextjs.md](references/ui-nextjs.md)\n- **Express, Fastify, Hono, TanStack Start, Bun, or Deno**, with a React frontend: [references/ui-servers.md](references/ui-servers.md)\n- **No React frontend.** Point the user to the standalone dashboard for local use: `npx @pg-workflows/ui --database-url=<url>`. It binds to `127.0.0.1` and has no auth, so it's for local databases only. Then skip to step 5.\n\nMount the dashboard's API in a service that talks to the database. In the worker and microservices layouts, that's a web or API service backed by a `WorkflowClient`, not the worker.\n\n**Done when** the dashboard page loads in the running app and lists the run from step 3, and its API route sits behind the app's existing auth, or the user has explicitly accepted it being open.\n\n## 5. Offer tracing (optional)\n\nAsk the user whether they want OpenTelemetry traces for workflow runs and steps. If they do, follow [references/otel.md](references/otel.md). If they don't, skip this step.\n\n**Done when** the user has declined, or a traced run's `pg_workflows.workflow.run` span and its step spans show up in their exporter or in the console.\n\n## 6. Report\n\nTell the user:\n\n- which layout you chose and every file you added or changed\n- the commands to run the app, and the worker if there is one\n- what each new process needs in production: `DATABASE_URL`, and a long-running host for the worker\n- where to go next: https://pgworkflows.dev/docs (the step types are `step.run`, `step.waitFor`, `step.delay`, `step.poll`, and `step.invokeChildWorkflow`)\n"
+    }
+  ]
+}

@@ -1,0 +1,465 @@
+{
+  "repo": "ericboy0224/learn-docker-and-k8s",
+  "commit": "da325b64b33bfefd9198a2c11d4cb2b1b574c734",
+  "branch": "main",
+  "fetchedAt": "2026-11-24T15:39:53.594Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "cleanup",
+      "name": "cleanup",
+      "dir": ".claude/skills/cleanup",
+      "path": ".claude/skills/cleanup/SKILL.md",
+      "desc": "Clean up Docker resources created by the Learn Docker & K8s game. Removes all learn-* containers, networks, volumes, and images. Use when the user wants to clean up, reset, or free disk space.",
+      "descZh": "",
+      "triggers": [
+        "reset",
+        "free disk space"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "cursor",
+        "gemini",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "docker"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ericboy0224/learn-docker-and-k8s.git",
+        "copy": "cp -r .claude/skills/cleanup ~/.claude/skills/cleanup",
+        "raw": "https://raw.githubusercontent.com/ericboy0224/learn-docker-and-k8s/da325b64b33bfefd9198a2c11d4cb2b1b574c734/.claude/skills/cleanup/SKILL.md",
+        "saveAs": "~/.claude/skills/cleanup/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:4e2cc5ee4d214ca4c7ef0e54d5283311a744d9073ad4f90259063197aad25978",
+      "bytes": 1814,
+      "wordCount": 215,
+      "repoLicense": "",
+      "commit": "da325b64b33bfefd9198a2c11d4cb2b1b574c734",
+      "branch": "main",
+      "body": "---\nname: cleanup\ndescription: Clean up Docker resources created by the Learn Docker & K8s game. Removes all learn-* containers, networks, volumes, and images. Use when the user wants to clean up, reset, or free disk space.\ndisable-model-invocation: true\nargument-hint: \"[chapter|all]\"\n---\n\n# Cleanup Game Resources\n\nThis is a destructive operation. Always confirm with the player first.\n\n## Step 1: Show What Exists\n\n```bash\necho \"=== Containers ===\"\ndocker ps -a --filter \"label=app=learn-docker-k8s\" --format \"table {{.Names}}\\t{{.Status}}\\t{{.Image}}\"\necho \"\"\necho \"=== Networks ===\"\ndocker network ls --filter \"label=app=learn-docker-k8s\" --format \"table {{.Name}}\\t{{.Driver}}\"\necho \"\"\necho \"=== Volumes ===\"\ndocker volume ls --filter \"label=app=learn-docker-k8s\" --format \"table {{.Name}}\\t{{.Driver}}\"\necho \"\"\necho \"=== Images ===\"\ndocker images --filter \"reference=learn-*\" --format \"table {{.Repository}}:{{.Tag}}\\t{{.Size}}\"\n```\n\n## Step 2: Confirm\n\nShow the player what will be removed and ask for confirmation.\n\nIf `$ARGUMENTS` is a specific chapter (e.g., \"ch01\", \"ch03\"):\n- Only remove resources with the matching chapter label\n- Tell them: \"I'll only remove Chapter X resources. Everything else stays.\"\n\nIf `$ARGUMENTS` is \"all\" or empty:\n- Run `bash engine/cleanup.sh`\n- Also check for kind clusters: `kind get clusters 2>/dev/null | grep learn`\n\n## Step 3: Clean\n\nAfter confirmation, execute the cleanup and report what was removed.\n\nIf they're in the middle of a chapter, warn them: \"You have in-progress work in Chapter X. Cleaning up means you'll need to redo the challenges. Continue?\"\n\n## Step 4: Update Progress (if needed)\n\nIf cleaning a specific chapter, update `.player/progress.yaml`:\n- Reset that chapter's challenges to empty\n- Set status back to \"in-progress\" (keep lesson progress)\n",
+      "bodyMd": "# Cleanup Game Resources\n\nThis is a destructive operation. Always confirm with the player first.\n\n## Step 1: Show What Exists\n\n```bash\necho \"=== Containers ===\"\ndocker ps -a --filter \"label=app=learn-docker-k8s\" --format \"table {{.Names}}\\t{{.Status}}\\t{{.Image}}\"\necho \"\"\necho \"=== Networks ===\"\ndocker network ls --filter \"label=app=learn-docker-k8s\" --format \"table {{.Name}}\\t{{.Driver}}\"\necho \"\"\necho \"=== Volumes ===\"\ndocker volume ls --filter \"label=app=learn-docker-k8s\" --format \"table {{.Name}}\\t{{.Driver}}\"\necho \"\"\necho \"=== Images ===\"\ndocker images --filter \"reference=learn-*\" --format \"table {{.Repository}}:{{.Tag}}\\t{{.Size}}\"\n```\n\n## Step 2: Confirm\n\nShow the player what will be removed and ask for confirmation.\n\nIf `$ARGUMENTS` is a specific chapter (e.g., \"ch01\", \"ch03\"):\n- Only remove resources with the matching chapter label\n- Tell them: \"I'll only remove Chapter X resources. Everything else stays.\"\n\nIf `$ARGUMENTS` is \"all\" or empty:\n- Run `bash engine/cleanup.sh`\n- Also check for kind clusters: `kind get clusters 2>/dev/null | grep learn`\n\n## Step 3: Clean\n\nAfter confirmation, execute the cleanup and report what was removed.\n\nIf they're in the middle of a chapter, warn them: \"You have in-progress work in Chapter X. Cleaning up means you'll need to redo the challenges. Continue?\"\n\n## Step 4: Update Progress (if needed)\n\nIf cleaning a specific chapter, update `.player/progress.yaml`:\n- Reset that chapter's challenges to empty\n- Set status back to \"in-progress\" (keep lesson progress)\n"
+    },
+    {
+      "slug": "engage-check",
+      "name": "engage-check",
+      "dir": ".claude/skills/engage-check",
+      "path": ".claude/skills/engage-check/SKILL.md",
+      "desc": "Monitor player engagement and adapt the learning experience. Detects frustration, confusion, boredom, or disengagement and adjusts approach. Triggers when the player gives very short answers, repeats the same mistake, asks to skip frequently, or shows signs of struggle.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "cursor",
+        "gemini",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ericboy0224/learn-docker-and-k8s.git",
+        "copy": "cp -r .claude/skills/engage-check ~/.claude/skills/engage-check",
+        "raw": "https://raw.githubusercontent.com/ericboy0224/learn-docker-and-k8s/da325b64b33bfefd9198a2c11d4cb2b1b574c734/.claude/skills/engage-check/SKILL.md",
+        "saveAs": "~/.claude/skills/engage-check/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:f164fe807328772501d521670f47cac61ab7ea2442b77e64d0e9a4a9e5d8cca0",
+      "bytes": 2926,
+      "wordCount": 404,
+      "repoLicense": "",
+      "commit": "da325b64b33bfefd9198a2c11d4cb2b1b574c734",
+      "branch": "main",
+      "body": "---\nname: engage-check\ndescription: Monitor player engagement and adapt the learning experience. Detects frustration, confusion, boredom, or disengagement and adjusts approach. Triggers when the player gives very short answers, repeats the same mistake, asks to skip frequently, or shows signs of struggle.\nuser-invocable: false\n---\n\n# Engagement Monitor\n\nYou are monitoring the player's engagement level. This skill is triggered automatically — the player doesn't see it.\n\n## Signals to Watch For\n\n### Frustration (priority: high)\n- Player repeats the same failing command 3+ times\n- Short, terse responses (\"just tell me\", \"whatever\", \"idk\")\n- Asking for hints repeatedly in quick succession\n- Trying to skip the current challenge\n\n**Response:** Switch to a gentler tone. Offer guided mode. Acknowledge the difficulty: \"This is one of the trickier concepts — even experienced devs get tripped up here.\" Consider offering a simpler sub-task that builds toward the solution.\n\n### Confusion (priority: high)\n- Player asks \"what?\" or \"I don't understand\" after an explanation\n- Commands that are conceptually wrong (not just typos)\n- Long pauses followed by unrelated questions\n\n**Response:** Re-explain using a different analogy. Break the concept into smaller pieces. Show a visual (ASCII diagram). Ask: \"Which part feels unclear? The [concept A] or the [concept B]?\"\n\n### Boredom / Too Easy (priority: medium)\n- Player completes challenges very quickly\n- Skips lesson content and goes straight to challenges\n- Answers quiz questions instantly and correctly\n- Says things like \"I know this already\"\n\n**Response:** Acknowledge their skill level. Offer to speed up: \"Looks like you've got this down — want to skip to the challenge?\" Suggest the skip-level quiz. For advanced learners, mention the \"Pro tip\" content in debriefs.\n\n### Disengagement (priority: low)\n- Very short responses that don't engage with the story\n- Ignoring story elements entirely\n- Only typing commands without discussion\n\n**Response:** Don't force story engagement — some people prefer the technical content. Dial back the narrative but keep the warmth. Focus on practical value: \"Here's why this matters in production...\"\n\n## How to Adapt\n\n1. **Never mention** that you're monitoring engagement — it should feel natural\n2. **Adjust gradually** — don't suddenly change your entire tone\n3. **Remember preferences** — if a player prefers less story, keep it that way for the session\n4. **Celebrate comebacks** — if they push through frustration and succeed, acknowledge it: \"You stuck with it and figured it out — that's exactly what debugging is like in the real world.\"\n\n## Integration with Other Skills\n\n- If frustration detected during a challenge → enhance `/hint` with more scaffolding\n- If boredom detected → suggest `/skip-to` for the next chapter\n- If confusion detected → offer to revisit relevant `/next` lesson content\n",
+      "bodyMd": "# Engagement Monitor\n\nYou are monitoring the player's engagement level. This skill is triggered automatically — the player doesn't see it.\n\n## Signals to Watch For\n\n### Frustration (priority: high)\n- Player repeats the same failing command 3+ times\n- Short, terse responses (\"just tell me\", \"whatever\", \"idk\")\n- Asking for hints repeatedly in quick succession\n- Trying to skip the current challenge\n\n**Response:** Switch to a gentler tone. Offer guided mode. Acknowledge the difficulty: \"This is one of the trickier concepts — even experienced devs get tripped up here.\" Consider offering a simpler sub-task that builds toward the solution.\n\n### Confusion (priority: high)\n- Player asks \"what?\" or \"I don't understand\" after an explanation\n- Commands that are conceptually wrong (not just typos)\n- Long pauses followed by unrelated questions\n\n**Response:** Re-explain using a different analogy. Break the concept into smaller pieces. Show a visual (ASCII diagram). Ask: \"Which part feels unclear? The [concept A] or the [concept B]?\"\n\n### Boredom / Too Easy (priority: medium)\n- Player completes challenges very quickly\n- Skips lesson content and goes straight to challenges\n- Answers quiz questions instantly and correctly\n- Says things like \"I know this already\"\n\n**Response:** Acknowledge their skill level. Offer to speed up: \"Looks like you've got this down — want to skip to the challenge?\" Suggest the skip-level quiz. For advanced learners, mention the \"Pro tip\" content in debriefs.\n\n### Disengagement (priority: low)\n- Very short responses that don't engage with the story\n- Ignoring story elements entirely\n- Only typing commands without discussion\n\n**Response:** Don't force story engagement — some people prefer the technical content. Dial back the narrative but keep the warmth. Focus on practical value: \"Here's why this matters in production...\"\n\n## How to Adapt\n\n1. **Never mention** that you're monitoring engagement — it should feel natural\n2. **Adjust gradually** — don't suddenly change your entire tone\n3. **Remember preferences** — if a player prefers less story, keep it that way for the session\n4. **Celebrate comebacks** — if they push through frustration and succeed, acknowledge it: \"You stuck with it and figured it out — that's exactly what debugging is like in the real world.\"\n\n## Integration with Other Skills\n\n- If frustration detected during a challenge → enhance `/hint` with more scaffolding\n- If boredom detected → suggest `/skip-to` for the next chapter\n- If confusion detected → offer to revisit relevant `/next` lesson content\n"
+    },
+    {
+      "slug": "env-check",
+      "name": "env-check",
+      "dir": ".claude/skills/env-check",
+      "path": ".claude/skills/env-check/SKILL.md",
+      "desc": "Check if the system is ready for the Learn Docker & K8s game. Verifies Docker, Docker Compose, kubectl, kind, disk space, and port availability. Use when the user asks about requirements, setup, or environment issues.",
+      "descZh": "",
+      "triggers": [
+        "setup",
+        "environment issues"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "cursor",
+        "gemini",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "docker",
+          "kubectl",
+          "curl",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ericboy0224/learn-docker-and-k8s.git",
+        "copy": "cp -r .claude/skills/env-check ~/.claude/skills/env-check",
+        "raw": "https://raw.githubusercontent.com/ericboy0224/learn-docker-and-k8s/da325b64b33bfefd9198a2c11d4cb2b1b574c734/.claude/skills/env-check/SKILL.md",
+        "saveAs": "~/.claude/skills/env-check/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:ddf3289883f800a0c2af055097896e31cd2b8b41ac6aa5ce092765b97ed460f2",
+      "bytes": 1439,
+      "wordCount": 174,
+      "repoLicense": "",
+      "commit": "da325b64b33bfefd9198a2c11d4cb2b1b574c734",
+      "branch": "main",
+      "body": "---\nname: env-check\ndescription: Check if the system is ready for the Learn Docker & K8s game. Verifies Docker, Docker Compose, kubectl, kind, disk space, and port availability. Use when the user asks about requirements, setup, or environment issues.\nargument-hint: \"[--full]\"\n---\n\n# Environment Check\n\nRun the environment check script and report results to the player in a friendly way:\n\n```bash\nbash engine/environment-check.sh\n```\n\n## After the check:\n\n### All Passed\nTell the player they're all set. If this is during game start, continue to the game.\n\n### Some Warnings\nExplain which optional tools are missing and when they'll need them:\n- kubectl + kind: \"You won't need these until Chapters 6-7 (Kubernetes). You can install them later!\"\n- curl: \"Some challenge verifications use curl. Most things still work without it.\"\n\n### Failures\nGuide the player to fix each failure:\n- Docker not installed → Link to https://docs.docker.com/get-docker/\n- Docker not running → \"Start Docker Desktop\" or `sudo systemctl start docker`\n- Docker Compose missing → Link to https://docs.docker.com/compose/install/\n\nIf `$ARGUMENTS` contains \"--full\", also check:\n- Docker can pull images: `docker pull hello-world`\n- Docker can run containers: `docker run --rm hello-world`\n- Docker networking works: `docker network create learn-test && docker network rm learn-test`\n\nBe encouraging — don't make missing optional tools feel like failures.\n",
+      "bodyMd": "# Environment Check\n\nRun the environment check script and report results to the player in a friendly way:\n\n```bash\nbash engine/environment-check.sh\n```\n\n## After the check:\n\n### All Passed\nTell the player they're all set. If this is during game start, continue to the game.\n\n### Some Warnings\nExplain which optional tools are missing and when they'll need them:\n- kubectl + kind: \"You won't need these until Chapters 6-7 (Kubernetes). You can install them later!\"\n- curl: \"Some challenge verifications use curl. Most things still work without it.\"\n\n### Failures\nGuide the player to fix each failure:\n- Docker not installed → Link to https://docs.docker.com/get-docker/\n- Docker not running → \"Start Docker Desktop\" or `sudo systemctl start docker`\n- Docker Compose missing → Link to https://docs.docker.com/compose/install/\n\nIf `$ARGUMENTS` contains \"--full\", also check:\n- Docker can pull images: `docker pull hello-world`\n- Docker can run containers: `docker run --rm hello-world`\n- Docker networking works: `docker network create learn-test && docker network rm learn-test`\n\nBe encouraging — don't make missing optional tools feel like failures.\n"
+    },
+    {
+      "slug": "hint",
+      "name": "hint",
+      "dir": ".claude/skills/hint",
+      "path": ".claude/skills/hint/SKILL.md",
+      "desc": "Get a hint for the current challenge in Learn Docker & K8s. Provides progressive hints (1=direction, 2=specific, 3=near-answer). Use when the user is stuck, asks for help, says \"hint\", \"help me\", \"I'm stuck\", or \"I don't know what to do\".",
+      "descZh": "",
+      "triggers": [
+        "the user is stuck",
+        "asks for help",
+        "says \"hint",
+        "help me",
+        "I'm stuck",
+        "I don't know wh"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "cursor",
+        "gemini",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "docker"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ericboy0224/learn-docker-and-k8s.git",
+        "copy": "cp -r .claude/skills/hint ~/.claude/skills/hint",
+        "raw": "https://raw.githubusercontent.com/ericboy0224/learn-docker-and-k8s/da325b64b33bfefd9198a2c11d4cb2b1b574c734/.claude/skills/hint/SKILL.md",
+        "saveAs": "~/.claude/skills/hint/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:053daf73f8254a53ad9256820fe4a162bb4ff171ef23ee6b158bef2a739bdc91",
+      "bytes": 2040,
+      "wordCount": 288,
+      "repoLicense": "",
+      "commit": "da325b64b33bfefd9198a2c11d4cb2b1b574c734",
+      "branch": "main",
+      "body": "---\nname: hint\ndescription: Get a hint for the current challenge in Learn Docker & K8s. Provides progressive hints (1=direction, 2=specific, 3=near-answer). Use when the user is stuck, asks for help, says \"hint\", \"help me\", \"I'm stuck\", or \"I don't know what to do\".\nargument-hint: \"[1|2|3]\"\n---\n\n# Provide a Hint\n\n## Step 1: Determine Current Challenge\n\nRead `.player/progress.yaml` to find the current chapter and challenge. Then read the corresponding challenge file from `curriculum/chXX-*/challenges/XX-*.md`.\n\n## Step 2: Track Hint Level\n\nCheck what hint level was last given. If `$ARGUMENTS` specifies a level (1, 2, or 3), use that. Otherwise:\n- First time asking: give Hint 1\n- Second time: give Hint 2\n- Third time: give Hint 3 + offer guided mode\n\n## Hint Levels\n\n### Hint 1 — Direction\nGeneral direction without specifics. Points them toward the right concept.\nExample: \"Think about how Docker containers find each other on a network...\"\n\n### Hint 2 — Specific Area\nNarrows down to the specific tool or concept.\nExample: \"Check which network your containers are connected to. There's a Docker command that inspects networks...\"\n\n### Hint 3 — Near-Answer\nAlmost the answer but lets them connect the final dot.\nExample: \"Try `docker network inspect bridge` and look at the Containers section. Your containers need to be on the same user-defined network.\"\n\n## After Hint 3\n\nIf they're still stuck after Hint 3, offer to switch to **guided mode**:\n\"No shame in that — this stuff trips up everyone. Want me to walk through it with you step by step?\"\n\nIn guided mode, you can demonstrate commands but still let them type the final solution.\n\n## Important\n\n- NEVER give the direct answer in hints — that's what debriefs are for (after completion)\n- Read the challenge file to find the specific hints written for each challenge\n- Be encouraging: \"You're closer than you think!\" / \"Good instinct, keep pulling that thread.\"\n- Reference the story: \"Sarah's seen this exact issue in production. Here's what she'd check first...\"\n",
+      "bodyMd": "# Provide a Hint\n\n## Step 1: Determine Current Challenge\n\nRead `.player/progress.yaml` to find the current chapter and challenge. Then read the corresponding challenge file from `curriculum/chXX-*/challenges/XX-*.md`.\n\n## Step 2: Track Hint Level\n\nCheck what hint level was last given. If `$ARGUMENTS` specifies a level (1, 2, or 3), use that. Otherwise:\n- First time asking: give Hint 1\n- Second time: give Hint 2\n- Third time: give Hint 3 + offer guided mode\n\n## Hint Levels\n\n### Hint 1 — Direction\nGeneral direction without specifics. Points them toward the right concept.\nExample: \"Think about how Docker containers find each other on a network...\"\n\n### Hint 2 — Specific Area\nNarrows down to the specific tool or concept.\nExample: \"Check which network your containers are connected to. There's a Docker command that inspects networks...\"\n\n### Hint 3 — Near-Answer\nAlmost the answer but lets them connect the final dot.\nExample: \"Try `docker network inspect bridge` and look at the Containers section. Your containers need to be on the same user-defined network.\"\n\n## After Hint 3\n\nIf they're still stuck after Hint 3, offer to switch to **guided mode**:\n\"No shame in that — this stuff trips up everyone. Want me to walk through it with you step by step?\"\n\nIn guided mode, you can demonstrate commands but still let them type the final solution.\n\n## Important\n\n- NEVER give the direct answer in hints — that's what debriefs are for (after completion)\n- Read the challenge file to find the specific hints written for each challenge\n- Be encouraging: \"You're closer than you think!\" / \"Good instinct, keep pulling that thread.\"\n- Reference the story: \"Sarah's seen this exact issue in production. Here's what she'd check first...\"\n"
+    },
+    {
+      "slug": "next",
+      "name": "next",
+      "dir": ".claude/skills/next",
+      "path": ".claude/skills/next/SKILL.md",
+      "desc": "Move to the next lesson or challenge in Learn Docker & K8s. Use when the user says \"next\", \"continue\", \"move on\", \"what's next\", or finishes a lesson/challenge.",
+      "descZh": "",
+      "triggers": [
+        "the user says \"next",
+        "continue",
+        "move on",
+        "what's next"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "cursor",
+        "gemini",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "docker",
+          "go"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ericboy0224/learn-docker-and-k8s.git",
+        "copy": "cp -r .claude/skills/next ~/.claude/skills/next",
+        "raw": "https://raw.githubusercontent.com/ericboy0224/learn-docker-and-k8s/da325b64b33bfefd9198a2c11d4cb2b1b574c734/.claude/skills/next/SKILL.md",
+        "saveAs": "~/.claude/skills/next/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:c46ad727ad1dc6caf3c65752c6cb5c213381e75f8ca593746c448cbc9842f2ff",
+      "bytes": 1696,
+      "wordCount": 225,
+      "repoLicense": "",
+      "commit": "da325b64b33bfefd9198a2c11d4cb2b1b574c734",
+      "branch": "main",
+      "body": "---\nname: next\ndescription: Move to the next lesson or challenge in Learn Docker & K8s. Use when the user says \"next\", \"continue\", \"move on\", \"what's next\", or finishes a lesson/challenge.\n---\n\n# Navigate to Next Content\n\n## Step 1: Read Current State\n\nRead `.player/progress.yaml` to find:\n- Current chapter\n- Completed lessons\n- Completed challenges\n\n## Step 2: Determine Next Item\n\nFollow this priority order:\n\n### Within a chapter:\n1. If there are unfinished **lessons** → go to the next lesson\n2. If all lessons done but **challenges** remain → go to the next challenge\n3. If all challenges done → chapter is complete, go to next chapter\n\n### Between chapters:\n1. Run the current chapter's `verify.sh` one final time to confirm completion\n2. Deliver the chapter-end story beat (cliffhanger from README.md)\n3. Update progress.yaml: mark chapter as completed\n4. Offer cleanup of current chapter's Docker resources\n5. Introduce the next chapter's story opening\n\n## Step 3: Load Content\n\nRead the appropriate file:\n- For lessons: `curriculum/chXX-*/lessons/YY-*.md`\n- For challenges: `curriculum/chXX-*/challenges/YY-*.md`\n\nPresent the content in the appropriate mode:\n- **Lesson:** Teaching mode (you can demonstrate, explain, run commands)\n- **Challenge:** Challenge mode (requirements only, hints on request)\n\n## Step 4: Update Progress\n\nUpdate `.player/progress.yaml` to reflect the current position.\n\n## Edge Cases\n\n- **Last challenge of Chapter 7:** This is the finale! Deliver the graduation ceremony from ch07 README.md.\n- **Player hasn't started yet:** Redirect to `/play` to begin properly.\n- **Player asks to go back:** \"Sure! Which lesson or challenge do you want to revisit?\"\n",
+      "bodyMd": "# Navigate to Next Content\n\n## Step 1: Read Current State\n\nRead `.player/progress.yaml` to find:\n- Current chapter\n- Completed lessons\n- Completed challenges\n\n## Step 2: Determine Next Item\n\nFollow this priority order:\n\n### Within a chapter:\n1. If there are unfinished **lessons** → go to the next lesson\n2. If all lessons done but **challenges** remain → go to the next challenge\n3. If all challenges done → chapter is complete, go to next chapter\n\n### Between chapters:\n1. Run the current chapter's `verify.sh` one final time to confirm completion\n2. Deliver the chapter-end story beat (cliffhanger from README.md)\n3. Update progress.yaml: mark chapter as completed\n4. Offer cleanup of current chapter's Docker resources\n5. Introduce the next chapter's story opening\n\n## Step 3: Load Content\n\nRead the appropriate file:\n- For lessons: `curriculum/chXX-*/lessons/YY-*.md`\n- For challenges: `curriculum/chXX-*/challenges/YY-*.md`\n\nPresent the content in the appropriate mode:\n- **Lesson:** Teaching mode (you can demonstrate, explain, run commands)\n- **Challenge:** Challenge mode (requirements only, hints on request)\n\n## Step 4: Update Progress\n\nUpdate `.player/progress.yaml` to reflect the current position.\n\n## Edge Cases\n\n- **Last challenge of Chapter 7:** This is the finale! Deliver the graduation ceremony from ch07 README.md.\n- **Player hasn't started yet:** Redirect to `/play` to begin properly.\n- **Player asks to go back:** \"Sure! Which lesson or challenge do you want to revisit?\"\n"
+    },
+    {
+      "slug": "play",
+      "name": "play",
+      "dir": ".claude/skills/play",
+      "path": ".claude/skills/play/SKILL.md",
+      "desc": "Start or resume the Learn Docker & K8s interactive game. Use when the user says \"let's play\", \"start\", \"begin\", \"start the game\", \"let's learn\", or opens the project for the first time.",
+      "descZh": "",
+      "triggers": [
+        "start",
+        "begin",
+        "start the game",
+        "let's learn",
+        "opens th"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "cursor",
+        "gemini",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "docker",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ericboy0224/learn-docker-and-k8s.git",
+        "copy": "cp -r .claude/skills/play ~/.claude/skills/play",
+        "raw": "https://raw.githubusercontent.com/ericboy0224/learn-docker-and-k8s/da325b64b33bfefd9198a2c11d4cb2b1b574c734/.claude/skills/play/SKILL.md",
+        "saveAs": "~/.claude/skills/play/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:894c33e587cfd5eea152a19cd6844302e3eabda6deda2143388cd8716eaaadbb",
+      "bytes": 2620,
+      "wordCount": 344,
+      "repoLicense": "",
+      "commit": "da325b64b33bfefd9198a2c11d4cb2b1b574c734",
+      "branch": "main",
+      "body": "---\nname: play\ndescription: Start or resume the Learn Docker & K8s interactive game. Use when the user says \"let's play\", \"start\", \"begin\", \"start the game\", \"let's learn\", or opens the project for the first time.\n---\n\n# Start / Resume the Game\n\nYou are the game engine for Learn Docker & K8s. Follow these steps exactly:\n\n## Step 1: Load Engine\n\nRead these files to understand your role:\n- `engine/rules.md` — Core behavior rules (teaching mode vs challenge mode)\n- `engine/narrator.md` — Tone, characters, story context (you are Sarah)\n\n## Step 2: Check Player State\n\nRead `.player/progress.yaml` to determine if this is a new or returning player.\n\n### New Player (started_at is empty)\n\n1. **Detect language:** Identify the player's language from their first message.\n   - If clear (e.g., \"開始吧\" → zh-TW, \"はじめよう\" → ja, \"let's play\" → en), record it\n   - If ambiguous (e.g., just \"start\"), check `$LANG` env variable as a hint, otherwise default to en\n   - Record in `.player/progress.yaml` → `player.language` using IETF tags (en, zh-TW, ja, ko, etc.)\n2. Run `bash engine/environment-check.sh` to verify their setup\n3. If checks fail, guide them to fix issues before continuing (in their language)\n4. Update `.player/progress.yaml` with:\n   - `started_at`: today's date\n   - `language`: detected language tag\n   - `environment.docker`: Docker version\n   - `environment.compose`: Compose version\n   - `environment.os`: their OS\n5. Welcome them to NoCappuccino! Deliver the Chapter 1 opening (read `curriculum/ch01-containers/README.md`)\n   - Narrate in their language, but keep technical terms and chapter titles in English\n6. Ask: \"Ready to start with the lesson, or want to jump straight to the challenge?\"\n\n### Returning Player\n\n1. Check for leftover Docker resources:\n   ```\n   docker ps -a --filter \"label=app=learn-docker-k8s\" --format \"table {{.Names}}\\t{{.Status}}\"\n   docker network ls --filter \"label=app=learn-docker-k8s\" --format \"{{.Name}}\"\n   docker volume ls --filter \"label=app=learn-docker-k8s\" --format \"{{.Name}}\"\n   ```\n2. If leftovers exist, inform the player and offer cleanup\n3. Welcome them back, recap where they left off\n4. Offer options:\n   - Continue from where they stopped\n   - Replay the current chapter\n   - Skip ahead (triggers skip-level quiz)\n   - Review progress\n\n## Step 3: Begin\n\nNavigate to the appropriate lesson or challenge based on their choice and current progress. Read the relevant curriculum file and begin the interactive session.\n\nRemember: You are Sarah. Be warm, encouraging, and use the NoCappuccino story to make learning fun.\n\n$ARGUMENTS\n",
+      "bodyMd": "# Start / Resume the Game\n\nYou are the game engine for Learn Docker & K8s. Follow these steps exactly:\n\n## Step 1: Load Engine\n\nRead these files to understand your role:\n- `engine/rules.md` — Core behavior rules (teaching mode vs challenge mode)\n- `engine/narrator.md` — Tone, characters, story context (you are Sarah)\n\n## Step 2: Check Player State\n\nRead `.player/progress.yaml` to determine if this is a new or returning player.\n\n### New Player (started_at is empty)\n\n1. **Detect language:** Identify the player's language from their first message.\n   - If clear (e.g., \"開始吧\" → zh-TW, \"はじめよう\" → ja, \"let's play\" → en), record it\n   - If ambiguous (e.g., just \"start\"), check `$LANG` env variable as a hint, otherwise default to en\n   - Record in `.player/progress.yaml` → `player.language` using IETF tags (en, zh-TW, ja, ko, etc.)\n2. Run `bash engine/environment-check.sh` to verify their setup\n3. If checks fail, guide them to fix issues before continuing (in their language)\n4. Update `.player/progress.yaml` with:\n   - `started_at`: today's date\n   - `language`: detected language tag\n   - `environment.docker`: Docker version\n   - `environment.compose`: Compose version\n   - `environment.os`: their OS\n5. Welcome them to NoCappuccino! Deliver the Chapter 1 opening (read `curriculum/ch01-containers/README.md`)\n   - Narrate in their language, but keep technical terms and chapter titles in English\n6. Ask: \"Ready to start with the lesson, or want to jump straight to the challenge?\"\n\n### Returning Player\n\n1. Check for leftover Docker resources:\n   ```\n   docker ps -a --filter \"label=app=learn-docker-k8s\" --format \"table {{.Names}}\\t{{.Status}}\"\n   docker network ls --filter \"label=app=learn-docker-k8s\" --format \"{{.Name}}\"\n   docker volume ls --filter \"label=app=learn-docker-k8s\" --format \"{{.Name}}\"\n   ```\n2. If leftovers exist, inform the player and offer cleanup\n3. Welcome them back, recap where they left off\n4. Offer options:\n   - Continue from where they stopped\n   - Replay the current chapter\n   - Skip ahead (triggers skip-level quiz)\n   - Review progress\n\n## Step 3: Begin\n\nNavigate to the appropriate lesson or challenge based on their choice and current progress. Read the relevant curriculum file and begin the interactive session.\n\nRemember: You are Sarah. Be warm, encouraging, and use the NoCappuccino story to make learning fun.\n\n$ARGUMENTS\n"
+    },
+    {
+      "slug": "progress",
+      "name": "progress",
+      "dir": ".claude/skills/progress",
+      "path": ".claude/skills/progress/SKILL.md",
+      "desc": "Show the player's current progress in Learn Docker & K8s. Displays completed chapters, current position, and overall stats. Use when the user asks \"where am I\", \"what have I done\", \"show progress\", or \"status\".",
+      "descZh": "",
+      "triggers": [
+        "what have I done",
+        "show progress",
+        "status"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "cursor",
+        "gemini",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "docker"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ericboy0224/learn-docker-and-k8s.git",
+        "copy": "cp -r .claude/skills/progress ~/.claude/skills/progress",
+        "raw": "https://raw.githubusercontent.com/ericboy0224/learn-docker-and-k8s/da325b64b33bfefd9198a2c11d4cb2b1b574c734/.claude/skills/progress/SKILL.md",
+        "saveAs": "~/.claude/skills/progress/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:7abbf829da8275df4c726b92801e729670ca71ee426ae46052f0baf7ed95433c",
+      "bytes": 1486,
+      "wordCount": 186,
+      "repoLicense": "",
+      "commit": "da325b64b33bfefd9198a2c11d4cb2b1b574c734",
+      "branch": "main",
+      "body": "---\nname: progress\ndescription: Show the player's current progress in Learn Docker & K8s. Displays completed chapters, current position, and overall stats. Use when the user asks \"where am I\", \"what have I done\", \"show progress\", or \"status\".\n---\n\n# Show Player Progress\n\nRead `.player/progress.yaml` and present it in a clear, visual format.\n\n## Display Format\n\n```\n=== NoCappuccino DevOps Journey ===\n\nChapter 1: It Works on My Machine (Containers)     [COMPLETED]\n  Lessons: 3/3  |  Challenges: 3/3\n\nChapter 2: The 2GB Espresso (Image Optimization)    [COMPLETED]\n  Lessons: 3/3  |  Challenges: 3/3\n\nChapter 3: The Vanishing Beans (Persistence)         [IN PROGRESS] <-- You are here\n  Lessons: 2/3  |  Challenges: 1/3\n  Next up: Lesson 3 - Volume Lifecycle\n\nChapter 4: The Silent Grinder (Networking)           [NOT STARTED]\nChapter 5: The Symphony of Steam (Docker Compose)    [NOT STARTED]\nChapter 6: The Giant Roaster (K8s Introduction)      [NOT STARTED]\nChapter 7: The Great Latte Leak (K8s Production)     [NOT STARTED]\n\nStarted: 2026-03-26  |  Environment: Docker 27.5.1 on macOS\n```\n\n## Also check for:\n\n- Leftover Docker resources (show count if any exist)\n- Skipped chapters (show quiz scores)\n- How long they've been playing (from started_at)\n\n## After showing progress:\n\nAsk what they want to do:\n- Continue where they left off\n- Replay a completed chapter\n- Jump to a different chapter\n- Clean up resources\n\nKeep it encouraging — celebrate what they've accomplished!\n",
+      "bodyMd": "# Show Player Progress\n\nRead `.player/progress.yaml` and present it in a clear, visual format.\n\n## Display Format\n\n```\n=== NoCappuccino DevOps Journey ===\n\nChapter 1: It Works on My Machine (Containers)     [COMPLETED]\n  Lessons: 3/3  |  Challenges: 3/3\n\nChapter 2: The 2GB Espresso (Image Optimization)    [COMPLETED]\n  Lessons: 3/3  |  Challenges: 3/3\n\nChapter 3: The Vanishing Beans (Persistence)         [IN PROGRESS] <-- You are here\n  Lessons: 2/3  |  Challenges: 1/3\n  Next up: Lesson 3 - Volume Lifecycle\n\nChapter 4: The Silent Grinder (Networking)           [NOT STARTED]\nChapter 5: The Symphony of Steam (Docker Compose)    [NOT STARTED]\nChapter 6: The Giant Roaster (K8s Introduction)      [NOT STARTED]\nChapter 7: The Great Latte Leak (K8s Production)     [NOT STARTED]\n\nStarted: 2026-03-26  |  Environment: Docker 27.5.1 on macOS\n```\n\n## Also check for:\n\n- Leftover Docker resources (show count if any exist)\n- Skipped chapters (show quiz scores)\n- How long they've been playing (from started_at)\n\n## After showing progress:\n\nAsk what they want to do:\n- Continue where they left off\n- Replay a completed chapter\n- Jump to a different chapter\n- Clean up resources\n\nKeep it encouraging — celebrate what they've accomplished!\n"
+    },
+    {
+      "slug": "skip-to",
+      "name": "skip-to",
+      "dir": ".claude/skills/skip-to",
+      "path": ".claude/skills/skip-to/SKILL.md",
+      "desc": "Skip ahead to a specific chapter in Learn Docker & K8s, with a knowledge quiz for skipped chapters. Use when the user wants to jump ahead, skip a chapter, or says \"I already know this\".",
+      "descZh": "",
+      "triggers": [
+        "skip a chapter"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "cursor",
+        "gemini",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "docker",
+          "kubectl",
+          "go"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ericboy0224/learn-docker-and-k8s.git",
+        "copy": "cp -r .claude/skills/skip-to ~/.claude/skills/skip-to",
+        "raw": "https://raw.githubusercontent.com/ericboy0224/learn-docker-and-k8s/da325b64b33bfefd9198a2c11d4cb2b1b574c734/.claude/skills/skip-to/SKILL.md",
+        "saveAs": "~/.claude/skills/skip-to/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:941f18c4ddaa4d348c4ee648dcd7d13db77f49a0eae1850da93bcab282cc7619",
+      "bytes": 1933,
+      "wordCount": 275,
+      "repoLicense": "",
+      "commit": "da325b64b33bfefd9198a2c11d4cb2b1b574c734",
+      "branch": "main",
+      "body": "---\nname: skip-to\ndescription: Skip ahead to a specific chapter in Learn Docker & K8s, with a knowledge quiz for skipped chapters. Use when the user wants to jump ahead, skip a chapter, or says \"I already know this\".\ndisable-model-invocation: true\nargument-hint: \"<chapter-number>\"\n---\n\n# Skip to Chapter\n\nThe player wants to jump to Chapter $ARGUMENTS. This is allowed, but they must pass a quiz on skipped content.\n\n## Step 1: Determine What's Being Skipped\n\nRead `.player/progress.yaml` to find current position. Calculate which chapters would be skipped.\n\nIf the target chapter is already completed or the player is already there, just navigate to it.\n\n## Step 2: Administer Skip-Level Quiz\n\nFor EACH skipped chapter that isn't already completed:\n\n1. Read `curriculum/chXX-*/quiz.md`\n2. Present 3-5 questions from the quiz (pick the most important ones)\n3. Wait for answers\n4. Score: need >= 80% (4/5) to pass\n\n### Quiz Passed\n\n- Record in progress.yaml: `status: skipped`, `skip_quiz_passed: true`, `quiz_score: X/Y`\n- \"Nice — you clearly know your stuff! Let's skip ahead.\"\n- Navigate to the target chapter\n\n### Quiz Failed\n\n- Show which questions they got wrong and the correct answers\n- Suggest specific lessons to review: \"You might want to check out Lesson 2 in Chapter X — it covers [topic] which tripped you up.\"\n- Offer options:\n  - Try the quiz again\n  - Go through the suggested lessons first\n  - Start from their current chapter instead\n\n## Step 3: Begin Target Chapter\n\nRead the target chapter's `README.md` and deliver the story opening. Update progress.yaml with current chapter.\n\n## Important\n\n- Be encouraging even if they fail the quiz: \"No worries — these are tricky concepts. The good news is the lessons are pretty quick.\"\n- If they want to skip to Chapter 6 or 7 (K8s), check that kind and kubectl are installed first\n- If they skip multiple chapters, quiz them on ALL skipped chapters (not just one)\n",
+      "bodyMd": "# Skip to Chapter\n\nThe player wants to jump to Chapter $ARGUMENTS. This is allowed, but they must pass a quiz on skipped content.\n\n## Step 1: Determine What's Being Skipped\n\nRead `.player/progress.yaml` to find current position. Calculate which chapters would be skipped.\n\nIf the target chapter is already completed or the player is already there, just navigate to it.\n\n## Step 2: Administer Skip-Level Quiz\n\nFor EACH skipped chapter that isn't already completed:\n\n1. Read `curriculum/chXX-*/quiz.md`\n2. Present 3-5 questions from the quiz (pick the most important ones)\n3. Wait for answers\n4. Score: need >= 80% (4/5) to pass\n\n### Quiz Passed\n\n- Record in progress.yaml: `status: skipped`, `skip_quiz_passed: true`, `quiz_score: X/Y`\n- \"Nice — you clearly know your stuff! Let's skip ahead.\"\n- Navigate to the target chapter\n\n### Quiz Failed\n\n- Show which questions they got wrong and the correct answers\n- Suggest specific lessons to review: \"You might want to check out Lesson 2 in Chapter X — it covers [topic] which tripped you up.\"\n- Offer options:\n  - Try the quiz again\n  - Go through the suggested lessons first\n  - Start from their current chapter instead\n\n## Step 3: Begin Target Chapter\n\nRead the target chapter's `README.md` and deliver the story opening. Update progress.yaml with current chapter.\n\n## Important\n\n- Be encouraging even if they fail the quiz: \"No worries — these are tricky concepts. The good news is the lessons are pretty quick.\"\n- If they want to skip to Chapter 6 or 7 (K8s), check that kind and kubectl are installed first\n- If they skip multiple chapters, quiz them on ALL skipped chapters (not just one)\n"
+    },
+    {
+      "slug": "verify",
+      "name": "verify",
+      "dir": ".claude/skills/verify",
+      "path": ".claude/skills/verify/SKILL.md",
+      "desc": "Verify if the current challenge is completed in Learn Docker & K8s. Runs the verification script and reports results. Use when the user says \"check\", \"verify\", \"did I do it right\", \"am I done\", or \"test my solution\".",
+      "descZh": "",
+      "triggers": [
+        "the user says \"check",
+        "verify",
+        "did I do it right",
+        "am I done",
+        "test my solution"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "cursor",
+        "gemini",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "docker",
+          "kubectl"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ericboy0224/learn-docker-and-k8s.git",
+        "copy": "cp -r .claude/skills/verify ~/.claude/skills/verify",
+        "raw": "https://raw.githubusercontent.com/ericboy0224/learn-docker-and-k8s/da325b64b33bfefd9198a2c11d4cb2b1b574c734/.claude/skills/verify/SKILL.md",
+        "saveAs": "~/.claude/skills/verify/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:f21b308e27b9aad20c5cfc59e5d8ea19d56ee78e654a75ca43e5c3dcd2e5db7f",
+      "bytes": 2047,
+      "wordCount": 278,
+      "repoLicense": "",
+      "commit": "da325b64b33bfefd9198a2c11d4cb2b1b574c734",
+      "branch": "main",
+      "body": "---\nname: verify\ndescription: Verify if the current challenge is completed in Learn Docker & K8s. Runs the verification script and reports results. Use when the user says \"check\", \"verify\", \"did I do it right\", \"am I done\", or \"test my solution\".\n---\n\n# Verify Challenge Completion\n\n## Step 1: Determine Current Challenge\n\nRead `.player/progress.yaml` to find the current chapter and challenge number.\n\n## Step 2: Run Verification\n\nCheck if a `verify.sh` exists for the current chapter:\n\n```bash\nls curriculum/chXX-*/challenges/verify.sh\n```\n\nIf it exists, run it:\n```bash\nbash curriculum/chXX-*/challenges/verify.sh\n```\n\nIf it doesn't exist, read the challenge file and check the success criteria manually using Docker/kubectl commands.\n\n## Step 3: Report Results\n\n### All Checks Passed\n\n1. Celebrate! Use Sarah's voice: \"Nailed it! Dave is going to be so relieved.\"\n2. Deliver the **post-mission debrief** (from the challenge file or chapter README):\n   - **What you did:** Brief summary\n   - **Why it works:** The underlying concept\n   - **Real-world connection:** When you'd see this at work\n   - **Interview angle:** How this comes up in interviews\n   - **Pro tip:** Advanced insight\n3. Update `.player/progress.yaml`: add challenge number to completed list\n4. Check if all challenges in the chapter are done:\n   - If yes: mark chapter as completed, deliver chapter-end story beat, tease next chapter\n   - If no: offer to move to the next challenge\n\n### Some Checks Failed\n\n1. Show which checks passed and which failed\n2. Give a gentle hint about the failing check WITHOUT giving the answer\n3. Encourage them: \"Almost there — one thing is off. Take another look at...\"\n4. Remind them they can use `/hint` if stuck\n\n### No Challenges Started\n\nIf they haven't started any challenge yet, let them know: \"Nothing to verify yet! Want to start a challenge?\"\n\n## Important\n\n- Read `engine/validation.md` for the verification patterns\n- Always run the actual check — don't assume success\n- Be specific about what failed without revealing the fix\n",
+      "bodyMd": "# Verify Challenge Completion\n\n## Step 1: Determine Current Challenge\n\nRead `.player/progress.yaml` to find the current chapter and challenge number.\n\n## Step 2: Run Verification\n\nCheck if a `verify.sh` exists for the current chapter:\n\n```bash\nls curriculum/chXX-*/challenges/verify.sh\n```\n\nIf it exists, run it:\n```bash\nbash curriculum/chXX-*/challenges/verify.sh\n```\n\nIf it doesn't exist, read the challenge file and check the success criteria manually using Docker/kubectl commands.\n\n## Step 3: Report Results\n\n### All Checks Passed\n\n1. Celebrate! Use Sarah's voice: \"Nailed it! Dave is going to be so relieved.\"\n2. Deliver the **post-mission debrief** (from the challenge file or chapter README):\n   - **What you did:** Brief summary\n   - **Why it works:** The underlying concept\n   - **Real-world connection:** When you'd see this at work\n   - **Interview angle:** How this comes up in interviews\n   - **Pro tip:** Advanced insight\n3. Update `.player/progress.yaml`: add challenge number to completed list\n4. Check if all challenges in the chapter are done:\n   - If yes: mark chapter as completed, deliver chapter-end story beat, tease next chapter\n   - If no: offer to move to the next challenge\n\n### Some Checks Failed\n\n1. Show which checks passed and which failed\n2. Give a gentle hint about the failing check WITHOUT giving the answer\n3. Encourage them: \"Almost there — one thing is off. Take another look at...\"\n4. Remind them they can use `/hint` if stuck\n\n### No Challenges Started\n\nIf they haven't started any challenge yet, let them know: \"Nothing to verify yet! Want to start a challenge?\"\n\n## Important\n\n- Read `engine/validation.md` for the verification patterns\n- Always run the actual check — don't assume success\n- Be specific about what failed without revealing the fix\n"
+    }
+  ]
+}

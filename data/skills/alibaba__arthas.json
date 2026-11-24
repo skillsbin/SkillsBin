@@ -1,0 +1,169 @@
+{
+  "repo": "alibaba/arthas",
+  "commit": "4ea01d85748c5c19343535743dd875fe4f38a056",
+  "branch": "master",
+  "fetchedAt": "2026-11-24T15:39:24.117Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "skills",
+      "name": "arthas",
+      "dir": "skills",
+      "path": "skills/SKILL.md",
+      "desc": "arthas 诊断 java应用，jvm问题 skill",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/alibaba/arthas.git",
+        "copy": "cp -r skills ~/.claude/skills/skills",
+        "raw": "https://raw.githubusercontent.com/alibaba/arthas/4ea01d85748c5c19343535743dd875fe4f38a056/skills/SKILL.md",
+        "saveAs": "~/.claude/skills/skills/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:1e18734288669303d9e84beb8b0111682b79dbe0fabe4839b4c72d92586a7de6",
+      "bytes": 2788,
+      "wordCount": 190,
+      "repoLicense": "Apache-2.0",
+      "commit": "4ea01d85748c5c19343535743dd875fe4f38a056",
+      "branch": "master",
+      "body": "---\nname: arthas\ndescription: arthas 诊断 java应用，jvm问题 skill\n---\n\n# Arthas 诊断 Skill\n\n## Overview\n\nArthas 是 Java 应用在线诊断工具，本 Skill 包含多个子场景的诊断指南。使用时请根据用户描述的问题匹配对应场景，按指南中的步骤逐步排查。\n\n**通用原则：**\n- 先用低风险、只读的命令收集信息，再按需使用有侵入性的命令。\n- 所有 `watch` / `trace` / `tt` / `stack` 等命令**必须**设置 `-n`（执行次数限制），避免对线上应用造成压力。\n- 输出结论时附上关键证据（命令输出摘要），并给出明确的下一步建议。\n\n---\n\n## 子场景索引\n\n### 1. CPU 飙高排查\n\n**文件：** `cpu-high/SKILL.md`\n\n适用场景：机器 CPU 飙高、应用响应变慢、负载异常升高。\n\n核心步骤：\n1. `dashboard` 查看 CPU / 线程 / GC 概况\n2. `thread`（topN）定位最忙线程及堆栈\n3. 根据堆栈判断方向（CPU 密集计算 / 锁竞争 / GC 等）\n4. 按需用 `stack` / `trace` / `watch` 进一步确认热点方法调用路径\n5. 输出诊断结论（现象、证据、初步结论、下一步建议）\n\n---\n\n### 2. 获取 EagleEye traceId\n\n**文件：** `eagleeye-traceid/SKILL.md`\n\n适用场景：需要在不改代码的情况下，获取线上请求的 EagleEye traceId，用于关联日志 / 链路分析。\n\n核心步骤：\n1. `sc -d com.taobao.eagleeye.EagleEye` 确认类存在\n2. 选择合适的观察点（Controller / RPC Provider / Filter 等入口方法）\n3. **方案 A**：`watch` + OGNL 表达式 `@com.taobao.eagleeye.EagleEye@getTraceId()` 直接打印 traceId\n4. **方案 B**：`trace` 输出中自动带出 traceId，同时可看调用链耗时\n5. 拿到 traceId 后去日志 / 链路系统查询对应请求\n\n---\n\n### 3. Spring Context / Bean 排查\n\n**文件：** `spring-context/SKILL.md`\n\n适用场景：排查 Spring ApplicationContext / Bean / 配置注入等问题。\n\n核心步骤：\n1. `vmtool --action getInstances` 获取 `AbstractApplicationContext` 实例（注意通过 ClassLoader 区分正确的 Context）\n2. 获取配置项的值与来源（`getEnvironment().getProperty(...)` / `findConfigurationProperty(...)`）\n3. `containsBean` / `containsLocalBean` / `containsBeanDefinition` 验证 Bean 是否存在（不触发初始化）\n4. 按关键词过滤搜索 Bean（`getBeanDefinitionNames` + OGNL 过滤）\n5. 按类型查找 Bean（`getBeanNamesForType` / `getBeansOfType`）\n6. 查看 BeanDefinition 确认 Bean 注册来源（`@Bean` 工厂方法 / XML / 自动扫描）\n\n**注意：** 先只读查询，避免直接 `getBean()` 触发 Bean 初始化产生副作用；若遇到 `ClassNotFound`，通常是类加载器不对，需先用 `classloader` 命令找到正确的 `classLoaderHash`。\n",
+      "bodyMd": "# Arthas 诊断 Skill\n\n## Overview\n\nArthas 是 Java 应用在线诊断工具，本 Skill 包含多个子场景的诊断指南。使用时请根据用户描述的问题匹配对应场景，按指南中的步骤逐步排查。\n\n**通用原则：**\n- 先用低风险、只读的命令收集信息，再按需使用有侵入性的命令。\n- 所有 `watch` / `trace` / `tt` / `stack` 等命令**必须**设置 `-n`（执行次数限制），避免对线上应用造成压力。\n- 输出结论时附上关键证据（命令输出摘要），并给出明确的下一步建议。\n\n---\n\n## 子场景索引\n\n### 1. CPU 飙高排查\n\n**文件：** `cpu-high/SKILL.md`\n\n适用场景：机器 CPU 飙高、应用响应变慢、负载异常升高。\n\n核心步骤：\n1. `dashboard` 查看 CPU / 线程 / GC 概况\n2. `thread`（topN）定位最忙线程及堆栈\n3. 根据堆栈判断方向（CPU 密集计算 / 锁竞争 / GC 等）\n4. 按需用 `stack` / `trace` / `watch` 进一步确认热点方法调用路径\n5. 输出诊断结论（现象、证据、初步结论、下一步建议）\n\n---\n\n### 2. 获取 EagleEye traceId\n\n**文件：** `eagleeye-traceid/SKILL.md`\n\n适用场景：需要在不改代码的情况下，获取线上请求的 EagleEye traceId，用于关联日志 / 链路分析。\n\n核心步骤：\n1. `sc -d com.taobao.eagleeye.EagleEye` 确认类存在\n2. 选择合适的观察点（Controller / RPC Provider / Filter 等入口方法）\n3. **方案 A**：`watch` + OGNL 表达式 `@com.taobao.eagleeye.EagleEye@getTraceId()` 直接打印 traceId\n4. **方案 B**：`trace` 输出中自动带出 traceId，同时可看调用链耗时\n5. 拿到 traceId 后去日志 / 链路系统查询对应请求\n\n---\n\n### 3. Spring Context / Bean 排查\n\n**文件：** `spring-context/SKILL.md`\n\n适用场景：排查 Spring ApplicationContext / Bean / 配置注入等问题。\n\n核心步骤：\n1. `vmtool --action getInstances` 获取 `AbstractApplicationContext` 实例（注意通过 ClassLoader 区分正确的 Context）\n2. 获取配置项的值与来源（`getEnvironment().getProperty(...)` / `findConfigurationProperty(...)`）\n3. `containsBean` / `containsLocalBean` / `containsBeanDefinition` 验证 Bean 是否存在（不触发初始化）\n4. 按关键词过滤搜索 Bean（`getBeanDefinitionNames` + OGNL 过滤）\n5. 按类型查找 Bean（`getBeanNamesForType` / `getBeansOfType`）\n6. 查看 BeanDefinition 确认 Bean 注册来源（`@Bean` 工厂方法 / XML / 自动扫描）\n\n**注意：** 先只读查询，避免直接 `getBean()` 触发 Bean 初始化产生副作用；若遇到 `ClassNotFound`，通常是类加载器不对，需先用 `classloader` 命令找到正确的 `classLoaderHash`。\n"
+    },
+    {
+      "slug": "cpu-high",
+      "name": "arthas-cpu-high",
+      "dir": "skills/cpu-high",
+      "path": "skills/cpu-high/SKILL.md",
+      "desc": "排查 JVM / 应用 CPU 飙高（线程定位 + 代码路径分析）",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/alibaba/arthas.git",
+        "copy": "cp -r skills/cpu-high ~/.claude/skills/cpu-high",
+        "raw": "https://raw.githubusercontent.com/alibaba/arthas/4ea01d85748c5c19343535743dd875fe4f38a056/skills/cpu-high/SKILL.md",
+        "saveAs": "~/.claude/skills/cpu-high/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:0e860f8ce256f98c4253866fb5962489d96faa042cde144626e4bb821fadfbd8",
+      "bytes": 1811,
+      "wordCount": 85,
+      "repoLicense": "Apache-2.0",
+      "commit": "4ea01d85748c5c19343535743dd875fe4f38a056",
+      "branch": "master",
+      "body": "---\nname: arthas-cpu-high\ndescription: 排查 JVM / 应用 CPU 飙高（线程定位 + 代码路径分析）\n---\n\n# JVM CPU 飙高排查指南（Arthas）\n\n适用场景：机器 CPU 飙高、应用响应变慢、负载异常升高。\n\n原则：先用低风险工具定位「哪个线程在忙」，再逐步缩小到「哪个方法/代码路径」。\n\n## 1) 先确认当前 JVM 整体状态（低风险）\n\n- 使用 `dashboard` 查看 CPU/线程/GC 概况（建议设置有限次数）：\n  - 关注：CPU、线程数、GC 次数/耗时是否异常。\n\n## 2) 定位最忙线程（关键步骤）\n\n- 使用 `thread` 找出最忙的前 N 个线程并打印堆栈：\n  - 例如：`topN=3` 或 `topN=5`\n- 记录每个热点线程的 `threadId` 与堆栈关键方法名（可用 `take_notes` 记录证据）。\n\n判断方向：\n- 如果堆栈显示在 `java.util.regex`、JSON 序列化、日志格式化等：可能是 CPU 密集计算。\n- 如果堆栈显示在锁竞争：继续看是否有大量 `BLOCKED`，并考虑用 `thread(blocking=true)` 找出阻塞源头线程。\n\n## 3) 进一步确认热点方法的调用路径（按需、有限制）\n\n当热点线程堆栈指向某个「可疑方法」时：\n- 优先使用 `stack` / `trace` 针对该方法做路径确认（避免宽泛匹配）。\n- 如果需要观测入参/返回值，再考虑 `watch` 或 `tt`，并设置合理的执行次数与超时，避免对线上造成压力。\n\n## 4) 输出诊断结论\n\n报告至少包含：\n- 现象与证据：dashboard 摘要 + topN 线程堆栈关键片段\n- 初步结论：CPU 主要消耗在什么类型的逻辑（计算/锁/GC/日志等）\n- 下一步：建议进一步 trace/watch 的目标方法（给出类名+方法名的精确范围），或建议用户提供主包名/关键接口信息以继续收敛\n\n",
+      "bodyMd": "# JVM CPU 飙高排查指南（Arthas）\n\n适用场景：机器 CPU 飙高、应用响应变慢、负载异常升高。\n\n原则：先用低风险工具定位「哪个线程在忙」，再逐步缩小到「哪个方法/代码路径」。\n\n## 1) 先确认当前 JVM 整体状态（低风险）\n\n- 使用 `dashboard` 查看 CPU/线程/GC 概况（建议设置有限次数）：\n  - 关注：CPU、线程数、GC 次数/耗时是否异常。\n\n## 2) 定位最忙线程（关键步骤）\n\n- 使用 `thread` 找出最忙的前 N 个线程并打印堆栈：\n  - 例如：`topN=3` 或 `topN=5`\n- 记录每个热点线程的 `threadId` 与堆栈关键方法名（可用 `take_notes` 记录证据）。\n\n判断方向：\n- 如果堆栈显示在 `java.util.regex`、JSON 序列化、日志格式化等：可能是 CPU 密集计算。\n- 如果堆栈显示在锁竞争：继续看是否有大量 `BLOCKED`，并考虑用 `thread(blocking=true)` 找出阻塞源头线程。\n\n## 3) 进一步确认热点方法的调用路径（按需、有限制）\n\n当热点线程堆栈指向某个「可疑方法」时：\n- 优先使用 `stack` / `trace` 针对该方法做路径确认（避免宽泛匹配）。\n- 如果需要观测入参/返回值，再考虑 `watch` 或 `tt`，并设置合理的执行次数与超时，避免对线上造成压力。\n\n## 4) 输出诊断结论\n\n报告至少包含：\n- 现象与证据：dashboard 摘要 + topN 线程堆栈关键片段\n- 初步结论：CPU 主要消耗在什么类型的逻辑（计算/锁/GC/日志等）\n- 下一步：建议进一步 trace/watch 的目标方法（给出类名+方法名的精确范围），或建议用户提供主包名/关键接口信息以继续收敛\n\n"
+    },
+    {
+      "slug": "eagleeye-traceid",
+      "name": "arthas-eagleeye-traceid",
+      "dir": "skills/eagleeye-traceid",
+      "path": "skills/eagleeye-traceid/SKILL.md",
+      "desc": "使用 Arthas 的 watch/trace 获取 EagleEye traceId / 获取请求的 traceId",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/alibaba/arthas.git",
+        "copy": "cp -r skills/eagleeye-traceid ~/.claude/skills/eagleeye-traceid",
+        "raw": "https://raw.githubusercontent.com/alibaba/arthas/4ea01d85748c5c19343535743dd875fe4f38a056/skills/eagleeye-traceid/SKILL.md",
+        "saveAs": "~/.claude/skills/eagleeye-traceid/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:50ddf144672550df68cb49b1d46948d4eb701f0a18d0e0f4a128b32dbdbb3d54",
+      "bytes": 2992,
+      "wordCount": 182,
+      "repoLicense": "Apache-2.0",
+      "commit": "4ea01d85748c5c19343535743dd875fe4f38a056",
+      "branch": "master",
+      "body": "---\nname: arthas-eagleeye-traceid\ndescription: 使用 Arthas 的 watch/trace 获取 EagleEye traceId / 获取请求的 traceId\n---\n\n# 获取 EagleEye traceId（Arthas）\n\n适用场景：你需要在不改代码的情况下，在线上请求链路里拿到当前线程的 EagleEye `traceId`，用于关联日志/链路分析/问题复现。\n\n核心思路：\n- EagleEye 的 traceId 可在业务线程里通过 `EagleEye.getTraceId()` 获取。\n- Arthas 的 `watch` 支持 OGNL，可直接调用静态方法：`@com.taobao.eagleeye.EagleEye@getTraceId()`\n- Arthas 的 `trace` 输出中通常会自动包含 `trace_id=...`（如果环境集成了 EagleEye）。\n\n## 前置检查（推荐）\n\n1) 确认 EagleEye 类是否存在：\n\n```bash\nsc -d com.taobao.eagleeye.EagleEye\n```\n\n若找不到：\n- 可能未集成 EagleEye、或类被 relocate/shade（请让用户提供实际类名/依赖信息）。\n\n2) 选择一个“确定会被请求线程调用”的方法作为观察点：\n- 常见：Controller 入口方法、RPC Provider 方法、Filter/Interceptor 的 doFilter/preHandle 等。\n- 避免：高频热点方法（容易刷屏、增加开销）。\n\n## 方案 A：用 watch 直接打印 traceId（最直观）\n\n### A1) 只打印 traceId（最小输出）\n\n```bash\nwatch <类全名> <方法名> '@com.taobao.eagleeye.EagleEye@getTraceId()' -n 5\n```\n\n说明：\n- `@类名@静态方法()` 是 OGNL 静态方法调用语法。\n- `-n 5` 限制执行次数，避免线上刷屏（务必保留/调整）。\n\n### A2) 同时打印参数 + traceId（更好做关联）\n\n```bash\nwatch <类全名> <方法名> '{params, @com.taobao.eagleeye.EagleEye@getTraceId()}' -n 5 -x 2\n```\n\n说明：\n- `{...}` 会以数组/列表方式输出多个字段。\n- `params` 是 Arthas watch 内置变量之一；`-x 2` 控制对象展开深度（可按需调大/调小）。\n\n常见变体（按需）：\n- 在方法返回后再取（默认就是 after，可不写）：\n  - 如果你怀疑 traceId 在方法执行过程中才被设置，可尝试 `-b`（before）对比；具体以线上效果为准。\n\n## 方案 B：用 trace 自动带出 traceId（更适合看调用链）\n\n```bash\ntrace <类全名> <方法名> -n 5\n```\n\n期待现象：\n- `trace` 输出的头部信息里出现类似 `trace_id=<xxxx>` 的字段。\n- 同时你还能看到方法调用链与每段耗时，便于“拿 traceId + 看慢点在哪”一并完成。\n\n## 结果解读与产出（建议模板）\n\n最终给用户的结论/证据建议包含：\n- 观察点（类/方法）：`<类全名>#<方法名>`\n- 获取方式：`watch` / `trace`\n- 关键证据：\n  - `traceId=<...>`（以及必要时的 params 摘要）\n- 下一步建议：\n  - 用该 traceId 去日志/链路系统查询对应请求\n  - 或将观察点收敛到更下游的方法（如某个 DAO/RPC 调用）继续 trace/watch\n\n## 扩展\n\n- 其他分布式追踪系统的 traceId、或 ThreadLocal 里的值，也可以用类似方式在 `watch` 的 OGNL 表达式中读取。\n\n",
+      "bodyMd": "# 获取 EagleEye traceId（Arthas）\n\n适用场景：你需要在不改代码的情况下，在线上请求链路里拿到当前线程的 EagleEye `traceId`，用于关联日志/链路分析/问题复现。\n\n核心思路：\n- EagleEye 的 traceId 可在业务线程里通过 `EagleEye.getTraceId()` 获取。\n- Arthas 的 `watch` 支持 OGNL，可直接调用静态方法：`@com.taobao.eagleeye.EagleEye@getTraceId()`\n- Arthas 的 `trace` 输出中通常会自动包含 `trace_id=...`（如果环境集成了 EagleEye）。\n\n## 前置检查（推荐）\n\n1) 确认 EagleEye 类是否存在：\n\n```bash\nsc -d com.taobao.eagleeye.EagleEye\n```\n\n若找不到：\n- 可能未集成 EagleEye、或类被 relocate/shade（请让用户提供实际类名/依赖信息）。\n\n2) 选择一个“确定会被请求线程调用”的方法作为观察点：\n- 常见：Controller 入口方法、RPC Provider 方法、Filter/Interceptor 的 doFilter/preHandle 等。\n- 避免：高频热点方法（容易刷屏、增加开销）。\n\n## 方案 A：用 watch 直接打印 traceId（最直观）\n\n### A1) 只打印 traceId（最小输出）\n\n```bash\nwatch <类全名> <方法名> '@com.taobao.eagleeye.EagleEye@getTraceId()' -n 5\n```\n\n说明：\n- `@类名@静态方法()` 是 OGNL 静态方法调用语法。\n- `-n 5` 限制执行次数，避免线上刷屏（务必保留/调整）。\n\n### A2) 同时打印参数 + traceId（更好做关联）\n\n```bash\nwatch <类全名> <方法名> '{params, @com.taobao.eagleeye.EagleEye@getTraceId()}' -n 5 -x 2\n```\n\n说明：\n- `{...}` 会以数组/列表方式输出多个字段。\n- `params` 是 Arthas watch 内置变量之一；`-x 2` 控制对象展开深度（可按需调大/调小）。\n\n常见变体（按需）：\n- 在方法返回后再取（默认就是 after，可不写）：\n  - 如果你怀疑 traceId 在方法执行过程中才被设置，可尝试 `-b`（before）对比；具体以线上效果为准。\n\n## 方案 B：用 trace 自动带出 traceId（更适合看调用链）\n\n```bash\ntrace <类全名> <方法名> -n 5\n```\n\n期待现象：\n- `trace` 输出的头部信息里出现类似 `trace_id=<xxxx>` 的字段。\n- 同时你还能看到方法调用链与每段耗时，便于“拿 traceId + 看慢点在哪”一并完成。\n\n## 结果解读与产出（建议模板）\n\n最终给用户的结论/证据建议包含：\n- 观察点（类/方法）：`<类全名>#<方法名>`\n- 获取方式：`watch` / `trace`\n- 关键证据：\n  - `traceId=<...>`（以及必要时的 params 摘要）\n- 下一步建议：\n  - 用该 traceId 去日志/链路系统查询对应请求\n  - 或将观察点收敛到更下游的方法（如某个 DAO/RPC 调用）继续 trace/watch\n\n## 扩展\n\n- 其他分布式追踪系统的 traceId、或 ThreadLocal 里的值，也可以用类似方式在 `watch` 的 OGNL 表达式中读取。\n\n"
+    },
+    {
+      "slug": "spring-context",
+      "name": "arthas-springcontext-issues-resolve",
+      "dir": "skills/spring-context",
+      "path": "skills/spring-context/SKILL.md",
+      "desc": "排查 Spring ApplicationContext / Bean / 配置注入等问题",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/alibaba/arthas.git",
+        "copy": "cp -r skills/spring-context ~/.claude/skills/spring-context",
+        "raw": "https://raw.githubusercontent.com/alibaba/arthas/4ea01d85748c5c19343535743dd875fe4f38a056/skills/spring-context/SKILL.md",
+        "saveAs": "~/.claude/skills/spring-context/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:328349c0c8afc2e6b3628ea140329c283f5e948b63bae546f80797edf8aff89d",
+      "bytes": 5183,
+      "wordCount": 274,
+      "repoLicense": "Apache-2.0",
+      "commit": "4ea01d85748c5c19343535743dd875fe4f38a056",
+      "branch": "master",
+      "body": "---\nname: arthas-springcontext-issues-resolve\ndescription: 排查 Spring ApplicationContext / Bean / 配置注入等问题\n---\n\n# Spring Context / Bean 排查指南\n\n原则：\n- **先只读查询**（contains/beanNames/type/environment），避免直接 `getBean()` 触发 Bean 初始化产生副作用。\n- **严格限量**：`vmtool -l` 控制实例数量；避免无条件输出完整 `getBeanDefinitionNames()`。\n\n\n## 1) 获取并挑选正确的 ApplicationContext\n\n优先尝试获取常见的 Spring Boot Context（通常是 `AbstractApplicationContext` 子类）：\n\n```bash\nvmtool --action getInstances --className org.springframework.context.support.AbstractApplicationContext -l 5\n```\n\n如果拿不到结果，可以尝试获取： org.springframework.context.ApplicationContext\n\n如果获取到多个对象，可以从对象的 classloader 的 Class<?> name 来判断。\n\n1. 应用的 ClassLoader 通常是包含 `LaunchedURLClassLoader`\n2. 应用的 ClassLoader 绝不会是 com.taobao.pandora.service.loader.ModuleClassLoader\n\n## 2) 获取配置项的值与来源\n\n只看值（示例：`server.port`）：\n\n```bash\nvmtool --action getInstances --className org.springframework.context.support.AbstractApplicationContext -l 1 --express 'instances[0].getEnvironment().getProperty(\"server.port\")'\n```\n\n获取“来源”\n\n```bash\nvmtool --action getInstances --className org.springframework.context.support.AbstractApplicationContext -l 1 --express '#env=instances[0].getEnvironment(), #ps=#env.getPropertySources().get(\"configurationProperties\"), #ps.findConfigurationProperty(\"server.port\")'\n```\n\n如果应用有集成 spring-boot-starter-actuator ，可以尝试\n\n```bash\nvmtool --action getInstances \\\n--className org.springframework.boot.actuate.env.EnvironmentEndpoint \\\n--express 'instances[0].environmentEntry(\"server.port\")'\n```\n\n## 3) 按 Bean Name 验证是否存在（不触发初始化）\n\n假设你要查的 beanName 为 `fooService`：\n\n```bash\nvmtool --action getInstances --className org.springframework.context.support.AbstractApplicationContext -l 1 --express 'instances[0].containsBean(\"fooService\")'\nvmtool --action getInstances --className org.springframework.context.support.AbstractApplicationContext -l 1 --express 'instances[0].containsLocalBean(\"fooService\")'\nvmtool --action getInstances --className org.springframework.context.support.AbstractApplicationContext -l 1 --express 'instances[0].containsBeanDefinition(\"fooService\")'\nvmtool --action getInstances --className org.springframework.context.support.AbstractApplicationContext -l 1 --express 'instances[0].getAliases(\"fooService\")'\n```\n\n判读：\n- `containsBean=true` 但 `containsLocalBean=false`：Bean 可能来自**父 Context**。\n- `containsBean=false` 且你确定应该存在：优先检查**是否选错 Context**、`@Profile/@Conditional`、配置项/环境变量是否生效。\n\n## 4) 在 Spring Context 里“搜” Bean（按关键词过滤，限制输出）\n\n当你只有一个关键词（比如 `order` / `datasource`）而不知道精确 beanName 时：\n\n```bash\nvmtool --action getInstances --className org.springframework.context.support.AbstractApplicationContext -l 1 --express '#ctx=instances[0], #names=@java.util.Arrays@asList(#ctx.getBeanDefinitionNames()), #m=#names.{? #this.toLowerCase().contains(\"order\")}, #m.subList(0, @java.lang.Math@min(#m.size(), 50))'\n```\n\n说明：\n- 先用关键词把范围收敛，再最多输出 50 个候选；拿到候选 beanName 后回到第 3 步逐个验证。\n\n## 5) 按类型查找 Bean（最适合定位“注入到了哪个实现”）\n\n当你知道目标类型（接口/父类）全限定名时（示例：`com.foo.OrderService`）：\n\n```bash\nvmtool --action getInstances --className org.springframework.context.support.AbstractApplicationContext -l 1 --express 'instances[0].getBeanNamesForType(@com.foo.OrderService@class)'\n```\n\n若返回多个候选（`NoUniqueBeanDefinitionException` 常见根因），只看候选名称即可：\n\n```bash\nvmtool --action getInstances --className org.springframework.context.support.AbstractApplicationContext -l 1 --express 'instances[0].getBeansOfType(@com.foo.OrderService@class).keySet()'\n```\n\n提示：\n- 若怀疑代理导致类型不匹配（JDK Proxy / CGLIB），应优先按**接口类型**查询，再决定是否需要获取实例进一步确认。\n- 若 `@com.foo.OrderService@class` 报 `ClassNotFound`，通常是**类加载器不对**：先用 `classloader`（stats/instances/tree）找到应用的 `classLoaderHash`，再在 `vmtool/ognl` 上加 `--classLoader <hash>` 重新执行。也可以找到 `classloader`的 Class Name，再使用 `--classLoaderClass` 参数。\n\n## 6) 查看 BeanDefinition（来源/工厂方法/作用域）\n\n当你需要确认 Bean 是怎么注册进来的（`@Bean` 工厂方法？XML？自动扫描？）时，可尝试拿 `BeanFactory` 看 `BeanDefinition`（前提：Context 是 `AbstractApplicationContext`）。\n\n```bash\nvmtool --action getInstances --className org.springframework.context.support.AbstractApplicationContext -l 1 --express '#ctx=instances[0], #bf=#ctx.getBeanFactory(), #bd=#bf.getBeanDefinition(\"fooService\")'\n```",
+      "bodyMd": "# Spring Context / Bean 排查指南\n\n原则：\n- **先只读查询**（contains/beanNames/type/environment），避免直接 `getBean()` 触发 Bean 初始化产生副作用。\n- **严格限量**：`vmtool -l` 控制实例数量；避免无条件输出完整 `getBeanDefinitionNames()`。\n\n\n## 1) 获取并挑选正确的 ApplicationContext\n\n优先尝试获取常见的 Spring Boot Context（通常是 `AbstractApplicationContext` 子类）：\n\n```bash\nvmtool --action getInstances --className org.springframework.context.support.AbstractApplicationContext -l 5\n```\n\n如果拿不到结果，可以尝试获取： org.springframework.context.ApplicationContext\n\n如果获取到多个对象，可以从对象的 classloader 的 Class<?> name 来判断。\n\n1. 应用的 ClassLoader 通常是包含 `LaunchedURLClassLoader`\n2. 应用的 ClassLoader 绝不会是 com.taobao.pandora.service.loader.ModuleClassLoader\n\n## 2) 获取配置项的值与来源\n\n只看值（示例：`server.port`）：\n\n```bash\nvmtool --action getInstances --className org.springframework.context.support.AbstractApplicationContext -l 1 --express 'instances[0].getEnvironment().getProperty(\"server.port\")'\n```\n\n获取“来源”\n\n```bash\nvmtool --action getInstances --className org.springframework.context.support.AbstractApplicationContext -l 1 --express '#env=instances[0].getEnvironment(), #ps=#env.getPropertySources().get(\"configurationProperties\"), #ps.findConfigurationProperty(\"server.port\")'\n```\n\n如果应用有集成 spring-boot-starter-actuator ，可以尝试\n\n```bash\nvmtool --action getInstances \\\n--className org.springframework.boot.actuate.env.EnvironmentEndpoint \\\n--express 'instances[0].environmentEntry(\"server.port\")'\n```\n\n## 3) 按 Bean Name 验证是否存在（不触发初始化）\n\n假设你要查的 beanName 为 `fooService`：\n\n```bash\nvmtool --action getInstances --className org.springframework.context.support.AbstractApplicationContext -l 1 --express 'instances[0].containsBean(\"fooService\")'\nvmtool --action getInstances --className org.springframework.context.support.AbstractApplicationContext -l 1 --express 'instances[0].containsLocalBean(\"fooService\")'\nvmtool --action getInstances --className org.springframework.context.support.AbstractApplicationContext -l 1 --express 'instances[0].containsBeanDefinition(\"fooService\")'\nvmtool --action getInstances --className org.springframework.context.support.AbstractApplicationContext -l 1 --express 'instances[0].getAliases(\"fooService\")'\n```\n\n判读：\n- `containsBean=true` 但 `containsLocalBean=false`：Bean 可能来自**父 Context**。\n- `containsBean=false` 且你确定应该存在：优先检查**是否选错 Context**、`@Profile/@Conditional`、配置项/环境变量是否生效。\n\n## 4) 在 Spring Context 里“搜” Bean（按关键词过滤，限制输出）\n\n当你只有一个关键词（比如 `order` / `datasource`）而不知道精确 beanName 时：\n\n```bash\nvmtool --action getInstances --className org.springframework.context.support.AbstractApplicationContext -l 1 --express '#ctx=instances[0], #names=@java.util.Arrays@asList(#ctx.getBeanDefinitionNames()), #m=#names.{? #this.toLowerCase().contains(\"order\")}, #m.subList(0, @java.lang.Math@min(#m.size(), 50))'\n```\n\n说明：\n- 先用关键词把范围收敛，再最多输出 50 个候选；拿到候选 beanName 后回到第 3 步逐个验证。\n\n## 5) 按类型查找 Bean（最适合定位“注入到了哪个实现”）\n\n当你知道目标类型（接口/父类）全限定名时（示例：`com.foo.OrderService`）：\n\n```bash\nvmtool --action getInstances --className org.springframework.context.support.AbstractApplicationContext -l 1 --express 'instances[0].getBeanNamesForType(@com.foo.OrderService@class)'\n```\n\n若返回多个候选（`NoUniqueBeanDefinitionException` 常见根因），只看候选名称即可：\n\n```bash\nvmtool --action getInstances --className org.springframework.context.support.AbstractApplicationContext -l 1 --express 'instances[0].getBeansOfType(@com.foo.OrderService@class).keySet()'\n```\n\n提示：\n- 若怀疑代理导致类型不匹配（JDK Proxy / CGLIB），应优先按**接口类型**查询，再决定是否需要获取实例进一步确认。\n- 若 `@com.foo.OrderService@class` 报 `ClassNotFound`，通常是**类加载器不对**：先用 `classloader`（stats/instances/tree）找到应用的 `classLoaderHash`，再在 `vmtool/ognl` 上加 `--classLoader <hash>` 重新执行。也可以找到 `classloader`的 Class Name，再使用 `--classLoaderClass` 参数。\n\n## 6) 查看 BeanDefinition（来源/工厂方法/作用域）\n\n当你需要确认 Bean 是怎么注册进来的（`@Bean` 工厂方法？XML？自动扫描？）时，可尝试拿 `BeanFactory` 看 `BeanDefinition`（前提：Context 是 `AbstractApplicationContext`）。\n\n```bash\nvmtool --action getInstances --className org.springframework.context.support.AbstractApplicationContext -l 1 --express '#ctx=instances[0], #bf=#ctx.getBeanFactory(), #bd=#bf.getBeanDefinition(\"fooService\")'\n```"
+    }
+  ]
+}

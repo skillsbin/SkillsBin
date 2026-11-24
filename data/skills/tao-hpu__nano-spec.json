@@ -1,0 +1,55 @@
+{
+  "repo": "tao-hpu/nano-spec",
+  "commit": "1d44b07b8f39b8f72bd19f6122f7613eb9009957",
+  "branch": "master",
+  "fetchedAt": "2026-11-24T15:40:58.106Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "nano-spec",
+      "name": "nano-spec",
+      "dir": ".claude/skills/nano-spec",
+      "path": ".claude/skills/nano-spec/SKILL.md",
+      "desc": "Manage task specifications with nano-spec (create, status, update). Supports natural language like \"create a task spec for...\" or \"help me plan a task\".",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "cursor",
+        "gemini",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/tao-hpu/nano-spec.git",
+        "copy": "cp -r .claude/skills/nano-spec ~/.claude/skills/nano-spec",
+        "raw": "https://raw.githubusercontent.com/tao-hpu/nano-spec/1d44b07b8f39b8f72bd19f6122f7613eb9009957/.claude/skills/nano-spec/SKILL.md",
+        "saveAs": "~/.claude/skills/nano-spec/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:4166a5d3d203f97ec44abedd15cbcb060ff01ab147de9a20e78704af7613e89e",
+      "bytes": 3316,
+      "wordCount": 503,
+      "repoLicense": "MIT",
+      "commit": "1d44b07b8f39b8f72bd19f6122f7613eb9009957",
+      "branch": "master",
+      "body": "---\nname: nano-spec\ndescription: Manage task specifications with nano-spec (create, status, update). Supports natural language like \"create a task spec for...\" or \"help me plan a task\".\n---\n\n# nano-spec: Manage task specifications\n\nA lightweight task specification tool with 4 documents (README, todo, doc, log).\n\n## Arguments\n- $ACTION: The action to perform (create, status, update)\n- $TASK_NAME: The task folder name (kebab-case recommended)\n- $DESCRIPTION: Brief description (required for create, optional for others)\n\n## Actions\n\n### create\nCreate a new nano-spec task pack.\n\n**Usage**: `/nano-spec create my-task \"Task description\"`\n\n1. Create folder `tasks/$TASK_NAME/` if tasks/ exists, otherwise create at project root\n2. Generate 4 files based on the description, following the exact structure below:\n\n### README.md\n```markdown\n# {Task Name}\n\n## Background\n{Why does this task exist? What problem are we solving?}\n\n## Goals\n- {Goal 1}\n- {Goal 2}\n\n## Scope\n\n### In Scope\n- {What's included}\n\n### Out of Scope\n- {What's NOT included - be explicit}\n\n## Dependencies\n- [ ] {Dependency 1 - e.g., another task, external API, team decision}\n\n## Resources\n- {Link to related docs}\n- {Link to external references}\n```\n\n### todo.md\n```markdown\n# TODO\n\n## Research\n- [ ] {Research item 1}\n- [ ] {Research item 2}\n\n## Implementation\n- [ ] {Task 1}\n- [ ] {Task 2}\n- [ ] {Task 3}\n\n## Verification\n- [ ] {Verification step}\n\n---\n\n## Acceptance Criteria\n\n### Must Have\n- [ ] {Criterion 1 - specific, measurable}\n- [ ] {Criterion 2}\n\n### Nice to Have\n- [ ] {Optional criterion}\n\n### Out of Scope\n- {Explicitly NOT part of this task's acceptance}\n```\n\n### doc.md\n```markdown\n# {Task Name} - Technical Document\n\n## Summary\n{One paragraph summary of the solution/outcome}\n\n## Key Decisions\n\n### Decision 1: {Title}\n- **Options considered**: A, B, C\n- **Chosen**: B\n- **Rationale**: {Why B?}\n\n## Technical Details\n\n### Architecture / Data Flow\n```\n{Diagram using ASCII or describe the flow}\n```\n\n### Interfaces / Schema\n```typescript\n// Key interfaces if applicable\ninterface Example {\n  id: string;\n  name: string;\n}\n```\n\n### Implementation Notes\n- {Note 1}\n- {Note 2}\n\n## Open Questions\n- [ ] {Unresolved question 1}\n- [ ] {Unresolved question 2}\n\n## References\n- {Link 1}\n- {Link 2}\n```\n\n### log.md\n```markdown\n# Development Log\n\n## {YYYY-MM-DD}\n\n### Done\n- Task created\n\n### In Progress\n- {What's ongoing}\n\n### Blocked\n- {What's stuck and why}\n\n### Notes\n- {Discoveries, learnings, things to remember}\n\n---\n\n<!-- Copy the template above for each day -->\n```\n\n### Output Format (create)\n\nAfter creating files, summarize:\n```\nCreated nano-spec: tasks/$TASK_NAME/\n- README.md  (background, goals, scope)\n- todo.md    (X tasks, Y acceptance criteria)\n- doc.md     (technical decisions template)\n- log.md     (initialized)\n\nNext: Review and refine the generated spec\n```\n\n---\n\n### status\nShow current progress of a task.\n\n**Usage**: `/nano-spec status my-task`\n\n1. Read `tasks/$TASK_NAME/todo.md` and `log.md`\n2. Summarize:\n   - Completed tasks vs total\n   - Current blockers (if any)\n   - Last log entry date\n\n---\n\n### update\nUpdate an existing nano-spec.\n\n**Usage**: `/nano-spec update my-task \"What to update\"`\n\n1. Read existing files in `tasks/$TASK_NAME/`\n2. Make requested updates\n3. Add entry to log.md with today's date\n",
+      "bodyMd": "# nano-spec: Manage task specifications\n\nA lightweight task specification tool with 4 documents (README, todo, doc, log).\n\n## Arguments\n- $ACTION: The action to perform (create, status, update)\n- $TASK_NAME: The task folder name (kebab-case recommended)\n- $DESCRIPTION: Brief description (required for create, optional for others)\n\n## Actions\n\n### create\nCreate a new nano-spec task pack.\n\n**Usage**: `/nano-spec create my-task \"Task description\"`\n\n1. Create folder `tasks/$TASK_NAME/` if tasks/ exists, otherwise create at project root\n2. Generate 4 files based on the description, following the exact structure below:\n\n### README.md\n```markdown\n# {Task Name}\n\n## Background\n{Why does this task exist? What problem are we solving?}\n\n## Goals\n- {Goal 1}\n- {Goal 2}\n\n## Scope\n\n### In Scope\n- {What's included}\n\n### Out of Scope\n- {What's NOT included - be explicit}\n\n## Dependencies\n- [ ] {Dependency 1 - e.g., another task, external API, team decision}\n\n## Resources\n- {Link to related docs}\n- {Link to external references}\n```\n\n### todo.md\n```markdown\n# TODO\n\n## Research\n- [ ] {Research item 1}\n- [ ] {Research item 2}\n\n## Implementation\n- [ ] {Task 1}\n- [ ] {Task 2}\n- [ ] {Task 3}\n\n## Verification\n- [ ] {Verification step}\n\n---\n\n## Acceptance Criteria\n\n### Must Have\n- [ ] {Criterion 1 - specific, measurable}\n- [ ] {Criterion 2}\n\n### Nice to Have\n- [ ] {Optional criterion}\n\n### Out of Scope\n- {Explicitly NOT part of this task's acceptance}\n```\n\n### doc.md\n```markdown\n# {Task Name} - Technical Document\n\n## Summary\n{One paragraph summary of the solution/outcome}\n\n## Key Decisions\n\n### Decision 1: {Title}\n- **Options considered**: A, B, C\n- **Chosen**: B\n- **Rationale**: {Why B?}\n\n## Technical Details\n\n### Architecture / Data Flow\n```\n{Diagram using ASCII or describe the flow}\n```\n\n### Interfaces / Schema\n```typescript\n// Key interfaces if applicable\ninterface Example {\n  id: string;\n  name: string;\n}\n```\n\n### Implementation Notes\n- {Note 1}\n- {Note 2}\n\n## Open Questions\n- [ ] {Unresolved question 1}\n- [ ] {Unresolved question 2}\n\n## References\n- {Link 1}\n- {Link 2}\n```\n\n### log.md\n```markdown\n# Development Log\n\n## {YYYY-MM-DD}\n\n### Done\n- Task created\n\n### In Progress\n- {What's ongoing}\n\n### Blocked\n- {What's stuck and why}\n\n### Notes\n- {Discoveries, learnings, things to remember}\n\n---\n\n<!-- Copy the template above for each day -->\n```\n\n### Output Format (create)\n\nAfter creating files, summarize:\n```\nCreated nano-spec: tasks/$TASK_NAME/\n- README.md  (background, goals, scope)\n- todo.md    (X tasks, Y acceptance criteria)\n- doc.md     (technical decisions template)\n- log.md     (initialized)\n\nNext: Review and refine the generated spec\n```\n\n---\n\n### status\nShow current progress of a task.\n\n**Usage**: `/nano-spec status my-task`\n\n1. Read `tasks/$TASK_NAME/todo.md` and `log.md`\n2. Summarize:\n   - Completed tasks vs total\n   - Current blockers (if any)\n   - Last log entry date\n\n---\n\n### update\nUpdate an existing nano-spec.\n\n**Usage**: `/nano-spec update my-task \"What to update\"`\n\n1. Read existing files in `tasks/$TASK_NAME/`\n2. Make requested updates\n3. Add entry to log.md with today's date\n"
+    }
+  ]
+}

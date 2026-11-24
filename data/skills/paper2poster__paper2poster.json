@@ -1,0 +1,53 @@
+{
+  "repo": "Paper2Poster/Paper2Poster",
+  "commit": "70fc6f7b778bc8c9bfecc22875eff66f4eb65f93",
+  "branch": "main",
+  "fetchedAt": "2026-11-24T15:39:33.375Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "skills",
+      "name": "paper2poster-poster",
+      "dir": "skills",
+      "path": "skills/SKILL.md",
+      "desc": "Use when the user wants to turn an academic paper into a conference poster, poster outline, poster copy deck, poster layout brief, poster.yaml style draft, or Paper2Poster-ready generation package. Trigger for paper-to-poster requests involving PDF papers, arXiv links, manuscripts, PPTX posters, conference submissions, research summaries, or the Paper2Poster workflow.",
+      "descZh": "",
+      "triggers": [
+        "poster outline",
+        "poster"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Paper2Poster/Paper2Poster.git",
+        "copy": "cp -r skills ~/.claude/skills/skills",
+        "raw": "https://raw.githubusercontent.com/Paper2Poster/Paper2Poster/70fc6f7b778bc8c9bfecc22875eff66f4eb65f93/skills/SKILL.md",
+        "saveAs": "~/.claude/skills/skills/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:ba046a100d8f0d0ca433876b9f2b5f22e5a3e2d8df961660449a127d6915b0d4",
+      "bytes": 4367,
+      "wordCount": 580,
+      "repoLicense": "MIT",
+      "commit": "70fc6f7b778bc8c9bfecc22875eff66f4eb65f93",
+      "branch": "main",
+      "body": "---\nname: paper2poster-poster\ndescription: Use when the user wants to turn an academic paper into a conference poster, poster outline, poster copy deck, poster layout brief, poster.yaml style draft, or Paper2Poster-ready generation package. Trigger for paper-to-poster requests involving PDF papers, arXiv links, manuscripts, PPTX posters, conference submissions, research summaries, or the Paper2Poster workflow.\n---\n\n# Paper2Poster Poster\n\nUse this skill when the goal is to turn a paper into a readable, credible, poster-ready package instead of a long prose summary.\n\n## Core behavior\n\nWork from the source paper first. Prefer grounded extraction over creative rewriting.\n\nDo not invent:\n\n- metrics that do not appear in the paper\n- figure content you have not seen\n- ablation claims that are not supported\n- author affiliations, funding, or venue details unless supplied\n\nIf key information is missing, say so explicitly and continue with labeled assumptions.\n\n## Default workflow\n\n1. Gather inputs.\n\nCollect the paper source plus any constraints that are already available:\n\n- `paper.pdf`, arXiv link, markdown draft, or pasted paper text\n- venue, audience, poster dimensions, branding, deadline\n- whether the user wants poster copy only or also Paper2Poster execution assets\n\nIf the user gave no dimensions, use the defaults in `references/poster-defaults.md`.\n\n2. Choose the output mode.\n\n- Draft mode: produce poster copy, layout guidance, figure recommendations, and a concise runbook.\n- Execution mode: additionally prepare a `poster.yaml` draft, a Paper2Poster folder layout, and the exact command the user can run.\n\n3. Extract poster-worthy content from the paper.\n\nCapture:\n\n- title and subtitle candidate\n- one-sentence paper claim\n- problem and motivation\n- method overview\n- core figures, tables, and diagrams worth featuring\n- strongest quantitative results\n- limitations, deployment notes, or future work if they matter\n\n4. Compress for poster reading.\n\nRewrite for scanability:\n\n- short headers\n- bullets over paragraphs\n- one idea per bullet\n- clear result statements with units and baselines when available\n- captions that can stand alone\n\n5. Build the poster package.\n\nUnless the user asks for a different structure, produce:\n\n- `poster_brief.md`: audience, poster goal, assumptions, content priorities\n- `poster_copy.md`: final section copy ready for layout\n- `poster_layout.md`: panel plan, figure placement, hierarchy, and visual notes\n- `poster_runbook.md`: exact next steps for Paper2Poster or manual assembly\n\nIf execution mode is requested, also produce `poster.yaml`.\n\n6. Finish with a quality pass.\n\nCheck that:\n\n- the poster has a visible narrative from problem to result\n- text is shorter than the source summary would naturally be\n- the main figure is obvious\n- every number can be traced back to the source material\n- there is a clear takeaway and contact/QR placeholder if relevant\n\n## Paper2Poster execution guidance\n\nWhen the user wants a repo-ready Paper2Poster setup, follow the upstream folder and command pattern:\n\n- place the paper at `{dataset_dir}/{paper_name}/paper.pdf`\n- place a per-poster `poster.yaml` next to `paper.pdf` if custom styling is needed\n- use `python -m PosterAgent.new_pipeline` with poster path, text model, vision model, and poster dimensions\n\nCommon options to surface when relevant:\n\n- `--poster_width_inches`\n- `--poster_height_inches`\n- `--conference_venue`\n- `--institution_logo_path`\n- `--conference_logo_path`\n- `--use_google_search`\n- `--max_workers`\n\nIf the environment is not ready to run Paper2Poster, still provide the exact command and clearly mark it as unexecuted.\n\n## Output style\n\nPrefer confident but compact deliverables.\n\n- Keep section headers short.\n- Prefer bullets to paragraphs.\n- Preserve technical meaning.\n- Surface assumptions at the top, not buried at the end.\n- If the paper is dense, move secondary details into a small \"Backup / Appendix\" section suggestion rather than bloating the main poster.\n\n## When to read references\n\n- Read `references/inputs-and-deliverables.md` when you need a checklist for missing materials or expected outputs.\n- Read `references/poster-defaults.md` when dimensions, panel count, copy density, or layout choices are unspecified.\n- Read `references/example-prompts.md` when the user wants a ready-to-paste invocation for Codex or Claude.\n",
+      "bodyMd": "# Paper2Poster Poster\n\nUse this skill when the goal is to turn a paper into a readable, credible, poster-ready package instead of a long prose summary.\n\n## Core behavior\n\nWork from the source paper first. Prefer grounded extraction over creative rewriting.\n\nDo not invent:\n\n- metrics that do not appear in the paper\n- figure content you have not seen\n- ablation claims that are not supported\n- author affiliations, funding, or venue details unless supplied\n\nIf key information is missing, say so explicitly and continue with labeled assumptions.\n\n## Default workflow\n\n1. Gather inputs.\n\nCollect the paper source plus any constraints that are already available:\n\n- `paper.pdf`, arXiv link, markdown draft, or pasted paper text\n- venue, audience, poster dimensions, branding, deadline\n- whether the user wants poster copy only or also Paper2Poster execution assets\n\nIf the user gave no dimensions, use the defaults in `references/poster-defaults.md`.\n\n2. Choose the output mode.\n\n- Draft mode: produce poster copy, layout guidance, figure recommendations, and a concise runbook.\n- Execution mode: additionally prepare a `poster.yaml` draft, a Paper2Poster folder layout, and the exact command the user can run.\n\n3. Extract poster-worthy content from the paper.\n\nCapture:\n\n- title and subtitle candidate\n- one-sentence paper claim\n- problem and motivation\n- method overview\n- core figures, tables, and diagrams worth featuring\n- strongest quantitative results\n- limitations, deployment notes, or future work if they matter\n\n4. Compress for poster reading.\n\nRewrite for scanability:\n\n- short headers\n- bullets over paragraphs\n- one idea per bullet\n- clear result statements with units and baselines when available\n- captions that can stand alone\n\n5. Build the poster package.\n\nUnless the user asks for a different structure, produce:\n\n- `poster_brief.md`: audience, poster goal, assumptions, content priorities\n- `poster_copy.md`: final section copy ready for layout\n- `poster_layout.md`: panel plan, figure placement, hierarchy, and visual notes\n- `poster_runbook.md`: exact next steps for Paper2Poster or manual assembly\n\nIf execution mode is requested, also produce `poster.yaml`.\n\n6. Finish with a quality pass.\n\nCheck that:\n\n- the poster has a visible narrative from problem to result\n- text is shorter than the source summary would naturally be\n- the main figure is obvious\n- every number can be traced back to the source material\n- there is a clear takeaway and contact/QR placeholder if relevant\n\n## Paper2Poster execution guidance\n\nWhen the user wants a repo-ready Paper2Poster setup, follow the upstream folder and command pattern:\n\n- place the paper at `{dataset_dir}/{paper_name}/paper.pdf`\n- place a per-poster `poster.yaml` next to `paper.pdf` if custom styling is needed\n- use `python -m PosterAgent.new_pipeline` with poster path, text model, vision model, and poster dimensions\n\nCommon options to surface when relevant:\n\n- `--poster_width_inches`\n- `--poster_height_inches`\n- `--conference_venue`\n- `--institution_logo_path`\n- `--conference_logo_path`\n- `--use_google_search`\n- `--max_workers`\n\nIf the environment is not ready to run Paper2Poster, still provide the exact command and clearly mark it as unexecuted.\n\n## Output style\n\nPrefer confident but compact deliverables.\n\n- Keep section headers short.\n- Prefer bullets to paragraphs.\n- Preserve technical meaning.\n- Surface assumptions at the top, not buried at the end.\n- If the paper is dense, move secondary details into a small \"Backup / Appendix\" section suggestion rather than bloating the main poster.\n\n## When to read references\n\n- Read `references/inputs-and-deliverables.md` when you need a checklist for missing materials or expected outputs.\n- Read `references/poster-defaults.md` when dimensions, panel count, copy density, or layout choices are unspecified.\n- Read `references/example-prompts.md` when the user wants a ready-to-paste invocation for Codex or Claude.\n"
+    }
+  ]
+}

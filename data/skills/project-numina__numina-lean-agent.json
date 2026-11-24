@@ -1,0 +1,248 @@
+{
+  "repo": "project-numina/numina-lean-agent",
+  "commit": "1c9af8a52e715f22fede766425ba3d3b95526132",
+  "branch": "main",
+  "fetchedAt": "2026-11-24T15:40:02.723Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "skills",
+      "name": "numina-lean-agent",
+      "dir": "skills",
+      "path": "skills/SKILL.md",
+      "desc": "Lean 4 theorem proving toolkit: search lemmas, verify proofs, repair/simplify code, and get LLM-assisted informal proofs",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": true,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/project-numina/numina-lean-agent.git",
+        "copy": "cp -r skills ~/.claude/skills/skills",
+        "raw": "https://raw.githubusercontent.com/project-numina/numina-lean-agent/1c9af8a52e715f22fede766425ba3d3b95526132/skills/SKILL.md",
+        "saveAs": "~/.claude/skills/skills/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:7bef8385d3a4c4545f34c288a877898014af25d244068695d34448f7acc93d5e",
+      "bytes": 1088,
+      "wordCount": 95,
+      "repoLicense": "",
+      "commit": "1c9af8a52e715f22fede766425ba3d3b95526132",
+      "branch": "main",
+      "body": "---\nname: numina-lean-agent\ndescription: \"Lean 4 theorem proving toolkit: search lemmas, verify proofs, repair/simplify code, and get LLM-assisted informal proofs\"\n---\n\n# Numina Lean Agent — Skills Index\n\n## Skills\n\n| Skill | Description |\n|-------|-------------|\n| [search](search/SKILL.md) | Search tools: leanexplore, loogle, leanfinder, leansearch, state-search, hammer-premise |\n| [verification](verification/SKILL.md) | Verification: lean-check, verify-proof, disprove |\n| [code-transform](code-transform/SKILL.md) | Code transforms: repair-proofs, simplify-theorems, sorry2lemma, extract-theorems |\n| [llm](llm/SKILL.md) | LLM tools: informal_prover, discussion_partner, code_golf |\n\n## Environment variables\n- `GEMINI_API_KEY` — informal_prover (gemini generation, gemini verifier, gemini refinement), code_golf, discussion_partner (gemini)\n- `OPENAI_API_KEY` — informal_prover (gpt generation, gpt verifier), discussion_partner (gpt)\n- `ANTHROPIC_API_KEY` — informal_prover (claude verifier)\n- `AXLE_API_KEY` — axle commands (verify-proof, disprove, sorry2lemma, etc.)\n",
+      "bodyMd": "# Numina Lean Agent — Skills Index\n\n## Skills\n\n| Skill | Description |\n|-------|-------------|\n| [search](search/SKILL.md) | Search tools: leanexplore, loogle, leanfinder, leansearch, state-search, hammer-premise |\n| [verification](verification/SKILL.md) | Verification: lean-check, verify-proof, disprove |\n| [code-transform](code-transform/SKILL.md) | Code transforms: repair-proofs, simplify-theorems, sorry2lemma, extract-theorems |\n| [llm](llm/SKILL.md) | LLM tools: informal_prover, discussion_partner, code_golf |\n\n## Environment variables\n- `GEMINI_API_KEY` — informal_prover (gemini generation, gemini verifier, gemini refinement), code_golf, discussion_partner (gemini)\n- `OPENAI_API_KEY` — informal_prover (gpt generation, gpt verifier), discussion_partner (gpt)\n- `ANTHROPIC_API_KEY` — informal_prover (claude verifier)\n- `AXLE_API_KEY` — axle commands (verify-proof, disprove, sorry2lemma, etc.)\n"
+    },
+    {
+      "slug": "code-transform",
+      "name": "code-transform",
+      "dir": "skills/code-transform",
+      "path": "skills/code-transform/SKILL.md",
+      "desc": "Code transformation tools for repairing, simplifying, and extracting Lean proofs",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/project-numina/numina-lean-agent.git",
+        "copy": "cp -r skills/code-transform ~/.claude/skills/code-transform",
+        "raw": "https://raw.githubusercontent.com/project-numina/numina-lean-agent/1c9af8a52e715f22fede766425ba3d3b95526132/skills/code-transform/SKILL.md",
+        "saveAs": "~/.claude/skills/code-transform/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:919a9756908767b906098d970cabc9be272b7dfd25463b1f6123f9aab51f1a29",
+      "bytes": 1083,
+      "wordCount": 142,
+      "repoLicense": "",
+      "commit": "1c9af8a52e715f22fede766425ba3d3b95526132",
+      "branch": "main",
+      "body": "---\nname: code-transform\ndescription: \"Code transformation tools for repairing, simplifying, and extracting Lean proofs\"\n---\n\n# Code Transform Tools\n\nTools for automatically transforming and improving Lean proof code. All scripts use `python skills/cli/axle.py <subcommand>`.\n\n## Available Tools\n\n| Tool | Purpose | When to use |\n|------|---------|-------------|\n| **axle repair-proofs** | Auto-fix broken proofs using configurable repair strategies | When a proof fails and you want automated repair before manual editing |\n| **axle simplify-theorems** | Clean up proofs by removing unused tactics and bindings | As a final cleanup step after a proof is verified |\n| **axle sorry2lemma** | Lift sorry placeholders into standalone named lemmas | When a proof has multiple sorry sub-goals you want to tackle independently |\n| **axle extract-theorems** | Split a Lean file into structured per-theorem records | For analysis, dataset construction, or understanding file structure |\n\nFor full parameters and examples, read the corresponding `reference-<tool>.md` file in this directory.\n",
+      "bodyMd": "# Code Transform Tools\n\nTools for automatically transforming and improving Lean proof code. All scripts use `python skills/cli/axle.py <subcommand>`.\n\n## Available Tools\n\n| Tool | Purpose | When to use |\n|------|---------|-------------|\n| **axle repair-proofs** | Auto-fix broken proofs using configurable repair strategies | When a proof fails and you want automated repair before manual editing |\n| **axle simplify-theorems** | Clean up proofs by removing unused tactics and bindings | As a final cleanup step after a proof is verified |\n| **axle sorry2lemma** | Lift sorry placeholders into standalone named lemmas | When a proof has multiple sorry sub-goals you want to tackle independently |\n| **axle extract-theorems** | Split a Lean file into structured per-theorem records | For analysis, dataset construction, or understanding file structure |\n\nFor full parameters and examples, read the corresponding `reference-<tool>.md` file in this directory.\n"
+    },
+    {
+      "slug": "llm",
+      "name": "llm",
+      "dir": "skills/llm",
+      "path": "skills/llm/SKILL.md",
+      "desc": "LLM-assisted tools for informal proofs, proof strategy discussion, and code simplification",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/project-numina/numina-lean-agent.git",
+        "copy": "cp -r skills/llm ~/.claude/skills/llm",
+        "raw": "https://raw.githubusercontent.com/project-numina/numina-lean-agent/1c9af8a52e715f22fede766425ba3d3b95526132/skills/llm/SKILL.md",
+        "saveAs": "~/.claude/skills/llm/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:dbc3593b151e75e587ae299dc55afb7beeef03ae07c49fd816bb1f1c42e1ddef",
+      "bytes": 840,
+      "wordCount": 112,
+      "repoLicense": "",
+      "commit": "1c9af8a52e715f22fede766425ba3d3b95526132",
+      "branch": "main",
+      "body": "---\nname: llm\ndescription: \"LLM-assisted tools for informal proofs, proof strategy discussion, and code simplification\"\n---\n\n# LLM Tools\n\nLLM-assisted tools for theorem proving support. All scripts are in `skills/cli/`.\n\n## Available Tools\n\n| Tool | Purpose | When to use |\n|------|---------|-------------|\n| **informal-prover** | Generate and verify step-by-step math solutions in a loop | When you want an LLM to attempt a full solution with auto-verification |\n| **discussion-partner** | Free-form discussion about proof strategies or Lean code | When you are stuck and want high-level strategic advice |\n| **code-golf** | Shorten and simplify an existing Lean proof via Gemini | After a proof works, to get a more elegant version |\n\nFor full parameters and examples, read the corresponding `reference-<tool>.md` file in this directory.\n",
+      "bodyMd": "# LLM Tools\n\nLLM-assisted tools for theorem proving support. All scripts are in `skills/cli/`.\n\n## Available Tools\n\n| Tool | Purpose | When to use |\n|------|---------|-------------|\n| **informal-prover** | Generate and verify step-by-step math solutions in a loop | When you want an LLM to attempt a full solution with auto-verification |\n| **discussion-partner** | Free-form discussion about proof strategies or Lean code | When you are stuck and want high-level strategic advice |\n| **code-golf** | Shorten and simplify an existing Lean proof via Gemini | After a proof works, to get a more elegant version |\n\nFor full parameters and examples, read the corresponding `reference-<tool>.md` file in this directory.\n"
+    },
+    {
+      "slug": "search",
+      "name": "search",
+      "dir": "skills/search",
+      "path": "skills/search/SKILL.md",
+      "desc": "Search tools for finding Lean theorems, lemmas, and definitions in Mathlib",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/project-numina/numina-lean-agent.git",
+        "copy": "cp -r skills/search ~/.claude/skills/search",
+        "raw": "https://raw.githubusercontent.com/project-numina/numina-lean-agent/1c9af8a52e715f22fede766425ba3d3b95526132/skills/search/SKILL.md",
+        "saveAs": "~/.claude/skills/search/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:f651ac87947ff6e6c514f5e032bb00d2821c55e0f222f13c6f3fc8a9d8e8fd47",
+      "bytes": 1012,
+      "wordCount": 141,
+      "repoLicense": "",
+      "commit": "1c9af8a52e715f22fede766425ba3d3b95526132",
+      "branch": "main",
+      "body": "---\nname: search\ndescription: \"Search tools for finding Lean theorems, lemmas, and definitions in Mathlib\"\n---\n\n# Search Tools\n\nTools for finding relevant Lean theorems, lemmas, and definitions. All scripts are in `skills/cli/`.\n\n## Available Tools\n\n| Tool | Purpose | When to use |\n|------|---------|-------------|\n| **leanexplore** | Semantic search by natural language or Lean terms | First choice for any search; **max 5 parallel queries** |\n| **loogle** | Pattern-based search by type shape | When you know the type signature pattern |\n| **leanfinder** | Mathlib semantic search | Alternative semantic search |\n| **leansearch** | Natural language + Lean term search | Alternative to leanexplore |\n| **state-search** | Search by proof goal/state | When you have a specific proof state to match |\n| **hammer-premise** | Premise retrieval for automation | When looking for premises for automated tactics |\n\nFor full parameters and examples, read the corresponding `reference-<tool>.md` file in this directory.\n",
+      "bodyMd": "# Search Tools\n\nTools for finding relevant Lean theorems, lemmas, and definitions. All scripts are in `skills/cli/`.\n\n## Available Tools\n\n| Tool | Purpose | When to use |\n|------|---------|-------------|\n| **leanexplore** | Semantic search by natural language or Lean terms | First choice for any search; **max 5 parallel queries** |\n| **loogle** | Pattern-based search by type shape | When you know the type signature pattern |\n| **leanfinder** | Mathlib semantic search | Alternative semantic search |\n| **leansearch** | Natural language + Lean term search | Alternative to leanexplore |\n| **state-search** | Search by proof goal/state | When you have a specific proof state to match |\n| **hammer-premise** | Premise retrieval for automation | When looking for premises for automated tactics |\n\nFor full parameters and examples, read the corresponding `reference-<tool>.md` file in this directory.\n"
+    },
+    {
+      "slug": "sorrifier",
+      "name": "sorrifier",
+      "dir": "skills/sorrifier",
+      "path": "skills/sorrifier/SKILL.md",
+      "desc": "Isolates failing proof steps by replacing them with `sorry` and extracting them into standalone lemmas to modularize and decouple complex Lean 4 proofs.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "go"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/project-numina/numina-lean-agent.git",
+        "copy": "cp -r skills/sorrifier ~/.claude/skills/sorrifier",
+        "raw": "https://raw.githubusercontent.com/project-numina/numina-lean-agent/1c9af8a52e715f22fede766425ba3d3b95526132/skills/sorrifier/SKILL.md",
+        "saveAs": "~/.claude/skills/sorrifier/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:980bf491c78e5013fa1e1cfff18f9578c760aee9bca22b59e2ed83c78d123bd8",
+      "bytes": 3253,
+      "wordCount": 451,
+      "repoLicense": "",
+      "commit": "1c9af8a52e715f22fede766425ba3d3b95526132",
+      "branch": "main",
+      "body": "---\nname: sorrifier\ndescription: \"Isolates failing proof steps by replacing them with `sorry` and extracting them into standalone lemmas to modularize and decouple complex Lean 4 proofs.\"\n---\n\n# Sorrifier — Proof Isolation Workflow\n\nStructural refactoring workflow for isolating broken proof steps. Replaces failing logic with `sorry`, extracts it into a standalone lemma, and reconstructs the call site so the main theorem compiles cleanly.\n\n## Tools Used\n\nThis workflow uses two tools from other skills. All commands go through the logging wrapper.\n\n| Tool | Skill | Purpose |\n|------|-------|---------|\n| `python skills/cli/lean_check.py FILE` | [verification](../verification/SKILL.md) | Diagnose compilation errors and pinpoint failing lines |\n| `python skills/cli/axle.py sorry2lemma` | [code-transform](../code-transform/SKILL.md) | Extract sorry into standalone lemma with `--reconstruct-callsite` |\n\nFor full parameter reference, see `verification/reference-lean-check.md` and `code-transform/reference-axle-sorry2lemma.md`.\n\n## Execution Workflow\n\nFollow these steps sequentially:\n\n### Step 1: Diagnose\nRun `python skills/cli/lean_check.py FILE` to identify failing lines.\n- Read `lean_messages` for entries with `severity: \"error\"`.\n\n### Step 2: Inject `sorry`\nEdit the Lean code: replace the failing tactic/expression with `sorry`.\n- Scope the `sorry` to the smallest failing block, not the entire theorem.\n\n### Step 3: Verify sorrified state\nRun `python skills/cli/lean_check.py FILE` again.\n- Acceptance: zero errors. Warnings about `declaration uses 'sorry'` are expected.\n- If errors persist, adjust sorry placement and repeat.\n\n### Step 4: Extract to lemma\nRun `python skills/cli/axle.py sorry2lemma` with:\n- `--reconstruct-callsite` (required) — replaces sorry with the extracted lemma call\n- `--names <theorem>` — target only the specific theorem\n- Omit `--no-include-whole-context` if local context variables need capturing\n\n### Step 5: Final verification\nRun `python skills/cli/lean_check.py FILE` one last time.\n- Acceptance: main theorem compiles by calling the new lemma. Unresolved logic is isolated in the extracted lemma.\n\n## Example\n\n**Broken state:**\n```lean\nimport Mathlib.Tactic\n\ntheorem sum_of_squares_helper (n : ℕ) : (n + 1)^2 = n^2 + 2*n + 1 := by\n  have h1 : (n + 1)^2 = (n + 1) * (n + 1) := by ring\n  rw [h1]\n  exact magic_solve n  -- error: unknown identifier\n```\n\n**After sorrify + extract:**\n```bash\npython skills/cli/axle.py sorry2lemma file.lean --environment lean-4.28.0 --names sum_of_squares_helper --reconstruct-callsite\n```\n\n```lean\nimport Mathlib.Tactic\n\nlemma sum_of_squares_helper_lemma_1 (n : ℕ) (h1 : (n + 1) ^ 2 = (n + 1) * (n + 1)) :\n  (n + 1) * (n + 1) = n ^ 2 + 2 * n + 1 := by\n  sorry\n\ntheorem sum_of_squares_helper (n : ℕ) : (n + 1)^2 = n^2 + 2*n + 1 := by\n  have h1 : (n + 1)^2 = (n + 1) * (n + 1) := by ring\n  rw [h1]\n  exact sum_of_squares_helper_lemma_1 n h1\n```\n\n## Best Practices\n\n- **Scope narrowly:** Sorry the specific subgoal or `have` statement, not the entire theorem.\n- **Rename:** The tool generates generic names (e.g., `lemma_1`). Rename to something meaningful.\n- **Next step:** Once extracted, solve the lemma independently using `informal_prover` or manual proof.\n",
+      "bodyMd": "# Sorrifier — Proof Isolation Workflow\n\nStructural refactoring workflow for isolating broken proof steps. Replaces failing logic with `sorry`, extracts it into a standalone lemma, and reconstructs the call site so the main theorem compiles cleanly.\n\n## Tools Used\n\nThis workflow uses two tools from other skills. All commands go through the logging wrapper.\n\n| Tool | Skill | Purpose |\n|------|-------|---------|\n| `python skills/cli/lean_check.py FILE` | [verification](../verification/SKILL.md) | Diagnose compilation errors and pinpoint failing lines |\n| `python skills/cli/axle.py sorry2lemma` | [code-transform](../code-transform/SKILL.md) | Extract sorry into standalone lemma with `--reconstruct-callsite` |\n\nFor full parameter reference, see `verification/reference-lean-check.md` and `code-transform/reference-axle-sorry2lemma.md`.\n\n## Execution Workflow\n\nFollow these steps sequentially:\n\n### Step 1: Diagnose\nRun `python skills/cli/lean_check.py FILE` to identify failing lines.\n- Read `lean_messages` for entries with `severity: \"error\"`.\n\n### Step 2: Inject `sorry`\nEdit the Lean code: replace the failing tactic/expression with `sorry`.\n- Scope the `sorry` to the smallest failing block, not the entire theorem.\n\n### Step 3: Verify sorrified state\nRun `python skills/cli/lean_check.py FILE` again.\n- Acceptance: zero errors. Warnings about `declaration uses 'sorry'` are expected.\n- If errors persist, adjust sorry placement and repeat.\n\n### Step 4: Extract to lemma\nRun `python skills/cli/axle.py sorry2lemma` with:\n- `--reconstruct-callsite` (required) — replaces sorry with the extracted lemma call\n- `--names <theorem>` — target only the specific theorem\n- Omit `--no-include-whole-context` if local context variables need capturing\n\n### Step 5: Final verification\nRun `python skills/cli/lean_check.py FILE` one last time.\n- Acceptance: main theorem compiles by calling the new lemma. Unresolved logic is isolated in the extracted lemma.\n\n## Example\n\n**Broken state:**\n```lean\nimport Mathlib.Tactic\n\ntheorem sum_of_squares_helper (n : ℕ) : (n + 1)^2 = n^2 + 2*n + 1 := by\n  have h1 : (n + 1)^2 = (n + 1) * (n + 1) := by ring\n  rw [h1]\n  exact magic_solve n  -- error: unknown identifier\n```\n\n**After sorrify + extract:**\n```bash\npython skills/cli/axle.py sorry2lemma file.lean --environment lean-4.28.0 --names sum_of_squares_helper --reconstruct-callsite\n```\n\n```lean\nimport Mathlib.Tactic\n\nlemma sum_of_squares_helper_lemma_1 (n : ℕ) (h1 : (n + 1) ^ 2 = (n + 1) * (n + 1)) :\n  (n + 1) * (n + 1) = n ^ 2 + 2 * n + 1 := by\n  sorry\n\ntheorem sum_of_squares_helper (n : ℕ) : (n + 1)^2 = n^2 + 2*n + 1 := by\n  have h1 : (n + 1)^2 = (n + 1) * (n + 1) := by ring\n  rw [h1]\n  exact sum_of_squares_helper_lemma_1 n h1\n```\n\n## Best Practices\n\n- **Scope narrowly:** Sorry the specific subgoal or `have` statement, not the entire theorem.\n- **Rename:** The tool generates generic names (e.g., `lemma_1`). Rename to something meaningful.\n- **Next step:** Once extracted, solve the lemma independently using `informal_prover` or manual proof.\n"
+    },
+    {
+      "slug": "verification",
+      "name": "verification",
+      "dir": "skills/verification",
+      "path": "skills/verification/SKILL.md",
+      "desc": "Verification tools for compiling, validating, and disproving Lean theorems",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": true,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/project-numina/numina-lean-agent.git",
+        "copy": "cp -r skills/verification ~/.claude/skills/verification",
+        "raw": "https://raw.githubusercontent.com/project-numina/numina-lean-agent/1c9af8a52e715f22fede766425ba3d3b95526132/skills/verification/SKILL.md",
+        "saveAs": "~/.claude/skills/verification/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:a654273e19c2025bbbce19bf11909405f0debe86d69547b5cfa4722161291644",
+      "bytes": 780,
+      "wordCount": 108,
+      "repoLicense": "",
+      "commit": "1c9af8a52e715f22fede766425ba3d3b95526132",
+      "branch": "main",
+      "body": "---\nname: verification\ndescription: \"Verification tools for compiling, validating, and disproving Lean theorems\"\n---\n\n# Verification Tools\n\nTools for verifying Lean code correctness.\n\n## Available Tools\n\n| Tool | Purpose | When to use |\n|------|---------|-------------|\n| **lean-check** | Compile a Lean file and report errors (local, no API key) | First step to validate any proof attempt |\n| **axle verify-proof** | Validate a proof matches a formal statement | When you need to confirm a proof proves exactly the right theorem |\n| **axle disprove** | Attempt to disprove theorems by proving negation | Before investing effort in a proof, check if the conjecture is false |\n\nFor full parameters and examples, read the corresponding `reference-<tool>.md` file in this directory.\n",
+      "bodyMd": "# Verification Tools\n\nTools for verifying Lean code correctness.\n\n## Available Tools\n\n| Tool | Purpose | When to use |\n|------|---------|-------------|\n| **lean-check** | Compile a Lean file and report errors (local, no API key) | First step to validate any proof attempt |\n| **axle verify-proof** | Validate a proof matches a formal statement | When you need to confirm a proof proves exactly the right theorem |\n| **axle disprove** | Attempt to disprove theorems by proving negation | Before investing effort in a proof, check if the conjecture is false |\n\nFor full parameters and examples, read the corresponding `reference-<tool>.md` file in this directory.\n"
+    }
+  ]
+}
