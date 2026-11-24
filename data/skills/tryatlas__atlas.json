@@ -1,0 +1,145 @@
+{
+  "repo": "tryatlas/atlas",
+  "commit": "4612e370b6b82be31b0e395ddcc5de883ac503d1",
+  "branch": "main",
+  "fetchedAt": "2026-11-24T22:05:26.712Z",
+  "parseFail": 3,
+  "skills": [
+    {
+      "slug": "atlas-self-configure",
+      "name": "atlas-self-configure",
+      "dir": "src-tauri/resources/skills/atlas-self-configure",
+      "path": "src-tauri/resources/skills/atlas-self-configure/SKILL.md",
+      "desc": "Inspect and safely update Atlas user preferences through Atlas's config.toml.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": true,
+        "network": true,
+        "bins": [
+          "git",
+          "go",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/tryatlas/atlas.git",
+        "copy": "cp -r src-tauri/resources/skills/atlas-self-configure ~/.claude/skills/atlas-self-configure",
+        "raw": "https://raw.githubusercontent.com/tryatlas/atlas/4612e370b6b82be31b0e395ddcc5de883ac503d1/src-tauri/resources/skills/atlas-self-configure/SKILL.md",
+        "saveAs": "~/.claude/skills/atlas-self-configure/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:4a4e5244330163b442b1db5f13020f4182027eefdae459a51b1a241c6c994106",
+      "bytes": 5907,
+      "wordCount": 975,
+      "repoLicense": "Apache-2.0",
+      "commit": "4612e370b6b82be31b0e395ddcc5de883ac503d1",
+      "branch": "main",
+      "body": "---\nname: atlas-self-configure\ndescription: Inspect and safely update Atlas user preferences through Atlas's config.toml.\n---\n\n# Atlas self-configure\n\nAtlas's user-facing preferences live in one human-editable file,\n`config.toml`. This skill is how you (an agent) read and change it safely —\nwithout touching anything else Atlas persists.\n\n## Where the file lives\n\n```\n~/.config/atlas/config.toml\n```\n\nThe same path on every platform. If `$XDG_CONFIG_HOME` is set to an absolute\npath, it's `$XDG_CONFIG_HOME/atlas/config.toml` instead — check that variable\nbefore assuming.\n\nEditing that file is the supported mechanism, and the only one available to\nyou: Atlas's config commands are IPC endpoints reachable from its own UI, not\nagent tools. Atlas watches the file and validates every change you make (see\nstep 6 below), so a direct edit is a first-class way in — not a workaround.\n\nIf the file does not exist yet, Atlas hasn't created it (a fresh install\nbefore first launch, or the user deleted it). Do not create one speculatively\n— report that to the user instead of guessing at defaults.\n\n## One project only: the project's own config.toml\n\nA project can override a few keys for itself in a `config.toml` inside the\nproject's `.atlas/` directory. Use it only when the user asks for a change in\n*this project* rather than everywhere. Its header says what it is; the rules:\n\n- It holds only the keys the project changes. The allowed keys are the ones\n  whose comment in the global file says a project can override it. Atlas\n  ignores any other key there.\n- Some of those a project can only turn **off** (the comment says \"never\n  on\"). If the user wants one on for a single project while it's off\n  everywhere else, say that Atlas won't honour it and stop.\n- Delete a key's line to go back to the global value.\n- The same care applies as below: read first, explain, change only your\n  lines, write atomically. It may not exist yet; unlike the global file,\n  creating it is fine — start it with `schemaVersion = 1` and `[settings]`.\n\n## The schema is in the file\n\nAtlas writes a comment above every key: what it does, its default, and any\nconstraint on its value — a numeric range, an exact set of allowed strings,\n\"must not be empty\". **Read those comments and follow them.** They are\ngenerated from the same table Atlas validates against, so they cannot drift\nfrom what it will actually accept.\n\nDo not work from a schema you remember, or from one you saw in another\nproject. The file in front of you is authoritative, and it is the only thing\nguaranteed to match the Atlas build the user is running.\n\nTwo things the comments won't spell out:\n\n- **A key that isn't there.** Some settings mean \"unset\" by being absent —\n  TOML has no null. The comment for such a key sits above whichever key\n  follows it, so read the whole `[settings]` block, not just the lines with\n  values on them. To clear one of these, delete its line; never write an\n  empty string.\n- **A key Atlas doesn't recognize.** It's preserved untouched and reported to\n  the user as a diagnostic. Never delete a key you don't recognize.\n\n## Making a change\n\n1. **Read the whole file first.** You need its comments and formatting to\n   avoid disturbing them, and you need the target key's comment to know what\n   a valid value even is.\n2. **Explain what you're about to change** to the user before writing: the\n   key, its current value, the new value, and what it does — quoting the\n   file's own comment. Don't silently flip a setting.\n3. **Change only the line (or few lines) you mean to change.** Leave every\n   other key, comment, and blank line exactly as it was — including the\n   comment above the key you're editing, which is Atlas's to rewrite, not\n   yours. Do not reformat, reorder, or re-indent anything:\n\n   ```diff\n    # Inline git blame — a dim author/age/summary annotation trailing the\n    # active line in the editor. (default: true)\n   -someSetting = true\n   +someSetting = false\n   ```\n4. **Validate the value against that key's comment before writing.** If the\n   comment states a range or a fixed set of values and the user asked for\n   something outside it, say so and stop; don't write it and let Atlas reject\n   it.\n5. **Write atomically:** write your edited content to a new file in the\n   *same directory* (e.g. `config.toml.tmp.<random>`), then rename/move it\n   over `config.toml`. Never edit in place — a crash or a concurrent Atlas\n   reload mid-write must not leave a half-written file behind.\n6. **Re-read the file after writing** to confirm your change landed.\n\nAtlas re-validates the whole file whenever it notices a change, live, no\nrestart. An invalid edit is rejected entirely and Atlas keeps running on the\nlast good settings — but the file stays as you wrote it, and while it's\ninvalid Atlas also refuses every settings write from its own UI, until someone\nrepairs it or uses \"Recreate defaults\" (which overwrites it, keeping a\n`.bak-<unix-seconds>` copy). So a bad write is not free: report it and offer to\nrestore the exact content you read in step 1, rather than trying to patch your\nway out.\n\n## What this skill must never touch\n\n- API keys, tokens, or any credential — Atlas doesn't store these in a file\n  it owns at all; they live in the user's own shell profile. Never write\n  secrets into `config.toml`.\n- `state.json`, `device.json`, `telemetry.json` — separate files with\n  separate ownership; not in scope for this skill.\n- The user's shell profile (`~/.zshrc` and similar).\n- Atlas's own binary, packages, or update mechanism. \"Self-configure\" means\n  preferences only, never self-update.\n- Session history, transcripts, or any other per-project `.atlas/` state —\n  none of that is a \"setting\". Only `.atlas/config.toml` is.\n\nIf a request needs any of the above, say so plainly and stop — it's out of\nscope for this skill, not something to work around.\n",
+      "bodyMd": "# Atlas self-configure\n\nAtlas's user-facing preferences live in one human-editable file,\n`config.toml`. This skill is how you (an agent) read and change it safely —\nwithout touching anything else Atlas persists.\n\n## Where the file lives\n\n```\n~/.config/atlas/config.toml\n```\n\nThe same path on every platform. If `$XDG_CONFIG_HOME` is set to an absolute\npath, it's `$XDG_CONFIG_HOME/atlas/config.toml` instead — check that variable\nbefore assuming.\n\nEditing that file is the supported mechanism, and the only one available to\nyou: Atlas's config commands are IPC endpoints reachable from its own UI, not\nagent tools. Atlas watches the file and validates every change you make (see\nstep 6 below), so a direct edit is a first-class way in — not a workaround.\n\nIf the file does not exist yet, Atlas hasn't created it (a fresh install\nbefore first launch, or the user deleted it). Do not create one speculatively\n— report that to the user instead of guessing at defaults.\n\n## One project only: the project's own config.toml\n\nA project can override a few keys for itself in a `config.toml` inside the\nproject's `.atlas/` directory. Use it only when the user asks for a change in\n*this project* rather than everywhere. Its header says what it is; the rules:\n\n- It holds only the keys the project changes. The allowed keys are the ones\n  whose comment in the global file says a project can override it. Atlas\n  ignores any other key there.\n- Some of those a project can only turn **off** (the comment says \"never\n  on\"). If the user wants one on for a single project while it's off\n  everywhere else, say that Atlas won't honour it and stop.\n- Delete a key's line to go back to the global value.\n- The same care applies as below: read first, explain, change only your\n  lines, write atomically. It may not exist yet; unlike the global file,\n  creating it is fine — start it with `schemaVersion = 1` and `[settings]`.\n\n## The schema is in the file\n\nAtlas writes a comment above every key: what it does, its default, and any\nconstraint on its value — a numeric range, an exact set of allowed strings,\n\"must not be empty\". **Read those comments and follow them.** They are\ngenerated from the same table Atlas validates against, so they cannot drift\nfrom what it will actually accept.\n\nDo not work from a schema you remember, or from one you saw in another\nproject. The file in front of you is authoritative, and it is the only thing\nguaranteed to match the Atlas build the user is running.\n\nTwo things the comments won't spell out:\n\n- **A key that isn't there.** Some settings mean \"unset\" by being absent —\n  TOML has no null. The comment for such a key sits above whichever key\n  follows it, so read the whole `[settings]` block, not just the lines with\n  values on them. To clear one of these, delete its line; never write an\n  empty string.\n- **A key Atlas doesn't recognize.** It's preserved untouched and reported to\n  the user as a diagnostic. Never delete a key you don't recognize.\n\n## Making a change\n\n1. **Read the whole file first.** You need its comments and formatting to\n   avoid disturbing them, and you need the target key's comment to know what\n   a valid value even is.\n2. **Explain what you're about to change** to the user before writing: the\n   key, its current value, the new value, and what it does — quoting the\n   file's own comment. Don't silently flip a setting.\n3. **Change only the line (or few lines) you mean to change.** Leave every\n   other key, comment, and blank line exactly as it was — including the\n   comment above the key you're editing, which is Atlas's to rewrite, not\n   yours. Do not reformat, reorder, or re-indent anything:\n\n   ```diff\n    # Inline git blame — a dim author/age/summary annotation trailing the\n    # active line in the editor. (default: true)\n   -someSetting = true\n   +someSetting = false\n   ```\n4. **Validate the value against that key's comment before writing.** If the\n   comment states a range or a fixed set of values and the user asked for\n   something outside it, say so and stop; don't write it and let Atlas reject\n   it.\n5. **Write atomically:** write your edited content to a new file in the\n   *same directory* (e.g. `config.toml.tmp.<random>`), then rename/move it\n   over `config.toml`. Never edit in place — a crash or a concurrent Atlas\n   reload mid-write must not leave a half-written file behind.\n6. **Re-read the file after writing** to confirm your change landed.\n\nAtlas re-validates the whole file whenever it notices a change, live, no\nrestart. An invalid edit is rejected entirely and Atlas keeps running on the\nlast good settings — but the file stays as you wrote it, and while it's\ninvalid Atlas also refuses every settings write from its own UI, until someone\nrepairs it or uses \"Recreate defaults\" (which overwrites it, keeping a\n`.bak-<unix-seconds>` copy). So a bad write is not free: report it and offer to\nrestore the exact content you read in step 1, rather than trying to patch your\nway out.\n\n## What this skill must never touch\n\n- API keys, tokens, or any credential — Atlas doesn't store these in a file\n  it owns at all; they live in the user's own shell profile. Never write\n  secrets into `config.toml`.\n- `state.json`, `device.json`, `telemetry.json` — separate files with\n  separate ownership; not in scope for this skill.\n- The user's shell profile (`~/.zshrc` and similar).\n- Atlas's own binary, packages, or update mechanism. \"Self-configure\" means\n  preferences only, never self-update.\n- Session history, transcripts, or any other per-project `.atlas/` state —\n  none of that is a \"setting\". Only `.atlas/config.toml` is.\n\nIf a request needs any of the above, say so plainly and stop — it's out of\nscope for this skill, not something to work around.\n"
+    },
+    {
+      "slug": "remember",
+      "name": "remember",
+      "dir": "src-tauri/resources/skills/remember",
+      "path": "src-tauri/resources/skills/remember/SKILL.md",
+      "desc": "Save the decisions, facts, dead ends and architecture this conversation established to Atlas's shared memory, so other agents and future sessions can build on them.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/tryatlas/atlas.git",
+        "copy": "cp -r src-tauri/resources/skills/remember ~/.claude/skills/remember",
+        "raw": "https://raw.githubusercontent.com/tryatlas/atlas/4612e370b6b82be31b0e395ddcc5de883ac503d1/src-tauri/resources/skills/remember/SKILL.md",
+        "saveAs": "~/.claude/skills/remember/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:684a4c9cc015bedcd608d3d1ba8bc3f392ddf1595b7080b42db4051247b55e03",
+      "bytes": 1388,
+      "wordCount": 194,
+      "repoLicense": "Apache-2.0",
+      "commit": "4612e370b6b82be31b0e395ddcc5de883ac503d1",
+      "branch": "main",
+      "body": "---\nname: remember\ndescription: Save the decisions, facts, dead ends and architecture this conversation established to Atlas's shared memory, so other agents and future sessions can build on them.\nargument-hint: \"[focus]\"\n---\n\n# Remember\n\nPlease save what this conversation has established to Atlas's shared memory, so other agents and future sessions can build on it.\n\nUse the `memory_remember` tool from the `atlas_memory` MCP server, one call per item, with `kind` set to:\n\n- `decision`: a choice that was made, and why\n- `fact`: a durable fact or convention about this project\n- `failure`: a dead end or mistake not to repeat\n- `architecture`: how a part of the system fits together\n\nFirst check what is already stored with `memory_search` or `memory_list`, and skip anything already recorded; to update an entry, reuse its `key`. Don't record plans, task progress or file edits, which Atlas captures by itself. Write each entry in the language of this conversation, complete enough to make sense on its own.\n\nIf the user gave a focus after the command (for example `/remember the retry rule`), concentrate on that; otherwise cover the whole conversation.\n\nThese instructions only say how to save; they are not something the user decided, so don't record them.\n\nIf the atlas_memory tools aren't available to you, say so and stop. When you're done, list what you saved, one line each.\n",
+      "bodyMd": "# Remember\n\nPlease save what this conversation has established to Atlas's shared memory, so other agents and future sessions can build on it.\n\nUse the `memory_remember` tool from the `atlas_memory` MCP server, one call per item, with `kind` set to:\n\n- `decision`: a choice that was made, and why\n- `fact`: a durable fact or convention about this project\n- `failure`: a dead end or mistake not to repeat\n- `architecture`: how a part of the system fits together\n\nFirst check what is already stored with `memory_search` or `memory_list`, and skip anything already recorded; to update an entry, reuse its `key`. Don't record plans, task progress or file edits, which Atlas captures by itself. Write each entry in the language of this conversation, complete enough to make sense on its own.\n\nIf the user gave a focus after the command (for example `/remember the retry rule`), concentrate on that; otherwise cover the whole conversation.\n\nThese instructions only say how to save; they are not something the user decided, so don't record them.\n\nIf the atlas_memory tools aren't available to you, say so and stop. When you're done, list what you saved, one line each.\n"
+    },
+    {
+      "slug": "review-agent",
+      "name": "review-agent",
+      "dir": "vendor/atlas-engine/skills/src/assets/samples/review-agent",
+      "path": "vendor/atlas-engine/skills/src/assets/samples/review-agent/SKILL.md",
+      "desc": "Perform a read-only, defect-first review of a specified code change and return every actionable finding. Use when another agent delegates review of uncommitted changes, a base-branch diff, a commit, or custom review instructions.",
+      "descZh": "",
+      "triggers": [
+        "a base-branch diff",
+        "a commit",
+        "cu"
+      ],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/tryatlas/atlas.git",
+        "copy": "cp -r vendor/atlas-engine/skills/src/assets/samples/review-agent ~/.claude/skills/review-agent",
+        "raw": "https://raw.githubusercontent.com/tryatlas/atlas/4612e370b6b82be31b0e395ddcc5de883ac503d1/vendor/atlas-engine/skills/src/assets/samples/review-agent/SKILL.md",
+        "saveAs": "~/.claude/skills/review-agent/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:07079efd0dc76f05fade424e5dfb048dce1de2df7626e1a4f56292a4f3f92228",
+      "bytes": 2661,
+      "wordCount": 380,
+      "repoLicense": "Apache-2.0",
+      "commit": "4612e370b6b82be31b0e395ddcc5de883ac503d1",
+      "branch": "main",
+      "body": "---\nname: review-agent\ndescription: Perform a read-only, defect-first review of a specified code change and return every actionable finding. Use when another agent delegates review of uncommitted changes, a base-branch diff, a commit, or custom review instructions.\n---\n\n# Review Agent\n\nInspect the requested target directly and return every finding that the author would likely fix.\nDo not modify files, create commits, push branches, post review comments, or delegate the review\nto another agent.\n\n## Review the change\n\n1. Read the applicable `AGENTS.md` instructions.\n2. Inspect the complete diff for the requested target and enough surrounding code to understand\n   each changed path.\n3. Identify concrete regressions introduced by the change. Continue through the whole diff after\n   finding the first issue.\n4. Check the relevant tests and call sites to confirm that each finding is real and actionable.\n\nFor a base-branch review, compare the changes that would actually merge rather than diffing\ndirectly against the branch tip. Resolve the comparison ref to the branch's upstream when that\nupstream exists and is ahead of the local branch; otherwise use the local branch. Run\n`git merge-base HEAD <comparison-ref>`, then inspect `git diff <merge-base-sha>`. If the local\nbranch cannot be resolved, try its configured upstream explicitly before reporting that the target\nis unavailable.\n\nFlag an issue only when all of these are true:\n\n- It affects correctness, security, performance, or maintainability in a meaningful way.\n- It is discrete and actionable.\n- It was introduced by the reviewed change.\n- The affected scenario or call path can be demonstrated from the code.\n- The author would probably fix it if they knew about it.\n\nDo not flag speculative concerns, pre-existing problems, intentional behavior changes, or style\nnits that do not obscure the code.\n\n## Write the result\n\nPresent findings first, ordered by severity. Use one entry per issue in this form:\n\n`[P1] Imperative finding title — path/to/file.rs:line`\n\nFollow the title with one short paragraph explaining the affected scenario and why the behavior is\nwrong. Keep the cited range as small as possible and make sure it overlaps the reviewed diff.\n\nUse these priorities:\n\n- `P0`: universal release blocker or critical failure.\n- `P1`: urgent defect that should be fixed next.\n- `P2`: ordinary defect that should be fixed.\n- `P3`: low-impact issue that is still worth fixing.\n\nIf there are no qualifying findings, say `No findings.` Do not invent a finding to fill the result.\nAfter the findings, add a brief overall assessment and mention any material test gaps or residual\nrisks.\n",
+      "bodyMd": "# Review Agent\n\nInspect the requested target directly and return every finding that the author would likely fix.\nDo not modify files, create commits, push branches, post review comments, or delegate the review\nto another agent.\n\n## Review the change\n\n1. Read the applicable `AGENTS.md` instructions.\n2. Inspect the complete diff for the requested target and enough surrounding code to understand\n   each changed path.\n3. Identify concrete regressions introduced by the change. Continue through the whole diff after\n   finding the first issue.\n4. Check the relevant tests and call sites to confirm that each finding is real and actionable.\n\nFor a base-branch review, compare the changes that would actually merge rather than diffing\ndirectly against the branch tip. Resolve the comparison ref to the branch's upstream when that\nupstream exists and is ahead of the local branch; otherwise use the local branch. Run\n`git merge-base HEAD <comparison-ref>`, then inspect `git diff <merge-base-sha>`. If the local\nbranch cannot be resolved, try its configured upstream explicitly before reporting that the target\nis unavailable.\n\nFlag an issue only when all of these are true:\n\n- It affects correctness, security, performance, or maintainability in a meaningful way.\n- It is discrete and actionable.\n- It was introduced by the reviewed change.\n- The affected scenario or call path can be demonstrated from the code.\n- The author would probably fix it if they knew about it.\n\nDo not flag speculative concerns, pre-existing problems, intentional behavior changes, or style\nnits that do not obscure the code.\n\n## Write the result\n\nPresent findings first, ordered by severity. Use one entry per issue in this form:\n\n`[P1] Imperative finding title — path/to/file.rs:line`\n\nFollow the title with one short paragraph explaining the affected scenario and why the behavior is\nwrong. Keep the cited range as small as possible and make sure it overlaps the reviewed diff.\n\nUse these priorities:\n\n- `P0`: universal release blocker or critical failure.\n- `P1`: urgent defect that should be fixed next.\n- `P2`: ordinary defect that should be fixed.\n- `P3`: low-impact issue that is still worth fixing.\n\nIf there are no qualifying findings, say `No findings.` Do not invent a finding to fill the result.\nAfter the findings, add a brief overall assessment and mention any material test gaps or residual\nrisks.\n"
+    }
+  ]
+}

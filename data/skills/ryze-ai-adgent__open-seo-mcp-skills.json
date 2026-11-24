@@ -1,0 +1,357 @@
+{
+  "repo": "Ryze-AI-Adgent/open-seo-mcp-skills",
+  "commit": "f587b0a69dc1ed92b65cdb241e4f14985b1031fd",
+  "branch": "main",
+  "fetchedAt": "2026-11-24T22:05:01.864Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "ai-visibility",
+      "name": "ai-visibility",
+      "dir": "skills/ai-visibility",
+      "path": "skills/ai-visibility/SKILL.md",
+      "desc": "Measure real AI-engine visibility — traffic from ChatGPT, Perplexity, Claude, Gemini and which pages they cite — from actual GA4 referral data, not prompt sampling. Use when asked \"AI visibility\", \"GEO/AEO check\", \"do LLMs cite us\", \"traffic from ChatGPT\", or \"how do we show up in AI search\".",
+      "descZh": "",
+      "triggers": [
+        "asked \"AI visibility",
+        "GEO/AEO check",
+        "do LLMs cite us",
+        "traffic from ChatGPT",
+        "how"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Ryze-AI-Adgent/open-seo-mcp-skills.git",
+        "copy": "cp -r skills/ai-visibility ~/.claude/skills/ai-visibility",
+        "raw": "https://raw.githubusercontent.com/Ryze-AI-Adgent/open-seo-mcp-skills/f587b0a69dc1ed92b65cdb241e4f14985b1031fd/skills/ai-visibility/SKILL.md",
+        "saveAs": "~/.claude/skills/ai-visibility/SKILL.md",
+        "marketplace": "/plugin marketplace add Ryze-AI-Adgent/open-seo-mcp-skills"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:0dbc6eb9cbd0fa2dacc31a767b86b9fa12644bcfa75aa068999c290be3302185",
+      "bytes": 2511,
+      "wordCount": 274,
+      "repoLicense": "MIT",
+      "commit": "f587b0a69dc1ed92b65cdb241e4f14985b1031fd",
+      "branch": "main",
+      "body": "---\nname: ai-visibility\ndescription: Measure real AI-engine visibility — traffic from ChatGPT, Perplexity, Claude, Gemini and which pages they cite — from actual GA4 referral data, not prompt sampling. Use when asked \"AI visibility\", \"GEO/AEO check\", \"do LLMs cite us\", \"traffic from ChatGPT\", or \"how do we show up in AI search\".\n---\n\n# AI Visibility\n\n## Requires\n\nThe free Ryze MCP connector (`https://connector.get-ryze.ai/mcp`). Claude Code: `claude mcp add ryze --transport http https://connector.get-ryze.ai/mcp`. claude.ai / Desktop / Cursor: add it as a custom connector with the same URL. Setup: https://www.get-ryze.ai/how-to-connect-claude-to-google-meta-ads-mcp?utm_source=github&utm_content=open-seo-mcp-skills\n\nEvery \"AI visibility tracker\" samples prompts and guesses. GA4 records the actual clicks AI engines send. Measure the real thing first, then diagnose.\n\n## Workflow\n\n1. **Traffic by engine.** `google_analytics__getAiTrafficByEngine` — sessions per AI source (ChatGPT, Perplexity, Gemini, Claude, Copilot…), current vs previous period.\n2. **Trend.** `google_analytics__getAiTrafficDaily` — is AI traffic growing, and did anything spike (a spike = something started citing you; find it).\n3. **Cited pages.** `google_analytics__getAiLandingPages` — which URLs AI engines actually send people to. These are your proven-citable pages.\n4. **Referral detail.** `google_analytics__getAIReferrals` for source-level detail and conversions — is AI traffic converting better or worse than organic.\n5. **Diagnose the winners.** Read the top 2–3 cited pages (fetch them). Note the pattern: direct answers high on the page, stats/definitions, clean headings, schema. That pattern is the citation recipe for this site.\n6. **Find the misses.** Cross-reference with `google_search_console__runRawSearchAnalytics`: pages with strong organic queries but zero AI referrals — candidates to restructure toward the citation recipe from step 5.\n\n## Output\n\nVerdict (AI traffic share of organic, trend, top engine), then: engine table, cited-pages table with conversions, the citation recipe observed on winning pages, and a top-5 list of pages to restructure. Keep it concrete — name the pages and the exact change.\n\n## Fallback\n\nIf the GA4 AI-traffic tools aren't available in the workspace, build the same report with `google_analytics__runRawReport` filtered on `sessionSource` matching known AI referrers (chatgpt.com, perplexity.ai, gemini.google.com, claude.ai, copilot.microsoft.com).\n",
+      "bodyMd": "# AI Visibility\n\n## Requires\n\nThe free Ryze MCP connector (`https://connector.get-ryze.ai/mcp`). Claude Code: `claude mcp add ryze --transport http https://connector.get-ryze.ai/mcp`. claude.ai / Desktop / Cursor: add it as a custom connector with the same URL. Setup: https://www.get-ryze.ai/how-to-connect-claude-to-google-meta-ads-mcp?utm_source=github&utm_content=open-seo-mcp-skills\n\nEvery \"AI visibility tracker\" samples prompts and guesses. GA4 records the actual clicks AI engines send. Measure the real thing first, then diagnose.\n\n## Workflow\n\n1. **Traffic by engine.** `google_analytics__getAiTrafficByEngine` — sessions per AI source (ChatGPT, Perplexity, Gemini, Claude, Copilot…), current vs previous period.\n2. **Trend.** `google_analytics__getAiTrafficDaily` — is AI traffic growing, and did anything spike (a spike = something started citing you; find it).\n3. **Cited pages.** `google_analytics__getAiLandingPages` — which URLs AI engines actually send people to. These are your proven-citable pages.\n4. **Referral detail.** `google_analytics__getAIReferrals` for source-level detail and conversions — is AI traffic converting better or worse than organic.\n5. **Diagnose the winners.** Read the top 2–3 cited pages (fetch them). Note the pattern: direct answers high on the page, stats/definitions, clean headings, schema. That pattern is the citation recipe for this site.\n6. **Find the misses.** Cross-reference with `google_search_console__runRawSearchAnalytics`: pages with strong organic queries but zero AI referrals — candidates to restructure toward the citation recipe from step 5.\n\n## Output\n\nVerdict (AI traffic share of organic, trend, top engine), then: engine table, cited-pages table with conversions, the citation recipe observed on winning pages, and a top-5 list of pages to restructure. Keep it concrete — name the pages and the exact change.\n\n## Fallback\n\nIf the GA4 AI-traffic tools aren't available in the workspace, build the same report with `google_analytics__runRawReport` filtered on `sessionSource` matching known AI referrers (chatgpt.com, perplexity.ai, gemini.google.com, claude.ai, copilot.microsoft.com).\n"
+    },
+    {
+      "slug": "backlink-check",
+      "name": "backlink-check",
+      "dir": "skills/backlink-check",
+      "path": "skills/backlink-check/SKILL.md",
+      "desc": "Backlink profile for any domain — referring domains, authority, anchors, new/lost links, and a side-by-side vs a competitor. Use when asked \"check my backlinks\", \"backlink profile of X\", \"who links to them\", or \"link gap vs competitor\".",
+      "descZh": "",
+      "triggers": [
+        "backlink profile of X",
+        "who links to them",
+        "link gap vs"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Ryze-AI-Adgent/open-seo-mcp-skills.git",
+        "copy": "cp -r skills/backlink-check ~/.claude/skills/backlink-check",
+        "raw": "https://raw.githubusercontent.com/Ryze-AI-Adgent/open-seo-mcp-skills/f587b0a69dc1ed92b65cdb241e4f14985b1031fd/skills/backlink-check/SKILL.md",
+        "saveAs": "~/.claude/skills/backlink-check/SKILL.md",
+        "marketplace": "/plugin marketplace add Ryze-AI-Adgent/open-seo-mcp-skills"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:bf8b68a041b7ae7f3f39ffd054d4da964378762b8c680f356c1cc368f1c0c128",
+      "bytes": 2119,
+      "wordCount": 238,
+      "repoLicense": "MIT",
+      "commit": "f587b0a69dc1ed92b65cdb241e4f14985b1031fd",
+      "branch": "main",
+      "body": "---\nname: backlink-check\ndescription: Backlink profile for any domain — referring domains, authority, anchors, new/lost links, and a side-by-side vs a competitor. Use when asked \"check my backlinks\", \"backlink profile of X\", \"who links to them\", or \"link gap vs competitor\".\n---\n\n# Backlink Check\n\n## Requires\n\nThe free Ryze MCP connector (`https://connector.get-ryze.ai/mcp`). Claude Code: `claude mcp add ryze --transport http https://connector.get-ryze.ai/mcp`. claude.ai / Desktop / Cursor: add it as a custom connector with the same URL. Setup: https://www.get-ryze.ai/how-to-connect-claude-to-google-meta-ads-mcp?utm_source=github&utm_content=open-seo-mcp-skills\n\n## Workflow\n\n1. **Source.** Use the workspace's DataForSEO Backlinks tools (`native__get_provider_docs`, provider `dataforseo`, for exact request shapes): `summary` for the profile, `referring_domains` for the domain list, `anchors` for anchor distribution. If DataForSEO backlinks aren't exposed, fall back to a connected `ahrefs` or `semrush` provider; if neither, stop and say which connection is missing — never fabricate link counts.\n2. **Target profile.** Pull summary + top ~100 referring domains by rank for the user's domain: total backlinks, referring domains, dofollow share, authority distribution.\n3. **Competitor (if named).** Same pulls for the competitor. Compute the **link gap**: strong domains linking to them but not to the user — that's the outreach list.\n4. **Quality read.** Flag: spammy anchor patterns (exact-match commercial anchors at scale), link velocity spikes, a profile dominated by low-authority domains.\n5. **Traffic cross-check (own site only).** `google_analytics__runRawReport` — referral sessions by source; note which linking domains actually send visitors.\n\n## Output\n\nVerdict first (profile strength in one paragraph, and the gap vs the competitor if asked), then: profile summary table, top referring domains, anchor distribution, and — when a competitor was given — the link-gap outreach list (domain, authority, page linking to competitor). All third-party numbers labeled as index estimates.\n",
+      "bodyMd": "# Backlink Check\n\n## Requires\n\nThe free Ryze MCP connector (`https://connector.get-ryze.ai/mcp`). Claude Code: `claude mcp add ryze --transport http https://connector.get-ryze.ai/mcp`. claude.ai / Desktop / Cursor: add it as a custom connector with the same URL. Setup: https://www.get-ryze.ai/how-to-connect-claude-to-google-meta-ads-mcp?utm_source=github&utm_content=open-seo-mcp-skills\n\n## Workflow\n\n1. **Source.** Use the workspace's DataForSEO Backlinks tools (`native__get_provider_docs`, provider `dataforseo`, for exact request shapes): `summary` for the profile, `referring_domains` for the domain list, `anchors` for anchor distribution. If DataForSEO backlinks aren't exposed, fall back to a connected `ahrefs` or `semrush` provider; if neither, stop and say which connection is missing — never fabricate link counts.\n2. **Target profile.** Pull summary + top ~100 referring domains by rank for the user's domain: total backlinks, referring domains, dofollow share, authority distribution.\n3. **Competitor (if named).** Same pulls for the competitor. Compute the **link gap**: strong domains linking to them but not to the user — that's the outreach list.\n4. **Quality read.** Flag: spammy anchor patterns (exact-match commercial anchors at scale), link velocity spikes, a profile dominated by low-authority domains.\n5. **Traffic cross-check (own site only).** `google_analytics__runRawReport` — referral sessions by source; note which linking domains actually send visitors.\n\n## Output\n\nVerdict first (profile strength in one paragraph, and the gap vs the competitor if asked), then: profile summary table, top referring domains, anchor distribution, and — when a competitor was given — the link-gap outreach list (domain, authority, page linking to competitor). All third-party numbers labeled as index estimates.\n"
+    },
+    {
+      "slug": "competitor-gap",
+      "name": "competitor-gap",
+      "dir": "skills/competitor-gap",
+      "path": "skills/competitor-gap/SKILL.md",
+      "desc": "Find keywords a competitor ranks for that the user's site doesn't — the content gap, prioritized by volume and winnability. Use when asked \"what does competitor.com rank for\", \"keyword gap vs X\", \"steal competitor keywords\", or \"why do they outrank us\".",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Ryze-AI-Adgent/open-seo-mcp-skills.git",
+        "copy": "cp -r skills/competitor-gap ~/.claude/skills/competitor-gap",
+        "raw": "https://raw.githubusercontent.com/Ryze-AI-Adgent/open-seo-mcp-skills/f587b0a69dc1ed92b65cdb241e4f14985b1031fd/skills/competitor-gap/SKILL.md",
+        "saveAs": "~/.claude/skills/competitor-gap/SKILL.md",
+        "marketplace": "/plugin marketplace add Ryze-AI-Adgent/open-seo-mcp-skills"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:e2c5e5c531c8036f00a28b42bcb303213d090002a12777d577b39b4d14d155cc",
+      "bytes": 2311,
+      "wordCount": 270,
+      "repoLicense": "MIT",
+      "commit": "f587b0a69dc1ed92b65cdb241e4f14985b1031fd",
+      "branch": "main",
+      "body": "---\nname: competitor-gap\ndescription: Find keywords a competitor ranks for that the user's site doesn't — the content gap, prioritized by volume and winnability. Use when asked \"what does competitor.com rank for\", \"keyword gap vs X\", \"steal competitor keywords\", or \"why do they outrank us\".\n---\n\n# Competitor Gap\n\n## Requires\n\nThe free Ryze MCP connector (`https://connector.get-ryze.ai/mcp`). Claude Code: `claude mcp add ryze --transport http https://connector.get-ryze.ai/mcp`. claude.ai / Desktop / Cursor: add it as a custom connector with the same URL. Setup: https://www.get-ryze.ai/how-to-connect-claude-to-google-meta-ads-mcp?utm_source=github&utm_content=open-seo-mcp-skills\n\nTheir rankings are estimates (DataForSEO), yours are real (GSC). Diff them.\n\n## Workflow\n\n1. **Competitor's keywords.** Via the workspace's DataForSEO tools — Labs `ranked_keywords` for the competitor domain (request shape: `native__get_provider_docs`, provider `dataforseo`). Pull top ~500 by volume. If DataForSEO isn't exposed in this workspace, check for connected `ahrefs`/`semrush` providers and use their organic-keywords endpoint instead; if none, stop and say which connection is missing.\n2. **Competitor overview.** Labs `domain_rank_overview` — their estimated organic traffic and keyword count, for context.\n3. **Your keywords.** `google_search_console__runRawSearchAnalytics`, dimension `[\"query\"]`, last 90 days, high rowLimit — the full set of queries the user's site gets impressions for.\n4. **Diff into three buckets:**\n   - **Gap** — competitor ranks top 20, you have zero impressions → new content needed\n   - **Behind** — you both rank but they're ≥ 5 spots ahead → improve existing page\n   - **Ahead** — you outrank them (report briefly; it's the moat)\n5. **Prioritize** the Gap and Behind buckets by volume × relevance to the user's product. Drop branded competitor terms unless the user wants comparison pages — then list them separately as \"vs / alternative\" page candidates.\n\n## Output\n\nVerdict (how big the gap is, in keywords and estimated traffic), then: Gap table (keyword, their position, volume, suggested page), Behind table (keyword, their pos, your pos, your page, fix), and a top-10 action list. Note explicitly which numbers are estimates (theirs) vs real (yours).\n",
+      "bodyMd": "# Competitor Gap\n\n## Requires\n\nThe free Ryze MCP connector (`https://connector.get-ryze.ai/mcp`). Claude Code: `claude mcp add ryze --transport http https://connector.get-ryze.ai/mcp`. claude.ai / Desktop / Cursor: add it as a custom connector with the same URL. Setup: https://www.get-ryze.ai/how-to-connect-claude-to-google-meta-ads-mcp?utm_source=github&utm_content=open-seo-mcp-skills\n\nTheir rankings are estimates (DataForSEO), yours are real (GSC). Diff them.\n\n## Workflow\n\n1. **Competitor's keywords.** Via the workspace's DataForSEO tools — Labs `ranked_keywords` for the competitor domain (request shape: `native__get_provider_docs`, provider `dataforseo`). Pull top ~500 by volume. If DataForSEO isn't exposed in this workspace, check for connected `ahrefs`/`semrush` providers and use their organic-keywords endpoint instead; if none, stop and say which connection is missing.\n2. **Competitor overview.** Labs `domain_rank_overview` — their estimated organic traffic and keyword count, for context.\n3. **Your keywords.** `google_search_console__runRawSearchAnalytics`, dimension `[\"query\"]`, last 90 days, high rowLimit — the full set of queries the user's site gets impressions for.\n4. **Diff into three buckets:**\n   - **Gap** — competitor ranks top 20, you have zero impressions → new content needed\n   - **Behind** — you both rank but they're ≥ 5 spots ahead → improve existing page\n   - **Ahead** — you outrank them (report briefly; it's the moat)\n5. **Prioritize** the Gap and Behind buckets by volume × relevance to the user's product. Drop branded competitor terms unless the user wants comparison pages — then list them separately as \"vs / alternative\" page candidates.\n\n## Output\n\nVerdict (how big the gap is, in keywords and estimated traffic), then: Gap table (keyword, their position, volume, suggested page), Behind table (keyword, their pos, your pos, your page, fix), and a top-10 action list. Note explicitly which numbers are estimates (theirs) vs real (yours).\n"
+    },
+    {
+      "slug": "content-brief",
+      "name": "content-brief",
+      "dir": "skills/content-brief",
+      "path": "skills/content-brief/SKILL.md",
+      "desc": "SERP-driven content brief for a target keyword — what ranks, what to cover, headings, questions, internal links from your own data. Use when asked for a \"content brief\", \"outline to rank for X\", \"what should this article cover\", or before writing any SEO page.",
+      "descZh": "",
+      "triggers": [
+        "outline to rank for X",
+        "or"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Ryze-AI-Adgent/open-seo-mcp-skills.git",
+        "copy": "cp -r skills/content-brief ~/.claude/skills/content-brief",
+        "raw": "https://raw.githubusercontent.com/Ryze-AI-Adgent/open-seo-mcp-skills/f587b0a69dc1ed92b65cdb241e4f14985b1031fd/skills/content-brief/SKILL.md",
+        "saveAs": "~/.claude/skills/content-brief/SKILL.md",
+        "marketplace": "/plugin marketplace add Ryze-AI-Adgent/open-seo-mcp-skills"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:26874c7da45b8b421f415bb019631a0210abefa5986be651f200eff87d019379",
+      "bytes": 2500,
+      "wordCount": 308,
+      "repoLicense": "MIT",
+      "commit": "f587b0a69dc1ed92b65cdb241e4f14985b1031fd",
+      "branch": "main",
+      "body": "---\nname: content-brief\ndescription: SERP-driven content brief for a target keyword — what ranks, what to cover, headings, questions, internal links from your own data. Use when asked for a \"content brief\", \"outline to rank for X\", \"what should this article cover\", or before writing any SEO page.\n---\n\n# Content Brief\n\n## Requires\n\nThe free Ryze MCP connector (`https://connector.get-ryze.ai/mcp`). Claude Code: `claude mcp add ryze --transport http https://connector.get-ryze.ai/mcp`. claude.ai / Desktop / Cursor: add it as a custom connector with the same URL. Setup: https://www.get-ryze.ai/how-to-connect-claude-to-google-meta-ads-mcp?utm_source=github&utm_content=open-seo-mcp-skills\n\nA brief grounded in the live SERP plus the site's own data — not a generic outline.\n\n## Workflow\n\n1. **The SERP.** If the workspace exposes DataForSEO SERP tools, pull the live Google top 10 for the target keyword (`native__get_provider_docs`, provider `dataforseo`, for the request shape) — titles, URLs, SERP features (featured snippet, PAA, video). If unavailable, fetch the top results via web search instead; the brief must be built from a real SERP either way.\n2. **Read the top 3.** Fetch and skim the top-ranking pages: their structure, depth, angle, what they all cover (table stakes) and what none cover (the opening).\n3. **Keyword set.** `google_ads__generateKeywordIdeas` seeded with the target — secondary keywords and question variants worth folding in, with volumes via `google_ads__generateKeywordHistoricalMetrics`.\n4. **Your existing foothold.** `google_search_console__runRawSearchAnalytics` filtered to the topic — queries the site already gets impressions for (work them into headings), and existing pages on adjacent topics (internal-link sources; also flag if one already half-covers this and should be expanded instead of a new page).\n5. **Assemble the brief:**\n   - Target keyword + secondaries with volumes\n   - Search intent and required format (guide/listicle/comparison/tool page), inferred from what actually ranks\n   - Proposed title + meta (write for the CTR, under 60/155 chars)\n   - H2/H3 outline with a one-line note per section on what it must say\n   - Questions to answer (PAA + question keywords)\n   - Table stakes vs the differentiating angle\n   - Internal links: 3–5 existing pages to link from, with anchors\n   - Target length: match the ranking median, don't pad\n\n## Output\n\nThe brief, ready to hand to a writer (or to write from directly). No preamble.\n",
+      "bodyMd": "# Content Brief\n\n## Requires\n\nThe free Ryze MCP connector (`https://connector.get-ryze.ai/mcp`). Claude Code: `claude mcp add ryze --transport http https://connector.get-ryze.ai/mcp`. claude.ai / Desktop / Cursor: add it as a custom connector with the same URL. Setup: https://www.get-ryze.ai/how-to-connect-claude-to-google-meta-ads-mcp?utm_source=github&utm_content=open-seo-mcp-skills\n\nA brief grounded in the live SERP plus the site's own data — not a generic outline.\n\n## Workflow\n\n1. **The SERP.** If the workspace exposes DataForSEO SERP tools, pull the live Google top 10 for the target keyword (`native__get_provider_docs`, provider `dataforseo`, for the request shape) — titles, URLs, SERP features (featured snippet, PAA, video). If unavailable, fetch the top results via web search instead; the brief must be built from a real SERP either way.\n2. **Read the top 3.** Fetch and skim the top-ranking pages: their structure, depth, angle, what they all cover (table stakes) and what none cover (the opening).\n3. **Keyword set.** `google_ads__generateKeywordIdeas` seeded with the target — secondary keywords and question variants worth folding in, with volumes via `google_ads__generateKeywordHistoricalMetrics`.\n4. **Your existing foothold.** `google_search_console__runRawSearchAnalytics` filtered to the topic — queries the site already gets impressions for (work them into headings), and existing pages on adjacent topics (internal-link sources; also flag if one already half-covers this and should be expanded instead of a new page).\n5. **Assemble the brief:**\n   - Target keyword + secondaries with volumes\n   - Search intent and required format (guide/listicle/comparison/tool page), inferred from what actually ranks\n   - Proposed title + meta (write for the CTR, under 60/155 chars)\n   - H2/H3 outline with a one-line note per section on what it must say\n   - Questions to answer (PAA + question keywords)\n   - Table stakes vs the differentiating angle\n   - Internal links: 3–5 existing pages to link from, with anchors\n   - Target length: match the ranking median, don't pad\n\n## Output\n\nThe brief, ready to hand to a writer (or to write from directly). No preamble.\n"
+    },
+    {
+      "slug": "keyword-research",
+      "name": "keyword-research",
+      "dir": "skills/keyword-research",
+      "path": "skills/keyword-research/SKILL.md",
+      "desc": "Keyword research from a seed topic — ideas, real Google volume/CPC, intent, difficulty, clustered into a plan. Use when asked to \"find keywords\", \"keyword research for X\", \"what should I rank for\", or \"build a keyword plan\".",
+      "descZh": "",
+      "triggers": [
+        "asked to \"find keywords",
+        "keyword research for X",
+        "what should I rank for",
+        "build a"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Ryze-AI-Adgent/open-seo-mcp-skills.git",
+        "copy": "cp -r skills/keyword-research ~/.claude/skills/keyword-research",
+        "raw": "https://raw.githubusercontent.com/Ryze-AI-Adgent/open-seo-mcp-skills/f587b0a69dc1ed92b65cdb241e4f14985b1031fd/skills/keyword-research/SKILL.md",
+        "saveAs": "~/.claude/skills/keyword-research/SKILL.md",
+        "marketplace": "/plugin marketplace add Ryze-AI-Adgent/open-seo-mcp-skills"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:b7686d9a5b468e86ea37fcb5477c4888d3c9ff6900fe1853457ac38063911b35",
+      "bytes": 2392,
+      "wordCount": 282,
+      "repoLicense": "MIT",
+      "commit": "f587b0a69dc1ed92b65cdb241e4f14985b1031fd",
+      "branch": "main",
+      "body": "---\nname: keyword-research\ndescription: Keyword research from a seed topic — ideas, real Google volume/CPC, intent, difficulty, clustered into a plan. Use when asked to \"find keywords\", \"keyword research for X\", \"what should I rank for\", or \"build a keyword plan\".\n---\n\n# Keyword Research\n\n## Requires\n\nThe free Ryze MCP connector (`https://connector.get-ryze.ai/mcp`). Claude Code: `claude mcp add ryze --transport http https://connector.get-ryze.ai/mcp`. claude.ai / Desktop / Cursor: add it as a custom connector with the same URL. Setup: https://www.get-ryze.ai/how-to-connect-claude-to-google-meta-ads-mcp?utm_source=github&utm_content=open-seo-mcp-skills\n\nSeed → ideas → metrics → clusters. Volumes come from Google Ads planner data (the source everyone else resells), enriched with DataForSEO intent/difficulty.\n\n## Workflow\n\n1. **Expand the seed.** `google_ads__generateKeywordIdeas` with the seed keyword(s) and/or the user's URL. Collect up to ~200 ideas.\n2. **Metrics.** `google_ads__generateKeywordHistoricalMetrics` on the candidate list — monthly volume, competition, CPC range, 12-month trend.\n3. **Intent + difficulty (optional enrich).** If the workspace exposes DataForSEO tools, call the Labs `keyword_overview` endpoint for the top ~50 (search intent, keyword difficulty, SERP features). Request shape: `native__get_provider_docs` provider `dataforseo`. Skip silently if unavailable — Google metrics alone are enough for a v1 plan.\n4. **What they already rank for.** `google_search_console__runRawSearchAnalytics` (dimension `query`, filtered to the topic) — mark keywords the site already has positions for; those are optimize-not-create.\n5. **Cluster.** Group by intent and topic into content clusters: pillar + supporting pages. For each cluster: target keyword, supporting keywords, total volume, intent, existing page (if any) or \"new page\".\n\n## Output\n\nOne table per cluster (keyword, volume, CPC, intent, current position if any), then a ranked plan: which clusters to attack first and why (volume × winnability — favor clusters where the site already has striking-distance positions). Plain language, no filler.\n\n## Rules\n\n- Never invent volumes. If a metrics call fails, show the keyword without numbers and say why.\n- CPC belongs in the output — it tells the user what the traffic is worth, and this doubles as an ads negative-keyword source.\n",
+      "bodyMd": "# Keyword Research\n\n## Requires\n\nThe free Ryze MCP connector (`https://connector.get-ryze.ai/mcp`). Claude Code: `claude mcp add ryze --transport http https://connector.get-ryze.ai/mcp`. claude.ai / Desktop / Cursor: add it as a custom connector with the same URL. Setup: https://www.get-ryze.ai/how-to-connect-claude-to-google-meta-ads-mcp?utm_source=github&utm_content=open-seo-mcp-skills\n\nSeed → ideas → metrics → clusters. Volumes come from Google Ads planner data (the source everyone else resells), enriched with DataForSEO intent/difficulty.\n\n## Workflow\n\n1. **Expand the seed.** `google_ads__generateKeywordIdeas` with the seed keyword(s) and/or the user's URL. Collect up to ~200 ideas.\n2. **Metrics.** `google_ads__generateKeywordHistoricalMetrics` on the candidate list — monthly volume, competition, CPC range, 12-month trend.\n3. **Intent + difficulty (optional enrich).** If the workspace exposes DataForSEO tools, call the Labs `keyword_overview` endpoint for the top ~50 (search intent, keyword difficulty, SERP features). Request shape: `native__get_provider_docs` provider `dataforseo`. Skip silently if unavailable — Google metrics alone are enough for a v1 plan.\n4. **What they already rank for.** `google_search_console__runRawSearchAnalytics` (dimension `query`, filtered to the topic) — mark keywords the site already has positions for; those are optimize-not-create.\n5. **Cluster.** Group by intent and topic into content clusters: pillar + supporting pages. For each cluster: target keyword, supporting keywords, total volume, intent, existing page (if any) or \"new page\".\n\n## Output\n\nOne table per cluster (keyword, volume, CPC, intent, current position if any), then a ranked plan: which clusters to attack first and why (volume × winnability — favor clusters where the site already has striking-distance positions). Plain language, no filler.\n\n## Rules\n\n- Never invent volumes. If a metrics call fails, show the keyword without numbers and say why.\n- CPC belongs in the output — it tells the user what the traffic is worth, and this doubles as an ads negative-keyword source.\n"
+    },
+    {
+      "slug": "rank-tracking",
+      "name": "rank-tracking",
+      "dir": "skills/rank-tracking",
+      "path": "skills/rank-tracking/SKILL.md",
+      "desc": "Rank tracking without a tracker subscription — position movers between any two periods from real Search Console data. Use when asked \"how are my rankings\", \"what moved this week/month\", \"track my keywords\", or \"did the update hit me\".",
+      "descZh": "",
+      "triggers": [
+        "track my keywords",
+        "did th"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Ryze-AI-Adgent/open-seo-mcp-skills.git",
+        "copy": "cp -r skills/rank-tracking ~/.claude/skills/rank-tracking",
+        "raw": "https://raw.githubusercontent.com/Ryze-AI-Adgent/open-seo-mcp-skills/f587b0a69dc1ed92b65cdb241e4f14985b1031fd/skills/rank-tracking/SKILL.md",
+        "saveAs": "~/.claude/skills/rank-tracking/SKILL.md",
+        "marketplace": "/plugin marketplace add Ryze-AI-Adgent/open-seo-mcp-skills"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:da742b96d7b054ba036c8e392de1a7b8065714f520366d3694e8fb39d807cc7b",
+      "bytes": 2370,
+      "wordCount": 296,
+      "repoLicense": "MIT",
+      "commit": "f587b0a69dc1ed92b65cdb241e4f14985b1031fd",
+      "branch": "main",
+      "body": "---\nname: rank-tracking\ndescription: Rank tracking without a tracker subscription — position movers between any two periods from real Search Console data. Use when asked \"how are my rankings\", \"what moved this week/month\", \"track my keywords\", or \"did the update hit me\".\n---\n\n# Rank Tracking\n\n## Requires\n\nThe free Ryze MCP connector (`https://connector.get-ryze.ai/mcp`). Claude Code: `claude mcp add ryze --transport http https://connector.get-ryze.ai/mcp`. claude.ai / Desktop / Cursor: add it as a custom connector with the same URL. Setup: https://www.get-ryze.ai/how-to-connect-claude-to-google-meta-ads-mcp?utm_source=github&utm_content=open-seo-mcp-skills\n\nRank trackers estimate your position by scraping SERPs daily. Search Console records the position Google actually served you at. Use the real number.\n\n## Workflow\n\n1. **Property.** `google_search_console__listSites` → pick the user's domain.\n2. **Two windows.** Default: last 28 days vs previous 28. If the user names an event (\"since the March update\"), split around that date. GSC data lags ~2 days — never include today.\n3. **Pull both periods.** `google_search_console__runRawSearchAnalytics`, dimensions `[\"query\"]`, rowLimit high enough to cover the site (start 5000). Repeat with `[\"page\"]` for page-level movement.\n4. **Join and diff.** Match queries across periods, compute position delta, clicks delta, impressions delta.\n5. **Classify:**\n   - **Winners** — position improved ≥ 2 spots on queries with real impressions\n   - **Losers** — dropped ≥ 2 spots (sort by clicks lost, not by delta — a 4→7 drop on a money query beats a 40→80 crash on a nothing query)\n   - **New** — queries appearing only in the recent period\n   - **Lost** — queries that vanished\n6. **Spot-verify (optional).** For the 3–5 most important losers, if DataForSEO SERP tools are exposed in the workspace, pull the live SERP to see who took the spot. Skip if unavailable.\n\n## Output\n\nVerdict first (net up/down and the single biggest move), then four tables: Winners, Losers, New, Lost — query, positions before→after, clicks delta. If the user asked about a specific algorithm update, answer that question explicitly with the before/after evidence.\n\n## Recurring\n\nIf the user wants this weekly, suggest scheduling it (Claude Code scheduled tasks / a routine) rather than re-running by hand.\n",
+      "bodyMd": "# Rank Tracking\n\n## Requires\n\nThe free Ryze MCP connector (`https://connector.get-ryze.ai/mcp`). Claude Code: `claude mcp add ryze --transport http https://connector.get-ryze.ai/mcp`. claude.ai / Desktop / Cursor: add it as a custom connector with the same URL. Setup: https://www.get-ryze.ai/how-to-connect-claude-to-google-meta-ads-mcp?utm_source=github&utm_content=open-seo-mcp-skills\n\nRank trackers estimate your position by scraping SERPs daily. Search Console records the position Google actually served you at. Use the real number.\n\n## Workflow\n\n1. **Property.** `google_search_console__listSites` → pick the user's domain.\n2. **Two windows.** Default: last 28 days vs previous 28. If the user names an event (\"since the March update\"), split around that date. GSC data lags ~2 days — never include today.\n3. **Pull both periods.** `google_search_console__runRawSearchAnalytics`, dimensions `[\"query\"]`, rowLimit high enough to cover the site (start 5000). Repeat with `[\"page\"]` for page-level movement.\n4. **Join and diff.** Match queries across periods, compute position delta, clicks delta, impressions delta.\n5. **Classify:**\n   - **Winners** — position improved ≥ 2 spots on queries with real impressions\n   - **Losers** — dropped ≥ 2 spots (sort by clicks lost, not by delta — a 4→7 drop on a money query beats a 40→80 crash on a nothing query)\n   - **New** — queries appearing only in the recent period\n   - **Lost** — queries that vanished\n6. **Spot-verify (optional).** For the 3–5 most important losers, if DataForSEO SERP tools are exposed in the workspace, pull the live SERP to see who took the spot. Skip if unavailable.\n\n## Output\n\nVerdict first (net up/down and the single biggest move), then four tables: Winners, Losers, New, Lost — query, positions before→after, clicks delta. If the user asked about a specific algorithm update, answer that question explicitly with the before/after evidence.\n\n## Recurring\n\nIf the user wants this weekly, suggest scheduling it (Claude Code scheduled tasks / a routine) rather than re-running by hand.\n"
+    },
+    {
+      "slug": "seo-audit",
+      "name": "seo-audit",
+      "dir": "skills/seo-audit",
+      "path": "skills/seo-audit/SKILL.md",
+      "desc": "Full SEO audit of a site from its real Search Console + GA4 data — indexation health, CTR anomalies, decaying pages, striking-distance keywords, quick wins. Use when asked to \"audit my site\", \"SEO audit\", \"why is my organic traffic down\", or \"SEO health check\".",
+      "descZh": "",
+      "triggers": [
+        "asked to \"audit my site",
+        "SEO audit",
+        "SEO health ch"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Ryze-AI-Adgent/open-seo-mcp-skills.git",
+        "copy": "cp -r skills/seo-audit ~/.claude/skills/seo-audit",
+        "raw": "https://raw.githubusercontent.com/Ryze-AI-Adgent/open-seo-mcp-skills/f587b0a69dc1ed92b65cdb241e4f14985b1031fd/skills/seo-audit/SKILL.md",
+        "saveAs": "~/.claude/skills/seo-audit/SKILL.md",
+        "marketplace": "/plugin marketplace add Ryze-AI-Adgent/open-seo-mcp-skills"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:d0361e667b639b8972582ad723fa14743bec96136a5fad4ac400b8c9f46d927f",
+      "bytes": 2734,
+      "wordCount": 317,
+      "repoLicense": "MIT",
+      "commit": "f587b0a69dc1ed92b65cdb241e4f14985b1031fd",
+      "branch": "main",
+      "body": "---\nname: seo-audit\ndescription: Full SEO audit of a site from its real Search Console + GA4 data — indexation health, CTR anomalies, decaying pages, striking-distance keywords, quick wins. Use when asked to \"audit my site\", \"SEO audit\", \"why is my organic traffic down\", or \"SEO health check\".\n---\n\n# SEO Audit\n\n## Requires\n\nThe free Ryze MCP connector (`https://connector.get-ryze.ai/mcp`). Claude Code: `claude mcp add ryze --transport http https://connector.get-ryze.ai/mcp`. claude.ai / Desktop / Cursor: add it as a custom connector with the same URL. Setup: https://www.get-ryze.ai/how-to-connect-claude-to-google-meta-ads-mcp?utm_source=github&utm_content=open-seo-mcp-skills\n\nAudit the user's site using their own data via the Ryze MCP. No estimates — everything below comes from their actual GSC/GA4.\n\n## Workflow\n\n1. **Pick the property.** `google_search_console__listSites`. If several, use the one matching the user's domain; confirm only when ambiguous.\n2. **Indexation.** `google_search_console__getIndexationSummary` — indexed vs not-indexed counts and reasons. Flag anything unusual (large \"Crawled — currently not indexed\", spikes in excluded pages).\n3. **Performance baseline.** `google_search_console__runRawSearchAnalytics`: last 90 days vs previous 90, dimensions `query` and `page` (two calls each period). Compute clicks/impressions/CTR/position deltas.\n4. **Find the problems:**\n   - **Decaying pages** — pages whose clicks dropped >30% period-over-period\n   - **CTR anomalies** — queries with position ≤ 5 but CTR < 2% (title/meta problem)\n   - **Striking distance** — queries at position 8–20 with high impressions (one push from page 1)\n   - **Cannibalization** — same query, multiple ranking pages splitting clicks\n5. **Spot-check pages.** For the 3–5 worst pages, `google_search_console__inspectUrl` — canonical, indexing state, last crawl.\n6. **Cross-check traffic.** `google_analytics__runRawReport` — organic sessions + conversions by landing page, same periods. A page can hold rankings but lose revenue; call that out.\n7. **AI traffic.** `google_analytics__getAIReferrals` for the same window — note whether AI engines are becoming a meaningful channel for this site.\n\n## Output\n\nA report with: verdict up top (one paragraph, is the site healthy or not and the #1 issue), then sections — Indexation, Losers, Quick wins (striking distance + CTR fixes, ranked by impressions), Cannibalization — each with a table and the specific fix. End with a prioritized 5-item action list.\n\n## Fallbacks\n\nIf GSC isn't connected, say so and point to Ryze connector setup (https://help.get-ryze.ai/claude/connect) — do not substitute third-party estimates for the site's own data.\n",
+      "bodyMd": "# SEO Audit\n\n## Requires\n\nThe free Ryze MCP connector (`https://connector.get-ryze.ai/mcp`). Claude Code: `claude mcp add ryze --transport http https://connector.get-ryze.ai/mcp`. claude.ai / Desktop / Cursor: add it as a custom connector with the same URL. Setup: https://www.get-ryze.ai/how-to-connect-claude-to-google-meta-ads-mcp?utm_source=github&utm_content=open-seo-mcp-skills\n\nAudit the user's site using their own data via the Ryze MCP. No estimates — everything below comes from their actual GSC/GA4.\n\n## Workflow\n\n1. **Pick the property.** `google_search_console__listSites`. If several, use the one matching the user's domain; confirm only when ambiguous.\n2. **Indexation.** `google_search_console__getIndexationSummary` — indexed vs not-indexed counts and reasons. Flag anything unusual (large \"Crawled — currently not indexed\", spikes in excluded pages).\n3. **Performance baseline.** `google_search_console__runRawSearchAnalytics`: last 90 days vs previous 90, dimensions `query` and `page` (two calls each period). Compute clicks/impressions/CTR/position deltas.\n4. **Find the problems:**\n   - **Decaying pages** — pages whose clicks dropped >30% period-over-period\n   - **CTR anomalies** — queries with position ≤ 5 but CTR < 2% (title/meta problem)\n   - **Striking distance** — queries at position 8–20 with high impressions (one push from page 1)\n   - **Cannibalization** — same query, multiple ranking pages splitting clicks\n5. **Spot-check pages.** For the 3–5 worst pages, `google_search_console__inspectUrl` — canonical, indexing state, last crawl.\n6. **Cross-check traffic.** `google_analytics__runRawReport` — organic sessions + conversions by landing page, same periods. A page can hold rankings but lose revenue; call that out.\n7. **AI traffic.** `google_analytics__getAIReferrals` for the same window — note whether AI engines are becoming a meaningful channel for this site.\n\n## Output\n\nA report with: verdict up top (one paragraph, is the site healthy or not and the #1 issue), then sections — Indexation, Losers, Quick wins (striking distance + CTR fixes, ranked by impressions), Cannibalization — each with a table and the specific fix. End with a prioritized 5-item action list.\n\n## Fallbacks\n\nIf GSC isn't connected, say so and point to Ryze connector setup (https://help.get-ryze.ai/claude/connect) — do not substitute third-party estimates for the site's own data.\n"
+    },
+    {
+      "slug": "seo-vs-ads",
+      "name": "seo-vs-ads",
+      "dir": "skills/seo-vs-ads",
+      "path": "skills/seo-vs-ads/SKILL.md",
+      "desc": "Find money leaking between search ads and SEO — queries you pay for while already ranking organically, and paid queries with no organic coverage. Use when asked \"am I paying for clicks I'd get free\", \"brand bidding waste\", \"SEO vs ads overlap\", or \"cut wasted ad spend with SEO\".",
+      "descZh": "",
+      "triggers": [
+        "brand bidding waste",
+        "SEO vs ads overlap"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Ryze-AI-Adgent/open-seo-mcp-skills.git",
+        "copy": "cp -r skills/seo-vs-ads ~/.claude/skills/seo-vs-ads",
+        "raw": "https://raw.githubusercontent.com/Ryze-AI-Adgent/open-seo-mcp-skills/f587b0a69dc1ed92b65cdb241e4f14985b1031fd/skills/seo-vs-ads/SKILL.md",
+        "saveAs": "~/.claude/skills/seo-vs-ads/SKILL.md",
+        "marketplace": "/plugin marketplace add Ryze-AI-Adgent/open-seo-mcp-skills"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:883b461d76654180dcd5cc4f8569bac6a8744b896f7b9e632bf1051bbb3e4599",
+      "bytes": 2447,
+      "wordCount": 295,
+      "repoLicense": "MIT",
+      "commit": "f587b0a69dc1ed92b65cdb241e4f14985b1031fd",
+      "branch": "main",
+      "body": "---\nname: seo-vs-ads\ndescription: Find money leaking between search ads and SEO — queries you pay for while already ranking organically, and paid queries with no organic coverage. Use when asked \"am I paying for clicks I'd get free\", \"brand bidding waste\", \"SEO vs ads overlap\", or \"cut wasted ad spend with SEO\".\n---\n\n# SEO vs Ads\n\n## Requires\n\nThe free Ryze MCP connector (`https://connector.get-ryze.ai/mcp`). Claude Code: `claude mcp add ryze --transport http https://connector.get-ryze.ai/mcp`. claude.ai / Desktop / Cursor: add it as a custom connector with the same URL. Setup: https://www.get-ryze.ai/how-to-connect-claude-to-google-meta-ads-mcp?utm_source=github&utm_content=open-seo-mcp-skills\n\nThe report subscription tools can't do: it needs your ads account AND your Search Console together. Both are on the Ryze MCP.\n\n## Workflow\n\n1. **Paid search terms.** `google_ads__runRawGaql` on the default account — search terms report, last 90 days: term, impressions, clicks, cost, conversions. (GAQL shape via `native__get_provider_docs`, provider `google_ads`, if needed.)\n2. **Organic positions.** `google_search_console__runRawSearchAnalytics`, dimension `[\"query\"]`, same window.\n3. **Join on query** and bucket:\n   - **Double-paying** — organic position ≤ 3 AND paid spend on the same term. Especially brand terms with no competing advertisers (check top-of-page rate / competition). Sum the spend: that's the number for the headline.\n   - **Defensible** — organic ≤ 3 but competitors bid on the term (paid presence may be justified; say so honestly)\n   - **Paid-only winners** — terms converting in ads with no organic ranking → the SEO content roadmap, pre-validated by money\n   - **Organic-only converters** — strong organic queries with no ad coverage → scale candidates if ads team wants volume\n4. **Estimate savings.** For the double-paying bucket: spend × the organic click-capture you'd retain (be conservative, ~50–70% for position 1 brand terms; label it an estimate).\n\n## Output\n\nHeadline first: \"$X/quarter going to clicks you already rank #1 for.\" Then the four buckets as tables (term, cost, conversions, organic position), the savings estimate with its assumptions stated, and a short action list: exact negatives to add, exact pages to build.\n\n## Fallback\n\nIf only one of the two accounts is connected, run what's possible, and name the missing connection instead of guessing at the other half.\n",
+      "bodyMd": "# SEO vs Ads\n\n## Requires\n\nThe free Ryze MCP connector (`https://connector.get-ryze.ai/mcp`). Claude Code: `claude mcp add ryze --transport http https://connector.get-ryze.ai/mcp`. claude.ai / Desktop / Cursor: add it as a custom connector with the same URL. Setup: https://www.get-ryze.ai/how-to-connect-claude-to-google-meta-ads-mcp?utm_source=github&utm_content=open-seo-mcp-skills\n\nThe report subscription tools can't do: it needs your ads account AND your Search Console together. Both are on the Ryze MCP.\n\n## Workflow\n\n1. **Paid search terms.** `google_ads__runRawGaql` on the default account — search terms report, last 90 days: term, impressions, clicks, cost, conversions. (GAQL shape via `native__get_provider_docs`, provider `google_ads`, if needed.)\n2. **Organic positions.** `google_search_console__runRawSearchAnalytics`, dimension `[\"query\"]`, same window.\n3. **Join on query** and bucket:\n   - **Double-paying** — organic position ≤ 3 AND paid spend on the same term. Especially brand terms with no competing advertisers (check top-of-page rate / competition). Sum the spend: that's the number for the headline.\n   - **Defensible** — organic ≤ 3 but competitors bid on the term (paid presence may be justified; say so honestly)\n   - **Paid-only winners** — terms converting in ads with no organic ranking → the SEO content roadmap, pre-validated by money\n   - **Organic-only converters** — strong organic queries with no ad coverage → scale candidates if ads team wants volume\n4. **Estimate savings.** For the double-paying bucket: spend × the organic click-capture you'd retain (be conservative, ~50–70% for position 1 brand terms; label it an estimate).\n\n## Output\n\nHeadline first: \"$X/quarter going to clicks you already rank #1 for.\" Then the four buckets as tables (term, cost, conversions, organic position), the savings estimate with its assumptions stated, and a short action list: exact negatives to add, exact pages to build.\n\n## Fallback\n\nIf only one of the two accounts is connected, run what's possible, and name the missing connection instead of guessing at the other half.\n"
+    }
+  ]
+}

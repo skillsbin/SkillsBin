@@ -1,0 +1,397 @@
+{
+  "repo": "ykdojo/claude-code-tips",
+  "commit": "577ac89252195d61283b334c4b9d292b52c82203",
+  "branch": "main",
+  "fetchedAt": "2026-11-24T22:05:06.325Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "gha",
+      "name": "gha",
+      "dir": "skills/gha",
+      "path": "skills/gha/SKILL.md",
+      "desc": "Analyze GitHub Actions failures and identify root causes",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "gh"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ykdojo/claude-code-tips.git",
+        "copy": "cp -r skills/gha ~/.claude/skills/gha",
+        "raw": "https://raw.githubusercontent.com/ykdojo/claude-code-tips/577ac89252195d61283b334c4b9d292b52c82203/skills/gha/SKILL.md",
+        "saveAs": "~/.claude/skills/gha/SKILL.md",
+        "marketplace": "/plugin marketplace add ykdojo/claude-code-tips"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:c96df79c57b022c5e7dd964ad604fb53fc22f2c5448551bb13e96f2e7d3385a4",
+      "bytes": 2556,
+      "wordCount": 407,
+      "repoLicense": "",
+      "commit": "577ac89252195d61283b334c4b9d292b52c82203",
+      "branch": "main",
+      "body": "---\nname: gha\ndescription: Analyze GitHub Actions failures and identify root causes\nargument-hint: <url>\n---\n\nInvestigate this GitHub Actions URL: $ARGUMENTS\n\nUse the gh CLI to analyze this workflow run. Your investigation should:\n\n1. **Get basic info & identify actual failure**:\n   - What workflow/job failed, when, and on which commit?\n   - CRITICAL: Read the full logs carefully to find what SPECIFICALLY caused the exit code 1\n   - Distinguish between warnings/non-fatal errors vs actual failures\n   - Look for patterns like \"failing:\", \"fatal:\", or script logic that determines when to exit 1\n   - If you see both \"non-fatal\" and \"fatal\" errors, focus on what actually caused the failure\n\n2. **Check flakiness**: Check the past 10-20 runs of THE EXACT SAME failing job:\n   - IMPORTANT: If a workflow has multiple jobs, you must check history for the SPECIFIC JOB that failed, not just the workflow\n   - Use `gh run list --workflow=<workflow-name>` to get run IDs, then `gh run view <run-id> --json jobs` to check the specific job's status\n   - Is this a one-time failure or recurring pattern for THIS SPECIFIC JOB?\n   - What's the success rate for THIS JOB recently?\n   - When did THIS JOB last pass?\n\n3. **Identify breaking commit** (if there's a pattern of failures for the specific job):\n   - Find the first run where THIS SPECIFIC JOB failed and the last run where it passed\n   - Identify the commit that introduced the failure\n   - Verify by checking: does THIS JOB fail in ALL runs after that commit? Does it pass in ALL runs before?\n   - If verified, report the breaking commit with high confidence\n\n4. **Root cause**: Based on logs, history, and any breaking commit, what's the likely cause?\n   - Focus on what ACTUALLY caused the failure (not just any errors you see)\n   - Verify your hypothesis against the logs and failure logic\n\n5. **Check for existing fix PRs**: Search for open PRs that might already address this issue:\n   - Use `gh pr list --state open --search \"<keywords>\"` with relevant error messages or file names\n   - Check if any open PR modifies the failing file/workflow\n   - If a fix PR exists, note it in your report and skip the recommendation section\n\nWrite a final report with:\n- Summary of failure (what specifically triggered the exit code 1)\n- Flakiness assessment (one-time vs recurring, success rate)\n- Breaking commit (if identified and verified)\n- Root cause analysis (based on the ACTUAL failure trigger)\n- Existing fix PR (if found - include PR number and link)\n- Recommendation (skip if fix PR already exists)\n",
+      "bodyMd": "Investigate this GitHub Actions URL: $ARGUMENTS\n\nUse the gh CLI to analyze this workflow run. Your investigation should:\n\n1. **Get basic info & identify actual failure**:\n   - What workflow/job failed, when, and on which commit?\n   - CRITICAL: Read the full logs carefully to find what SPECIFICALLY caused the exit code 1\n   - Distinguish between warnings/non-fatal errors vs actual failures\n   - Look for patterns like \"failing:\", \"fatal:\", or script logic that determines when to exit 1\n   - If you see both \"non-fatal\" and \"fatal\" errors, focus on what actually caused the failure\n\n2. **Check flakiness**: Check the past 10-20 runs of THE EXACT SAME failing job:\n   - IMPORTANT: If a workflow has multiple jobs, you must check history for the SPECIFIC JOB that failed, not just the workflow\n   - Use `gh run list --workflow=<workflow-name>` to get run IDs, then `gh run view <run-id> --json jobs` to check the specific job's status\n   - Is this a one-time failure or recurring pattern for THIS SPECIFIC JOB?\n   - What's the success rate for THIS JOB recently?\n   - When did THIS JOB last pass?\n\n3. **Identify breaking commit** (if there's a pattern of failures for the specific job):\n   - Find the first run where THIS SPECIFIC JOB failed and the last run where it passed\n   - Identify the commit that introduced the failure\n   - Verify by checking: does THIS JOB fail in ALL runs after that commit? Does it pass in ALL runs before?\n   - If verified, report the breaking commit with high confidence\n\n4. **Root cause**: Based on logs, history, and any breaking commit, what's the likely cause?\n   - Focus on what ACTUALLY caused the failure (not just any errors you see)\n   - Verify your hypothesis against the logs and failure logic\n\n5. **Check for existing fix PRs**: Search for open PRs that might already address this issue:\n   - Use `gh pr list --state open --search \"<keywords>\"` with relevant error messages or file names\n   - Check if any open PR modifies the failing file/workflow\n   - If a fix PR exists, note it in your report and skip the recommendation section\n\nWrite a final report with:\n- Summary of failure (what specifically triggered the exit code 1)\n- Flakiness assessment (one-time vs recurring, success rate)\n- Breaking commit (if identified and verified)\n- Root cause analysis (based on the ACTUAL failure trigger)\n- Existing fix PR (if found - include PR number and link)\n- Recommendation (skip if fix PR already exists)\n"
+    },
+    {
+      "slug": "half-clone",
+      "name": "half-clone",
+      "dir": "skills/half-clone",
+      "path": "skills/half-clone/SKILL.md",
+      "desc": "Clone the later half of the current conversation, discarding earlier context to reduce token usage while preserving recent work.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "jq"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ykdojo/claude-code-tips.git",
+        "copy": "cp -r skills/half-clone ~/.claude/skills/half-clone",
+        "raw": "https://raw.githubusercontent.com/ykdojo/claude-code-tips/577ac89252195d61283b334c4b9d292b52c82203/skills/half-clone/SKILL.md",
+        "saveAs": "~/.claude/skills/half-clone/SKILL.md",
+        "marketplace": "/plugin marketplace add ykdojo/claude-code-tips"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:dfed2360f59a1d6184b367880e8709130e69e44edf89dd502ccf9e9992be1993",
+      "bytes": 1486,
+      "wordCount": 197,
+      "repoLicense": "",
+      "commit": "577ac89252195d61283b334c4b9d292b52c82203",
+      "branch": "main",
+      "body": "---\nname: half-clone\ndescription: Clone the later half of the current conversation, discarding earlier context to reduce token usage while preserving recent work.\n---\n\nClone the later half of the current conversation, discarding earlier context to reduce token usage while preserving recent work.\n\nSteps:\n1. Get the current session ID and project path: `tail -1 ~/.claude/history.jsonl | jq -r '[.sessionId, .project] | @tsv'`\n2. Find half-clone-conversation.sh with bash: `find ~/.claude -name \"half-clone-conversation.sh\" 2>/dev/null | sort -V | tail -1`\n   - This finds the script whether installed via plugin or manual symlink\n   - Uses version sort to prefer the latest version if multiple exist\n3. Preview the conversation to verify the session ID: `<script-path> --preview <session-id> <project-path>`\n   - Check that the first and last messages match the current conversation\n4. Run the clone: `<script-path> <session-id> <project-path>`\n   - Always pass the project path from the history entry, not the current working directory\n5. The script prints the new session ID (the `New session: <id>` line). Give the user the exact command to resume it directly, no picker needed:\n   ```\n   claude --resume <new-session-id>\n   ```\n   The script automatically appends a reference to the original conversation at the end of the cloned file. (The new session is also marked `[HALF-CLONE <timestamp>]`, e.g. `[HALF-CLONE Jan 7 14:30]`, so `claude -r` and picking it works as a fallback.)\n",
+      "bodyMd": "Clone the later half of the current conversation, discarding earlier context to reduce token usage while preserving recent work.\n\nSteps:\n1. Get the current session ID and project path: `tail -1 ~/.claude/history.jsonl | jq -r '[.sessionId, .project] | @tsv'`\n2. Find half-clone-conversation.sh with bash: `find ~/.claude -name \"half-clone-conversation.sh\" 2>/dev/null | sort -V | tail -1`\n   - This finds the script whether installed via plugin or manual symlink\n   - Uses version sort to prefer the latest version if multiple exist\n3. Preview the conversation to verify the session ID: `<script-path> --preview <session-id> <project-path>`\n   - Check that the first and last messages match the current conversation\n4. Run the clone: `<script-path> <session-id> <project-path>`\n   - Always pass the project path from the history entry, not the current working directory\n5. The script prints the new session ID (the `New session: <id>` line). Give the user the exact command to resume it directly, no picker needed:\n   ```\n   claude --resume <new-session-id>\n   ```\n   The script automatically appends a reference to the original conversation at the end of the cloned file. (The new session is also marked `[HALF-CLONE <timestamp>]`, e.g. `[HALF-CLONE Jan 7 14:30]`, so `claude -r` and picking it works as a fallback.)\n"
+    },
+    {
+      "slug": "handoff",
+      "name": "handoff",
+      "dir": "skills/handoff",
+      "path": "skills/handoff/SKILL.md",
+      "desc": "Write or update a handoff document so the next agent with fresh context can continue this work.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ykdojo/claude-code-tips.git",
+        "copy": "cp -r skills/handoff ~/.claude/skills/handoff",
+        "raw": "https://raw.githubusercontent.com/ykdojo/claude-code-tips/577ac89252195d61283b334c4b9d292b52c82203/skills/handoff/SKILL.md",
+        "saveAs": "~/.claude/skills/handoff/SKILL.md",
+        "marketplace": "/plugin marketplace add ykdojo/claude-code-tips"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:d66fdc3cf7edc7ad02098fa1f3e3cb2bf655670880b3d28736e5118587d80dbf",
+      "bytes": 812,
+      "wordCount": 112,
+      "repoLicense": "",
+      "commit": "577ac89252195d61283b334c4b9d292b52c82203",
+      "branch": "main",
+      "body": "---\nname: handoff\ndescription: Write or update a handoff document so the next agent with fresh context can continue this work.\n---\n\nWrite or update a handoff document so the next agent with fresh context can continue this work.\n\nSteps:\n1. Check if HANDOFF.md already exists in the project\n2. If it exists, read it first to understand prior context before updating\n3. Create or update the document with:\n   - **Goal**: What we're trying to accomplish\n   - **Current Progress**: What's been done so far\n   - **What Worked**: Approaches that succeeded\n   - **What Didn't Work**: Approaches that failed (so they're not repeated)\n   - **Next Steps**: Clear action items for continuing\n\nSave as HANDOFF.md in the project root and tell the user the file path so they can start a fresh conversation with just that path.\n",
+      "bodyMd": "Write or update a handoff document so the next agent with fresh context can continue this work.\n\nSteps:\n1. Check if HANDOFF.md already exists in the project\n2. If it exists, read it first to understand prior context before updating\n3. Create or update the document with:\n   - **Goal**: What we're trying to accomplish\n   - **Current Progress**: What's been done so far\n   - **What Worked**: Approaches that succeeded\n   - **What Didn't Work**: Approaches that failed (so they're not repeated)\n   - **Next Steps**: Clear action items for continuing\n\nSave as HANDOFF.md in the project root and tell the user the file path so they can start a fresh conversation with just that path.\n"
+    },
+    {
+      "slug": "hn-summarize",
+      "name": "hn-summarize",
+      "dir": "skills/hn-summarize",
+      "path": "skills/hn-summarize/SKILL.md",
+      "desc": "Fetch and summarize Hacker News / hckrnews.com top stories, articles, and their comment threads. Use when asked to summarize HN front-page stories, a specific HN story plus its discussion, or \"the top N from hckrnews\".",
+      "descZh": "",
+      "triggers": [
+        "the"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "python3",
+          "curl",
+          "sed"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ykdojo/claude-code-tips.git",
+        "copy": "cp -r skills/hn-summarize ~/.claude/skills/hn-summarize",
+        "raw": "https://raw.githubusercontent.com/ykdojo/claude-code-tips/577ac89252195d61283b334c4b9d292b52c82203/skills/hn-summarize/SKILL.md",
+        "saveAs": "~/.claude/skills/hn-summarize/SKILL.md",
+        "marketplace": "/plugin marketplace add ykdojo/claude-code-tips"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:976ac9d48a1f35bd8de646489f58bb131d4c64d7eab538e25b362467cfbaf7b5",
+      "bytes": 3769,
+      "wordCount": 432,
+      "repoLicense": "",
+      "commit": "577ac89252195d61283b334c4b9d292b52c82203",
+      "branch": "main",
+      "body": "---\nname: hn-summarize\ndescription: Fetch and summarize Hacker News / hckrnews.com top stories, articles, and their comment threads. Use when asked to summarize HN front-page stories, a specific HN story plus its discussion, or \"the top N from hckrnews\".\n---\n\n# HN Summarize\n\n`hckrnews.com` is a JavaScript-rendered front end - curling it returns an empty shell, so **do not scrape it**. Instead use the official Hacker News APIs (Firebase + Algolia), which give the same stories with points, comment counts, and full comment trees. These APIs return plain JSON, so plain `curl` works fine.\n\n## 1. Current top stories (the \"top 10\")\n\n`topstories.json` returns 500 story IDs in front-page rank order. Take the first N and look up each item.\n\n```bash\ncurl -sL 'https://hacker-news.firebaseio.com/v0/topstories.json' -o /tmp/top.json\npython3 -c \"\nimport json,urllib.request\nids=json.load(open('/tmp/top.json'))[:10]\nfor i,sid in enumerate(ids,1):\n    d=json.load(urllib.request.urlopen(f'https://hacker-news.firebaseio.com/v0/item/{sid}.json'))\n    print(f\\\"{i}. {d.get('title')} | {d.get('score')} pts | {d.get('descendants',0)} comments | id {sid}\\\")\n    print(f\\\"   {d.get('url','(text post)')}\\\")\n\"\n```\n\n## 2. Find a specific story by topic (Algolia search)\n\n```bash\ncurl -sL 'https://hn.algolia.com/api/v1/search?query=YOUR+QUERY&tags=story' -o /tmp/s.json\npython3 -c \"\nimport json\nfor h in json.load(open('/tmp/s.json'))['hits'][:8]:\n    print(h['objectID'], '|', h.get('points'), 'pts |', h.get('num_comments'), 'comments |', h['title'])\n    print('   ', h.get('url'))\n\"\n```\n\n- Add `&numericFilters=created_at_i>UNIXTS` to restrict to recent stories (avoids matching an old duplicate of the same headline).\n- `search` ranks by relevance; `search_by_date` ranks by recency.\n- Pick the `objectID` with the highest points/comments - that's the live front-page discussion.\n\n## 3. Fetch a story + its comment tree\n\n```bash\ncurl -sL 'https://hn.algolia.com/api/v1/items/OBJECT_ID' -o /tmp/hn.json\n```\n\nThe response is a nested tree: top-level `children` are root comments, each with their own `children`. Flatten and print root comments in thread order (HN's default ranking ≈ this order):\n\n```bash\npython3 -c \"\nimport json,re\nd=json.load(open('/tmp/hn.json'))\ndef clean(t):\n    t=re.sub('<[^>]+>',' ',t)\n    for a,b in [('&#x27;',chr(39)),('&gt;','>'),('&lt;','<'),('&amp;','&'),('&quot;','\\\"')]:\n        t=t.replace(a,b)\n    return re.sub(' +',' ',t).strip()\nfor c in d.get('children',[])[:15]:\n    if c.get('text'):\n        print(f\\\"{c.get('author')}: {clean(c['text'])[:550]}\\\")\n        print('---')\n\"\n```\n\nNote: Algolia's per-comment `points` field is now always `null`, so sort by thread order (already roughly HN's ranking) rather than by points. For deeper threads, recurse into `children` and track depth.\n\n## 4. Fetch the linked article\n\nFetch the story's article with `curl -sL <url>`, then strip tags with `sed 's/<[^>]*>//g'` to extract readable text, or grep for the key sentences. If the page is JS-heavy or paywalled, try a Wayback Machine snapshot:\n\n```bash\ncurl -sL 'http://archive.org/wayback/available?url=ARTICLE_URL' -o /tmp/wb.json\npython3 -c \"import json;print(json.load(open('/tmp/wb.json'))['archived_snapshots'].get('closest',{}).get('url'))\"\n```\n\nThen fetch the snapshot URL the same way. If the host blocks outbound `curl` requests, fetch through a container or proxy you have available.\n\n## Summary format\n\nFor each story give: title, points, comment count, source, a few sentences on what the article says, then **comment themes** - group the discussion into 3-6 recurring threads (agreement, rebuttals, tangents) rather than listing comments one by one. Note when the top thread is a critical/contrarian take, since that's common on HN.\n",
+      "bodyMd": "# HN Summarize\n\n`hckrnews.com` is a JavaScript-rendered front end - curling it returns an empty shell, so **do not scrape it**. Instead use the official Hacker News APIs (Firebase + Algolia), which give the same stories with points, comment counts, and full comment trees. These APIs return plain JSON, so plain `curl` works fine.\n\n## 1. Current top stories (the \"top 10\")\n\n`topstories.json` returns 500 story IDs in front-page rank order. Take the first N and look up each item.\n\n```bash\ncurl -sL 'https://hacker-news.firebaseio.com/v0/topstories.json' -o /tmp/top.json\npython3 -c \"\nimport json,urllib.request\nids=json.load(open('/tmp/top.json'))[:10]\nfor i,sid in enumerate(ids,1):\n    d=json.load(urllib.request.urlopen(f'https://hacker-news.firebaseio.com/v0/item/{sid}.json'))\n    print(f\\\"{i}. {d.get('title')} | {d.get('score')} pts | {d.get('descendants',0)} comments | id {sid}\\\")\n    print(f\\\"   {d.get('url','(text post)')}\\\")\n\"\n```\n\n## 2. Find a specific story by topic (Algolia search)\n\n```bash\ncurl -sL 'https://hn.algolia.com/api/v1/search?query=YOUR+QUERY&tags=story' -o /tmp/s.json\npython3 -c \"\nimport json\nfor h in json.load(open('/tmp/s.json'))['hits'][:8]:\n    print(h['objectID'], '|', h.get('points'), 'pts |', h.get('num_comments'), 'comments |', h['title'])\n    print('   ', h.get('url'))\n\"\n```\n\n- Add `&numericFilters=created_at_i>UNIXTS` to restrict to recent stories (avoids matching an old duplicate of the same headline).\n- `search` ranks by relevance; `search_by_date` ranks by recency.\n- Pick the `objectID` with the highest points/comments - that's the live front-page discussion.\n\n## 3. Fetch a story + its comment tree\n\n```bash\ncurl -sL 'https://hn.algolia.com/api/v1/items/OBJECT_ID' -o /tmp/hn.json\n```\n\nThe response is a nested tree: top-level `children` are root comments, each with their own `children`. Flatten and print root comments in thread order (HN's default ranking ≈ this order):\n\n```bash\npython3 -c \"\nimport json,re\nd=json.load(open('/tmp/hn.json'))\ndef clean(t):\n    t=re.sub('<[^>]+>',' ',t)\n    for a,b in [('&#x27;',chr(39)),('&gt;','>'),('&lt;','<'),('&amp;','&'),('&quot;','\\\"')]:\n        t=t.replace(a,b)\n    return re.sub(' +',' ',t).strip()\nfor c in d.get('children',[])[:15]:\n    if c.get('text'):\n        print(f\\\"{c.get('author')}: {clean(c['text'])[:550]}\\\")\n        print('---')\n\"\n```\n\nNote: Algolia's per-comment `points` field is now always `null`, so sort by thread order (already roughly HN's ranking) rather than by points. For deeper threads, recurse into `children` and track depth.\n\n## 4. Fetch the linked article\n\nFetch the story's article with `curl -sL <url>`, then strip tags with `sed 's/<[^>]*>//g'` to extract readable text, or grep for the key sentences. If the page is JS-heavy or paywalled, try a Wayback Machine snapshot:\n\n```bash\ncurl -sL 'http://archive.org/wayback/available?url=ARTICLE_URL' -o /tmp/wb.json\npython3 -c \"import json;print(json.load(open('/tmp/wb.json'))['archived_snapshots'].get('closest',{}).get('url'))\"\n```\n\nThen fetch the snapshot URL the same way. If the host blocks outbound `curl` requests, fetch through a container or proxy you have available.\n\n## Summary format\n\nFor each story give: title, points, comment count, source, a few sentences on what the article says, then **comment themes** - group the discussion into 3-6 recurring threads (agreement, rebuttals, tangents) rather than listing comments one by one. Note when the top thread is a critical/contrarian take, since that's common on HN.\n"
+    },
+    {
+      "slug": "private-github-search",
+      "name": "private-github-search",
+      "dir": "skills/private-github-search",
+      "path": "skills/private-github-search/SKILL.md",
+      "desc": "Full-text search across all of the user's GitHub repos (including private ones) using a local mirror and ripgrep. Use for \"where did I put X\", \"which repo has X\", or any search spanning the user's repos - gh search code / the REST API cannot reliably search private repos.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git",
+          "gh",
+          "rg",
+          "ripgrep"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ykdojo/claude-code-tips.git",
+        "copy": "cp -r skills/private-github-search ~/.claude/skills/private-github-search",
+        "raw": "https://raw.githubusercontent.com/ykdojo/claude-code-tips/577ac89252195d61283b334c4b9d292b52c82203/skills/private-github-search/SKILL.md",
+        "saveAs": "~/.claude/skills/private-github-search/SKILL.md",
+        "marketplace": "/plugin marketplace add ykdojo/claude-code-tips"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:32cbe423609e1eec6fda982c1375cac4ae762a6de44a63a80d51ae791795e13b",
+      "bytes": 1774,
+      "wordCount": 229,
+      "repoLicense": "",
+      "commit": "577ac89252195d61283b334c4b9d292b52c82203",
+      "branch": "main",
+      "body": "---\nname: private-github-search\ndescription: Full-text search across all of the user's GitHub repos (including private ones) using a local mirror and ripgrep. Use for \"where did I put X\", \"which repo has X\", or any search spanning the user's repos - gh search code / the REST API cannot reliably search private repos.\n---\n\n# Private GitHub search\n\nGitHub's modern code search (the one that indexes private repos) is web-only; `gh search code` uses the legacy engine and often returns nothing for private repos. Instead, search a local mirror of all the user's repos - it covers the same content as GitHub's index (default branch, non-fork) and a full search takes milliseconds.\n\n## Searching\n\nFind the bundled sync script (works for plugin installs and manual symlinks):\n\n```bash\nfind ~/.claude ~/.codex -name \"private-github-search-sync.sh\" 2>/dev/null | sort -V | tail -1\n```\n\nAlways refresh first - it exits instantly if the mirror was synced within the last hour, and takes ~15s otherwise (`--force` syncs regardless of age):\n\n```bash\nbash <script-path>\nrg -il 'pattern' ~/repo-mirror/repos          # which files\nrg -in 'pattern' ~/repo-mirror/repos | head   # matching lines\n```\n\n## First-time setup\n\nIf `~/repo-mirror/owners.txt` doesn't exist: ask the user which GitHub accounts to mirror (don't guess - they may manage several), write them one per line to `~/repo-mirror/owners.txt`, then run the sync script in the background (initial clone takes a few minutes; needs `gh` auth with access to those accounts).\n\n## Caveats\n\n- Only the default-branch tip is mirrored - for history or other branches, use `git log -S` in a full clone or GitHub web search.\n- The mirror may contain private data: keep it out of synced folders and never commit or publish its contents.\n",
+      "bodyMd": "# Private GitHub search\n\nGitHub's modern code search (the one that indexes private repos) is web-only; `gh search code` uses the legacy engine and often returns nothing for private repos. Instead, search a local mirror of all the user's repos - it covers the same content as GitHub's index (default branch, non-fork) and a full search takes milliseconds.\n\n## Searching\n\nFind the bundled sync script (works for plugin installs and manual symlinks):\n\n```bash\nfind ~/.claude ~/.codex -name \"private-github-search-sync.sh\" 2>/dev/null | sort -V | tail -1\n```\n\nAlways refresh first - it exits instantly if the mirror was synced within the last hour, and takes ~15s otherwise (`--force` syncs regardless of age):\n\n```bash\nbash <script-path>\nrg -il 'pattern' ~/repo-mirror/repos          # which files\nrg -in 'pattern' ~/repo-mirror/repos | head   # matching lines\n```\n\n## First-time setup\n\nIf `~/repo-mirror/owners.txt` doesn't exist: ask the user which GitHub accounts to mirror (don't guess - they may manage several), write them one per line to `~/repo-mirror/owners.txt`, then run the sync script in the background (initial clone takes a few minutes; needs `gh` auth with access to those accounts).\n\n## Caveats\n\n- Only the default-branch tip is mirrored - for history or other branches, use `git log -S` in a full clone or GitHub web search.\n- The mirror may contain private data: keep it out of synced folders and never commit or publish its contents.\n"
+    },
+    {
+      "slug": "quarter-clone",
+      "name": "quarter-clone",
+      "dir": "skills/quarter-clone",
+      "path": "skills/quarter-clone/SKILL.md",
+      "desc": "Clone the last quarter of the current conversation, discarding earlier context to reduce token usage while preserving recent work.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "jq"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ykdojo/claude-code-tips.git",
+        "copy": "cp -r skills/quarter-clone ~/.claude/skills/quarter-clone",
+        "raw": "https://raw.githubusercontent.com/ykdojo/claude-code-tips/577ac89252195d61283b334c4b9d292b52c82203/skills/quarter-clone/SKILL.md",
+        "saveAs": "~/.claude/skills/quarter-clone/SKILL.md",
+        "marketplace": "/plugin marketplace add ykdojo/claude-code-tips"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:3371dcc6a5413504a412dabd95028f43b2cf6eae21399008d7f6a2e0240b9c34",
+      "bytes": 1602,
+      "wordCount": 212,
+      "repoLicense": "",
+      "commit": "577ac89252195d61283b334c4b9d292b52c82203",
+      "branch": "main",
+      "body": "---\nname: quarter-clone\ndescription: Clone the last quarter of the current conversation, discarding earlier context to reduce token usage while preserving recent work.\n---\n\nClone the last quarter of the current conversation, discarding earlier context to reduce token usage while preserving recent work.\n\nSteps:\n1. Get the current session ID and project path: `tail -1 ~/.claude/history.jsonl | jq -r '[.sessionId, .project] | @tsv'`\n2. Find half-clone-conversation.sh with bash: `find ~/.claude -name \"half-clone-conversation.sh\" 2>/dev/null | sort -V | tail -1`\n   - This finds the script whether installed via plugin or manual symlink\n   - Uses version sort to prefer the latest version if multiple exist\n   - The same script handles both half and quarter cloning; `--quarter` selects quarter mode\n3. Preview the conversation to verify the session ID: `<script-path> --preview <session-id> <project-path>`\n   - Check that the first and last messages match the current conversation\n4. Run the clone: `<script-path> --quarter <session-id> <project-path>`\n   - Always pass the project path from the history entry, not the current working directory\n5. The script prints the new session ID (the `New session: <id>` line). Give the user the exact command to resume it directly, no picker needed:\n   ```\n   claude --resume <new-session-id>\n   ```\n   The script automatically appends a reference to the original conversation at the end of the cloned file. (The new session is also marked `[QUARTER-CLONE <timestamp>]`, e.g. `[QUARTER-CLONE Jan 7 14:30]`, so `claude -r` and picking it works as a fallback.)\n",
+      "bodyMd": "Clone the last quarter of the current conversation, discarding earlier context to reduce token usage while preserving recent work.\n\nSteps:\n1. Get the current session ID and project path: `tail -1 ~/.claude/history.jsonl | jq -r '[.sessionId, .project] | @tsv'`\n2. Find half-clone-conversation.sh with bash: `find ~/.claude -name \"half-clone-conversation.sh\" 2>/dev/null | sort -V | tail -1`\n   - This finds the script whether installed via plugin or manual symlink\n   - Uses version sort to prefer the latest version if multiple exist\n   - The same script handles both half and quarter cloning; `--quarter` selects quarter mode\n3. Preview the conversation to verify the session ID: `<script-path> --preview <session-id> <project-path>`\n   - Check that the first and last messages match the current conversation\n4. Run the clone: `<script-path> --quarter <session-id> <project-path>`\n   - Always pass the project path from the history entry, not the current working directory\n5. The script prints the new session ID (the `New session: <id>` line). Give the user the exact command to resume it directly, no picker needed:\n   ```\n   claude --resume <new-session-id>\n   ```\n   The script automatically appends a reference to the original conversation at the end of the cloned file. (The new session is also marked `[QUARTER-CLONE <timestamp>]`, e.g. `[QUARTER-CLONE Jan 7 14:30]`, so `claude -r` and picking it works as a fallback.)\n"
+    },
+    {
+      "slug": "reddit-fetch",
+      "name": "reddit-fetch",
+      "dir": "skills/reddit-fetch",
+      "path": "skills/reddit-fetch/SKILL.md",
+      "desc": "Fetch content from Reddit via its JSON API using a browser session (DuckDuckGo-hop unlock). Use when accessing Reddit URLs, researching topics on Reddit, or when Reddit returns 403/blocked errors.",
+      "descZh": "",
+      "triggers": [
+        "accessing Reddit URLs"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "curl",
+          "jq",
+          "playwright",
+          "go"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ykdojo/claude-code-tips.git",
+        "copy": "cp -r skills/reddit-fetch ~/.claude/skills/reddit-fetch",
+        "raw": "https://raw.githubusercontent.com/ykdojo/claude-code-tips/577ac89252195d61283b334c4b9d292b52c82203/skills/reddit-fetch/SKILL.md",
+        "saveAs": "~/.claude/skills/reddit-fetch/SKILL.md",
+        "marketplace": "/plugin marketplace add ykdojo/claude-code-tips"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:59a55dbe455beafc9731a857ed2a38303d92f2a3c6b7767844df4a0d9398e18a",
+      "bytes": 5478,
+      "wordCount": 685,
+      "repoLicense": "",
+      "commit": "577ac89252195d61283b334c4b9d292b52c82203",
+      "branch": "main",
+      "body": "---\nname: reddit-fetch\ndescription: Fetch content from Reddit via its JSON API using a browser session (DuckDuckGo-hop unlock). Use when accessing Reddit URLs, researching topics on Reddit, or when Reddit returns 403/blocked errors.\n---\n\n# Reddit Fetch\n\nReddit's public JSON API works by appending `.json` to any Reddit URL — but Reddit now hard-blocks automated access. **curl 403s essentially every time (host AND container, regardless of User-Agent), and even a cold Playwright navigation to `reddit.com` hits a `\"You've been blocked by network security\"` challenge page.** The reliable method is to arrive at Reddit *through a DuckDuckGo result redirect*: that sets a Reddit session cookie which unlocks direct `.json` access for the rest of the browser session.\n\n## Primary method: the DuckDuckGo-hop unlock\n\n**Step 1 - the DDG hop.** Do this once per session before any `.json` fetch.\n\n1. `mcp__playwright__browser_navigate` to `https://html.duckduckgo.com/html/?q=site:reddit.com/r/SUBREDDIT+YOUR+QUERY`\n2. Grab the first result's **full href** - it's a DDG redirect that includes a `rut` token (`https://duckduckgo.com/l/?uddg=...&rut=...`). The token is required; navigating to the bare `/l/?uddg=` without it 400s.\n   ```js\n   () => document.querySelector('.result__a')?.href\n   ```\n3. `browser_navigate` to that full redirect href. It lands on a real `www.reddit.com` page (title = the post/subreddit title, **not** \"Blocked\") and sets the session cookie. The result doesn't have to be the exact thread you want - landing on *any* real Reddit page sets the cookie.\n\nIf Playwright errors with `Browser is already in use`, a stale instance is holding the profile - `pkill -f ms-playwright-mcp` (or the profile dir named in the error) and retry.\n\n**Step 2 - direct `.json` now works.** For the rest of the session, navigate Playwright straight to any `.json` URL and `JSON.parse(document.body.innerText)`. Use `www.reddit.com` (not `old.reddit.com`) for browser navigation. Full recency sorting (`sort=new&t=week`) is available.\n\n1. `browser_navigate` to e.g. `https://www.reddit.com/r/SUBREDDIT/search.json?q=QUERY&restrict_sr=on&sort=new&t=week&limit=25`\n2. `browser_evaluate`, **always wrapped in try/catch** (return `document.body.innerText.slice(0,200)` on failure so you can see a challenge page if the session lapsed - just re-do the hop):\n   ```js\n   () => {\n     try {\n       const data = JSON.parse(document.body.innerText);\n       return data.data.children.map(c => ({\n         t: c.data.title, s: c.data.score, n: c.data.num_comments, id: c.data.id\n       }));\n     } catch (e) { return document.body.innerText.slice(0, 200); }\n   }\n   ```\n3. For a thread, navigate to `.../comments/POST_ID.json?limit=30&sort=top` and parse `data[0]` (post) and `data[1].data.children` (comments).\n\n## JSON shapes (same for browser and curl)\n\n```text\n# Listing - swap hot for new/top/rising; for top add &t=day|week|month|year|all\n/r/SUBREDDIT/hot.json?limit=15\n# Post + comments - JSON array where [0]=post, [1]=comment tree\n/r/SUBREDDIT/comments/POST_ID.json?limit=20\n# Search within a subreddit\n/r/SUBREDDIT/search.json?q=QUERY&restrict_sr=on&sort=new&limit=15\n```\n\n- Listings: `.data.children[].data` has `title`, `score`, `num_comments`, `author`, `id`.\n- Threads: `[0].data.children[0].data` is the post; `[1].data.children[]` (filter `kind == \"t1\"`) are comments with `author`, `score`, `body`, and nested `replies` of the same shape.\n- Truncate long comment bodies (e.g. `body.slice(0, 300)` in JS, `.body[:300]` in jq 1.7+) to keep output readable.\n\n## Fallbacks\n\n- **More comments per thread:** load the rendered thread page (after the hop) and scrape the `shreddit` DOM - it returns more comments than `.json?limit=`:\n  ```js\n  () => ({\n    title: document.querySelector('shreddit-post')?.getAttribute('post-title'),\n    comments: [...document.querySelectorAll('shreddit-comment')].map(c => ({\n      author: c.getAttribute('author'),\n      score:  c.getAttribute('score'),\n      text:   c.querySelector('.md')?.innerText\n    }))\n  })\n  ```\n- **No Playwright at all:** use Claude for Chrome to open the thread / `.json` URL and read it off the page.\n- **curl (last resort, expect 403):** direct curl with a browser User-Agent used to work and is faster when it does, but it now gets 403'd essentially always - changing the UA doesn't help. Only worth a single quick try if you're already shelling out and a browser isn't available; on 403, go straight to the DDG hop.\n  ```bash\n  UA=\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\"\n  curl -s -L -o /tmp/reddit_result.txt -w \"%{http_code}\" -H \"User-Agent: $UA\" \\\n    'https://old.reddit.com/r/SUBREDDIT/hot.json?limit=15'\n  jq -r '.data.children[] | .data | \"\\(.title)\\n   \\(.score) pts | \\(.num_comments) comments | u/\\(.author) | id: \\(.id)\\n\"' /tmp/reddit_result.txt\n  ```\n  Fetch to a temp file (`-o`) then parse; `-w \"%{http_code}\"` prints the status; `-L` follows redirects; single-quote the URL so the shell doesn't eat `&`.\n\n## Rate limiting\n\nReddit rate-limits aggressively even once you're unblocked:\n\n- **Don't fire parallel requests** - run them sequentially with `sleep 2`/`sleep 3` (or brief pauses between navigations). Fetch one listing, parse it, then fetch threads one at a time.\n- Empty response (0 bytes): wait 3-5s and retry. HTTP 429: back off 10-15s. A challenge page mid-session means the cookie lapsed - re-do the DDG hop.\n",
+      "bodyMd": "# Reddit Fetch\n\nReddit's public JSON API works by appending `.json` to any Reddit URL — but Reddit now hard-blocks automated access. **curl 403s essentially every time (host AND container, regardless of User-Agent), and even a cold Playwright navigation to `reddit.com` hits a `\"You've been blocked by network security\"` challenge page.** The reliable method is to arrive at Reddit *through a DuckDuckGo result redirect*: that sets a Reddit session cookie which unlocks direct `.json` access for the rest of the browser session.\n\n## Primary method: the DuckDuckGo-hop unlock\n\n**Step 1 - the DDG hop.** Do this once per session before any `.json` fetch.\n\n1. `mcp__playwright__browser_navigate` to `https://html.duckduckgo.com/html/?q=site:reddit.com/r/SUBREDDIT+YOUR+QUERY`\n2. Grab the first result's **full href** - it's a DDG redirect that includes a `rut` token (`https://duckduckgo.com/l/?uddg=...&rut=...`). The token is required; navigating to the bare `/l/?uddg=` without it 400s.\n   ```js\n   () => document.querySelector('.result__a')?.href\n   ```\n3. `browser_navigate` to that full redirect href. It lands on a real `www.reddit.com` page (title = the post/subreddit title, **not** \"Blocked\") and sets the session cookie. The result doesn't have to be the exact thread you want - landing on *any* real Reddit page sets the cookie.\n\nIf Playwright errors with `Browser is already in use`, a stale instance is holding the profile - `pkill -f ms-playwright-mcp` (or the profile dir named in the error) and retry.\n\n**Step 2 - direct `.json` now works.** For the rest of the session, navigate Playwright straight to any `.json` URL and `JSON.parse(document.body.innerText)`. Use `www.reddit.com` (not `old.reddit.com`) for browser navigation. Full recency sorting (`sort=new&t=week`) is available.\n\n1. `browser_navigate` to e.g. `https://www.reddit.com/r/SUBREDDIT/search.json?q=QUERY&restrict_sr=on&sort=new&t=week&limit=25`\n2. `browser_evaluate`, **always wrapped in try/catch** (return `document.body.innerText.slice(0,200)` on failure so you can see a challenge page if the session lapsed - just re-do the hop):\n   ```js\n   () => {\n     try {\n       const data = JSON.parse(document.body.innerText);\n       return data.data.children.map(c => ({\n         t: c.data.title, s: c.data.score, n: c.data.num_comments, id: c.data.id\n       }));\n     } catch (e) { return document.body.innerText.slice(0, 200); }\n   }\n   ```\n3. For a thread, navigate to `.../comments/POST_ID.json?limit=30&sort=top` and parse `data[0]` (post) and `data[1].data.children` (comments).\n\n## JSON shapes (same for browser and curl)\n\n```text\n# Listing - swap hot for new/top/rising; for top add &t=day|week|month|year|all\n/r/SUBREDDIT/hot.json?limit=15\n# Post + comments - JSON array where [0]=post, [1]=comment tree\n/r/SUBREDDIT/comments/POST_ID.json?limit=20\n# Search within a subreddit\n/r/SUBREDDIT/search.json?q=QUERY&restrict_sr=on&sort=new&limit=15\n```\n\n- Listings: `.data.children[].data` has `title`, `score`, `num_comments`, `author`, `id`.\n- Threads: `[0].data.children[0].data` is the post; `[1].data.children[]` (filter `kind == \"t1\"`) are comments with `author`, `score`, `body`, and nested `replies` of the same shape.\n- Truncate long comment bodies (e.g. `body.slice(0, 300)` in JS, `.body[:300]` in jq 1.7+) to keep output readable.\n\n## Fallbacks\n\n- **More comments per thread:** load the rendered thread page (after the hop) and scrape the `shreddit` DOM - it returns more comments than `.json?limit=`:\n  ```js\n  () => ({\n    title: document.querySelector('shreddit-post')?.getAttribute('post-title'),\n    comments: [...document.querySelectorAll('shreddit-comment')].map(c => ({\n      author: c.getAttribute('author'),\n      score:  c.getAttribute('score'),\n      text:   c.querySelector('.md')?.innerText\n    }))\n  })\n  ```\n- **No Playwright at all:** use Claude for Chrome to open the thread / `.json` URL and read it off the page.\n- **curl (last resort, expect 403):** direct curl with a browser User-Agent used to work and is faster when it does, but it now gets 403'd essentially always - changing the UA doesn't help. Only worth a single quick try if you're already shelling out and a browser isn't available; on 403, go straight to the DDG hop.\n  ```bash\n  UA=\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36\"\n  curl -s -L -o /tmp/reddit_result.txt -w \"%{http_code}\" -H \"User-Agent: $UA\" \\\n    'https://old.reddit.com/r/SUBREDDIT/hot.json?limit=15'\n  jq -r '.data.children[] | .data | \"\\(.title)\\n   \\(.score) pts | \\(.num_comments) comments | u/\\(.author) | id: \\(.id)\\n\"' /tmp/reddit_result.txt\n  ```\n  Fetch to a temp file (`-o`) then parse; `-w \"%{http_code}\"` prints the status; `-L` follows redirects; single-quote the URL so the shell doesn't eat `&`.\n\n## Rate limiting\n\nReddit rate-limits aggressively even once you're unblocked:\n\n- **Don't fire parallel requests** - run them sequentially with `sleep 2`/`sleep 3` (or brief pauses between navigations). Fetch one listing, parse it, then fetch threads one at a time.\n- Empty response (0 bytes): wait 3-5s and retry. HTTP 429: back off 10-15s. A challenge page mid-session means the cookie lapsed - re-do the DDG hop.\n"
+    },
+    {
+      "slug": "review-claudemd",
+      "name": "review-claudemd",
+      "dir": "skills/review-claudemd",
+      "path": "skills/review-claudemd/SKILL.md",
+      "desc": "Review recent conversations to find improvements for CLAUDE.md files.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "jq",
+          "sed"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ykdojo/claude-code-tips.git",
+        "copy": "cp -r skills/review-claudemd ~/.claude/skills/review-claudemd",
+        "raw": "https://raw.githubusercontent.com/ykdojo/claude-code-tips/577ac89252195d61283b334c4b9d292b52c82203/skills/review-claudemd/SKILL.md",
+        "saveAs": "~/.claude/skills/review-claudemd/SKILL.md",
+        "marketplace": "/plugin marketplace add ykdojo/claude-code-tips"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:1053a62411357f2ef837d94abdb86cc02061f494b0ba4319c769b3effd4b71a5",
+      "bytes": 2705,
+      "wordCount": 368,
+      "repoLicense": "",
+      "commit": "577ac89252195d61283b334c4b9d292b52c82203",
+      "branch": "main",
+      "body": "---\nname: review-claudemd\ndescription: Review recent conversations to find improvements for CLAUDE.md files.\n---\n\n# Review CLAUDE.md from conversation history\n\nAnalyze recent conversations to improve both global (~/.claude/CLAUDE.md) and local (project) CLAUDE.md files.\n\n## Step 1: Find conversation history\n\nThe project's conversation history is in `~/.claude/projects/`. The folder name is the project path with slashes replaced by dashes.\n\n```bash\n# Find the project folder (replace / with -)\nPROJECT_PATH=$(pwd | sed 's|/|-|g' | sed 's|^-||')\nCONVO_DIR=~/.claude/projects/-${PROJECT_PATH}\nls -lt \"$CONVO_DIR\"/*.jsonl | head -20\n```\n\n## Step 2: Extract recent conversations\n\nExtract the 15-20 most recent conversations (excluding the current one) to a temp directory:\n\n```bash\nSCRATCH=/tmp/claudemd-review-$(date +%s)\nmkdir -p \"$SCRATCH\"\n\nfor f in $(ls -t \"$CONVO_DIR\"/*.jsonl | head -20); do\n  basename=$(basename \"$f\" .jsonl)\n  # Skip current conversation if known\n  cat \"$f\" | jq -r '\n    if .type == \"user\" then\n      \"USER: \" + (.message.content // \"\")\n    elif .type == \"assistant\" then\n      \"ASSISTANT: \" + ((.message.content // []) | map(select(.type == \"text\") | .text) | join(\"\\n\"))\n    else\n      empty\n    end\n  ' 2>/dev/null | grep -v \"^ASSISTANT: $\" > \"$SCRATCH/${basename}.txt\"\ndone\n\nls -lhS \"$SCRATCH\"\n```\n\n## Step 3: Spin up subagents\n\nLaunch parallel subagents to analyze conversations. Each agent should read:\n- Global CLAUDE.md: `~/.claude/CLAUDE.md`\n- Local CLAUDE.md: `./CLAUDE.md` (if exists)\n- Batch of conversation files\n\nGive each agent this prompt template:\n\n```\nRead:\n1. Global CLAUDE.md: ~/.claude/CLAUDE.md\n2. Local CLAUDE.md: [project]/CLAUDE.md\n3. Conversations: [list of files]\n\nAnalyze the conversations against BOTH CLAUDE.md files. Find:\n1. Instructions that exist but were violated (need reinforcement or rewording)\n2. Patterns that should be added to LOCAL CLAUDE.md (project-specific)\n3. Patterns that should be added to GLOBAL CLAUDE.md (applies everywhere)\n4. Anything in either file that seems outdated or unnecessary\n\nBe specific. Output bullet points only.\n```\n\nBatch conversations by size:\n- Large (>100KB): 1-2 per agent\n- Medium (10-100KB): 3-5 per agent\n- Small (<10KB): 5-10 per agent\n\n## Step 4: Aggregate findings\n\nCombine results from all agents into a summary with these sections:\n\n1. **Instructions violated** - existing rules that weren't followed (need stronger wording)\n2. **Suggested additions - LOCAL** - project-specific patterns\n3. **Suggested additions - GLOBAL** - patterns that apply everywhere\n4. **Potentially outdated** - items that may no longer be relevant\n\nPresent as tables or bullet points. Ask user if they want edits drafted.\n",
+      "bodyMd": "# Review CLAUDE.md from conversation history\n\nAnalyze recent conversations to improve both global (~/.claude/CLAUDE.md) and local (project) CLAUDE.md files.\n\n## Step 1: Find conversation history\n\nThe project's conversation history is in `~/.claude/projects/`. The folder name is the project path with slashes replaced by dashes.\n\n```bash\n# Find the project folder (replace / with -)\nPROJECT_PATH=$(pwd | sed 's|/|-|g' | sed 's|^-||')\nCONVO_DIR=~/.claude/projects/-${PROJECT_PATH}\nls -lt \"$CONVO_DIR\"/*.jsonl | head -20\n```\n\n## Step 2: Extract recent conversations\n\nExtract the 15-20 most recent conversations (excluding the current one) to a temp directory:\n\n```bash\nSCRATCH=/tmp/claudemd-review-$(date +%s)\nmkdir -p \"$SCRATCH\"\n\nfor f in $(ls -t \"$CONVO_DIR\"/*.jsonl | head -20); do\n  basename=$(basename \"$f\" .jsonl)\n  # Skip current conversation if known\n  cat \"$f\" | jq -r '\n    if .type == \"user\" then\n      \"USER: \" + (.message.content // \"\")\n    elif .type == \"assistant\" then\n      \"ASSISTANT: \" + ((.message.content // []) | map(select(.type == \"text\") | .text) | join(\"\\n\"))\n    else\n      empty\n    end\n  ' 2>/dev/null | grep -v \"^ASSISTANT: $\" > \"$SCRATCH/${basename}.txt\"\ndone\n\nls -lhS \"$SCRATCH\"\n```\n\n## Step 3: Spin up subagents\n\nLaunch parallel subagents to analyze conversations. Each agent should read:\n- Global CLAUDE.md: `~/.claude/CLAUDE.md`\n- Local CLAUDE.md: `./CLAUDE.md` (if exists)\n- Batch of conversation files\n\nGive each agent this prompt template:\n\n```\nRead:\n1. Global CLAUDE.md: ~/.claude/CLAUDE.md\n2. Local CLAUDE.md: [project]/CLAUDE.md\n3. Conversations: [list of files]\n\nAnalyze the conversations against BOTH CLAUDE.md files. Find:\n1. Instructions that exist but were violated (need reinforcement or rewording)\n2. Patterns that should be added to LOCAL CLAUDE.md (project-specific)\n3. Patterns that should be added to GLOBAL CLAUDE.md (applies everywhere)\n4. Anything in either file that seems outdated or unnecessary\n\nBe specific. Output bullet points only.\n```\n\nBatch conversations by size:\n- Large (>100KB): 1-2 per agent\n- Medium (10-100KB): 3-5 per agent\n- Small (<10KB): 5-10 per agent\n\n## Step 4: Aggregate findings\n\nCombine results from all agents into a summary with these sections:\n\n1. **Instructions violated** - existing rules that weren't followed (need stronger wording)\n2. **Suggested additions - LOCAL** - project-specific patterns\n3. **Suggested additions - GLOBAL** - patterns that apply everywhere\n4. **Potentially outdated** - items that may no longer be relevant\n\nPresent as tables or bullet points. Ask user if they want edits drafted.\n"
+    },
+    {
+      "slug": "version-check",
+      "name": "version-check",
+      "dir": "skills/version-check",
+      "path": "skills/version-check/SKILL.md",
+      "desc": "Recommend which Claude Code version to run, or whether to update. Use when asked which Claude Code version is best/safe, whether to update now, whether a recent release is buggy, or what changed since the installed version.",
+      "descZh": "",
+      "triggers": [
+        "whether to update now",
+        "whether a recent rele"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "npm",
+          "python3",
+          "gh",
+          "curl",
+          "playwright",
+          "awk"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ykdojo/claude-code-tips.git",
+        "copy": "cp -r skills/version-check ~/.claude/skills/version-check",
+        "raw": "https://raw.githubusercontent.com/ykdojo/claude-code-tips/577ac89252195d61283b334c4b9d292b52c82203/skills/version-check/SKILL.md",
+        "saveAs": "~/.claude/skills/version-check/SKILL.md",
+        "marketplace": "/plugin marketplace add ykdojo/claude-code-tips"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:658adae623f4163df8a572f5eef88248d25831110b5c851ac149b4f75c86f535",
+      "bytes": 7351,
+      "wordCount": 1058,
+      "repoLicense": "",
+      "commit": "577ac89252195d61283b334c4b9d292b52c82203",
+      "branch": "main",
+      "body": "---\nname: version-check\ndescription: Recommend which Claude Code version to run, or whether to update. Use when asked which Claude Code version is best/safe, whether to update now, whether a recent release is buggy, or what changed since the installed version.\n---\n\n# Claude Code version check\n\nThe goal is a recommendation: stay put, update, or pin to a specific version. Claude Code ships `latest` very frequently (often 1-2x/day), so \"best version\" is a moving target and the answer is usually a *range*, not a single build.\n\n## Heuristics (read first)\n\n- **`stable` lags `latest` and is NOT an LTS.** The npm `stable` dist-tag is just a pointer that trails `latest` by a handful of patch releases. It can even sit *behind* an important fix release, so \"stable\" does not mean \"most bugs fixed.\" Don't blindly recommend `@stable`.\n- **Quiet version = good sign.** If nobody is complaining about a recent release, that's a positive signal. A loud pile-on about a specific build is the thing to avoid.\n- **Version comparisons are the strongest signal.** Posts where people compare builds (\"X broke Y, rolled back to Z\") tell you exactly which release to avoid.\n- **Stay ~a day behind the bleeding edge.** Avoid a release that's only a few hours old - let others surface same-day regressions first.\n- **But a same-day release is fine when the tracker is quiet and it fixes something you're carrying.** If a few hours have passed with no cluster of issues, and the changelog shows it fixing a regression that's live in your installed range, taking it is usually better than waiting. Say plainly what you're trading: a few hours of field time instead of a day.\n- **The real lever is *when* you update, not stable-vs-latest.** Default Claude Code auto-updates to `latest` constantly, which is how you drift onto a same-day regression.\n\n## 1. What's installed vs what's published\n\n```bash\nclaude --version\nnpm view @anthropic-ai/claude-code dist-tags --json\n```\n\n`dist-tags` shows `latest`, `stable`, and `next`. Compare against the installed version to see how far ahead/behind each pointer is.\n\nRecent releases and their timestamps (to see how fast things are shipping):\n\n```bash\nnpm view @anthropic-ai/claude-code time --json | python3 -c \"import sys,json;d=json.load(sys.stdin);print('\\n'.join(f'{k}: {v}' for k,v in list(d.items())[-8:]))\"\n```\n\n## 2. Scan the changelog for regressions in the gap\n\nFetch the changelog and read the entries *between* the installed version and `latest`. Look for \"Fixed ... regression in X\" lines - if a recent build introduced a regression that has not yet been fixed, that's the one to avoid.\n\n```bash\ncurl -sL https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md | awk '/## <LATEST>/,/## <INSTALLED>/'\n```\n\n(Substitute the two version numbers.) A release that is mostly \"Fixed …\" after a noisy one is usually a safe landing spot.\n\n## 3. Community sentiment (valuable - do this, don't skip it)\n\n### GitHub issues (primary - reliable and fetchable)\n\nThe most dependable signal. Search recent open bug reports, sorted by reactions:\n\n```bash\ngh api -X GET search/issues \\\n  -f q=\"repo:anthropics/claude-code is:issue is:open created:>=<DATE> label:bug\" \\\n  -f sort=reactions -f per_page=25 \\\n  --jq '.items[] | \"\\(.created_at[:10]) +\\(.reactions.total_count) c\\(.comments) #\\(.number) \\(.title)\"'\n```\n\n(Set `<DATE>` to ~3 days before today.) A version regression shows up as a *cluster* of high-reaction issues filed right after a release. Single reports with 0-1 reactions are noise, not a signal - the tracker always has a steady trickle of those.\n\nCross-reference titles against the changelog gap: if a top issue is already addressed by a fix/flag in `latest`, that build is *safer*, not riskier. Mostly minor or server-side (API 500/529) issues = quiet release = good sign.\n\nTo judge a release that's only hours old, drop `label:bug` and `is:open` and set the date to today - you want everything filed since it shipped, before anyone has triaged or labeled it.\n\nAlso check whether the issues are even about the CLI. Clusters about Claude Desktop or the VS Code extension say nothing about whether a Claude Code CLI build is safe.\n\n### Reddit (secondary - reachable via the DuckDuckGo hop)\n\nr/ClaudeAI version-comparison threads are valuable, but **Reddit now hard-blocks every direct automated route** - curl (host + container), the WebSearch crawler (denied by user-agent), AND a cold Playwright navigation (network-security challenge page). The reliable way in is the `reddit-fetch` skill's **DuckDuckGo-hop unlock**: navigate Playwright to a `html.duckduckgo.com/html/?q=site:reddit.com/r/ClaudeAI+...` result redirect once, which sets a session cookie, then direct `.json` navigation works:\n\n```\nhttps://www.reddit.com/r/ClaudeAI/search.json?q=claude+code+update+broke+OR+regression&restrict_sr=on&sort=new&t=week&limit=25\n```\n\nApply the heuristics above: a positive or quiet recent-update thread is reassuring; a high-score \"X is broken\" thread names the build to skip.\n\n## 4. Test the claim instead of arguing about it\n\nWhen the question is \"do I actually need this release to get X\" - usually a new model - just run it. A new model is server-side, so it often works on an older client; what the older client gets *wrong* is the metadata around it.\n\n```bash\nclaude -p \"Reply with exactly: ok\" --model <model-id> --output-format json 2>&1 \\\n  | python3 -c \"import sys,json;u=json.load(sys.stdin)['modelUsage'];print(json.dumps({m:{'contextWindow':v['contextWindow'],'costUSD':v['costUSD']} for m,v in u.items()},indent=2))\"\n```\n\n`modelUsage` is the honest answer: it names the model that actually served the turn (ignore the Haiku row, that's the background helper) and reports the `contextWindow` the client is applying. A new model responding on an old client but showing a 200000 window where the changelog promises 1000000 means the model works and the *client* is capping it - which is a concrete, checkable reason to update rather than a vague one.\n\nRe-run the same command after updating to confirm the number moved.\n\n## 5. Recommend\n\n- If the installed version is in the recent, well-received range and nothing in the gap regressed: **stay put**, don't chase a release that's only hours old.\n- If there's a known regression in a build, recommend the last good version and pin/rollback to it.\n- For anyone who's been burned: **disable the auto-updater and update deliberately** (the repo's setup script does this), rather than religiously tracking `@stable`.\n\n### Installing a specific version - check how it was installed first\n\n`npm install -g @anthropic-ai/claude-code@X.Y.Z` is **not** universal. On a native install it fails with `EEXIST: file already exists /Users/<you>/.local/bin/claude`, because that path is a symlink into `~/.local/share/claude/versions/` that npm won't overwrite. Don't `--force` past it - that replaces the native launcher with an npm shim.\n\n```bash\nls -la \"$(command -v claude)\"   # symlink into ~/.local/share/claude/versions/ = native install\n```\n\n- **Native install** → `claude install X.Y.Z` (same command for rollback)\n- **npm install** → `npm install -g @anthropic-ai/claude-code@X.Y.Z`\n\nEither way, confirm with `claude --version` afterwards - a package manager reporting success is not the same as the launcher pointing at the new build.\n",
+      "bodyMd": "# Claude Code version check\n\nThe goal is a recommendation: stay put, update, or pin to a specific version. Claude Code ships `latest` very frequently (often 1-2x/day), so \"best version\" is a moving target and the answer is usually a *range*, not a single build.\n\n## Heuristics (read first)\n\n- **`stable` lags `latest` and is NOT an LTS.** The npm `stable` dist-tag is just a pointer that trails `latest` by a handful of patch releases. It can even sit *behind* an important fix release, so \"stable\" does not mean \"most bugs fixed.\" Don't blindly recommend `@stable`.\n- **Quiet version = good sign.** If nobody is complaining about a recent release, that's a positive signal. A loud pile-on about a specific build is the thing to avoid.\n- **Version comparisons are the strongest signal.** Posts where people compare builds (\"X broke Y, rolled back to Z\") tell you exactly which release to avoid.\n- **Stay ~a day behind the bleeding edge.** Avoid a release that's only a few hours old - let others surface same-day regressions first.\n- **But a same-day release is fine when the tracker is quiet and it fixes something you're carrying.** If a few hours have passed with no cluster of issues, and the changelog shows it fixing a regression that's live in your installed range, taking it is usually better than waiting. Say plainly what you're trading: a few hours of field time instead of a day.\n- **The real lever is *when* you update, not stable-vs-latest.** Default Claude Code auto-updates to `latest` constantly, which is how you drift onto a same-day regression.\n\n## 1. What's installed vs what's published\n\n```bash\nclaude --version\nnpm view @anthropic-ai/claude-code dist-tags --json\n```\n\n`dist-tags` shows `latest`, `stable`, and `next`. Compare against the installed version to see how far ahead/behind each pointer is.\n\nRecent releases and their timestamps (to see how fast things are shipping):\n\n```bash\nnpm view @anthropic-ai/claude-code time --json | python3 -c \"import sys,json;d=json.load(sys.stdin);print('\\n'.join(f'{k}: {v}' for k,v in list(d.items())[-8:]))\"\n```\n\n## 2. Scan the changelog for regressions in the gap\n\nFetch the changelog and read the entries *between* the installed version and `latest`. Look for \"Fixed ... regression in X\" lines - if a recent build introduced a regression that has not yet been fixed, that's the one to avoid.\n\n```bash\ncurl -sL https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md | awk '/## <LATEST>/,/## <INSTALLED>/'\n```\n\n(Substitute the two version numbers.) A release that is mostly \"Fixed …\" after a noisy one is usually a safe landing spot.\n\n## 3. Community sentiment (valuable - do this, don't skip it)\n\n### GitHub issues (primary - reliable and fetchable)\n\nThe most dependable signal. Search recent open bug reports, sorted by reactions:\n\n```bash\ngh api -X GET search/issues \\\n  -f q=\"repo:anthropics/claude-code is:issue is:open created:>=<DATE> label:bug\" \\\n  -f sort=reactions -f per_page=25 \\\n  --jq '.items[] | \"\\(.created_at[:10]) +\\(.reactions.total_count) c\\(.comments) #\\(.number) \\(.title)\"'\n```\n\n(Set `<DATE>` to ~3 days before today.) A version regression shows up as a *cluster* of high-reaction issues filed right after a release. Single reports with 0-1 reactions are noise, not a signal - the tracker always has a steady trickle of those.\n\nCross-reference titles against the changelog gap: if a top issue is already addressed by a fix/flag in `latest`, that build is *safer*, not riskier. Mostly minor or server-side (API 500/529) issues = quiet release = good sign.\n\nTo judge a release that's only hours old, drop `label:bug` and `is:open` and set the date to today - you want everything filed since it shipped, before anyone has triaged or labeled it.\n\nAlso check whether the issues are even about the CLI. Clusters about Claude Desktop or the VS Code extension say nothing about whether a Claude Code CLI build is safe.\n\n### Reddit (secondary - reachable via the DuckDuckGo hop)\n\nr/ClaudeAI version-comparison threads are valuable, but **Reddit now hard-blocks every direct automated route** - curl (host + container), the WebSearch crawler (denied by user-agent), AND a cold Playwright navigation (network-security challenge page). The reliable way in is the `reddit-fetch` skill's **DuckDuckGo-hop unlock**: navigate Playwright to a `html.duckduckgo.com/html/?q=site:reddit.com/r/ClaudeAI+...` result redirect once, which sets a session cookie, then direct `.json` navigation works:\n\n```\nhttps://www.reddit.com/r/ClaudeAI/search.json?q=claude+code+update+broke+OR+regression&restrict_sr=on&sort=new&t=week&limit=25\n```\n\nApply the heuristics above: a positive or quiet recent-update thread is reassuring; a high-score \"X is broken\" thread names the build to skip.\n\n## 4. Test the claim instead of arguing about it\n\nWhen the question is \"do I actually need this release to get X\" - usually a new model - just run it. A new model is server-side, so it often works on an older client; what the older client gets *wrong* is the metadata around it.\n\n```bash\nclaude -p \"Reply with exactly: ok\" --model <model-id> --output-format json 2>&1 \\\n  | python3 -c \"import sys,json;u=json.load(sys.stdin)['modelUsage'];print(json.dumps({m:{'contextWindow':v['contextWindow'],'costUSD':v['costUSD']} for m,v in u.items()},indent=2))\"\n```\n\n`modelUsage` is the honest answer: it names the model that actually served the turn (ignore the Haiku row, that's the background helper) and reports the `contextWindow` the client is applying. A new model responding on an old client but showing a 200000 window where the changelog promises 1000000 means the model works and the *client* is capping it - which is a concrete, checkable reason to update rather than a vague one.\n\nRe-run the same command after updating to confirm the number moved.\n\n## 5. Recommend\n\n- If the installed version is in the recent, well-received range and nothing in the gap regressed: **stay put**, don't chase a release that's only hours old.\n- If there's a known regression in a build, recommend the last good version and pin/rollback to it.\n- For anyone who's been burned: **disable the auto-updater and update deliberately** (the repo's setup script does this), rather than religiously tracking `@stable`.\n\n### Installing a specific version - check how it was installed first\n\n`npm install -g @anthropic-ai/claude-code@X.Y.Z` is **not** universal. On a native install it fails with `EEXIST: file already exists /Users/<you>/.local/bin/claude`, because that path is a symlink into `~/.local/share/claude/versions/` that npm won't overwrite. Don't `--force` past it - that replaces the native launcher with an npm shim.\n\n```bash\nls -la \"$(command -v claude)\"   # symlink into ~/.local/share/claude/versions/ = native install\n```\n\n- **Native install** → `claude install X.Y.Z` (same command for rollback)\n- **npm install** → `npm install -g @anthropic-ai/claude-code@X.Y.Z`\n\nEither way, confirm with `claude --version` afterwards - a package manager reporting success is not the same as the launcher pointing at the new build.\n"
+    }
+  ]
+}

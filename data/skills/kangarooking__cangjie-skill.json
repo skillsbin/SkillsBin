@@ -1,0 +1,920 @@
+{
+  "repo": "kangarooking/cangjie-skill",
+  "commit": "a28de55ba881b9928956a55048f743f7a9e3b23e",
+  "branch": "main",
+  "fetchedAt": "2026-11-24T22:04:15.925Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "cangjie-skill",
+      "name": "cangjie-skill",
+      "dir": "",
+      "path": "SKILL.md",
+      "desc": "Distill a book, long-video transcript, podcast, course, or interview into a coherent set of executable skills. Use when the user asks to \"拆书\" / \"蒸馏一本书\" / \"把 XX 书做成 skill\" / \"把这个视频/播客/课程蒸馏成 skill\" / \"turn a book or video into skills\" — i.e. wants the frameworks, principles, and methodologies in long-form content extracted into atomic, reusable Claude skills that an agent can invoke in real-world situations. NOT for simple summarization, book reviews, or role-playing as the author (that is nuwa-skill's job).",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "python3",
+          "pip"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/kangarooking/cangjie-skill.git",
+        "copy": "",
+        "raw": "https://raw.githubusercontent.com/kangarooking/cangjie-skill/a28de55ba881b9928956a55048f743f7a9e3b23e/SKILL.md",
+        "saveAs": "~/.claude/skills/cangjie-skill/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:cd9e3e844cf405773a30b2640a56e07a77d66caf909055a1ebe0808a561d3c45",
+      "bytes": 13461,
+      "wordCount": 858,
+      "repoLicense": "MIT",
+      "commit": "a28de55ba881b9928956a55048f743f7a9e3b23e",
+      "branch": "main",
+      "body": "---\nname: cangjie-skill\ndescription: Distill a book, long-video transcript, podcast, course, or interview into a coherent set of executable skills. Use when the user asks to \"拆书\" / \"蒸馏一本书\" / \"把 XX 书做成 skill\" / \"把这个视频/播客/课程蒸馏成 skill\" / \"turn a book or video into skills\" — i.e. wants the frameworks, principles, and methodologies in long-form content extracted into atomic, reusable Claude skills that an agent can invoke in real-world situations. NOT for simple summarization, book reviews, or role-playing as the author (that is nuwa-skill's job).\nmetadata:\n  cangjie.version: \"2.5.0\"\n---\n\n# cangjie-skill — 把一本书蒸馏成一组可执行 skills 的元 skill\n\n## 使命\n\n把一本书里沉淀的方法论,拆解成**原子化、可被 agent 在真实场景下调用**的能力,并按用户目的编译成合适数量的 skill,让读者真正用起来。\n\n> **术语约定**: 本文档及 `methodology/`、`extractors/` 中所有的\"书\",泛指一切被蒸馏的长内容 — 书籍、长视频转写、播客文字稿、课程、访谈、长文、资料集。\n\n**边界**:\n- ✅ 做: 方法论 / 决策框架 / 操作流程 / 计算规则 / 排障 / 清单 / 原则的蒸馏，概念体系作为参考支撑\n- ❌ 不做: 书摘 / 读后感 / 作者人设角色扮演 (后者请用 nuwa-skill)\n\n## 核心方法论: RIA-TV++（v2.5 Bundle 版）\n\n一个五阶段 + 并行提取 + 三重验证 + 晋级门 + darwin 兼容测试的流水线。详见 `methodology/00-overview.md`。\n\n```\n阶段 0:   Adler 整书理解        → BOOK_OVERVIEW.md\n阶段 1:   5 个 agent 并行提取    → 候选方法论单元池\n阶段 1.5: 三重验证筛选（知识验证） → 通过的单元 (用户轻确认)\n阶段 1.6: 独立 Skill 晋级门（产品化验证）→ promoted / router 去向\n阶段 2:   RIA++ 构造能力卡       → .cangjie/capabilities/cards/<slug>.md\n阶段 3:   Zettelkasten 链接      → verified.yaml 的 also_read + GLOSSARY\n阶段 4:   压力测试 (darwin 兼容)  → 评测用例 + 回炉淘汰\n阶段 5:   编译与交付             → cangjie.py compile（single/pack）+ DIGEST.md + 安装\n```\n\n**v2.5 关键变化（ADR-002）**: 阶段 2–4 不再直接把每个单元写成独立的最终 Skill 目录，而是产出一份 **Capability Bundle**（`books/<slug>/.cangjie/capabilities/verified.yaml` + `cards/*.md`）。single 与 pack 都从这同一份 Bundle 由 `scripts/cangjie.py compile` 确定性编译，两者引用同一组稳定 `capability_id`。旧的 one-to-one 输出仍受支持（legacy-pack，见 `docs/migrations/2026-08-25-v2.0-to-v2.1.md`）。\n\n## 何时调用此 skill\n\n用户说类似:\n- \"帮我拆《穷查理宝典》\"\n- \"把毛选蒸馏成 skill\"\n- \"把这个 B 站视频/播客/课程蒸馏成 skill\"\n- \"distill this book into skills: <path>\"\n- \"我想把这本书的方法论做成可用的 skill\"\n\n## 输入要求\n\n在开始前**必须**从用户处确认:\n\n> **脚本依赖**: 确定性脚本(`scripts/`)需要 Python 3.10+ 与 PyYAML(`python3 -m pip install pyyaml`)。缺 PyYAML 时先运行 `python3 scripts/cangjie.py doctor` 自检,它会给出安装指引。\n1. **内容文本来源**: PDF / EPUB / TXT / 字幕文件 / 转写稿路径, 或可访问的纯文本。**不要**在没有文本的情况下\"凭记忆\"蒸馏 — 宁可停下来问用户要。(视频/播客建议先用 video-downloader 类工具拿到转写文本)\n2. **内容元信息**: 书籍是\"书名 + 作者 + 出版年\"; 视频/播客/课程是\"标题 + 作者(UP 主/主播/讲者) + 发布时间\"。用于目录命名和审计。\n3. **使用目的**（决定输出模式推荐）: 学习/查阅这本书 → 倾向 single；接入日常工作流、跨书组合 → 倾向 pack。不确定时按 single-first 原则先推荐 single。\n4. **是否首次试点**: 如果用户是第一次用 cangjie-skill,建议先蒸馏 1 份内容验证流程再批量。\n\n**非书籍内容的字段映射**: 章节类字段对视频填时间戳或分 P,对播客填集数,对课程填讲次 — 保证可追溯即可。\n\n## 输出结构\n\n```\nbooks/<book-slug>/\n├── PIPELINE_STATE.md          # 流水线状态: 当前阶段 + 进度 (断点续跑用)\n├── BOOK_OVERVIEW.md           # 阶段 0 产出: 主旨/骨架/术语/批判\n├── verified.md                # 阶段 1.5 产出: 通过三重验证的单元 + 判定理由\n├── coverage-audit.md          # 原书关键任务 → 候选 → 判定 → 实际交付去向\n├── references.md              # 有依据但不执行的参考内容及交付映射\n├── needs-review.md            # 来源/条件/测试缺口；不编译为 active 能力\n├── GLOSSARY.md                # 阶段 3 产出: 全书共享术语词典\n├── DIGEST.md                  # 阶段 5 产出: 面向读者的精华长文\n├── candidates/                # 阶段 1 产出: 原始候选池 (审计用)\n├── rejected/                  # 阶段 1.5 淘汰的单元 + 原因 (审计用)\n└── .cangjie/                  # v2.5 侧车层（编译事实源 + 运行记录）\n    ├── capabilities/\n    │   ├── verified.yaml      # Capability Bundle（唯一编译事实源, capability-bundle.schema.json）\n    │   ├── cards/<slug>.md    # RIA 能力卡（R/I/A1/A2/E/B, 阶段 2 产出）\n    │   ├── resources/         # 能力显式声明的 UTF-8 脚本、CSV/JSON/Markdown 模板（可选）\n    │   ├── destinations.json  # 晋级/路由去向映射（阶段 1.6 产出）\n    │   └── book/{overview.md,glossary.md}\n    ├── runs/<run-id>/         # 每次编译/更新的决策报告与校验日志\n    └── snapshots/             # 发布前快照（rollback 用）\n```\n\n最终交付物由 `scripts/cangjie.py compile` 从 Bundle 编译（--output single 得到 1 个入口 + 能力卡；--output pack 得到 1 个来源路由入口 + 少量晋级 Skill）。\n\n## 执行流程 (严格按顺序)\n\n**断点续跑**: 开始前先检查 `books/<slug>/PIPELINE_STATE.md` 是否存在。存在则读取并从记录的阶段续跑,不要从头重来。每完成一个阶段,更新该文件。\n\n### 阶段 0 — 整书理解\n\n1. 读取用户提供的书本文本。大文件分块阅读。\n2. 执行 `methodology/01-stage0-adler.md` 中的 Adler 四步 (结构 / 解释 / 批判 / 应用)。\n3. 按 `templates/BOOK_OVERVIEW.md.template` 填充,写入 `books/<slug>/BOOK_OVERVIEW.md`。\n4. 把产出展示给用户确认:\"骨架我理解对了吗?有没有你希望重点突出的方向?\" 得到确认再进入阶段 1。\n\n### 阶段 1 — 5 个 sub-agent 并行提取\n\n**并行** spawn 5 个 Task sub-agents(使用 Agent 工具,一次调用中发起 5 个):\n\n| sub-agent | 读取的 prompt | 上下文策略 | 产出 |\n|---|---|---|---|\n| 框架提取器 | `extractors/framework-extractor.md` | **全量扫描**（兼顾跨章节与单处完整机制） | 决策框架 / 思维模型 / 流程 / 排障 |\n| 原则提取器 | `extractors/principle-extractor.md` | **全量扫描**（含公式、表格、脚注） | 原则 / 清单 / 规则 / 计算口径 |\n| 案例提取器 | `extractors/case-extractor.md` | 检索式取块（局部命中型） | 书中实例、转述案例、例题，标明类型 |\n| 反例提取器 | `extractors/counter-example-extractor.md` | 检索式取块（局部命中型） | 书中警告的失败模式 |\n| 术语提取器 | `extractors/glossary-extractor.md` | 检索式取块 + 脚本预筛 | 关键概念词典 |\n\n每个 sub-agent 独立判断、独立输出到 `books/<slug>/candidates/<type>.md`。\n\n- **长文本**: 超出单个 sub-agent 上下文的内容,按 `methodology/02-stage1-parallel-extract.md` 的分块策略处理；已建立内容索引（`.cangjie/index/`）时,检索式 extractor 按索引取相关块。\n- **覆盖率硬门**: 同时对照全量扫描候选和阶段 0 的原书关键任务清单，不只检查旧版通过项。重要任务须有候选及明确去向；有未解释遗漏时补读/退回全量扫描，不虚报零遗漏。\n- **降级方案**: 当前环境不支持并行 sub-agent 时,用同样 5 个 extractor prompt **串行**执行,产出格式不变。\n\n### 阶段 1.5 — 三重验证筛选（知识验证）\n\n读取 `methodology/03-stage1.5-triple-verify.md`,对每个候选单元执行:\n\n- **V1 来源充分性**: 可定位原文足以支持限定范围内的做法吗？完整机制在一处讲透也可通过。\n- **V2 可执行性**: 用合法的新输入能完成任务并核验结果吗？不强求跨领域外推。\n- **V3 任务增益**: 能减少遗漏、统一口径或稳定交付吗？不要求作者独创。\n\n按 `verified / reference / needs_review / rejected` 分流，记录依据及缺口；参考内容须映射到实际交付的 overview/glossary，不是所有未通过项都淘汰。更新 `coverage-audit.md`。\n\n**用户轻确认** ★: 展示可执行候选、参考、待核查、淘汰四类及重要缺口，再进入阶段 1.6；确认不能替代来源验证。\n\n### 阶段 1.6 — 独立 Skill 晋级门（产品化验证）\n\n读取 `methodology/03b-stage1.6-promotion-gate.md`。知识验证通过 ≠ 值得成为独立 Skill。对每个单元评审五条判据（独立意图/独立契约/独立运行/独立复用/独立评测,前 3 条必须通过,后 2 条至少 1 条),把去向写入 Bundle 的 `promotion.destination`（promoted / router）。未晋级单元**不淘汰**,保留为来源路由入口内的能力卡。可发现入口软预算默认 8（含 1 个来源路由入口）。\n\n### 阶段 2 — RIA++ 构造能力卡\n\n对每个通过的单元,按 `methodology/04-stage2-ria-plus.md` 构造 R / I / A1 / A2 / E / B 六段能力卡:\n\n- 卡片正文写入 `books/<slug>/.cangjie/capabilities/cards/<slug>.md`（**不带 frontmatter**,frontmatter 数据记入 Bundle）;\n- 同时在 `verified.yaml` 登记该能力: 稳定 `capability_id`、intents、keywords、one_liner、importance（附依据）、`frontmatter.description`（A2 浓缩版）。\n- A1 区分原书案例与明确标记的合成演练；E 明确输入、输出、分支和完成标准。必要时通过 `resources` 显式声明配套文本资源，见阶段 2 说明。\n\n### 阶段 3 — Zettelkasten 链接\n\n按 `methodology/05-stage3-zettelkasten.md`:\n1. 找出能力之间的引用关系,写入 Bundle 中各能力的 `also_read`,并回填 A2 的\"与相邻能力的区分\"\n2. 把 `candidates/glossary.md` 整理成 `books/<slug>/GLOSSARY.md`,并复制到 `.cangjie/capabilities/book/glossary.md`\n3. INDEX/路由表由编译器从 Bundle 生成,不再手写\n4. 把 `references.md` 中需保留的内容并入 Bundle 的 `book/overview.md` 或 `book/glossary.md`，在覆盖审计登记实际路径；不把待核查内容伪装为可执行方法\n\n### 阶段 4 — 压力测试 (darwin 兼容)\n\n按 `methodology/06-stage4-pressure-test.md`，晋级能力测触发，router 能力测可达；**两类都要实际完成代表任务并核对输出**，不能用“会调用”替代“做得对”。缺失输出计入评测分母，未完成不得声明通过。未过的回炉重做阶段 2。\n\n### 阶段 5 — 编译与交付\n\n按 `methodology/07-stage5-deliver.md`:\n1. 生成 `books/<slug>/DIGEST.md` — 面向读者的精华长文\n2. 运行 `python3 scripts/cangjie.py compile --bundle books/<slug>/.cangjie/capabilities --out <目标目录> --output auto`,把决策报告展示给用户轻确认（按推荐 / 改 single / 改 pack）\n3. 询问用户安装位置,把编译产物复制或 symlink 过去\n4. 告知用户: \"已完成,可一键喂给 darwin-skill 自动进化\"\n\n## 质量红线 (违反则阻止输出)\n\n1. 每个能力必须通过**全部**三重验证\n2. 每张能力卡必须有完整的 R / I / A1 / A2 / E / B 六段；A1 无原书案例时如实标注，合成演练不冒充书中事实\n3. 原文引用 ≤150 字/段 (英文 ≤100 词/段)\n4. 每个 active 能力在 `destinations.json` 中恰好一个去向（promoted_to 或 served_by）;未晋级能力必须可经来源路由入口到达\n5. 晋级 Skill 的 `description` 必须明确 trigger 条件,并与来源路由入口互有近邻负例\n6. 编译产物必须通过 `scripts/validate_skill_pack.py`（格式/相对引用/frontmatter 100%）\n7. 生成目录只读:检测到本地手改时不得静默覆盖（编译器强制三选一）\n8. 关键任务覆盖有可追溯去向；实际输出评测与来源核查分别记录。存在重要缺口只能交付明确标注范围的草稿，不能宣称完整通过\n\n## 与 nuwa-skill / darwin-skill 的生态定位\n\n- **nuwa-skill**: 蒸馏人 (思维方式 / 表达 DNA)\n- **cangjie-skill** (本 skill): 蒸馏书 (方法论 / 框架 / 原则)\n- **darwin-skill**: 进化任意 skill\n\n三者咬合: 本 skill 输出的评测用例遵循 darwin-skill 格式,以便产出的 skill 可直接接入 darwin 做自动进化。\n\n## 调用惯例\n\n- **永远先试点 1 本** — 除非用户明确说\"批量\"\n- **阶段之间主动汇报进度** — 不要静默跑完再 dump 结果\n- **不凭记忆拆书** — 没文本就停下来问\n- **保留审计轨迹** — candidates/ 和 rejected/ 都要留\n- **随时可续跑** — 每完成一个阶段就更新 PIPELINE_STATE.md,中断后从状态文件恢复\n- **输出策略持久化** — update/repair 默认沿用原输出模式,不因新增材料静默改变产物形态\n",
+      "bodyMd": "# cangjie-skill — 把一本书蒸馏成一组可执行 skills 的元 skill\n\n## 使命\n\n把一本书里沉淀的方法论,拆解成**原子化、可被 agent 在真实场景下调用**的能力,并按用户目的编译成合适数量的 skill,让读者真正用起来。\n\n> **术语约定**: 本文档及 `methodology/`、`extractors/` 中所有的\"书\",泛指一切被蒸馏的长内容 — 书籍、长视频转写、播客文字稿、课程、访谈、长文、资料集。\n\n**边界**:\n- ✅ 做: 方法论 / 决策框架 / 操作流程 / 计算规则 / 排障 / 清单 / 原则的蒸馏，概念体系作为参考支撑\n- ❌ 不做: 书摘 / 读后感 / 作者人设角色扮演 (后者请用 nuwa-skill)\n\n## 核心方法论: RIA-TV++（v2.5 Bundle 版）\n\n一个五阶段 + 并行提取 + 三重验证 + 晋级门 + darwin 兼容测试的流水线。详见 `methodology/00-overview.md`。\n\n```\n阶段 0:   Adler 整书理解        → BOOK_OVERVIEW.md\n阶段 1:   5 个 agent 并行提取    → 候选方法论单元池\n阶段 1.5: 三重验证筛选（知识验证） → 通过的单元 (用户轻确认)\n阶段 1.6: 独立 Skill 晋级门（产品化验证）→ promoted / router 去向\n阶段 2:   RIA++ 构造能力卡       → .cangjie/capabilities/cards/<slug>.md\n阶段 3:   Zettelkasten 链接      → verified.yaml 的 also_read + GLOSSARY\n阶段 4:   压力测试 (darwin 兼容)  → 评测用例 + 回炉淘汰\n阶段 5:   编译与交付             → cangjie.py compile（single/pack）+ DIGEST.md + 安装\n```\n\n**v2.5 关键变化（ADR-002）**: 阶段 2–4 不再直接把每个单元写成独立的最终 Skill 目录，而是产出一份 **Capability Bundle**（`books/<slug>/.cangjie/capabilities/verified.yaml` + `cards/*.md`）。single 与 pack 都从这同一份 Bundle 由 `scripts/cangjie.py compile` 确定性编译，两者引用同一组稳定 `capability_id`。旧的 one-to-one 输出仍受支持（legacy-pack，见 `docs/migrations/2026-08-25-v2.0-to-v2.1.md`）。\n\n## 何时调用此 skill\n\n用户说类似:\n- \"帮我拆《穷查理宝典》\"\n- \"把毛选蒸馏成 skill\"\n- \"把这个 B 站视频/播客/课程蒸馏成 skill\"\n- \"distill this book into skills: <path>\"\n- \"我想把这本书的方法论做成可用的 skill\"\n\n## 输入要求\n\n在开始前**必须**从用户处确认:\n\n> **脚本依赖**: 确定性脚本(`scripts/`)需要 Python 3.10+ 与 PyYAML(`python3 -m pip install pyyaml`)。缺 PyYAML 时先运行 `python3 scripts/cangjie.py doctor` 自检,它会给出安装指引。\n1. **内容文本来源**: PDF / EPUB / TXT / 字幕文件 / 转写稿路径, 或可访问的纯文本。**不要**在没有文本的情况下\"凭记忆\"蒸馏 — 宁可停下来问用户要。(视频/播客建议先用 video-downloader 类工具拿到转写文本)\n2. **内容元信息**: 书籍是\"书名 + 作者 + 出版年\"; 视频/播客/课程是\"标题 + 作者(UP 主/主播/讲者) + 发布时间\"。用于目录命名和审计。\n3. **使用目的**（决定输出模式推荐）: 学习/查阅这本书 → 倾向 single；接入日常工作流、跨书组合 → 倾向 pack。不确定时按 single-first 原则先推荐 single。\n4. **是否首次试点**: 如果用户是第一次用 cangjie-skill,建议先蒸馏 1 份内容验证流程再批量。\n\n**非书籍内容的字段映射**: 章节类字段对视频填时间戳或分 P,对播客填集数,对课程填讲次 — 保证可追溯即可。\n\n## 输出结构\n\n```\nbooks/<book-slug>/\n├── PIPELINE_STATE.md          # 流水线状态: 当前阶段 + 进度 (断点续跑用)\n├── BOOK_OVERVIEW.md           # 阶段 0 产出: 主旨/骨架/术语/批判\n├── verified.md                # 阶段 1.5 产出: 通过三重验证的单元 + 判定理由\n├── coverage-audit.md          # 原书关键任务 → 候选 → 判定 → 实际交付去向\n├── references.md              # 有依据但不执行的参考内容及交付映射\n├── needs-review.md            # 来源/条件/测试缺口；不编译为 active 能力\n├── GLOSSARY.md                # 阶段 3 产出: 全书共享术语词典\n├── DIGEST.md                  # 阶段 5 产出: 面向读者的精华长文\n├── candidates/                # 阶段 1 产出: 原始候选池 (审计用)\n├── rejected/                  # 阶段 1.5 淘汰的单元 + 原因 (审计用)\n└── .cangjie/                  # v2.5 侧车层（编译事实源 + 运行记录）\n    ├── capabilities/\n    │   ├── verified.yaml      # Capability Bundle（唯一编译事实源, capability-bundle.schema.json）\n    │   ├── cards/<slug>.md    # RIA 能力卡（R/I/A1/A2/E/B, 阶段 2 产出）\n    │   ├── resources/         # 能力显式声明的 UTF-8 脚本、CSV/JSON/Markdown 模板（可选）\n    │   ├── destinations.json  # 晋级/路由去向映射（阶段 1.6 产出）\n    │   └── book/{overview.md,glossary.md}\n    ├── runs/<run-id>/         # 每次编译/更新的决策报告与校验日志\n    └── snapshots/             # 发布前快照（rollback 用）\n```\n\n最终交付物由 `scripts/cangjie.py compile` 从 Bundle 编译（--output single 得到 1 个入口 + 能力卡；--output pack 得到 1 个来源路由入口 + 少量晋级 Skill）。\n\n## 执行流程 (严格按顺序)\n\n**断点续跑**: 开始前先检查 `books/<slug>/PIPELINE_STATE.md` 是否存在。存在则读取并从记录的阶段续跑,不要从头重来。每完成一个阶段,更新该文件。\n\n### 阶段 0 — 整书理解\n\n1. 读取用户提供的书本文本。大文件分块阅读。\n2. 执行 `methodology/01-stage0-adler.md` 中的 Adler 四步 (结构 / 解释 / 批判 / 应用)。\n3. 按 `templates/BOOK_OVERVIEW.md.template` 填充,写入 `books/<slug>/BOOK_OVERVIEW.md`。\n4. 把产出展示给用户确认:\"骨架我理解对了吗?有没有你希望重点突出的方向?\" 得到确认再进入阶段 1。\n\n### 阶段 1 — 5 个 sub-agent 并行提取\n\n**并行** spawn 5 个 Task sub-agents(使用 Agent 工具,一次调用中发起 5 个):\n\n| sub-agent | 读取的 prompt | 上下文策略 | 产出 |\n|---|---|---|---|\n| 框架提取器 | `extractors/framework-extractor.md` | **全量扫描**（兼顾跨章节与单处完整机制） | 决策框架 / 思维模型 / 流程 / 排障 |\n| 原则提取器 | `extractors/principle-extractor.md` | **全量扫描**（含公式、表格、脚注） | 原则 / 清单 / 规则 / 计算口径 |\n| 案例提取器 | `extractors/case-extractor.md` | 检索式取块（局部命中型） | 书中实例、转述案例、例题，标明类型 |\n| 反例提取器 | `extractors/counter-example-extractor.md` | 检索式取块（局部命中型） | 书中警告的失败模式 |\n| 术语提取器 | `extractors/glossary-extractor.md` | 检索式取块 + 脚本预筛 | 关键概念词典 |\n\n每个 sub-agent 独立判断、独立输出到 `books/<slug>/candidates/<type>.md`。\n\n- **长文本**: 超出单个 sub-agent 上下文的内容,按 `methodology/02-stage1-parallel-extract.md` 的分块策略处理；已建立内容索引（`.cangjie/index/`）时,检索式 extractor 按索引取相关块。\n- **覆盖率硬门**: 同时对照全量扫描候选和阶段 0 的原书关键任务清单，不只检查旧版通过项。重要任务须有候选及明确去向；有未解释遗漏时补读/退回全量扫描，不虚报零遗漏。\n- **降级方案**: 当前环境不支持并行 sub-agent 时,用同样 5 个 extractor prompt **串行**执行,产出格式不变。\n\n### 阶段 1.5 — 三重验证筛选（知识验证）\n\n读取 `methodology/03-stage1.5-triple-verify.md`,对每个候选单元执行:\n\n- **V1 来源充分性**: 可定位原文足以支持限定范围内的做法吗？完整机制在一处讲透也可通过。\n- **V2 可执行性**: 用合法的新输入能完成任务并核验结果吗？不强求跨领域外推。\n- **V3 任务增益**: 能减少遗漏、统一口径或稳定交付吗？不要求作者独创。\n\n按 `verified / reference / needs_review / rejected` 分流，记录依据及缺口；参考内容须映射到实际交付的 overview/glossary，不是所有未通过项都淘汰。更新 `coverage-audit.md`。\n\n**用户轻确认** ★: 展示可执行候选、参考、待核查、淘汰四类及重要缺口，再进入阶段 1.6；确认不能替代来源验证。\n\n### 阶段 1.6 — 独立 Skill 晋级门（产品化验证）\n\n读取 `methodology/03b-stage1.6-promotion-gate.md`。知识验证通过 ≠ 值得成为独立 Skill。对每个单元评审五条判据（独立意图/独立契约/独立运行/独立复用/独立评测,前 3 条必须通过,后 2 条至少 1 条),把去向写入 Bundle 的 `promotion.destination`（promoted / router）。未晋级单元**不淘汰**,保留为来源路由入口内的能力卡。可发现入口软预算默认 8（含 1 个来源路由入口）。\n\n### 阶段 2 — RIA++ 构造能力卡\n\n对每个通过的单元,按 `methodology/04-stage2-ria-plus.md` 构造 R / I / A1 / A2 / E / B 六段能力卡:\n\n- 卡片正文写入 `books/<slug>/.cangjie/capabilities/cards/<slug>.md`（**不带 frontmatter**,frontmatter 数据记入 Bundle）;\n- 同时在 `verified.yaml` 登记该能力: 稳定 `capability_id`、intents、keywords、one_liner、importance（附依据）、`frontmatter.description`（A2 浓缩版）。\n- A1 区分原书案例与明确标记的合成演练；E 明确输入、输出、分支和完成标准。必要时通过 `resources` 显式声明配套文本资源，见阶段 2 说明。\n\n### 阶段 3 — Zettelkasten 链接\n\n按 `methodology/05-stage3-zettelkasten.md`:\n1. 找出能力之间的引用关系,写入 Bundle 中各能力的 `also_read`,并回填 A2 的\"与相邻能力的区分\"\n2. 把 `candidates/glossary.md` 整理成 `books/<slug>/GLOSSARY.md`,并复制到 `.cangjie/capabilities/book/glossary.md`\n3. INDEX/路由表由编译器从 Bundle 生成,不再手写\n4. 把 `references.md` 中需保留的内容并入 Bundle 的 `book/overview.md` 或 `book/glossary.md`，在覆盖审计登记实际路径；不把待核查内容伪装为可执行方法\n\n### 阶段 4 — 压力测试 (darwin 兼容)\n\n按 `methodology/06-stage4-pressure-test.md`，晋级能力测触发，router 能力测可达；**两类都要实际完成代表任务并核对输出**，不能用“会调用”替代“做得对”。缺失输出计入评测分母，未完成不得声明通过。未过的回炉重做阶段 2。\n\n### 阶段 5 — 编译与交付\n\n按 `methodology/07-stage5-deliver.md`:\n1. 生成 `books/<slug>/DIGEST.md` — 面向读者的精华长文\n2. 运行 `python3 scripts/cangjie.py compile --bundle books/<slug>/.cangjie/capabilities --out <目标目录> --output auto`,把决策报告展示给用户轻确认（按推荐 / 改 single / 改 pack）\n3. 询问用户安装位置,把编译产物复制或 symlink 过去\n4. 告知用户: \"已完成,可一键喂给 darwin-skill 自动进化\"\n\n## 质量红线 (违反则阻止输出)\n\n1. 每个能力必须通过**全部**三重验证\n2. 每张能力卡必须有完整的 R / I / A1 / A2 / E / B 六段；A1 无原书案例时如实标注，合成演练不冒充书中事实\n3. 原文引用 ≤150 字/段 (英文 ≤100 词/段)\n4. 每个 active 能力在 `destinations.json` 中恰好一个去向（promoted_to 或 served_by）;未晋级能力必须可经来源路由入口到达\n5. 晋级 Skill 的 `description` 必须明确 trigger 条件,并与来源路由入口互有近邻负例\n6. 编译产物必须通过 `scripts/validate_skill_pack.py`（格式/相对引用/frontmatter 100%）\n7. 生成目录只读:检测到本地手改时不得静默覆盖（编译器强制三选一）\n8. 关键任务覆盖有可追溯去向；实际输出评测与来源核查分别记录。存在重要缺口只能交付明确标注范围的草稿，不能宣称完整通过\n\n## 与 nuwa-skill / darwin-skill 的生态定位\n\n- **nuwa-skill**: 蒸馏人 (思维方式 / 表达 DNA)\n- **cangjie-skill** (本 skill): 蒸馏书 (方法论 / 框架 / 原则)\n- **darwin-skill**: 进化任意 skill\n\n三者咬合: 本 skill 输出的评测用例遵循 darwin-skill 格式,以便产出的 skill 可直接接入 darwin 做自动进化。\n\n## 调用惯例\n\n- **永远先试点 1 本** — 除非用户明确说\"批量\"\n- **阶段之间主动汇报进度** — 不要静默跑完再 dump 结果\n- **不凭记忆拆书** — 没文本就停下来问\n- **保留审计轨迹** — candidates/ 和 rejected/ 都要留\n- **随时可续跑** — 每完成一个阶段就更新 PIPELINE_STATE.md,中断后从状态文件恢复\n- **输出策略持久化** — update/repair 默认沿用原输出模式,不因新增材料静默改变产物形态\n"
+    },
+    {
+      "slug": "acceptance",
+      "name": "acceptance",
+      "dir": "books/naval-almanack-skill/acceptance",
+      "path": "books/naval-almanack-skill/acceptance/SKILL.md",
+      "desc": "当用户困在无法改变的处境（坏关系/讨厌的同事/不如意的事）里反复内耗、问「该忍还是该走」时调用。 核心理念: 面对任何情境只有三选项——改变它/接受它/离开它; 三者都不做是痛苦之源; 接受=快速适应, 用「积极方面是什么」重释训练。 不适用于: 可以改变的处境(应先改变), 以及涉及违法/人身安全的场景。 Triggers: 接受/忍/内耗/放不下/该走该留/acceptance/let go/change-accept-leave",
+      "descZh": "",
+      "triggers": [
+        "可以改变的处境(应先改变)",
+        "以及涉及违法/人身安全的场景"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "go"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/kangarooking/cangjie-skill.git",
+        "copy": "cp -r books/naval-almanack-skill/acceptance ~/.claude/skills/acceptance",
+        "raw": "https://raw.githubusercontent.com/kangarooking/cangjie-skill/a28de55ba881b9928956a55048f743f7a9e3b23e/books/naval-almanack-skill/acceptance/SKILL.md",
+        "saveAs": "~/.claude/skills/acceptance/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:9c9d32387e0b0df1a978741df8145d7fbb637c06449c87e74729460156220d20",
+      "bytes": 5815,
+      "wordCount": 249,
+      "repoLicense": "MIT",
+      "commit": "a28de55ba881b9928956a55048f743f7a9e3b23e",
+      "branch": "main",
+      "body": "---\nname: acceptance\ndescription: |\n  当用户困在无法改变的处境（坏关系/讨厌的同事/不如意的事）里反复内耗、问「该忍还是该走」时调用。\n  核心理念: 面对任何情境只有三选项——改变它/接受它/离开它; 三者都不做是痛苦之源; 接受=快速适应, 用「积极方面是什么」重释训练。\n  不适用于: 可以改变的处境(应先改变), 以及涉及违法/人身安全的场景。\n  Triggers: 接受/忍/内耗/放不下/该走该留/acceptance/let go/change-accept-leave\nsource_book: 《纳瓦尔宝典：财富与幸福指南》 纳瓦尔·拉维坎特\nsource_chapter: 第二章·幸福 / 第一节 学习幸福 / 在接受中寻找幸福\ntags: [acceptance, happiness, decision, resilience]\nrelated_skills:\n  - slug: happiness-skill\n    relation: composes-with\n  - slug: identity-work\n    relation: composes-with\n  - slug: decision-heuristics\n    relation: contrasts-with\n---\n\n# 接受：改变 / 接受 / 离开\n\n## R — 原文 (Reading)\n\n> 在生活中任何情况下，总会有三种选择：你可以改变它，你可以接受它，或者你可以离开它。……一个不好的选择是，干坐着，希望你可以改变它，但你却没有改变它；希望你可以离开它，但你却没有离开它，也没接受它。这种挣扎或厌恶是我们大多数痛苦的原因。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第二章·幸福\n\n## I — 方法论骨架 (Interpretation)\n\n面对任何处境只有三个合法选项：**改变、接受、离开**。选择的标准很明确——\n能改变就改变；不能改变但能走就离开；走不了（或选择留下）就真正接受。\n最差的状态是三者都不做：既不改变、也不离开、也没接受，只是干坐着希望事情不同——这是大多数慢性痛苦的结构。\n接受不是认命，而是主动选择 + 快速适应：「你能更快接受事实，你就能更快适应它」。\n可训练的入口是**正面重释**：每件小烦恼发生，立刻问「这件事积极的方面是什么？」，\n从需要几秒钟练到瞬时完成（迟到可以看鸟、100 张照片正好挑 5 张最喜欢的）。\n终极接受是拥抱死亡——承认必死，才停止为想象中的明天牺牲今天。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 100 张照片挑 5 张\n- **问题**: 有人发来 100 多张照片，第一反应是恼火\n- **方法论的使用**: 立刻问「好的方面是什么？」\n- **结论**: 可以按自己的眼光挑 5 张最喜欢的\n- **结果**: 练习一年后，从花几秒找积极面到几乎瞬时完成\n\n### 案例 2: 迟到看鸟\n- **问题**: 开会要迟到，身体马上消极反应\n- **方法论的使用**: 「我开会要迟到了。但对我有益是什么？我可以放松一下，看一会儿鸟。」\n- **结论**: 几乎总是有积极的东西\n- **结果**: 接受练习变成第二天性\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 反复抱怨同一件事却不动手（工作/关系/环境）\n2. 问「我该忍还是该走」\n3. 对不可控事件愤怒/内耗（天气/他人行为/市场）\n4. 放不下过去：「要是当时……就好了」\n\n### 语言信号\n\n- \"我该接受还是改变/离开\"\n- \"我就是放不下/老想这件事\"\n- \"这件事我控制不了怎么办\"\n- \"accept it or leave / let it go / can't change it\"\n\n### 与相邻 skill 的区分\n\n- 与 `decision-heuristics` 的区别: 决策启发式处理「能选择」的重大决定；本 skill 处理「不能改变」的处境\n- 与 `identity-work` 的区别: 接受需要放下自我；身份工作负责拆掉那个不肯面对现实的自我\n\n## E — 可执行步骤 (Execution)\n\n1. **跑三选项筛查**\n   - 完成标准: 对处境分别回答「能改变吗？能离开吗？能接受吗？」，至少圈定 1 个合法选项\n   - 判停条件: 若三选项都被排除（不能改/不能走/不愿接受），明确警告「这是自我折磨结构」，回到步骤 1 重新审视选项\n\n2. **若选择「改变」**\n   - 完成标准: 写出改变计划与截止日期；到期没行动则重跑三选项\n\n3. **若选择「接受」**\n   - 完成标准: 列出该处境的 3 个积极方面；未来 7 天每次消极反应触发时做「积极方面是什么」练习\n\n4. **若选择「离开」**\n   - 完成标准: 制定退出时间表（含财务/关系缓冲），设定最后期限\n\n5. **终极校准：拥抱死亡**\n   - 完成标准: 写下「如果我知道自己只剩一年，这件事还重要吗」，据此调整接受/改变的优先级\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 可以低成本改变的处境（先改变，别用「接受」逃避行动）\n- 涉及违法/人身安全/家暴——此时应离开而不是接受\n\n### 作者在书中警告的失败模式\n\n- 干坐着希望改变: 「这种挣扎或厌恶是我们大多数痛苦的原因」\n- 用接受伪装拖延: 接受是主动选择，不是「算了」的被动放弃\n\n### 作者的盲点 / 时代局限\n\n- 「任何时候都可以接受」忽视物质匮乏与创伤的真实痛苦强度\n- 正面重释可能滑向 toxic positivity（本书以「几乎总是有积极面」表述，保留限度）\n\n### 容易混淆的邻近方法论\n\n- `decision-heuristics`: 接受是「不改变」的决策，但出发点是处境不可控\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `happiness-skill`、`identity-work`（放下自我才能接受）\n- contrasts-with: `decision-heuristics`（可改变 vs 不可改变）\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v11)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n",
+      "bodyMd": "# 接受：改变 / 接受 / 离开\n\n## R — 原文 (Reading)\n\n> 在生活中任何情况下，总会有三种选择：你可以改变它，你可以接受它，或者你可以离开它。……一个不好的选择是，干坐着，希望你可以改变它，但你却没有改变它；希望你可以离开它，但你却没有离开它，也没接受它。这种挣扎或厌恶是我们大多数痛苦的原因。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第二章·幸福\n\n## I — 方法论骨架 (Interpretation)\n\n面对任何处境只有三个合法选项：**改变、接受、离开**。选择的标准很明确——\n能改变就改变；不能改变但能走就离开；走不了（或选择留下）就真正接受。\n最差的状态是三者都不做：既不改变、也不离开、也没接受，只是干坐着希望事情不同——这是大多数慢性痛苦的结构。\n接受不是认命，而是主动选择 + 快速适应：「你能更快接受事实，你就能更快适应它」。\n可训练的入口是**正面重释**：每件小烦恼发生，立刻问「这件事积极的方面是什么？」，\n从需要几秒钟练到瞬时完成（迟到可以看鸟、100 张照片正好挑 5 张最喜欢的）。\n终极接受是拥抱死亡——承认必死，才停止为想象中的明天牺牲今天。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 100 张照片挑 5 张\n- **问题**: 有人发来 100 多张照片，第一反应是恼火\n- **方法论的使用**: 立刻问「好的方面是什么？」\n- **结论**: 可以按自己的眼光挑 5 张最喜欢的\n- **结果**: 练习一年后，从花几秒找积极面到几乎瞬时完成\n\n### 案例 2: 迟到看鸟\n- **问题**: 开会要迟到，身体马上消极反应\n- **方法论的使用**: 「我开会要迟到了。但对我有益是什么？我可以放松一下，看一会儿鸟。」\n- **结论**: 几乎总是有积极的东西\n- **结果**: 接受练习变成第二天性\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 反复抱怨同一件事却不动手（工作/关系/环境）\n2. 问「我该忍还是该走」\n3. 对不可控事件愤怒/内耗（天气/他人行为/市场）\n4. 放不下过去：「要是当时……就好了」\n\n### 语言信号\n\n- \"我该接受还是改变/离开\"\n- \"我就是放不下/老想这件事\"\n- \"这件事我控制不了怎么办\"\n- \"accept it or leave / let it go / can't change it\"\n\n### 与相邻 skill 的区分\n\n- 与 `decision-heuristics` 的区别: 决策启发式处理「能选择」的重大决定；本 skill 处理「不能改变」的处境\n- 与 `identity-work` 的区别: 接受需要放下自我；身份工作负责拆掉那个不肯面对现实的自我\n\n## E — 可执行步骤 (Execution)\n\n1. **跑三选项筛查**\n   - 完成标准: 对处境分别回答「能改变吗？能离开吗？能接受吗？」，至少圈定 1 个合法选项\n   - 判停条件: 若三选项都被排除（不能改/不能走/不愿接受），明确警告「这是自我折磨结构」，回到步骤 1 重新审视选项\n\n2. **若选择「改变」**\n   - 完成标准: 写出改变计划与截止日期；到期没行动则重跑三选项\n\n3. **若选择「接受」**\n   - 完成标准: 列出该处境的 3 个积极方面；未来 7 天每次消极反应触发时做「积极方面是什么」练习\n\n4. **若选择「离开」**\n   - 完成标准: 制定退出时间表（含财务/关系缓冲），设定最后期限\n\n5. **终极校准：拥抱死亡**\n   - 完成标准: 写下「如果我知道自己只剩一年，这件事还重要吗」，据此调整接受/改变的优先级\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 可以低成本改变的处境（先改变，别用「接受」逃避行动）\n- 涉及违法/人身安全/家暴——此时应离开而不是接受\n\n### 作者在书中警告的失败模式\n\n- 干坐着希望改变: 「这种挣扎或厌恶是我们大多数痛苦的原因」\n- 用接受伪装拖延: 接受是主动选择，不是「算了」的被动放弃\n\n### 作者的盲点 / 时代局限\n\n- 「任何时候都可以接受」忽视物质匮乏与创伤的真实痛苦强度\n- 正面重释可能滑向 toxic positivity（本书以「几乎总是有积极面」表述，保留限度）\n\n### 容易混淆的邻近方法论\n\n- `decision-heuristics`: 接受是「不改变」的决策，但出发点是处境不可控\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `happiness-skill`、`identity-work`（放下自我才能接受）\n- contrasts-with: `decision-heuristics`（可改变 vs 不可改变）\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v11)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n"
+    },
+    {
+      "slug": "game-selection",
+      "name": "game-selection",
+      "dir": "books/naval-almanack-skill/game-selection",
+      "path": "books/naval-almanack-skill/game-selection/SKILL.md",
+      "desc": "当用户困惑「为什么有人攻击我/为什么大家卷来卷去/我怎么不在乎别人眼光/为什么妒忌」时调用。 核心理念: 人生同时存在零和地位游戏、正和财富游戏、单人游戏; 识别你玩的是哪种游戏, 避免地位游戏, 回到内在记分卡。 不适用于: 具体竞争策略制定（如何赢下某个比赛）。 Triggers: 地位/攀比/内卷/妒忌/别人怎么看我/零和/单人游戏/status game/envy",
+      "descZh": "",
+      "triggers": [
+        "具体竞争策略制定（如何赢下某个比赛）"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/kangarooking/cangjie-skill.git",
+        "copy": "cp -r books/naval-almanack-skill/game-selection ~/.claude/skills/game-selection",
+        "raw": "https://raw.githubusercontent.com/kangarooking/cangjie-skill/a28de55ba881b9928956a55048f743f7a9e3b23e/books/naval-almanack-skill/game-selection/SKILL.md",
+        "saveAs": "~/.claude/skills/game-selection/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:929bae136ce3a9fe70416ad2c541c8ae42c96886fc94cf98166d069f91f20f67",
+      "bytes": 5457,
+      "wordCount": 232,
+      "repoLicense": "MIT",
+      "commit": "a28de55ba881b9928956a55048f743f7a9e3b23e",
+      "branch": "main",
+      "body": "---\nname: game-selection\ndescription: |\n  当用户困惑「为什么有人攻击我/为什么大家卷来卷去/我怎么不在乎别人眼光/为什么妒忌」时调用。\n  核心理念: 人生同时存在零和地位游戏、正和财富游戏、单人游戏; 识别你玩的是哪种游戏, 避免地位游戏, 回到内在记分卡。\n  不适用于: 具体竞争策略制定（如何赢下某个比赛）。\n  Triggers: 地位/攀比/内卷/妒忌/别人怎么看我/零和/单人游戏/status game/envy\nsource_book: 《纳瓦尔宝典：财富与幸福指南》 纳瓦尔·拉维坎特\nsource_chapter: 第二章·幸福 / 第一节 学习幸福 / 妒忌是幸福的敌人\ntags: [status, zero-sum, happiness, psychology]\nrelated_skills:\n  - slug: long-term-compounding\n    relation: contrasts-with\n  - slug: happiness-skill\n    relation: composes-with\n---\n\n# 游戏选择：识别地位游戏与单人游戏\n\n## R — 原文 (Reading)\n\n> 财富创造是最近进化出来的正和游戏。地位争夺是古老的零和游戏。那些攻击财富创造的人通常只是在追求地位。……事实上，人生就是一场单人游戏。你是独自一个人来到世界的。也将独自死去。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第一章·财富 / 第二章·幸福\n\n## I — 方法论骨架 (Interpretation)\n\n人在一生中同时被卷入三种游戏，关键是识别自己在玩哪一种：\n① **地位游戏**（零和）——等级排名，赢家必须击倒别人，政治/体育/学术排名属此类；参与它会让人愤怒好斗；\n② **财富游戏**（正和）——把饼做大，人人可赢，是近现代才出现的新游戏；\n③ **单人游戏**（内在）——幸福、平静、自我成长，没有外部进度条和外部验证，所有真正的记分卡都在内在。\n使用方法：被攻击时先问「他在玩什么游戏」（攻击创造财富者的人多在追求地位）；\n被攀比/妒忌困扰时，用巴菲特的内在/外在记分卡测试，并用妒忌消解法——「如果我不愿与他完全交换身份，妒忌就无意义」。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 巴菲特的内在记分卡\n- **问题**: 用外部名声还是内在标准评价自己\n- **方法论的使用**: 问「你想成为名声最差但最好的情人，还是名声最好但最糟糕的情人」\n- **结论**: 所有真正的记分卡是内在的\n- **结果**: 作者转向修炼内在自我\n\n### 案例 2: 妒忌消解实验\n- **问题**: 年轻时妒忌心重\n- **方法论的使用**: 意识到「我不能只选他人生活的某几个片段，要么完全交换身份要么不妒忌」\n- **结论**: 「一旦我意识到这一点，妒忌就会消失，因为我不想成为别人」\n- **结果**: 妒忌不再主导情绪\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 被攻击/被比较：「为什么有人针对我/贬低我」\n2. 内卷倦怠：「大家都这么卷有意义吗」\n3. 妒忌：「看到别人成功我好难受」\n4. 意义校准：「我做这件事到底为了什么」\n\n### 语言信号\n\n- \"别人在玩什么游戏/为什么都针对我\"\n- \"我很妒忌/很在意别人看法\"\n- \"内卷/攀比/面子\"\n- \"status / zero-sum / why do people attack me / envy\"\n\n### 与相邻 skill 的区分\n\n- 与 `long-term-compounding` 的区别: 本 skill 识别博弈结构；复利 skill 处理时间尺度\n- 与 `happiness-skill` 的区别: 本 skill 是博弈分类，幸福 skill 是状态训练\n\n## E — 可执行步骤 (Execution)\n\n1. **识别游戏类型**\n   - 完成标准: 对当前处境回答「这是零和、正和、还是单人游戏？」\n   - 判停条件: 若确认是零和地位游戏且非必要，直接标记「不值得赢」，跳到步骤 3\n\n2. **测试记分卡**\n   - 完成标准: 问自己「如果把外部评价全部移除，这件事我还做吗？」——区分内在/外在动机\n\n3. **跑妒忌消解**\n   - 完成标准: 对每个妒忌对象问「我愿意与他完全交换身份（包括所有反应/家庭/自我形象）吗？」；不愿→放下\n\n4. **回到单人游戏投入**\n   - 完成标准: 把本周至少 1 项行动改为「只为自己的内在标准」执行\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 用户需要在竞争里赢（体育/职场晋升）——此时应给竞争策略而非「退出游戏」\n- 地位游戏无法避免的场合（政治/组织内），本书立场是识别而非硬刚\n\n### 作者在书中警告的失败模式\n\n- 玩地位游戏会让你变成愤怒好斗的人: 「你总是在窝里斗，损人利己」\n- 用外部进度条训练内在能力: 瑜伽/冥想难坚持是因为没有外在价值\n\n### 作者的盲点 / 时代局限\n\n- 「完全不玩地位游戏」在组织生存中并不现实；作者有资本网络作为退路\n- 单人游戏叙事可能滑向回避现实竞争\n\n### 容易混淆的邻近方法论\n\n- `long-term-compounding`: 长期正和游戏 vs 零和地位游戏是两类判据，先分类再选\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- contrasts-with: `long-term-compounding`（正和/零和 vs 长期/短期）\n- composes-with: `happiness-skill`（单人游戏是幸福的地基）\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v09)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n",
+      "bodyMd": "# 游戏选择：识别地位游戏与单人游戏\n\n## R — 原文 (Reading)\n\n> 财富创造是最近进化出来的正和游戏。地位争夺是古老的零和游戏。那些攻击财富创造的人通常只是在追求地位。……事实上，人生就是一场单人游戏。你是独自一个人来到世界的。也将独自死去。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第一章·财富 / 第二章·幸福\n\n## I — 方法论骨架 (Interpretation)\n\n人在一生中同时被卷入三种游戏，关键是识别自己在玩哪一种：\n① **地位游戏**（零和）——等级排名，赢家必须击倒别人，政治/体育/学术排名属此类；参与它会让人愤怒好斗；\n② **财富游戏**（正和）——把饼做大，人人可赢，是近现代才出现的新游戏；\n③ **单人游戏**（内在）——幸福、平静、自我成长，没有外部进度条和外部验证，所有真正的记分卡都在内在。\n使用方法：被攻击时先问「他在玩什么游戏」（攻击创造财富者的人多在追求地位）；\n被攀比/妒忌困扰时，用巴菲特的内在/外在记分卡测试，并用妒忌消解法——「如果我不愿与他完全交换身份，妒忌就无意义」。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 巴菲特的内在记分卡\n- **问题**: 用外部名声还是内在标准评价自己\n- **方法论的使用**: 问「你想成为名声最差但最好的情人，还是名声最好但最糟糕的情人」\n- **结论**: 所有真正的记分卡是内在的\n- **结果**: 作者转向修炼内在自我\n\n### 案例 2: 妒忌消解实验\n- **问题**: 年轻时妒忌心重\n- **方法论的使用**: 意识到「我不能只选他人生活的某几个片段，要么完全交换身份要么不妒忌」\n- **结论**: 「一旦我意识到这一点，妒忌就会消失，因为我不想成为别人」\n- **结果**: 妒忌不再主导情绪\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 被攻击/被比较：「为什么有人针对我/贬低我」\n2. 内卷倦怠：「大家都这么卷有意义吗」\n3. 妒忌：「看到别人成功我好难受」\n4. 意义校准：「我做这件事到底为了什么」\n\n### 语言信号\n\n- \"别人在玩什么游戏/为什么都针对我\"\n- \"我很妒忌/很在意别人看法\"\n- \"内卷/攀比/面子\"\n- \"status / zero-sum / why do people attack me / envy\"\n\n### 与相邻 skill 的区分\n\n- 与 `long-term-compounding` 的区别: 本 skill 识别博弈结构；复利 skill 处理时间尺度\n- 与 `happiness-skill` 的区别: 本 skill 是博弈分类，幸福 skill 是状态训练\n\n## E — 可执行步骤 (Execution)\n\n1. **识别游戏类型**\n   - 完成标准: 对当前处境回答「这是零和、正和、还是单人游戏？」\n   - 判停条件: 若确认是零和地位游戏且非必要，直接标记「不值得赢」，跳到步骤 3\n\n2. **测试记分卡**\n   - 完成标准: 问自己「如果把外部评价全部移除，这件事我还做吗？」——区分内在/外在动机\n\n3. **跑妒忌消解**\n   - 完成标准: 对每个妒忌对象问「我愿意与他完全交换身份（包括所有反应/家庭/自我形象）吗？」；不愿→放下\n\n4. **回到单人游戏投入**\n   - 完成标准: 把本周至少 1 项行动改为「只为自己的内在标准」执行\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 用户需要在竞争里赢（体育/职场晋升）——此时应给竞争策略而非「退出游戏」\n- 地位游戏无法避免的场合（政治/组织内），本书立场是识别而非硬刚\n\n### 作者在书中警告的失败模式\n\n- 玩地位游戏会让你变成愤怒好斗的人: 「你总是在窝里斗，损人利己」\n- 用外部进度条训练内在能力: 瑜伽/冥想难坚持是因为没有外在价值\n\n### 作者的盲点 / 时代局限\n\n- 「完全不玩地位游戏」在组织生存中并不现实；作者有资本网络作为退路\n- 单人游戏叙事可能滑向回避现实竞争\n\n### 容易混淆的邻近方法论\n\n- `long-term-compounding`: 长期正和游戏 vs 零和地位游戏是两类判据，先分类再选\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- contrasts-with: `long-term-compounding`（正和/零和 vs 长期/短期）\n- composes-with: `happiness-skill`（单人游戏是幸福的地基）\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v09)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n"
+    },
+    {
+      "slug": "happiness-skill",
+      "name": "happiness-skill",
+      "dir": "books/naval-almanack-skill/happiness-skill",
+      "path": "books/naval-almanack-skill/happiness-skill/SKILL.md",
+      "desc": "当用户问「怎么才能更幸福/为什么得到了还不满足/怎么减少焦虑」时调用。 核心理念: 幸福是缺憾感清空的默认状态, 是可训练的技能; 欲望是与自己的契约(得到前不快乐), 同时只留一个重大欲望; 活在当下。 不适用于: 临床抑郁等需要专业治疗的场景(本书方法不能替代医疗)。 Triggers: 幸福/不快乐/欲望/焦虑/知足/活在当下/happiness/desire/anxiety",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/kangarooking/cangjie-skill.git",
+        "copy": "cp -r books/naval-almanack-skill/happiness-skill ~/.claude/skills/happiness-skill",
+        "raw": "https://raw.githubusercontent.com/kangarooking/cangjie-skill/a28de55ba881b9928956a55048f743f7a9e3b23e/books/naval-almanack-skill/happiness-skill/SKILL.md",
+        "saveAs": "~/.claude/skills/happiness-skill/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:93d926353ba7d7c0ba0577b24655cbac421a6c3b35f1b613d960719d6c24a785",
+      "bytes": 5334,
+      "wordCount": 236,
+      "repoLicense": "MIT",
+      "commit": "a28de55ba881b9928956a55048f743f7a9e3b23e",
+      "branch": "main",
+      "body": "---\nname: happiness-skill\ndescription: |\n  当用户问「怎么才能更幸福/为什么得到了还不满足/怎么减少焦虑」时调用。\n  核心理念: 幸福是缺憾感清空的默认状态, 是可训练的技能; 欲望是与自己的契约(得到前不快乐), 同时只留一个重大欲望; 活在当下。\n  不适用于: 临床抑郁等需要专业治疗的场景(本书方法不能替代医疗)。\n  Triggers: 幸福/不快乐/欲望/焦虑/知足/活在当下/happiness/desire/anxiety\nsource_book: 《纳瓦尔宝典：财富与幸福指南》 纳瓦尔·拉维坎特\nsource_chapter: 第二章·幸福 / 第一节 学习幸福\ntags: [happiness, desire, mindfulness, skill]\nrelated_skills:\n  - slug: acceptance\n    relation: composes-with\n  - slug: monkey-mind-meditation\n    relation: composes-with\n  - slug: game-selection\n    relation: composes-with\n  - slug: screen-detox\n    relation: composes-with\n---\n\n# 幸福技能\n\n## R — 原文 (Reading)\n\n> 现在，我相信幸福其实是一种默认状态。当你消除生命中的缺憾感时，幸福就在那里。……欲望是你与自身定下的契约，直到你得到你想要的之前，你都不会快乐。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第二章·幸福\n\n## I — 方法论骨架 (Interpretation)\n\n幸福不是要添加的积极情绪，而是**缺憾感清空后自动浮现的默认状态**——像孩子一样沉浸当下。\n因此通往幸福的路线是「减法」：\n① 识别欲望契约——每个欲望都是「得到前不快乐」的合同，一整天签太多份就一整天不快乐；\n② 同时只保留一个重大欲望——给你目标和动力，两个以上就分心；\n③ 活在当下——思维流向未来（妄想）或过去（悔恨）时幸福感最低；\n④ 把幸福当技能训练——冥想、习惯、同伴、接受练习，基线可像肌肉一样逐步提高（作者 2/10→9/10）。\n判断幸福的标准不是快乐感而是平和：一个快乐的人不是一直快乐的人，而是能不失内心平和地诠释事情的人。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 从 2/10 到 9/10\n- **问题**: 十年前自评快乐 2/10–3/10，且不重视快乐\n- **方法论的使用**: 把幸福当最重要的事，用技巧系统培养（冥想/欲望管理/接受/习惯）\n- **结论**: 「幸福是一种技能，是你做出的一种选择」\n- **结果**: 今日 9/10，且作者强调金钱只占其中很小部分\n\n### 案例 2: 欲望是痛苦的轴心\n- **问题**: 想要的东西越来越多，越来越不满足\n- **方法论的使用**: 意识到「我试图在我生活中的任何时候都不拥有多于一个的大欲望」\n- **结论**: 欲望=选择不幸的契约，清醒地选择它\n- **结果**: 欲望从自动发生变成受控选择\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 情绪低谷：「我为什么不快乐」\n2. 欲望失控：「想要的东西永远填不满」\n3. 焦虑反刍：「脑子停不下来，总担心未来/悔恨过去」\n4. 目标达成后空虚：「得到之后反而更空虚」\n\n### 语言信号\n\n- \"怎么才能更幸福/快乐\"\n- \"我总是不满足/焦虑\"\n- \"欲望太多怎么办\"\n- \"how to be happy / why am I unhappy / desires\"\n\n### 与相邻 skill 的区分\n\n- 与 `acceptance` 的区别: 本 skill 是幸福总体框架；接受是其中一种核心技术\n- 与 `monkey-mind-meditation` 的区别: 冥想是工具，本 skill 是目标定义\n\n## E — 可执行步骤 (Execution)\n\n1. **清点欲望契约**\n   - 完成标准: 写下当前所有「在得到前不快乐」的欲望，标出其中 1 个重大欲望，其余降级或删除\n\n2. **检查时间流向**\n   - 完成标准: 记录 1 天里花在未来妄想/过去悔恨/当下体验的时间比例，找出最大漏点\n\n3. **选择一个幸福训练动作**\n   - 完成标准: 从冥想/习惯替换/同伴选择/接受练习中选 1 项，定为每日最小习惯\n   - 判停条件: 若用户有临床抑郁症状（持续 2 周以上低情绪），提示寻求专业帮助并停止本流程\n\n4. **每周复盘幸福基线**\n   - 完成标准: 每周自评 1–10 并记录，确认基线在缓慢上升\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 临床抑郁/焦虑障碍（本 skill 不替代医疗；作者方法建立在无严重心理疾病的前提上）\n- 物质匮乏或安全危机场景（先解决生存，再谈幸福技能）\n\n### 作者在书中警告的失败模式\n\n- 把幸福当积极思维: 「每个积极的想法基本上都包含着一个消极的想法」\n- 追求幸福反失幸福: 「如果我执著于一种感觉……我就是在放弃那种幸福」\n\n### 作者的盲点 / 时代局限\n\n- 「幸福=选择」忽略生物性因素（抑郁/激素/疾病）\n- 幸福可训练的证据是作者个人经验（n=1），不具普遍统计效力\n\n### 容易混淆的邻近方法论\n\n- `acceptance`: 接受是幸福的下游技术\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `acceptance`、`monkey-mind-meditation`、`screen-detox`、`game-selection`\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v10)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n",
+      "bodyMd": "# 幸福技能\n\n## R — 原文 (Reading)\n\n> 现在，我相信幸福其实是一种默认状态。当你消除生命中的缺憾感时，幸福就在那里。……欲望是你与自身定下的契约，直到你得到你想要的之前，你都不会快乐。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第二章·幸福\n\n## I — 方法论骨架 (Interpretation)\n\n幸福不是要添加的积极情绪，而是**缺憾感清空后自动浮现的默认状态**——像孩子一样沉浸当下。\n因此通往幸福的路线是「减法」：\n① 识别欲望契约——每个欲望都是「得到前不快乐」的合同，一整天签太多份就一整天不快乐；\n② 同时只保留一个重大欲望——给你目标和动力，两个以上就分心；\n③ 活在当下——思维流向未来（妄想）或过去（悔恨）时幸福感最低；\n④ 把幸福当技能训练——冥想、习惯、同伴、接受练习，基线可像肌肉一样逐步提高（作者 2/10→9/10）。\n判断幸福的标准不是快乐感而是平和：一个快乐的人不是一直快乐的人，而是能不失内心平和地诠释事情的人。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 从 2/10 到 9/10\n- **问题**: 十年前自评快乐 2/10–3/10，且不重视快乐\n- **方法论的使用**: 把幸福当最重要的事，用技巧系统培养（冥想/欲望管理/接受/习惯）\n- **结论**: 「幸福是一种技能，是你做出的一种选择」\n- **结果**: 今日 9/10，且作者强调金钱只占其中很小部分\n\n### 案例 2: 欲望是痛苦的轴心\n- **问题**: 想要的东西越来越多，越来越不满足\n- **方法论的使用**: 意识到「我试图在我生活中的任何时候都不拥有多于一个的大欲望」\n- **结论**: 欲望=选择不幸的契约，清醒地选择它\n- **结果**: 欲望从自动发生变成受控选择\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 情绪低谷：「我为什么不快乐」\n2. 欲望失控：「想要的东西永远填不满」\n3. 焦虑反刍：「脑子停不下来，总担心未来/悔恨过去」\n4. 目标达成后空虚：「得到之后反而更空虚」\n\n### 语言信号\n\n- \"怎么才能更幸福/快乐\"\n- \"我总是不满足/焦虑\"\n- \"欲望太多怎么办\"\n- \"how to be happy / why am I unhappy / desires\"\n\n### 与相邻 skill 的区分\n\n- 与 `acceptance` 的区别: 本 skill 是幸福总体框架；接受是其中一种核心技术\n- 与 `monkey-mind-meditation` 的区别: 冥想是工具，本 skill 是目标定义\n\n## E — 可执行步骤 (Execution)\n\n1. **清点欲望契约**\n   - 完成标准: 写下当前所有「在得到前不快乐」的欲望，标出其中 1 个重大欲望，其余降级或删除\n\n2. **检查时间流向**\n   - 完成标准: 记录 1 天里花在未来妄想/过去悔恨/当下体验的时间比例，找出最大漏点\n\n3. **选择一个幸福训练动作**\n   - 完成标准: 从冥想/习惯替换/同伴选择/接受练习中选 1 项，定为每日最小习惯\n   - 判停条件: 若用户有临床抑郁症状（持续 2 周以上低情绪），提示寻求专业帮助并停止本流程\n\n4. **每周复盘幸福基线**\n   - 完成标准: 每周自评 1–10 并记录，确认基线在缓慢上升\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 临床抑郁/焦虑障碍（本 skill 不替代医疗；作者方法建立在无严重心理疾病的前提上）\n- 物质匮乏或安全危机场景（先解决生存，再谈幸福技能）\n\n### 作者在书中警告的失败模式\n\n- 把幸福当积极思维: 「每个积极的想法基本上都包含着一个消极的想法」\n- 追求幸福反失幸福: 「如果我执著于一种感觉……我就是在放弃那种幸福」\n\n### 作者的盲点 / 时代局限\n\n- 「幸福=选择」忽略生物性因素（抑郁/激素/疾病）\n- 幸福可训练的证据是作者个人经验（n=1），不具普遍统计效力\n\n### 容易混淆的邻近方法论\n\n- `acceptance`: 接受是幸福的下游技术\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `acceptance`、`monkey-mind-meditation`、`screen-detox`、`game-selection`\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v10)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n"
+    },
+    {
+      "slug": "honesty-communication",
+      "name": "honesty-communication",
+      "dir": "books/naval-almanack-skill/honesty-communication",
+      "path": "books/naval-almanack-skill/honesty-communication/SKILL.md",
+      "desc": "当用户问怎么真诚沟通/拒绝别人/给反馈/不想说场面话、或发现自己在隐瞒时调用。 核心理念: 撒谎会先骗到自己(费曼: 你最容易愚弄的人是你); 彻底诚实=所想与所说一致; 具体表扬、一般批评; 秘密越少快乐越多。 不适用于: 需要外交辞令的谈判策略(可以诚实但不必全说)。 Triggers: 诚实/沟通/拒绝/批评/表扬/秘密/场面话/honesty/communication/feedback",
+      "descZh": "",
+      "triggers": [
+        "需要外交辞令的谈判策略(可以诚实但不必全说)"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/kangarooking/cangjie-skill.git",
+        "copy": "cp -r books/naval-almanack-skill/honesty-communication ~/.claude/skills/honesty-communication",
+        "raw": "https://raw.githubusercontent.com/kangarooking/cangjie-skill/a28de55ba881b9928956a55048f743f7a9e3b23e/books/naval-almanack-skill/honesty-communication/SKILL.md",
+        "saveAs": "~/.claude/skills/honesty-communication/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:38eb679a1b113c362fdd7f8fa109858183b2d9783e09c5be75c55951e753f672",
+      "bytes": 5313,
+      "wordCount": 218,
+      "repoLicense": "MIT",
+      "commit": "a28de55ba881b9928956a55048f743f7a9e3b23e",
+      "branch": "main",
+      "body": "---\nname: honesty-communication\ndescription: |\n  当用户问怎么真诚沟通/拒绝别人/给反馈/不想说场面话、或发现自己在隐瞒时调用。\n  核心理念: 撒谎会先骗到自己(费曼: 你最容易愚弄的人是你); 彻底诚实=所想与所说一致; 具体表扬、一般批评; 秘密越少快乐越多。\n  不适用于: 需要外交辞令的谈判策略(可以诚实但不必全说)。\n  Triggers: 诚实/沟通/拒绝/批评/表扬/秘密/场面话/honesty/communication/feedback\nsource_book: 《纳瓦尔宝典：财富与幸福指南》 纳瓦尔·拉维坎特\nsource_chapter: 第一章·财富 / 第二节 培养判断力 / 如何清晰地思考 + 第二章·幸福 / 活出你的价值\ntags: [honesty, communication, values, feedback]\nrelated_skills:\n  - slug: identity-work\n    relation: composes-with\n  - slug: self-liberation\n    relation: composes-with\n  - slug: peer-selection\n    relation: composes-with\n---\n\n# 诚实与沟通\n\n## R — 原文 (Reading)\n\n> 彻底的诚实仅是意味着我想自由。……在你向别人撒谎之前，你必须先对自己撒谎。……我会把彻底的诚实和沃伦·巴菲特的一条老的行事规则结合起来，那是具体地表扬、一般地批判。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》\n\n## I — 方法论骨架 (Interpretation)\n\n诚实不是道德表演，而是**认知安全与心理自由**：\n① **撒谎先骗自己**——费曼「你从不应该在任何时候愚弄任何人，你是最容易愚弄的人」；对别人撒谎会让你相信自己的谎话，扭曲对事实的判断；\n② **诚实=自由**——所想与所说高度一致时，内心没有需要维护的多重线程；不与需要你注意言辞的人相处；\n③ **具体表扬、一般批评**——批评指向做法/类别而非个人，表扬要具体到这个人最值得称赞的点，这样对方的自我不会与你对抗；\n④ **秘密越少，快乐越多**——需要隐藏的东西会变成内心负担；\n⑤ **诚实的边界感**——「我不会主动说一些消极或令人讨厌的事」，诚实不等于口无遮拦。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 不用「我喜欢/不喜欢」\n- **问题**: 判断被喜好污染\n- **方法论的使用**: 费曼规则——「我从不询问我喜欢或我不喜欢。我会认为这是什么或这不是什么。」\n- **结论**: 描述事实优先于表达喜好\n- **结果**: 判断保持对现实的锚定\n\n### 案例 2: 剔除不诚实者\n- **问题**: 如何识别不可信的人\n- **方法论的使用**: 「如果有人总说他们自己是多么的诚实，他们很有可能是不诚实的」\n- **结论**: 过度自我标榜=掩盖信号\n- **结果**: 作者据此保持距离\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 给反馈：「怎么批评同事/孩子而不伤人」\n2. 拒绝别人：「怎么说'不'又不撒谎」\n3. 自我检查：「我是不是在自欺」\n4. 关系沟通：「这段关系里我总是言不由衷」\n\n### 语言信号\n\n- \"怎么诚实又不伤人地沟通\"\n- \"怎么拒绝/批评/表扬\"\n- \"我不想说场面话\"\n- \"how to be honest / give feedback / say no\"\n\n### 与相邻 skill 的区分\n\n- 与 `self-liberation` 的区别: 解放 skill 给「说不」的边界，本 skill 给「怎么说」\n- 与 `peer-selection` 的区别: 诚实是内部一致性标准；同伴选择是外部筛选标准\n\n## E — 可执行步骤 (Execution)\n\n1. **检查自欺点**\n   - 完成标准: 找出本周 1 个「对别人没说真话/对自己隐瞒」的场景，确认它影响什么判断\n\n2. **用事实句式重述**\n   - 完成标准: 把「我喜欢/我不喜欢」改成「这是什么/这不是什么」的陈述，检验是否更接近事实\n\n3. **执行具体表扬、一般批评**\n   - 完成标准: 下次给反馈时：批评对事不对人（「这个做法」而非「你这个人」），表扬具体到细节\n\n4. **清理一个秘密**\n   - 完成标准: 挑一个可以安全说出的秘密，对可信的人讲出来，感受「秘密减少=负担减少」\n   - 判停条件: 涉及他人隐私/安全时保留秘密——诚实不等于泄露\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 谈判/保密场景（诚实≠和盘托出，作者强调「不会主动说消极或令人讨厌的事」）\n- 涉及他人隐私（别人的秘密不是你的诚实素材）\n\n### 作者在书中警告的失败模式\n\n- 自欺: 「当你对别人撒谎的时候，你也是在骗自己」\n- 用诚实当伤害工具: 诚实要配积极——「诚实和积极几乎总是可能的」\n\n### 作者的盲点 / 时代局限\n\n- 「彻底诚实」在威权/职场政治环境中可能有现实代价，作者有足够的地位承受它\n- 「秘密越少快乐越多」未区分健康隐私\n\n### 容易混淆的邻近方法论\n\n- `self-liberation`: 期望边界给出拒绝的合法性，诚实给出拒绝的句式\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `identity-work`（无所隐藏）、`self-liberation`、`peer-selection`\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v17)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n",
+      "bodyMd": "# 诚实与沟通\n\n## R — 原文 (Reading)\n\n> 彻底的诚实仅是意味着我想自由。……在你向别人撒谎之前，你必须先对自己撒谎。……我会把彻底的诚实和沃伦·巴菲特的一条老的行事规则结合起来，那是具体地表扬、一般地批判。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》\n\n## I — 方法论骨架 (Interpretation)\n\n诚实不是道德表演，而是**认知安全与心理自由**：\n① **撒谎先骗自己**——费曼「你从不应该在任何时候愚弄任何人，你是最容易愚弄的人」；对别人撒谎会让你相信自己的谎话，扭曲对事实的判断；\n② **诚实=自由**——所想与所说高度一致时，内心没有需要维护的多重线程；不与需要你注意言辞的人相处；\n③ **具体表扬、一般批评**——批评指向做法/类别而非个人，表扬要具体到这个人最值得称赞的点，这样对方的自我不会与你对抗；\n④ **秘密越少，快乐越多**——需要隐藏的东西会变成内心负担；\n⑤ **诚实的边界感**——「我不会主动说一些消极或令人讨厌的事」，诚实不等于口无遮拦。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 不用「我喜欢/不喜欢」\n- **问题**: 判断被喜好污染\n- **方法论的使用**: 费曼规则——「我从不询问我喜欢或我不喜欢。我会认为这是什么或这不是什么。」\n- **结论**: 描述事实优先于表达喜好\n- **结果**: 判断保持对现实的锚定\n\n### 案例 2: 剔除不诚实者\n- **问题**: 如何识别不可信的人\n- **方法论的使用**: 「如果有人总说他们自己是多么的诚实，他们很有可能是不诚实的」\n- **结论**: 过度自我标榜=掩盖信号\n- **结果**: 作者据此保持距离\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 给反馈：「怎么批评同事/孩子而不伤人」\n2. 拒绝别人：「怎么说'不'又不撒谎」\n3. 自我检查：「我是不是在自欺」\n4. 关系沟通：「这段关系里我总是言不由衷」\n\n### 语言信号\n\n- \"怎么诚实又不伤人地沟通\"\n- \"怎么拒绝/批评/表扬\"\n- \"我不想说场面话\"\n- \"how to be honest / give feedback / say no\"\n\n### 与相邻 skill 的区分\n\n- 与 `self-liberation` 的区别: 解放 skill 给「说不」的边界，本 skill 给「怎么说」\n- 与 `peer-selection` 的区别: 诚实是内部一致性标准；同伴选择是外部筛选标准\n\n## E — 可执行步骤 (Execution)\n\n1. **检查自欺点**\n   - 完成标准: 找出本周 1 个「对别人没说真话/对自己隐瞒」的场景，确认它影响什么判断\n\n2. **用事实句式重述**\n   - 完成标准: 把「我喜欢/我不喜欢」改成「这是什么/这不是什么」的陈述，检验是否更接近事实\n\n3. **执行具体表扬、一般批评**\n   - 完成标准: 下次给反馈时：批评对事不对人（「这个做法」而非「你这个人」），表扬具体到细节\n\n4. **清理一个秘密**\n   - 完成标准: 挑一个可以安全说出的秘密，对可信的人讲出来，感受「秘密减少=负担减少」\n   - 判停条件: 涉及他人隐私/安全时保留秘密——诚实不等于泄露\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 谈判/保密场景（诚实≠和盘托出，作者强调「不会主动说消极或令人讨厌的事」）\n- 涉及他人隐私（别人的秘密不是你的诚实素材）\n\n### 作者在书中警告的失败模式\n\n- 自欺: 「当你对别人撒谎的时候，你也是在骗自己」\n- 用诚实当伤害工具: 诚实要配积极——「诚实和积极几乎总是可能的」\n\n### 作者的盲点 / 时代局限\n\n- 「彻底诚实」在威权/职场政治环境中可能有现实代价，作者有足够的地位承受它\n- 「秘密越少快乐越多」未区分健康隐私\n\n### 容易混淆的邻近方法论\n\n- `self-liberation`: 期望边界给出拒绝的合法性，诚实给出拒绝的句式\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `identity-work`（无所隐藏）、`self-liberation`、`peer-selection`\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v17)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n"
+    },
+    {
+      "slug": "identity-work",
+      "name": "identity-work",
+      "dir": "books/naval-almanack-skill/identity-work",
+      "path": "books/naval-almanack-skill/identity-work/SKILL.md",
+      "desc": "当用户发现自己在为立场辩护、看不清现实、或反复立志却改变不了自己时调用。 核心理念: 身份是认知牢笼也是行为杠杆——放下身份才能看清真相(痛苦=真相时刻), 更新自我形象才能替代自律(对外承诺)。 不适用于: 需要专业心理咨询的深层创伤。 Triggers: 立场/身份/自我/看不清现实/改变不了自己/自律失败/identity/self-image",
+      "descZh": "",
+      "triggers": [
+        "需要专业心理咨询的深层创伤"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/kangarooking/cangjie-skill.git",
+        "copy": "cp -r books/naval-almanack-skill/identity-work ~/.claude/skills/identity-work",
+        "raw": "https://raw.githubusercontent.com/kangarooking/cangjie-skill/a28de55ba881b9928956a55048f743f7a9e3b23e/books/naval-almanack-skill/identity-work/SKILL.md",
+        "saveAs": "~/.claude/skills/identity-work/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:8e82b7391b90c4176697852118289b1738a49448130db5c3a67abe79721b0ece",
+      "bytes": 5316,
+      "wordCount": 216,
+      "repoLicense": "MIT",
+      "commit": "a28de55ba881b9928956a55048f743f7a9e3b23e",
+      "branch": "main",
+      "body": "---\nname: identity-work\ndescription: |\n  当用户发现自己在为立场辩护、看不清现实、或反复立志却改变不了自己时调用。\n  核心理念: 身份是认知牢笼也是行为杠杆——放下身份才能看清真相(痛苦=真相时刻), 更新自我形象才能替代自律(对外承诺)。\n  不适用于: 需要专业心理咨询的深层创伤。\n  Triggers: 立场/身份/自我/看不清现实/改变不了自己/自律失败/identity/self-image\nsource_book: 《纳瓦尔宝典：财富与幸福指南》 纳瓦尔·拉维坎特\nsource_chapter: 第一章·财富 / 第二节 培养判断力 / 如何清晰地思考 + 第二章·幸福 / 选择去塑造你自己\ntags: [identity, self-awareness, change, reality]\nrelated_skills:\n  - slug: acceptance\n    relation: composes-with\n  - slug: self-liberation\n    relation: composes-with\n  - slug: judgment-training\n    relation: composes-with\n---\n\n# 身份工作：看清现实与重塑自我\n\n## R — 原文 (Reading)\n\n> 痛苦时刻的一个定义是“你看清事物本来面貌的时刻。”……好消息是痛苦时刻……是真相时刻。……我尽量不要有太多预先决定。我认为创造身份和标签会锁死你的认知，让你无法看清真相。……为了在没有自律的情况下自我提升，请更新你的自我形象。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》\n\n## I — 方法论骨架 (Interpretation)\n\n「身份」是一把双刃剑，两个方向都要用：\n**认知侧——清空身份看清现实**：身份和标签会锁死认知，让人为立场辩护而非看事实；\n痛苦时刻是「愿望与现实冲突无法再回避」的真相时刻，是看清现实的最佳入口；\n操作：公开认错（防自欺）、对成捆一致的信念高度怀疑、从基本原则重估一切。\n**行为侧——用自我形象替代自律**：靠意志力对抗旧习惯不可持续，真正的杠杆是重塑「我是谁」——\n先对外宣布新身份（「我戒烟了」），利用承诺一致性让新自我形象约束行为；\n「自律是通向新自我形象的桥梁」，最终「你就是它」。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 公开承认失败\n- **问题**: 生意没做好时容易自欺\n- **方法论的使用**: 在联合创始人和同事面前公开承认\n- **结论**: 「如果我没有对别人隐瞒，我就不会欺骗自己」\n- **结果**: 用外部承诺锁死自欺通道\n\n### 案例 2: 向所有人宣布戒烟\n- **问题**: 靠意志力戒烟失败\n- **方法论的使用**: 「对每一个你认识的人说：我戒烟了。我戒了。我向你保证。」\n- **结论**: 对外承诺=用身份约束行为\n- **结果**: 「那就是你需要去做的全部」\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 立场先行：「我发现我总在为某个标签辩护」\n2. 无法面对现实：「明明有问题却一直拖」\n3. 改变失败：「我下定决心了还是做不到」\n4. 自我欺骗：「我总是给自己找借口」\n\n### 语言信号\n\n- \"我为我的立场辩护/看不清现实\"\n- \"我改变不了自己/自律失败\"\n- \"我是不是在自欺欺人\"\n- \"identity / why can't I change / self-deception\"\n\n### 与相邻 skill 的区分\n\n- 与 `acceptance` 的区别: 身份工作拆掉「不肯面对现实的自我」；接受是拆掉之后的落地动作\n- 与 `self-liberation` 的区别: 本 skill 改身份；解放 skill 卸外部期望\n\n## E — 可执行步骤 (Execution)\n\n1. **做信念审计**\n   - 完成标准: 列出 3 条「成捆一致」的信念，标注哪些未经独立检验、哪些是为标签辩护\n\n2. **找真相入口**\n   - 完成标准: 问「我在回避什么现实？最痛苦的地方在提醒我什么？」，并把其中一条向可信的人公开承认\n   - 判停条件: 若涉及深层创伤，停止自助流程并建议专业咨询\n\n3. **声明新身份**\n   - 完成标准: 把想改变的习惯写成身份宣言（「我是……的人」），向至少 3 人宣布\n\n4. **用行为回填身份**\n   - 完成标准: 接下来 30 天每天做一个与新身份一致的小动作，把「我尝试」改成「我就是」\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 深层创伤/人格层面的问题（需专业咨询，不能靠身份宣言）\n- 用户需要先解决外部实际问题时（先行动，再调身份）\n\n### 作者在书中警告的失败模式\n\n- 身份锁死认知: 「创造身份和标签会锁死你的认知，让你无法看清真相」\n- 用「我要」拖延: 「当你说'我要做这个'和'我要做那个'的时候，你其实是在拖延」\n\n### 作者的盲点 / 时代局限\n\n- 「放下身份」对少数群体/弱势身份可能意味着放弃重要的群体支持\n- 身份重塑并非对所有人都同样可行（社会结构约束）\n\n### 容易混淆的邻近方法论\n\n- `acceptance`: 接受需要先放下自我，身份工作是那个「放下」的动作\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `acceptance`、`self-liberation`、`judgment-training`\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v16)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n",
+      "bodyMd": "# 身份工作：看清现实与重塑自我\n\n## R — 原文 (Reading)\n\n> 痛苦时刻的一个定义是“你看清事物本来面貌的时刻。”……好消息是痛苦时刻……是真相时刻。……我尽量不要有太多预先决定。我认为创造身份和标签会锁死你的认知，让你无法看清真相。……为了在没有自律的情况下自我提升，请更新你的自我形象。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》\n\n## I — 方法论骨架 (Interpretation)\n\n「身份」是一把双刃剑，两个方向都要用：\n**认知侧——清空身份看清现实**：身份和标签会锁死认知，让人为立场辩护而非看事实；\n痛苦时刻是「愿望与现实冲突无法再回避」的真相时刻，是看清现实的最佳入口；\n操作：公开认错（防自欺）、对成捆一致的信念高度怀疑、从基本原则重估一切。\n**行为侧——用自我形象替代自律**：靠意志力对抗旧习惯不可持续，真正的杠杆是重塑「我是谁」——\n先对外宣布新身份（「我戒烟了」），利用承诺一致性让新自我形象约束行为；\n「自律是通向新自我形象的桥梁」，最终「你就是它」。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 公开承认失败\n- **问题**: 生意没做好时容易自欺\n- **方法论的使用**: 在联合创始人和同事面前公开承认\n- **结论**: 「如果我没有对别人隐瞒，我就不会欺骗自己」\n- **结果**: 用外部承诺锁死自欺通道\n\n### 案例 2: 向所有人宣布戒烟\n- **问题**: 靠意志力戒烟失败\n- **方法论的使用**: 「对每一个你认识的人说：我戒烟了。我戒了。我向你保证。」\n- **结论**: 对外承诺=用身份约束行为\n- **结果**: 「那就是你需要去做的全部」\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 立场先行：「我发现我总在为某个标签辩护」\n2. 无法面对现实：「明明有问题却一直拖」\n3. 改变失败：「我下定决心了还是做不到」\n4. 自我欺骗：「我总是给自己找借口」\n\n### 语言信号\n\n- \"我为我的立场辩护/看不清现实\"\n- \"我改变不了自己/自律失败\"\n- \"我是不是在自欺欺人\"\n- \"identity / why can't I change / self-deception\"\n\n### 与相邻 skill 的区分\n\n- 与 `acceptance` 的区别: 身份工作拆掉「不肯面对现实的自我」；接受是拆掉之后的落地动作\n- 与 `self-liberation` 的区别: 本 skill 改身份；解放 skill 卸外部期望\n\n## E — 可执行步骤 (Execution)\n\n1. **做信念审计**\n   - 完成标准: 列出 3 条「成捆一致」的信念，标注哪些未经独立检验、哪些是为标签辩护\n\n2. **找真相入口**\n   - 完成标准: 问「我在回避什么现实？最痛苦的地方在提醒我什么？」，并把其中一条向可信的人公开承认\n   - 判停条件: 若涉及深层创伤，停止自助流程并建议专业咨询\n\n3. **声明新身份**\n   - 完成标准: 把想改变的习惯写成身份宣言（「我是……的人」），向至少 3 人宣布\n\n4. **用行为回填身份**\n   - 完成标准: 接下来 30 天每天做一个与新身份一致的小动作，把「我尝试」改成「我就是」\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 深层创伤/人格层面的问题（需专业咨询，不能靠身份宣言）\n- 用户需要先解决外部实际问题时（先行动，再调身份）\n\n### 作者在书中警告的失败模式\n\n- 身份锁死认知: 「创造身份和标签会锁死你的认知，让你无法看清真相」\n- 用「我要」拖延: 「当你说'我要做这个'和'我要做那个'的时候，你其实是在拖延」\n\n### 作者的盲点 / 时代局限\n\n- 「放下身份」对少数群体/弱势身份可能意味着放弃重要的群体支持\n- 身份重塑并非对所有人都同样可行（社会结构约束）\n\n### 容易混淆的邻近方法论\n\n- `acceptance`: 接受需要先放下自我，身份工作是那个「放下」的动作\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `acceptance`、`self-liberation`、`judgment-training`\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v16)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n"
+    },
+    {
+      "slug": "judgment-training",
+      "name": "judgment-training",
+      "dir": "books/naval-almanack-skill/judgment-training",
+      "path": "books/naval-almanack-skill/judgment-training/SKILL.md",
+      "desc": "当用户需要做方向性判断、评估「该往哪走/这事靠谱吗」、或想提升决策能力时调用。 核心理念: 判断力(知道行为长期后果)比努力重要; 清晰思考=从基础学科重建推理; 收集心智模型(复利/委托代理/可证伪性/基础数学)。 不适用于: 需要立即执行的具体任务步骤。 Triggers: 判断力/方向/第一性原理/心智模型/思维模型/判断靠不靠谱/judgment/mental model/first principles",
+      "descZh": "",
+      "triggers": [
+        "需要立即执行的具体任务步骤"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/kangarooking/cangjie-skill.git",
+        "copy": "cp -r books/naval-almanack-skill/judgment-training ~/.claude/skills/judgment-training",
+        "raw": "https://raw.githubusercontent.com/kangarooking/cangjie-skill/a28de55ba881b9928956a55048f743f7a9e3b23e/books/naval-almanack-skill/judgment-training/SKILL.md",
+        "saveAs": "~/.claude/skills/judgment-training/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:75e66dd728fc115c24747515d664999d4ab13a8c036727a115cd03ba644e6a4f",
+      "bytes": 5571,
+      "wordCount": 225,
+      "repoLicense": "MIT",
+      "commit": "a28de55ba881b9928956a55048f743f7a9e3b23e",
+      "branch": "main",
+      "body": "---\nname: judgment-training\ndescription: |\n  当用户需要做方向性判断、评估「该往哪走/这事靠谱吗」、或想提升决策能力时调用。\n  核心理念: 判断力(知道行为长期后果)比努力重要; 清晰思考=从基础学科重建推理; 收集心智模型(复利/委托代理/可证伪性/基础数学)。\n  不适用于: 需要立即执行的具体任务步骤。\n  Triggers: 判断力/方向/第一性原理/心智模型/思维模型/判断靠不靠谱/judgment/mental model/first principles\nsource_book: 《纳瓦尔宝典：财富与幸福指南》 纳瓦尔·拉维坎特\nsource_chapter: 第一章·财富 / 第二节 培养判断力 / 判断力与如何清晰地思考\ntags: [judgment, thinking, mental-models, learning]\nrelated_skills:\n  - slug: reading-metaskill\n    relation: depends-on\n  - slug: decision-heuristics\n    relation: composes-with\n  - slug: principal-agent\n    relation: composes-with\n  - slug: rational-buddhism\n    relation: composes-with\n---\n\n# 判断力训练\n\n## R — 原文 (Reading)\n\n> 努力工作的价值真的被高估了。在现代经济中，努力工作不是那么重要。那什么被低估了？判断力。……真正聪明的思考者是思维清晰的思考者。他们理解非常非常基本的基础知识。……如果你不能根据需要从基础知识重新推导出概念，你会迷惑不解。你只是熟记而已。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第一章·财富\n\n## I — 方法论骨架 (Interpretation)\n\n判断力=知道行为长期后果并据此决策的能力，它是杠杆时代最重要的生产力——\n一个正确的决定可以赢过大量低效努力，而错误方向上的努力只会放大损失。\n训练判断力有三个路径：\n① **从基础重建**——真正理解=能从头推导；高级概念无法推导就只是熟记；最聪明的人能把事情向小孩讲明白；\n② **打牢基础学科**——数学、微观经济学、可证伪性等是「严肃知识」，比背诵复杂概念更值钱；\n③ **收集心智模型**——复利、委托代理、黑天鹅、进化论等模型库，遇到新问题先找合适的模型套用；\n④ **留出思考空白**——每周至少一天不安排会议，伟大的想法只在你无聊之后出现。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 费曼三页纸讲数学\n- **问题**: 如何判断一个人是否真的懂\n- **方法论的使用**: 费曼从数字→计算→初级微积分，用不打破的逻辑链串起来，不靠定义\n- **结论**: 能重建逻辑链才是真懂\n- **结果**: 「如果你无法向小孩子讲明白，那么你并不是真的知道」\n\n### 案例 2: 每周留白思考\n- **问题**: 忙碌挤掉了思考时间\n- **方法论的使用**: 每周留一两天不安排会议\n- **结论**: 「只会在你感到无聊之后，才会有伟大的想法」\n- **结果**: 判断力和好想法随之而来\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 方向选择：「这件事该不该做/往哪走」\n2. 评估言论：「这个专家的说法靠谱吗/是真懂还是包装」\n3. 学习新领域：「怎么快速建立对陌生领域的判断力」\n4. 决策前检查：「我的依据能不能从头推导」\n\n### 语言信号\n\n- \"帮我判断一下/评估一下\"\n- \"他怎么知道自己在说什么\"\n- \"我想提升自己的判断力/思维模型\"\n- \"how to think clearly / build judgment / is this credible\"\n\n### 与相邻 skill 的区分\n\n- 与 `decision-heuristics` 的区别: 本 skill 是底层能力训练；决策启发式是即用规则\n- 与 `rational-buddhism` 的区别: 本 skill 讲如何想清楚；理性佛教是验证一切主张的总标准\n\n## E — 可执行步骤 (Execution)\n\n1. **识别决策类型与后果尺度**\n   - 完成标准: 明确这是方向判断（长期后果大）还是执行选择（后果小）；判断力优先投入前者\n\n2. **从基础重建核心假设**\n   - 完成标准: 把问题拆到「我能从头解释」的公理层；解释不了的部分标为未知\n   - 判停条件: 若发现对方/自己满口大词但无法推导，标记为「不可信」，停止采信\n\n3. **套用已知心智模型**\n   - 完成标准: 至少匹配 1–2 个模型（复利/委托代理/可证伪性/黑天鹅…）交叉检验结论\n\n4. **预留思考留白**\n   - 完成标准: 每周安排 ≥1 天无会议/无任务，把最难的问题放进留白时段\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 用户只需要快速执行步骤（先执行，再复盘判断）\n- 信息查询类问题（查资料不需要完整推导）\n\n### 作者在书中警告的失败模式\n\n- 熟记≠理解: 「如果你不能根据需要从基础知识重新推导出概念，你会迷惑不解」\n- 读错次序的博学: 虚假基础会过滤一切新想法\n\n### 作者的盲点 / 时代局限\n\n- 「基础学科优先」隐含理性人假设，未覆盖情绪/直觉在决策中的作用\n- 判断力训练无法替代经验；作者自己也说判断力需要经验打底\n\n### 容易混淆的邻近方法论\n\n- `reading-metaskill`: 阅读是判断力的供给管线\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- depends-on: `reading-metaskill`（基础来自阅读）\n- composes-with: `decision-heuristics`、`principal-agent`、`rational-buddhism`\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v06)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n",
+      "bodyMd": "# 判断力训练\n\n## R — 原文 (Reading)\n\n> 努力工作的价值真的被高估了。在现代经济中，努力工作不是那么重要。那什么被低估了？判断力。……真正聪明的思考者是思维清晰的思考者。他们理解非常非常基本的基础知识。……如果你不能根据需要从基础知识重新推导出概念，你会迷惑不解。你只是熟记而已。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第一章·财富\n\n## I — 方法论骨架 (Interpretation)\n\n判断力=知道行为长期后果并据此决策的能力，它是杠杆时代最重要的生产力——\n一个正确的决定可以赢过大量低效努力，而错误方向上的努力只会放大损失。\n训练判断力有三个路径：\n① **从基础重建**——真正理解=能从头推导；高级概念无法推导就只是熟记；最聪明的人能把事情向小孩讲明白；\n② **打牢基础学科**——数学、微观经济学、可证伪性等是「严肃知识」，比背诵复杂概念更值钱；\n③ **收集心智模型**——复利、委托代理、黑天鹅、进化论等模型库，遇到新问题先找合适的模型套用；\n④ **留出思考空白**——每周至少一天不安排会议，伟大的想法只在你无聊之后出现。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 费曼三页纸讲数学\n- **问题**: 如何判断一个人是否真的懂\n- **方法论的使用**: 费曼从数字→计算→初级微积分，用不打破的逻辑链串起来，不靠定义\n- **结论**: 能重建逻辑链才是真懂\n- **结果**: 「如果你无法向小孩子讲明白，那么你并不是真的知道」\n\n### 案例 2: 每周留白思考\n- **问题**: 忙碌挤掉了思考时间\n- **方法论的使用**: 每周留一两天不安排会议\n- **结论**: 「只会在你感到无聊之后，才会有伟大的想法」\n- **结果**: 判断力和好想法随之而来\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 方向选择：「这件事该不该做/往哪走」\n2. 评估言论：「这个专家的说法靠谱吗/是真懂还是包装」\n3. 学习新领域：「怎么快速建立对陌生领域的判断力」\n4. 决策前检查：「我的依据能不能从头推导」\n\n### 语言信号\n\n- \"帮我判断一下/评估一下\"\n- \"他怎么知道自己在说什么\"\n- \"我想提升自己的判断力/思维模型\"\n- \"how to think clearly / build judgment / is this credible\"\n\n### 与相邻 skill 的区分\n\n- 与 `decision-heuristics` 的区别: 本 skill 是底层能力训练；决策启发式是即用规则\n- 与 `rational-buddhism` 的区别: 本 skill 讲如何想清楚；理性佛教是验证一切主张的总标准\n\n## E — 可执行步骤 (Execution)\n\n1. **识别决策类型与后果尺度**\n   - 完成标准: 明确这是方向判断（长期后果大）还是执行选择（后果小）；判断力优先投入前者\n\n2. **从基础重建核心假设**\n   - 完成标准: 把问题拆到「我能从头解释」的公理层；解释不了的部分标为未知\n   - 判停条件: 若发现对方/自己满口大词但无法推导，标记为「不可信」，停止采信\n\n3. **套用已知心智模型**\n   - 完成标准: 至少匹配 1–2 个模型（复利/委托代理/可证伪性/黑天鹅…）交叉检验结论\n\n4. **预留思考留白**\n   - 完成标准: 每周安排 ≥1 天无会议/无任务，把最难的问题放进留白时段\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 用户只需要快速执行步骤（先执行，再复盘判断）\n- 信息查询类问题（查资料不需要完整推导）\n\n### 作者在书中警告的失败模式\n\n- 熟记≠理解: 「如果你不能根据需要从基础知识重新推导出概念，你会迷惑不解」\n- 读错次序的博学: 虚假基础会过滤一切新想法\n\n### 作者的盲点 / 时代局限\n\n- 「基础学科优先」隐含理性人假设，未覆盖情绪/直觉在决策中的作用\n- 判断力训练无法替代经验；作者自己也说判断力需要经验打底\n\n### 容易混淆的邻近方法论\n\n- `reading-metaskill`: 阅读是判断力的供给管线\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- depends-on: `reading-metaskill`（基础来自阅读）\n- composes-with: `decision-heuristics`、`principal-agent`、`rational-buddhism`\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v06)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n"
+    },
+    {
+      "slug": "life-meaning",
+      "name": "life-meaning",
+      "dir": "books/naval-almanack-skill/life-meaning",
+      "path": "books/naval-almanack-skill/life-meaning/SKILL.md",
+      "desc": "当用户问「活着的意义是什么/找不到方向/虚无感/该为什么努力」时调用。 核心理念: 生命没有外在赋予的意义(宇宙尺度一切会消失); 意义=个人创造+愿意为之受苦; 拥抱死亡是意义的入口。 不适用于: 急性自杀风险(先紧急求助)。 Triggers: 生命的意义/虚无/找不到意义/为什么活着/meaning/purpose/nihilism",
+      "descZh": "",
+      "triggers": [
+        "急性自杀风险(先紧急求助)"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/kangarooking/cangjie-skill.git",
+        "copy": "cp -r books/naval-almanack-skill/life-meaning ~/.claude/skills/life-meaning",
+        "raw": "https://raw.githubusercontent.com/kangarooking/cangjie-skill/a28de55ba881b9928956a55048f743f7a9e3b23e/books/naval-almanack-skill/life-meaning/SKILL.md",
+        "saveAs": "~/.claude/skills/life-meaning/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:17e3d0df776ae477027d795c7dadf61ed5c882fd8d7feb0fb57b45bf9729ef56",
+      "bytes": 5495,
+      "wordCount": 220,
+      "repoLicense": "MIT",
+      "commit": "a28de55ba881b9928956a55048f743f7a9e3b23e",
+      "branch": "main",
+      "body": "---\nname: life-meaning\ndescription: |\n  当用户问「活着的意义是什么/找不到方向/虚无感/该为什么努力」时调用。\n  核心理念: 生命没有外在赋予的意义(宇宙尺度一切会消失); 意义=个人创造+愿意为之受苦; 拥抱死亡是意义的入口。\n  不适用于: 急性自杀风险(先紧急求助)。\n  Triggers: 生命的意义/虚无/找不到意义/为什么活着/meaning/purpose/nihilism\nsource_book: 《纳瓦尔宝典：财富与幸福指南》 纳瓦尔·拉维坎特\nsource_chapter: 第二章·幸福 / 第三节 哲学 / 生命的意义\ntags: [philosophy, meaning, mortality, values]\nrelated_skills:\n  - slug: rational-buddhism\n    relation: composes-with\n  - slug: acceptance\n    relation: composes-with\n---\n\n# 生命意义：三个答案与拥抱死亡\n\n## R — 原文 (Reading)\n\n> 这是个大问题。因为这是一个大问题，我将给你三个答案。……答案一：这是私人的。你必须找到属于你自己的意义。……答案二：生命没有意义。……可以归结为，你必须创造自己的意义。……答案三：……我们作为生命系统所做的事情正在加速达到这种状态（宇宙的热死亡）。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第二章·幸福\n\n## I — 方法论骨架 (Interpretation)\n\n「生命的意义是什么」是无边界问题，Naval 给出三层递进答案：\n① **私人的**——意义只能自己找；任何人（包括佛陀）给你的答案听起来都像废话，重要的不是答案而是带着问题挖掘；\n② **没有意义**——宇宙尺度下，你做的事都会褪色、人类和文明都会消失，所以「你必须创造自己的意义」；\n③ **熵的意义**——生命是局部熵减系统，在加速宇宙熵增/热死亡；你的创造（艺术/家庭/科学）在宇宙尺度上是在把万物推向「最终成为一个东西」。\n两个推论：\n- **意义=愿意受苦**——「你真实的履历只是你痛苦的目录」，有意义的事都是你有所牺牲的事；\n- **拥抱死亡**——承认必死（而不是逃避）反而带来意义与平静；生命如黑夜中的萤火虫一闪，所以用最积极的方式演绎它。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 从追求成功到内在之路\n- **问题**: 获得物质成功后仍不满足\n- **方法论的使用**: 意识到「我周围的人已经取得了类似的成功……似乎没有那么快乐」\n- **结论**: 「所有真正的成功是内在的」\n- **结果**: 走上修炼内在自我的路\n\n### 案例 2: 有孩子后意义转移\n- **问题**: 意义的承载物在哪里\n- **方法论的使用**: 成为父母后「宇宙中最重要的东西从你身体里转移到孩子的身体里」\n- **结论**: 价值观变得更不自私\n- **结果**: 意义从自我实现扩展到传承\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 虚无/无意义感：「活着到底为了什么」\n2. 中年/重大转折：「人生下半场往哪走」\n3. 重大失去/失败后：「一切还有意义吗」\n4. 面对死亡恐惧：「我害怕变老/死亡」\n\n### 语言信号\n\n- \"生命的意义/活着的意义\"\n- \"我觉得一切都没意义\"\n- \"人生该怎么过/为什么努力\"\n- \"meaning of life / nihilism / purpose / mortality\"\n\n### 与相邻 skill 的区分\n\n- 与 `rational-buddhism` 的区别: 理性佛教给「信什么」的标准；本 skill 给「为何活」的答案\n- 与 `acceptance` 的区别: 拥抱死亡是接受的终极版，但本 skill 的落点是意义而非处境\n\n## E — 可执行步骤 (Execution)\n\n1. **承认宇宙尺度**\n   - 完成标准: 接受「你做的事最终都会消失」——检查这是否减轻了「必须正确/必须留名」的焦虑\n   - 判停条件: 若出现急性自杀念头/严重抑郁，立即转介专业危机干预，停止本流程\n\n2. **找出愿意为之受苦的事**\n   - 完成标准: 列出「你真实履历中最有意义的 3 件事」，确认它们都包含牺牲/困难\n\n3. **创造你的意义版本**\n   - 完成标准: 用一句话写下你的意义主张（可以是「我是来看戏的/我在跳自我实现的舞蹈/为家人而活」），标为「我编造的但我要的」\n\n4. **把死亡请进决策**\n   - 完成标准: 每月一次自问「如果只剩一年，我会怎么过」并据此刻意调整一项时间分配\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 急性心理危机/自杀风险（第一优先级是专业帮助，不是哲学）\n- 用户在寻求传统宗教答案（尊重信仰，不推销虚无主义）\n\n### 作者在书中警告的失败模式\n\n- 逃避死亡: 对永生的追求是很多徒劳奋斗的根源；「热门的提示：没有遗产」\n- 把意义外包: 外在强加的目的（「社会需要我去做X」）不会让你快乐\n\n### 作者的盲点 / 时代局限\n\n- 「无意义」叙事建立在无神论/物理主义世界观上，对信仰者不成立\n- 熵增意义论是个人整合，非严谨科学结论\n\n### 容易混淆的邻近方法论\n\n- `acceptance`: 拥抱死亡与接受现实共享「放下」的动作，但落点不同\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `rational-buddhism`、`acceptance`\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v19)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n",
+      "bodyMd": "# 生命意义：三个答案与拥抱死亡\n\n## R — 原文 (Reading)\n\n> 这是个大问题。因为这是一个大问题，我将给你三个答案。……答案一：这是私人的。你必须找到属于你自己的意义。……答案二：生命没有意义。……可以归结为，你必须创造自己的意义。……答案三：……我们作为生命系统所做的事情正在加速达到这种状态（宇宙的热死亡）。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第二章·幸福\n\n## I — 方法论骨架 (Interpretation)\n\n「生命的意义是什么」是无边界问题，Naval 给出三层递进答案：\n① **私人的**——意义只能自己找；任何人（包括佛陀）给你的答案听起来都像废话，重要的不是答案而是带着问题挖掘；\n② **没有意义**——宇宙尺度下，你做的事都会褪色、人类和文明都会消失，所以「你必须创造自己的意义」；\n③ **熵的意义**——生命是局部熵减系统，在加速宇宙熵增/热死亡；你的创造（艺术/家庭/科学）在宇宙尺度上是在把万物推向「最终成为一个东西」。\n两个推论：\n- **意义=愿意受苦**——「你真实的履历只是你痛苦的目录」，有意义的事都是你有所牺牲的事；\n- **拥抱死亡**——承认必死（而不是逃避）反而带来意义与平静；生命如黑夜中的萤火虫一闪，所以用最积极的方式演绎它。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 从追求成功到内在之路\n- **问题**: 获得物质成功后仍不满足\n- **方法论的使用**: 意识到「我周围的人已经取得了类似的成功……似乎没有那么快乐」\n- **结论**: 「所有真正的成功是内在的」\n- **结果**: 走上修炼内在自我的路\n\n### 案例 2: 有孩子后意义转移\n- **问题**: 意义的承载物在哪里\n- **方法论的使用**: 成为父母后「宇宙中最重要的东西从你身体里转移到孩子的身体里」\n- **结论**: 价值观变得更不自私\n- **结果**: 意义从自我实现扩展到传承\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 虚无/无意义感：「活着到底为了什么」\n2. 中年/重大转折：「人生下半场往哪走」\n3. 重大失去/失败后：「一切还有意义吗」\n4. 面对死亡恐惧：「我害怕变老/死亡」\n\n### 语言信号\n\n- \"生命的意义/活着的意义\"\n- \"我觉得一切都没意义\"\n- \"人生该怎么过/为什么努力\"\n- \"meaning of life / nihilism / purpose / mortality\"\n\n### 与相邻 skill 的区分\n\n- 与 `rational-buddhism` 的区别: 理性佛教给「信什么」的标准；本 skill 给「为何活」的答案\n- 与 `acceptance` 的区别: 拥抱死亡是接受的终极版，但本 skill 的落点是意义而非处境\n\n## E — 可执行步骤 (Execution)\n\n1. **承认宇宙尺度**\n   - 完成标准: 接受「你做的事最终都会消失」——检查这是否减轻了「必须正确/必须留名」的焦虑\n   - 判停条件: 若出现急性自杀念头/严重抑郁，立即转介专业危机干预，停止本流程\n\n2. **找出愿意为之受苦的事**\n   - 完成标准: 列出「你真实履历中最有意义的 3 件事」，确认它们都包含牺牲/困难\n\n3. **创造你的意义版本**\n   - 完成标准: 用一句话写下你的意义主张（可以是「我是来看戏的/我在跳自我实现的舞蹈/为家人而活」），标为「我编造的但我要的」\n\n4. **把死亡请进决策**\n   - 完成标准: 每月一次自问「如果只剩一年，我会怎么过」并据此刻意调整一项时间分配\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 急性心理危机/自杀风险（第一优先级是专业帮助，不是哲学）\n- 用户在寻求传统宗教答案（尊重信仰，不推销虚无主义）\n\n### 作者在书中警告的失败模式\n\n- 逃避死亡: 对永生的追求是很多徒劳奋斗的根源；「热门的提示：没有遗产」\n- 把意义外包: 外在强加的目的（「社会需要我去做X」）不会让你快乐\n\n### 作者的盲点 / 时代局限\n\n- 「无意义」叙事建立在无神论/物理主义世界观上，对信仰者不成立\n- 熵增意义论是个人整合，非严谨科学结论\n\n### 容易混淆的邻近方法论\n\n- `acceptance`: 拥抱死亡与接受现实共享「放下」的动作，但落点不同\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `rational-buddhism`、`acceptance`\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v19)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n"
+    },
+    {
+      "slug": "long-term-compounding",
+      "name": "long-term-compounding",
+      "dir": "books/naval-almanack-skill/long-term-compounding",
+      "path": "books/naval-almanack-skill/long-term-compounding/SKILL.md",
+      "desc": "当用户在选择合作者/生意模式/人生策略、问「要不要长期投入这段关系/这个项目」「如何积累声誉」时调用。 核心理念: 财富、知识、声誉、关系都遵循复利; 只玩长期正和游戏, 与能想象共事一辈子的人合作, 拒绝短期思维交易。 不适用于: 紧急止损、短期现金周转等必须立即决策的场景。 Triggers: 长期/复利/声誉/合作/信任/compounding/long-term/trust",
+      "descZh": "",
+      "triggers": [
+        "紧急止损",
+        "短期现金周转等必须立即决策的场景"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/kangarooking/cangjie-skill.git",
+        "copy": "cp -r books/naval-almanack-skill/long-term-compounding ~/.claude/skills/long-term-compounding",
+        "raw": "https://raw.githubusercontent.com/kangarooking/cangjie-skill/a28de55ba881b9928956a55048f743f7a9e3b23e/books/naval-almanack-skill/long-term-compounding/SKILL.md",
+        "saveAs": "~/.claude/skills/long-term-compounding/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:cfae5df1c8c78d1baff3c9dfe9f60234cdece032e69d7b350317cdcf61fcaa0d",
+      "bytes": 5617,
+      "wordCount": 228,
+      "repoLicense": "MIT",
+      "commit": "a28de55ba881b9928956a55048f743f7a9e3b23e",
+      "branch": "main",
+      "body": "---\nname: long-term-compounding\ndescription: |\n  当用户在选择合作者/生意模式/人生策略、问「要不要长期投入这段关系/这个项目」「如何积累声誉」时调用。\n  核心理念: 财富、知识、声誉、关系都遵循复利; 只玩长期正和游戏, 与能想象共事一辈子的人合作, 拒绝短期思维交易。\n  不适用于: 紧急止损、短期现金周转等必须立即决策的场景。\n  Triggers: 长期/复利/声誉/合作/信任/compounding/long-term/trust\nsource_book: 《纳瓦尔宝典：财富与幸福指南》 纳瓦尔·拉维坎特\nsource_chapter: 第一章·财富 / 第一节 创造财富 / 认识如何创造财富\ntags: [long-term, compounding, relationship, trust, reputation]\nrelated_skills:\n  - slug: wealth-structure\n    relation: composes-with\n  - slug: peer-selection\n    relation: composes-with\n  - slug: game-selection\n    relation: contrasts-with\n---\n\n# 长期复利游戏\n\n## R — 原文 (Reading)\n\n> 玩复利游戏。无论是财富，人际关系或是知识，所有你人生里获得的回报，都来自于复利。……我的联合创始人Nivi说，“在一个长期游戏里，好像每个人都在让彼此发财，而在一个短期游戏里，好像每个人都在让自己发财。”\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第一章·财富\n\n## I — 方法论骨架 (Interpretation)\n\n把复利从金融概念升级为通用人生规律：财富、知识、声誉、关系都以指数方式积累，\n所以选择的判据不是「现在能拿多少」，而是「这件事在十年尺度上是否复利」。\n两个推论：① 只与「能想象共事一辈子」的长期伙伴合作——信任让谈判成本趋近于零；\n② 只玩长期正和游戏——长期游戏里人人把饼做大，短期游戏里人人抢饼。\n声誉是最典型的复利资产：持续几十年维护诚信，最终价值远超有才华但无声誉积累的人。\n反面筛选信号：愤世嫉俗者、悲观主义者、短期思维者——他们会破坏复利结构。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 与 Elad Gil 的交易\n- **问题**: 商业谈判成本高、信任难建立\n- **方法论的使用**: 与 Elad Gil 长期交易，对方主动多给好处、差额自掏腰包\n- **结论**: 信任让常规谈判极简，彼此愿意让利\n- **结果**: 作者几乎每笔交易都优先拉对方入局，关系进入复利循环\n\n### 案例 2: 声誉换来别人做不了的交易\n- **问题**: 为什么巴菲特能买到别人买不到的公司\n- **方法论的使用**: 长期诚信+可靠+长期思维建立的声誉品牌\n- **结论**: 「你的性格和你的声誉是可以建立的……你知道这不是运气」\n- **结果**: 别人把「运气」当机会时，声誉者把机会变成确定收益\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 评估合作/合伙/签约对象：「这个人能合作五年十年吗」\n2. 犹豫是否接受短期高回报交易：「这单来钱快但伤口碑」\n3. 想积累声誉/复利资产：「怎么让机会主动来找我」\n4. 关系决策：「这段关系值得长期投入吗」\n\n### 语言信号\n\n- \"长期 vs 短期怎么选\"\n- \"这个人靠谱吗/值得长期合作吗\"\n- \"怎么建立信任/声誉\"\n- \"compounding / long-term game / is this person trustworthy\"\n\n### 与相邻 skill 的区分\n\n- 与 `game-selection` 的区别: 本 skill 关注时间尺度（长期/短期）；game-selection 关注博弈结构（零和/正和/单人）\n- 与 `peer-selection` 的区别: 本 skill 的伙伴筛选服务于复利收益；peer-selection 服务于幸福与行为塑造\n\n## E — 可执行步骤 (Execution)\n\n1. **对候选机会跑复利测试**\n   - 完成标准: 回答「十年后它还值多少？现在投入的信任/时间/钱会不会指数增长？」\n   - 判停条件: 若答案是「不可复利且只是快钱」，标记为短期游戏，慎重\n\n2. **对合作者跑『一辈子』测试**\n   - 完成标准: 问「我能想象和这个人共事/生活一辈子吗？」；不能，则一天也别开始\n\n3. **检查负向信号**\n   - 完成标准: 确认对方不是愤世嫉俗者/悲观主义者/短期思维者（他们要证明自己负面看法正确）\n\n4. **为声誉做一笔复利存款**\n   - 完成标准: 本周期内做一件「对方会记得的好事」，不记账、不估量\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 对方已在诈骗/违法边缘（先止损，不要用长期主义自我麻痹）\n- 用户急需短期现金流救急（先解决生存，再谈复利）\n\n### 作者在书中警告的失败模式\n\n- 与愤世嫉俗者合作: 「他们会任由坏事发生，以证明他们负面看法是正确的」\n- 估量付出: 「不要去估量——一旦开始计较，你的耐性就会耗尽」\n\n### 作者的盲点 / 时代局限\n\n- 长期游戏假设环境稳定可预期；在剧变行业/强监管环境，长期承诺也有风险\n- 「所有好处都来自复利」是强断言，未考虑不可复利的必要止损\n\n### 容易混淆的邻近方法论\n\n- `game-selection`: 先识别博弈结构，再决定玩长期还是短期\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `wealth-structure`（复利结构）、`peer-selection`（长期伙伴）\n- contrasts-with: `game-selection`（时间尺度 vs 博弈结构）\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v03)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n",
+      "bodyMd": "# 长期复利游戏\n\n## R — 原文 (Reading)\n\n> 玩复利游戏。无论是财富，人际关系或是知识，所有你人生里获得的回报，都来自于复利。……我的联合创始人Nivi说，“在一个长期游戏里，好像每个人都在让彼此发财，而在一个短期游戏里，好像每个人都在让自己发财。”\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第一章·财富\n\n## I — 方法论骨架 (Interpretation)\n\n把复利从金融概念升级为通用人生规律：财富、知识、声誉、关系都以指数方式积累，\n所以选择的判据不是「现在能拿多少」，而是「这件事在十年尺度上是否复利」。\n两个推论：① 只与「能想象共事一辈子」的长期伙伴合作——信任让谈判成本趋近于零；\n② 只玩长期正和游戏——长期游戏里人人把饼做大，短期游戏里人人抢饼。\n声誉是最典型的复利资产：持续几十年维护诚信，最终价值远超有才华但无声誉积累的人。\n反面筛选信号：愤世嫉俗者、悲观主义者、短期思维者——他们会破坏复利结构。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 与 Elad Gil 的交易\n- **问题**: 商业谈判成本高、信任难建立\n- **方法论的使用**: 与 Elad Gil 长期交易，对方主动多给好处、差额自掏腰包\n- **结论**: 信任让常规谈判极简，彼此愿意让利\n- **结果**: 作者几乎每笔交易都优先拉对方入局，关系进入复利循环\n\n### 案例 2: 声誉换来别人做不了的交易\n- **问题**: 为什么巴菲特能买到别人买不到的公司\n- **方法论的使用**: 长期诚信+可靠+长期思维建立的声誉品牌\n- **结论**: 「你的性格和你的声誉是可以建立的……你知道这不是运气」\n- **结果**: 别人把「运气」当机会时，声誉者把机会变成确定收益\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 评估合作/合伙/签约对象：「这个人能合作五年十年吗」\n2. 犹豫是否接受短期高回报交易：「这单来钱快但伤口碑」\n3. 想积累声誉/复利资产：「怎么让机会主动来找我」\n4. 关系决策：「这段关系值得长期投入吗」\n\n### 语言信号\n\n- \"长期 vs 短期怎么选\"\n- \"这个人靠谱吗/值得长期合作吗\"\n- \"怎么建立信任/声誉\"\n- \"compounding / long-term game / is this person trustworthy\"\n\n### 与相邻 skill 的区分\n\n- 与 `game-selection` 的区别: 本 skill 关注时间尺度（长期/短期）；game-selection 关注博弈结构（零和/正和/单人）\n- 与 `peer-selection` 的区别: 本 skill 的伙伴筛选服务于复利收益；peer-selection 服务于幸福与行为塑造\n\n## E — 可执行步骤 (Execution)\n\n1. **对候选机会跑复利测试**\n   - 完成标准: 回答「十年后它还值多少？现在投入的信任/时间/钱会不会指数增长？」\n   - 判停条件: 若答案是「不可复利且只是快钱」，标记为短期游戏，慎重\n\n2. **对合作者跑『一辈子』测试**\n   - 完成标准: 问「我能想象和这个人共事/生活一辈子吗？」；不能，则一天也别开始\n\n3. **检查负向信号**\n   - 完成标准: 确认对方不是愤世嫉俗者/悲观主义者/短期思维者（他们要证明自己负面看法正确）\n\n4. **为声誉做一笔复利存款**\n   - 完成标准: 本周期内做一件「对方会记得的好事」，不记账、不估量\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 对方已在诈骗/违法边缘（先止损，不要用长期主义自我麻痹）\n- 用户急需短期现金流救急（先解决生存，再谈复利）\n\n### 作者在书中警告的失败模式\n\n- 与愤世嫉俗者合作: 「他们会任由坏事发生，以证明他们负面看法是正确的」\n- 估量付出: 「不要去估量——一旦开始计较，你的耐性就会耗尽」\n\n### 作者的盲点 / 时代局限\n\n- 长期游戏假设环境稳定可预期；在剧变行业/强监管环境，长期承诺也有风险\n- 「所有好处都来自复利」是强断言，未考虑不可复利的必要止损\n\n### 容易混淆的邻近方法论\n\n- `game-selection`: 先识别博弈结构，再决定玩长期还是短期\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `wealth-structure`（复利结构）、`peer-selection`（长期伙伴）\n- contrasts-with: `game-selection`（时间尺度 vs 博弈结构）\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v03)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n"
+    },
+    {
+      "slug": "monkey-mind-meditation",
+      "name": "monkey-mind-meditation",
+      "dir": "books/naval-almanack-skill/monkey-mind-meditation",
+      "path": "books/naval-almanack-skill/monkey-mind-meditation/SKILL.md",
+      "desc": "当用户脑子停不下来、焦虑反刍、想学冥想/提升专注力时调用。 核心理念: 内心独白(心猴)是失控程序不是\"我\"; 用调试模式逐条观察念头, 意识到即失去控制; 冥想=收件箱归零/心灵间歇性禁食。 不适用于: 严重精神疾病急性发作(先就医); 需要立刻处理的实际问题(先做事)。 Triggers: 冥想/焦虑/脑子停不下来/胡思乱想/专注/心猴/monkey mind/meditation/anxiety",
+      "descZh": "",
+      "triggers": [
+        "严重精神疾病急性发作(先就医)",
+        "需要立刻处理的实际问题(先做事)"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/kangarooking/cangjie-skill.git",
+        "copy": "cp -r books/naval-almanack-skill/monkey-mind-meditation ~/.claude/skills/monkey-mind-meditation",
+        "raw": "https://raw.githubusercontent.com/kangarooking/cangjie-skill/a28de55ba881b9928956a55048f743f7a9e3b23e/books/naval-almanack-skill/monkey-mind-meditation/SKILL.md",
+        "saveAs": "~/.claude/skills/monkey-mind-meditation/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:bd6aadac5a1d0c43379be1de6b3011db914651f2464dfa1e15a2bda1f5e3b148",
+      "bytes": 5591,
+      "wordCount": 227,
+      "repoLicense": "MIT",
+      "commit": "a28de55ba881b9928956a55048f743f7a9e3b23e",
+      "branch": "main",
+      "body": "---\nname: monkey-mind-meditation\ndescription: |\n  当用户脑子停不下来、焦虑反刍、想学冥想/提升专注力时调用。\n  核心理念: 内心独白(心猴)是失控程序不是\"我\"; 用调试模式逐条观察念头, 意识到即失去控制; 冥想=收件箱归零/心灵间歇性禁食。\n  不适用于: 严重精神疾病急性发作(先就医); 需要立刻处理的实际问题(先做事)。\n  Triggers: 冥想/焦虑/脑子停不下来/胡思乱想/专注/心猴/monkey mind/meditation/anxiety\nsource_book: 《纳瓦尔宝典：财富与幸福指南》 纳瓦尔·拉维坎特\nsource_chapter: 第二章·幸福 / 第二节 自救 / 冥想+精神力量\ntags: [mind, meditation, anxiety, focus, self-awareness]\nrelated_skills:\n  - slug: happiness-skill\n    relation: composes-with\n  - slug: screen-detox\n    relation: composes-with\n  - slug: rational-buddhism\n    relation: composes-with\n---\n\n# 心猴关停：观察思维与冥想\n\n## R — 原文 (Reading)\n\n> 它就像一只在扔粪便的猴子，在房间里跑来跑去，制造麻烦，大喊大叫，打碎东西。它是完全不受制的。……从计算机编程的角度来解释，我尽量让我的大脑以“调试模式”运行。……当你观察你的想法时，你就会意识到其中有多少想法是出于恐惧的。当你意识到恐惧的那一刻，甚至不用去尝试，它就会消失。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第二章·幸福\n\n## I — 方法论骨架 (Interpretation)\n\n大脑的内心独白（「心猴」）是一个失控的焦虑程序，而不是「我」。\n它大约 90% 的念头出于恐惧、10% 出于欲望；它默认开着，消耗能量、加速主观时间。\n关闭它的方法不是对抗，而是**观察**：\n① **调试模式**——像看程序执行一样逐条检视念头，问「为什么我有这个想法」「我现在真的需要处理它吗」；\n② **识别即分离**——念头被意识到的那一刻就失去控制力；\n③ **冥想=收件箱归零**——坐着不抵抗，让童年以来的未解决情绪（藤壶/未回复邮件）逐个浮现、被客观处理；\n④ **频率纪律**——每天一小时、坚持 60 天，作为早上第一件事；冥想是心灵的间歇性禁食。\n目标是让头脑成为仆人和工具，而不是主人；「专注的能力与迷失自我、活在当下、快乐以及更有效率的能力有关」。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 刷牙时的心猴\n- **问题**: 刷牙时幻想未来播客采访\n- **方法论的使用**: 切到调试模式，逐条追问「为什么我要幻想未来？我终将死去」\n- **结论**: 念头被意识到即消散\n- **结果**: 回到对牙刷的觉察，「我只需要注意牙刷是多么的好」\n\n### 案例 2: 冥想收件箱零\n- **问题**: 堆积的未解决情绪像藤壶黏住内心\n- **方法论的使用**: 每天静坐一小时，不抵抗念头，让它们逐个浮现\n- **结论**: 解决它们不需要工作，只需要观察（成年后有了距离与时间）\n- **结果**: 有一天进入「收件箱零」的心境——快乐、幸福和平静\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 睡前/独处时脑子停不下来\n2. 焦虑反刍：「总在担心/反复想同一件事」\n3. 想开始冥想但不知怎么做\n4. 专注力差：「做什么都分心」\n\n### 语言信号\n\n- \"我脑子停不下来/胡思乱想\"\n- \"怎么冥想/冥想有用吗\"\n- \"我总是焦虑/担心\"\n- \"monkey mind / can't stop thinking / how to meditate\"\n\n### 与相邻 skill 的区分\n\n- 与 `screen-detox` 的区别: 本 skill 处理内部杂念；屏幕戒断处理外部刺激源\n- 与 `rational-buddhism` 的区别: 冥想是技术，理性佛教是验证该技术的哲学框架\n\n## E — 可执行步骤 (Execution)\n\n1. **切换调试模式**\n   - 完成标准: 发现自己在反刍/幻想时，暂停并问「我现在为什么有这个想法？」\n   - 判停条件: 若念头指向必须马上处理的实际问题（火灾/截止），先处理问题再回来\n\n2. **分类念头**\n   - 完成标准: 把念头标为「恐惧类」或「欲望类」或「中性」，体会分类后的距离感\n\n3. **启动每日冥想**\n   - 完成标准: 每天固定时间静坐（起步 10–20 分钟，目标 1 小时），只观察不抵抗，连续 60 天\n\n4. **做情绪收件箱整理**\n   - 完成标准: 每周一次，把浮现的旧情绪写下来（写日志=写作冥想），标记已处理/待处理\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 急性精神危机/严重抑郁发作（先就医，冥想不能替代治疗）\n- 用户需要立刻行动时（观察念头≠逃避行动）\n\n### 作者在书中警告的失败模式\n\n- 用冥想控制情绪: 「冥想并不意味你能突然获得控制你内心状态的超能力」，它先让你看见失控\n- 期待超能力: 理性佛教拒绝「冥想带来漂浮/超能力」的玄学承诺\n\n### 作者的盲点 / 时代局限\n\n- 「每天一小时」对大多数人门槛过高，作者以自身高投入为标准\n- 冥想收益是个人体验证据，个体差异大\n\n### 容易混淆的邻近方法论\n\n- `happiness-skill`: 冥想是幸福训练的工具之一\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `happiness-skill`、`screen-detox`、`rational-buddhism`\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v13)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n",
+      "bodyMd": "# 心猴关停：观察思维与冥想\n\n## R — 原文 (Reading)\n\n> 它就像一只在扔粪便的猴子，在房间里跑来跑去，制造麻烦，大喊大叫，打碎东西。它是完全不受制的。……从计算机编程的角度来解释，我尽量让我的大脑以“调试模式”运行。……当你观察你的想法时，你就会意识到其中有多少想法是出于恐惧的。当你意识到恐惧的那一刻，甚至不用去尝试，它就会消失。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第二章·幸福\n\n## I — 方法论骨架 (Interpretation)\n\n大脑的内心独白（「心猴」）是一个失控的焦虑程序，而不是「我」。\n它大约 90% 的念头出于恐惧、10% 出于欲望；它默认开着，消耗能量、加速主观时间。\n关闭它的方法不是对抗，而是**观察**：\n① **调试模式**——像看程序执行一样逐条检视念头，问「为什么我有这个想法」「我现在真的需要处理它吗」；\n② **识别即分离**——念头被意识到的那一刻就失去控制力；\n③ **冥想=收件箱归零**——坐着不抵抗，让童年以来的未解决情绪（藤壶/未回复邮件）逐个浮现、被客观处理；\n④ **频率纪律**——每天一小时、坚持 60 天，作为早上第一件事；冥想是心灵的间歇性禁食。\n目标是让头脑成为仆人和工具，而不是主人；「专注的能力与迷失自我、活在当下、快乐以及更有效率的能力有关」。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 刷牙时的心猴\n- **问题**: 刷牙时幻想未来播客采访\n- **方法论的使用**: 切到调试模式，逐条追问「为什么我要幻想未来？我终将死去」\n- **结论**: 念头被意识到即消散\n- **结果**: 回到对牙刷的觉察，「我只需要注意牙刷是多么的好」\n\n### 案例 2: 冥想收件箱零\n- **问题**: 堆积的未解决情绪像藤壶黏住内心\n- **方法论的使用**: 每天静坐一小时，不抵抗念头，让它们逐个浮现\n- **结论**: 解决它们不需要工作，只需要观察（成年后有了距离与时间）\n- **结果**: 有一天进入「收件箱零」的心境——快乐、幸福和平静\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 睡前/独处时脑子停不下来\n2. 焦虑反刍：「总在担心/反复想同一件事」\n3. 想开始冥想但不知怎么做\n4. 专注力差：「做什么都分心」\n\n### 语言信号\n\n- \"我脑子停不下来/胡思乱想\"\n- \"怎么冥想/冥想有用吗\"\n- \"我总是焦虑/担心\"\n- \"monkey mind / can't stop thinking / how to meditate\"\n\n### 与相邻 skill 的区分\n\n- 与 `screen-detox` 的区别: 本 skill 处理内部杂念；屏幕戒断处理外部刺激源\n- 与 `rational-buddhism` 的区别: 冥想是技术，理性佛教是验证该技术的哲学框架\n\n## E — 可执行步骤 (Execution)\n\n1. **切换调试模式**\n   - 完成标准: 发现自己在反刍/幻想时，暂停并问「我现在为什么有这个想法？」\n   - 判停条件: 若念头指向必须马上处理的实际问题（火灾/截止），先处理问题再回来\n\n2. **分类念头**\n   - 完成标准: 把念头标为「恐惧类」或「欲望类」或「中性」，体会分类后的距离感\n\n3. **启动每日冥想**\n   - 完成标准: 每天固定时间静坐（起步 10–20 分钟，目标 1 小时），只观察不抵抗，连续 60 天\n\n4. **做情绪收件箱整理**\n   - 完成标准: 每周一次，把浮现的旧情绪写下来（写日志=写作冥想），标记已处理/待处理\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 急性精神危机/严重抑郁发作（先就医，冥想不能替代治疗）\n- 用户需要立刻行动时（观察念头≠逃避行动）\n\n### 作者在书中警告的失败模式\n\n- 用冥想控制情绪: 「冥想并不意味你能突然获得控制你内心状态的超能力」，它先让你看见失控\n- 期待超能力: 理性佛教拒绝「冥想带来漂浮/超能力」的玄学承诺\n\n### 作者的盲点 / 时代局限\n\n- 「每天一小时」对大多数人门槛过高，作者以自身高投入为标准\n- 冥想收益是个人体验证据，个体差异大\n\n### 容易混淆的邻近方法论\n\n- `happiness-skill`: 冥想是幸福训练的工具之一\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `happiness-skill`、`screen-detox`、`rational-buddhism`\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v13)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n"
+    },
+    {
+      "slug": "peer-selection",
+      "name": "peer-selection",
+      "dir": "books/naval-almanack-skill/peer-selection",
+      "path": "books/naval-almanack-skill/peer-selection/SKILL.md",
+      "desc": "当用户纠结交朋友/选伴侣/换圈子、感觉被周围人拖累、问「该不该疏远某人」时调用。 核心理念: 五只黑猩猩理论(你的行为由最常接触的5人预测); 同伴是主动选择而非巧合; 只与价值观一致者深交, 远离愤世嫉俗者/愤怒者。 不适用于: 职场必须共事的同事关系(可先设边界)。 Triggers: 朋友/圈子/伴侣/该不该疏远/被拖累/五只黑猩猩/peer/friends/circle/values",
+      "descZh": "",
+      "triggers": [
+        "职场必须共事的同事关系(可先设边界)"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/kangarooking/cangjie-skill.git",
+        "copy": "cp -r books/naval-almanack-skill/peer-selection ~/.claude/skills/peer-selection",
+        "raw": "https://raw.githubusercontent.com/kangarooking/cangjie-skill/a28de55ba881b9928956a55048f743f7a9e3b23e/books/naval-almanack-skill/peer-selection/SKILL.md",
+        "saveAs": "~/.claude/skills/peer-selection/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:dcbbdc8a059a3f265b853874a23905be17d271ed970040412893026209827687",
+      "bytes": 5487,
+      "wordCount": 223,
+      "repoLicense": "MIT",
+      "commit": "a28de55ba881b9928956a55048f743f7a9e3b23e",
+      "branch": "main",
+      "body": "---\nname: peer-selection\ndescription: |\n  当用户纠结交朋友/选伴侣/换圈子、感觉被周围人拖累、问「该不该疏远某人」时调用。\n  核心理念: 五只黑猩猩理论(你的行为由最常接触的5人预测); 同伴是主动选择而非巧合; 只与价值观一致者深交, 远离愤世嫉俗者/愤怒者。\n  不适用于: 职场必须共事的同事关系(可先设边界)。\n  Triggers: 朋友/圈子/伴侣/该不该疏远/被拖累/五只黑猩猩/peer/friends/circle/values\nsource_book: 《纳瓦尔宝典：财富与幸福指南》 纳瓦尔·拉维坎特\nsource_chapter: 第二章·幸福 / 第一节 学习幸福 / 习惯造就幸福\ntags: [relationship, happiness, values, community]\nrelated_skills:\n  - slug: happiness-skill\n    relation: composes-with\n  - slug: long-term-compounding\n    relation: composes-with\n  - slug: honesty-communication\n    relation: composes-with\n---\n\n# 同伴选择：五只黑猩猩\n\n## R — 原文 (Reading)\n\n> 有个“五只黑猩猩的理论”，你可以通过它最常接触的五个黑猩猩来预测一个黑猩猩的行为。……你不应该随意地选择你的朋友，仅仅是因为你们住的比较近或者碰巧在一起工作。选择了正确的五只黑猩猩的人，是最快乐和最乐观的人。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第二章·幸福\n\n## I — 方法论骨架 (Interpretation)\n\n你的行为、情绪和成就由**最常接触的五个人**预测——所以同伴选择是人生最重要的主动决策之一。\n三个原则：\n① **主动选择**——朋友不是地理/巧合的产物，而是价值观筛选的结果；\n② **按场景配置**——「工作时，身边要有比你更成功的人；玩乐时，身边要有比你更快乐的人」；\n③ **远离负向者**——愤世嫉俗者/悲观主义者会传染负面预期；处理冲突的第一规则是「不要和那些经常发生冲突的人在一起」；「如果你不能看到你与某人一起工作一辈子，那么连一天也不要和他共事」。\n判断信号：总说自己诚实的人多半不诚实；花很多时间谈论价值观的人可能在掩盖什么；\n价值观一致时小事不重要，价值观冲突才是争吵的根源。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 贝赫扎德的「哇」\n- **问题**: 如何保持对生活的感恩与乐观\n- **方法论的使用**: 学习热爱生活、不浪费时间在不快乐的人身上\n- **结论**: 他的诀窍是「停止询问为什么，开始说哇」\n- **结果**: 成为作者心中选择正确同伴的样板\n\n### 案例 2: 从生活中剔除负面者\n- **问题**: 有人做损害他人的事\n- **方法论的使用**: 第一次提醒，不改就保持距离、从生活中切割\n- **结论**: 「越想靠近我的，你的价值观必须要更好」\n- **结果**: 圈子成为价值观过滤后的结果\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 换城市/换工作后的交友\n2. 被朋友拖累：「朋友总在抱怨，我也变消极了」\n3. 择偶/亲密关系选择\n4. 想改变圈子：「我想认识更优秀/更快乐的人」\n\n### 语言信号\n\n- \"我该交什么样的朋友\"\n- \"要不要疏远某人\"\n- \"怎么认识优秀的人/换圈子\"\n- \"who should I surround myself with / toxic friends\"\n\n### 与相邻 skill 的区分\n\n- 与 `long-term-compounding` 的区别: 本 skill 选「和谁生活」；复利 skill 选「和谁做生意」\n- 与 `honesty-communication` 的区别: 诚实是自我标准，本 skill 是外部筛选标准\n\n## E — 可执行步骤 (Execution)\n\n1. **盘点你的五只黑猩猩**\n   - 完成标准: 列出最常接触的 5 人，逐个标「积极/消极/中性」，评估他们预测了你的什么行为\n\n2. **按场景调整配置**\n   - 完成标准: 明确工作圈和玩乐圈分别缺什么（更成功/更快乐），列出 1 个具体加入动作（活动/社群/项目）\n\n3. **处理负向关系**\n   - 完成标准: 对每个消极关系选一：改造（明确沟通）、边界（减少接触频次）、或切割（退出）\n   - 判停条件: 若对方是亲属/同事无法切割，改为设置接触边界并补齐正向外圈\n\n4. **建立价值观检查**\n   - 完成标准: 写下一份 3–5 条核心价值观清单，用来判断新朋友是否「小事不重要、大事一致」\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 必须共事的同事/家人（先边界，再切割）\n- 用户自身处于低谷、把责任全推给环境（先自我负责再选圈）\n\n### 作者在书中警告的失败模式\n\n- 随意选友: 「仅仅是因为你们住的比较近或者碰巧在一起工作」\n- 与经常冲突的人在一起: 冲突是低质量关系的信号，不是性格磨合\n\n### 作者的盲点 / 时代局限\n\n- 「远离不快乐的人」在家庭/社群文化中的执行成本高，且可能滑向同温层\n- 五只黑猩猩是预测性比喻，非严谨心理学结论\n\n### 容易混淆的邻近方法论\n\n- `long-term-compounding`: 生意伙伴选「能共事一辈子」；生活同伴选「价值观一致+积极」\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `happiness-skill`、`long-term-compounding`、`honesty-communication`\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v15)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n",
+      "bodyMd": "# 同伴选择：五只黑猩猩\n\n## R — 原文 (Reading)\n\n> 有个“五只黑猩猩的理论”，你可以通过它最常接触的五个黑猩猩来预测一个黑猩猩的行为。……你不应该随意地选择你的朋友，仅仅是因为你们住的比较近或者碰巧在一起工作。选择了正确的五只黑猩猩的人，是最快乐和最乐观的人。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第二章·幸福\n\n## I — 方法论骨架 (Interpretation)\n\n你的行为、情绪和成就由**最常接触的五个人**预测——所以同伴选择是人生最重要的主动决策之一。\n三个原则：\n① **主动选择**——朋友不是地理/巧合的产物，而是价值观筛选的结果；\n② **按场景配置**——「工作时，身边要有比你更成功的人；玩乐时，身边要有比你更快乐的人」；\n③ **远离负向者**——愤世嫉俗者/悲观主义者会传染负面预期；处理冲突的第一规则是「不要和那些经常发生冲突的人在一起」；「如果你不能看到你与某人一起工作一辈子，那么连一天也不要和他共事」。\n判断信号：总说自己诚实的人多半不诚实；花很多时间谈论价值观的人可能在掩盖什么；\n价值观一致时小事不重要，价值观冲突才是争吵的根源。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 贝赫扎德的「哇」\n- **问题**: 如何保持对生活的感恩与乐观\n- **方法论的使用**: 学习热爱生活、不浪费时间在不快乐的人身上\n- **结论**: 他的诀窍是「停止询问为什么，开始说哇」\n- **结果**: 成为作者心中选择正确同伴的样板\n\n### 案例 2: 从生活中剔除负面者\n- **问题**: 有人做损害他人的事\n- **方法论的使用**: 第一次提醒，不改就保持距离、从生活中切割\n- **结论**: 「越想靠近我的，你的价值观必须要更好」\n- **结果**: 圈子成为价值观过滤后的结果\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 换城市/换工作后的交友\n2. 被朋友拖累：「朋友总在抱怨，我也变消极了」\n3. 择偶/亲密关系选择\n4. 想改变圈子：「我想认识更优秀/更快乐的人」\n\n### 语言信号\n\n- \"我该交什么样的朋友\"\n- \"要不要疏远某人\"\n- \"怎么认识优秀的人/换圈子\"\n- \"who should I surround myself with / toxic friends\"\n\n### 与相邻 skill 的区分\n\n- 与 `long-term-compounding` 的区别: 本 skill 选「和谁生活」；复利 skill 选「和谁做生意」\n- 与 `honesty-communication` 的区别: 诚实是自我标准，本 skill 是外部筛选标准\n\n## E — 可执行步骤 (Execution)\n\n1. **盘点你的五只黑猩猩**\n   - 完成标准: 列出最常接触的 5 人，逐个标「积极/消极/中性」，评估他们预测了你的什么行为\n\n2. **按场景调整配置**\n   - 完成标准: 明确工作圈和玩乐圈分别缺什么（更成功/更快乐），列出 1 个具体加入动作（活动/社群/项目）\n\n3. **处理负向关系**\n   - 完成标准: 对每个消极关系选一：改造（明确沟通）、边界（减少接触频次）、或切割（退出）\n   - 判停条件: 若对方是亲属/同事无法切割，改为设置接触边界并补齐正向外圈\n\n4. **建立价值观检查**\n   - 完成标准: 写下一份 3–5 条核心价值观清单，用来判断新朋友是否「小事不重要、大事一致」\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 必须共事的同事/家人（先边界，再切割）\n- 用户自身处于低谷、把责任全推给环境（先自我负责再选圈）\n\n### 作者在书中警告的失败模式\n\n- 随意选友: 「仅仅是因为你们住的比较近或者碰巧在一起工作」\n- 与经常冲突的人在一起: 冲突是低质量关系的信号，不是性格磨合\n\n### 作者的盲点 / 时代局限\n\n- 「远离不快乐的人」在家庭/社群文化中的执行成本高，且可能滑向同温层\n- 五只黑猩猩是预测性比喻，非严谨心理学结论\n\n### 容易混淆的邻近方法论\n\n- `long-term-compounding`: 生意伙伴选「能共事一辈子」；生活同伴选「价值观一致+积极」\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `happiness-skill`、`long-term-compounding`、`honesty-communication`\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v15)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n"
+    },
+    {
+      "slug": "principal-agent",
+      "name": "principal-agent",
+      "dir": "books/naval-almanack-skill/principal-agent",
+      "path": "books/naval-almanack-skill/principal-agent/SKILL.md",
+      "desc": "当用户选择职业/组织/合作方式、困惑「为什么大公司磨洋工/小公司拼命」「该不该自己干」时调用。 核心理念: 委托人(主人)会把事做好, 代理人会为自己利益优化; 收益与创造价值绑得越紧, 越像委托人; 别让媒体洗脑你需要代理人。 不适用于: 具体薪酬谈判数字、组织架构设计细节。 Triggers: 激励/代理/主人/打工 vs 创业/利益绑定/principal/agent/incentive",
+      "descZh": "",
+      "triggers": [
+        "具体薪酬谈判数字",
+        "组织架构设计细节"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/kangarooking/cangjie-skill.git",
+        "copy": "cp -r books/naval-almanack-skill/principal-agent ~/.claude/skills/principal-agent",
+        "raw": "https://raw.githubusercontent.com/kangarooking/cangjie-skill/a28de55ba881b9928956a55048f743f7a9e3b23e/books/naval-almanack-skill/principal-agent/SKILL.md",
+        "saveAs": "~/.claude/skills/principal-agent/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:463b7e667668703d2ae092776064532861c70ba8c538cd0cdf0442b4a1b14713",
+      "bytes": 5462,
+      "wordCount": 220,
+      "repoLicense": "MIT",
+      "commit": "a28de55ba881b9928956a55048f743f7a9e3b23e",
+      "branch": "main",
+      "body": "---\nname: principal-agent\ndescription: |\n  当用户选择职业/组织/合作方式、困惑「为什么大公司磨洋工/小公司拼命」「该不该自己干」时调用。\n  核心理念: 委托人(主人)会把事做好, 代理人会为自己利益优化; 收益与创造价值绑得越紧, 越像委托人; 别让媒体洗脑你需要代理人。\n  不适用于: 具体薪酬谈判数字、组织架构设计细节。\n  Triggers: 激励/代理/主人/打工 vs 创业/利益绑定/principal/agent/incentive\nsource_book: 《纳瓦尔宝典：财富与幸福指南》 纳瓦尔·拉维坎特\nsource_chapter: 第一章·财富 / 第二节 培养判断力 / 经济学 / 委托-代理问题\ntags: [economics, incentive, career, organization]\nrelated_skills:\n  - slug: wealth-structure\n    relation: composes-with\n  - slug: judgment-training\n    relation: composes-with\n---\n\n# 委托-代理识别\n\n## R — 原文 (Reading)\n\n> 如果你想做好，那你必须亲自去做。当你是委托人，那你就是主人你就会关心并且会把工作做得很好。当你是代理人，你是在为别人的利益做事，你可能会把事情做得很糟糕。……你能把某个人的收益和他所创造的价值联系得越紧密，就越能把他们变成委托人。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第一章·财富\n\n## I — 方法论骨架 (Interpretation)\n\n委托-代理问题是微观经济学最基本的问题：**利益归属决定行为质量**。\n当你是委托人（自己的钱/自己的事），你会做好；当你是代理人（为别人利益做事），你会为自己优化。\n推论三条：\n① 选择位置时，优先选「每个人都能感到自己是委托人」的小组织；\n② 设计合作时，把收益与创造的价值绑定得越紧越好（股权、分成、责任到人）；\n③ 警惕「代理人叙事」——媒体和现代社会长期洗脑你「需要一个知识渊博的代理人」，而委托人直觉其实人人都有。\n用在职业上：为别人打工=代理人拿最低报酬；拥有产权和判断=委托人拿剩余。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 为别人工作拿最低报酬\n- **问题**: 为什么高薪打工者无法致富\n- **方法论的使用**: 雇主是委托人（承担风险/责任/知识产权），雇员是代理人拿「最低限度的报酬」\n- **结论**: 工资再高也不是财富\n- **结果**: 医生开私人诊所（品牌）后才成为委托人\n\n### 案例 2: 小公司人人像委托人\n- **问题**: 如何让团队用心做事\n- **方法论的使用**: 越小的公司，每个人越能感觉到自己是委托人\n- **结论**: 「你越觉得自己不是代理人，你将会把工作做得更好」\n- **结果**: 组织结构越扁平、收益越绑定，行为质量越高\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 职业选择：「去大公司还是小创业公司」「打工还是自己干」\n2. 合作设计：「怎么设计分成/激励让合伙人真的上心」\n3. 困惑现象：「为什么同事都在磨洋工/外包总出问题」\n4. 自我诊断：「我是在为谁的利益工作」\n\n### 语言信号\n\n- \"大公司 vs 小公司怎么选\"\n- \"怎么让团队/合伙人更用心\"\n- \"为什么没人对结果负责\"\n- \"principal-agent / ownership / who benefits\"\n\n### 与相邻 skill 的区分\n\n- 与 `wealth-structure` 的区别: 财富结构是个人资产框架；本 skill 是组织/合作中的激励透镜\n- 与 `judgment-training` 的区别: 委托代理是判断力心智模型库里的一个模型\n\n## E — 可执行步骤 (Execution)\n\n1. **诊断你当前的角色**\n   - 完成标准: 回答「我的收益与创造的价值绑定程度（低/中/高）」「我是委托人还是代理人」\n\n2. **寻找或创建委托人位置**\n   - 完成标准: 列出 1–2 个具体动作（要求股权/分成、做有产权的事、加入小组织）\n\n3. **检查合作方的激励结构**\n   - 完成标准: 对每个合作者问「他赢的判定标准是什么」，确认利益是否一致\n   - 判停条件: 若发现纯代理结构（收益完全脱钩）且无法改变，标记为高风险合作\n\n4. **为未来决策保留记录**\n   - 完成标准: 记录本次诊断结论，作为下次职业/合作选择的输入\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 用户要具体薪酬谈判话术（本 skill 给结构不给话术）\n- 管理细节（如何监督/考核）不是本 skill 的重点——先改结构再谈管理\n\n### 作者在书中警告的失败模式\n\n- 依赖代理人: 「媒体和现代社会花了大量时间来洗脑你：让你认为需要一个代理人」\n- 收益脱钩: 收益与价值脱钩时，代理人必然为自己优化\n\n### 作者的盲点 / 时代局限\n\n- 「小公司人人像委托人」在规模化后不成立，作者未给大组织化解决方案\n- 委托-代理只是心智模型之一，不能解释所有组织问题\n\n### 容易混淆的邻近方法论\n\n- `wealth-structure`: 两者的交集是「股权绑定」，但视角不同（组织 vs 个人）\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `wealth-structure`（股权绑定是共同解法）、`judgment-training`\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v07)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n",
+      "bodyMd": "# 委托-代理识别\n\n## R — 原文 (Reading)\n\n> 如果你想做好，那你必须亲自去做。当你是委托人，那你就是主人你就会关心并且会把工作做得很好。当你是代理人，你是在为别人的利益做事，你可能会把事情做得很糟糕。……你能把某个人的收益和他所创造的价值联系得越紧密，就越能把他们变成委托人。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第一章·财富\n\n## I — 方法论骨架 (Interpretation)\n\n委托-代理问题是微观经济学最基本的问题：**利益归属决定行为质量**。\n当你是委托人（自己的钱/自己的事），你会做好；当你是代理人（为别人利益做事），你会为自己优化。\n推论三条：\n① 选择位置时，优先选「每个人都能感到自己是委托人」的小组织；\n② 设计合作时，把收益与创造的价值绑定得越紧越好（股权、分成、责任到人）；\n③ 警惕「代理人叙事」——媒体和现代社会长期洗脑你「需要一个知识渊博的代理人」，而委托人直觉其实人人都有。\n用在职业上：为别人打工=代理人拿最低报酬；拥有产权和判断=委托人拿剩余。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 为别人工作拿最低报酬\n- **问题**: 为什么高薪打工者无法致富\n- **方法论的使用**: 雇主是委托人（承担风险/责任/知识产权），雇员是代理人拿「最低限度的报酬」\n- **结论**: 工资再高也不是财富\n- **结果**: 医生开私人诊所（品牌）后才成为委托人\n\n### 案例 2: 小公司人人像委托人\n- **问题**: 如何让团队用心做事\n- **方法论的使用**: 越小的公司，每个人越能感觉到自己是委托人\n- **结论**: 「你越觉得自己不是代理人，你将会把工作做得更好」\n- **结果**: 组织结构越扁平、收益越绑定，行为质量越高\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 职业选择：「去大公司还是小创业公司」「打工还是自己干」\n2. 合作设计：「怎么设计分成/激励让合伙人真的上心」\n3. 困惑现象：「为什么同事都在磨洋工/外包总出问题」\n4. 自我诊断：「我是在为谁的利益工作」\n\n### 语言信号\n\n- \"大公司 vs 小公司怎么选\"\n- \"怎么让团队/合伙人更用心\"\n- \"为什么没人对结果负责\"\n- \"principal-agent / ownership / who benefits\"\n\n### 与相邻 skill 的区分\n\n- 与 `wealth-structure` 的区别: 财富结构是个人资产框架；本 skill 是组织/合作中的激励透镜\n- 与 `judgment-training` 的区别: 委托代理是判断力心智模型库里的一个模型\n\n## E — 可执行步骤 (Execution)\n\n1. **诊断你当前的角色**\n   - 完成标准: 回答「我的收益与创造的价值绑定程度（低/中/高）」「我是委托人还是代理人」\n\n2. **寻找或创建委托人位置**\n   - 完成标准: 列出 1–2 个具体动作（要求股权/分成、做有产权的事、加入小组织）\n\n3. **检查合作方的激励结构**\n   - 完成标准: 对每个合作者问「他赢的判定标准是什么」，确认利益是否一致\n   - 判停条件: 若发现纯代理结构（收益完全脱钩）且无法改变，标记为高风险合作\n\n4. **为未来决策保留记录**\n   - 完成标准: 记录本次诊断结论，作为下次职业/合作选择的输入\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 用户要具体薪酬谈判话术（本 skill 给结构不给话术）\n- 管理细节（如何监督/考核）不是本 skill 的重点——先改结构再谈管理\n\n### 作者在书中警告的失败模式\n\n- 依赖代理人: 「媒体和现代社会花了大量时间来洗脑你：让你认为需要一个代理人」\n- 收益脱钩: 收益与价值脱钩时，代理人必然为自己优化\n\n### 作者的盲点 / 时代局限\n\n- 「小公司人人像委托人」在规模化后不成立，作者未给大组织化解决方案\n- 委托-代理只是心智模型之一，不能解释所有组织问题\n\n### 容易混淆的邻近方法论\n\n- `wealth-structure`: 两者的交集是「股权绑定」，但视角不同（组织 vs 个人）\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `wealth-structure`（股权绑定是共同解法）、`judgment-training`\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v07)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n"
+    },
+    {
+      "slug": "rational-buddhism",
+      "name": "rational-buddhism",
+      "dir": "books/naval-almanack-skill/rational-buddhism",
+      "path": "books/naval-almanack-skill/rational-buddhism/SKILL.md",
+      "desc": "当用户问某主张/玄学/灵修该不该信、想建立自己的验证标准、或寻找科学与精神的结合点时调用。 核心理念: 尝试一切, 亲自测试, 保持怀疑, 保留有用的, 舍弃没用的; 不可证伪的主张不进入基本真理; 冥想/接纳等内在技术可保留。 不适用于: 需要信仰安慰的临终/哀伤场景(尊重个体选择)。 Triggers: 该不该信/玄学/灵修/冥想/可证伪/验证/理性/rational buddhism/verify/belief",
+      "descZh": "",
+      "triggers": [
+        "需要信仰安慰的临终/哀伤场景(尊重个体选择)"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/kangarooking/cangjie-skill.git",
+        "copy": "cp -r books/naval-almanack-skill/rational-buddhism ~/.claude/skills/rational-buddhism",
+        "raw": "https://raw.githubusercontent.com/kangarooking/cangjie-skill/a28de55ba881b9928956a55048f743f7a9e3b23e/books/naval-almanack-skill/rational-buddhism/SKILL.md",
+        "saveAs": "~/.claude/skills/rational-buddhism/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:4be72c3847eb94102f2c2a528985b485a869d2be59678653fb1df4c4637cac99",
+      "bytes": 5676,
+      "wordCount": 223,
+      "repoLicense": "MIT",
+      "commit": "a28de55ba881b9928956a55048f743f7a9e3b23e",
+      "branch": "main",
+      "body": "---\nname: rational-buddhism\ndescription: |\n  当用户问某主张/玄学/灵修该不该信、想建立自己的验证标准、或寻找科学与精神的结合点时调用。\n  核心理念: 尝试一切, 亲自测试, 保持怀疑, 保留有用的, 舍弃没用的; 不可证伪的主张不进入基本真理; 冥想/接纳等内在技术可保留。\n  不适用于: 需要信仰安慰的临终/哀伤场景(尊重个体选择)。\n  Triggers: 该不该信/玄学/灵修/冥想/可证伪/验证/理性/rational buddhism/verify/belief\nsource_book: 《纳瓦尔宝典：财富与幸福指南》 纳瓦尔·拉维坎特\nsource_chapter: 第二章·幸福 / 第三节 哲学 / 理性佛教\ntags: [philosophy, verification, mindfulness, epistemology]\nrelated_skills:\n  - slug: judgment-training\n    relation: depends-on\n  - slug: monkey-mind-meditation\n    relation: composes-with\n  - slug: life-meaning\n    relation: composes-with\n---\n\n# 理性佛教：验证一切\n\n## R — 原文 (Reading)\n\n> 尝试一切，亲自测试，保持怀疑，保留有用的，舍弃没用的。……理性的部分意味着我必须与科学和进化和解。我必须拒绝所有我不能验证的内容。……如果我无法验证它，或者如果我不能通过科学到达那里，那么它可能是真的，也可能是假的，但它肯定是无法证伪的，所以我不能将它视为基本真理。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第二章·幸福\n\n## I — 方法论骨架 (Interpretation)\n\n「理性佛教」是用科学标准过滤、保留内在技术的精神立场：\n① **可证伪底线**——「如果不能做出可证伪的预测，那它就不是科学」；无法验证/无法证伪的主张（业报、脉轮、超能力）不能进入基本真理；\n② **亲自测试**——冥想对你有好处吗？理清思路是好事吗？亲自验证后再采纳；\n③ **保留有用的**——冥想、观察、接纳等经时间考验的内在工作方法与科学并不冲突；\n④ **进化是约束原则**——进化论解释人是什么（生存与复制机器），佛教解释内在状态怎么调，二者可调和；\n⑤ **保持怀疑但不关闭体验**——「我不赞成任何幻想的东西」，但也别因「听起来玄」就拒绝亲测（读《当下的力量》的例子：先合上书说屁话，后来带着积极心态尝试，感觉很好）。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 拒绝不可验证的教义\n- **问题**: 佛教里的业报/脉轮该信吗\n- **方法论的使用**: 「我看过。我不记得任何前世。我没有任何相关记忆。我就只是不能相信。」\n- **结论**: 无法亲自验证=不能视为基本真理\n- **结果**: 保留佛教的内在工作，拒绝玄学部分\n\n### 案例 2: 读《当下的力量》的转变\n- **问题**: 对能量练习的第一反应是「这是屁话」\n- **方法论的使用**: 「我会带着积极的心态去做。我躺下，并尝试冥想。」\n- **结论**: 「很好，如果我相信它，或许它能起作用」\n- **结果**: 体验很好——验证优先于偏见\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 面对玄学/灵修/伪科学主张：「这个该信吗」\n2. 建立个人验证标准：「我该信什么」\n3. 科学与精神之间的摇摆：「科学和冥想冲突吗」\n4. 想尝试但保持理性：「怎么亲测又不走火入魔」\n\n### 语言信号\n\n- \"这东西是真的吗/该信吗\"\n- \"怎么验证一个说法\"\n- \"科学 vs 灵修/冥想\"\n- \"is this true / falsifiable / rational approach to spirituality\"\n\n### 与相邻 skill 的区分\n\n- 与 `judgment-training` 的区别: 判断力是通用思考能力；本 skill 是「什么可以信」的验证标准\n- 与 `monkey-mind-meditation` 的区别: 冥想是技术，本 skill 是允许/拒绝技术的哲学框架\n\n## E — 可执行步骤 (Execution)\n\n1. **跑可证伪测试**\n   - 完成标准: 对主张问「它能做出可证伪的预测吗？失败时我能发现吗？」；不能→标记为「非基本真理」\n\n2. **跑亲自验证**\n   - 完成标准: 若主张可体验（冥想/断食/练习），设计一个 30 天亲测计划，记录前后差异\n\n3. **按结果取舍**\n   - 完成标准: 保留有用的（可复现体验），舍弃没用的（无效果/无法验证），不因来源迷信也不因标签拒绝\n\n4. **写入个人原则**\n   - 完成标准: 形成 3 条自己的「相信清单」，注明每条的证据等级\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 用户寻求宗教/灵性安慰的临终关怀、哀伤场景（尊重信仰选择，不灌输理性主义）\n- 用「可证伪」标准审判一切人文领域（文学/爱/意义不适用该标准）\n\n### 作者在书中警告的失败模式\n\n- 把无法证伪当真理: 脉轮、业报等「花里胡哨的命名」不能进入基本真理\n- 迷信权威替代亲测: 一切都要亲自测试\n\n### 作者的盲点 / 时代局限\n\n- 「亲自验证」本身也是主观证据，作者对玄学用可证伪标准、对自己体验用个人标准，存在双标\n- 理性主义框架对非理性需求的解释力有限\n\n### 容易混淆的邻近方法论\n\n- `judgment-training`: 可证伪性是判断力心智模型库之一\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- depends-on: `judgment-training`（可证伪标准是判断力产物）\n- composes-with: `monkey-mind-meditation`、`life-meaning`\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v18)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n",
+      "bodyMd": "# 理性佛教：验证一切\n\n## R — 原文 (Reading)\n\n> 尝试一切，亲自测试，保持怀疑，保留有用的，舍弃没用的。……理性的部分意味着我必须与科学和进化和解。我必须拒绝所有我不能验证的内容。……如果我无法验证它，或者如果我不能通过科学到达那里，那么它可能是真的，也可能是假的，但它肯定是无法证伪的，所以我不能将它视为基本真理。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第二章·幸福\n\n## I — 方法论骨架 (Interpretation)\n\n「理性佛教」是用科学标准过滤、保留内在技术的精神立场：\n① **可证伪底线**——「如果不能做出可证伪的预测，那它就不是科学」；无法验证/无法证伪的主张（业报、脉轮、超能力）不能进入基本真理；\n② **亲自测试**——冥想对你有好处吗？理清思路是好事吗？亲自验证后再采纳；\n③ **保留有用的**——冥想、观察、接纳等经时间考验的内在工作方法与科学并不冲突；\n④ **进化是约束原则**——进化论解释人是什么（生存与复制机器），佛教解释内在状态怎么调，二者可调和；\n⑤ **保持怀疑但不关闭体验**——「我不赞成任何幻想的东西」，但也别因「听起来玄」就拒绝亲测（读《当下的力量》的例子：先合上书说屁话，后来带着积极心态尝试，感觉很好）。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 拒绝不可验证的教义\n- **问题**: 佛教里的业报/脉轮该信吗\n- **方法论的使用**: 「我看过。我不记得任何前世。我没有任何相关记忆。我就只是不能相信。」\n- **结论**: 无法亲自验证=不能视为基本真理\n- **结果**: 保留佛教的内在工作，拒绝玄学部分\n\n### 案例 2: 读《当下的力量》的转变\n- **问题**: 对能量练习的第一反应是「这是屁话」\n- **方法论的使用**: 「我会带着积极的心态去做。我躺下，并尝试冥想。」\n- **结论**: 「很好，如果我相信它，或许它能起作用」\n- **结果**: 体验很好——验证优先于偏见\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 面对玄学/灵修/伪科学主张：「这个该信吗」\n2. 建立个人验证标准：「我该信什么」\n3. 科学与精神之间的摇摆：「科学和冥想冲突吗」\n4. 想尝试但保持理性：「怎么亲测又不走火入魔」\n\n### 语言信号\n\n- \"这东西是真的吗/该信吗\"\n- \"怎么验证一个说法\"\n- \"科学 vs 灵修/冥想\"\n- \"is this true / falsifiable / rational approach to spirituality\"\n\n### 与相邻 skill 的区分\n\n- 与 `judgment-training` 的区别: 判断力是通用思考能力；本 skill 是「什么可以信」的验证标准\n- 与 `monkey-mind-meditation` 的区别: 冥想是技术，本 skill 是允许/拒绝技术的哲学框架\n\n## E — 可执行步骤 (Execution)\n\n1. **跑可证伪测试**\n   - 完成标准: 对主张问「它能做出可证伪的预测吗？失败时我能发现吗？」；不能→标记为「非基本真理」\n\n2. **跑亲自验证**\n   - 完成标准: 若主张可体验（冥想/断食/练习），设计一个 30 天亲测计划，记录前后差异\n\n3. **按结果取舍**\n   - 完成标准: 保留有用的（可复现体验），舍弃没用的（无效果/无法验证），不因来源迷信也不因标签拒绝\n\n4. **写入个人原则**\n   - 完成标准: 形成 3 条自己的「相信清单」，注明每条的证据等级\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 用户寻求宗教/灵性安慰的临终关怀、哀伤场景（尊重信仰选择，不灌输理性主义）\n- 用「可证伪」标准审判一切人文领域（文学/爱/意义不适用该标准）\n\n### 作者在书中警告的失败模式\n\n- 把无法证伪当真理: 脉轮、业报等「花里胡哨的命名」不能进入基本真理\n- 迷信权威替代亲测: 一切都要亲自测试\n\n### 作者的盲点 / 时代局限\n\n- 「亲自验证」本身也是主观证据，作者对玄学用可证伪标准、对自己体验用个人标准，存在双标\n- 理性主义框架对非理性需求的解释力有限\n\n### 容易混淆的邻近方法论\n\n- `judgment-training`: 可证伪性是判断力心智模型库之一\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- depends-on: `judgment-training`（可证伪标准是判断力产物）\n- composes-with: `monkey-mind-meditation`、`life-meaning`\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v18)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n"
+    },
+    {
+      "slug": "self-liberation",
+      "name": "self-liberation",
+      "dir": "books/naval-almanack-skill/self-liberation",
+      "path": "books/naval-almanack-skill/self-liberation/SKILL.md",
+      "desc": "当用户被别人的期望压垮、容易愤怒、或感觉被工作/责任困住、问「怎么说不/怎么不生气/怎么更自由」时调用。 核心理念: 期望不是你的合同(约定才是); 愤怒是自我惩罚; 就业自由来自低生活成本; 自由=免于被迫反应的自由。 不适用于: 违约/欠债等真正的约定责任。 Triggers: 期望/愤怒/自由/取悦别人/说不/就业自由/freedom/anger/expectations",
+      "descZh": "",
+      "triggers": [
+        "违约/欠债等真正的约定责任"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/kangarooking/cangjie-skill.git",
+        "copy": "cp -r books/naval-almanack-skill/self-liberation ~/.claude/skills/self-liberation",
+        "raw": "https://raw.githubusercontent.com/kangarooking/cangjie-skill/a28de55ba881b9928956a55048f743f7a9e3b23e/books/naval-almanack-skill/self-liberation/SKILL.md",
+        "saveAs": "~/.claude/skills/self-liberation/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:a9990170ff4dd2c68192033b67dfbdac51f6e9b64f65228774ca10be5e7ec078",
+      "bytes": 5503,
+      "wordCount": 224,
+      "repoLicense": "MIT",
+      "commit": "a28de55ba881b9928956a55048f743f7a9e3b23e",
+      "branch": "main",
+      "body": "---\nname: self-liberation\ndescription: |\n  当用户被别人的期望压垮、容易愤怒、或感觉被工作/责任困住、问「怎么说不/怎么不生气/怎么更自由」时调用。\n  核心理念: 期望不是你的合同(约定才是); 愤怒是自我惩罚; 就业自由来自低生活成本; 自由=免于被迫反应的自由。\n  不适用于: 违约/欠债等真正的约定责任。\n  Triggers: 期望/愤怒/自由/取悦别人/说不/就业自由/freedom/anger/expectations\nsource_book: 《纳瓦尔宝典：财富与幸福指南》 纳瓦尔·拉维坎特\nsource_chapter: 第二章·幸福 / 第二节 自救 / 选择解放自己\ntags: [freedom, boundaries, emotion, independence]\nrelated_skills:\n  - slug: happiness-skill\n    relation: composes-with\n  - slug: identity-work\n    relation: composes-with\n  - slug: honesty-communication\n    relation: composes-with\n---\n\n# 自我解放：期望、愤怒与自由\n\n## R — 原文 (Reading)\n\n> 如果你伤害别人是因为他们对你有期望，那是他们的问题。如果他们和你有约定，那就是你的问题。……愤怒是一种尽可能强烈地向对方表明你有能力使用暴力的方式。愤怒是暴力的前兆。……生活水平远远低于自己经济收入的人，享受着忙于改善生活方式的人无法理解的自由。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第二章·幸福\n\n## I — 方法论骨架 (Interpretation)\n\n自由的定义会从「享有自由」（想做什么就做什么）升级为「免于自由」（免于被迫反应、免于愤怒、免于被迫做事）。\n三个可操作的解放源：\n① **期望边界**——区分「期望」和「约定」：约定（合同/债务/承诺）必须守，期望（别人脑内剧本）不是你的问题；「勇气是不在乎别人的想法」；\n② **愤怒解体**——愤怒是与自己签订的契约（身心混乱直到现实改变），也是暴力的前兆；它先伤害握煤的人自己；\n③ **就业自由**——生活水平低于收入的人才有说「不」的底气；尝到自由的滋味，可能会让你失业，但那是自由的代价。\n时间是最硬的边界：珍惜时间高于一切，不在不想做的事/取悦别人上花时间。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 不再为小事愤怒\n- **问题**: 年轻时把愤怒当力量（「在我年轻充满睾丸的时候」）\n- **方法论的使用**: 把愤怒定义为热煤/暴力前兆，从生活里剔除愤怒者\n- **结论**: 「愤怒是你握在手里的一块热煤炭，等着把他扔给别人」\n- **结果**: 愤怒不再是核心价值观\n\n### 案例 2: 低生活成本的自由\n- **问题**: 如何拥有说「不」的能力\n- **方法论的使用**: 保持生活水平低于收入\n- **结论**: 「生活水平远远低于自己经济收入的人，享受着忙于改善生活方式的人无法理解的自由」\n- **结果**: 财务缓冲=话语自由\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 被家人/老板/社会的期望绑架：「他们觉得我应该……」\n2. 经常愤怒：「我控制不住生气」\n3. 不敢拒绝：「怕得罪人，总在取悦别人」\n4. 想辞职但不敢：「被工作困住了怎么办」\n\n### 语言信号\n\n- \"他们对我的期望压得我喘不过气\"\n- \"我总是忍不住生气\"\n- \"怎么拒绝别人/怎么说不\"\n- \"expectations / anger / how to say no / freedom\"\n\n### 与相邻 skill 的区分\n\n- 与 `honesty-communication` 的区别: 诚实是内部一致性，本 skill 是外部边界\n- 与 `identity-work` 的区别: 本 skill 解放「被期望绑架的自我」；身份工作处理「自我本身的结构」\n\n## E — 可执行步骤 (Execution)\n\n1. **拆分期望与约定**\n   - 完成标准: 列出你感到压力的所有「应该」，逐个标注「约定（要守）」或「期望（别人的问题）」\n\n2. **做一次期望断舍离**\n   - 完成标准: 挑 1 个纯期望，明确告诉对方「这是你的期望，不是我的约定」；或直接停止迎合\n   - 判停条件: 若涉及真实合同/债务/承诺，先履行约定再谈自由\n\n3. **愤怒检查**\n   - 完成标准: 下次愤怒触发时，暂停并写下「我在生什么气？这值得我支付身心混乱吗？」\n\n4. **检查就业自由缓冲**\n   - 完成标准: 计算支出/收入比；若接近 1:1，制定 3 个月降支计划（为自由买期权）\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 真实违约/负债场景（约定必须守，别用「期望论」自我开脱）\n- 工作中不能立即辞职的人（先建缓冲，再谈就业自由）\n\n### 作者在书中警告的失败模式\n\n- 把「期望」当「约定」: 守错合同会耗尽自己\n- 用愤怒做谈判工具: 愤怒=暴力前兆，先伤己再伤人\n\n### 作者的盲点 / 时代局限\n\n- 「别人的期望不是你的问题」在家庭/集体文化中的执行成本被低估\n- 作者有财务安全网；无缓冲者直接说「不」可能失业\n\n### 容易混淆的邻近方法论\n\n- `honesty-communication`: 拒绝别人时，本 skill 给边界，诚实 skill 给表达方式\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `happiness-skill`、`identity-work`、`honesty-communication`\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v12)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n",
+      "bodyMd": "# 自我解放：期望、愤怒与自由\n\n## R — 原文 (Reading)\n\n> 如果你伤害别人是因为他们对你有期望，那是他们的问题。如果他们和你有约定，那就是你的问题。……愤怒是一种尽可能强烈地向对方表明你有能力使用暴力的方式。愤怒是暴力的前兆。……生活水平远远低于自己经济收入的人，享受着忙于改善生活方式的人无法理解的自由。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第二章·幸福\n\n## I — 方法论骨架 (Interpretation)\n\n自由的定义会从「享有自由」（想做什么就做什么）升级为「免于自由」（免于被迫反应、免于愤怒、免于被迫做事）。\n三个可操作的解放源：\n① **期望边界**——区分「期望」和「约定」：约定（合同/债务/承诺）必须守，期望（别人脑内剧本）不是你的问题；「勇气是不在乎别人的想法」；\n② **愤怒解体**——愤怒是与自己签订的契约（身心混乱直到现实改变），也是暴力的前兆；它先伤害握煤的人自己；\n③ **就业自由**——生活水平低于收入的人才有说「不」的底气；尝到自由的滋味，可能会让你失业，但那是自由的代价。\n时间是最硬的边界：珍惜时间高于一切，不在不想做的事/取悦别人上花时间。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 不再为小事愤怒\n- **问题**: 年轻时把愤怒当力量（「在我年轻充满睾丸的时候」）\n- **方法论的使用**: 把愤怒定义为热煤/暴力前兆，从生活里剔除愤怒者\n- **结论**: 「愤怒是你握在手里的一块热煤炭，等着把他扔给别人」\n- **结果**: 愤怒不再是核心价值观\n\n### 案例 2: 低生活成本的自由\n- **问题**: 如何拥有说「不」的能力\n- **方法论的使用**: 保持生活水平低于收入\n- **结论**: 「生活水平远远低于自己经济收入的人，享受着忙于改善生活方式的人无法理解的自由」\n- **结果**: 财务缓冲=话语自由\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 被家人/老板/社会的期望绑架：「他们觉得我应该……」\n2. 经常愤怒：「我控制不住生气」\n3. 不敢拒绝：「怕得罪人，总在取悦别人」\n4. 想辞职但不敢：「被工作困住了怎么办」\n\n### 语言信号\n\n- \"他们对我的期望压得我喘不过气\"\n- \"我总是忍不住生气\"\n- \"怎么拒绝别人/怎么说不\"\n- \"expectations / anger / how to say no / freedom\"\n\n### 与相邻 skill 的区分\n\n- 与 `honesty-communication` 的区别: 诚实是内部一致性，本 skill 是外部边界\n- 与 `identity-work` 的区别: 本 skill 解放「被期望绑架的自我」；身份工作处理「自我本身的结构」\n\n## E — 可执行步骤 (Execution)\n\n1. **拆分期望与约定**\n   - 完成标准: 列出你感到压力的所有「应该」，逐个标注「约定（要守）」或「期望（别人的问题）」\n\n2. **做一次期望断舍离**\n   - 完成标准: 挑 1 个纯期望，明确告诉对方「这是你的期望，不是我的约定」；或直接停止迎合\n   - 判停条件: 若涉及真实合同/债务/承诺，先履行约定再谈自由\n\n3. **愤怒检查**\n   - 完成标准: 下次愤怒触发时，暂停并写下「我在生什么气？这值得我支付身心混乱吗？」\n\n4. **检查就业自由缓冲**\n   - 完成标准: 计算支出/收入比；若接近 1:1，制定 3 个月降支计划（为自由买期权）\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 真实违约/负债场景（约定必须守，别用「期望论」自我开脱）\n- 工作中不能立即辞职的人（先建缓冲，再谈就业自由）\n\n### 作者在书中警告的失败模式\n\n- 把「期望」当「约定」: 守错合同会耗尽自己\n- 用愤怒做谈判工具: 愤怒=暴力前兆，先伤己再伤人\n\n### 作者的盲点 / 时代局限\n\n- 「别人的期望不是你的问题」在家庭/集体文化中的执行成本被低估\n- 作者有财务安全网；无缓冲者直接说「不」可能失业\n\n### 容易混淆的邻近方法论\n\n- `honesty-communication`: 拒绝别人时，本 skill 给边界，诚实 skill 给表达方式\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `happiness-skill`、`identity-work`、`honesty-communication`\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v12)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n"
+    },
+    {
+      "slug": "decision-heuristics",
+      "name": "decision-heuristics",
+      "dir": "dist/naval-almanack-pack/decision-heuristics",
+      "path": "dist/naval-almanack-pack/decision-heuristics/SKILL.md",
+      "desc": "当用户在重大选择上纠结（换工作/买房/搬城/合伙/结婚）、列了利弊表还是拿不定主意时调用。 核心理念: 无法决定就答否; 三个重大决定(住哪/和谁/做什么)值得花一两年; 两个均等选择选短期更痛苦的路。 不适用于: 日常琐碎选择（晚饭吃什么）、信息查询。 Triggers: 纠结/拿不定主意/要不要/该不该/利弊/decision/hesitate/should I",
+      "descZh": "",
+      "triggers": [
+        "日常琐碎选择（晚饭吃什么）",
+        "信息查询"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/kangarooking/cangjie-skill.git",
+        "copy": "cp -r dist/naval-almanack-pack/decision-heuristics ~/.claude/skills/decision-heuristics",
+        "raw": "https://raw.githubusercontent.com/kangarooking/cangjie-skill/a28de55ba881b9928956a55048f743f7a9e3b23e/dist/naval-almanack-pack/decision-heuristics/SKILL.md",
+        "saveAs": "~/.claude/skills/decision-heuristics/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:d0eb95b1d04aa2d9fdeae43a628e19ffb2b70b4d94431c9ecf1e4432b00569ec",
+      "bytes": 5670,
+      "wordCount": 244,
+      "repoLicense": "MIT",
+      "commit": "a28de55ba881b9928956a55048f743f7a9e3b23e",
+      "branch": "main",
+      "body": "---\nname: decision-heuristics\ndescription: |\n  当用户在重大选择上纠结（换工作/买房/搬城/合伙/结婚）、列了利弊表还是拿不定主意时调用。\n  核心理念: 无法决定就答否; 三个重大决定(住哪/和谁/做什么)值得花一两年; 两个均等选择选短期更痛苦的路。\n  不适用于: 日常琐碎选择（晚饭吃什么）、信息查询。\n  Triggers: 纠结/拿不定主意/要不要/该不该/利弊/decision/hesitate/should I\nmetadata:\n  cangjie.generated-by: cangjie-tools v2.5.0\n  cangjie.capability-id: cap.naval.decision-heuristics\n  cangjie.capability-revision: 1\n  cangjie.bundle-id: bundle.naval-almanack\n  cangjie.source-title: 《纳瓦尔宝典：财富与幸福指南》\n  cangjie.tags: decision, heuristics, career, life-choice\n---\n<!-- capability_id: cap.naval.decision-heuristics | revision: 1 | status: active -->\n<!-- 来源: books/naval-almanack-skill/decision-heuristics/SKILL.md（正文逐字保留） -->\n\n# 重大决策启发式\n\n## R — 原文 (Reading)\n\n> 如果你无法下决定，就回答否。原因是，现代社会充满了选择。……当你选择某些事物时，你会被锁定一段很长的时间。……简单的启发式算法：如果你在一个困难的决定上有同等程度的分歧，那么就选择在短期内会更痛苦的那条路。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第一章·财富\n\n## I — 方法论骨架 (Interpretation)\n\n现代社会的选择无穷多，而每个重大选择的锁定时间极长（创业十年、感情五年以上、城市十年以上），\n所以决策的默认值是「否」——只有非常确定时才说「是」。\n三条可执行启发式：\n① **决策门**：无法决定就答否；做利弊电子表格本身就是「不够确定」的信号，忘掉它；\n② **三个重大决定**：住哪/和谁在一起/做什么决定人生轨迹，值得花一两年认真决定，同时对所有不重要的事说不；\n③ **短期痛苦原则**：两个均等选项之间，选短期更痛苦的那条——按复利逻辑它对应长期收益，而大脑本能回避短期痛苦。\n这套启发式专治「过度纠结」，不是用来分析日常小选择。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 读不懂的书与练酸痛的肌肉\n- **问题**: 大脑回避短期痛苦（读难书/健身）\n- **方法论的使用**: 把短期痛苦当长期收益的信号\n- **结论**: 「生命中大多数收益都是来自于短期的痛苦」\n- **结果**: 作者用健身/读书验证该原则并长期执行\n\n### 案例 2: 冷水澡的启示\n- **问题**: 每天早上面对令人逃避的冷水澡\n- **方法论的使用**: 大部分痛苦来自逃避，直接走进去\n- **结论**: 「一旦你进去了，你就是进去了。这不是痛苦。这只是冷。」\n- **结果**: 成为每天重训该教训的习惯\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 重大选择纠结：「要不要跳槽/买房/搬去另一个城市/合伙」\n2. 利弊表做了很久：「列了十项利弊还是拿不定主意」\n3. 机会太多：「这个也想做那个也想做，怎么选」\n4. 需要说不：「怎么拒绝一个'还行'的机会」\n\n### 语言信号\n\n- \"我纠结要不要……\"\n- \"这个决定该不该做\"\n- \"我该选哪个（两个选项都还行）\"\n- \"can't decide / should I take it / pros and cons\"\n\n### 与相邻 skill 的区分\n\n- 与 `acceptance` 的区别: 本 skill 处理「能改变的选择」；接受处理「不能改变/只能接受或离开」的处境\n- 与 `judgment-training` 的区别: 判断力是底层能力，本 skill 是即用启发式\n\n## E — 可执行步骤 (Execution)\n\n1. **判断这是不是重大决定**\n   - 完成标准: 是「住哪/和谁/做什么」类（锁定 ≥5 年）才算；日常选择走普通决策\n\n2. **跑决策门**\n   - 完成标准: 若无法当场决定且开始列利弊表 → 默认答「否」，除非有非常确定的新证据\n\n3. **两个均等选项时选短期更痛苦的路**\n   - 完成标准: 明确两个选项「均等」，确认其中一个短期更痛苦，选它\n   - 判停条件: 若选项不等（一方明显更差），直接排除差的，不套启发式\n\n4. **给重大决定分配应有的时间**\n   - 完成标准: 对影响十年生活的决定，规划 1–2 年的调研窗口，期间对不重要的机会说不\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 日常琐碎选择（晚餐/穿搭/娱乐）——启发式会误伤生活\n- 对方已有明确偏好、只需要执行（先确认真实犹豫点）\n\n### 作者在书中警告的失败模式\n\n- 用列表逃避决策: 「如果你发现你自己做了一个关于决定的电子表格……那就忘了它吧」\n- 对不重要的事说「是」: 会把时间全部占满，无法聚焦重大问题\n\n### 作者的盲点 / 时代局限\n\n- 「答否」默认值适合机会富余者；资源稀缺环境里「否」可能让你错过唯一机会\n- 短期痛苦≠总是正确（存在纯粹的坏痛苦），需先排除「纯损害」选项\n\n### 容易混淆的邻近方法论\n\n- `hourly-rate-time`: 时薪解决时间价值，本 skill 解决选择结构\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `judgment-training`（启发式背后的能力）、`hourly-rate-time`（时薪作量化判据）\n- contrasts-with: `acceptance`（能改变 vs 只能接受）\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v05)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n",
+      "bodyMd": "<!-- capability_id: cap.naval.decision-heuristics | revision: 1 | status: active -->\n<!-- 来源: books/naval-almanack-skill/decision-heuristics/SKILL.md（正文逐字保留） -->\n\n# 重大决策启发式\n\n## R — 原文 (Reading)\n\n> 如果你无法下决定，就回答否。原因是，现代社会充满了选择。……当你选择某些事物时，你会被锁定一段很长的时间。……简单的启发式算法：如果你在一个困难的决定上有同等程度的分歧，那么就选择在短期内会更痛苦的那条路。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第一章·财富\n\n## I — 方法论骨架 (Interpretation)\n\n现代社会的选择无穷多，而每个重大选择的锁定时间极长（创业十年、感情五年以上、城市十年以上），\n所以决策的默认值是「否」——只有非常确定时才说「是」。\n三条可执行启发式：\n① **决策门**：无法决定就答否；做利弊电子表格本身就是「不够确定」的信号，忘掉它；\n② **三个重大决定**：住哪/和谁在一起/做什么决定人生轨迹，值得花一两年认真决定，同时对所有不重要的事说不；\n③ **短期痛苦原则**：两个均等选项之间，选短期更痛苦的那条——按复利逻辑它对应长期收益，而大脑本能回避短期痛苦。\n这套启发式专治「过度纠结」，不是用来分析日常小选择。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 读不懂的书与练酸痛的肌肉\n- **问题**: 大脑回避短期痛苦（读难书/健身）\n- **方法论的使用**: 把短期痛苦当长期收益的信号\n- **结论**: 「生命中大多数收益都是来自于短期的痛苦」\n- **结果**: 作者用健身/读书验证该原则并长期执行\n\n### 案例 2: 冷水澡的启示\n- **问题**: 每天早上面对令人逃避的冷水澡\n- **方法论的使用**: 大部分痛苦来自逃避，直接走进去\n- **结论**: 「一旦你进去了，你就是进去了。这不是痛苦。这只是冷。」\n- **结果**: 成为每天重训该教训的习惯\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 重大选择纠结：「要不要跳槽/买房/搬去另一个城市/合伙」\n2. 利弊表做了很久：「列了十项利弊还是拿不定主意」\n3. 机会太多：「这个也想做那个也想做，怎么选」\n4. 需要说不：「怎么拒绝一个'还行'的机会」\n\n### 语言信号\n\n- \"我纠结要不要……\"\n- \"这个决定该不该做\"\n- \"我该选哪个（两个选项都还行）\"\n- \"can't decide / should I take it / pros and cons\"\n\n### 与相邻 skill 的区分\n\n- 与 `acceptance` 的区别: 本 skill 处理「能改变的选择」；接受处理「不能改变/只能接受或离开」的处境\n- 与 `judgment-training` 的区别: 判断力是底层能力，本 skill 是即用启发式\n\n## E — 可执行步骤 (Execution)\n\n1. **判断这是不是重大决定**\n   - 完成标准: 是「住哪/和谁/做什么」类（锁定 ≥5 年）才算；日常选择走普通决策\n\n2. **跑决策门**\n   - 完成标准: 若无法当场决定且开始列利弊表 → 默认答「否」，除非有非常确定的新证据\n\n3. **两个均等选项时选短期更痛苦的路**\n   - 完成标准: 明确两个选项「均等」，确认其中一个短期更痛苦，选它\n   - 判停条件: 若选项不等（一方明显更差），直接排除差的，不套启发式\n\n4. **给重大决定分配应有的时间**\n   - 完成标准: 对影响十年生活的决定，规划 1–2 年的调研窗口，期间对不重要的机会说不\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 日常琐碎选择（晚餐/穿搭/娱乐）——启发式会误伤生活\n- 对方已有明确偏好、只需要执行（先确认真实犹豫点）\n\n### 作者在书中警告的失败模式\n\n- 用列表逃避决策: 「如果你发现你自己做了一个关于决定的电子表格……那就忘了它吧」\n- 对不重要的事说「是」: 会把时间全部占满，无法聚焦重大问题\n\n### 作者的盲点 / 时代局限\n\n- 「答否」默认值适合机会富余者；资源稀缺环境里「否」可能让你错过唯一机会\n- 短期痛苦≠总是正确（存在纯粹的坏痛苦），需先排除「纯损害」选项\n\n### 容易混淆的邻近方法论\n\n- `hourly-rate-time`: 时薪解决时间价值，本 skill 解决选择结构\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `judgment-training`（启发式背后的能力）、`hourly-rate-time`（时薪作量化判据）\n- contrasts-with: `acceptance`（能改变 vs 只能接受）\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v05)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n"
+    },
+    {
+      "slug": "hourly-rate-time",
+      "name": "hourly-rate-time",
+      "dir": "dist/naval-almanack-pack/hourly-rate-time",
+      "path": "dist/naval-almanack-pack/hourly-rate-time/SKILL.md",
+      "desc": "当用户纠结时间分配、问「这个琐事/外包值不值」「怎么安排时间」「离财务自由还差什么」时调用。 核心理念: 给时间定一个高得离谱的时薪, 低于时薪的事外包或不做; 退休=不为想象中的明天牺牲今天; 不随收入升级生活方式。 不适用于: 需要享受慢节奏的时刻（休息/家庭时间按定义不是浪费）。 Triggers: 时薪/时间管理/外包/琐事/排队/财务自由/退休/hourly rate/delegate",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/kangarooking/cangjie-skill.git",
+        "copy": "cp -r dist/naval-almanack-pack/hourly-rate-time ~/.claude/skills/hourly-rate-time",
+        "raw": "https://raw.githubusercontent.com/kangarooking/cangjie-skill/a28de55ba881b9928956a55048f743f7a9e3b23e/dist/naval-almanack-pack/hourly-rate-time/SKILL.md",
+        "saveAs": "~/.claude/skills/hourly-rate-time/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:4d96033b168589d7288f902d20b194bad2b40028fdfc17c32086588d25b01100",
+      "bytes": 5684,
+      "wordCount": 253,
+      "repoLicense": "MIT",
+      "commit": "a28de55ba881b9928956a55048f743f7a9e3b23e",
+      "branch": "main",
+      "body": "---\nname: hourly-rate-time\ndescription: |\n  当用户纠结时间分配、问「这个琐事/外包值不值」「怎么安排时间」「离财务自由还差什么」时调用。\n  核心理念: 给时间定一个高得离谱的时薪, 低于时薪的事外包或不做; 退休=不为想象中的明天牺牲今天; 不随收入升级生活方式。\n  不适用于: 需要享受慢节奏的时刻（休息/家庭时间按定义不是浪费）。\n  Triggers: 时薪/时间管理/外包/琐事/排队/财务自由/退休/hourly rate/delegate\nmetadata:\n  cangjie.generated-by: cangjie-tools v2.5.0\n  cangjie.capability-id: cap.naval.hourly-rate-time\n  cangjie.capability-revision: 1\n  cangjie.bundle-id: bundle.naval-almanack\n  cangjie.source-title: 《纳瓦尔宝典：财富与幸福指南》\n  cangjie.tags: time, delegation, freedom, productivity\n---\n<!-- capability_id: cap.naval.hourly-rate-time | revision: 1 | status: active -->\n<!-- 来源: books/naval-almanack-skill/hourly-rate-time/SKILL.md（正文逐字保留） -->\n\n# 时薪与时间资产\n\n## R — 原文 (Reading)\n\n> 为自己设定一个非常高的时薪期望值，并坚持下去。它应该看起来和感觉上都是高得离谱的。……退休就是不用再为想象中的明天而牺牲今天。当今天完成了，本身就完成了，你就退休了。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第一章·财富\n\n## I — 方法论骨架 (Interpretation)\n\n把「时间」当作人生唯一不可再生的资产来定价：\n① **设定个人时薪**——高得离谱（作者没钱时也按 5000 美元/小时），它是自我价值声明；\n② **用时薪做过滤**——低于时薪的琐事外包或不做，高于时薪的事亲自做，每个决定都换算时间成本；\n③ **时间即自由**——「你永远不会比你设想的价值更高」，珍惜时间不是不能放松，而是不做不想做的事；\n④ **退休重新定义**——不为想象中的明天牺牲今天，途径有三：被动收入覆盖支出 / 支出归零 / 做热爱之事；\n⑤ **不升级生活方式**——收入涨消费不涨，被动收入很快覆盖支出，提前自由。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 没钱时的 5000 美元时薪\n- **问题**: 年轻没钱时如何对待自己的时间\n- **方法论的使用**: 自定 5000 美元/小时；雇助理、扔坏音箱不修、外包做饭\n- **结论**: 低于时薪的琐事一律外包或放弃\n- **结果**: 作者自评实际回报已超过该时薪；「讽刺的是，我认为我实际上已经打败它了」\n\n### 案例 2: 浪费时间即离场\n- **问题**: 聚会/活动浪费大量时间\n- **方法论的使用**: 发现浪费时间立刻离开（作者以粗鲁著称）\n- **结论**: 「珍惜你的时间。它是你的全部。它比你的金钱更重要。」\n- **结果**: 保留时间给想做的事/赚钱/学习\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 纠结琐事：「这 2 小时排队省 50 元值吗」「要不要自己修/自己跑」\n2. 时间失控：「每天都很忙但没产出」\n3. 外包决策：「要不要请人/雇助理」\n4. 财务自由规划：「我离退休/自由还差什么」\n\n### 语言信号\n\n- \"怎么分配我的时间\"\n- \"这钱该花吗（买时间）\"\n- \"我该不该外包/请人\"\n- \"how to value my time / delegate / retire early\"\n\n### 与相邻 skill 的区分\n\n- 与 `wealth-structure` 的区别: 时薪解决「怎么用时间」，财富结构解决「怎么建资产」\n- 与 `decision-heuristics` 的区别: 时薪是量化判据，决策启发式是结构判据\n\n## E — 可执行步骤 (Execution)\n\n1. **设定个人时薪**\n   - 完成标准: 写下你的时薪数字，确认它「高得离谱、看起来荒谬」；否则上调\n   - 判停条件: 若用户感到舒服/合理，说明定低了，上调到荒谬\n\n2. **扫描本周时间账**\n   - 完成标准: 列出本周所有活动，标注每项的机会成本（时薪×小时）\n\n3. **外包/删除低于时薪的活动**\n   - 完成标准: 至少处理 3 项（外包、删除、或改变方式）\n\n4. **检查生活方式通胀**\n   - 完成标准: 确认收入上涨时消费没有同步上涨（储蓄率是否提升）\n\n5. **重算自由进度**\n   - 完成标准: 计算被动收入/支出比值，写下距离「不为明天牺牲今天」的差距\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 休息、陪伴家人、无目的放松（作者明确「只要在做想做的事，就不是浪费」）\n- 用户现金流紧张时，外包建议需现实化（先算预算再外包）\n\n### 作者在书中警告的失败模式\n\n- 赚到钱就升级生活方式: 「如果你可以保持生活方式不变……你可能走得更远，实际上也已经财务自由了」\n- 用忙碌掩盖低价值: 「你应该忙得没时间去'煮咖啡'，同时又要保持日程安排有序」\n\n### 作者的盲点 / 时代局限\n\n- 高时薪外包建立在可支配现金流上；对低收入者是奢侈建议\n- 「忙到没时间煮咖啡」的强度适合创业者，不适合所有生活阶段\n\n### 容易混淆的邻近方法论\n\n- `decision-heuristics`: 时薪是量化判据之一，不是唯一决策逻辑\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `decision-heuristics`（时薪作判据）、`happiness-skill`（自由=幸福前提）\n- contrasts-with: `wealth-structure`（时间效率 vs 资产结构）\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v04)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n",
+      "bodyMd": "<!-- capability_id: cap.naval.hourly-rate-time | revision: 1 | status: active -->\n<!-- 来源: books/naval-almanack-skill/hourly-rate-time/SKILL.md（正文逐字保留） -->\n\n# 时薪与时间资产\n\n## R — 原文 (Reading)\n\n> 为自己设定一个非常高的时薪期望值，并坚持下去。它应该看起来和感觉上都是高得离谱的。……退休就是不用再为想象中的明天而牺牲今天。当今天完成了，本身就完成了，你就退休了。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第一章·财富\n\n## I — 方法论骨架 (Interpretation)\n\n把「时间」当作人生唯一不可再生的资产来定价：\n① **设定个人时薪**——高得离谱（作者没钱时也按 5000 美元/小时），它是自我价值声明；\n② **用时薪做过滤**——低于时薪的琐事外包或不做，高于时薪的事亲自做，每个决定都换算时间成本；\n③ **时间即自由**——「你永远不会比你设想的价值更高」，珍惜时间不是不能放松，而是不做不想做的事；\n④ **退休重新定义**——不为想象中的明天牺牲今天，途径有三：被动收入覆盖支出 / 支出归零 / 做热爱之事；\n⑤ **不升级生活方式**——收入涨消费不涨，被动收入很快覆盖支出，提前自由。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 没钱时的 5000 美元时薪\n- **问题**: 年轻没钱时如何对待自己的时间\n- **方法论的使用**: 自定 5000 美元/小时；雇助理、扔坏音箱不修、外包做饭\n- **结论**: 低于时薪的琐事一律外包或放弃\n- **结果**: 作者自评实际回报已超过该时薪；「讽刺的是，我认为我实际上已经打败它了」\n\n### 案例 2: 浪费时间即离场\n- **问题**: 聚会/活动浪费大量时间\n- **方法论的使用**: 发现浪费时间立刻离开（作者以粗鲁著称）\n- **结论**: 「珍惜你的时间。它是你的全部。它比你的金钱更重要。」\n- **结果**: 保留时间给想做的事/赚钱/学习\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 纠结琐事：「这 2 小时排队省 50 元值吗」「要不要自己修/自己跑」\n2. 时间失控：「每天都很忙但没产出」\n3. 外包决策：「要不要请人/雇助理」\n4. 财务自由规划：「我离退休/自由还差什么」\n\n### 语言信号\n\n- \"怎么分配我的时间\"\n- \"这钱该花吗（买时间）\"\n- \"我该不该外包/请人\"\n- \"how to value my time / delegate / retire early\"\n\n### 与相邻 skill 的区分\n\n- 与 `wealth-structure` 的区别: 时薪解决「怎么用时间」，财富结构解决「怎么建资产」\n- 与 `decision-heuristics` 的区别: 时薪是量化判据，决策启发式是结构判据\n\n## E — 可执行步骤 (Execution)\n\n1. **设定个人时薪**\n   - 完成标准: 写下你的时薪数字，确认它「高得离谱、看起来荒谬」；否则上调\n   - 判停条件: 若用户感到舒服/合理，说明定低了，上调到荒谬\n\n2. **扫描本周时间账**\n   - 完成标准: 列出本周所有活动，标注每项的机会成本（时薪×小时）\n\n3. **外包/删除低于时薪的活动**\n   - 完成标准: 至少处理 3 项（外包、删除、或改变方式）\n\n4. **检查生活方式通胀**\n   - 完成标准: 确认收入上涨时消费没有同步上涨（储蓄率是否提升）\n\n5. **重算自由进度**\n   - 完成标准: 计算被动收入/支出比值，写下距离「不为明天牺牲今天」的差距\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 休息、陪伴家人、无目的放松（作者明确「只要在做想做的事，就不是浪费」）\n- 用户现金流紧张时，外包建议需现实化（先算预算再外包）\n\n### 作者在书中警告的失败模式\n\n- 赚到钱就升级生活方式: 「如果你可以保持生活方式不变……你可能走得更远，实际上也已经财务自由了」\n- 用忙碌掩盖低价值: 「你应该忙得没时间去'煮咖啡'，同时又要保持日程安排有序」\n\n### 作者的盲点 / 时代局限\n\n- 高时薪外包建立在可支配现金流上；对低收入者是奢侈建议\n- 「忙到没时间煮咖啡」的强度适合创业者，不适合所有生活阶段\n\n### 容易混淆的邻近方法论\n\n- `decision-heuristics`: 时薪是量化判据之一，不是唯一决策逻辑\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `decision-heuristics`（时薪作判据）、`happiness-skill`（自由=幸福前提）\n- contrasts-with: `wealth-structure`（时间效率 vs 资产结构）\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v04)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n"
+    },
+    {
+      "slug": "naval-almanack",
+      "name": "naval-almanack",
+      "dir": "dist/naval-almanack-pack/naval-almanack",
+      "path": "dist/naval-almanack-pack/naval-almanack/SKILL.md",
+      "desc": "当用户询问《纳瓦尔宝典》这本书本身(书名/作者/章节/整书概览/术语)，或涉及本书未独立成 Skill 的主题时调用: 幸福训练/欲望管理、接受与内耗、冥想与心猴、地位游戏与攀比、选朋友与圈子、打工vs创业(委托代理)、 诚实沟通、身份与自我形象、期望与愤怒、生命意义、该不该信玄学(理性验证)、长期复利与声誉、判断力训练。 以下意图优先使用同包独立 Skill: wealth-structure(致富/股权期权)、productize-yourself(职业定位/副业方向)、 decision-heuristics(重大选择纠结)、hourly-rate-time(时薪/外包/时间分配)、reading-metaskill(怎么读书学习)、screen-detox(刷手机上瘾)。 Triggers: 纳瓦尔/Naval/纳瓦尔宝典/幸福/冥想/内耗/攀比/圈子/复利/人生意义",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/kangarooking/cangjie-skill.git",
+        "copy": "cp -r dist/naval-almanack-pack/naval-almanack ~/.claude/skills/naval-almanack",
+        "raw": "https://raw.githubusercontent.com/kangarooking/cangjie-skill/a28de55ba881b9928956a55048f743f7a9e3b23e/dist/naval-almanack-pack/naval-almanack/SKILL.md",
+        "saveAs": "~/.claude/skills/naval-almanack/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:862bc9c47a6d026f6ac621063b5e78b9e3204d46bb7735fbf90246fbab327ca0",
+      "bytes": 7744,
+      "wordCount": 238,
+      "repoLicense": "MIT",
+      "commit": "a28de55ba881b9928956a55048f743f7a9e3b23e",
+      "branch": "main",
+      "body": "---\nname: naval-almanack\ndescription: |\n  当用户询问《纳瓦尔宝典》这本书本身(书名/作者/章节/整书概览/术语)，或涉及本书未独立成 Skill 的主题时调用:\n  幸福训练/欲望管理、接受与内耗、冥想与心猴、地位游戏与攀比、选朋友与圈子、打工vs创业(委托代理)、\n  诚实沟通、身份与自我形象、期望与愤怒、生命意义、该不该信玄学(理性验证)、长期复利与声誉、判断力训练。\n  以下意图优先使用同包独立 Skill: wealth-structure(致富/股权期权)、productize-yourself(职业定位/副业方向)、\n  decision-heuristics(重大选择纠结)、hourly-rate-time(时薪/外包/时间分配)、reading-metaskill(怎么读书学习)、screen-detox(刷手机上瘾)。\n  Triggers: 纳瓦尔/Naval/纳瓦尔宝典/幸福/冥想/内耗/攀比/圈子/复利/人生意义\nmetadata:\n  cangjie.generated-by: cangjie-tools v2.5.0\n  cangjie.variant: router\n  cangjie.bundle-id: bundle.naval-almanack\n  cangjie.capability-count: 19\n  cangjie.entrypoint-count: 7\n---\n# 《纳瓦尔宝典：财富与幸福指南》 — 来源路由入口（compact pack）\n\n## 触发与不触发\n\n**适用**：与本书能力域相关的咨询与任务（见下方路由表的意图列）。\n**不适用**：\n- 具体投资标的分析、选股与理财产品建议\n- 临床抑郁、精神疾病急性发作等需要专业治疗的场景（先就医）\n- 急性自杀风险（先紧急求助）\n- 需要外交辞令的谈判策略与具体薪酬数字\n\n## 核心原则（常驻速览，概览类问题读到这里即可回答）\n\n1. 财富=睡觉时仍在赚钱的资产；靠「责任→产权→杠杆」构建，无法靠出租时间致富。\n2. 用特殊知识（对你像玩、对别人像工作）产品化自己，成为不可替代。\n3. 判断力比努力重要；无法决定就答否；两条均等的路选短期更痛苦的那条。\n4. 财富、知识、声誉、关系都遵循复利；只玩长期正和游戏，与能共事一辈子的人同行。\n5. 幸福是可训练的技能：减少欲望、活在当下；任何处境只有三选项——改变/接受/离开。\n6. 阅读是终极元技能：读你所爱、原著优先，每天 1-2 小时即进入极少数人行列。\n\n## 能力路由（先读本表，按意图加载 1 张能力卡）\n\n| 用户意图 | 先读 | 补读/备注 |\n|---|---|---|\n| 怎么赚钱/如何致富；该不该要期权/股权；评估一个生意或副业的结构 | references/capabilities/wealth-structure.md | 已晋级为独立 Skill `wealth-structure`（已安装时优先直接使用；本卡仅作原文与背景补充） |\n| 职业/副业/自由职业方向纠结；我该做什么才能赚钱且不被替代；寻找独特优势 | references/capabilities/productize-yourself.md | 已晋级为独立 Skill `productize-yourself`（已安装时优先直接使用；本卡仅作原文与背景补充） |\n| 换工作/买房/搬城/合伙/结婚等重大选择纠结；列了利弊表还是拿不定主意 | references/capabilities/decision-heuristics.md | 已晋级为独立 Skill `decision-heuristics`（已安装时优先直接使用；本卡仅作原文与背景补充） |\n| 琐事/外包值不值得；时间分配与安排；离财务自由还差什么 | references/capabilities/hourly-rate-time.md | 已晋级为独立 Skill `hourly-rate-time`（已安装时优先直接使用；本卡仅作原文与背景补充） |\n| 想养成阅读习惯；读什么书/怎么读；如何学习新领域/入门某学科 | references/capabilities/reading-metaskill.md | 已晋级为独立 Skill `reading-metaskill`（已安装时优先直接使用；本卡仅作原文与背景补充） |\n| 刷手机/短视频/社交媒体上瘾；想戒断多巴胺零食 | references/capabilities/screen-detox.md | 已晋级为独立 Skill `screen-detox`（已安装时优先直接使用；本卡仅作原文与背景补充） |\n| 需要方向性判断/这事靠谱吗；想提升决策能力/学心智模型 | references/capabilities/judgment-training.md | references/capabilities/reading-metaskill.md、references/capabilities/decision-heuristics.md |\n| 要不要长期投入某段关系/某个项目；如何积累声誉与信任 | references/capabilities/long-term-compounding.md | references/capabilities/peer-selection.md、references/capabilities/wealth-structure.md |\n| 为什么大公司磨洋工/小公司拼命；打工还是创业/该不该自己干 | references/capabilities/principal-agent.md | references/capabilities/judgment-training.md |\n| 怎么才能更幸福；为什么得到了还不满足；怎么减少焦虑 | references/capabilities/happiness-skill.md | references/capabilities/acceptance.md、references/capabilities/monkey-mind-meditation.md |\n| 为什么有人攻击我/大家卷来卷去；怎么不在乎别人眼光；为什么妒忌 | references/capabilities/game-selection.md | references/capabilities/happiness-skill.md、references/capabilities/long-term-compounding.md |\n| 困在无法改变的处境里反复内耗；该忍还是该走 | references/capabilities/acceptance.md | references/capabilities/life-meaning.md、references/capabilities/happiness-skill.md |\n| 被别人的期望压垮；容易愤怒/怎么不生气；感觉被工作困住/怎么说不 | references/capabilities/self-liberation.md | references/capabilities/happiness-skill.md、references/capabilities/honesty-communication.md |\n| 脑子停不下来/焦虑反刍；想学冥想/提升专注力 | references/capabilities/monkey-mind-meditation.md | references/capabilities/happiness-skill.md、references/capabilities/rational-buddhism.md |\n| 交朋友/选伴侣/换圈子纠结；感觉被周围人拖累/该不该疏远某人 | references/capabilities/peer-selection.md | references/capabilities/long-term-compounding.md、references/capabilities/honesty-communication.md |\n| 发现自己在为立场辩护/看不清现实；反复立志却改变不了自己 | references/capabilities/identity-work.md | references/capabilities/acceptance.md、references/capabilities/honesty-communication.md |\n| 怎么真诚沟通/拒绝别人/给反馈；不想说场面话/发现自己在隐瞒 | references/capabilities/honesty-communication.md | references/capabilities/identity-work.md |\n| 某主张/玄学/灵修该不该信；想建立自己的验证标准 | references/capabilities/rational-buddhism.md | references/capabilities/life-meaning.md、references/capabilities/monkey-mind-meditation.md |\n| 活着的意义是什么/虚无感；找不到方向/该为什么努力 | references/capabilities/life-meaning.md | references/capabilities/rational-buddhism.md、references/capabilities/acceptance.md |\n\n**非能力类查询**：\n- 书名/作者/章节/整书概览 → references/overview.md\n- 术语解释 → references/glossary.md\n- 决策规则速查（不需要原文依据时） → references/cheatsheet.md\n- 完整意图与关键词索引（本表未覆盖的意图先查这里） → references/capability-index.md\n\n## 加载规则\n\n- 每次任务先读本文件，再按路由表加载 **1** 张能力卡；任务明确跨域时最多加载 2 张。\n- 概览/书名类问题不加载能力卡，用「核心原则」与 overview.md 回答。\n- 路由表与 capability-index.md 都无法命中的意图，明确告知超出本书范围，不要硬套。\n\n## 边界与判停\n\n- 意图在路由表与能力索引中均无法命中 → 明确告知超出本书范围，不硬套书中框架。\n- 涉及医疗/法律/人身安全 → 停止套用方法论，建议专业求助。\n- 纯事实查询（书名/作者/出版年/章节）→ 用核心原则与 overview 回答后即停，不展开人生建议。\n",
+      "bodyMd": "# 《纳瓦尔宝典：财富与幸福指南》 — 来源路由入口（compact pack）\n\n## 触发与不触发\n\n**适用**：与本书能力域相关的咨询与任务（见下方路由表的意图列）。\n**不适用**：\n- 具体投资标的分析、选股与理财产品建议\n- 临床抑郁、精神疾病急性发作等需要专业治疗的场景（先就医）\n- 急性自杀风险（先紧急求助）\n- 需要外交辞令的谈判策略与具体薪酬数字\n\n## 核心原则（常驻速览，概览类问题读到这里即可回答）\n\n1. 财富=睡觉时仍在赚钱的资产；靠「责任→产权→杠杆」构建，无法靠出租时间致富。\n2. 用特殊知识（对你像玩、对别人像工作）产品化自己，成为不可替代。\n3. 判断力比努力重要；无法决定就答否；两条均等的路选短期更痛苦的那条。\n4. 财富、知识、声誉、关系都遵循复利；只玩长期正和游戏，与能共事一辈子的人同行。\n5. 幸福是可训练的技能：减少欲望、活在当下；任何处境只有三选项——改变/接受/离开。\n6. 阅读是终极元技能：读你所爱、原著优先，每天 1-2 小时即进入极少数人行列。\n\n## 能力路由（先读本表，按意图加载 1 张能力卡）\n\n| 用户意图 | 先读 | 补读/备注 |\n|---|---|---|\n| 怎么赚钱/如何致富；该不该要期权/股权；评估一个生意或副业的结构 | references/capabilities/wealth-structure.md | 已晋级为独立 Skill `wealth-structure`（已安装时优先直接使用；本卡仅作原文与背景补充） |\n| 职业/副业/自由职业方向纠结；我该做什么才能赚钱且不被替代；寻找独特优势 | references/capabilities/productize-yourself.md | 已晋级为独立 Skill `productize-yourself`（已安装时优先直接使用；本卡仅作原文与背景补充） |\n| 换工作/买房/搬城/合伙/结婚等重大选择纠结；列了利弊表还是拿不定主意 | references/capabilities/decision-heuristics.md | 已晋级为独立 Skill `decision-heuristics`（已安装时优先直接使用；本卡仅作原文与背景补充） |\n| 琐事/外包值不值得；时间分配与安排；离财务自由还差什么 | references/capabilities/hourly-rate-time.md | 已晋级为独立 Skill `hourly-rate-time`（已安装时优先直接使用；本卡仅作原文与背景补充） |\n| 想养成阅读习惯；读什么书/怎么读；如何学习新领域/入门某学科 | references/capabilities/reading-metaskill.md | 已晋级为独立 Skill `reading-metaskill`（已安装时优先直接使用；本卡仅作原文与背景补充） |\n| 刷手机/短视频/社交媒体上瘾；想戒断多巴胺零食 | references/capabilities/screen-detox.md | 已晋级为独立 Skill `screen-detox`（已安装时优先直接使用；本卡仅作原文与背景补充） |\n| 需要方向性判断/这事靠谱吗；想提升决策能力/学心智模型 | references/capabilities/judgment-training.md | references/capabilities/reading-metaskill.md、references/capabilities/decision-heuristics.md |\n| 要不要长期投入某段关系/某个项目；如何积累声誉与信任 | references/capabilities/long-term-compounding.md | references/capabilities/peer-selection.md、references/capabilities/wealth-structure.md |\n| 为什么大公司磨洋工/小公司拼命；打工还是创业/该不该自己干 | references/capabilities/principal-agent.md | references/capabilities/judgment-training.md |\n| 怎么才能更幸福；为什么得到了还不满足；怎么减少焦虑 | references/capabilities/happiness-skill.md | references/capabilities/acceptance.md、references/capabilities/monkey-mind-meditation.md |\n| 为什么有人攻击我/大家卷来卷去；怎么不在乎别人眼光；为什么妒忌 | references/capabilities/game-selection.md | references/capabilities/happiness-skill.md、references/capabilities/long-term-compounding.md |\n| 困在无法改变的处境里反复内耗；该忍还是该走 | references/capabilities/acceptance.md | references/capabilities/life-meaning.md、references/capabilities/happiness-skill.md |\n| 被别人的期望压垮；容易愤怒/怎么不生气；感觉被工作困住/怎么说不 | references/capabilities/self-liberation.md | references/capabilities/happiness-skill.md、references/capabilities/honesty-communication.md |\n| 脑子停不下来/焦虑反刍；想学冥想/提升专注力 | references/capabilities/monkey-mind-meditation.md | references/capabilities/happiness-skill.md、references/capabilities/rational-buddhism.md |\n| 交朋友/选伴侣/换圈子纠结；感觉被周围人拖累/该不该疏远某人 | references/capabilities/peer-selection.md | references/capabilities/long-term-compounding.md、references/capabilities/honesty-communication.md |\n| 发现自己在为立场辩护/看不清现实；反复立志却改变不了自己 | references/capabilities/identity-work.md | references/capabilities/acceptance.md、references/capabilities/honesty-communication.md |\n| 怎么真诚沟通/拒绝别人/给反馈；不想说场面话/发现自己在隐瞒 | references/capabilities/honesty-communication.md | references/capabilities/identity-work.md |\n| 某主张/玄学/灵修该不该信；想建立自己的验证标准 | references/capabilities/rational-buddhism.md | references/capabilities/life-meaning.md、references/capabilities/monkey-mind-meditation.md |\n| 活着的意义是什么/虚无感；找不到方向/该为什么努力 | references/capabilities/life-meaning.md | references/capabilities/rational-buddhism.md、references/capabilities/acceptance.md |\n\n**非能力类查询**：\n- 书名/作者/章节/整书概览 → references/overview.md\n- 术语解释 → references/glossary.md\n- 决策规则速查（不需要原文依据时） → references/cheatsheet.md\n- 完整意图与关键词索引（本表未覆盖的意图先查这里） → references/capability-index.md\n\n## 加载规则\n\n- 每次任务先读本文件，再按路由表加载 **1** 张能力卡；任务明确跨域时最多加载 2 张。\n- 概览/书名类问题不加载能力卡，用「核心原则」与 overview.md 回答。\n- 路由表与 capability-index.md 都无法命中的意图，明确告知超出本书范围，不要硬套。\n\n## 边界与判停\n\n- 意图在路由表与能力索引中均无法命中 → 明确告知超出本书范围，不硬套书中框架。\n- 涉及医疗/法律/人身安全 → 停止套用方法论，建议专业求助。\n- 纯事实查询（书名/作者/出版年/章节）→ 用核心原则与 overview 回答后即停，不展开人生建议。\n"
+    },
+    {
+      "slug": "productize-yourself",
+      "name": "productize-yourself",
+      "dir": "dist/naval-almanack-pack/productize-yourself",
+      "path": "dist/naval-almanack-pack/productize-yourself/SKILL.md",
+      "desc": "当用户在纠结职业/副业/自由职业方向、问「我该做什么才能赚钱/不被替代」、或想找到自己的独特优势时调用。 核心理念: 特殊知识(不可培训、对你像玩对别人像工作) × 产品化(杠杆规模化) = 无可替代的致富定位。 不适用于: 纯求职投递、写简历、已有明确方向的执行细节。 Triggers: 找方向/独特优势/副业/不可替代/productize/special knowledge/moat",
+      "descZh": "",
+      "triggers": [
+        "纯求职投递",
+        "写简历",
+        "已有明确方向的执行细节"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/kangarooking/cangjie-skill.git",
+        "copy": "cp -r dist/naval-almanack-pack/productize-yourself ~/.claude/skills/productize-yourself",
+        "raw": "https://raw.githubusercontent.com/kangarooking/cangjie-skill/a28de55ba881b9928956a55048f743f7a9e3b23e/dist/naval-almanack-pack/productize-yourself/SKILL.md",
+        "saveAs": "~/.claude/skills/productize-yourself/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:485f3336016123b617d5894143ccc2313f422b99492f905e2ad4f459bd58bc33",
+      "bytes": 5977,
+      "wordCount": 256,
+      "repoLicense": "MIT",
+      "commit": "a28de55ba881b9928956a55048f743f7a9e3b23e",
+      "branch": "main",
+      "body": "---\nname: productize-yourself\ndescription: |\n  当用户在纠结职业/副业/自由职业方向、问「我该做什么才能赚钱/不被替代」、或想找到自己的独特优势时调用。\n  核心理念: 特殊知识(不可培训、对你像玩对别人像工作) × 产品化(杠杆规模化) = 无可替代的致富定位。\n  不适用于: 纯求职投递、写简历、已有明确方向的执行细节。\n  Triggers: 找方向/独特优势/副业/不可替代/productize/special knowledge/moat\nmetadata:\n  cangjie.generated-by: cangjie-tools v2.5.0\n  cangjie.capability-id: cap.naval.productize-yourself\n  cangjie.capability-revision: 1\n  cangjie.bundle-id: bundle.naval-almanack\n  cangjie.source-title: 《纳瓦尔宝典：财富与幸福指南》\n  cangjie.tags: wealth, career, positioning, moat, leverage\n---\n<!-- capability_id: cap.naval.productize-yourself | revision: 1 | status: active -->\n<!-- 来源: books/naval-almanack-skill/productize-yourself/SKILL.md（正文逐字保留） -->\n\n# 产品化你自己\n\n## R — 原文 (Reading)\n\n> “产品化”和“你自己”。“你自己”具有独特性，“产品化”就有杠杆点。“你自己”有责任感，“产品化”有特殊知识。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第一章·财富\n\n## I — 方法论骨架 (Interpretation)\n\n把「如何不靠运气致富」压缩成一个定位公式：**特殊知识 + 责任感 + 杠杆 → 产品化你自己**。\n「你自己」= 不可培训的特殊知识（来自 DNA、成长环境和个人回应的独特组合），它让你没有竞争者；\n「产品化」= 用杠杆（人力/资本/代码/媒体）把这份独特规模化，让投入产出脱钩。\n判断方向对不对，持续自问两句：这真的是我在投射的自己吗？我在产品化它、规模化它吗？\n特殊知识有四个识别信号：① 不能通过培训获得（否则会被替代）；② 对你像玩、对别人像工作；\n③ 通常靠好奇心与学徒制发现，而非热门行业；④ 别人很难和你竞争「做你自己」。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 母亲在厨房预言他做生意\n- **问题**: 作者十五六岁想当天体物理学家，方向与天赋错位\n- **方法论的使用**: 母亲作为旁观者指出他真正的特殊知识是「做生意」；作者后来回看自己的组合是销售技巧+分析能力+玩技术\n- **结论**: 特殊知识往往是身边人先看到、你自己不当回事的天然倾向\n- **结果**: 作者沿着这套组合做风投/创业，而不是当科学家\n\n### 案例 2: 乔·罗根与新一代媒体富豪\n- **问题**: 普通人如何不靠资本放大努力\n- **方法论的使用**: 用代码/媒体（零边际复制成本）把自己的独特内容规模化\n- **结论**: 独特性+媒体杠杆=新富来源\n- **结果**: 播客/视频/代码成为可复制资产，睡觉时仍在工作\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 纠结职业/副业/自由职业方向：「我不知道该做什么」「选哪个赛道」\n2. 担心被替代：「我的工作会不会被 AI/年轻人取代」\n3. 想提升不可替代性：「怎么建立自己的护城河/独特优势」\n4. 准备推出个人产品或内容：「做什么内容/产品别人抢不走」\n\n### 语言信号\n\n- \"帮我找找我的特殊知识/独特优势\"\n- \"我不想再做可替代的工作\"\n- \"副业/自媒体/自由职业选什么方向\"\n- \"how to find my moat / special knowledge / what should I do\"\n\n### 与相邻 skill 的区分\n\n- 与 `wealth-structure` 的区别: 本 skill 解决「你是谁、做什么」；wealth-structure 解决「怎么把价值变成资产结构」\n- 与 `reading-metaskill` 的区别: 阅读是培养特殊知识的手段；本 skill 是特殊知识本身的使用框架\n\n## E — 可执行步骤 (Execution)\n\n1. **盘点特殊知识信号**\n   - 完成标准: 列出 3–5 个「对你像玩、对别人像工作」的事，并问身边人「你觉得我最擅长什么」交叉验证\n   - 判停条件: 若找到的事可以被培训/被替代，回到步骤 1 继续找\n\n2. **检验独特性 × 可规模化**\n   - 完成标准: 对每个候选回答「我是唯一/少数能做到这个的吗？」与「它能不能被代码/媒体/产品放大？」\n\n3. **定义最小产品并发布**\n   - 完成标准: 30 天内发布一个最小作品（一篇文章/一个工具/一个内容系列），公开署名\n\n4. **按反馈重新定义你的工作**\n   - 完成标准: 每季度重问「我是否做到了世界最好？如果没有，调整『我做什么』的定义」，直到成立\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 用户已有明确方向、只需要执行细节（此时应给执行建议而非定位分析）\n- 纯求职场景（写简历/投递不是本 skill 职责）\n\n### 作者在书中警告的失败模式\n\n- 盲目追热点: 热门行业可以培训出替代者；「如果他们能训练你们去做，那么他们接下来也会训练计算机去做」\n- 与别人竞争=复制别人: 「通过真实性避开竞争」「不要复制」\n\n### 作者的盲点 / 时代局限\n\n- 作者是硅谷/风投视角，默认有资本网络和早期入场条件；特殊知识对无资本、无技能起点并不平等\n- 「每个人都能找到特殊知识」未被证明；找得到≠市场会定价\n\n### 容易混淆的邻近方法论\n\n- `wealth-structure`: 那是「怎么把特殊知识变成资产」的下游问题\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `wealth-structure`（定位之后做结构）、`long-term-compounding`（特殊知识靠复利放大）\n- depends-on: `reading-metaskill`（特殊知识来自持续学习）\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v01)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n",
+      "bodyMd": "<!-- capability_id: cap.naval.productize-yourself | revision: 1 | status: active -->\n<!-- 来源: books/naval-almanack-skill/productize-yourself/SKILL.md（正文逐字保留） -->\n\n# 产品化你自己\n\n## R — 原文 (Reading)\n\n> “产品化”和“你自己”。“你自己”具有独特性，“产品化”就有杠杆点。“你自己”有责任感，“产品化”有特殊知识。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第一章·财富\n\n## I — 方法论骨架 (Interpretation)\n\n把「如何不靠运气致富」压缩成一个定位公式：**特殊知识 + 责任感 + 杠杆 → 产品化你自己**。\n「你自己」= 不可培训的特殊知识（来自 DNA、成长环境和个人回应的独特组合），它让你没有竞争者；\n「产品化」= 用杠杆（人力/资本/代码/媒体）把这份独特规模化，让投入产出脱钩。\n判断方向对不对，持续自问两句：这真的是我在投射的自己吗？我在产品化它、规模化它吗？\n特殊知识有四个识别信号：① 不能通过培训获得（否则会被替代）；② 对你像玩、对别人像工作；\n③ 通常靠好奇心与学徒制发现，而非热门行业；④ 别人很难和你竞争「做你自己」。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 母亲在厨房预言他做生意\n- **问题**: 作者十五六岁想当天体物理学家，方向与天赋错位\n- **方法论的使用**: 母亲作为旁观者指出他真正的特殊知识是「做生意」；作者后来回看自己的组合是销售技巧+分析能力+玩技术\n- **结论**: 特殊知识往往是身边人先看到、你自己不当回事的天然倾向\n- **结果**: 作者沿着这套组合做风投/创业，而不是当科学家\n\n### 案例 2: 乔·罗根与新一代媒体富豪\n- **问题**: 普通人如何不靠资本放大努力\n- **方法论的使用**: 用代码/媒体（零边际复制成本）把自己的独特内容规模化\n- **结论**: 独特性+媒体杠杆=新富来源\n- **结果**: 播客/视频/代码成为可复制资产，睡觉时仍在工作\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 纠结职业/副业/自由职业方向：「我不知道该做什么」「选哪个赛道」\n2. 担心被替代：「我的工作会不会被 AI/年轻人取代」\n3. 想提升不可替代性：「怎么建立自己的护城河/独特优势」\n4. 准备推出个人产品或内容：「做什么内容/产品别人抢不走」\n\n### 语言信号\n\n- \"帮我找找我的特殊知识/独特优势\"\n- \"我不想再做可替代的工作\"\n- \"副业/自媒体/自由职业选什么方向\"\n- \"how to find my moat / special knowledge / what should I do\"\n\n### 与相邻 skill 的区分\n\n- 与 `wealth-structure` 的区别: 本 skill 解决「你是谁、做什么」；wealth-structure 解决「怎么把价值变成资产结构」\n- 与 `reading-metaskill` 的区别: 阅读是培养特殊知识的手段；本 skill 是特殊知识本身的使用框架\n\n## E — 可执行步骤 (Execution)\n\n1. **盘点特殊知识信号**\n   - 完成标准: 列出 3–5 个「对你像玩、对别人像工作」的事，并问身边人「你觉得我最擅长什么」交叉验证\n   - 判停条件: 若找到的事可以被培训/被替代，回到步骤 1 继续找\n\n2. **检验独特性 × 可规模化**\n   - 完成标准: 对每个候选回答「我是唯一/少数能做到这个的吗？」与「它能不能被代码/媒体/产品放大？」\n\n3. **定义最小产品并发布**\n   - 完成标准: 30 天内发布一个最小作品（一篇文章/一个工具/一个内容系列），公开署名\n\n4. **按反馈重新定义你的工作**\n   - 完成标准: 每季度重问「我是否做到了世界最好？如果没有，调整『我做什么』的定义」，直到成立\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 用户已有明确方向、只需要执行细节（此时应给执行建议而非定位分析）\n- 纯求职场景（写简历/投递不是本 skill 职责）\n\n### 作者在书中警告的失败模式\n\n- 盲目追热点: 热门行业可以培训出替代者；「如果他们能训练你们去做，那么他们接下来也会训练计算机去做」\n- 与别人竞争=复制别人: 「通过真实性避开竞争」「不要复制」\n\n### 作者的盲点 / 时代局限\n\n- 作者是硅谷/风投视角，默认有资本网络和早期入场条件；特殊知识对无资本、无技能起点并不平等\n- 「每个人都能找到特殊知识」未被证明；找得到≠市场会定价\n\n### 容易混淆的邻近方法论\n\n- `wealth-structure`: 那是「怎么把特殊知识变成资产」的下游问题\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `wealth-structure`（定位之后做结构）、`long-term-compounding`（特殊知识靠复利放大）\n- depends-on: `reading-metaskill`（特殊知识来自持续学习）\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v01)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n"
+    },
+    {
+      "slug": "reading-metaskill",
+      "name": "reading-metaskill",
+      "dir": "dist/naval-almanack-pack/reading-metaskill",
+      "path": "dist/naval-almanack-pack/reading-metaskill/SKILL.md",
+      "desc": "当用户想养成阅读习惯、问「读什么书/怎么读」「如何学习新领域/怎么入门某学科」时调用。 核心理念: 阅读是终极元技能; 读你所爱直到爱上阅读, 没有读完义务; 读原著与经典优先; 以教促学; 每天1-2小时即可进入极少数人行列。 不适用于: 具体某本书的书评、考试备考资料选择。 Triggers: 阅读/读书/怎么学习/入门/原著/书单/reading/how to learn",
+      "descZh": "",
+      "triggers": [
+        "具体某本书的书评",
+        "考试备考资料选择"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/kangarooking/cangjie-skill.git",
+        "copy": "cp -r dist/naval-almanack-pack/reading-metaskill ~/.claude/skills/reading-metaskill",
+        "raw": "https://raw.githubusercontent.com/kangarooking/cangjie-skill/a28de55ba881b9928956a55048f743f7a9e3b23e/dist/naval-almanack-pack/reading-metaskill/SKILL.md",
+        "saveAs": "~/.claude/skills/reading-metaskill/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:968cab09b408a2cc2dceb55ac4fd93f9e5a4344de3e73dfe588a76492ddcacfa",
+      "bytes": 5437,
+      "wordCount": 262,
+      "repoLicense": "MIT",
+      "commit": "a28de55ba881b9928956a55048f743f7a9e3b23e",
+      "branch": "main",
+      "body": "---\nname: reading-metaskill\ndescription: |\n  当用户想养成阅读习惯、问「读什么书/怎么读」「如何学习新领域/怎么入门某学科」时调用。\n  核心理念: 阅读是终极元技能; 读你所爱直到爱上阅读, 没有读完义务; 读原著与经典优先; 以教促学; 每天1-2小时即可进入极少数人行列。\n  不适用于: 具体某本书的书评、考试备考资料选择。\n  Triggers: 阅读/读书/怎么学习/入门/原著/书单/reading/how to learn\nmetadata:\n  cangjie.generated-by: cangjie-tools v2.5.0\n  cangjie.capability-id: cap.naval.reading-metaskill\n  cangjie.capability-revision: 1\n  cangjie.bundle-id: bundle.naval-almanack\n  cangjie.source-title: 《纳瓦尔宝典：财富与幸福指南》\n  cangjie.tags: reading, learning, habit, foundations\n---\n<!-- capability_id: cap.naval.reading-metaskill | revision: 1 | status: active -->\n<!-- 来源: books/naval-almanack-skill/reading-metaskill/SKILL.md（正文逐字保留） -->\n\n# 阅读元技能\n\n## R — 原文 (Reading)\n\n> 读你所爱读的直到你爱上阅读。……我大概每天读一到两小时。那个使我进入0.00001%的行列。……真正的人不会每天读一小时。真正的人，每天读一分钟或更少。使它成为实际的习惯才是最重要的事情。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第一章·财富\n\n## I — 方法论骨架 (Interpretation)\n\n阅读是可以用它换来任何其他技能的元技能。培养它的关键是**降低门槛、保持愉悦**：\n① 读你所爱（包括「精神垃圾食品」）直到爱上阅读——没有垃圾这种东西；\n② 没有读完义务——跳读、从中间读、同时穿插 10–20 本都合法，把书当博客/推文；\n③ 质量靠「原著优先」——先读达尔文再读道金斯、先读亚当·斯密再读当代经济学家，解读本会灌输立场；\n④ 每天 1–2 小时、让它成为实际习惯，比「读很多」更重要（数量是虚荣指标）；\n⑤ 以教促学——向别人解释你学到的东西，能讲明白才是真掌握。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 同时读 10–20 本\n- **问题**: 被「必须读完」训练毁了阅读习惯\n- **方法论的使用**: 把书当博客，无读完义务，穿插跳读\n- **结论**: 「我觉得没有任何义务去读完这本书。突然间，书籍又回到了我的阅读库。」\n- **结果**: 从 Twitter 多巴胺时代回到每天 1–2 小时深度阅读\n\n### 案例 2: 读书数十年后重读\n- **问题**: 如何真正掌握一本书\n- **方法论的使用**: 「越好的书，就越要慢慢地理解和吸收」；重读好书\n- **结论**: 「我不想去读完所有书，我只想反复读那100本伟大的书」\n- **结果**: 少而精的重读取代数量竞赛\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 想读书但读不进去/总卡在某页\n2. 问「入门某领域该读什么」\n3. 想提升学习能力：「怎么学得又快又牢」\n4. 被书单焦虑：「别人一年读 100 本我好焦虑」\n\n### 语言信号\n\n- \"推荐几本书入门/怎么开始读书\"\n- \"我读不进去/总半途而废\"\n- \"怎么学习新领域\"\n- \"how to read more / learn anything / what to read first\"\n\n### 与相邻 skill 的区分\n\n- 与 `judgment-training` 的区别: 本 skill 是输入管线（怎么读），判断力是输出能力（怎么想）\n- 与 `screen-detox` 的区别: 深度阅读替代屏幕多巴胺，但本 skill 不负责戒断\n\n## E — 可执行步骤 (Execution)\n\n1. **降低门槛，随手开读**\n   - 完成标准: 挑一本「读起来有意思」的书（不挑「应该读」的），从最吸引你的章节开始\n   - 判停条件: 若读得痛苦超过 20 分钟，换一本或跳读，不做完读义务\n\n2. **建立每日最小习惯**\n   - 完成标准: 每天固定 1–2 小时（或固定 15 分钟起步），连续 7 天不断\n\n3. **按「原著优先」补基础**\n   - 完成标准: 对想入门的领域，先找到该领域 1–2 本奠基原著加入队列\n\n4. **以教促学**\n   - 完成标准: 每周写/讲一次「我最近学到的东西」，直到能向小孩讲明白\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 用户要具体书评/摘录（这不是阅读习惯训练）\n- 备考场景（应试策略与培养习惯不同）\n\n### 作者在书中警告的失败模式\n\n- 读错次序的博学: 「一开始读的是一系列虚假的或部分真实的东西，这些东西组成他们世界观的基本公理」\n- 为社会认可而读: 读大家都在读的书=融入羊群，生活回报在脱离群体的一侧\n\n### 作者的盲点 / 时代局限\n\n- 每天 1–2 小时对高压人群不现实；「读原著」假设读者有耐心与语言门槛（译本也是折中）\n- 作者强调非虚构/经典，未覆盖小说与专业实操书的阅读价值\n\n### 容易混淆的邻近方法论\n\n- `judgment-training`: 阅读供给基础，判断力消费基础\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `judgment-training`、`productize-yourself`（终身学习=特殊知识来源）\n- contrasts-with: `screen-detox`（深度阅读 vs 多巴胺零食）\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v08)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n",
+      "bodyMd": "<!-- capability_id: cap.naval.reading-metaskill | revision: 1 | status: active -->\n<!-- 来源: books/naval-almanack-skill/reading-metaskill/SKILL.md（正文逐字保留） -->\n\n# 阅读元技能\n\n## R — 原文 (Reading)\n\n> 读你所爱读的直到你爱上阅读。……我大概每天读一到两小时。那个使我进入0.00001%的行列。……真正的人不会每天读一小时。真正的人，每天读一分钟或更少。使它成为实际的习惯才是最重要的事情。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第一章·财富\n\n## I — 方法论骨架 (Interpretation)\n\n阅读是可以用它换来任何其他技能的元技能。培养它的关键是**降低门槛、保持愉悦**：\n① 读你所爱（包括「精神垃圾食品」）直到爱上阅读——没有垃圾这种东西；\n② 没有读完义务——跳读、从中间读、同时穿插 10–20 本都合法，把书当博客/推文；\n③ 质量靠「原著优先」——先读达尔文再读道金斯、先读亚当·斯密再读当代经济学家，解读本会灌输立场；\n④ 每天 1–2 小时、让它成为实际习惯，比「读很多」更重要（数量是虚荣指标）；\n⑤ 以教促学——向别人解释你学到的东西，能讲明白才是真掌握。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 同时读 10–20 本\n- **问题**: 被「必须读完」训练毁了阅读习惯\n- **方法论的使用**: 把书当博客，无读完义务，穿插跳读\n- **结论**: 「我觉得没有任何义务去读完这本书。突然间，书籍又回到了我的阅读库。」\n- **结果**: 从 Twitter 多巴胺时代回到每天 1–2 小时深度阅读\n\n### 案例 2: 读书数十年后重读\n- **问题**: 如何真正掌握一本书\n- **方法论的使用**: 「越好的书，就越要慢慢地理解和吸收」；重读好书\n- **结论**: 「我不想去读完所有书，我只想反复读那100本伟大的书」\n- **结果**: 少而精的重读取代数量竞赛\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 想读书但读不进去/总卡在某页\n2. 问「入门某领域该读什么」\n3. 想提升学习能力：「怎么学得又快又牢」\n4. 被书单焦虑：「别人一年读 100 本我好焦虑」\n\n### 语言信号\n\n- \"推荐几本书入门/怎么开始读书\"\n- \"我读不进去/总半途而废\"\n- \"怎么学习新领域\"\n- \"how to read more / learn anything / what to read first\"\n\n### 与相邻 skill 的区分\n\n- 与 `judgment-training` 的区别: 本 skill 是输入管线（怎么读），判断力是输出能力（怎么想）\n- 与 `screen-detox` 的区别: 深度阅读替代屏幕多巴胺，但本 skill 不负责戒断\n\n## E — 可执行步骤 (Execution)\n\n1. **降低门槛，随手开读**\n   - 完成标准: 挑一本「读起来有意思」的书（不挑「应该读」的），从最吸引你的章节开始\n   - 判停条件: 若读得痛苦超过 20 分钟，换一本或跳读，不做完读义务\n\n2. **建立每日最小习惯**\n   - 完成标准: 每天固定 1–2 小时（或固定 15 分钟起步），连续 7 天不断\n\n3. **按「原著优先」补基础**\n   - 完成标准: 对想入门的领域，先找到该领域 1–2 本奠基原著加入队列\n\n4. **以教促学**\n   - 完成标准: 每周写/讲一次「我最近学到的东西」，直到能向小孩讲明白\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 用户要具体书评/摘录（这不是阅读习惯训练）\n- 备考场景（应试策略与培养习惯不同）\n\n### 作者在书中警告的失败模式\n\n- 读错次序的博学: 「一开始读的是一系列虚假的或部分真实的东西，这些东西组成他们世界观的基本公理」\n- 为社会认可而读: 读大家都在读的书=融入羊群，生活回报在脱离群体的一侧\n\n### 作者的盲点 / 时代局限\n\n- 每天 1–2 小时对高压人群不现实；「读原著」假设读者有耐心与语言门槛（译本也是折中）\n- 作者强调非虚构/经典，未覆盖小说与专业实操书的阅读价值\n\n### 容易混淆的邻近方法论\n\n- `judgment-training`: 阅读供给基础，判断力消费基础\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `judgment-training`、`productize-yourself`（终身学习=特殊知识来源）\n- contrasts-with: `screen-detox`（深度阅读 vs 多巴胺零食）\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v08)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n"
+    },
+    {
+      "slug": "screen-detox",
+      "name": "screen-detox",
+      "dir": "dist/naval-almanack-pack/screen-detox",
+      "path": "dist/naval-almanack-pack/screen-detox/SKILL.md",
+      "desc": "当用户刷手机/短视频/社交媒体上瘾、感觉空虚、想戒断多巴胺零食时调用。 核心理念: 所有屏幕活动与更少幸福相关(作者断言无例外); 屏幕=用长期后果换短期快感的多巴胺零食; 用习惯替换五步戒断。 不适用于: 工作需要屏幕的职业场景(区分工作屏幕与消费屏幕)。 Triggers: 刷手机/上瘾/短视频/社交媒体/多巴胺/戒断/屏幕时间/screen time/dopamine/addiction",
+      "descZh": "",
+      "triggers": [
+        "工作需要屏幕的职业场景(区分工作屏幕与消费屏幕)"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/kangarooking/cangjie-skill.git",
+        "copy": "cp -r dist/naval-almanack-pack/screen-detox ~/.claude/skills/screen-detox",
+        "raw": "https://raw.githubusercontent.com/kangarooking/cangjie-skill/a28de55ba881b9928956a55048f743f7a9e3b23e/dist/naval-almanack-pack/screen-detox/SKILL.md",
+        "saveAs": "~/.claude/skills/screen-detox/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:5a24eea87e3c4bf1d4e6bbff1f1f2d8dd8700742140661f306889aec4f08ee3f",
+      "bytes": 5637,
+      "wordCount": 250,
+      "repoLicense": "MIT",
+      "commit": "a28de55ba881b9928956a55048f743f7a9e3b23e",
+      "branch": "main",
+      "body": "---\nname: screen-detox\ndescription: |\n  当用户刷手机/短视频/社交媒体上瘾、感觉空虚、想戒断多巴胺零食时调用。\n  核心理念: 所有屏幕活动与更少幸福相关(作者断言无例外); 屏幕=用长期后果换短期快感的多巴胺零食; 用习惯替换五步戒断。\n  不适用于: 工作需要屏幕的职业场景(区分工作屏幕与消费屏幕)。\n  Triggers: 刷手机/上瘾/短视频/社交媒体/多巴胺/戒断/屏幕时间/screen time/dopamine/addiction\nmetadata:\n  cangjie.generated-by: cangjie-tools v2.5.0\n  cangjie.capability-id: cap.naval.screen-detox\n  cangjie.capability-revision: 1\n  cangjie.bundle-id: bundle.naval-almanack\n  cangjie.source-title: 《纳瓦尔宝典：财富与幸福指南》\n  cangjie.tags: habits, digital, dopamine, happiness\n---\n<!-- capability_id: cap.naval.screen-detox | revision: 1 | status: active -->\n<!-- 来源: books/naval-almanack-skill/screen-detox/SKILL.md（正文逐字保留） -->\n\n# 屏幕戒断与多巴胺管理\n\n## R — 原文 (Reading)\n\n> 没有例外——所有屏幕活动都与更少幸福有关，所有非屏幕的活动都与更多的幸福联系在一起。……我只是整日吃着小多巴胺的零食。我得到了我小140字的多巴胺。我发推特，然后留意谁转推了我的推文。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第二章·幸福\n\n## I — 方法论骨架 (Interpretation)\n\n屏幕内容（社交媒体/新闻/短视频/游戏）是精心设计的**多巴胺零食**：\n用即时奖赏的长期后果（注意力涣散、幸福下降、焦虑升高）换短期快感。\n戒断的逻辑不是靠意志力硬扛，而是：\n① **承认机制**——屏幕=用长期后果换短期利益（咖啡因同理），「所有屏幕活动都与更少幸福相关」；\n② **识别替代**——阳光、运动、积极思考、面对面交流是天然血清素来源，非屏幕活动与更多幸福相关；\n③ **习惯替换五步**——挑一件事→培养一个愿望→可视化→规划可持续道路→识别需求/触发/替代品→告诉朋友→仔细调查；\n④ **环境设计**——少用电话/日历/闹钟（三个让你重新回到数字世界循环的 app）。\n现代斗争的真相：孤独的个体用非人的意志力，对抗大量科学家和统计学家设计的「垃圾食品、点击诱导新闻、无限色情、无尽游戏和上瘾药物」。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 从 Twitter 回到书籍\n- **问题**: 沉迷推文多巴胺，意识到「我其实学不到任何东西」\n- **方法论的使用**: 承认这是游戏，重新把书当博客读（无读完义务）\n- **结论**: 「我意识到我必须回去读书」\n- **结果**: 阅读重新回到他的生活\n\n### 案例 2: 丢掉咖啡因与每天锻炼\n- **问题**: 情绪不稳、幸福基线低\n- **方法论的使用**: 戒咖啡因、每天锻炼、晒太阳、抬头微笑\n- **结论**: 「我认为丢掉咖啡因使我更快乐。这使我变得更加稳重。」\n- **结果**: 这些成为第二天性的幸福习惯\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 刷手机失控：「一刷就两小时，停不下来」\n2. 空虚感：「刷完更空虚/焦虑」\n3. 想戒某个坏习惯：「怎么戒短视频/游戏/零食」\n4. 想提升专注与幸福：「把时间还给自己」\n\n### 语言信号\n\n- \"我刷手机上瘾怎么办\"\n- \"怎么戒掉短视频/游戏/熬夜刷手机\"\n- \"感觉被算法控制\"\n- \"screen addiction / doomscrolling / dopamine detox\"\n\n### 与相邻 skill 的区分\n\n- 与 `reading-metaskill` 的区别: 阅读是替代屏幕的深度输入，但戒断本身是本 skill 职责\n- 与 `monkey-mind-meditation` 的区别: 本 skill 管外部刺激源，冥想管内部杂念\n\n## E — 可执行步骤 (Execution)\n\n1. **量化当前屏幕消耗**\n   - 完成标准: 用屏幕时间统计记录 3 天，标出最痛的 1 个消费型 app/时段\n\n2. **做一个环境改造**\n   - 完成标准: 把该 app 移出首屏/卸载/设限额，物理隔离（手机放另一房间）\n\n3. **设计替代活动**\n   - 完成标准: 为每个触发时段（通勤/睡前/等饭）准备一个非屏幕替代（书/散步/面对面聊天）\n\n4. **对外承诺**\n   - 完成标准: 告诉 3 个朋友你的戒断目标，接受他们的监督\n   - 判停条件: 若 7 天后复发 ≥3 次，缩小目标（如从「戒全部」改为「只戒睡前 1 小时」），不责备自己\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 用户靠屏幕工作谋生（区分工作屏幕与消费屏幕，别一刀切）\n- 用屏幕维持社交联系的孤独老人/异地关系（先保留必要联系）\n\n### 作者在书中警告的失败模式\n\n- 用意志力对抗设计好的武器: 「孤独的个体召唤非人的意志力……去对抗大量的科学家和统计学家」\n- 以为「看新闻=学习」: 新闻的工作是让你焦虑和生气\n\n### 作者的盲点 / 时代局限\n\n- 「所有屏幕活动与更少幸福相关」是强断言，未区分社交连接型屏幕使用\n- 对必须用屏幕的现代职业缺乏解决方案\n\n### 容易混淆的邻近方法论\n\n- `reading-metaskill`: 两者互补：戒屏幕→把时间给阅读\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `happiness-skill`、`monkey-mind-meditation`\n- contrasts-with: `reading-metaskill`\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v14)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n",
+      "bodyMd": "<!-- capability_id: cap.naval.screen-detox | revision: 1 | status: active -->\n<!-- 来源: books/naval-almanack-skill/screen-detox/SKILL.md（正文逐字保留） -->\n\n# 屏幕戒断与多巴胺管理\n\n## R — 原文 (Reading)\n\n> 没有例外——所有屏幕活动都与更少幸福有关，所有非屏幕的活动都与更多的幸福联系在一起。……我只是整日吃着小多巴胺的零食。我得到了我小140字的多巴胺。我发推特，然后留意谁转推了我的推文。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第二章·幸福\n\n## I — 方法论骨架 (Interpretation)\n\n屏幕内容（社交媒体/新闻/短视频/游戏）是精心设计的**多巴胺零食**：\n用即时奖赏的长期后果（注意力涣散、幸福下降、焦虑升高）换短期快感。\n戒断的逻辑不是靠意志力硬扛，而是：\n① **承认机制**——屏幕=用长期后果换短期利益（咖啡因同理），「所有屏幕活动都与更少幸福相关」；\n② **识别替代**——阳光、运动、积极思考、面对面交流是天然血清素来源，非屏幕活动与更多幸福相关；\n③ **习惯替换五步**——挑一件事→培养一个愿望→可视化→规划可持续道路→识别需求/触发/替代品→告诉朋友→仔细调查；\n④ **环境设计**——少用电话/日历/闹钟（三个让你重新回到数字世界循环的 app）。\n现代斗争的真相：孤独的个体用非人的意志力，对抗大量科学家和统计学家设计的「垃圾食品、点击诱导新闻、无限色情、无尽游戏和上瘾药物」。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 从 Twitter 回到书籍\n- **问题**: 沉迷推文多巴胺，意识到「我其实学不到任何东西」\n- **方法论的使用**: 承认这是游戏，重新把书当博客读（无读完义务）\n- **结论**: 「我意识到我必须回去读书」\n- **结果**: 阅读重新回到他的生活\n\n### 案例 2: 丢掉咖啡因与每天锻炼\n- **问题**: 情绪不稳、幸福基线低\n- **方法论的使用**: 戒咖啡因、每天锻炼、晒太阳、抬头微笑\n- **结论**: 「我认为丢掉咖啡因使我更快乐。这使我变得更加稳重。」\n- **结果**: 这些成为第二天性的幸福习惯\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 刷手机失控：「一刷就两小时，停不下来」\n2. 空虚感：「刷完更空虚/焦虑」\n3. 想戒某个坏习惯：「怎么戒短视频/游戏/零食」\n4. 想提升专注与幸福：「把时间还给自己」\n\n### 语言信号\n\n- \"我刷手机上瘾怎么办\"\n- \"怎么戒掉短视频/游戏/熬夜刷手机\"\n- \"感觉被算法控制\"\n- \"screen addiction / doomscrolling / dopamine detox\"\n\n### 与相邻 skill 的区分\n\n- 与 `reading-metaskill` 的区别: 阅读是替代屏幕的深度输入，但戒断本身是本 skill 职责\n- 与 `monkey-mind-meditation` 的区别: 本 skill 管外部刺激源，冥想管内部杂念\n\n## E — 可执行步骤 (Execution)\n\n1. **量化当前屏幕消耗**\n   - 完成标准: 用屏幕时间统计记录 3 天，标出最痛的 1 个消费型 app/时段\n\n2. **做一个环境改造**\n   - 完成标准: 把该 app 移出首屏/卸载/设限额，物理隔离（手机放另一房间）\n\n3. **设计替代活动**\n   - 完成标准: 为每个触发时段（通勤/睡前/等饭）准备一个非屏幕替代（书/散步/面对面聊天）\n\n4. **对外承诺**\n   - 完成标准: 告诉 3 个朋友你的戒断目标，接受他们的监督\n   - 判停条件: 若 7 天后复发 ≥3 次，缩小目标（如从「戒全部」改为「只戒睡前 1 小时」），不责备自己\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 用户靠屏幕工作谋生（区分工作屏幕与消费屏幕，别一刀切）\n- 用屏幕维持社交联系的孤独老人/异地关系（先保留必要联系）\n\n### 作者在书中警告的失败模式\n\n- 用意志力对抗设计好的武器: 「孤独的个体召唤非人的意志力……去对抗大量的科学家和统计学家」\n- 以为「看新闻=学习」: 新闻的工作是让你焦虑和生气\n\n### 作者的盲点 / 时代局限\n\n- 「所有屏幕活动与更少幸福相关」是强断言，未区分社交连接型屏幕使用\n- 对必须用屏幕的现代职业缺乏解决方案\n\n### 容易混淆的邻近方法论\n\n- `reading-metaskill`: 两者互补：戒屏幕→把时间给阅读\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `happiness-skill`、`monkey-mind-meditation`\n- contrasts-with: `reading-metaskill`\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v14)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n"
+    },
+    {
+      "slug": "wealth-structure",
+      "name": "wealth-structure",
+      "dir": "dist/naval-almanack-pack/wealth-structure",
+      "path": "dist/naval-almanack-pack/wealth-structure/SKILL.md",
+      "desc": "当用户问「怎么赚钱/如何致富/该不该要期权/如何判断一个生意的结构」时调用。 核心理念: 财富=睡觉时仍在赚钱的资产; 靠「责任(押上声誉)→产权(股权/知识产权)→杠杆(无需许可的代码媒体)→避免出局」构建, 无法靠出租时间致富。 不适用于: 具体投资标的分析、理财产品的选股建议。 Triggers: 致富/赚钱/股权/期权/杠杆/被动收入/ownership/leverage/equity",
+      "descZh": "",
+      "triggers": [
+        "具体投资标的分析",
+        "理财产品的选股建议"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/kangarooking/cangjie-skill.git",
+        "copy": "cp -r dist/naval-almanack-pack/wealth-structure ~/.claude/skills/wealth-structure",
+        "raw": "https://raw.githubusercontent.com/kangarooking/cangjie-skill/a28de55ba881b9928956a55048f743f7a9e3b23e/dist/naval-almanack-pack/wealth-structure/SKILL.md",
+        "saveAs": "~/.claude/skills/wealth-structure/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:02a97de2248da213ec7146e9e5f8302dd5a1598dc30e3ac99ddf0dd003190b67",
+      "bytes": 5886,
+      "wordCount": 257,
+      "repoLicense": "MIT",
+      "commit": "a28de55ba881b9928956a55048f743f7a9e3b23e",
+      "branch": "main",
+      "body": "---\nname: wealth-structure\ndescription: |\n  当用户问「怎么赚钱/如何致富/该不该要期权/如何判断一个生意的结构」时调用。\n  核心理念: 财富=睡觉时仍在赚钱的资产; 靠「责任(押上声誉)→产权(股权/知识产权)→杠杆(无需许可的代码媒体)→避免出局」构建, 无法靠出租时间致富。\n  不适用于: 具体投资标的分析、理财产品的选股建议。\n  Triggers: 致富/赚钱/股权/期权/杠杆/被动收入/ownership/leverage/equity\nmetadata:\n  cangjie.generated-by: cangjie-tools v2.5.0\n  cangjie.capability-id: cap.naval.wealth-structure\n  cangjie.capability-revision: 1\n  cangjie.bundle-id: bundle.naval-almanack\n  cangjie.source-title: 《纳瓦尔宝典：财富与幸福指南》\n  cangjie.tags: wealth, leverage, ownership, equity, risk\n---\n<!-- capability_id: cap.naval.wealth-structure | revision: 1 | status: active -->\n<!-- 来源: books/naval-almanack-skill/wealth-structure/SKILL.md（正文逐字保留） -->\n\n# 财富结构：责任 + 产权 + 杠杆 + 避免出局\n\n## R — 原文 (Reading)\n\n> 你无法通过廉价出租自己的时间而致富。你必须拥有产权——生意的一部分（如股权）——获得个人的财务自由。……商业杠杆主要有资本、人力、复制成本极低的产品（代码和媒体）。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第一章·财富\n\n## I — 方法论骨架 (Interpretation)\n\n致富不是靠工作更努力，而是靠改变收入的结构：\n① **不卖时间**——工资是「为别人承担风险的人打工」拿的最低报酬，退休即断；\n② **要产权**——股权、知识产权、品牌才能让睡觉时也有收入，实现非线性赚钱；\n③ **加杠杆**——人力/资本需要许可，代码和媒体无需许可且最民主；\n④ **避免出局**——不违法、不伤身、不孤注一掷，保住复利的游戏资格；\n⑤ **责任感换回报**——敢把名字押上去、公开承担失败风险的人，社会以产权和杠杆回报他。\n判断任何职业/生意，先诊断它用了几种杠杆、有没有产权、下行风险多大。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 房地产五级杠杆阶梯\n- **问题**: 同样的房地产行业，报酬从时薪 15 美元到数十亿美元量级\n- **方法论的使用**: 修房工人(无杠杆)→总承包商(人力杠杆)→开发商(资本+责任)→基金管理人(资本杠杆)→平台公司(代码+资本+团队)\n- **结论**: 每上一级=更多责任+更多杠杆+更多特殊知识\n- **结果**: 顶端公司创造数十亿美元价值，收入与投入完全脱钩\n\n### 案例 2: 医生为什么能致富\n- **问题**: 为什么高薪打工者退休后没有收入\n- **方法论的使用**: 真有钱的医生开了私人诊所（品牌/知识产权），而非只领工资\n- **结论**: 产权是财富与工资的分界线\n- **结果**: 「他们不会给你足够的报酬——最低限度的报酬可能是很高的工资，但它仍然不是真正的财富」\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 思考收入结构：「我怎么才能不靠出卖时间赚钱」\n2. 谈 offer/期权：「高薪 vs 股权怎么选」「该不该要这家公司期权」\n3. 评估生意/副业：「这个副业有杠杆吗？能规模吗？」\n4. 风险决策：「要不要 All in / 借钱创业」\n\n### 语言信号\n\n- \"怎么致富/怎么财富自由\"\n- \"工资之外怎么创造被动收入\"\n- \"要不要期权/股权/合伙\"\n- \"how to get rich / build assets / passive income\"\n\n### 与相邻 skill 的区分\n\n- 与 `productize-yourself` 的区别: 前者是「你是谁」的定位，本 skill 是「价值如何变成资产结构」\n- 与 `principal-agent` 的区别: 委托代理解决组织内的激励归属；本 skill 解决个人财富的资产结构\n\n## E — 可执行步骤 (Execution)\n\n1. **诊断当前收入结构**\n   - 完成标准: 回答三个问题——收入是否按时间计？有无产权（股权/知识产权/品牌）？有几层杠杆？\n\n2. **向上迁移一层**\n   - 完成标准: 找到一个可以增加责任/产权/杠杆的具体动作（要期权、做产品、写内容、入股）\n   - 判停条件: 若下一步涉及孤注一掷（All in 全部积蓄/违法），跳过该动作并回到步骤 2\n\n3. **加一道防出局护栏**\n   - 完成标准: 明确写下「绝不违法、绝不押上全部资本、保持健康」三条红线\n\n4. **用复利视角重跑**\n   - 完成标准: 每季度检查资产是否在睡觉时产生收入，持续向产权+杠杆方向迁移\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 用户要具体投资标的/选股/理财建议（本书不提供标的推荐）\n- 用户处于生存线上、需要先解决现金流（先谈工作/技能，再谈结构）\n\n### 作者在书中警告的失败模式\n\n- 孤注一掷与破产: 「远离那些事会导致你失去所有资本和所有积蓄的事情」\n- 只为他人打工: 雇主付「让你工作的最低报酬」，退休即断粮\n\n### 作者的盲点 / 时代局限\n\n- 2008–2019 硅谷/风投背景: 「代码和媒体杠杆」叙事低估平台规则变化与流量通胀\n- 特殊知识+杠杆对无资本起点的人门槛高；作者默认有试错安全网\n\n### 容易混淆的邻近方法论\n\n- `hourly-rate-time`: 时薪是时间效率工具，本 skill 是资产结构框架；两者互补不冲突\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `productize-yourself`、`long-term-compounding`、`principal-agent`\n- depends-on: `judgment-training`（先有判断力再上杠杆）\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v02)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n",
+      "bodyMd": "<!-- capability_id: cap.naval.wealth-structure | revision: 1 | status: active -->\n<!-- 来源: books/naval-almanack-skill/wealth-structure/SKILL.md（正文逐字保留） -->\n\n# 财富结构：责任 + 产权 + 杠杆 + 避免出局\n\n## R — 原文 (Reading)\n\n> 你无法通过廉价出租自己的时间而致富。你必须拥有产权——生意的一部分（如股权）——获得个人的财务自由。……商业杠杆主要有资本、人力、复制成本极低的产品（代码和媒体）。\n>\n> — 纳瓦尔·拉维坎特, 《纳瓦尔宝典》 第一章·财富\n\n## I — 方法论骨架 (Interpretation)\n\n致富不是靠工作更努力，而是靠改变收入的结构：\n① **不卖时间**——工资是「为别人承担风险的人打工」拿的最低报酬，退休即断；\n② **要产权**——股权、知识产权、品牌才能让睡觉时也有收入，实现非线性赚钱；\n③ **加杠杆**——人力/资本需要许可，代码和媒体无需许可且最民主；\n④ **避免出局**——不违法、不伤身、不孤注一掷，保住复利的游戏资格；\n⑤ **责任感换回报**——敢把名字押上去、公开承担失败风险的人，社会以产权和杠杆回报他。\n判断任何职业/生意，先诊断它用了几种杠杆、有没有产权、下行风险多大。\n\n## A1 — 书中的应用 (Past Application)\n\n### 案例 1: 房地产五级杠杆阶梯\n- **问题**: 同样的房地产行业，报酬从时薪 15 美元到数十亿美元量级\n- **方法论的使用**: 修房工人(无杠杆)→总承包商(人力杠杆)→开发商(资本+责任)→基金管理人(资本杠杆)→平台公司(代码+资本+团队)\n- **结论**: 每上一级=更多责任+更多杠杆+更多特殊知识\n- **结果**: 顶端公司创造数十亿美元价值，收入与投入完全脱钩\n\n### 案例 2: 医生为什么能致富\n- **问题**: 为什么高薪打工者退休后没有收入\n- **方法论的使用**: 真有钱的医生开了私人诊所（品牌/知识产权），而非只领工资\n- **结论**: 产权是财富与工资的分界线\n- **结果**: 「他们不会给你足够的报酬——最低限度的报酬可能是很高的工资，但它仍然不是真正的财富」\n\n## A2 — 触发场景 (Future Trigger) ★\n\n### 用户会在什么情境下需要这个 skill?\n\n1. 思考收入结构：「我怎么才能不靠出卖时间赚钱」\n2. 谈 offer/期权：「高薪 vs 股权怎么选」「该不该要这家公司期权」\n3. 评估生意/副业：「这个副业有杠杆吗？能规模吗？」\n4. 风险决策：「要不要 All in / 借钱创业」\n\n### 语言信号\n\n- \"怎么致富/怎么财富自由\"\n- \"工资之外怎么创造被动收入\"\n- \"要不要期权/股权/合伙\"\n- \"how to get rich / build assets / passive income\"\n\n### 与相邻 skill 的区分\n\n- 与 `productize-yourself` 的区别: 前者是「你是谁」的定位，本 skill 是「价值如何变成资产结构」\n- 与 `principal-agent` 的区别: 委托代理解决组织内的激励归属；本 skill 解决个人财富的资产结构\n\n## E — 可执行步骤 (Execution)\n\n1. **诊断当前收入结构**\n   - 完成标准: 回答三个问题——收入是否按时间计？有无产权（股权/知识产权/品牌）？有几层杠杆？\n\n2. **向上迁移一层**\n   - 完成标准: 找到一个可以增加责任/产权/杠杆的具体动作（要期权、做产品、写内容、入股）\n   - 判停条件: 若下一步涉及孤注一掷（All in 全部积蓄/违法），跳过该动作并回到步骤 2\n\n3. **加一道防出局护栏**\n   - 完成标准: 明确写下「绝不违法、绝不押上全部资本、保持健康」三条红线\n\n4. **用复利视角重跑**\n   - 完成标准: 每季度检查资产是否在睡觉时产生收入，持续向产权+杠杆方向迁移\n\n## B — 边界 (Boundary) ★\n\n### 不要在以下情况使用此 skill\n\n- 用户要具体投资标的/选股/理财建议（本书不提供标的推荐）\n- 用户处于生存线上、需要先解决现金流（先谈工作/技能，再谈结构）\n\n### 作者在书中警告的失败模式\n\n- 孤注一掷与破产: 「远离那些事会导致你失去所有资本和所有积蓄的事情」\n- 只为他人打工: 雇主付「让你工作的最低报酬」，退休即断粮\n\n### 作者的盲点 / 时代局限\n\n- 2008–2019 硅谷/风投背景: 「代码和媒体杠杆」叙事低估平台规则变化与流量通胀\n- 特殊知识+杠杆对无资本起点的人门槛高；作者默认有试错安全网\n\n### 容易混淆的邻近方法论\n\n- `hourly-rate-time`: 时薪是时间效率工具，本 skill 是资产结构框架；两者互补不冲突\n\n---\n\n## 相关 skills (阶段 3 定稿)\n\n- composes-with: `productize-yourself`、`long-term-compounding`、`principal-agent`\n- depends-on: `judgment-training`（先有判断力再上杠杆）\n\n---\n\n## 审计信息\n\n- **验证通过**: V1 ✓ / V2 ✓ / V3 ✓ (v02)\n- **测试通过率**: 见 test-results.md\n- **蒸馏时间**: 2026-08-01\n"
+    },
+    {
+      "slug": "naval-almanack-single",
+      "name": "naval-almanack",
+      "dir": "dist/naval-almanack-single",
+      "path": "dist/naval-almanack-single/SKILL.md",
+      "desc": "当用户询问《纳瓦尔宝典》(The Almanack of Naval Ravikant) 相关内容，或在以下领域寻求建议时调用: 财富构建(怎么赚钱/股权期权/杠杆/副业与职业定位/时薪与外包决策)、判断与决策(重大选择纠结/心智模型/打工vs创业)、 幸福与心智(欲望与焦虑/接受与内耗/冥想/刷手机上瘾/愤怒与期望/攀比妒忌)、人生哲学(生命意义/该不该信玄学/诚实沟通/选朋友圈子/怎么读书学习)。 不适用于: 具体投资标的与选股、临床心理治疗、急性危机(先求助专业人士)。 Triggers: 纳瓦尔/Naval/纳瓦尔宝典/致富/财富/幸福/判断力/冥想/读书/人生意义",
+      "descZh": "",
+      "triggers": [
+        "具体投资标的与选股",
+        "临床心理治疗",
+        "急性危机(先求助专业人士)"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/kangarooking/cangjie-skill.git",
+        "copy": "cp -r dist/naval-almanack-single ~/.claude/skills/naval-almanack-single",
+        "raw": "https://raw.githubusercontent.com/kangarooking/cangjie-skill/a28de55ba881b9928956a55048f743f7a9e3b23e/dist/naval-almanack-single/SKILL.md",
+        "saveAs": "~/.claude/skills/naval-almanack-single/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:2b7f9dc498d813bc2f89076a284e9441ce1daab6007f7e01d377f64c367de076",
+      "bytes": 7199,
+      "wordCount": 225,
+      "repoLicense": "MIT",
+      "commit": "a28de55ba881b9928956a55048f743f7a9e3b23e",
+      "branch": "main",
+      "body": "---\nname: naval-almanack\ndescription: |\n  当用户询问《纳瓦尔宝典》(The Almanack of Naval Ravikant) 相关内容，或在以下领域寻求建议时调用:\n  财富构建(怎么赚钱/股权期权/杠杆/副业与职业定位/时薪与外包决策)、判断与决策(重大选择纠结/心智模型/打工vs创业)、\n  幸福与心智(欲望与焦虑/接受与内耗/冥想/刷手机上瘾/愤怒与期望/攀比妒忌)、人生哲学(生命意义/该不该信玄学/诚实沟通/选朋友圈子/怎么读书学习)。\n  不适用于: 具体投资标的与选股、临床心理治疗、急性危机(先求助专业人士)。\n  Triggers: 纳瓦尔/Naval/纳瓦尔宝典/致富/财富/幸福/判断力/冥想/读书/人生意义\nmetadata:\n  cangjie.generated-by: cangjie-tools v2.5.0\n  cangjie.variant: single\n  cangjie.bundle-id: bundle.naval-almanack\n  cangjie.capability-count: 19\n  cangjie.entrypoint-count: 1\n---\n# 《纳瓦尔宝典：财富与幸福指南》 — 全书能力入口\n\n## 触发与不触发\n\n**适用**：与本书能力域相关的咨询与任务（见下方路由表的意图列）。\n**不适用**：\n- 具体投资标的分析、选股与理财产品建议\n- 临床抑郁、精神疾病急性发作等需要专业治疗的场景（先就医）\n- 急性自杀风险（先紧急求助）\n- 需要外交辞令的谈判策略与具体薪酬数字\n\n## 核心原则（常驻速览，概览类问题读到这里即可回答）\n\n1. 财富=睡觉时仍在赚钱的资产；靠「责任→产权→杠杆」构建，无法靠出租时间致富。\n2. 用特殊知识（对你像玩、对别人像工作）产品化自己，成为不可替代。\n3. 判断力比努力重要；无法决定就答否；两条均等的路选短期更痛苦的那条。\n4. 财富、知识、声誉、关系都遵循复利；只玩长期正和游戏，与能共事一辈子的人同行。\n5. 幸福是可训练的技能：减少欲望、活在当下；任何处境只有三选项——改变/接受/离开。\n6. 阅读是终极元技能：读你所爱、原著优先，每天 1-2 小时即进入极少数人行列。\n\n## 能力路由（先读本表，按意图加载 1 张能力卡）\n\n| 用户意图 | 先读 | 补读/备注 |\n|---|---|---|\n| 怎么赚钱/如何致富；该不该要期权/股权；评估一个生意或副业的结构 | references/capabilities/wealth-structure.md | references/capabilities/productize-yourself.md、references/capabilities/long-term-compounding.md |\n| 职业/副业/自由职业方向纠结；我该做什么才能赚钱且不被替代；寻找独特优势 | references/capabilities/productize-yourself.md | references/capabilities/wealth-structure.md |\n| 换工作/买房/搬城/合伙/结婚等重大选择纠结；列了利弊表还是拿不定主意 | references/capabilities/decision-heuristics.md | references/capabilities/judgment-training.md |\n| 琐事/外包值不值得；时间分配与安排；离财务自由还差什么 | references/capabilities/hourly-rate-time.md | references/capabilities/wealth-structure.md |\n| 想养成阅读习惯；读什么书/怎么读；如何学习新领域/入门某学科 | references/capabilities/reading-metaskill.md | references/capabilities/judgment-training.md |\n| 刷手机/短视频/社交媒体上瘾；想戒断多巴胺零食 | references/capabilities/screen-detox.md | references/capabilities/happiness-skill.md |\n| 需要方向性判断/这事靠谱吗；想提升决策能力/学心智模型 | references/capabilities/judgment-training.md | references/capabilities/reading-metaskill.md、references/capabilities/decision-heuristics.md |\n| 要不要长期投入某段关系/某个项目；如何积累声誉与信任 | references/capabilities/long-term-compounding.md | references/capabilities/peer-selection.md、references/capabilities/wealth-structure.md |\n| 为什么大公司磨洋工/小公司拼命；打工还是创业/该不该自己干 | references/capabilities/principal-agent.md | references/capabilities/judgment-training.md |\n| 怎么才能更幸福；为什么得到了还不满足；怎么减少焦虑 | references/capabilities/happiness-skill.md | references/capabilities/acceptance.md、references/capabilities/monkey-mind-meditation.md |\n| 为什么有人攻击我/大家卷来卷去；怎么不在乎别人眼光；为什么妒忌 | references/capabilities/game-selection.md | references/capabilities/happiness-skill.md、references/capabilities/long-term-compounding.md |\n| 困在无法改变的处境里反复内耗；该忍还是该走 | references/capabilities/acceptance.md | references/capabilities/life-meaning.md、references/capabilities/happiness-skill.md |\n| 被别人的期望压垮；容易愤怒/怎么不生气；感觉被工作困住/怎么说不 | references/capabilities/self-liberation.md | references/capabilities/happiness-skill.md、references/capabilities/honesty-communication.md |\n| 脑子停不下来/焦虑反刍；想学冥想/提升专注力 | references/capabilities/monkey-mind-meditation.md | references/capabilities/happiness-skill.md、references/capabilities/rational-buddhism.md |\n| 交朋友/选伴侣/换圈子纠结；感觉被周围人拖累/该不该疏远某人 | references/capabilities/peer-selection.md | references/capabilities/long-term-compounding.md、references/capabilities/honesty-communication.md |\n| 发现自己在为立场辩护/看不清现实；反复立志却改变不了自己 | references/capabilities/identity-work.md | references/capabilities/acceptance.md、references/capabilities/honesty-communication.md |\n| 怎么真诚沟通/拒绝别人/给反馈；不想说场面话/发现自己在隐瞒 | references/capabilities/honesty-communication.md | references/capabilities/identity-work.md |\n| 某主张/玄学/灵修该不该信；想建立自己的验证标准 | references/capabilities/rational-buddhism.md | references/capabilities/life-meaning.md、references/capabilities/monkey-mind-meditation.md |\n| 活着的意义是什么/虚无感；找不到方向/该为什么努力 | references/capabilities/life-meaning.md | references/capabilities/rational-buddhism.md、references/capabilities/acceptance.md |\n\n**非能力类查询**：\n- 书名/作者/章节/整书概览 → references/overview.md\n- 术语解释 → references/glossary.md\n- 决策规则速查（不需要原文依据时） → references/cheatsheet.md\n- 完整意图与关键词索引（本表未覆盖的意图先查这里） → references/capability-index.md\n\n## 加载规则\n\n- 每次任务先读本文件，再按路由表加载 **1** 张能力卡；任务明确跨域时最多加载 2 张。\n- 概览/书名类问题不加载能力卡，用「核心原则」与 overview.md 回答。\n- 路由表与 capability-index.md 都无法命中的意图，明确告知超出本书范围，不要硬套。\n\n## 边界与判停\n\n- 意图在路由表与能力索引中均无法命中 → 明确告知超出本书范围，不硬套书中框架。\n- 涉及医疗/法律/人身安全 → 停止套用方法论，建议专业求助。\n- 纯事实查询（书名/作者/出版年/章节）→ 用核心原则与 overview 回答后即停，不展开人生建议。\n",
+      "bodyMd": "# 《纳瓦尔宝典：财富与幸福指南》 — 全书能力入口\n\n## 触发与不触发\n\n**适用**：与本书能力域相关的咨询与任务（见下方路由表的意图列）。\n**不适用**：\n- 具体投资标的分析、选股与理财产品建议\n- 临床抑郁、精神疾病急性发作等需要专业治疗的场景（先就医）\n- 急性自杀风险（先紧急求助）\n- 需要外交辞令的谈判策略与具体薪酬数字\n\n## 核心原则（常驻速览，概览类问题读到这里即可回答）\n\n1. 财富=睡觉时仍在赚钱的资产；靠「责任→产权→杠杆」构建，无法靠出租时间致富。\n2. 用特殊知识（对你像玩、对别人像工作）产品化自己，成为不可替代。\n3. 判断力比努力重要；无法决定就答否；两条均等的路选短期更痛苦的那条。\n4. 财富、知识、声誉、关系都遵循复利；只玩长期正和游戏，与能共事一辈子的人同行。\n5. 幸福是可训练的技能：减少欲望、活在当下；任何处境只有三选项——改变/接受/离开。\n6. 阅读是终极元技能：读你所爱、原著优先，每天 1-2 小时即进入极少数人行列。\n\n## 能力路由（先读本表，按意图加载 1 张能力卡）\n\n| 用户意图 | 先读 | 补读/备注 |\n|---|---|---|\n| 怎么赚钱/如何致富；该不该要期权/股权；评估一个生意或副业的结构 | references/capabilities/wealth-structure.md | references/capabilities/productize-yourself.md、references/capabilities/long-term-compounding.md |\n| 职业/副业/自由职业方向纠结；我该做什么才能赚钱且不被替代；寻找独特优势 | references/capabilities/productize-yourself.md | references/capabilities/wealth-structure.md |\n| 换工作/买房/搬城/合伙/结婚等重大选择纠结；列了利弊表还是拿不定主意 | references/capabilities/decision-heuristics.md | references/capabilities/judgment-training.md |\n| 琐事/外包值不值得；时间分配与安排；离财务自由还差什么 | references/capabilities/hourly-rate-time.md | references/capabilities/wealth-structure.md |\n| 想养成阅读习惯；读什么书/怎么读；如何学习新领域/入门某学科 | references/capabilities/reading-metaskill.md | references/capabilities/judgment-training.md |\n| 刷手机/短视频/社交媒体上瘾；想戒断多巴胺零食 | references/capabilities/screen-detox.md | references/capabilities/happiness-skill.md |\n| 需要方向性判断/这事靠谱吗；想提升决策能力/学心智模型 | references/capabilities/judgment-training.md | references/capabilities/reading-metaskill.md、references/capabilities/decision-heuristics.md |\n| 要不要长期投入某段关系/某个项目；如何积累声誉与信任 | references/capabilities/long-term-compounding.md | references/capabilities/peer-selection.md、references/capabilities/wealth-structure.md |\n| 为什么大公司磨洋工/小公司拼命；打工还是创业/该不该自己干 | references/capabilities/principal-agent.md | references/capabilities/judgment-training.md |\n| 怎么才能更幸福；为什么得到了还不满足；怎么减少焦虑 | references/capabilities/happiness-skill.md | references/capabilities/acceptance.md、references/capabilities/monkey-mind-meditation.md |\n| 为什么有人攻击我/大家卷来卷去；怎么不在乎别人眼光；为什么妒忌 | references/capabilities/game-selection.md | references/capabilities/happiness-skill.md、references/capabilities/long-term-compounding.md |\n| 困在无法改变的处境里反复内耗；该忍还是该走 | references/capabilities/acceptance.md | references/capabilities/life-meaning.md、references/capabilities/happiness-skill.md |\n| 被别人的期望压垮；容易愤怒/怎么不生气；感觉被工作困住/怎么说不 | references/capabilities/self-liberation.md | references/capabilities/happiness-skill.md、references/capabilities/honesty-communication.md |\n| 脑子停不下来/焦虑反刍；想学冥想/提升专注力 | references/capabilities/monkey-mind-meditation.md | references/capabilities/happiness-skill.md、references/capabilities/rational-buddhism.md |\n| 交朋友/选伴侣/换圈子纠结；感觉被周围人拖累/该不该疏远某人 | references/capabilities/peer-selection.md | references/capabilities/long-term-compounding.md、references/capabilities/honesty-communication.md |\n| 发现自己在为立场辩护/看不清现实；反复立志却改变不了自己 | references/capabilities/identity-work.md | references/capabilities/acceptance.md、references/capabilities/honesty-communication.md |\n| 怎么真诚沟通/拒绝别人/给反馈；不想说场面话/发现自己在隐瞒 | references/capabilities/honesty-communication.md | references/capabilities/identity-work.md |\n| 某主张/玄学/灵修该不该信；想建立自己的验证标准 | references/capabilities/rational-buddhism.md | references/capabilities/life-meaning.md、references/capabilities/monkey-mind-meditation.md |\n| 活着的意义是什么/虚无感；找不到方向/该为什么努力 | references/capabilities/life-meaning.md | references/capabilities/rational-buddhism.md、references/capabilities/acceptance.md |\n\n**非能力类查询**：\n- 书名/作者/章节/整书概览 → references/overview.md\n- 术语解释 → references/glossary.md\n- 决策规则速查（不需要原文依据时） → references/cheatsheet.md\n- 完整意图与关键词索引（本表未覆盖的意图先查这里） → references/capability-index.md\n\n## 加载规则\n\n- 每次任务先读本文件，再按路由表加载 **1** 张能力卡；任务明确跨域时最多加载 2 张。\n- 概览/书名类问题不加载能力卡，用「核心原则」与 overview.md 回答。\n- 路由表与 capability-index.md 都无法命中的意图，明确告知超出本书范围，不要硬套。\n\n## 边界与判停\n\n- 意图在路由表与能力索引中均无法命中 → 明确告知超出本书范围，不硬套书中框架。\n- 涉及医疗/法律/人身安全 → 停止套用方法论，建议专业求助。\n- 纯事实查询（书名/作者/出版年/章节）→ 用核心原则与 overview 回答后即停，不展开人生建议。\n"
+    }
+  ]
+}

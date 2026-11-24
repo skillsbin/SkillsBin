@@ -1,0 +1,54 @@
+{
+  "repo": "tigerless-labs/autoharness",
+  "commit": "6d85325ab5ef436d1d4d52ffa82e43ea0365d144",
+  "branch": "main",
+  "fetchedAt": "2026-11-24T22:04:46.645Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "learn",
+      "name": "learn",
+      "dir": "skills/learn",
+      "path": "skills/learn/SKILL.md",
+      "desc": "Use when users /learn, save, remember, or distill lessons.",
+      "descZh": "",
+      "triggers": [
+        "users /learn",
+        "save",
+        "remember",
+        "distill lessons"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/tigerless-labs/autoharness.git",
+        "copy": "cp -r skills/learn ~/.claude/skills/learn",
+        "raw": "https://raw.githubusercontent.com/tigerless-labs/autoharness/6d85325ab5ef436d1d4d52ffa82e43ea0365d144/skills/learn/SKILL.md",
+        "saveAs": "~/.claude/skills/learn/SKILL.md",
+        "marketplace": "/plugin marketplace add tigerless-labs/autoharness"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:949d6cbdc3bf797c7dbbff48e98d0262007e41a9b0fd063f45318fc8ab7ffd71",
+      "bytes": 1123,
+      "wordCount": 146,
+      "repoLicense": "MIT",
+      "commit": "6d85325ab5ef436d1d4d52ffa82e43ea0365d144",
+      "branch": "main",
+      "body": "---\nname: learn\ndescription: \"Use when users /learn, save, remember, or distill lessons.\"\ncategory: general\n---\n# Learn: distill this session into the skill library\n\nReview the conversation so far and distill what is worth keeping — through the\nstandard proposal chain, never by writing files.\n\n1. Identify class-level, reusable lessons: corrected approaches, non-trivial\n   techniques, durable user preferences. Skip one-off narratives and\n   environment-specific failures.\n2. Compare first: read the injected skill index; if an existing skill covers\n   the topic, prefer a `patch`/`update` over creating a near-duplicate.\n3. Reconcile old with new: when a lesson supersedes an earlier rule, search\n   the managed skill trees for contradicting statements and stage updates so\n   the new version wins everywhere.\n4. Stage every change exclusively via the `stage_skill` tool, one intent per\n   lesson, with `reason` and a verbatim `evidence` quote from this session.\n   The deterministic promoter validates and lands; rejects are reported at\n   the next session start.\n\nIf nothing meets the bar, say so and stage nothing.\n",
+      "bodyMd": "# Learn: distill this session into the skill library\n\nReview the conversation so far and distill what is worth keeping — through the\nstandard proposal chain, never by writing files.\n\n1. Identify class-level, reusable lessons: corrected approaches, non-trivial\n   techniques, durable user preferences. Skip one-off narratives and\n   environment-specific failures.\n2. Compare first: read the injected skill index; if an existing skill covers\n   the topic, prefer a `patch`/`update` over creating a near-duplicate.\n3. Reconcile old with new: when a lesson supersedes an earlier rule, search\n   the managed skill trees for contradicting statements and stage updates so\n   the new version wins everywhere.\n4. Stage every change exclusively via the `stage_skill` tool, one intent per\n   lesson, with `reason` and a verbatim `evidence` quote from this session.\n   The deterministic promoter validates and lands; rejects are reported at\n   the next session start.\n\nIf nothing meets the bar, say so and stage nothing.\n"
+    }
+  ]
+}

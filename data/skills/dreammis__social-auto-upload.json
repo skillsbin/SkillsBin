@@ -1,0 +1,755 @@
+{
+  "repo": "dreammis/social-auto-upload",
+  "commit": "409d4fdd33f3eb0d946310af93633ddb5eebe1d5",
+  "branch": "main",
+  "fetchedAt": "2026-11-24T22:03:34.529Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "alipay-upload",
+      "name": "alipay-upload",
+      "dir": "skills/alipay-upload",
+      "path": "skills/alipay-upload/SKILL.md",
+      "desc": "使用 social-auto-upload 的 `sau alipay` 登录支付宝生活号并发布视频。Use when 用户要向支付宝生活号发布视频或检查创作账号状态。",
+      "descZh": "",
+      "triggers": [
+        "用户要向支付宝生活号发布视频或检查创作账号状态"
+      ],
+      "version": "1.0.0",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/dreammis/social-auto-upload.git",
+        "copy": "cp -r skills/alipay-upload ~/.claude/skills/alipay-upload",
+        "raw": "https://raw.githubusercontent.com/dreammis/social-auto-upload/409d4fdd33f3eb0d946310af93633ddb5eebe1d5/skills/alipay-upload/SKILL.md",
+        "saveAs": "~/.claude/skills/alipay-upload/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:504ff49a52d23917bb0fe4ec76127e938adf730302e60b46c1bd80f4dedc710b",
+      "bytes": 1222,
+      "wordCount": 38,
+      "repoLicense": "MIT",
+      "commit": "409d4fdd33f3eb0d946310af93633ddb5eebe1d5",
+      "branch": "main",
+      "body": "---\nname: alipay-upload\ndescription: 使用 social-auto-upload 的 `sau alipay` 登录支付宝生活号并发布视频。Use when 用户要向支付宝生活号发布视频或检查创作账号状态。\nlicense: MIT-0\nslug: social-auto-upload-alipay-upload\ndisplayName: 支付宝生活号视频发布\nversion: 1.0.0\nsummary: 登录支付宝生活号并发布视频，支持封面与合集。\n---\n\n# 支付宝生活号视频发布\n\n调用现有 `sau alipay` CLI。首次使用前，用户需要在支付宝内容创作后台登录并确认账号已开通生活号内容创作权限。\n\n```powershell\nsau alipay login --account creator\nsau alipay check --account creator\nsau alipay upload-video --account creator --file videos/demo.mp4 --title \"标题\" --desc \"简介\" --tags 生活号,测试\n```\n\n当前仅支持视频，不支持图文和定时发布。可选 `--thumbnail` 指定封面，`--collection` 指定已有合集。账号名是本地会话别名；登录需要扫码时，把二维码图片展示给用户。\n\n发布前核对账号、素材、标题、简介和标签。不要把 CLI 返回“已提交”扩大解释成审核通过或公开可见；结果不确定时先查支付宝后台，不盲目重试。\n",
+      "bodyMd": "# 支付宝生活号视频发布\n\n调用现有 `sau alipay` CLI。首次使用前，用户需要在支付宝内容创作后台登录并确认账号已开通生活号内容创作权限。\n\n```powershell\nsau alipay login --account creator\nsau alipay check --account creator\nsau alipay upload-video --account creator --file videos/demo.mp4 --title \"标题\" --desc \"简介\" --tags 生活号,测试\n```\n\n当前仅支持视频，不支持图文和定时发布。可选 `--thumbnail` 指定封面，`--collection` 指定已有合集。账号名是本地会话别名；登录需要扫码时，把二维码图片展示给用户。\n\n发布前核对账号、素材、标题、简介和标签。不要把 CLI 返回“已提交”扩大解释成审核通过或公开可见；结果不确定时先查支付宝后台，不盲目重试。\n"
+    },
+    {
+      "slug": "baijiahao-upload",
+      "name": "baijiahao-upload",
+      "dir": "skills/baijiahao-upload",
+      "path": "skills/baijiahao-upload/SKILL.md",
+      "desc": "使用 social-auto-upload 的 `sau baijiahao` 登录百家号、检查账号并发布视频。Use when 用户要向百家号发布视频或核验百家号登录状态。",
+      "descZh": "",
+      "triggers": [
+        "用户要向百家号发布视频或核验百家号登录状态"
+      ],
+      "version": "1.0.0",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/dreammis/social-auto-upload.git",
+        "copy": "cp -r skills/baijiahao-upload ~/.claude/skills/baijiahao-upload",
+        "raw": "https://raw.githubusercontent.com/dreammis/social-auto-upload/409d4fdd33f3eb0d946310af93633ddb5eebe1d5/skills/baijiahao-upload/SKILL.md",
+        "saveAs": "~/.claude/skills/baijiahao-upload/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:1cd2d6ae22ed22bce4153652a30fd051c886b4f7c7831f6eb5a61e272596d98f",
+      "bytes": 1198,
+      "wordCount": 38,
+      "repoLicense": "MIT",
+      "commit": "409d4fdd33f3eb0d946310af93633ddb5eebe1d5",
+      "branch": "main",
+      "body": "---\nname: baijiahao-upload\ndescription: 使用 social-auto-upload 的 `sau baijiahao` 登录百家号、检查账号并发布视频。Use when 用户要向百家号发布视频或核验百家号登录状态。\nlicense: MIT-0\nslug: social-auto-upload-baijiahao-upload\ndisplayName: 百家号视频发布\nversion: 1.0.0\nsummary: 登录百家号并发布视频，支持封面和合集。\n---\n\n# 百家号视频发布\n\n调用现有 CLI，不另写上传流程。账号名是本地会话别名；发布前先查看 `sau baijiahao upload-video --help`。\n\n```powershell\nsau baijiahao login --account creator\nsau baijiahao check --account creator\nsau baijiahao upload-video --account creator --file videos/demo.mp4 --title \"标题\" --desc \"简介\" --tags 百家号,测试\n```\n\n当前仅支持视频，不支持图文和定时发布。可选 `--thumbnail` 指定封面，`--collection` 指定已有合集。先完成百度账号登录并保存会话；登录出现二维码时把二维码图片展示给用户。\n\n发布前核对账号、素材、标题、文案和标签。只有命令及平台提供的本次提交证据才表示成功；超时或状态不明时先去后台核查，不能直接重发。\n",
+      "bodyMd": "# 百家号视频发布\n\n调用现有 CLI，不另写上传流程。账号名是本地会话别名；发布前先查看 `sau baijiahao upload-video --help`。\n\n```powershell\nsau baijiahao login --account creator\nsau baijiahao check --account creator\nsau baijiahao upload-video --account creator --file videos/demo.mp4 --title \"标题\" --desc \"简介\" --tags 百家号,测试\n```\n\n当前仅支持视频，不支持图文和定时发布。可选 `--thumbnail` 指定封面，`--collection` 指定已有合集。先完成百度账号登录并保存会话；登录出现二维码时把二维码图片展示给用户。\n\n发布前核对账号、素材、标题、文案和标签。只有命令及平台提供的本次提交证据才表示成功；超时或状态不明时先去后台核查，不能直接重发。\n"
+    },
+    {
+      "slug": "bilibili-upload",
+      "name": "bilibili-upload",
+      "dir": "skills/bilibili-upload",
+      "path": "skills/bilibili-upload/SKILL.md",
+      "desc": "当 agent 需要通过已安装的 `sau` CLI 完成 Bilibili 登录、账号校验或视频上传时使用这个 skill。优先使用 `sau bilibili ...`，程序会自动准备 `biliup`，不要求用户手动安装。",
+      "descZh": "",
+      "triggers": [],
+      "version": "1.0.0",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/dreammis/social-auto-upload.git",
+        "copy": "cp -r skills/bilibili-upload ~/.claude/skills/bilibili-upload",
+        "raw": "https://raw.githubusercontent.com/dreammis/social-auto-upload/409d4fdd33f3eb0d946310af93633ddb5eebe1d5/skills/bilibili-upload/SKILL.md",
+        "saveAs": "~/.claude/skills/bilibili-upload/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:5bf0f93ac68d0a3020aa2755cb3d65ed9511fa4ac384fb4270ef60f17225184f",
+      "bytes": 2141,
+      "wordCount": 138,
+      "repoLicense": "MIT",
+      "commit": "409d4fdd33f3eb0d946310af93633ddb5eebe1d5",
+      "branch": "main",
+      "body": "---\nname: bilibili-upload\ndescription: 当 agent 需要通过已安装的 `sau` CLI 完成 Bilibili 登录、账号校验或视频上传时使用这个 skill。优先使用 `sau bilibili ...`，程序会自动准备 `biliup`，不要求用户手动安装。\nlicense: MIT-0\nslug: social-auto-upload-bilibili-upload\ndisplayName: Bilibili 视频发布\nversion: 1.0.0\nsummary: 登录哔哩哔哩并发布视频，支持分区选择。\n---\n\n# Bilibili 上传 Skill\n\n优先把 `sau` 作为主接口。\n\n不要一开始就让用户自己找 `biliup` 或手动下载 release。\n程序会在运行时自动检查、自动下载、自动更新 `biliup`。\n\n## 功能概览\n\n| 功能 | 命令入口 | 说明 |\n| --- | --- | --- |\n| 登录 | `sau bilibili login --account <name>` | 需要用户自己在本地真实终端里执行，用于生成或刷新登录信息 |\n| 校验 | `sau bilibili check --account <name>` | 检查指定账号当前是否有效 |\n| 视频上传 | `sau bilibili upload-video ...` | 上传一条 Bilibili 视频 |\n\n## 默认工作流\n\n1. 先确认 `references/runtime-requirements.md`\n2. 再确认 `references/cli-contract.md`\n3. 执行匹配的 `sau bilibili ...` 命令\n4. 如果命令失败，再看 `references/troubleshooting.md`\n\n## 命令选择建议\n\n- 用户没有登录信息，先让用户自己在本地终端执行 `login`\n- 用户只想确认账号状态，先用 `check`\n- 用户要发视频，用 `upload-video`\n\n## 执行前检查\n\n- 优先确认当前环境能运行 `sau`\n- 如果 `sau` 不在 PATH 中，可以用仓库里的 `sau_cli.py`\n- 不要要求用户手动下载 `biliup`\n- 第一次运行 Bilibili 命令时，程序可能会自动联网准备 `biliup`\n- 对 agent 来说，不要在非交互环境里硬跑 `sau bilibili login`\n- 正确做法是让用户自己在本地终端执行 `sau bilibili login --account <name>`\n- 如果终端里的二维码显示不完整，提醒用户直接打开当前目录下的 `qrcode.png` 扫码\n\n## 参考文档\n\n- 运行前提：`references/runtime-requirements.md`\n- CLI 契约：`references/cli-contract.md`\n- 故障排查：`references/troubleshooting.md`\n",
+      "bodyMd": "# Bilibili 上传 Skill\n\n优先把 `sau` 作为主接口。\n\n不要一开始就让用户自己找 `biliup` 或手动下载 release。\n程序会在运行时自动检查、自动下载、自动更新 `biliup`。\n\n## 功能概览\n\n| 功能 | 命令入口 | 说明 |\n| --- | --- | --- |\n| 登录 | `sau bilibili login --account <name>` | 需要用户自己在本地真实终端里执行，用于生成或刷新登录信息 |\n| 校验 | `sau bilibili check --account <name>` | 检查指定账号当前是否有效 |\n| 视频上传 | `sau bilibili upload-video ...` | 上传一条 Bilibili 视频 |\n\n## 默认工作流\n\n1. 先确认 `references/runtime-requirements.md`\n2. 再确认 `references/cli-contract.md`\n3. 执行匹配的 `sau bilibili ...` 命令\n4. 如果命令失败，再看 `references/troubleshooting.md`\n\n## 命令选择建议\n\n- 用户没有登录信息，先让用户自己在本地终端执行 `login`\n- 用户只想确认账号状态，先用 `check`\n- 用户要发视频，用 `upload-video`\n\n## 执行前检查\n\n- 优先确认当前环境能运行 `sau`\n- 如果 `sau` 不在 PATH 中，可以用仓库里的 `sau_cli.py`\n- 不要要求用户手动下载 `biliup`\n- 第一次运行 Bilibili 命令时，程序可能会自动联网准备 `biliup`\n- 对 agent 来说，不要在非交互环境里硬跑 `sau bilibili login`\n- 正确做法是让用户自己在本地终端执行 `sau bilibili login --account <name>`\n- 如果终端里的二维码显示不完整，提醒用户直接打开当前目录下的 `qrcode.png` 扫码\n\n## 参考文档\n\n- 运行前提：`references/runtime-requirements.md`\n- CLI 契约：`references/cli-contract.md`\n- 故障排查：`references/troubleshooting.md`\n"
+    },
+    {
+      "slug": "dayu-upload",
+      "name": "dayu-upload",
+      "dir": "skills/dayu-upload",
+      "path": "skills/dayu-upload/SKILL.md",
+      "desc": "通过 social-auto-upload 的 sau CLI 完成大鱼号登录、账号核验、视频和文章的立即或定时发布，以及原作品结果查询。文章接收 HTML、Markdown 或 TXT 文件，Markdown 可选择主题。适用于已安装 sau 的环境，无需先阅读上传器源码。",
+      "descZh": "",
+      "triggers": [
+        "已安装 sau 的环境",
+        "无需先阅读上传器源码"
+      ],
+      "version": "1.0.0",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "node",
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/dreammis/social-auto-upload.git",
+        "copy": "cp -r skills/dayu-upload ~/.claude/skills/dayu-upload",
+        "raw": "https://raw.githubusercontent.com/dreammis/social-auto-upload/409d4fdd33f3eb0d946310af93633ddb5eebe1d5/skills/dayu-upload/SKILL.md",
+        "saveAs": "~/.claude/skills/dayu-upload/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:8768a6128ca50f469ce2cfa1fa51082ad5a4ff66afe066e6b3df6be1029119d0",
+      "bytes": 5441,
+      "wordCount": 200,
+      "repoLicense": "MIT",
+      "commit": "409d4fdd33f3eb0d946310af93633ddb5eebe1d5",
+      "branch": "main",
+      "body": "---\nname: dayu-upload\ndescription: 通过 social-auto-upload 的 sau CLI 完成大鱼号登录、账号核验、视频和文章的立即或定时发布，以及原作品结果查询。文章接收 HTML、Markdown 或 TXT 文件，Markdown 可选择主题。适用于已安装 sau 的环境，无需先阅读上传器源码。\nlicense: MIT-0\nslug: social-auto-upload-dayu-upload\ndisplayName: 大鱼号视频与文章发布\nversion: 1.0.0\nsummary: 发布大鱼号视频和文章，支持定时与结果核验。\n---\n\n# 大鱼号发布\n\n使用 `sau dayu`，不另写一套网页发布逻辑。先执行 `sau dayu --help`，具体参数以 `upload-video --help`、`upload-article --help` 和 `verify --help` 为准。仓库环境在项目根目录运行；Windows 未将命令加入 PATH 时用 `.\\.venv\\Scripts\\sau.exe`。不要依赖固定测试账号或本机路径。\n\n## 账号与输入\n\n1. 使用已有账号时执行 `sau dayu check --account <本地账号名>`。首次使用或登录失效时执行 `sau dayu login --account <本地账号名> --expected-name \"用户指定的大鱼号名称\"`，让用户在打开的 Chrome 中登录。CLI 会绑定发布主体，拒绝错号。\n2. 视频必须提供 `--file`、`--title`、`--thumbnail`、`--category`、`--source`。视频至少 5 秒；标题 5–60 字（英文按半字）；封面最大 5 MB。分类从 CLI 的 choices 中选择，不能猜测页面外的分类。\n3. 文章必须提供 `--title`、`--content-file`、`--source`。标题 5–50 字（英文按半字并向上取整），正文为 UTF-8 HTML/Markdown/TXT 文件，最多 2 万字。长文放在文件里，不拼进命令行。图片使用本地路径，相对路径以正文文件所在目录为起点，每张最大 5 MB。\n4. 信息来源必须按实际内容选择：`无需标注`、`AI生成`、`虚构演绎`、`营销信息`、`转载`、`个人观点`、`不适宜未成年人`。转载必须同时提供 `--source-url \"https://原文地址\"`，其他来源不传原文链接。\n\n## 命令\n\n```powershell\nsau dayu upload-video --account <本地账号名> --file \"视频.mp4\" --title \"用户的视频标题\" --category \"科技\" --source \"无需标注\" --thumbnail \"封面.jpg\"\nsau dayu upload-article --account <本地账号名> --title \"用户的文章标题\" --content-file \"文章.html\" --source \"无需标注\" --cover-indices 1\n```\n\n以上会实际发表；素材、主体及发表意图沿用用户已给出的授权。仅要求检查准备时增加 `--prepare-only`：它会上传素材、填写表单并保存本地截图，不发表，也不保存可恢复草稿。\n\nMarkdown 首次使用需要 Node.js 22+ 并执行 `sau article setup`。在文章命令中传 `--content-file \"文章.md\" --theme modern`，主题可选 `default/grace/simple/modern/plain`，默认 `default`。HTML/TXT 不传 `--theme`。可先使用 `sau article render --content-file \"文章.md\" --theme modern --output \"预览.html\"` 本地渲染。大鱼号采用兼容排版，保留文字颜色、背景和近似字号；圆角、精确字体与间距不保证原样。最终发表前会核对服务端主题预览。\n\n视频选填 `--desc`、逗号分隔的 `--tags`；文章选填 `--author`、`--cover-indices 1` 或 `--cover-indices 1 3 2`，封面序号从正文图片顺序的 1 开始，三封面须各不相同。文章没有分类和标签字段。竖版封面、素材库、文档导入、正文视频和独立保存草稿尚未接入；不要声称命令已支持。\n\n## 定时\n\n只有用户要求定时才增加 `--schedule \"YYYY-MM-DD HH:MM\"`；不传默认立即发表。时间固定按**北京时间 Asia/Shanghai（UTC+8）**解释，须在当前时间 **2 小时后至 7 天内**，分钟为 **5 的倍数**。视频和文章用同一参数。向用户说明时区；缺少具体时间或存在歧义时先明确时间，不擅自取整或改成立即发表。预留上传和处理时间，填表时仍会校验范围。\n\n平台确认本次作品及保存的预定时间后即为定时安排成功，不等待到点、审核或公开访问，不把“定时安排成功”说成“已公开”。平台审核可能使实际公开时间延后。\n\n## 结果与中断\n\n保留命令输出的结果文件和作品 ID。立即发表以最终业务确认成功为完成，审核中也已提交成功；定时必须确认原作品及预定时间。\n\n提交超时或结果未知时，**只查询原作品，不重新执行上传或确认发表**：\n\n```powershell\nsau dayu verify --account <本地账号名> --result \"本次结果文件.json\" --timeout 60\n```\n\n结果文件会帮助核对标题、主体、作品及定时时间。也可按 ID 查询：`sau dayu verify --account <本地账号名> --type article --content-id \"作品ID\"`（视频用 `--type video`）。无可查询 ID 时告知具体错误，请用户核查后台；不要猜测失败并重发。\n\n只有用户明确要求核对公开内容/播放时才在查询命令添加 `--public`；主题或完整正文核对应使用原结果文件。公开检查可能等待审核或定时到点，不属于默认发表完成条件。\n\n## 示例脚本\n\n`scripts/examples/` 下的文件是复制用示例，不是运行时依赖。执行前先查看当前 CLI 的 `--help`，替换账号、素材和正文；这些命令可能创建真实作品。\n\n- `dayu_commands.ps1`：PowerShell\n- `dayu_commands.sh`：Bash\n- `dayu_cli_template.py`：Python subprocess\n",
+      "bodyMd": "# 大鱼号发布\n\n使用 `sau dayu`，不另写一套网页发布逻辑。先执行 `sau dayu --help`，具体参数以 `upload-video --help`、`upload-article --help` 和 `verify --help` 为准。仓库环境在项目根目录运行；Windows 未将命令加入 PATH 时用 `.\\.venv\\Scripts\\sau.exe`。不要依赖固定测试账号或本机路径。\n\n## 账号与输入\n\n1. 使用已有账号时执行 `sau dayu check --account <本地账号名>`。首次使用或登录失效时执行 `sau dayu login --account <本地账号名> --expected-name \"用户指定的大鱼号名称\"`，让用户在打开的 Chrome 中登录。CLI 会绑定发布主体，拒绝错号。\n2. 视频必须提供 `--file`、`--title`、`--thumbnail`、`--category`、`--source`。视频至少 5 秒；标题 5–60 字（英文按半字）；封面最大 5 MB。分类从 CLI 的 choices 中选择，不能猜测页面外的分类。\n3. 文章必须提供 `--title`、`--content-file`、`--source`。标题 5–50 字（英文按半字并向上取整），正文为 UTF-8 HTML/Markdown/TXT 文件，最多 2 万字。长文放在文件里，不拼进命令行。图片使用本地路径，相对路径以正文文件所在目录为起点，每张最大 5 MB。\n4. 信息来源必须按实际内容选择：`无需标注`、`AI生成`、`虚构演绎`、`营销信息`、`转载`、`个人观点`、`不适宜未成年人`。转载必须同时提供 `--source-url \"https://原文地址\"`，其他来源不传原文链接。\n\n## 命令\n\n```powershell\nsau dayu upload-video --account <本地账号名> --file \"视频.mp4\" --title \"用户的视频标题\" --category \"科技\" --source \"无需标注\" --thumbnail \"封面.jpg\"\nsau dayu upload-article --account <本地账号名> --title \"用户的文章标题\" --content-file \"文章.html\" --source \"无需标注\" --cover-indices 1\n```\n\n以上会实际发表；素材、主体及发表意图沿用用户已给出的授权。仅要求检查准备时增加 `--prepare-only`：它会上传素材、填写表单并保存本地截图，不发表，也不保存可恢复草稿。\n\nMarkdown 首次使用需要 Node.js 22+ 并执行 `sau article setup`。在文章命令中传 `--content-file \"文章.md\" --theme modern`，主题可选 `default/grace/simple/modern/plain`，默认 `default`。HTML/TXT 不传 `--theme`。可先使用 `sau article render --content-file \"文章.md\" --theme modern --output \"预览.html\"` 本地渲染。大鱼号采用兼容排版，保留文字颜色、背景和近似字号；圆角、精确字体与间距不保证原样。最终发表前会核对服务端主题预览。\n\n视频选填 `--desc`、逗号分隔的 `--tags`；文章选填 `--author`、`--cover-indices 1` 或 `--cover-indices 1 3 2`，封面序号从正文图片顺序的 1 开始，三封面须各不相同。文章没有分类和标签字段。竖版封面、素材库、文档导入、正文视频和独立保存草稿尚未接入；不要声称命令已支持。\n\n## 定时\n\n只有用户要求定时才增加 `--schedule \"YYYY-MM-DD HH:MM\"`；不传默认立即发表。时间固定按**北京时间 Asia/Shanghai（UTC+8）**解释，须在当前时间 **2 小时后至 7 天内**，分钟为 **5 的倍数**。视频和文章用同一参数。向用户说明时区；缺少具体时间或存在歧义时先明确时间，不擅自取整或改成立即发表。预留上传和处理时间，填表时仍会校验范围。\n\n平台确认本次作品及保存的预定时间后即为定时安排成功，不等待到点、审核或公开访问，不把“定时安排成功”说成“已公开”。平台审核可能使实际公开时间延后。\n\n## 结果与中断\n\n保留命令输出的结果文件和作品 ID。立即发表以最终业务确认成功为完成，审核中也已提交成功；定时必须确认原作品及预定时间。\n\n提交超时或结果未知时，**只查询原作品，不重新执行上传或确认发表**：\n\n```powershell\nsau dayu verify --account <本地账号名> --result \"本次结果文件.json\" --timeout 60\n```\n\n结果文件会帮助核对标题、主体、作品及定时时间。也可按 ID 查询：`sau dayu verify --account <本地账号名> --type article --content-id \"作品ID\"`（视频用 `--type video`）。无可查询 ID 时告知具体错误，请用户核查后台；不要猜测失败并重发。\n\n只有用户明确要求核对公开内容/播放时才在查询命令添加 `--public`；主题或完整正文核对应使用原结果文件。公开检查可能等待审核或定时到点，不属于默认发表完成条件。\n\n## 示例脚本\n\n`scripts/examples/` 下的文件是复制用示例，不是运行时依赖。执行前先查看当前 CLI 的 `--help`，替换账号、素材和正文；这些命令可能创建真实作品。\n\n- `dayu_commands.ps1`：PowerShell\n- `dayu_commands.sh`：Bash\n- `dayu_cli_template.py`：Python subprocess\n"
+    },
+    {
+      "slug": "douyin-upload",
+      "name": "douyin-upload",
+      "dir": "skills/douyin-upload",
+      "path": "skills/douyin-upload/SKILL.md",
+      "desc": "当 agent 需要通过已安装的 `sau` CLI 完成抖音登录、cookie 校验、视频上传或图文发布时使用这个 skill。该 skill 适用于已经安装 `social-auto-upload` 且可调用 `sau` 命令的环境。优先使用这个 skill 进行稳定的命令式抖音工作流，而不是一开始就阅读 uploader 源码。",
+      "descZh": "",
+      "triggers": [],
+      "version": "1.0.0",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/dreammis/social-auto-upload.git",
+        "copy": "cp -r skills/douyin-upload ~/.claude/skills/douyin-upload",
+        "raw": "https://raw.githubusercontent.com/dreammis/social-auto-upload/409d4fdd33f3eb0d946310af93633ddb5eebe1d5/skills/douyin-upload/SKILL.md",
+        "saveAs": "~/.claude/skills/douyin-upload/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:ff07defad7e14daef8c1c57ae00bb5bb7650a88d033dddbe0cc725e677916625",
+      "bytes": 2783,
+      "wordCount": 195,
+      "repoLicense": "MIT",
+      "commit": "409d4fdd33f3eb0d946310af93633ddb5eebe1d5",
+      "branch": "main",
+      "body": "---\nname: douyin-upload\ndescription: 当 agent 需要通过已安装的 `sau` CLI 完成抖音登录、cookie 校验、视频上传或图文发布时使用这个 skill。该 skill 适用于已经安装 `social-auto-upload` 且可调用 `sau` 命令的环境。优先使用这个 skill 进行稳定的命令式抖音工作流，而不是一开始就阅读 uploader 源码。\nlicense: MIT-0\nslug: social-auto-upload-douyin-upload\ndisplayName: 抖音视频与图文发布\nversion: 1.0.0\nsummary: 使用 sau 登录抖音并发布视频或图文。\n---\n\n# 抖音上传 Skill\n\n优先把 `sau` 作为主接口。\n\n不要假设当前环境一定能读取仓库源码。\n不要一开始就去读 `uploader/`。\n只有在命令不可用或 CLI 执行失败时，才回退到故障排查说明。\n\n## 功能概览\n\n| 功能 | 命令入口 | 说明 |\n| --- | --- | --- |\n| 抖音登录 | `sau douyin login --account <name>` | 生成或刷新指定账号的 cookie |\n| cookie 校验 | `sau douyin check --account <name>` | 检查指定账号 cookie 是否有效 |\n| 视频上传 | `sau douyin upload-video ...` | 上传并发布抖音视频 |\n| 图文上传 | `sau douyin upload-note ...` | 上传并发布抖音图文 |\n\n元数据约定：\n\n- 视频使用 `title + desc + tags`\n- 图文使用 `title + note + tags`\n\n## 默认工作流\n\n1. 先确认 `references/runtime-requirements.md` 里的运行前提。\n2. 再确认 `references/cli-contract.md` 里的命令契约。\n3. 执行匹配的 `sau douyin ...` 命令。\n4. 如果命令失败，再看 `references/troubleshooting.md`。\n\n## 支持动作\n\n- 使用 `sau douyin login --account <name>` 登录抖音\n- 使用 `sau douyin check --account <name>` 校验 cookie 是否有效\n- 使用 `sau douyin upload-video ...` 上传抖音视频\n- 使用 `sau douyin upload-note ...` 上传抖音图文\n\n## 命令选择建议\n\n- 当用户需要新的 cookie，或现有 cookie 已失效时，使用 `login`\n- 当用户只需要确认 cookie 状态时，使用 `check`\n- 当用户要发布视频时，使用 `upload-video`\n- 当用户要发布图文时，使用 `upload-note`\n\n## 执行前检查\n\n- 先确认当前 shell 里是否可以调用 `sau`\n- 如果 `sau` 不可用，按 `references/runtime-requirements.md` 里的回退方式处理\n- 当用户明确指定无头或有头模式时，显式传 `--headless` 或 `--headed`\n- 只有用户明确要求定时发布时，才使用 `--schedule`\n- 如果登录流程生成了本地二维码图片，不要只把图片路径告诉用户\n- 二维码图片本身就是给用户扫码的，优先直接把本地图片展示/发送给用户\n\n## 参考文档\n\n- 运行前提：`references/runtime-requirements.md`\n- CLI 契约：`references/cli-contract.md`\n- 故障排查：`references/troubleshooting.md`\n",
+      "bodyMd": "# 抖音上传 Skill\n\n优先把 `sau` 作为主接口。\n\n不要假设当前环境一定能读取仓库源码。\n不要一开始就去读 `uploader/`。\n只有在命令不可用或 CLI 执行失败时，才回退到故障排查说明。\n\n## 功能概览\n\n| 功能 | 命令入口 | 说明 |\n| --- | --- | --- |\n| 抖音登录 | `sau douyin login --account <name>` | 生成或刷新指定账号的 cookie |\n| cookie 校验 | `sau douyin check --account <name>` | 检查指定账号 cookie 是否有效 |\n| 视频上传 | `sau douyin upload-video ...` | 上传并发布抖音视频 |\n| 图文上传 | `sau douyin upload-note ...` | 上传并发布抖音图文 |\n\n元数据约定：\n\n- 视频使用 `title + desc + tags`\n- 图文使用 `title + note + tags`\n\n## 默认工作流\n\n1. 先确认 `references/runtime-requirements.md` 里的运行前提。\n2. 再确认 `references/cli-contract.md` 里的命令契约。\n3. 执行匹配的 `sau douyin ...` 命令。\n4. 如果命令失败，再看 `references/troubleshooting.md`。\n\n## 支持动作\n\n- 使用 `sau douyin login --account <name>` 登录抖音\n- 使用 `sau douyin check --account <name>` 校验 cookie 是否有效\n- 使用 `sau douyin upload-video ...` 上传抖音视频\n- 使用 `sau douyin upload-note ...` 上传抖音图文\n\n## 命令选择建议\n\n- 当用户需要新的 cookie，或现有 cookie 已失效时，使用 `login`\n- 当用户只需要确认 cookie 状态时，使用 `check`\n- 当用户要发布视频时，使用 `upload-video`\n- 当用户要发布图文时，使用 `upload-note`\n\n## 执行前检查\n\n- 先确认当前 shell 里是否可以调用 `sau`\n- 如果 `sau` 不可用，按 `references/runtime-requirements.md` 里的回退方式处理\n- 当用户明确指定无头或有头模式时，显式传 `--headless` 或 `--headed`\n- 只有用户明确要求定时发布时，才使用 `--schedule`\n- 如果登录流程生成了本地二维码图片，不要只把图片路径告诉用户\n- 二维码图片本身就是给用户扫码的，优先直接把本地图片展示/发送给用户\n\n## 参考文档\n\n- 运行前提：`references/runtime-requirements.md`\n- CLI 契约：`references/cli-contract.md`\n- 故障排查：`references/troubleshooting.md`\n"
+    },
+    {
+      "slug": "facebook-upload",
+      "name": "facebook-upload",
+      "dir": "skills/facebook-upload",
+      "path": "skills/facebook-upload/SKILL.md",
+      "desc": "使用 sau CLI 登录 Facebook 个人主页，立即发布视频或图文，查询原作品、移至垃圾箱或永久删除。",
+      "descZh": "",
+      "triggers": [],
+      "version": "1.0.0",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/dreammis/social-auto-upload.git",
+        "copy": "cp -r skills/facebook-upload ~/.claude/skills/facebook-upload",
+        "raw": "https://raw.githubusercontent.com/dreammis/social-auto-upload/409d4fdd33f3eb0d946310af93633ddb5eebe1d5/skills/facebook-upload/SKILL.md",
+        "saveAs": "~/.claude/skills/facebook-upload/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:36f79b4f2a0cc703124aadecb49fe63aa15e94abe03025163d722084659bdfb6",
+      "bytes": 3080,
+      "wordCount": 139,
+      "repoLicense": "MIT",
+      "commit": "409d4fdd33f3eb0d946310af93633ddb5eebe1d5",
+      "branch": "main",
+      "body": "---\nname: facebook-upload\ndescription: 使用 sau CLI 登录 Facebook 个人主页，立即发布视频或图文，查询原作品、移至垃圾箱或永久删除。\nlicense: MIT-0\nslug: social-auto-upload-facebook-upload\ndisplayName: Facebook 个人主页发布\nversion: 1.0.0\nsummary: 管理 Facebook 个人主页登录、视频图文发布和作品核验。\n---\n\n# Facebook 个人主页发布与删除\n\n本 Skill 调用现有 CLI。默认不配置代理，浏览器按系统网络直连；网络环境需要代理时显式传 `--proxy` 或设置 `SAU_FACEBOOK_PROXY`。传 `--proxy \"\"` 可忽略环境变量并直连。\n\n```powershell\nsau facebook login --account creator\nsau facebook check --account creator\nsau facebook upload-video --account creator --file videos/demo.mp4 --title \"标题\" --desc \"正文\" --tags 生活,分享\nsau facebook upload-note --account creator --images images/1.jpg images/2.jpg --title \"图文标题\" --note \"正文\"\n```\n\n登录时在可见 Chrome 完成登录，账号保存为 `cookies/facebook_creator.json`。`check` 验证个人主页登录态，不代表 Page 权限或作品发布结果。标题、正文、标签合并为一段配文。当前支持立即发布，未接入个人主页定时；Page 使用独立 `facebook-page` 命令。\n\n取得原作品链接后管理作品：\n\n```powershell\nsau facebook verify --account creator --post-url \"原作品链接\" --owner-id \"作者数字ID\" --expected-text \"原作品正文\"\nsau facebook delete --account creator --post-url \"原作品链接\" --owner-id \"作者数字ID\" --expected-text \"原作品正文\" --result .local/trash-result.json\nsau facebook delete --account creator --post-url \"原作品链接\" --owner-id \"作者数字ID\" --expected-text \"原作品正文\" --from-trash --permanent --result .local/delete-result.json\n```\n\n删除前同时核对登录用户、作者、原作品编号和正文。默认移至垃圾箱，30 天后由平台删除，返回 `trashed`；加 `--permanent` 立即永久删除，已经在垃圾箱时再加 `--from-trash`。永久删除不可恢复。\n\n`verify --from-trash` 查询垃圾箱原记录；`verify --deleted` 仅确认编号不在垃圾箱，返回 `absent_from_trash`，不能单凭缺席证明过去发生过永久删除。当前仅检索有限滚动范围的近期作品；没有找到或同文案无法唯一定位时明确失败。\n\n只有平台出现本次提交的成功提示才认为发表已确认。点击后超时或浏览器断开应视为结果未知：先在同一账号个人主页或垃圾箱核对原作品，不重复上传或重复删除。本地素材不会被删除。完整参数以 `sau facebook upload-video --help`、`upload-note --help`、`verify --help` 和 `delete --help` 为准。\n\n## 示例脚本\n\n`scripts/examples/` 下的文件是复制用示例，不是运行时依赖。执行前先查看当前 CLI 的 `--help`，替换账号、素材和正文；这些命令可能创建真实作品。\n\n- `facebook_commands.ps1`：PowerShell\n- `facebook_commands.sh`：Bash\n- `facebook_cli_template.py`：Python subprocess\n",
+      "bodyMd": "# Facebook 个人主页发布与删除\n\n本 Skill 调用现有 CLI。默认不配置代理，浏览器按系统网络直连；网络环境需要代理时显式传 `--proxy` 或设置 `SAU_FACEBOOK_PROXY`。传 `--proxy \"\"` 可忽略环境变量并直连。\n\n```powershell\nsau facebook login --account creator\nsau facebook check --account creator\nsau facebook upload-video --account creator --file videos/demo.mp4 --title \"标题\" --desc \"正文\" --tags 生活,分享\nsau facebook upload-note --account creator --images images/1.jpg images/2.jpg --title \"图文标题\" --note \"正文\"\n```\n\n登录时在可见 Chrome 完成登录，账号保存为 `cookies/facebook_creator.json`。`check` 验证个人主页登录态，不代表 Page 权限或作品发布结果。标题、正文、标签合并为一段配文。当前支持立即发布，未接入个人主页定时；Page 使用独立 `facebook-page` 命令。\n\n取得原作品链接后管理作品：\n\n```powershell\nsau facebook verify --account creator --post-url \"原作品链接\" --owner-id \"作者数字ID\" --expected-text \"原作品正文\"\nsau facebook delete --account creator --post-url \"原作品链接\" --owner-id \"作者数字ID\" --expected-text \"原作品正文\" --result .local/trash-result.json\nsau facebook delete --account creator --post-url \"原作品链接\" --owner-id \"作者数字ID\" --expected-text \"原作品正文\" --from-trash --permanent --result .local/delete-result.json\n```\n\n删除前同时核对登录用户、作者、原作品编号和正文。默认移至垃圾箱，30 天后由平台删除，返回 `trashed`；加 `--permanent` 立即永久删除，已经在垃圾箱时再加 `--from-trash`。永久删除不可恢复。\n\n`verify --from-trash` 查询垃圾箱原记录；`verify --deleted` 仅确认编号不在垃圾箱，返回 `absent_from_trash`，不能单凭缺席证明过去发生过永久删除。当前仅检索有限滚动范围的近期作品；没有找到或同文案无法唯一定位时明确失败。\n\n只有平台出现本次提交的成功提示才认为发表已确认。点击后超时或浏览器断开应视为结果未知：先在同一账号个人主页或垃圾箱核对原作品，不重复上传或重复删除。本地素材不会被删除。完整参数以 `sau facebook upload-video --help`、`upload-note --help`、`verify --help` 和 `delete --help` 为准。\n\n## 示例脚本\n\n`scripts/examples/` 下的文件是复制用示例，不是运行时依赖。执行前先查看当前 CLI 的 `--help`，替换账号、素材和正文；这些命令可能创建真实作品。\n\n- `facebook_commands.ps1`：PowerShell\n- `facebook_commands.sh`：Bash\n- `facebook_cli_template.py`：Python subprocess\n"
+    },
+    {
+      "slug": "hupu-upload",
+      "name": "hupu-upload",
+      "dir": "skills/hupu-upload",
+      "path": "skills/hupu-upload/SKILL.md",
+      "desc": "使用 social-auto-upload 的 `sau hupu` 登录虎扑并发布视频，可指定封面。Use when 用户要向虎扑发布视频或检查虎扑账号状态。",
+      "descZh": "",
+      "triggers": [
+        "用户要向虎扑发布视频或检查虎扑账号状态"
+      ],
+      "version": "1.0.0",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/dreammis/social-auto-upload.git",
+        "copy": "cp -r skills/hupu-upload ~/.claude/skills/hupu-upload",
+        "raw": "https://raw.githubusercontent.com/dreammis/social-auto-upload/409d4fdd33f3eb0d946310af93633ddb5eebe1d5/skills/hupu-upload/SKILL.md",
+        "saveAs": "~/.claude/skills/hupu-upload/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:27a26881633941097b6cd14205ea85347e0f5bd260030c7e13c02d4a362dfb05",
+      "bytes": 1075,
+      "wordCount": 41,
+      "repoLicense": "MIT",
+      "commit": "409d4fdd33f3eb0d946310af93633ddb5eebe1d5",
+      "branch": "main",
+      "body": "---\nname: hupu-upload\ndescription: 使用 social-auto-upload 的 `sau hupu` 登录虎扑并发布视频，可指定封面。Use when 用户要向虎扑发布视频或检查虎扑账号状态。\nlicense: MIT-0\nslug: social-auto-upload-hupu-upload\ndisplayName: 虎扑视频发布\nversion: 1.0.0\nsummary: 登录虎扑并发布视频，可指定封面。\n---\n\n# 虎扑视频发布\n\n调用现有 CLI，不另写网页上传流程。账号名是本地会话别名。\n\n```powershell\nsau hupu login --account creator --headed\nsau hupu check --account creator\nsau hupu upload-video --account creator --file videos/demo.mp4 --title \"标题\" --desc \"简介\" --tags 虎扑,测试 --thumbnail covers/demo.png\n```\n\n当前仅支持视频，不支持图文和定时发布。标题长度为 4–40 个字。登录可能需要用户在浏览器中完成 QQ 或手机号验证；需要看见页面时保留 `--headed`。封面参数 `--thumbnail` 可省略。\n\n发布前核对账号、视频、标题长度、简介、标签和封面。结果不明确时先查虎扑后台，不直接重发。\n",
+      "bodyMd": "# 虎扑视频发布\n\n调用现有 CLI，不另写网页上传流程。账号名是本地会话别名。\n\n```powershell\nsau hupu login --account creator --headed\nsau hupu check --account creator\nsau hupu upload-video --account creator --file videos/demo.mp4 --title \"标题\" --desc \"简介\" --tags 虎扑,测试 --thumbnail covers/demo.png\n```\n\n当前仅支持视频，不支持图文和定时发布。标题长度为 4–40 个字。登录可能需要用户在浏览器中完成 QQ 或手机号验证；需要看见页面时保留 `--headed`。封面参数 `--thumbnail` 可省略。\n\n发布前核对账号、视频、标题长度、简介、标签和封面。结果不明确时先查虎扑后台，不直接重发。\n"
+    },
+    {
+      "slug": "instagram-upload",
+      "name": "instagram-upload",
+      "dir": "skills/instagram-upload",
+      "path": "skills/instagram-upload/SKILL.md",
+      "desc": "使用 sau CLI 在 Instagram 独立网页登录、立即发布 Reels/单图/轮播、核验原作品并移至最近删除。",
+      "descZh": "",
+      "triggers": [],
+      "version": "1.0.0",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git",
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/dreammis/social-auto-upload.git",
+        "copy": "cp -r skills/instagram-upload ~/.claude/skills/instagram-upload",
+        "raw": "https://raw.githubusercontent.com/dreammis/social-auto-upload/409d4fdd33f3eb0d946310af93633ddb5eebe1d5/skills/instagram-upload/SKILL.md",
+        "saveAs": "~/.claude/skills/instagram-upload/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:b8f9e824de06f609ebed17d6175ba2ac2ce2a82221be463cbdfe547837984461",
+      "bytes": 4127,
+      "wordCount": 147,
+      "repoLicense": "MIT",
+      "commit": "409d4fdd33f3eb0d946310af93633ddb5eebe1d5",
+      "branch": "main",
+      "body": "---\nname: instagram-upload\ndescription: 使用 sau CLI 在 Instagram 独立网页登录、立即发布 Reels/单图/轮播、核验原作品并移至最近删除。\nlicense: MIT-0\nslug: social-auto-upload-instagram-upload\ndisplayName: Instagram 视频与图文发布\nversion: 1.0.0\nsummary: 发布 Instagram Reels、单图或轮播，并核验作品。\n---\n\n# Instagram 独立网页发布\n\n调用现有 CLI，不自行实现浏览器上传。使用工程 Patchright Chrome 和独立 Instagram 会话，不使用 Business Suite 的绑定入口。默认可见浏览器，未配置代理时按系统网络直连；需要代理时显式使用 `--proxy` 或设置 `SAU_INSTAGRAM_PROXY`。传 `--proxy \"\"` 可忽略环境变量并直连。\n\n```powershell\nsau instagram login --account creator\nsau instagram check --account creator\nsau instagram upload-video --account creator --file videos/demo.mp4 --thumbnail covers/demo.png --title \"标题\" --desc \"正文\" --tags 生活,分享 --result .local/instagram-video.json\nsau instagram upload-note --account creator --images images/1.jpg images/2.jpg --title \"轮播标题\" --note \"正文\" --result .local/instagram-images.json\n```\n\n视频/Reel 可用 `--thumbnail` 指定 JPG/JPEG/PNG 封面；省略时使用 Instagram 默认封面。指定图片后会检查主预览确实使用该图片，失败则停止提交。封面按当前视频画幅居中裁剪，图片边缘的重要文字应留出安全区域。图文发布不接受此参数。\n\n账号文件保存为 `cookies/instagram_creator.json`。密码和验证由用户在工程浏览器输入。上传流程会自动跳过首次通知提示、确认 Reels 介绍，没有提示则继续。登录验证仍由用户完成；未知弹窗或提示关闭失败须报告，不能宣称上传成功。\n\n视频支持 MP4/MOV，照片支持 JPG/JPEG/PNG/AVIF/HEIC/HEIF，实际处理取决于平台。多图按输入顺序发布轮播，单图和两图轮播已实测。标题、正文、标签合计最多 2200 字符。当前账号独立网页版的照片/Reels 表单及高级设置没有定时入口，当前 CLI 仅支持立即发布；不能把定时任务转换成立即发布。地点、协作者、AI 标签、替代文字、滤镜、裁剪、声音和评论/点赞设置未接入，沿用页面默认值。\n\n最终结果 `published` 代表平台确认作品创建，返回作品编号、原作品链接和媒体数。`processing` 表示已受理且仍在处理，`submission_unknown` 表示提交后结果未确认；不能当成已发布，也不能直接重发。默认结果位于 `.local/instagram-results/`，使用 `--result` 固定记录路径。\n\n```powershell\nsau instagram verify --account creator --post-url \"原作品链接\" --expected-text \"原作品中的准确文字\" --result .local/instagram-verify.json\nsau instagram delete --account creator --post-url \"原作品链接\" --expected-text \"原作品中的准确文字\" --result .local/instagram-delete.json\n```\n\n结果未知但没有链接时，先在同一账号主页按素材、配文和发布时间找原作品，复制链接再运行 `verify`；未找到不证明失败，不重复上传。链接支持 `/p/编号/`、`/reel/编号/` 和带作者名的形式。核对登录用户、作者、作品编号和正文后才允许删除。删除返回 `deleted`，作品进入“最近删除”；批量删除和提前永久清空不在范围内。本地素材不会删除。`deletion_unknown` 须先查询原作品和“最近删除”，不重复提交删除。\n\n完整参数和能力边界以 `sau instagram upload-video --help`、`upload-note --help`、`verify --help` 和 `delete --help` 为准。失败时根据结果文件中的错误及本地证据分析；不得把账号状态、截图或页面记录提交到 Git。\n\n## 示例脚本\n\n`scripts/examples/` 下的文件是复制用示例，不是运行时依赖。执行前先查看当前 CLI 的 `--help`，替换账号、素材和正文；这些命令可能创建真实作品。\n\n- `instagram_commands.ps1`：PowerShell\n- `instagram_commands.sh`：Bash\n- `instagram_cli_template.py`：Python subprocess\n",
+      "bodyMd": "# Instagram 独立网页发布\n\n调用现有 CLI，不自行实现浏览器上传。使用工程 Patchright Chrome 和独立 Instagram 会话，不使用 Business Suite 的绑定入口。默认可见浏览器，未配置代理时按系统网络直连；需要代理时显式使用 `--proxy` 或设置 `SAU_INSTAGRAM_PROXY`。传 `--proxy \"\"` 可忽略环境变量并直连。\n\n```powershell\nsau instagram login --account creator\nsau instagram check --account creator\nsau instagram upload-video --account creator --file videos/demo.mp4 --thumbnail covers/demo.png --title \"标题\" --desc \"正文\" --tags 生活,分享 --result .local/instagram-video.json\nsau instagram upload-note --account creator --images images/1.jpg images/2.jpg --title \"轮播标题\" --note \"正文\" --result .local/instagram-images.json\n```\n\n视频/Reel 可用 `--thumbnail` 指定 JPG/JPEG/PNG 封面；省略时使用 Instagram 默认封面。指定图片后会检查主预览确实使用该图片，失败则停止提交。封面按当前视频画幅居中裁剪，图片边缘的重要文字应留出安全区域。图文发布不接受此参数。\n\n账号文件保存为 `cookies/instagram_creator.json`。密码和验证由用户在工程浏览器输入。上传流程会自动跳过首次通知提示、确认 Reels 介绍，没有提示则继续。登录验证仍由用户完成；未知弹窗或提示关闭失败须报告，不能宣称上传成功。\n\n视频支持 MP4/MOV，照片支持 JPG/JPEG/PNG/AVIF/HEIC/HEIF，实际处理取决于平台。多图按输入顺序发布轮播，单图和两图轮播已实测。标题、正文、标签合计最多 2200 字符。当前账号独立网页版的照片/Reels 表单及高级设置没有定时入口，当前 CLI 仅支持立即发布；不能把定时任务转换成立即发布。地点、协作者、AI 标签、替代文字、滤镜、裁剪、声音和评论/点赞设置未接入，沿用页面默认值。\n\n最终结果 `published` 代表平台确认作品创建，返回作品编号、原作品链接和媒体数。`processing` 表示已受理且仍在处理，`submission_unknown` 表示提交后结果未确认；不能当成已发布，也不能直接重发。默认结果位于 `.local/instagram-results/`，使用 `--result` 固定记录路径。\n\n```powershell\nsau instagram verify --account creator --post-url \"原作品链接\" --expected-text \"原作品中的准确文字\" --result .local/instagram-verify.json\nsau instagram delete --account creator --post-url \"原作品链接\" --expected-text \"原作品中的准确文字\" --result .local/instagram-delete.json\n```\n\n结果未知但没有链接时，先在同一账号主页按素材、配文和发布时间找原作品，复制链接再运行 `verify`；未找到不证明失败，不重复上传。链接支持 `/p/编号/`、`/reel/编号/` 和带作者名的形式。核对登录用户、作者、作品编号和正文后才允许删除。删除返回 `deleted`，作品进入“最近删除”；批量删除和提前永久清空不在范围内。本地素材不会删除。`deletion_unknown` 须先查询原作品和“最近删除”，不重复提交删除。\n\n完整参数和能力边界以 `sau instagram upload-video --help`、`upload-note --help`、`verify --help` 和 `delete --help` 为准。失败时根据结果文件中的错误及本地证据分析；不得把账号状态、截图或页面记录提交到 Git。\n\n## 示例脚本\n\n`scripts/examples/` 下的文件是复制用示例，不是运行时依赖。执行前先查看当前 CLI 的 `--help`，替换账号、素材和正文；这些命令可能创建真实作品。\n\n- `instagram_commands.ps1`：PowerShell\n- `instagram_commands.sh`：Bash\n- `instagram_cli_template.py`：Python subprocess\n"
+    },
+    {
+      "slug": "kuaishou-upload",
+      "name": "kuaishou-upload",
+      "dir": "skills/kuaishou-upload",
+      "path": "skills/kuaishou-upload/SKILL.md",
+      "desc": "当 agent 需要通过已安装的 `sau` CLI 完成快手登录、cookie 校验、视频上传或图文发布时使用这个 skill。该 skill 适用于已经安装 `social-auto-upload` 且可调用 `sau` 命令的环境。优先使用这个 skill 进行稳定的命令式快手工作流，而不是一开始就阅读 uploader 源码。",
+      "descZh": "",
+      "triggers": [],
+      "version": "1.0.0",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/dreammis/social-auto-upload.git",
+        "copy": "cp -r skills/kuaishou-upload ~/.claude/skills/kuaishou-upload",
+        "raw": "https://raw.githubusercontent.com/dreammis/social-auto-upload/409d4fdd33f3eb0d946310af93633ddb5eebe1d5/skills/kuaishou-upload/SKILL.md",
+        "saveAs": "~/.claude/skills/kuaishou-upload/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:08adfab434b646f830956775d044dee4e4e10a306d61e371a68d66c8e566a09e",
+      "bytes": 2805,
+      "wordCount": 195,
+      "repoLicense": "MIT",
+      "commit": "409d4fdd33f3eb0d946310af93633ddb5eebe1d5",
+      "branch": "main",
+      "body": "---\nname: kuaishou-upload\ndescription: 当 agent 需要通过已安装的 `sau` CLI 完成快手登录、cookie 校验、视频上传或图文发布时使用这个 skill。该 skill 适用于已经安装 `social-auto-upload` 且可调用 `sau` 命令的环境。优先使用这个 skill 进行稳定的命令式快手工作流，而不是一开始就阅读 uploader 源码。\nlicense: MIT-0\nslug: social-auto-upload-kuaishou-upload\ndisplayName: 快手视频与图文发布\nversion: 1.0.0\nsummary: 使用 sau 登录快手并发布视频或图文。\n---\n\n# 快手上传 Skill\n\n优先把 `sau` 作为主接口。\n\n不要假设当前环境一定能读取仓库源码。\n不要一开始就去读 `uploader/`。\n只有在命令不可用或 CLI 执行失败时，才回退到故障排查说明。\n\n## 功能概览\n\n| 功能 | 命令入口 | 说明 |\n| --- | --- | --- |\n| 快手登录 | `sau kuaishou login --account <name>` | 生成或刷新指定账号的 cookie |\n| cookie 校验 | `sau kuaishou check --account <name>` | 检查指定账号 cookie 是否有效 |\n| 视频上传 | `sau kuaishou upload-video ...` | 上传并发布快手视频 |\n| 图文上传 | `sau kuaishou upload-note ...` | 上传并发布快手图文 |\n\n元数据约定：\n\n- 视频使用 `title + desc + tags`\n- 图文使用 `title + note + tags`\n\n## 默认工作流\n\n1. 先确认 `references/runtime-requirements.md` 里的运行前提。\n2. 再确认 `references/cli-contract.md` 里的命令契约。\n3. 执行匹配的 `sau kuaishou ...` 命令。\n4. 如果命令失败，再看 `references/troubleshooting.md`。\n\n## 支持动作\n\n- 使用 `sau kuaishou login --account <name>` 登录快手\n- 使用 `sau kuaishou check --account <name>` 校验 cookie 是否有效\n- 使用 `sau kuaishou upload-video ...` 上传快手视频\n- 使用 `sau kuaishou upload-note ...` 上传快手图文\n\n## 命令选择建议\n\n- 当用户需要新的 cookie，或现有 cookie 已失效时，使用 `login`\n- 当用户只需要确认 cookie 状态时，使用 `check`\n- 当用户要发布视频时，使用 `upload-video`\n- 当用户要发布图文时，使用 `upload-note`\n\n## 执行前检查\n\n- 先确认当前 shell 里是否可以调用 `sau`\n- 如果 `sau` 不可用，按 `references/runtime-requirements.md` 里的回退方式处理\n- 当用户明确指定无头或有头模式时，显式传 `--headless` 或 `--headed`\n- 只有用户明确要求定时发布时，才使用 `--schedule`\n- 如果登录流程生成了本地二维码图片，不要只把图片路径告诉用户\n- 二维码图片本身就是给用户扫码的，优先直接把本地图片展示/发送给用户\n\n## 参考文档\n\n- 运行前提：`references/runtime-requirements.md`\n- CLI 契约：`references/cli-contract.md`\n- 故障排查：`references/troubleshooting.md`\n",
+      "bodyMd": "# 快手上传 Skill\n\n优先把 `sau` 作为主接口。\n\n不要假设当前环境一定能读取仓库源码。\n不要一开始就去读 `uploader/`。\n只有在命令不可用或 CLI 执行失败时，才回退到故障排查说明。\n\n## 功能概览\n\n| 功能 | 命令入口 | 说明 |\n| --- | --- | --- |\n| 快手登录 | `sau kuaishou login --account <name>` | 生成或刷新指定账号的 cookie |\n| cookie 校验 | `sau kuaishou check --account <name>` | 检查指定账号 cookie 是否有效 |\n| 视频上传 | `sau kuaishou upload-video ...` | 上传并发布快手视频 |\n| 图文上传 | `sau kuaishou upload-note ...` | 上传并发布快手图文 |\n\n元数据约定：\n\n- 视频使用 `title + desc + tags`\n- 图文使用 `title + note + tags`\n\n## 默认工作流\n\n1. 先确认 `references/runtime-requirements.md` 里的运行前提。\n2. 再确认 `references/cli-contract.md` 里的命令契约。\n3. 执行匹配的 `sau kuaishou ...` 命令。\n4. 如果命令失败，再看 `references/troubleshooting.md`。\n\n## 支持动作\n\n- 使用 `sau kuaishou login --account <name>` 登录快手\n- 使用 `sau kuaishou check --account <name>` 校验 cookie 是否有效\n- 使用 `sau kuaishou upload-video ...` 上传快手视频\n- 使用 `sau kuaishou upload-note ...` 上传快手图文\n\n## 命令选择建议\n\n- 当用户需要新的 cookie，或现有 cookie 已失效时，使用 `login`\n- 当用户只需要确认 cookie 状态时，使用 `check`\n- 当用户要发布视频时，使用 `upload-video`\n- 当用户要发布图文时，使用 `upload-note`\n\n## 执行前检查\n\n- 先确认当前 shell 里是否可以调用 `sau`\n- 如果 `sau` 不可用，按 `references/runtime-requirements.md` 里的回退方式处理\n- 当用户明确指定无头或有头模式时，显式传 `--headless` 或 `--headed`\n- 只有用户明确要求定时发布时，才使用 `--schedule`\n- 如果登录流程生成了本地二维码图片，不要只把图片路径告诉用户\n- 二维码图片本身就是给用户扫码的，优先直接把本地图片展示/发送给用户\n\n## 参考文档\n\n- 运行前提：`references/runtime-requirements.md`\n- CLI 契约：`references/cli-contract.md`\n- 故障排查：`references/troubleshooting.md`\n"
+    },
+    {
+      "slug": "meta-upload",
+      "name": "meta-upload",
+      "dir": "skills/meta-upload",
+      "path": "skills/meta-upload/SKILL.md",
+      "desc": "使用 sau CLI 登录 Facebook Page，发布视频或图文、设置北京时间排期、查询原作品并删除。",
+      "descZh": "",
+      "triggers": [],
+      "version": "1.0.0",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/dreammis/social-auto-upload.git",
+        "copy": "cp -r skills/meta-upload ~/.claude/skills/meta-upload",
+        "raw": "https://raw.githubusercontent.com/dreammis/social-auto-upload/409d4fdd33f3eb0d946310af93633ddb5eebe1d5/skills/meta-upload/SKILL.md",
+        "saveAs": "~/.claude/skills/meta-upload/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:06103a4121980eb1d50eed5305e5569b463a59ab55416d52654b8a9208458fe5",
+      "bytes": 3427,
+      "wordCount": 159,
+      "repoLicense": "MIT",
+      "commit": "409d4fdd33f3eb0d946310af93633ddb5eebe1d5",
+      "branch": "main",
+      "body": "---\nname: meta-upload\ndescription: 使用 sau CLI 登录 Facebook Page，发布视频或图文、设置北京时间排期、查询原作品并删除。\nlicense: MIT-0\nslug: social-auto-upload-meta-upload\ndisplayName: Facebook Page 发布\nversion: 1.0.0\nsummary: 发布 Facebook Page 视频或图文，并管理排期。\n---\n\n# Facebook Page 发布与删除\n\n本 Skill 调用现有 `sau facebook-page`，不重复实现浏览器逻辑。Instagram 当前暂停，后续使用独立网页方式；不使用 Business Suite 绑定 Instagram。\n\n默认不配置代理，浏览器按系统网络直连；网络环境需要代理时显式传 `--proxy` 或设置 `SAU_FACEBOOK_PAGE_PROXY`。\n\n先登录并保存账号别名：\n\n```powershell\nsau facebook-page login --account creator\nsau facebook-page check --account creator\nsau facebook-page upload-note --account creator --page \"我的 Page\" --images images/1.jpg --title \"标题\" --note \"正文\" --result .local/page-result.json\nsau facebook-page upload-video --account creator --page \"我的 Page\" --file videos/demo.mp4 --title \"标题\" --desc \"正文\" --schedule \"2026-10-21 10:30\" --result .local/reel-result.json\n```\n\n视频与图文均可传 `--schedule \"YYYY-MM-DD HH:MM\"`，使用北京时间、至少提前 2 小时，浏览器时区必须为 Asia/Shanghai；留空立即提交。`--page` 填准确 Page 名称。`--tags` 为英文逗号分隔标签。传 `--proxy \"\"` 可忽略环境变量并直连。\n\n结果默认保存到 `.local/meta-results/`，建议显式传 `--result`，避免手工抄写编号。`scheduled` 表示平台确认排期并核对原记录；`published` 表示图文已发布；视频立即提交在创建响应无错误且完成弹窗出现后返回 `processing`，表示平台已受理并正在处理，尚不能证明已公开播放，`content_id` 可能暂时没有。`submission_unknown` 只表示提交证据不足，必须先查询原记录，不重发。\n\n用结果中的 Page ID、Page 名、内容编号和正文查询或删除：\n\n```powershell\nsau facebook-page verify --account creator --page \"我的 Page\" --page-id \"Page数字ID\" --content-id \"内容编号\" --expected-text \"原作品正文\" --scheduled\nsau facebook-page delete --account creator --page \"我的 Page\" --page-id \"Page数字ID\" --content-id \"内容编号\" --expected-text \"原作品正文\" --scheduled --result .local/delete-result.json\n```\n\n`--scheduled` 选择定时列表；删除会取消排期并永久移除，返回 `deleted`。管理已发布作品时不加它，当前平台会移至垃圾箱，返回 `trashed`，30 天后自动删除；未接入 Page 垃圾箱提前永久删除。已定时作品实际发布后编号可能变化，需使用已发布列表中的编号。\n\n只覆盖已加载的近期列表，不保证自动查找全部历史作品。同文案不能唯一定位、Page 或编号不符时不删除。删除后超时或浏览器断开时先核对原记录，不自动重删；本地素材保留。完整参数以 `sau facebook-page upload-video --help`、`upload-note --help`、`verify --help` 和 `delete --help` 为准。\n\n## 示例脚本\n\n`scripts/examples/` 下的文件是复制用示例，不是运行时依赖。执行前先查看当前 CLI 的 `--help`，替换账号、素材和正文；这些命令可能创建真实作品。\n\n- `meta_commands.ps1`：PowerShell\n- `meta_commands.sh`：Bash\n- `meta_cli_template.py`：Python subprocess\n",
+      "bodyMd": "# Facebook Page 发布与删除\n\n本 Skill 调用现有 `sau facebook-page`，不重复实现浏览器逻辑。Instagram 当前暂停，后续使用独立网页方式；不使用 Business Suite 绑定 Instagram。\n\n默认不配置代理，浏览器按系统网络直连；网络环境需要代理时显式传 `--proxy` 或设置 `SAU_FACEBOOK_PAGE_PROXY`。\n\n先登录并保存账号别名：\n\n```powershell\nsau facebook-page login --account creator\nsau facebook-page check --account creator\nsau facebook-page upload-note --account creator --page \"我的 Page\" --images images/1.jpg --title \"标题\" --note \"正文\" --result .local/page-result.json\nsau facebook-page upload-video --account creator --page \"我的 Page\" --file videos/demo.mp4 --title \"标题\" --desc \"正文\" --schedule \"2026-10-21 10:30\" --result .local/reel-result.json\n```\n\n视频与图文均可传 `--schedule \"YYYY-MM-DD HH:MM\"`，使用北京时间、至少提前 2 小时，浏览器时区必须为 Asia/Shanghai；留空立即提交。`--page` 填准确 Page 名称。`--tags` 为英文逗号分隔标签。传 `--proxy \"\"` 可忽略环境变量并直连。\n\n结果默认保存到 `.local/meta-results/`，建议显式传 `--result`，避免手工抄写编号。`scheduled` 表示平台确认排期并核对原记录；`published` 表示图文已发布；视频立即提交在创建响应无错误且完成弹窗出现后返回 `processing`，表示平台已受理并正在处理，尚不能证明已公开播放，`content_id` 可能暂时没有。`submission_unknown` 只表示提交证据不足，必须先查询原记录，不重发。\n\n用结果中的 Page ID、Page 名、内容编号和正文查询或删除：\n\n```powershell\nsau facebook-page verify --account creator --page \"我的 Page\" --page-id \"Page数字ID\" --content-id \"内容编号\" --expected-text \"原作品正文\" --scheduled\nsau facebook-page delete --account creator --page \"我的 Page\" --page-id \"Page数字ID\" --content-id \"内容编号\" --expected-text \"原作品正文\" --scheduled --result .local/delete-result.json\n```\n\n`--scheduled` 选择定时列表；删除会取消排期并永久移除，返回 `deleted`。管理已发布作品时不加它，当前平台会移至垃圾箱，返回 `trashed`，30 天后自动删除；未接入 Page 垃圾箱提前永久删除。已定时作品实际发布后编号可能变化，需使用已发布列表中的编号。\n\n只覆盖已加载的近期列表，不保证自动查找全部历史作品。同文案不能唯一定位、Page 或编号不符时不删除。删除后超时或浏览器断开时先核对原记录，不自动重删；本地素材保留。完整参数以 `sau facebook-page upload-video --help`、`upload-note --help`、`verify --help` 和 `delete --help` 为准。\n\n## 示例脚本\n\n`scripts/examples/` 下的文件是复制用示例，不是运行时依赖。执行前先查看当前 CLI 的 `--help`，替换账号、素材和正文；这些命令可能创建真实作品。\n\n- `meta_commands.ps1`：PowerShell\n- `meta_commands.sh`：Bash\n- `meta_cli_template.py`：Python subprocess\n"
+    },
+    {
+      "slug": "social-auto-upload",
+      "name": "social-auto-upload",
+      "dir": "skills/social-auto-upload",
+      "path": "skills/social-auto-upload/SKILL.md",
+      "desc": "为 social-auto-upload 提供总入口，按平台和内容类型选择对应发布流程。Use when 用户要在本仓库支持的平台发布视频、文章或图文，或需要把内容分发到多个指定平台。",
+      "descZh": "",
+      "triggers": [
+        "用户要在本仓库支持的平台发布视频",
+        "文章或图文",
+        "或需要把内容分发到多个指定平台"
+      ],
+      "version": "1.0.0",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "npx"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/dreammis/social-auto-upload.git",
+        "copy": "cp -r skills/social-auto-upload ~/.claude/skills/social-auto-upload",
+        "raw": "https://raw.githubusercontent.com/dreammis/social-auto-upload/409d4fdd33f3eb0d946310af93633ddb5eebe1d5/skills/social-auto-upload/SKILL.md",
+        "saveAs": "~/.claude/skills/social-auto-upload/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:14f87f86ca6118c228c02c4e86e0e7941218159286846bfd6b4b0ff58f331b2d",
+      "bytes": 2602,
+      "wordCount": 192,
+      "repoLicense": "MIT",
+      "commit": "409d4fdd33f3eb0d946310af93633ddb5eebe1d5",
+      "branch": "main",
+      "body": "---\nname: social-auto-upload\ndescription: 为 social-auto-upload 提供总入口，按平台和内容类型选择对应发布流程。Use when 用户要在本仓库支持的平台发布视频、文章或图文，或需要把内容分发到多个指定平台。\nlicense: MIT-0\nslug: social-auto-upload\ndisplayName: social-auto-upload 多平台发布入口\nversion: 1.0.0\nsummary: 按用户指定的平台和内容类型选择发布流程。\n---\n\n# social-auto-upload 总入口\n\n先确认用户指定的平台、内容类型、账号别名和发布方式。用户没有指定平台时先询问，不自行选择目标平台。\n\n## 选择平台入口\n\n| 平台 | 专用 Skill | CLI 平台名 |\n| --- | --- | --- |\n| 抖音 | `douyin-upload` | `douyin` |\n| Bilibili | `bilibili-upload` | `bilibili` |\n| 小红书 | `xiaohongshu-upload` | `xiaohongshu` |\n| 快手 | `kuaishou-upload` | `kuaishou` |\n| 视频号 | `tencent-upload` | `tencent` |\n| 百家号 | `baijiahao-upload` | `baijiahao` |\n| 大鱼号 | `dayu-upload` | `dayu` |\n| 支付宝生活号 | `alipay-upload` | `alipay` |\n| 微博 | `weibo-upload` | `weibo` |\n| 虎扑 | `hupu-upload` | `hupu` |\n| TikTok | `tiktok-upload` | 无 `sau` 命令 |\n| 雪球 | `xueqiu-upload` | `xueqiu` |\n| YouTube | `youtube-upload` | `youtube` |\n| 知乎 | `zhihu-upload` | `zhihu` |\n| Facebook 个人主页 | `facebook-upload` | `facebook` |\n| Facebook Page | `meta-upload` | `facebook-page` |\n| Instagram | `instagram-upload` | `instagram` |\n\n## 工作流程\n\n1. 如已安装对应平台 Skill，先读取并遵循它；从仓库运行时读取 `skills/<skill-name>/SKILL.md`。\n2. 若仓库可用，从 `skills/<skill-name>/SKILL.md` 读取平台说明；否则先提供对应安装命令。执行 CLI 前使用 `sau <平台> --help` 确认当前参数。不要猜测参数或声称 TikTok 有 CLI。\n3. 先检查目标账号状态；登录需要用户在平台页面完成时，交给用户操作，不索取或保存密码。\n4. 发布前核对文件、标题、文案、标签、可见范围、发布时间及目标账号。只发布用户明确指定的平台；同一份内容也要逐个平台核对要求。\n5. 只有命令或平台提供本次提交的成功证据才报告已发布。超时或结果未知时先查原作品，不盲目重发。\n\n## 安装入口\n\n从公开 GitHub 仓库安装总入口：\n\n```bash\nnpx skills add dreammis/social-auto-upload --skill social-auto-upload\n```\n\n指定平台时将 `social-auto-upload` 换成表格中的专用 Skill 名称。完整平台能力和分发状态见 GitHub 源仓库的 README 与分发文档。\n",
+      "bodyMd": "# social-auto-upload 总入口\n\n先确认用户指定的平台、内容类型、账号别名和发布方式。用户没有指定平台时先询问，不自行选择目标平台。\n\n## 选择平台入口\n\n| 平台 | 专用 Skill | CLI 平台名 |\n| --- | --- | --- |\n| 抖音 | `douyin-upload` | `douyin` |\n| Bilibili | `bilibili-upload` | `bilibili` |\n| 小红书 | `xiaohongshu-upload` | `xiaohongshu` |\n| 快手 | `kuaishou-upload` | `kuaishou` |\n| 视频号 | `tencent-upload` | `tencent` |\n| 百家号 | `baijiahao-upload` | `baijiahao` |\n| 大鱼号 | `dayu-upload` | `dayu` |\n| 支付宝生活号 | `alipay-upload` | `alipay` |\n| 微博 | `weibo-upload` | `weibo` |\n| 虎扑 | `hupu-upload` | `hupu` |\n| TikTok | `tiktok-upload` | 无 `sau` 命令 |\n| 雪球 | `xueqiu-upload` | `xueqiu` |\n| YouTube | `youtube-upload` | `youtube` |\n| 知乎 | `zhihu-upload` | `zhihu` |\n| Facebook 个人主页 | `facebook-upload` | `facebook` |\n| Facebook Page | `meta-upload` | `facebook-page` |\n| Instagram | `instagram-upload` | `instagram` |\n\n## 工作流程\n\n1. 如已安装对应平台 Skill，先读取并遵循它；从仓库运行时读取 `skills/<skill-name>/SKILL.md`。\n2. 若仓库可用，从 `skills/<skill-name>/SKILL.md` 读取平台说明；否则先提供对应安装命令。执行 CLI 前使用 `sau <平台> --help` 确认当前参数。不要猜测参数或声称 TikTok 有 CLI。\n3. 先检查目标账号状态；登录需要用户在平台页面完成时，交给用户操作，不索取或保存密码。\n4. 发布前核对文件、标题、文案、标签、可见范围、发布时间及目标账号。只发布用户明确指定的平台；同一份内容也要逐个平台核对要求。\n5. 只有命令或平台提供本次提交的成功证据才报告已发布。超时或结果未知时先查原作品，不盲目重发。\n\n## 安装入口\n\n从公开 GitHub 仓库安装总入口：\n\n```bash\nnpx skills add dreammis/social-auto-upload --skill social-auto-upload\n```\n\n指定平台时将 `social-auto-upload` 换成表格中的专用 Skill 名称。完整平台能力和分发状态见 GitHub 源仓库的 README 与分发文档。\n"
+    },
+    {
+      "slug": "tencent-upload",
+      "name": "tencent-upload",
+      "dir": "skills/tencent-upload",
+      "path": "skills/tencent-upload/SKILL.md",
+      "desc": "使用 social-auto-upload 的 `sau tencent` 登录视频号并发布或定时发布视频、保存草稿。Use when 用户要向微信视频号发布视频或检查视频号账号状态。",
+      "descZh": "",
+      "triggers": [
+        "用户要向微信视频号发布视频或检查视频号账号状态"
+      ],
+      "version": "1.0.0",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/dreammis/social-auto-upload.git",
+        "copy": "cp -r skills/tencent-upload ~/.claude/skills/tencent-upload",
+        "raw": "https://raw.githubusercontent.com/dreammis/social-auto-upload/409d4fdd33f3eb0d946310af93633ddb5eebe1d5/skills/tencent-upload/SKILL.md",
+        "saveAs": "~/.claude/skills/tencent-upload/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:7fb2fcb53e774653abe96dbd13d0a0e0e18cc984860597722ce2e8b7ed4b6a68",
+      "bytes": 1558,
+      "wordCount": 52,
+      "repoLicense": "MIT",
+      "commit": "409d4fdd33f3eb0d946310af93633ddb5eebe1d5",
+      "branch": "main",
+      "body": "---\nname: tencent-upload\ndescription: 使用 social-auto-upload 的 `sau tencent` 登录视频号并发布或定时发布视频、保存草稿。Use when 用户要向微信视频号发布视频或检查视频号账号状态。\nlicense: MIT-0\nslug: social-auto-upload-tencent-upload\ndisplayName: 微信视频号发布\nversion: 1.0.0\nsummary: 登录视频号并发布、定时发布或保存视频草稿。\n---\n\n# 视频号发布\n\n调用现有 `sau tencent` CLI，不另写网页上传流程。先确认 `sau tencent --help`；账号名是本地会话别名。\n\n```powershell\nsau tencent login --account creator\nsau tencent check --account creator\nsau tencent upload-video --account creator --file videos/demo.mp4 --title \"标题\" --desc \"简介\" --tags 视频号,测试\n```\n\n视频号仅支持视频发布。可选参数包括 `--schedule \"YYYY-MM-DD HH:MM\"`、`--draft`、`--collection`、`--short-title`、`--category`、`--thumbnail-landscape` 和 `--thumbnail-portrait`。`--thumbnail` 是竖版封面的兼容参数。合集必须已存在。\n\n登录和上传依赖浏览器会话。登录若生成二维码，直接展示二维码图片供用户扫码；需要人工操作页面时使用 `--headed`。定时仅在用户给出明确时间时使用。`--draft` 只保存草稿，不代表发布。\n\n发布前确认目标账号、视频、标题、简介、标签及立即发布/定时/草稿意图。只依据 CLI 输出和平台页面确认结果，不把命令启动成功当成发布成功。完整参数以 `sau tencent upload-video --help` 为准。\n",
+      "bodyMd": "# 视频号发布\n\n调用现有 `sau tencent` CLI，不另写网页上传流程。先确认 `sau tencent --help`；账号名是本地会话别名。\n\n```powershell\nsau tencent login --account creator\nsau tencent check --account creator\nsau tencent upload-video --account creator --file videos/demo.mp4 --title \"标题\" --desc \"简介\" --tags 视频号,测试\n```\n\n视频号仅支持视频发布。可选参数包括 `--schedule \"YYYY-MM-DD HH:MM\"`、`--draft`、`--collection`、`--short-title`、`--category`、`--thumbnail-landscape` 和 `--thumbnail-portrait`。`--thumbnail` 是竖版封面的兼容参数。合集必须已存在。\n\n登录和上传依赖浏览器会话。登录若生成二维码，直接展示二维码图片供用户扫码；需要人工操作页面时使用 `--headed`。定时仅在用户给出明确时间时使用。`--draft` 只保存草稿，不代表发布。\n\n发布前确认目标账号、视频、标题、简介、标签及立即发布/定时/草稿意图。只依据 CLI 输出和平台页面确认结果，不把命令启动成功当成发布成功。完整参数以 `sau tencent upload-video --help` 为准。\n"
+    },
+    {
+      "slug": "tiktok-upload",
+      "name": "tiktok-upload",
+      "dir": "skills/tiktok-upload",
+      "path": "skills/tiktok-upload/SKILL.md",
+      "desc": "使用仓库现有 Patchright/Playwright Chrome 上传器登录并发布 TikTok 视频。Use when 用户要发布 TikTok 视频，且当前环境可访问本仓库及其本地 Chrome 配置。",
+      "descZh": "",
+      "triggers": [
+        "用户要发布 TikTok 视频"
+      ],
+      "version": "1.0.0",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "playwright"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/dreammis/social-auto-upload.git",
+        "copy": "cp -r skills/tiktok-upload ~/.claude/skills/tiktok-upload",
+        "raw": "https://raw.githubusercontent.com/dreammis/social-auto-upload/409d4fdd33f3eb0d946310af93633ddb5eebe1d5/skills/tiktok-upload/SKILL.md",
+        "saveAs": "~/.claude/skills/tiktok-upload/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:162d7a2590ae14103317b95c561ae7f39b1cbbb107ffccae2ea1056600692f03",
+      "bytes": 2004,
+      "wordCount": 80,
+      "repoLicense": "MIT",
+      "commit": "409d4fdd33f3eb0d946310af93633ddb5eebe1d5",
+      "branch": "main",
+      "body": "---\nname: tiktok-upload\ndescription: 使用仓库现有 Patchright/Playwright Chrome 上传器登录并发布 TikTok 视频。Use when 用户要发布 TikTok 视频，且当前环境可访问本仓库及其本地 Chrome 配置。\nlicense: MIT-0\nslug: social-auto-upload-tiktok-upload\ndisplayName: TikTok 视频发布\nversion: 1.0.0\nsummary: 使用仓库 Chrome 上传器登录并发布 TikTok 视频。\n---\n\n# TikTok 视频发布\n\nTikTok 当前没有 `sau tiktok` 命令。使用仓库的 `uploader/tk_uploader/main_chrome.py`，不能虚构 CLI 参数。运行前确认仓库依赖、`conf.py` 中的 Chrome 配置及用户提供的视频路径。\n\n账号会话存放在 `cookies/tk_uploader/account.json`。首次登录可参考 `examples/get_tk_cookie.py`，在 TikTok 页面由用户本人完成登录。不要读取、复制或提交 cookie 文件。\n\n单条视频优先按下面的仓库 API 流程执行，先用 `publish_date=0` 表示立即发布：\n\n```python\nimport asyncio\nfrom pathlib import Path\nfrom conf import BASE_DIR\nfrom uploader.tk_uploader.main_chrome import TiktokVideo, tiktok_setup\n\naccount_file = Path(BASE_DIR) / \"cookies\" / \"tk_uploader\" / \"account.json\"\nvideo_file = Path(BASE_DIR) / \"videos\" / \"demo.mp4\"\nasyncio.run(tiktok_setup(str(account_file), handle=True))\napp = TiktokVideo(\"标题\", str(video_file), [\"标签\"], 0, str(account_file))\nasyncio.run(app.main())\n```\n\n`TiktokVideo` 没有独立简介参数。定时发布需传入明确的 `datetime`，不要自行推算时间。仓库中的 `examples/upload_video_to_tiktok.py` 会批量处理目录下的 MP4、自动从文件提取标题/标签，并安排次日 16:00 发布；除非用户明确要求这些行为，不要直接运行该脚本。\n\n每次发布前让用户确认账号、单条视频、标题、标签及立即/定时方式。页面布局或登录状态不符合预期时停止并报告；只有平台页面确认提交后才报告成功，未知结果先核查 TikTok Studio，不能直接重发。\n",
+      "bodyMd": "# TikTok 视频发布\n\nTikTok 当前没有 `sau tiktok` 命令。使用仓库的 `uploader/tk_uploader/main_chrome.py`，不能虚构 CLI 参数。运行前确认仓库依赖、`conf.py` 中的 Chrome 配置及用户提供的视频路径。\n\n账号会话存放在 `cookies/tk_uploader/account.json`。首次登录可参考 `examples/get_tk_cookie.py`，在 TikTok 页面由用户本人完成登录。不要读取、复制或提交 cookie 文件。\n\n单条视频优先按下面的仓库 API 流程执行，先用 `publish_date=0` 表示立即发布：\n\n```python\nimport asyncio\nfrom pathlib import Path\nfrom conf import BASE_DIR\nfrom uploader.tk_uploader.main_chrome import TiktokVideo, tiktok_setup\n\naccount_file = Path(BASE_DIR) / \"cookies\" / \"tk_uploader\" / \"account.json\"\nvideo_file = Path(BASE_DIR) / \"videos\" / \"demo.mp4\"\nasyncio.run(tiktok_setup(str(account_file), handle=True))\napp = TiktokVideo(\"标题\", str(video_file), [\"标签\"], 0, str(account_file))\nasyncio.run(app.main())\n```\n\n`TiktokVideo` 没有独立简介参数。定时发布需传入明确的 `datetime`，不要自行推算时间。仓库中的 `examples/upload_video_to_tiktok.py` 会批量处理目录下的 MP4、自动从文件提取标题/标签，并安排次日 16:00 发布；除非用户明确要求这些行为，不要直接运行该脚本。\n\n每次发布前让用户确认账号、单条视频、标题、标签及立即/定时方式。页面布局或登录状态不符合预期时停止并报告；只有平台页面确认提交后才报告成功，未知结果先核查 TikTok Studio，不能直接重发。\n"
+    },
+    {
+      "slug": "weibo-upload",
+      "name": "weibo-upload",
+      "dir": "skills/weibo-upload",
+      "path": "skills/weibo-upload/SKILL.md",
+      "desc": "使用 social-auto-upload 的 `sau weibo` 登录微博并发布视频，可指定封面。Use when 用户要向微博发布视频或检查微博账号状态。",
+      "descZh": "",
+      "triggers": [
+        "用户要向微博发布视频或检查微博账号状态"
+      ],
+      "version": "1.0.0",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/dreammis/social-auto-upload.git",
+        "copy": "cp -r skills/weibo-upload ~/.claude/skills/weibo-upload",
+        "raw": "https://raw.githubusercontent.com/dreammis/social-auto-upload/409d4fdd33f3eb0d946310af93633ddb5eebe1d5/skills/weibo-upload/SKILL.md",
+        "saveAs": "~/.claude/skills/weibo-upload/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:35dd1b0923d30e84a649d0519f2213183126992c770e38eac2c50bec3c46031d",
+      "bytes": 1150,
+      "wordCount": 42,
+      "repoLicense": "MIT",
+      "commit": "409d4fdd33f3eb0d946310af93633ddb5eebe1d5",
+      "branch": "main",
+      "body": "---\nname: weibo-upload\ndescription: 使用 social-auto-upload 的 `sau weibo` 登录微博并发布视频，可指定封面。Use when 用户要向微博发布视频或检查微博账号状态。\nlicense: MIT-0\nslug: social-auto-upload-weibo-upload\ndisplayName: 微博视频发布\nversion: 1.0.0\nsummary: 使用 sau 登录微博并发布视频，可指定封面。\n---\n\n# 微博视频发布\n\n调用现有 CLI，不另写网页上传流程。账号名是本地会话别名。\n\n```powershell\nsau weibo login --account creator\nsau weibo check --account creator\nsau weibo upload-video --account creator --file videos/demo.mp4 --title \"标题\" --desc \"简介\" --tags 微博,测试 --thumbnail covers/demo.png\n```\n\n当前仅支持视频，不支持图文和定时发布。标题最多 30 个字；封面建议小于 5 MB。登录时若出现二维码，展示二维码图片供用户扫码。完整参数以 `sau weibo upload-video --help` 为准。\n\n发布前核对账号、视频、标题长度、简介、标签和封面。提交后只根据实际平台反馈报告结果；超时或状态不明时先在微博后台确认原作品，不重复上传。\n",
+      "bodyMd": "# 微博视频发布\n\n调用现有 CLI，不另写网页上传流程。账号名是本地会话别名。\n\n```powershell\nsau weibo login --account creator\nsau weibo check --account creator\nsau weibo upload-video --account creator --file videos/demo.mp4 --title \"标题\" --desc \"简介\" --tags 微博,测试 --thumbnail covers/demo.png\n```\n\n当前仅支持视频，不支持图文和定时发布。标题最多 30 个字；封面建议小于 5 MB。登录时若出现二维码，展示二维码图片供用户扫码。完整参数以 `sau weibo upload-video --help` 为准。\n\n发布前核对账号、视频、标题长度、简介、标签和封面。提交后只根据实际平台反馈报告结果；超时或状态不明时先在微博后台确认原作品，不重复上传。\n"
+    },
+    {
+      "slug": "xiaohongshu-upload",
+      "name": "xiaohongshu-upload",
+      "dir": "skills/xiaohongshu-upload",
+      "path": "skills/xiaohongshu-upload/SKILL.md",
+      "desc": "当 agent 需要通过已安装的 `sau` CLI 完成小红书登录、cookie 校验、视频上传或图文发布时使用这个 skill。该 skill 适用于已经安装 `social-auto-upload` 且可调用 `sau` 命令的环境。优先使用这个 skill 进行稳定的命令式小红书工作流，而不是一开始就阅读 uploader 源码。",
+      "descZh": "",
+      "triggers": [],
+      "version": "1.0.0",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/dreammis/social-auto-upload.git",
+        "copy": "cp -r skills/xiaohongshu-upload ~/.claude/skills/xiaohongshu-upload",
+        "raw": "https://raw.githubusercontent.com/dreammis/social-auto-upload/409d4fdd33f3eb0d946310af93633ddb5eebe1d5/skills/xiaohongshu-upload/SKILL.md",
+        "saveAs": "~/.claude/skills/xiaohongshu-upload/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:17f721b4ec0e0a5fe00dc4b00ef3e7c64c0177dd605ebc836877ef4d9f4d93a6",
+      "bytes": 2871,
+      "wordCount": 195,
+      "repoLicense": "MIT",
+      "commit": "409d4fdd33f3eb0d946310af93633ddb5eebe1d5",
+      "branch": "main",
+      "body": "---\nname: xiaohongshu-upload\ndescription: 当 agent 需要通过已安装的 `sau` CLI 完成小红书登录、cookie 校验、视频上传或图文发布时使用这个 skill。该 skill 适用于已经安装 `social-auto-upload` 且可调用 `sau` 命令的环境。优先使用这个 skill 进行稳定的命令式小红书工作流，而不是一开始就阅读 uploader 源码。\nlicense: MIT-0\nslug: social-auto-upload-xiaohongshu-upload\ndisplayName: 小红书视频与图文发布\nversion: 1.0.0\nsummary: 使用 sau 登录小红书并发布视频或图文。\n---\n\n# 小红书上传 Skill\n\n优先把 `sau` 作为主接口。\n\n不要假设当前环境一定能读取仓库源码。\n不要一开始就去读 `uploader/`。\n只有在命令不可用或 CLI 执行失败时，才回退到故障排查说明。\n\n## 功能概览\n\n| 功能 | 命令入口 | 说明 |\n| --- | --- | --- |\n| 小红书登录 | `sau xiaohongshu login --account <name>` | 生成或刷新指定账号的 cookie |\n| cookie 校验 | `sau xiaohongshu check --account <name>` | 检查指定账号 cookie 是否有效 |\n| 视频上传 | `sau xiaohongshu upload-video ...` | 上传并发布小红书视频 |\n| 图文上传 | `sau xiaohongshu upload-note ...` | 上传并发布小红书图文 |\n\n元数据约定：\n\n- 视频使用 `title + desc + tags`\n- 图文使用 `title + note + tags`\n\n## 默认工作流\n\n1. 先确认 `references/runtime-requirements.md` 里的运行前提。\n2. 再确认 `references/cli-contract.md` 里的命令契约。\n3. 执行匹配的 `sau xiaohongshu ...` 命令。\n4. 如果命令失败，再看 `references/troubleshooting.md`。\n\n## 支持动作\n\n- 使用 `sau xiaohongshu login --account <name>` 登录小红书\n- 使用 `sau xiaohongshu check --account <name>` 校验 cookie 是否有效\n- 使用 `sau xiaohongshu upload-video ...` 上传小红书视频\n- 使用 `sau xiaohongshu upload-note ...` 上传小红书图文\n\n## 命令选择建议\n\n- 当用户需要新的 cookie，或现有 cookie 已失效时，使用 `login`\n- 当用户只需要确认 cookie 状态时，使用 `check`\n- 当用户要发布视频时，使用 `upload-video`\n- 当用户要发布图文时，使用 `upload-note`\n\n## 执行前检查\n\n- 先确认当前 shell 里是否可以调用 `sau`\n- 如果 `sau` 不可用，按 `references/runtime-requirements.md` 里的回退方式处理\n- 当用户明确指定无头或有头模式时，显式传 `--headless` 或 `--headed`\n- 只有用户明确要求定时发布时，才使用 `--schedule`\n- 如果登录流程生成了本地二维码图片，不要只把图片路径告诉用户\n- 二维码图片本身就是给用户扫码的，优先直接把本地图片展示/发送给用户\n\n## 参考文档\n\n- 运行前提：`references/runtime-requirements.md`\n- CLI 契约：`references/cli-contract.md`\n- 故障排查：`references/troubleshooting.md`\n",
+      "bodyMd": "# 小红书上传 Skill\n\n优先把 `sau` 作为主接口。\n\n不要假设当前环境一定能读取仓库源码。\n不要一开始就去读 `uploader/`。\n只有在命令不可用或 CLI 执行失败时，才回退到故障排查说明。\n\n## 功能概览\n\n| 功能 | 命令入口 | 说明 |\n| --- | --- | --- |\n| 小红书登录 | `sau xiaohongshu login --account <name>` | 生成或刷新指定账号的 cookie |\n| cookie 校验 | `sau xiaohongshu check --account <name>` | 检查指定账号 cookie 是否有效 |\n| 视频上传 | `sau xiaohongshu upload-video ...` | 上传并发布小红书视频 |\n| 图文上传 | `sau xiaohongshu upload-note ...` | 上传并发布小红书图文 |\n\n元数据约定：\n\n- 视频使用 `title + desc + tags`\n- 图文使用 `title + note + tags`\n\n## 默认工作流\n\n1. 先确认 `references/runtime-requirements.md` 里的运行前提。\n2. 再确认 `references/cli-contract.md` 里的命令契约。\n3. 执行匹配的 `sau xiaohongshu ...` 命令。\n4. 如果命令失败，再看 `references/troubleshooting.md`。\n\n## 支持动作\n\n- 使用 `sau xiaohongshu login --account <name>` 登录小红书\n- 使用 `sau xiaohongshu check --account <name>` 校验 cookie 是否有效\n- 使用 `sau xiaohongshu upload-video ...` 上传小红书视频\n- 使用 `sau xiaohongshu upload-note ...` 上传小红书图文\n\n## 命令选择建议\n\n- 当用户需要新的 cookie，或现有 cookie 已失效时，使用 `login`\n- 当用户只需要确认 cookie 状态时，使用 `check`\n- 当用户要发布视频时，使用 `upload-video`\n- 当用户要发布图文时，使用 `upload-note`\n\n## 执行前检查\n\n- 先确认当前 shell 里是否可以调用 `sau`\n- 如果 `sau` 不可用，按 `references/runtime-requirements.md` 里的回退方式处理\n- 当用户明确指定无头或有头模式时，显式传 `--headless` 或 `--headed`\n- 只有用户明确要求定时发布时，才使用 `--schedule`\n- 如果登录流程生成了本地二维码图片，不要只把图片路径告诉用户\n- 二维码图片本身就是给用户扫码的，优先直接把本地图片展示/发送给用户\n\n## 参考文档\n\n- 运行前提：`references/runtime-requirements.md`\n- CLI 契约：`references/cli-contract.md`\n- 故障排查：`references/troubleshooting.md`\n"
+    },
+    {
+      "slug": "xueqiu-upload",
+      "name": "xueqiu-upload",
+      "dir": "skills/xueqiu-upload",
+      "path": "skills/xueqiu-upload/SKILL.md",
+      "desc": "通过 social-auto-upload 的 sau CLI 登录和核验雪球账号，发布 HTML、Markdown 或 TXT 长文，保留原稿段间配图、原生文字结构与独立封面，并查询原作品确认结果。适用于雪球创作者平台，不支持定时或视频。",
+      "descZh": "",
+      "triggers": [
+        "雪球创作者平台",
+        "不支持定时或视频"
+      ],
+      "version": "1.0.0",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/dreammis/social-auto-upload.git",
+        "copy": "cp -r skills/xueqiu-upload ~/.claude/skills/xueqiu-upload",
+        "raw": "https://raw.githubusercontent.com/dreammis/social-auto-upload/409d4fdd33f3eb0d946310af93633ddb5eebe1d5/skills/xueqiu-upload/SKILL.md",
+        "saveAs": "~/.claude/skills/xueqiu-upload/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:c43ce7f773e7fef0115e4e3641ac68ca59cebe92977d001dfc431a7d60365107",
+      "bytes": 4356,
+      "wordCount": 151,
+      "repoLicense": "MIT",
+      "commit": "409d4fdd33f3eb0d946310af93633ddb5eebe1d5",
+      "branch": "main",
+      "body": "---\nname: xueqiu-upload\ndescription: 通过 social-auto-upload 的 sau CLI 登录和核验雪球账号，发布 HTML、Markdown 或 TXT 长文，保留原稿段间配图、原生文字结构与独立封面，并查询原作品确认结果。适用于雪球创作者平台，不支持定时或视频。\nlicense: MIT-0\nslug: social-auto-upload-xueqiu-upload\ndisplayName: 雪球长文发布\nversion: 1.0.0\nsummary: 发布雪球 HTML、Markdown 或 TXT 长文并核验结果。\n---\n\n# 雪球长文\n\n使用仓库现有 `sau xueqiu`，不另写网页上传实现。先检查 `sau xueqiu upload-article --help`。Windows 未加入 PATH 时在仓库根目录使用 `.\\.venv\\Scripts\\sau.exe`。\n\n## 账号及输入\n\n- 已有账号执行 `sau xueqiu check --account <别名>`。首次使用执行 `sau xueqiu login --account <别名> --expected-name \"用户指定昵称\"`，在打开的 Chrome 中登录。程序保存会话并绑定真实用户 ID；不要把账号密码写进命令或源码。Codex 内置浏览器的登录不会自动生成 CLI 会话文件。\n- 必须提供非空单行 `--title`、UTF-8 HTML/Markdown/TXT `--content-file` 和与实际创作方式相符的 `--declaration`。声明选择 `不添加创作声明` 或 `本文包含AI生成内容`，不要替用户猜测。\n- `--visibility` 为 `公开` 或 `私人`，默认公开。正文图片通过 HTML 的 `img` 或 Markdown 图片写在原稿对应位置，相对路径基于原稿目录；没有 `--images` 文末追加参数。独立封面用 `--cover`，采用平台默认裁剪。图片接受本地 GIF/JPEG/PNG，不接受远端或 data URL。\n- 雪球各级标题统一为平台小标题，保留段落、加粗、斜体、链接；列表转换为带编号或圆点的段落。自定义 CSS 不保证保留。表格、代码块等未验证结构在创建远端草稿前报错。Markdown 首次使用需运行 `sau article setup`，详见使用说明。\n\n## 草稿和发表\n\n```powershell\nsau xueqiu upload-article --account <别名> --title \"用户标题\" --content-file \"文章.md\" --cover \"封面.png\" --visibility 私人 --declaration \"本文包含AI生成内容\"\n```\n\n命令默认实际发表。仅检查草稿和预览时显式增加 `--prepare-only`；雪球会自动保存远端草稿，重复运行可能创建多份草稿。编辑器若已有内容会拒绝覆盖。无需独立封面时省略 `--cover`。\n\n优先使用 Markdown 原稿；段间配图用相对原稿路径的 Markdown 图片语法，例如 `![图片说明](images/chart.png)`。首次使用先执行 `sau article setup`。\n\n正式 CLI 已实测原生结构、两张不同的段间图片、独立封面、私人发表及后台原作品查询。沿用用户的操作范围；开发或登录授权本身不等于授权发表测试内容。\n\n没有定时参数：本次账号的完整长文表单未观察到定时功能。Word、自定义裁剪、视频、股票/话题/@关联对象尚未支持，不用普通文字冒充关联对象。\n\n## 判断结果与中断处理\n\n保留命令输出的结果 JSON 路径和截图。`prepared` 仅表示准备完成；`published` 表示平台最终受理并通过主体、标题、分享范围及正文核对。`management_verified: true` 表示后台原 ID 查询也通过。私人作品显示“仅自己可见”。\n\n若记录为 `submission_unknown`，执行 `sau xueqiu verify --account <别名> --result \"本次结果文件.json\"`，按已保存的原作品 ID 只读查询，并用原稿重查后台正文和图片。保留发表时的原稿、图片及路径，内容改变会报错；旧版缺少原稿路径的成功结果仅核查作品身份和分享范围。没有 ID 时进入“内容管理”按标题、账号及时间核查。未查明前不要重跑上传或再次点击发布，避免重复作品。\n\n默认使用可见 Chrome，`--headless` 为显式选项；本机无头访问曾被平台拦截。网络超时、403 或主体不一致应保留具体错误，不据此断言 Cookie 失效。`--debug` 保存失败截图。\n\n## 示例脚本\n\n`scripts/examples/` 下的文件是复制用示例，不是运行时依赖。执行前先查看当前 CLI 的 `--help`，替换账号、素材和正文；这些命令可能创建真实作品。\n\n- `xueqiu_commands.ps1`：PowerShell\n- `xueqiu_commands.sh`：Bash\n- `xueqiu_cli_template.py`：Python subprocess\n",
+      "bodyMd": "# 雪球长文\n\n使用仓库现有 `sau xueqiu`，不另写网页上传实现。先检查 `sau xueqiu upload-article --help`。Windows 未加入 PATH 时在仓库根目录使用 `.\\.venv\\Scripts\\sau.exe`。\n\n## 账号及输入\n\n- 已有账号执行 `sau xueqiu check --account <别名>`。首次使用执行 `sau xueqiu login --account <别名> --expected-name \"用户指定昵称\"`，在打开的 Chrome 中登录。程序保存会话并绑定真实用户 ID；不要把账号密码写进命令或源码。Codex 内置浏览器的登录不会自动生成 CLI 会话文件。\n- 必须提供非空单行 `--title`、UTF-8 HTML/Markdown/TXT `--content-file` 和与实际创作方式相符的 `--declaration`。声明选择 `不添加创作声明` 或 `本文包含AI生成内容`，不要替用户猜测。\n- `--visibility` 为 `公开` 或 `私人`，默认公开。正文图片通过 HTML 的 `img` 或 Markdown 图片写在原稿对应位置，相对路径基于原稿目录；没有 `--images` 文末追加参数。独立封面用 `--cover`，采用平台默认裁剪。图片接受本地 GIF/JPEG/PNG，不接受远端或 data URL。\n- 雪球各级标题统一为平台小标题，保留段落、加粗、斜体、链接；列表转换为带编号或圆点的段落。自定义 CSS 不保证保留。表格、代码块等未验证结构在创建远端草稿前报错。Markdown 首次使用需运行 `sau article setup`，详见使用说明。\n\n## 草稿和发表\n\n```powershell\nsau xueqiu upload-article --account <别名> --title \"用户标题\" --content-file \"文章.md\" --cover \"封面.png\" --visibility 私人 --declaration \"本文包含AI生成内容\"\n```\n\n命令默认实际发表。仅检查草稿和预览时显式增加 `--prepare-only`；雪球会自动保存远端草稿，重复运行可能创建多份草稿。编辑器若已有内容会拒绝覆盖。无需独立封面时省略 `--cover`。\n\n优先使用 Markdown 原稿；段间配图用相对原稿路径的 Markdown 图片语法，例如 `![图片说明](images/chart.png)`。首次使用先执行 `sau article setup`。\n\n正式 CLI 已实测原生结构、两张不同的段间图片、独立封面、私人发表及后台原作品查询。沿用用户的操作范围；开发或登录授权本身不等于授权发表测试内容。\n\n没有定时参数：本次账号的完整长文表单未观察到定时功能。Word、自定义裁剪、视频、股票/话题/@关联对象尚未支持，不用普通文字冒充关联对象。\n\n## 判断结果与中断处理\n\n保留命令输出的结果 JSON 路径和截图。`prepared` 仅表示准备完成；`published` 表示平台最终受理并通过主体、标题、分享范围及正文核对。`management_verified: true` 表示后台原 ID 查询也通过。私人作品显示“仅自己可见”。\n\n若记录为 `submission_unknown`，执行 `sau xueqiu verify --account <别名> --result \"本次结果文件.json\"`，按已保存的原作品 ID 只读查询，并用原稿重查后台正文和图片。保留发表时的原稿、图片及路径，内容改变会报错；旧版缺少原稿路径的成功结果仅核查作品身份和分享范围。没有 ID 时进入“内容管理”按标题、账号及时间核查。未查明前不要重跑上传或再次点击发布，避免重复作品。\n\n默认使用可见 Chrome，`--headless` 为显式选项；本机无头访问曾被平台拦截。网络超时、403 或主体不一致应保留具体错误，不据此断言 Cookie 失效。`--debug` 保存失败截图。\n\n## 示例脚本\n\n`scripts/examples/` 下的文件是复制用示例，不是运行时依赖。执行前先查看当前 CLI 的 `--help`，替换账号、素材和正文；这些命令可能创建真实作品。\n\n- `xueqiu_commands.ps1`：PowerShell\n- `xueqiu_commands.sh`：Bash\n- `xueqiu_cli_template.py`：Python subprocess\n"
+    },
+    {
+      "slug": "youtube-upload",
+      "name": "youtube-upload",
+      "dir": "skills/youtube-upload",
+      "path": "skills/youtube-upload/SKILL.md",
+      "desc": "使用 social-auto-upload 的 `sau youtube` 登录 YouTube 并上传、安排定时或设置视频可见范围。Use when 用户要向 YouTube 发布或定时发布视频，或检查 Google/YouTube 登录状态。",
+      "descZh": "",
+      "triggers": [
+        "用户要向 YouTube 发布或定时发布视频",
+        "或检查 Google/YouTube 登录状态"
+      ],
+      "version": "1.0.0",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/dreammis/social-auto-upload.git",
+        "copy": "cp -r skills/youtube-upload ~/.claude/skills/youtube-upload",
+        "raw": "https://raw.githubusercontent.com/dreammis/social-auto-upload/409d4fdd33f3eb0d946310af93633ddb5eebe1d5/skills/youtube-upload/SKILL.md",
+        "saveAs": "~/.claude/skills/youtube-upload/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:dfe6c52c94da9d6b80e2f103190fd7cc83e9c21af5daade6183172a4269e9444",
+      "bytes": 1426,
+      "wordCount": 56,
+      "repoLicense": "MIT",
+      "commit": "409d4fdd33f3eb0d946310af93633ddb5eebe1d5",
+      "branch": "main",
+      "body": "---\nname: youtube-upload\ndescription: 使用 social-auto-upload 的 `sau youtube` 登录 YouTube 并上传、安排定时或设置视频可见范围。Use when 用户要向 YouTube 发布或定时发布视频，或检查 Google/YouTube 登录状态。\nlicense: MIT-0\nslug: social-auto-upload-youtube-upload\ndisplayName: YouTube 视频发布\nversion: 1.0.0\nsummary: 使用 sau 登录 YouTube 并上传或定时发布视频。\n---\n\n# YouTube 视频发布\n\n调用现有 `sau youtube` CLI。登录在浏览器中完成 Google 账号登录，不使用二维码；账号名是本地会话别名。\n\n```powershell\nsau youtube login --account creator\nsau youtube check --account creator\nsau youtube upload-video --account creator --file videos/demo.mp4 --title \"标题\" --desc \"简介\" --tags tag1,tag2 --visibility public\n```\n\n标题最多 100 个字符。`--visibility` 可选 `public`、`unlisted`、`private`，默认 `public`；`--thumbnail` 指定封面，`--playlist` 指定已有播放列表。只有用户明确给出定时时间才传 `--schedule \"YYYY-MM-DD HH:MM\"`；该选项会使用 YouTube Studio 的 Schedule 状态，需核对页面显示的日期与时间。\n\n发布前再次核对账号、视频、标题、说明、标签、可见范围及立即/定时意图。上传或发布遇到超时时先查 YouTube Studio 中的原视频，不盲目重传。上传成功不等于审核完成或公开视频已可播放。\n",
+      "bodyMd": "# YouTube 视频发布\n\n调用现有 `sau youtube` CLI。登录在浏览器中完成 Google 账号登录，不使用二维码；账号名是本地会话别名。\n\n```powershell\nsau youtube login --account creator\nsau youtube check --account creator\nsau youtube upload-video --account creator --file videos/demo.mp4 --title \"标题\" --desc \"简介\" --tags tag1,tag2 --visibility public\n```\n\n标题最多 100 个字符。`--visibility` 可选 `public`、`unlisted`、`private`，默认 `public`；`--thumbnail` 指定封面，`--playlist` 指定已有播放列表。只有用户明确给出定时时间才传 `--schedule \"YYYY-MM-DD HH:MM\"`；该选项会使用 YouTube Studio 的 Schedule 状态，需核对页面显示的日期与时间。\n\n发布前再次核对账号、视频、标题、说明、标签、可见范围及立即/定时意图。上传或发布遇到超时时先查 YouTube Studio 中的原视频，不盲目重传。上传成功不等于审核完成或公开视频已可播放。\n"
+    },
+    {
+      "slug": "zhihu-upload",
+      "name": "zhihu-upload",
+      "dir": "skills/zhihu-upload",
+      "path": "skills/zhihu-upload/SKILL.md",
+      "desc": "使用 social-auto-upload 的 sau CLI 登录知乎、发布文章或视频，并按作品链接核对结果；支持原稿位置配图与视频领域、声明选项。",
+      "descZh": "",
+      "triggers": [],
+      "version": "1.0.0",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/dreammis/social-auto-upload.git",
+        "copy": "cp -r skills/zhihu-upload ~/.claude/skills/zhihu-upload",
+        "raw": "https://raw.githubusercontent.com/dreammis/social-auto-upload/409d4fdd33f3eb0d946310af93633ddb5eebe1d5/skills/zhihu-upload/SKILL.md",
+        "saveAs": "~/.claude/skills/zhihu-upload/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:1428371709a12dd52a31e9cf028d1b51e6bc0fc128c22aec980fd01de11be21a",
+      "bytes": 4315,
+      "wordCount": 249,
+      "repoLicense": "MIT",
+      "commit": "409d4fdd33f3eb0d946310af93633ddb5eebe1d5",
+      "branch": "main",
+      "body": "---\nname: zhihu-upload\ndescription: 使用 social-auto-upload 的 sau CLI 登录知乎、发布文章或视频，并按作品链接核对结果；支持原稿位置配图与视频领域、声明选项。\nlicense: MIT-0\nslug: social-auto-upload-zhihu-upload\ndisplayName: 知乎文章与视频发布\nversion: 1.0.0\nsummary: 使用 sau 登录知乎并发布文章或视频。\n---\n\n# 知乎文章与视频\n\n使用仓库的 `sau zhihu` 命令，不另写网页上传逻辑。\n\n## 功能概览\n\n| 功能 | 命令入口 | 说明 |\n| --- | --- | --- |\n| 登录 | `sau zhihu login --account <name>` | 保存指定账号的本地会话 |\n| 账号检查 | `sau zhihu check --account <name>` | 检查会话与当前账号是否一致 |\n| 文章发布 | `sau zhihu upload-article ...` | HTML/Markdown/TXT 原稿，图片保留原稿位置 |\n| 视频发布 | `sau zhihu upload-video ...` | 单视频、标题、简介、领域与内容声明 |\n| 作品核对 | `sau zhihu verify --account <name> --result <json>` | 打开结果文件中的原作品链接核对标题 |\n\n元数据约定：文章使用 `title + content-file`，视频使用 `title + desc + originality + category + video-mark`。`--account` 是本地会话别名，无须与知乎昵称相同。\n\n## 登录\n\n```powershell\nsau zhihu login --account creator\nsau zhihu check --account creator\n```\n\n账号密码、验证码在登录窗口输入；会话文件保存在本地，不提交到仓库。\n\n## 文章\n\n标题最多 100 字。正文使用 UTF-8 HTML、Markdown 或 TXT；Markdown 首次使用先执行 `sau article setup`。\n\n图片写在原稿对应段落中，相对路径从原稿目录解析：\n\n```markdown\n第一段正文。\n\n![配图](images/1.png)\n\n第二段正文。\n```\n\n```powershell\nsau zhihu upload-article --account creator --title \"文章标题\" --content-file \"文章.md\"\n```\n\n提交前核对文字、图片顺序、基本格式和链接。编辑器恢复出非空草稿时会停止，避免覆盖已有内容。暂不支持自定义主题 CSS、手动封面、专栏收录、芝士任务和文档导入。\n\n## 视频\n\n文件必须大于 100KB（102400 字节）、最大 20GB、最长 4 小时。标题 5–50 字，简介最多 300 字；默认使用平台生成的封面。\n\n```powershell\nsau zhihu upload-video --account creator --file \"视频.mp4\" --title \"视频标题示例\" --desc \"视频简介\" --originality original --category \"教育\" --video-mark \"含 AI 生成内容\"\n```\n\n- `--originality`：`original`（原创）或 `reprint`（转载）。\n- `--category`：领域选项见 `sau zhihu upload-video --help`；省略时显示实时菜单，按编号选择。\n- `--video-mark`：`内容无需标注`、`含 AI 生成内容`、`含虚构演绎内容`、`内容含营销信息`、`内容为转载`、`个人观点仅供参考`；声明须与内容一致。\n\n非交互调用应指定领域和声明。程序提交前仍会核对实时菜单。仅获取当前页面的候选时使用：\n\n```powershell\nsau zhihu upload-video --account creator --file \"视频.mp4\" --title \"视频标题示例\" --originality original --show-options\n```\n\n候选写入结果 JSON 的 `options.category`、`options.video_mark`。暂不支持自动选择话题、自定义封面、专栏和内容来源。\n\n## 提交与结果\n\n文章和视频均可加 `--prepare-only`，填写并检查后结束；`--prepare-only`、`--show-options` 都可能留下远端草稿。\n\n`published` 表示平台确认发表，详情链接写入结果文件的 `url`；视频地址可为 `/pin/<作品ID>`。若详情读取失败，保留 `published` 和 `error`，到创作中心查原作品，勿重发。`prepared` 不表示发表成功。若为 `submission_unknown`，也先按标题和提交时间检查原作品。已有 URL 时可执行：\n\n```powershell\nsau zhihu verify --account creator --result \"本次结果.json\"\n```\n\n`--schedule \"YYYY-MM-DD HH:MM\"` 为实验性选项，按北京时间限制在 30 分钟后至 48 小时内；尚不保证完整排期流程可用。\n\n## 示例脚本\n\n以下文件提供登录、检查、表单预填及候选查询模板；移除 `--prepare-only` 会真实发布文章。\n\n- [PowerShell](scripts/examples/zhihu_commands.ps1)\n- [Bash](scripts/examples/zhihu_commands.sh)\n- [Python subprocess](scripts/examples/zhihu_cli_template.py)\n",
+      "bodyMd": "# 知乎文章与视频\n\n使用仓库的 `sau zhihu` 命令，不另写网页上传逻辑。\n\n## 功能概览\n\n| 功能 | 命令入口 | 说明 |\n| --- | --- | --- |\n| 登录 | `sau zhihu login --account <name>` | 保存指定账号的本地会话 |\n| 账号检查 | `sau zhihu check --account <name>` | 检查会话与当前账号是否一致 |\n| 文章发布 | `sau zhihu upload-article ...` | HTML/Markdown/TXT 原稿，图片保留原稿位置 |\n| 视频发布 | `sau zhihu upload-video ...` | 单视频、标题、简介、领域与内容声明 |\n| 作品核对 | `sau zhihu verify --account <name> --result <json>` | 打开结果文件中的原作品链接核对标题 |\n\n元数据约定：文章使用 `title + content-file`，视频使用 `title + desc + originality + category + video-mark`。`--account` 是本地会话别名，无须与知乎昵称相同。\n\n## 登录\n\n```powershell\nsau zhihu login --account creator\nsau zhihu check --account creator\n```\n\n账号密码、验证码在登录窗口输入；会话文件保存在本地，不提交到仓库。\n\n## 文章\n\n标题最多 100 字。正文使用 UTF-8 HTML、Markdown 或 TXT；Markdown 首次使用先执行 `sau article setup`。\n\n图片写在原稿对应段落中，相对路径从原稿目录解析：\n\n```markdown\n第一段正文。\n\n![配图](images/1.png)\n\n第二段正文。\n```\n\n```powershell\nsau zhihu upload-article --account creator --title \"文章标题\" --content-file \"文章.md\"\n```\n\n提交前核对文字、图片顺序、基本格式和链接。编辑器恢复出非空草稿时会停止，避免覆盖已有内容。暂不支持自定义主题 CSS、手动封面、专栏收录、芝士任务和文档导入。\n\n## 视频\n\n文件必须大于 100KB（102400 字节）、最大 20GB、最长 4 小时。标题 5–50 字，简介最多 300 字；默认使用平台生成的封面。\n\n```powershell\nsau zhihu upload-video --account creator --file \"视频.mp4\" --title \"视频标题示例\" --desc \"视频简介\" --originality original --category \"教育\" --video-mark \"含 AI 生成内容\"\n```\n\n- `--originality`：`original`（原创）或 `reprint`（转载）。\n- `--category`：领域选项见 `sau zhihu upload-video --help`；省略时显示实时菜单，按编号选择。\n- `--video-mark`：`内容无需标注`、`含 AI 生成内容`、`含虚构演绎内容`、`内容含营销信息`、`内容为转载`、`个人观点仅供参考`；声明须与内容一致。\n\n非交互调用应指定领域和声明。程序提交前仍会核对实时菜单。仅获取当前页面的候选时使用：\n\n```powershell\nsau zhihu upload-video --account creator --file \"视频.mp4\" --title \"视频标题示例\" --originality original --show-options\n```\n\n候选写入结果 JSON 的 `options.category`、`options.video_mark`。暂不支持自动选择话题、自定义封面、专栏和内容来源。\n\n## 提交与结果\n\n文章和视频均可加 `--prepare-only`，填写并检查后结束；`--prepare-only`、`--show-options` 都可能留下远端草稿。\n\n`published` 表示平台确认发表，详情链接写入结果文件的 `url`；视频地址可为 `/pin/<作品ID>`。若详情读取失败，保留 `published` 和 `error`，到创作中心查原作品，勿重发。`prepared` 不表示发表成功。若为 `submission_unknown`，也先按标题和提交时间检查原作品。已有 URL 时可执行：\n\n```powershell\nsau zhihu verify --account creator --result \"本次结果.json\"\n```\n\n`--schedule \"YYYY-MM-DD HH:MM\"` 为实验性选项，按北京时间限制在 30 分钟后至 48 小时内；尚不保证完整排期流程可用。\n\n## 示例脚本\n\n以下文件提供登录、检查、表单预填及候选查询模板；移除 `--prepare-only` 会真实发布文章。\n\n- [PowerShell](scripts/examples/zhihu_commands.ps1)\n- [Bash](scripts/examples/zhihu_commands.sh)\n- [Python subprocess](scripts/examples/zhihu_cli_template.py)\n"
+    }
+  ]
+}

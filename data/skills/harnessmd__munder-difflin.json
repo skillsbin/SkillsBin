@@ -1,0 +1,846 @@
+{
+  "repo": "HarnessMD/munder-difflin",
+  "commit": "9ffd373bdb89f57a572f2181a38e643f2a7d21d4",
+  "branch": "main",
+  "fetchedAt": "2026-11-24T22:05:16.499Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "ian-xiaohei-illustrations",
+      "name": "ian-xiaohei-illustrations",
+      "dir": ".claude/skills/ian-xiaohei-illustrations",
+      "path": ".claude/skills/ian-xiaohei-illustrations/SKILL.md",
+      "desc": "生成 Ian 风格的中文正文配图。用于用户要求为中文文章、帖子、博客、Notion 文档、工作流文档、方法论、流程、结构、状态、隐喻或观点生成“怪诞”“小黑”“手绘”“正文配图”“文章插图”“配图建议”“shot list”“去标题/改图”等任务；默认使用小黑 IP、纯白手绘、少量红橙蓝批注、简洁清爽但天马行空的视觉风格。",
+      "descZh": "",
+      "triggers": [
+        "用户要求为中文文章",
+        "帖子",
+        "博客",
+        "Notion 文档",
+        "工作流文档",
+        "方法论",
+        "流程",
+        "结构"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "go"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HarnessMD/munder-difflin.git",
+        "copy": "cp -r .claude/skills/ian-xiaohei-illustrations ~/.claude/skills/ian-xiaohei-illustrations",
+        "raw": "https://raw.githubusercontent.com/HarnessMD/munder-difflin/9ffd373bdb89f57a572f2181a38e643f2a7d21d4/.claude/skills/ian-xiaohei-illustrations/SKILL.md",
+        "saveAs": "~/.claude/skills/ian-xiaohei-illustrations/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:e8c9bae77dc42db5614af6ae459516fe72f79253c00dc74556120e8042cc508d",
+      "bytes": 5307,
+      "wordCount": 318,
+      "repoLicense": "MIT",
+      "commit": "9ffd373bdb89f57a572f2181a38e643f2a7d21d4",
+      "branch": "main",
+      "body": "---\nname: ian-xiaohei-illustrations\ndescription: 生成 Ian 风格的中文正文配图。用于用户要求为中文文章、帖子、博客、Notion 文档、工作流文档、方法论、流程、结构、状态、隐喻或观点生成“怪诞”“小黑”“手绘”“正文配图”“文章插图”“配图建议”“shot list”“去标题/改图”等任务；默认使用小黑 IP、纯白手绘、少量红橙蓝批注、简洁清爽但天马行空的视觉风格。\n---\n\n# Ian 小黑怪诞正文配图\n\n## 核心定位\n\n为中文文章设计和生成 16:9 横版正文配图。目标不是做商业插画、PPT 信息图或可爱卡通，而是把文章里的关键判断、流程、结构、状态或隐喻，变成一张清爽、怪诞、有创意、可读但不说明书的手绘解释图。\n\n默认视觉 IP 是“小黑”：黑色实心、白点眼、细腿、空表情，认真做一件荒诞但成立的事。小黑必须参与画面的核心动作，不能只是站在旁边当装饰。\n\n## 先读这些参考\n\n按任务需要读取，不要一次塞满上下文：\n\n- `references/style-dna.md`：风格 DNA、颜色、文字、禁忌。\n- `references/xiaohei-ip.md`：小黑 IP 的形象、性格、动作库和禁忌。\n- `references/composition-patterns.md`：结构类型、原创隐喻方法和反复刻规则。\n- `references/prompt-template.md`：单张生图提示词模板。\n- `references/qa-checklist.md`：生成后检查和迭代规则。\n- `assets/examples/`：只作低频视觉校准，不进入默认生成路径。不要照抄这些案例的构图、物件或标注。\n\n## 工作流\n\n### 1. 消化正文\n\n先读用户给的正文、链接、Notion 页面、Markdown 文件或截图内容。提炼：\n\n- 核心观点是什么\n- 哪些段落承担认知转折\n- 哪些内容适合用图解释\n- 哪些地方只适合文字，不需要图\n\n不要平均配图。优先选择“认知锚点”，例如：核心判断、两个断点、输入输出闭环、分流、前后对比、一鱼多吃、承接路径、常见坑、角色状态变化。\n\n### 2. 先出配图策略\n\n如果用户只是说“分析怎么配图 / 思考哪些地方需要配图”，先给 shot list。每张图写清楚：\n\n- 放在哪个段落后\n- 图的主题\n- 核心意思\n- 结构类型\n- 小黑在图里做什么\n- 建议元素\n- 建议中文标注词\n\n默认 4-8 张。文章很短时 1-3 张；长文也不要轻易超过 9 张。够用就好，避免把正文做成画册。\n\n### 3. 单张生成\n\n如果用户明确要求“生成 / 输出 / 做图 / 帮我生成”，不要停下来等确认；用内置 `image_gen` 每张单独生成。不要把多张图拼在一张里。\n\n每张图只讲一个核心结构。提示词必须包含：\n\n- 16:9 横版中文正文配图\n- 纯白背景\n- 黑色手绘线稿\n- 少量红色/橙色/蓝色中文手写批注\n- 大量留白\n- 小黑作为核心动作主体\n- 禁止 PPT、商业插画、幼稚可爱、复杂架构、左上角类型标题\n\n不要复刻过往案例。案例只提供风格密度和小黑参与方式，不能直接复用“传送带断点 / 小黑拉线 / 素材鱼 / 盖章工具箱 / 常见坑路径”等已有构图，除非用户明确要求复刻某张图。每次都要从当前文章重新发明一个奇怪但成立的隐喻。\n\n### 4. 检查与迭代\n\n生成后检查 `references/qa-checklist.md`。如果出现以下问题，优先重生成或局部编辑：\n\n- 小黑只是装饰\n- 画面太满\n- 太像流程图/PPT\n- 中文太多或错字严重\n- 左上角出现“常见坑/流程图/系统架构图”等标题\n- 画风太可爱、幼稚、死板\n- 背景不是干净白底\n\n### 5. 保存交付\n\n如果用户在 workspace 内工作，把最终图复制到：\n\n```text\nassets/<article-slug>-illustrations/\n```\n\n按顺序命名：\n\n```text\n01-topic-name.png\n02-topic-name.png\n```\n\n保留原始生成文件，不要覆盖已有资产，除非用户明确要求替换。\n\n## 输出口径\n\n生成前的策略输出要短而准。生成后的交付要包含：\n\n- 生成了几张\n- 每张图的用途\n- 保存路径\n- 哪些图最稳，哪些图是可选\n\n不要长篇解释风格理论；让图自己说话。\n\n---\n\n## 本地覆盖规则（Munder Difflin blog — local overrides）\n\nThese project-level overrides apply on top of everything above whenever this skill runs in this repo:\n\n1. **小黑是黄色的。** Xiaohei's body is ALWAYS filled with the Munder Difflin accent yellow **#FFCA54** with a thin black hand-drawn outline (no suit, no tie). Eyes become two small BLACK dots (white dots don't read on yellow). Keep the bean shape, thin legs, blank expression — every image, no exceptions.\n2. Annotations are hand-written in **English**, not Chinese (the blog is English).\n3. Annotation colors: **orange, blue, and yellow only — never red** (site-wide no-red rule).\n4. Output images for blog posts go to `blog/src/assets/media/<post-slug>/` and each generated file must be recorded in `blog/src/_data/media.json` (set the entry's `status` to `\"ready\"`).\n5. Aspect 16:9, pure white background, one concept per image — unchanged from the core skill.\n\nAttribution: this skill is \"Ian Xiaohei Illustrations\" by Ian (https://github.com/helloianneo), MIT — see LICENSE and NOTICE.md in this folder.\n",
+      "bodyMd": "# Ian 小黑怪诞正文配图\n\n## 核心定位\n\n为中文文章设计和生成 16:9 横版正文配图。目标不是做商业插画、PPT 信息图或可爱卡通，而是把文章里的关键判断、流程、结构、状态或隐喻，变成一张清爽、怪诞、有创意、可读但不说明书的手绘解释图。\n\n默认视觉 IP 是“小黑”：黑色实心、白点眼、细腿、空表情，认真做一件荒诞但成立的事。小黑必须参与画面的核心动作，不能只是站在旁边当装饰。\n\n## 先读这些参考\n\n按任务需要读取，不要一次塞满上下文：\n\n- `references/style-dna.md`：风格 DNA、颜色、文字、禁忌。\n- `references/xiaohei-ip.md`：小黑 IP 的形象、性格、动作库和禁忌。\n- `references/composition-patterns.md`：结构类型、原创隐喻方法和反复刻规则。\n- `references/prompt-template.md`：单张生图提示词模板。\n- `references/qa-checklist.md`：生成后检查和迭代规则。\n- `assets/examples/`：只作低频视觉校准，不进入默认生成路径。不要照抄这些案例的构图、物件或标注。\n\n## 工作流\n\n### 1. 消化正文\n\n先读用户给的正文、链接、Notion 页面、Markdown 文件或截图内容。提炼：\n\n- 核心观点是什么\n- 哪些段落承担认知转折\n- 哪些内容适合用图解释\n- 哪些地方只适合文字，不需要图\n\n不要平均配图。优先选择“认知锚点”，例如：核心判断、两个断点、输入输出闭环、分流、前后对比、一鱼多吃、承接路径、常见坑、角色状态变化。\n\n### 2. 先出配图策略\n\n如果用户只是说“分析怎么配图 / 思考哪些地方需要配图”，先给 shot list。每张图写清楚：\n\n- 放在哪个段落后\n- 图的主题\n- 核心意思\n- 结构类型\n- 小黑在图里做什么\n- 建议元素\n- 建议中文标注词\n\n默认 4-8 张。文章很短时 1-3 张；长文也不要轻易超过 9 张。够用就好，避免把正文做成画册。\n\n### 3. 单张生成\n\n如果用户明确要求“生成 / 输出 / 做图 / 帮我生成”，不要停下来等确认；用内置 `image_gen` 每张单独生成。不要把多张图拼在一张里。\n\n每张图只讲一个核心结构。提示词必须包含：\n\n- 16:9 横版中文正文配图\n- 纯白背景\n- 黑色手绘线稿\n- 少量红色/橙色/蓝色中文手写批注\n- 大量留白\n- 小黑作为核心动作主体\n- 禁止 PPT、商业插画、幼稚可爱、复杂架构、左上角类型标题\n\n不要复刻过往案例。案例只提供风格密度和小黑参与方式，不能直接复用“传送带断点 / 小黑拉线 / 素材鱼 / 盖章工具箱 / 常见坑路径”等已有构图，除非用户明确要求复刻某张图。每次都要从当前文章重新发明一个奇怪但成立的隐喻。\n\n### 4. 检查与迭代\n\n生成后检查 `references/qa-checklist.md`。如果出现以下问题，优先重生成或局部编辑：\n\n- 小黑只是装饰\n- 画面太满\n- 太像流程图/PPT\n- 中文太多或错字严重\n- 左上角出现“常见坑/流程图/系统架构图”等标题\n- 画风太可爱、幼稚、死板\n- 背景不是干净白底\n\n### 5. 保存交付\n\n如果用户在 workspace 内工作，把最终图复制到：\n\n```text\nassets/<article-slug>-illustrations/\n```\n\n按顺序命名：\n\n```text\n01-topic-name.png\n02-topic-name.png\n```\n\n保留原始生成文件，不要覆盖已有资产，除非用户明确要求替换。\n\n## 输出口径\n\n生成前的策略输出要短而准。生成后的交付要包含：\n\n- 生成了几张\n- 每张图的用途\n- 保存路径\n- 哪些图最稳，哪些图是可选\n\n不要长篇解释风格理论；让图自己说话。\n\n---\n\n## 本地覆盖规则（Munder Difflin blog — local overrides）\n\nThese project-level overrides apply on top of everything above whenever this skill runs in this repo:\n\n1. **小黑是黄色的。** Xiaohei's body is ALWAYS filled with the Munder Difflin accent yellow **#FFCA54** with a thin black hand-drawn outline (no suit, no tie). Eyes become two small BLACK dots (white dots don't read on yellow). Keep the bean shape, thin legs, blank expression — every image, no exceptions.\n2. Annotations are hand-written in **English**, not Chinese (the blog is English).\n3. Annotation colors: **orange, blue, and yellow only — never red** (site-wide no-red rule).\n4. Output images for blog posts go to `blog/src/assets/media/<post-slug>/` and each generated file must be recorded in `blog/src/_data/media.json` (set the entry's `status` to `\"ready\"`).\n5. Aspect 16:9, pure white background, one concept per image — unchanged from the core skill.\n\nAttribution: this skill is \"Ian Xiaohei Illustrations\" by Ian (https://github.com/helloianneo), MIT — see LICENSE and NOTICE.md in this folder.\n"
+    },
+    {
+      "slug": "capabilities",
+      "name": "capabilities",
+      "dir": "resources/skills/capabilities",
+      "path": "resources/skills/capabilities/SKILL.md",
+      "desc": "Your capability catalog. Read it once at boot. Lists the date skills, the external integrations (reached via the loopback broker), the usage limits and the engines and models available to you as an agent or a temp, and exactly how to call each. Read only. Consult it whenever you are unsure what tools or integrations you have or how to invoke them.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Bash"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": true,
+        "network": true,
+        "bins": [
+          "git",
+          "node",
+          "curl",
+          "sed"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HarnessMD/munder-difflin.git",
+        "copy": "cp -r resources/skills/capabilities ~/.claude/skills/capabilities",
+        "raw": "https://raw.githubusercontent.com/HarnessMD/munder-difflin/9ffd373bdb89f57a572f2181a38e643f2a7d21d4/resources/skills/capabilities/SKILL.md",
+        "saveAs": "~/.claude/skills/capabilities/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:f6bd0d665e3c39f3ba5c8c50aaf5fad9c28382a1537e28edf460b4d53519238c",
+      "bytes": 13643,
+      "wordCount": 2140,
+      "repoLicense": "MIT",
+      "commit": "9ffd373bdb89f57a572f2181a38e643f2a7d21d4",
+      "branch": "main",
+      "body": "---\nname: capabilities\ndescription: |\n  Your capability catalog. Read it once at boot. Lists the date skills, the\n  external integrations (reached via the loopback broker), the usage limits and\n  the engines and models available to you as an agent or a temp, and exactly\n  how to call each. Read only. Consult it\n  whenever you are unsure what tools or integrations you have or how to invoke\n  them.\nallowed-tools:\n  - Bash\n---\n\n# Capability catalog\n\nYou are an agent or a temp in this office. An agent has a lasting session; a temp\nis a short lived agent the orchestrator starts for one job, and it reports done\nwhen the job is finished. This catalog tells you **what you can do and how to\ncall it**, your date skills and your external integrations, so you never have to\nguess. Everything here is read only to invoke (the integrations themselves may\nact, but they are mediated and credential free from your side).\n\n## 1. Your environment\n\nThe harness injects these env vars (use them; don't hard-code paths):\n\n- `AGENT_ID`, `AGENT_NAME` — your identity in the hive.\n- `AGENT_DIR` — your private workspace (`identity.md`, `memory.md`, `inbox/`,\n  `outbox/`, and `.claude/skills/`). Your bundled skills live under\n  `$AGENT_DIR/.claude/skills/`.\n- `HIVE_ROOT` — the shared hive (`PROTOCOL.md`, the kanban, other agents).\n\nAt boot you also have `identity.md` (who you are) and `HIVE_ROOT/PROTOCOL.md`\n(the full coordination protocol). To message god or another agent, write ONE\nmessage JSON into `$AGENT_DIR/outbox/` (schema in PROTOCOL.md). When finished,\nsend god an `\"act\":\"done\"` outbox message with a substantive result summary.\n\n## 2. Temporal skills — concrete date ranges, relative to now\n\nWhen your task is time-scoped, resolve the dates instead of computing them by\nhand. Each skill prints inclusive civil dates (`YYYY-MM-DD`, your local\ntimezone) **and** the half-open `[startUtc, endExclusiveUtc)` instants for\ntimestamp queries. All are read-only (clock + stdout only; no writes, no network).\n\nNamed shortcuts (invoke directly):\n\n| Skill | Range it resolves |\n| --- | --- |\n| `/today`, `/yesterday` | the single civil day |\n| `/thisWeek`, `/lastWeek` | ISO week (Mon-start); this = Mon→today, last = prior full week |\n| `/last7Days`, `/last30Days` | rolling N-day window ending today |\n| `/thisMonth`, `/lastMonth` | this = 1st→today; last = prior full month |\n| `/thisQuarter`, `/lastQuarter` | this = quarter-start→today; last = prior full quarter |\n| `/thisYear`, `/lastYear` | this = Jan 1→today (YTD); last = prior full year |\n\nFor **any** window — including `last90Days`, `last12Months`, or arbitrary\n`lastNdays` / `lastNweeks` / `lastNmonths` — use `/temporal`, or call the\nresolver directly:\n\n```bash\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" last30Days   # one window\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\"             # all windows\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" --json 90d  # JSON only\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" --list      # keywords\n```\n\nConvention: `this*` windows are **period-start → today** (to-date); `last*`\nnamed periods are the **full prior complete period**.\n\n## 3. Integrations — via the loopback broker\n\nExternal services are reached through the hive's **loopback broker**: a local,\nauthenticated endpoint the harness runs on `127.0.0.1`. You call the broker; it\nholds the credentials and performs the outbound call on your behalf. A service\nconnection's key never reaches you, and only loopback callers are accepted, so\nintegration access is brokered and auditable. The keys and secrets saved in\nIntegrations, Keys and secrets are the one exception: you use them through\n`md-secret` (below), never by reading a file.\n\n**Every agent receives the broker.** `MD_BROKER_URL` and `MD_BROKER_TOKEN` are\nset in your environment, agent or temp. Call an integration as\n`curl -H \"Authorization: Bearer $MD_BROKER_TOKEN\" \"$MD_BROKER_URL/i/<integration id>/<path>\"`.\nThe port changes every time the app starts, so a lasting session can outlive\nits env: if the call is refused, read the current `url` and `token` from the\nJSON file `$AGENT_DIR/.broker` (yours only, rewritten on every broker start)\nand use those.\nLoad it without printing it, since what a command prints stays in your\ntranscript: `MD_BROKER_TOKEN=$(sed -n 's/.*\"token\":\"\\([^\"]*\\)\".*/\\1/p' \"$AGENT_DIR/.broker\")`,\nand the same with `url`. Never `cat` or open that file. Never copy that token anywhere else. An integration enabled\nafter you started reaches you with no restart. The human adds or fixes a\nconnection in **Integrations > Apps and services** (a new one is a row in that\nlist); Slack and inbound webhooks are in the same list. The auth choices there are None, Bearer\ntoken, Custom header, Header with a prefix, Query parameter and HTTP basic (a\nUser field plus the key, for services such as Razorpay, Twilio or Atlassian);\npoint the human at the matching one rather than a hand built header value.\nWhat is enabled depends on the office's configuration, so discover what is\nlive at run time rather than assuming. The broker pattern is stable even\nas specific integrations are added; treat the list below as the current surface,\nnot a fixed contract.\n\n### What you can reach, how to call it, and what a refusal means (0.5.8)\n\n**List what is live.** Your start brief has a LIVE INTEGRATIONS line: what you\ncould reach when you started. It changes while you run (the person switches\nthings on and off), so ask the broker when it matters:\n\n    curl -s -H \"Authorization: Bearer $MD_BROKER_TOKEN\" \"$MD_BROKER_URL/integrations\"\n\nIt answers `{\"integrations\":[...]}`: one entry for each integration you may\nreach now, only those switched on. Each has `id`, `name`, `kind` (`api` or\n`webhook`) and `allows` (one sentence: what you may do with it). An API also\nhas `call` (the address to use) and `base` (the service address your path goes\nunder). It never holds a key, a token or a secret. `GET $MD_BROKER_URL/i` gives\nthe ids alone.\n\n**Call an API** (kind `api`). The person saved a key for a service. Call\n`$MD_BROKER_URL/i/<id>/<path>`, where `<path>` is what comes after `base`, with\nany method, headers and body the service takes. The broker adds the key. What\nthat key may do is the service's decision.\n\n**A webhook** (kind `webhook`) brings work in; there is nothing to call. Each\nrequest to its address reaches the agent it names (or the default webhook\nagent, or god) as a hive message from `webhook` with the subject\n`[webhook] <title>`, and a kanban card `webhook-...` is made for it. Some\nwebhooks hold each message until the person approves it. The message says how\nto finish: do the work, then set that card's status and result, because the\noutside caller reads the card's status from its address.\n\n**Ask for a webhook.** You may add one yourself: write a `webhook.add` request\ninto `$AGENT_DIR/connections/requests/` as `$HIVE_ROOT/connections/README.md`\nsays (its name, who it goes to, its standing prompt). The result file names its\nid, address and secret. The secret is for the outside service only: never put\nit in a message, a card or a log. If the address is empty, this computer has no\npublic address yet; tell god. Pasting the address into the outside service\n(GitHub, Linear, Telegram, a form) is the person's to do: message god with the\naddress and what it is for. An API key is always the person's to add: message\ngod with what you need and why.\n\n**When the broker refuses.** Every refusal is JSON with `code` (below) and\n`error` (a sentence). Do not retry a refusal that needs the person; message god once,\nnaming the integration id, the code and what you were trying to do.\n\n| Status and code | What it means | What you do |\n| --- | --- | --- |\n| 401 `unauthorized` | Your token is old: the app restarted. | Read `url` and `token` from `$AGENT_DIR/.broker` again and retry once. |\n| 403 `forbidden`, \"integration not in this ... capability\" | Not granted to you. | List `/integrations`. If you need it, ask god. |\n| 403 `forbidden`, \"integration is disabled\" | The person switched it off. | Tell god; do not retry. |\n| 404 `not_found` | No integration has that id. | Use an id from `/integrations`. |\n| 400 `bad_request` | The path left the service (`..`, a full address). | Give only the path under `base`. |\n| 503 `no_secret` | Not set up: no key is saved for it. | Tell god: the person saves the key in Integrations. |\n| 503 `secret_unreadable` or `secret_store_unreadable` | A saved key cannot be read here. | Tell god: the person saves it again. |\n| 429 `rate_limited` | Too many calls. | Wait a minute, retry once. |\n| 502 `bad_gateway` or 503 `upstream_unavailable` | The service did not answer. | Retry once later; then tell god. |\n| 413 `payload_too_large` | The body is too big. | Send less. |\n\nConcrete capabilities you may have right now (check availability before relying\non one):\n\n- **Reply to the originating Slack thread.** If your job arrived from Slack,\n  your dispatch includes the exact reply command (the bundled Node path, the\n  helper, the channel and the thread). Use *that* command verbatim to post your\n  result back to the thread. Send a substantive reply (a short `*bold*`\n  headline plus the actual outcome and links), never a bare \"done\".\n- **Hive messaging.** Coordinate or hand off by writing an outbox message JSON\n  to god or another agent (`$AGENT_DIR/outbox/`). This is your always-available\n  channel.\n- **Semantic memory (MemPalace).** If enabled for you: `md-memory search\n  \"<query>\"` to recall shared knowledge, when a task needs it. It runs\n  `mempalace` one search at a time on this machine, so use it rather than\n  `mempalace` itself. If it says MemPalace is busy, carry on without it.\n- **Enterprise Knowledge Graph.** If enabled: `node \"$KG_CLI\" search \"<query>\"`\n  for ranked passages, `node \"$KG_CLI\" list`, `node \"$KG_CLI\" get <id>` — use it\n  for company-specific facts instead of guessing.\n- **MCP integrations** (filesystem, git, and others) come pre-wired into your\n  session settings when enabled; invoke them as normal tools. The set is gated\n  by the hive's consent configuration.\n- **Keys and secrets (0.5.6).** A key or secret saved in Integrations, Keys\n  and secrets works at once, with no restart. Your CAPABILITIES line gives the exact\n  command: `list` names what is saved, `run NAME -- <command>` runs the command\n  with NAME set in its environment. Never print a key or write it anywhere.\n\nAs additional brokered integrations land (calendar, mail, docs, web fetch, …),\nthey follow the same shape: a brokered, credential-free call discoverable at run\ntime. Pair them with the temporal skills above — resolve the date window first,\nthen pass those concrete ISO bounds to the integration query.\n\n## 4. Usage limits — `md-limits`\n\n`md-limits` prints each engine's usage limits: Claude Code, Codex,\nAntigravity (per model group) and OpenCode: the percent used of each window\nthe engine reports, when it resets, and how old the reading is.\n`md-limits --json` gives the same as JSON.\n\n- It reads what the app already keeps. It asks no engine, uses no key and costs\n  nothing, so run it whenever the answer matters.\n- Run it before a big piece of work, before starting temps, and when a call\n  fails on a rate limit.\n- A window at 80% or more says NEAR LIMIT: tell `god` instead of starting work\n  that would stop half way. The orchestrator gives it to an agent on another\n  engine or waits for the reset.\n- \"no reading yet\" means no Claude agent has replied since the app started. It\n  is not zero. \"not available\" means the engine reports no limits (OpenCode, or\n  Codex signed in with an API key).\n\n## 5. Engines and models — `md-models`\n\n`md-models` lists every engine this app can start an agent on, with its\nmodels, and says which engines are installed and signed in on this computer.\n`md-models --json` gives the\nsame as JSON, every model included.\n\n- Run it before you name an engine or a model anywhere: above all a temp's\n  spawn request (`spawn-requests/`).\n- `\"provider\"` is the id in quotes (`\"claude\"`, `\"codex\"`); `\"model\"` is one\n  of that engine's model ids. Leave `\"model\"` out for the engine's default.\n- Pick an engine that is installed and signed in. One that is signed out\n  needs the human to sign it in first; one not installed cannot start.\n- \"sign in not known\" means the engine has no status the app can read; it\n  may well work. It is never a reason to guess a different engine.\n- It shows no key, token or account, and costs nothing to run.\n\n## 6. Boundaries\n\n- **Contacting the user is opt in.** Use email, Slack direct messages, Telegram\n  or another external channel only when the user explicitly chose that channel\n  in onboarding or asked you to use it. A connected integration, saved key,\n  account email or known address is not consent. Otherwise keep updates and\n  questions in the app. Reply to incoming requests in their originating channel\n  and thread; this does not authorize unrelated messages, another channel or\n  recurring updates. Pass these limits to agents you delegate to.\n- Temporal skills are **read-only** helpers — they never write or reach the\n  network. The broker mediates all external calls; you hold no service keys,\n  and a saved key or secret is used through `md-secret run`, never printed.\n- Do **not** push or tag to any remote. Commit locally; **god** is the sole\n  integrator. Pause only for high-severity actions (remote push, paid/infra\n  changes, deleting something you didn't create) — otherwise work autonomously.\n- Finish by reporting to god (`\"act\":\"done\"`) with a real, substantive summary.\n",
+      "bodyMd": "# Capability catalog\n\nYou are an agent or a temp in this office. An agent has a lasting session; a temp\nis a short lived agent the orchestrator starts for one job, and it reports done\nwhen the job is finished. This catalog tells you **what you can do and how to\ncall it**, your date skills and your external integrations, so you never have to\nguess. Everything here is read only to invoke (the integrations themselves may\nact, but they are mediated and credential free from your side).\n\n## 1. Your environment\n\nThe harness injects these env vars (use them; don't hard-code paths):\n\n- `AGENT_ID`, `AGENT_NAME` — your identity in the hive.\n- `AGENT_DIR` — your private workspace (`identity.md`, `memory.md`, `inbox/`,\n  `outbox/`, and `.claude/skills/`). Your bundled skills live under\n  `$AGENT_DIR/.claude/skills/`.\n- `HIVE_ROOT` — the shared hive (`PROTOCOL.md`, the kanban, other agents).\n\nAt boot you also have `identity.md` (who you are) and `HIVE_ROOT/PROTOCOL.md`\n(the full coordination protocol). To message god or another agent, write ONE\nmessage JSON into `$AGENT_DIR/outbox/` (schema in PROTOCOL.md). When finished,\nsend god an `\"act\":\"done\"` outbox message with a substantive result summary.\n\n## 2. Temporal skills — concrete date ranges, relative to now\n\nWhen your task is time-scoped, resolve the dates instead of computing them by\nhand. Each skill prints inclusive civil dates (`YYYY-MM-DD`, your local\ntimezone) **and** the half-open `[startUtc, endExclusiveUtc)` instants for\ntimestamp queries. All are read-only (clock + stdout only; no writes, no network).\n\nNamed shortcuts (invoke directly):\n\n| Skill | Range it resolves |\n| --- | --- |\n| `/today`, `/yesterday` | the single civil day |\n| `/thisWeek`, `/lastWeek` | ISO week (Mon-start); this = Mon→today, last = prior full week |\n| `/last7Days`, `/last30Days` | rolling N-day window ending today |\n| `/thisMonth`, `/lastMonth` | this = 1st→today; last = prior full month |\n| `/thisQuarter`, `/lastQuarter` | this = quarter-start→today; last = prior full quarter |\n| `/thisYear`, `/lastYear` | this = Jan 1→today (YTD); last = prior full year |\n\nFor **any** window — including `last90Days`, `last12Months`, or arbitrary\n`lastNdays` / `lastNweeks` / `lastNmonths` — use `/temporal`, or call the\nresolver directly:\n\n```bash\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" last30Days   # one window\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\"             # all windows\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" --json 90d  # JSON only\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" --list      # keywords\n```\n\nConvention: `this*` windows are **period-start → today** (to-date); `last*`\nnamed periods are the **full prior complete period**.\n\n## 3. Integrations — via the loopback broker\n\nExternal services are reached through the hive's **loopback broker**: a local,\nauthenticated endpoint the harness runs on `127.0.0.1`. You call the broker; it\nholds the credentials and performs the outbound call on your behalf. A service\nconnection's key never reaches you, and only loopback callers are accepted, so\nintegration access is brokered and auditable. The keys and secrets saved in\nIntegrations, Keys and secrets are the one exception: you use them through\n`md-secret` (below), never by reading a file.\n\n**Every agent receives the broker.** `MD_BROKER_URL` and `MD_BROKER_TOKEN` are\nset in your environment, agent or temp. Call an integration as\n`curl -H \"Authorization: Bearer $MD_BROKER_TOKEN\" \"$MD_BROKER_URL/i/<integration id>/<path>\"`.\nThe port changes every time the app starts, so a lasting session can outlive\nits env: if the call is refused, read the current `url` and `token` from the\nJSON file `$AGENT_DIR/.broker` (yours only, rewritten on every broker start)\nand use those.\nLoad it without printing it, since what a command prints stays in your\ntranscript: `MD_BROKER_TOKEN=$(sed -n 's/.*\"token\":\"\\([^\"]*\\)\".*/\\1/p' \"$AGENT_DIR/.broker\")`,\nand the same with `url`. Never `cat` or open that file. Never copy that token anywhere else. An integration enabled\nafter you started reaches you with no restart. The human adds or fixes a\nconnection in **Integrations > Apps and services** (a new one is a row in that\nlist); Slack and inbound webhooks are in the same list. The auth choices there are None, Bearer\ntoken, Custom header, Header with a prefix, Query parameter and HTTP basic (a\nUser field plus the key, for services such as Razorpay, Twilio or Atlassian);\npoint the human at the matching one rather than a hand built header value.\nWhat is enabled depends on the office's configuration, so discover what is\nlive at run time rather than assuming. The broker pattern is stable even\nas specific integrations are added; treat the list below as the current surface,\nnot a fixed contract.\n\n### What you can reach, how to call it, and what a refusal means (0.5.8)\n\n**List what is live.** Your start brief has a LIVE INTEGRATIONS line: what you\ncould reach when you started. It changes while you run (the person switches\nthings on and off), so ask the broker when it matters:\n\n    curl -s -H \"Authorization: Bearer $MD_BROKER_TOKEN\" \"$MD_BROKER_URL/integrations\"\n\nIt answers `{\"integrations\":[...]}`: one entry for each integration you may\nreach now, only those switched on. Each has `id`, `name`, `kind` (`api` or\n`webhook`) and `allows` (one sentence: what you may do with it). An API also\nhas `call` (the address to use) and `base` (the service address your path goes\nunder). It never holds a key, a token or a secret. `GET $MD_BROKER_URL/i` gives\nthe ids alone.\n\n**Call an API** (kind `api`). The person saved a key for a service. Call\n`$MD_BROKER_URL/i/<id>/<path>`, where `<path>` is what comes after `base`, with\nany method, headers and body the service takes. The broker adds the key. What\nthat key may do is the service's decision.\n\n**A webhook** (kind `webhook`) brings work in; there is nothing to call. Each\nrequest to its address reaches the agent it names (or the default webhook\nagent, or god) as a hive message from `webhook` with the subject\n`[webhook] <title>`, and a kanban card `webhook-...` is made for it. Some\nwebhooks hold each message until the person approves it. The message says how\nto finish: do the work, then set that card's status and result, because the\noutside caller reads the card's status from its address.\n\n**Ask for a webhook.** You may add one yourself: write a `webhook.add` request\ninto `$AGENT_DIR/connections/requests/` as `$HIVE_ROOT/connections/README.md`\nsays (its name, who it goes to, its standing prompt). The result file names its\nid, address and secret. The secret is for the outside service only: never put\nit in a message, a card or a log. If the address is empty, this computer has no\npublic address yet; tell god. Pasting the address into the outside service\n(GitHub, Linear, Telegram, a form) is the person's to do: message god with the\naddress and what it is for. An API key is always the person's to add: message\ngod with what you need and why.\n\n**When the broker refuses.** Every refusal is JSON with `code` (below) and\n`error` (a sentence). Do not retry a refusal that needs the person; message god once,\nnaming the integration id, the code and what you were trying to do.\n\n| Status and code | What it means | What you do |\n| --- | --- | --- |\n| 401 `unauthorized` | Your token is old: the app restarted. | Read `url` and `token` from `$AGENT_DIR/.broker` again and retry once. |\n| 403 `forbidden`, \"integration not in this ... capability\" | Not granted to you. | List `/integrations`. If you need it, ask god. |\n| 403 `forbidden`, \"integration is disabled\" | The person switched it off. | Tell god; do not retry. |\n| 404 `not_found` | No integration has that id. | Use an id from `/integrations`. |\n| 400 `bad_request` | The path left the service (`..`, a full address). | Give only the path under `base`. |\n| 503 `no_secret` | Not set up: no key is saved for it. | Tell god: the person saves the key in Integrations. |\n| 503 `secret_unreadable` or `secret_store_unreadable` | A saved key cannot be read here. | Tell god: the person saves it again. |\n| 429 `rate_limited` | Too many calls. | Wait a minute, retry once. |\n| 502 `bad_gateway` or 503 `upstream_unavailable` | The service did not answer. | Retry once later; then tell god. |\n| 413 `payload_too_large` | The body is too big. | Send less. |\n\nConcrete capabilities you may have right now (check availability before relying\non one):\n\n- **Reply to the originating Slack thread.** If your job arrived from Slack,\n  your dispatch includes the exact reply command (the bundled Node path, the\n  helper, the channel and the thread). Use *that* command verbatim to post your\n  result back to the thread. Send a substantive reply (a short `*bold*`\n  headline plus the actual outcome and links), never a bare \"done\".\n- **Hive messaging.** Coordinate or hand off by writing an outbox message JSON\n  to god or another agent (`$AGENT_DIR/outbox/`). This is your always-available\n  channel.\n- **Semantic memory (MemPalace).** If enabled for you: `md-memory search\n  \"<query>\"` to recall shared knowledge, when a task needs it. It runs\n  `mempalace` one search at a time on this machine, so use it rather than\n  `mempalace` itself. If it says MemPalace is busy, carry on without it.\n- **Enterprise Knowledge Graph.** If enabled: `node \"$KG_CLI\" search \"<query>\"`\n  for ranked passages, `node \"$KG_CLI\" list`, `node \"$KG_CLI\" get <id>` — use it\n  for company-specific facts instead of guessing.\n- **MCP integrations** (filesystem, git, and others) come pre-wired into your\n  session settings when enabled; invoke them as normal tools. The set is gated\n  by the hive's consent configuration.\n- **Keys and secrets (0.5.6).** A key or secret saved in Integrations, Keys\n  and secrets works at once, with no restart. Your CAPABILITIES line gives the exact\n  command: `list` names what is saved, `run NAME -- <command>` runs the command\n  with NAME set in its environment. Never print a key or write it anywhere.\n\nAs additional brokered integrations land (calendar, mail, docs, web fetch, …),\nthey follow the same shape: a brokered, credential-free call discoverable at run\ntime. Pair them with the temporal skills above — resolve the date window first,\nthen pass those concrete ISO bounds to the integration query.\n\n## 4. Usage limits — `md-limits`\n\n`md-limits` prints each engine's usage limits: Claude Code, Codex,\nAntigravity (per model group) and OpenCode: the percent used of each window\nthe engine reports, when it resets, and how old the reading is.\n`md-limits --json` gives the same as JSON.\n\n- It reads what the app already keeps. It asks no engine, uses no key and costs\n  nothing, so run it whenever the answer matters.\n- Run it before a big piece of work, before starting temps, and when a call\n  fails on a rate limit.\n- A window at 80% or more says NEAR LIMIT: tell `god` instead of starting work\n  that would stop half way. The orchestrator gives it to an agent on another\n  engine or waits for the reset.\n- \"no reading yet\" means no Claude agent has replied since the app started. It\n  is not zero. \"not available\" means the engine reports no limits (OpenCode, or\n  Codex signed in with an API key).\n\n## 5. Engines and models — `md-models`\n\n`md-models` lists every engine this app can start an agent on, with its\nmodels, and says which engines are installed and signed in on this computer.\n`md-models --json` gives the\nsame as JSON, every model included.\n\n- Run it before you name an engine or a model anywhere: above all a temp's\n  spawn request (`spawn-requests/`).\n- `\"provider\"` is the id in quotes (`\"claude\"`, `\"codex\"`); `\"model\"` is one\n  of that engine's model ids. Leave `\"model\"` out for the engine's default.\n- Pick an engine that is installed and signed in. One that is signed out\n  needs the human to sign it in first; one not installed cannot start.\n- \"sign in not known\" means the engine has no status the app can read; it\n  may well work. It is never a reason to guess a different engine.\n- It shows no key, token or account, and costs nothing to run.\n\n## 6. Boundaries\n\n- **Contacting the user is opt in.** Use email, Slack direct messages, Telegram\n  or another external channel only when the user explicitly chose that channel\n  in onboarding or asked you to use it. A connected integration, saved key,\n  account email or known address is not consent. Otherwise keep updates and\n  questions in the app. Reply to incoming requests in their originating channel\n  and thread; this does not authorize unrelated messages, another channel or\n  recurring updates. Pass these limits to agents you delegate to.\n- Temporal skills are **read-only** helpers — they never write or reach the\n  network. The broker mediates all external calls; you hold no service keys,\n  and a saved key or secret is used through `md-secret run`, never printed.\n- Do **not** push or tag to any remote. Commit locally; **god** is the sole\n  integrator. Pause only for high-severity actions (remote push, paid/infra\n  changes, deleting something you didn't create) — otherwise work autonomously.\n- Finish by reporting to god (`\"act\":\"done\"`) with a real, substantive summary.\n"
+    },
+    {
+      "slug": "last30days",
+      "name": "last30Days",
+      "dir": "resources/skills/last30Days",
+      "path": "resources/skills/last30Days/SKILL.md",
+      "desc": "Resolve \"last30Days\" to a concrete ISO date range relative to your run time — a rolling 30-day window ending today. Returns inclusive civil dates plus exact UTC instants so you have temporal context without computing dates by hand. Read-only: no writes, no network. Use before a \"last 30 days\" / trailing-month task (monthly trends, recent activity).",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Bash"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "node"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HarnessMD/munder-difflin.git",
+        "copy": "cp -r resources/skills/last30Days ~/.claude/skills/last30days",
+        "raw": "https://raw.githubusercontent.com/HarnessMD/munder-difflin/9ffd373bdb89f57a572f2181a38e643f2a7d21d4/resources/skills/last30Days/SKILL.md",
+        "saveAs": "~/.claude/skills/last30days/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:baafbc6a0d24deb87e52b446e4c49a34168e65c00fde566e5c2c38a84833557d",
+      "bytes": 1231,
+      "wordCount": 123,
+      "repoLicense": "MIT",
+      "commit": "9ffd373bdb89f57a572f2181a38e643f2a7d21d4",
+      "branch": "main",
+      "body": "---\nname: last30Days\ndescription: |\n  Resolve \"last30Days\" to a concrete ISO date range relative to your run time —\n  a rolling 30-day window ending today. Returns inclusive civil dates plus exact UTC instants so you have\n  temporal context without computing dates by hand. Read-only: no writes, no\n  network. Use before a \"last 30 days\" / trailing-month task (monthly trends, recent activity).\nallowed-tools:\n  - Bash\n---\n\n## /last30Days\n\nGet the concrete date range for **a rolling 30-day window ending today** by running the bundled resolver:\n\n```bash\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" last30Days\n```\n\nIt prints a human-readable line plus a JSON record:\n\n- `start` / `end` — inclusive civil dates (`YYYY-MM-DD`) in your local timezone\n- `startUtc` / `endExclusiveUtc` — the same window as a half-open `[start, end)`\n  range of exact UTC instants, for timestamp-based queries\n- `days`, `timezone`, `asOf` — the span, your timezone, and when this resolved\n\nUse the returned dates as the time bounds for the task at hand. **Do not derive\ndates by hand** — this resolver is the source of truth. For the full window list\nor an arbitrary range (e.g. `last45days`, `last6months`), see the `/temporal` skill.\n",
+      "bodyMd": "## /last30Days\n\nGet the concrete date range for **a rolling 30-day window ending today** by running the bundled resolver:\n\n```bash\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" last30Days\n```\n\nIt prints a human-readable line plus a JSON record:\n\n- `start` / `end` — inclusive civil dates (`YYYY-MM-DD`) in your local timezone\n- `startUtc` / `endExclusiveUtc` — the same window as a half-open `[start, end)`\n  range of exact UTC instants, for timestamp-based queries\n- `days`, `timezone`, `asOf` — the span, your timezone, and when this resolved\n\nUse the returned dates as the time bounds for the task at hand. **Do not derive\ndates by hand** — this resolver is the source of truth. For the full window list\nor an arbitrary range (e.g. `last45days`, `last6months`), see the `/temporal` skill.\n"
+    },
+    {
+      "slug": "last7days",
+      "name": "last7Days",
+      "dir": "resources/skills/last7Days",
+      "path": "resources/skills/last7Days/SKILL.md",
+      "desc": "Resolve \"last7Days\" to a concrete ISO date range relative to your run time — a rolling 7-day window ending today. Returns inclusive civil dates plus exact UTC instants so you have temporal context without computing dates by hand. Read-only: no writes, no network. Use before a \"last 7 days\" / trailing-week task.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Bash"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "node"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HarnessMD/munder-difflin.git",
+        "copy": "cp -r resources/skills/last7Days ~/.claude/skills/last7days",
+        "raw": "https://raw.githubusercontent.com/HarnessMD/munder-difflin/9ffd373bdb89f57a572f2181a38e643f2a7d21d4/resources/skills/last7Days/SKILL.md",
+        "saveAs": "~/.claude/skills/last7days/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:179d9a6697ad498850a7a271d25ce190141c45f465e6b9c64e58765a34da6fe4",
+      "bytes": 1189,
+      "wordCount": 123,
+      "repoLicense": "MIT",
+      "commit": "9ffd373bdb89f57a572f2181a38e643f2a7d21d4",
+      "branch": "main",
+      "body": "---\nname: last7Days\ndescription: |\n  Resolve \"last7Days\" to a concrete ISO date range relative to your run time —\n  a rolling 7-day window ending today. Returns inclusive civil dates plus exact UTC instants so you have\n  temporal context without computing dates by hand. Read-only: no writes, no\n  network. Use before a \"last 7 days\" / trailing-week task.\nallowed-tools:\n  - Bash\n---\n\n## /last7Days\n\nGet the concrete date range for **a rolling 7-day window ending today** by running the bundled resolver:\n\n```bash\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" last7Days\n```\n\nIt prints a human-readable line plus a JSON record:\n\n- `start` / `end` — inclusive civil dates (`YYYY-MM-DD`) in your local timezone\n- `startUtc` / `endExclusiveUtc` — the same window as a half-open `[start, end)`\n  range of exact UTC instants, for timestamp-based queries\n- `days`, `timezone`, `asOf` — the span, your timezone, and when this resolved\n\nUse the returned dates as the time bounds for the task at hand. **Do not derive\ndates by hand** — this resolver is the source of truth. For the full window list\nor an arbitrary range (e.g. `last45days`, `last6months`), see the `/temporal` skill.\n",
+      "bodyMd": "## /last7Days\n\nGet the concrete date range for **a rolling 7-day window ending today** by running the bundled resolver:\n\n```bash\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" last7Days\n```\n\nIt prints a human-readable line plus a JSON record:\n\n- `start` / `end` — inclusive civil dates (`YYYY-MM-DD`) in your local timezone\n- `startUtc` / `endExclusiveUtc` — the same window as a half-open `[start, end)`\n  range of exact UTC instants, for timestamp-based queries\n- `days`, `timezone`, `asOf` — the span, your timezone, and when this resolved\n\nUse the returned dates as the time bounds for the task at hand. **Do not derive\ndates by hand** — this resolver is the source of truth. For the full window list\nor an arbitrary range (e.g. `last45days`, `last6months`), see the `/temporal` skill.\n"
+    },
+    {
+      "slug": "lastmonth",
+      "name": "lastMonth",
+      "dir": "resources/skills/lastMonth",
+      "path": "resources/skills/lastMonth/SKILL.md",
+      "desc": "Resolve \"lastMonth\" to a concrete ISO date range relative to your run time — the previous full calendar month. Returns inclusive civil dates plus exact UTC instants so you have temporal context without computing dates by hand. Read-only: no writes, no network. Use before a task over last month (monthly reports, month-end summaries).",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Bash"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "node"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HarnessMD/munder-difflin.git",
+        "copy": "cp -r resources/skills/lastMonth ~/.claude/skills/lastmonth",
+        "raw": "https://raw.githubusercontent.com/HarnessMD/munder-difflin/9ffd373bdb89f57a572f2181a38e643f2a7d21d4/resources/skills/lastMonth/SKILL.md",
+        "saveAs": "~/.claude/skills/lastmonth/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:2318f26993486d3a6c31cae73f6e3ad20673a9c983ae48480003006be25c79d3",
+      "bytes": 1208,
+      "wordCount": 122,
+      "repoLicense": "MIT",
+      "commit": "9ffd373bdb89f57a572f2181a38e643f2a7d21d4",
+      "branch": "main",
+      "body": "---\nname: lastMonth\ndescription: |\n  Resolve \"lastMonth\" to a concrete ISO date range relative to your run time —\n  the previous full calendar month. Returns inclusive civil dates plus exact UTC instants so you have\n  temporal context without computing dates by hand. Read-only: no writes, no\n  network. Use before a task over last month (monthly reports, month-end summaries).\nallowed-tools:\n  - Bash\n---\n\n## /lastMonth\n\nGet the concrete date range for **the previous full calendar month** by running the bundled resolver:\n\n```bash\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" lastMonth\n```\n\nIt prints a human-readable line plus a JSON record:\n\n- `start` / `end` — inclusive civil dates (`YYYY-MM-DD`) in your local timezone\n- `startUtc` / `endExclusiveUtc` — the same window as a half-open `[start, end)`\n  range of exact UTC instants, for timestamp-based queries\n- `days`, `timezone`, `asOf` — the span, your timezone, and when this resolved\n\nUse the returned dates as the time bounds for the task at hand. **Do not derive\ndates by hand** — this resolver is the source of truth. For the full window list\nor an arbitrary range (e.g. `last45days`, `last6months`), see the `/temporal` skill.\n",
+      "bodyMd": "## /lastMonth\n\nGet the concrete date range for **the previous full calendar month** by running the bundled resolver:\n\n```bash\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" lastMonth\n```\n\nIt prints a human-readable line plus a JSON record:\n\n- `start` / `end` — inclusive civil dates (`YYYY-MM-DD`) in your local timezone\n- `startUtc` / `endExclusiveUtc` — the same window as a half-open `[start, end)`\n  range of exact UTC instants, for timestamp-based queries\n- `days`, `timezone`, `asOf` — the span, your timezone, and when this resolved\n\nUse the returned dates as the time bounds for the task at hand. **Do not derive\ndates by hand** — this resolver is the source of truth. For the full window list\nor an arbitrary range (e.g. `last45days`, `last6months`), see the `/temporal` skill.\n"
+    },
+    {
+      "slug": "lastquarter",
+      "name": "lastQuarter",
+      "dir": "resources/skills/lastQuarter",
+      "path": "resources/skills/lastQuarter/SKILL.md",
+      "desc": "Resolve \"lastQuarter\" to a concrete ISO date range relative to your run time — the previous full quarter. Returns inclusive civil dates plus exact UTC instants so you have temporal context without computing dates by hand. Read-only: no writes, no network. Use before a task over last quarter (quarterly reviews, QoQ comparisons).",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Bash"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "node"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HarnessMD/munder-difflin.git",
+        "copy": "cp -r resources/skills/lastQuarter ~/.claude/skills/lastquarter",
+        "raw": "https://raw.githubusercontent.com/HarnessMD/munder-difflin/9ffd373bdb89f57a572f2181a38e643f2a7d21d4/resources/skills/lastQuarter/SKILL.md",
+        "saveAs": "~/.claude/skills/lastquarter/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:4346498df5aa0a441f3d6739a8b230f0a90e094cdf24bbf504a8596fefac6d7b",
+      "bytes": 1202,
+      "wordCount": 121,
+      "repoLicense": "MIT",
+      "commit": "9ffd373bdb89f57a572f2181a38e643f2a7d21d4",
+      "branch": "main",
+      "body": "---\nname: lastQuarter\ndescription: |\n  Resolve \"lastQuarter\" to a concrete ISO date range relative to your run time —\n  the previous full quarter. Returns inclusive civil dates plus exact UTC instants so you have\n  temporal context without computing dates by hand. Read-only: no writes, no\n  network. Use before a task over last quarter (quarterly reviews, QoQ comparisons).\nallowed-tools:\n  - Bash\n---\n\n## /lastQuarter\n\nGet the concrete date range for **the previous full quarter** by running the bundled resolver:\n\n```bash\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" lastQuarter\n```\n\nIt prints a human-readable line plus a JSON record:\n\n- `start` / `end` — inclusive civil dates (`YYYY-MM-DD`) in your local timezone\n- `startUtc` / `endExclusiveUtc` — the same window as a half-open `[start, end)`\n  range of exact UTC instants, for timestamp-based queries\n- `days`, `timezone`, `asOf` — the span, your timezone, and when this resolved\n\nUse the returned dates as the time bounds for the task at hand. **Do not derive\ndates by hand** — this resolver is the source of truth. For the full window list\nor an arbitrary range (e.g. `last45days`, `last6months`), see the `/temporal` skill.\n",
+      "bodyMd": "## /lastQuarter\n\nGet the concrete date range for **the previous full quarter** by running the bundled resolver:\n\n```bash\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" lastQuarter\n```\n\nIt prints a human-readable line plus a JSON record:\n\n- `start` / `end` — inclusive civil dates (`YYYY-MM-DD`) in your local timezone\n- `startUtc` / `endExclusiveUtc` — the same window as a half-open `[start, end)`\n  range of exact UTC instants, for timestamp-based queries\n- `days`, `timezone`, `asOf` — the span, your timezone, and when this resolved\n\nUse the returned dates as the time bounds for the task at hand. **Do not derive\ndates by hand** — this resolver is the source of truth. For the full window list\nor an arbitrary range (e.g. `last45days`, `last6months`), see the `/temporal` skill.\n"
+    },
+    {
+      "slug": "lastweek",
+      "name": "lastWeek",
+      "dir": "resources/skills/lastWeek",
+      "path": "resources/skills/lastWeek/SKILL.md",
+      "desc": "Resolve \"lastWeek\" to a concrete ISO date range relative to your run time — the previous full week (Mon → Sun). Returns inclusive civil dates plus exact UTC instants so you have temporal context without computing dates by hand. Read-only: no writes, no network. Use before a task over the last complete week (weekly digests, week-over-week).",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Bash"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "node"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HarnessMD/munder-difflin.git",
+        "copy": "cp -r resources/skills/lastWeek ~/.claude/skills/lastweek",
+        "raw": "https://raw.githubusercontent.com/HarnessMD/munder-difflin/9ffd373bdb89f57a572f2181a38e643f2a7d21d4/resources/skills/lastWeek/SKILL.md",
+        "saveAs": "~/.claude/skills/lastweek/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:b1226aba62f070225cb58f2c096fb2242fde39246e92037b8dc51062f5dd34e3",
+      "bytes": 1218,
+      "wordCount": 124,
+      "repoLicense": "MIT",
+      "commit": "9ffd373bdb89f57a572f2181a38e643f2a7d21d4",
+      "branch": "main",
+      "body": "---\nname: lastWeek\ndescription: |\n  Resolve \"lastWeek\" to a concrete ISO date range relative to your run time —\n  the previous full week (Mon → Sun). Returns inclusive civil dates plus exact UTC instants so you have\n  temporal context without computing dates by hand. Read-only: no writes, no\n  network. Use before a task over the last complete week (weekly digests, week-over-week).\nallowed-tools:\n  - Bash\n---\n\n## /lastWeek\n\nGet the concrete date range for **the previous full week (Mon → Sun)** by running the bundled resolver:\n\n```bash\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" lastWeek\n```\n\nIt prints a human-readable line plus a JSON record:\n\n- `start` / `end` — inclusive civil dates (`YYYY-MM-DD`) in your local timezone\n- `startUtc` / `endExclusiveUtc` — the same window as a half-open `[start, end)`\n  range of exact UTC instants, for timestamp-based queries\n- `days`, `timezone`, `asOf` — the span, your timezone, and when this resolved\n\nUse the returned dates as the time bounds for the task at hand. **Do not derive\ndates by hand** — this resolver is the source of truth. For the full window list\nor an arbitrary range (e.g. `last45days`, `last6months`), see the `/temporal` skill.\n",
+      "bodyMd": "## /lastWeek\n\nGet the concrete date range for **the previous full week (Mon → Sun)** by running the bundled resolver:\n\n```bash\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" lastWeek\n```\n\nIt prints a human-readable line plus a JSON record:\n\n- `start` / `end` — inclusive civil dates (`YYYY-MM-DD`) in your local timezone\n- `startUtc` / `endExclusiveUtc` — the same window as a half-open `[start, end)`\n  range of exact UTC instants, for timestamp-based queries\n- `days`, `timezone`, `asOf` — the span, your timezone, and when this resolved\n\nUse the returned dates as the time bounds for the task at hand. **Do not derive\ndates by hand** — this resolver is the source of truth. For the full window list\nor an arbitrary range (e.g. `last45days`, `last6months`), see the `/temporal` skill.\n"
+    },
+    {
+      "slug": "lastyear",
+      "name": "lastYear",
+      "dir": "resources/skills/lastYear",
+      "path": "resources/skills/lastYear/SKILL.md",
+      "desc": "Resolve \"lastYear\" to a concrete ISO date range relative to your run time — the previous full calendar year. Returns inclusive civil dates plus exact UTC instants so you have temporal context without computing dates by hand. Read-only: no writes, no network. Use before a task over last year (annual reports, year-over-year).",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Bash"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "node"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HarnessMD/munder-difflin.git",
+        "copy": "cp -r resources/skills/lastYear ~/.claude/skills/lastyear",
+        "raw": "https://raw.githubusercontent.com/HarnessMD/munder-difflin/9ffd373bdb89f57a572f2181a38e643f2a7d21d4/resources/skills/lastYear/SKILL.md",
+        "saveAs": "~/.claude/skills/lastyear/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:cc96020c9c3352eb743ca171f22dab4718e6b127d2fc69cc79e627b035a3019b",
+      "bytes": 1195,
+      "wordCount": 122,
+      "repoLicense": "MIT",
+      "commit": "9ffd373bdb89f57a572f2181a38e643f2a7d21d4",
+      "branch": "main",
+      "body": "---\nname: lastYear\ndescription: |\n  Resolve \"lastYear\" to a concrete ISO date range relative to your run time —\n  the previous full calendar year. Returns inclusive civil dates plus exact UTC instants so you have\n  temporal context without computing dates by hand. Read-only: no writes, no\n  network. Use before a task over last year (annual reports, year-over-year).\nallowed-tools:\n  - Bash\n---\n\n## /lastYear\n\nGet the concrete date range for **the previous full calendar year** by running the bundled resolver:\n\n```bash\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" lastYear\n```\n\nIt prints a human-readable line plus a JSON record:\n\n- `start` / `end` — inclusive civil dates (`YYYY-MM-DD`) in your local timezone\n- `startUtc` / `endExclusiveUtc` — the same window as a half-open `[start, end)`\n  range of exact UTC instants, for timestamp-based queries\n- `days`, `timezone`, `asOf` — the span, your timezone, and when this resolved\n\nUse the returned dates as the time bounds for the task at hand. **Do not derive\ndates by hand** — this resolver is the source of truth. For the full window list\nor an arbitrary range (e.g. `last45days`, `last6months`), see the `/temporal` skill.\n",
+      "bodyMd": "## /lastYear\n\nGet the concrete date range for **the previous full calendar year** by running the bundled resolver:\n\n```bash\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" lastYear\n```\n\nIt prints a human-readable line plus a JSON record:\n\n- `start` / `end` — inclusive civil dates (`YYYY-MM-DD`) in your local timezone\n- `startUtc` / `endExclusiveUtc` — the same window as a half-open `[start, end)`\n  range of exact UTC instants, for timestamp-based queries\n- `days`, `timezone`, `asOf` — the span, your timezone, and when this resolved\n\nUse the returned dates as the time bounds for the task at hand. **Do not derive\ndates by hand** — this resolver is the source of truth. For the full window list\nor an arbitrary range (e.g. `last45days`, `last6months`), see the `/temporal` skill.\n"
+    },
+    {
+      "slug": "md-audit",
+      "name": "md-audit",
+      "dir": "resources/skills/md-audit",
+      "path": "resources/skills/md-audit/SKILL.md",
+      "desc": "Read-only code quality audit — scan the current working directory for common issues (bugs, dead code, security hotspots, missing error handling) and return a prioritised findings report. No files are edited. Use when asked to \"audit the code\", \"quick audit\", \"find issues\", \"code scan\", or \"what's wrong with this codebase\". (munder-difflin)",
+      "descZh": "",
+      "triggers": [
+        "asked to \"audit the code",
+        "quick audit",
+        "find issues",
+        "code scan",
+        "what's wrong wit"
+      ],
+      "version": "1.0.0",
+      "license": "MIT",
+      "allowedTools": [
+        "Read",
+        "Bash",
+        "Grep"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "cargo",
+          "go"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HarnessMD/munder-difflin.git",
+        "copy": "cp -r resources/skills/md-audit ~/.claude/skills/md-audit",
+        "raw": "https://raw.githubusercontent.com/HarnessMD/munder-difflin/9ffd373bdb89f57a572f2181a38e643f2a7d21d4/resources/skills/md-audit/SKILL.md",
+        "saveAs": "~/.claude/skills/md-audit/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:64e5ec65d30e229c51fc1b7eb334de8c3744b38a38209f2f12ee476c2eb9d77e",
+      "bytes": 1415,
+      "wordCount": 140,
+      "repoLicense": "MIT",
+      "commit": "9ffd373bdb89f57a572f2181a38e643f2a7d21d4",
+      "branch": "main",
+      "body": "---\nname: md-audit\nversion: 1.0.0\ndescription: |\n  Read-only code quality audit — scan the current working directory for common\n  issues (bugs, dead code, security hotspots, missing error handling) and return\n  a prioritised findings report. No files are edited.\n  Use when asked to \"audit the code\", \"quick audit\", \"find issues\", \"code scan\",\n  or \"what's wrong with this codebase\". (munder-difflin)\nallowed-tools:\n  - Read\n  - Bash\n  - Grep\n---\n\n## Code Audit (read-only)\n\nPerform a read-only code quality scan and return a findings report. Do NOT edit any files.\n\nSteps:\n1. **Scope** — identify the primary language and entry points (`package.json`, `Cargo.toml`, `go.mod`, `pyproject.toml`, or similar).\n2. **Scan** — use `Grep` and `Read` to look for:\n   - Unhandled promise rejections / ignored errors\n   - Hard-coded secrets or credentials (keys, tokens, passwords)\n   - `TODO`/`FIXME`/`HACK` comments that signal known debt\n   - Dead exports (exported symbols with no in-repo import)\n   - Obvious type-safety gaps (unchecked `any`, missing null guards)\n3. **Report** — output a findings list sorted by severity (Critical → High → Medium → Low):\n   ```\n   ## Audit Report — <project name>\n\n   ### Critical\n   - [file:line] <description>\n\n   ### High\n   - ...\n\n   ### Summary\n   <total count> findings across <file count> files scanned.\n   ```\n4. Stop after reporting. Do not apply any fixes.\n",
+      "bodyMd": "## Code Audit (read-only)\n\nPerform a read-only code quality scan and return a findings report. Do NOT edit any files.\n\nSteps:\n1. **Scope** — identify the primary language and entry points (`package.json`, `Cargo.toml`, `go.mod`, `pyproject.toml`, or similar).\n2. **Scan** — use `Grep` and `Read` to look for:\n   - Unhandled promise rejections / ignored errors\n   - Hard-coded secrets or credentials (keys, tokens, passwords)\n   - `TODO`/`FIXME`/`HACK` comments that signal known debt\n   - Dead exports (exported symbols with no in-repo import)\n   - Obvious type-safety gaps (unchecked `any`, missing null guards)\n3. **Report** — output a findings list sorted by severity (Critical → High → Medium → Low):\n   ```\n   ## Audit Report — <project name>\n\n   ### Critical\n   - [file:line] <description>\n\n   ### High\n   - ...\n\n   ### Summary\n   <total count> findings across <file count> files scanned.\n   ```\n4. Stop after reporting. Do not apply any fixes.\n"
+    },
+    {
+      "slug": "md-fetch-summarize",
+      "name": "md-fetch-summarize",
+      "dir": "resources/skills/md-fetch-summarize",
+      "path": "resources/skills/md-fetch-summarize/SKILL.md",
+      "desc": "Fetch a URL and return a concise markdown summary of its content. Read-only: no files are written; the summary is returned as output only. Use when asked to \"fetch and summarize\", \"summarize this URL\", \"what does this page say\", or \"get the content of <url>\". Proactively suggest when the user pastes a URL and asks what it contains. (munder-difflin)",
+      "descZh": "",
+      "triggers": [
+        "summarize this URL",
+        "what does this page say",
+        "get t"
+      ],
+      "version": "1.0.0",
+      "license": "MIT",
+      "allowedTools": [
+        "WebFetch",
+        "Bash"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "curl"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HarnessMD/munder-difflin.git",
+        "copy": "cp -r resources/skills/md-fetch-summarize ~/.claude/skills/md-fetch-summarize",
+        "raw": "https://raw.githubusercontent.com/HarnessMD/munder-difflin/9ffd373bdb89f57a572f2181a38e643f2a7d21d4/resources/skills/md-fetch-summarize/SKILL.md",
+        "saveAs": "~/.claude/skills/md-fetch-summarize/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:7acbda2b0e7473aacff360b25095301f474b2e42aefcfe33ba3a210797bf830a",
+      "bytes": 1037,
+      "wordCount": 97,
+      "repoLicense": "MIT",
+      "commit": "9ffd373bdb89f57a572f2181a38e643f2a7d21d4",
+      "branch": "main",
+      "body": "---\nname: md-fetch-summarize\nversion: 1.0.0\ndescription: |\n  Fetch a URL and return a concise markdown summary of its content.\n  Read-only: no files are written; the summary is returned as output only.\n  Use when asked to \"fetch and summarize\", \"summarize this URL\", \"what does\n  this page say\", or \"get the content of <url>\".\n  Proactively suggest when the user pastes a URL and asks what it contains. (munder-difflin)\nallowed-tools:\n  - WebFetch\n  - Bash\n---\n\n## Fetch & Summarize\n\nGiven a URL, fetch its content and return a concise markdown summary.\n\nSteps:\n1. Fetch the page with `WebFetch` (or `Bash` with `curl -sL <url> | head -200` as a fallback).\n2. Extract the main content — ignore nav, footer, ads, and boilerplate.\n3. Return a structured summary with:\n   - **Title** (the page's `<title>` or heading)\n   - **One-paragraph overview** of what the page is about\n   - **Key points** as a bullet list (max 5)\n   - **Source** — the URL fetched\n\nDo not save or write the fetched content anywhere. Return the summary directly.\n",
+      "bodyMd": "## Fetch & Summarize\n\nGiven a URL, fetch its content and return a concise markdown summary.\n\nSteps:\n1. Fetch the page with `WebFetch` (or `Bash` with `curl -sL <url> | head -200` as a fallback).\n2. Extract the main content — ignore nav, footer, ads, and boilerplate.\n3. Return a structured summary with:\n   - **Title** (the page's `<title>` or heading)\n   - **One-paragraph overview** of what the page is about\n   - **Key points** as a bullet list (max 5)\n   - **Source** — the URL fetched\n\nDo not save or write the fetched content anywhere. Return the summary directly.\n"
+    },
+    {
+      "slug": "md-hive-sync",
+      "name": "md-hive-sync",
+      "dir": "resources/skills/md-hive-sync",
+      "path": "resources/skills/md-hive-sync/SKILL.md",
+      "desc": "Munder Difflin hive sync — runs the start-of-task hive protocol steps: reads memory.md, checks inbox/ for new messages, and reminds you to record durable facts in memory.md and write coordination files before ending. Use when asked to \"sync with the hive\", \"check my inbox\", \"hive status\", or \"hive sync\". Proactively suggest at the start of a new task if you haven't checked your hive inbox in this conversation. (munder-difflin)",
+      "descZh": "",
+      "triggers": [
+        "check my inbox",
+        "hive status",
+        "hive sync"
+      ],
+      "version": "1.0.0",
+      "license": "MIT",
+      "allowedTools": [
+        "Read",
+        "Bash"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HarnessMD/munder-difflin.git",
+        "copy": "cp -r resources/skills/md-hive-sync ~/.claude/skills/md-hive-sync",
+        "raw": "https://raw.githubusercontent.com/HarnessMD/munder-difflin/9ffd373bdb89f57a572f2181a38e643f2a7d21d4/resources/skills/md-hive-sync/SKILL.md",
+        "saveAs": "~/.claude/skills/md-hive-sync/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:d1fcef3338b2484cc822e44e68f2f3260a6ff915f72d9dfb7a825ecc9d200cf3",
+      "bytes": 1331,
+      "wordCount": 118,
+      "repoLicense": "MIT",
+      "commit": "9ffd373bdb89f57a572f2181a38e643f2a7d21d4",
+      "branch": "main",
+      "body": "---\nname: md-hive-sync\nversion: 1.0.0\ndescription: |\n  Munder Difflin hive sync — runs the start-of-task hive protocol steps:\n  reads memory.md, checks inbox/ for new messages, and reminds you to record\n  durable facts in memory.md and write coordination files before ending.\n  Use when asked to \"sync with the hive\", \"check my inbox\", \"hive status\",\n  or \"hive sync\".\n  Proactively suggest at the start of a new task if you haven't checked your\n  hive inbox in this conversation. (munder-difflin)\nallowed-tools:\n  - Read\n  - Bash\n---\n\n## Hive Sync\n\nRun the mandatory hive start-of-task steps:\n\n1. **Read memory** — `Read $AGENT_DIR/memory.md` for durable context from prior sessions.\n\n2. **Check inbox** — list and read all files in `$AGENT_DIR/inbox/` that are NOT in `inbox/.done/`. For each message:\n   - Act on the message.\n   - Move the handled file into `$AGENT_DIR/inbox/.done/` with `mv`.\n\n3. **Report** — summarize what you found in memory and any new inbox messages. Note any tasks assigned to you or information relevant to the current session.\n\n4. **End-of-task reminder** — before closing this conversation, append durable facts, decisions, and outcomes to `$AGENT_DIR/memory.md` so future-you remembers.\n\nRun `echo $AGENT_DIR` if the variable is not set to locate your agent directory under the hive root.\n",
+      "bodyMd": "## Hive Sync\n\nRun the mandatory hive start-of-task steps:\n\n1. **Read memory** — `Read $AGENT_DIR/memory.md` for durable context from prior sessions.\n\n2. **Check inbox** — list and read all files in `$AGENT_DIR/inbox/` that are NOT in `inbox/.done/`. For each message:\n   - Act on the message.\n   - Move the handled file into `$AGENT_DIR/inbox/.done/` with `mv`.\n\n3. **Report** — summarize what you found in memory and any new inbox messages. Note any tasks assigned to you or information relevant to the current session.\n\n4. **End-of-task reminder** — before closing this conversation, append durable facts, decisions, and outcomes to `$AGENT_DIR/memory.md` so future-you remembers.\n\nRun `echo $AGENT_DIR` if the variable is not set to locate your agent directory under the hive root.\n"
+    },
+    {
+      "slug": "temporal",
+      "name": "temporal",
+      "dir": "resources/skills/temporal",
+      "path": "resources/skills/temporal/SKILL.md",
+      "desc": "Resolve ANY named time window — today, yesterday, thisWeek, lastWeek, last7Days, last30Days, last90Days, thisMonth, lastMonth, thisQuarter, lastQuarter, thisYear, lastYear, last12Months — or an arbitrary range (lastNdays / lastNweeks / lastNmonths) to a concrete ISO date range relative to your run time. Read-only: no writes, no network. Use whenever a task is time-scoped and you need exact start/end dates without computing them by hand.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Bash"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "node"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HarnessMD/munder-difflin.git",
+        "copy": "cp -r resources/skills/temporal ~/.claude/skills/temporal",
+        "raw": "https://raw.githubusercontent.com/HarnessMD/munder-difflin/9ffd373bdb89f57a572f2181a38e643f2a7d21d4/resources/skills/temporal/SKILL.md",
+        "saveAs": "~/.claude/skills/temporal/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:3e870f0b9fa95847a1654ba1bf352a5cff32a37a19c7c4a8ce01a63bc6002fbd",
+      "bytes": 2993,
+      "wordCount": 363,
+      "repoLicense": "MIT",
+      "commit": "9ffd373bdb89f57a572f2181a38e643f2a7d21d4",
+      "branch": "main",
+      "body": "---\nname: temporal\ndescription: |\n  Resolve ANY named time window — today, yesterday, thisWeek, lastWeek,\n  last7Days, last30Days, last90Days, thisMonth, lastMonth, thisQuarter,\n  lastQuarter, thisYear, lastYear, last12Months — or an arbitrary range\n  (lastNdays / lastNweeks / lastNmonths) to a concrete ISO date range relative\n  to your run time. Read-only: no writes, no network. Use whenever a task is\n  time-scoped and you need exact start/end dates without computing them by hand.\nallowed-tools:\n  - Bash\n---\n\n## /temporal — concrete date ranges, relative to now\n\nThis is the single source of truth for \"what dates does *<window>* mean right\nnow?\". It resolves named windows to **concrete ISO date ranges relative to your\nrun time** (`new Date()` at the moment you invoke it), so you never re-derive\ndates manually. It only reads the clock and prints — no files written, no network.\n\n### Run it\n\n```bash\n# all windows at once (a quick temporal-context dump)\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\"\n\n# one or several specific windows\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" last30Days thisQuarter\n\n# JSON only (machine-readable), or list the supported keywords\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" --json last7Days\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" --list\n```\n\nIf `$AGENT_DIR` is somehow unset, the script also lives under\n`~/.claude/skills/temporal/when.mjs`.\n\n### Windows\n\n| Keyword | Meaning |\n| --- | --- |\n| `today` / `yesterday` | the single civil day |\n| `thisWeek` / `lastWeek` | ISO week (Mon-start); *this* = Mon→today, *last* = the full prior Mon→Sun |\n| `last7Days` / `last30Days` / `last90Days` | rolling N-day window ending today (inclusive) |\n| `thisMonth` / `lastMonth` | *this* = 1st→today; *last* = the full prior calendar month |\n| `thisQuarter` / `lastQuarter` | *this* = quarter-start→today; *last* = the full prior quarter |\n| `thisYear` / `lastYear` | *this* = Jan 1→today (YTD); *last* = the full prior year |\n| `last12Months` | rolling 12 months ending today |\n| `lastNdays` / `lastNweeks` / `lastNmonths` | arbitrary rolling window, e.g. `last45days`, `last2weeks`, `last6months` |\n\nAliases: `ytd`, `qtd`, `mtd`, `wtd`, `7d`, `30d`, `90d`, `12m`.\n\nConvention: `this*` windows are **period-start → today** (to-date); `last*`\nnamed periods are the **full prior complete period**.\n\n### Output\n\nEach window prints a human line plus a JSON record:\n\n- `start` / `end` — inclusive civil dates (`YYYY-MM-DD`) in your local timezone\n- `startUtc` / `endExclusiveUtc` — the same span as a half-open `[start, end)`\n  range of exact UTC instants, ideal for timestamp / `createdAt`-style queries\n- `days`, `inclusive`, `timezone`, `tzOffsetMinutes`, `asOf` — span, tz, and the\n  instant the range was resolved\n\nUse the returned dates as the time bounds for the task. The named shortcuts\n`/today`, `/yesterday`, `/last30Days`, `/lastQuarter`, … each call this same\nresolver for their one window.\n",
+      "bodyMd": "## /temporal — concrete date ranges, relative to now\n\nThis is the single source of truth for \"what dates does *<window>* mean right\nnow?\". It resolves named windows to **concrete ISO date ranges relative to your\nrun time** (`new Date()` at the moment you invoke it), so you never re-derive\ndates manually. It only reads the clock and prints — no files written, no network.\n\n### Run it\n\n```bash\n# all windows at once (a quick temporal-context dump)\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\"\n\n# one or several specific windows\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" last30Days thisQuarter\n\n# JSON only (machine-readable), or list the supported keywords\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" --json last7Days\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" --list\n```\n\nIf `$AGENT_DIR` is somehow unset, the script also lives under\n`~/.claude/skills/temporal/when.mjs`.\n\n### Windows\n\n| Keyword | Meaning |\n| --- | --- |\n| `today` / `yesterday` | the single civil day |\n| `thisWeek` / `lastWeek` | ISO week (Mon-start); *this* = Mon→today, *last* = the full prior Mon→Sun |\n| `last7Days` / `last30Days` / `last90Days` | rolling N-day window ending today (inclusive) |\n| `thisMonth` / `lastMonth` | *this* = 1st→today; *last* = the full prior calendar month |\n| `thisQuarter` / `lastQuarter` | *this* = quarter-start→today; *last* = the full prior quarter |\n| `thisYear` / `lastYear` | *this* = Jan 1→today (YTD); *last* = the full prior year |\n| `last12Months` | rolling 12 months ending today |\n| `lastNdays` / `lastNweeks` / `lastNmonths` | arbitrary rolling window, e.g. `last45days`, `last2weeks`, `last6months` |\n\nAliases: `ytd`, `qtd`, `mtd`, `wtd`, `7d`, `30d`, `90d`, `12m`.\n\nConvention: `this*` windows are **period-start → today** (to-date); `last*`\nnamed periods are the **full prior complete period**.\n\n### Output\n\nEach window prints a human line plus a JSON record:\n\n- `start` / `end` — inclusive civil dates (`YYYY-MM-DD`) in your local timezone\n- `startUtc` / `endExclusiveUtc` — the same span as a half-open `[start, end)`\n  range of exact UTC instants, ideal for timestamp / `createdAt`-style queries\n- `days`, `inclusive`, `timezone`, `tzOffsetMinutes`, `asOf` — span, tz, and the\n  instant the range was resolved\n\nUse the returned dates as the time bounds for the task. The named shortcuts\n`/today`, `/yesterday`, `/last30Days`, `/lastQuarter`, … each call this same\nresolver for their one window.\n"
+    },
+    {
+      "slug": "thismonth",
+      "name": "thisMonth",
+      "dir": "resources/skills/thisMonth",
+      "path": "resources/skills/thisMonth/SKILL.md",
+      "desc": "Resolve \"thisMonth\" to a concrete ISO date range relative to your run time — this month so far (1st → today). Returns inclusive civil dates plus exact UTC instants so you have temporal context without computing dates by hand. Read-only: no writes, no network. Use before a month-to-date task (MTD metrics, \"so far this month\").",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Bash"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "node"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HarnessMD/munder-difflin.git",
+        "copy": "cp -r resources/skills/thisMonth ~/.claude/skills/thismonth",
+        "raw": "https://raw.githubusercontent.com/HarnessMD/munder-difflin/9ffd373bdb89f57a572f2181a38e643f2a7d21d4/resources/skills/thisMonth/SKILL.md",
+        "saveAs": "~/.claude/skills/thismonth/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:7faf398d81d51be2692e5e0e93a9dba56c90f723f7e3e86fb0bfaf1eed3ebb6d",
+      "bytes": 1204,
+      "wordCount": 124,
+      "repoLicense": "MIT",
+      "commit": "9ffd373bdb89f57a572f2181a38e643f2a7d21d4",
+      "branch": "main",
+      "body": "---\nname: thisMonth\ndescription: |\n  Resolve \"thisMonth\" to a concrete ISO date range relative to your run time —\n  this month so far (1st → today). Returns inclusive civil dates plus exact UTC instants so you have\n  temporal context without computing dates by hand. Read-only: no writes, no\n  network. Use before a month-to-date task (MTD metrics, \"so far this month\").\nallowed-tools:\n  - Bash\n---\n\n## /thisMonth\n\nGet the concrete date range for **this month so far (1st → today)** by running the bundled resolver:\n\n```bash\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" thisMonth\n```\n\nIt prints a human-readable line plus a JSON record:\n\n- `start` / `end` — inclusive civil dates (`YYYY-MM-DD`) in your local timezone\n- `startUtc` / `endExclusiveUtc` — the same window as a half-open `[start, end)`\n  range of exact UTC instants, for timestamp-based queries\n- `days`, `timezone`, `asOf` — the span, your timezone, and when this resolved\n\nUse the returned dates as the time bounds for the task at hand. **Do not derive\ndates by hand** — this resolver is the source of truth. For the full window list\nor an arbitrary range (e.g. `last45days`, `last6months`), see the `/temporal` skill.\n",
+      "bodyMd": "## /thisMonth\n\nGet the concrete date range for **this month so far (1st → today)** by running the bundled resolver:\n\n```bash\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" thisMonth\n```\n\nIt prints a human-readable line plus a JSON record:\n\n- `start` / `end` — inclusive civil dates (`YYYY-MM-DD`) in your local timezone\n- `startUtc` / `endExclusiveUtc` — the same window as a half-open `[start, end)`\n  range of exact UTC instants, for timestamp-based queries\n- `days`, `timezone`, `asOf` — the span, your timezone, and when this resolved\n\nUse the returned dates as the time bounds for the task at hand. **Do not derive\ndates by hand** — this resolver is the source of truth. For the full window list\nor an arbitrary range (e.g. `last45days`, `last6months`), see the `/temporal` skill.\n"
+    },
+    {
+      "slug": "thisquarter",
+      "name": "thisQuarter",
+      "dir": "resources/skills/thisQuarter",
+      "path": "resources/skills/thisQuarter/SKILL.md",
+      "desc": "Resolve \"thisQuarter\" to a concrete ISO date range relative to your run time — this quarter so far (quarter start → today). Returns inclusive civil dates plus exact UTC instants so you have temporal context without computing dates by hand. Read-only: no writes, no network. Use before a quarter-to-date task (QTD metrics, \"this quarter\").",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Bash"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "node"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HarnessMD/munder-difflin.git",
+        "copy": "cp -r resources/skills/thisQuarter ~/.claude/skills/thisquarter",
+        "raw": "https://raw.githubusercontent.com/HarnessMD/munder-difflin/9ffd373bdb89f57a572f2181a38e643f2a7d21d4/resources/skills/thisQuarter/SKILL.md",
+        "saveAs": "~/.claude/skills/thisquarter/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:d98c84a8c1cbaa69b828c185b5d9f8c0d0ee29442f2911b14f8942315882a94f",
+      "bytes": 1233,
+      "wordCount": 125,
+      "repoLicense": "MIT",
+      "commit": "9ffd373bdb89f57a572f2181a38e643f2a7d21d4",
+      "branch": "main",
+      "body": "---\nname: thisQuarter\ndescription: |\n  Resolve \"thisQuarter\" to a concrete ISO date range relative to your run time —\n  this quarter so far (quarter start → today). Returns inclusive civil dates plus exact UTC instants so you have\n  temporal context without computing dates by hand. Read-only: no writes, no\n  network. Use before a quarter-to-date task (QTD metrics, \"this quarter\").\nallowed-tools:\n  - Bash\n---\n\n## /thisQuarter\n\nGet the concrete date range for **this quarter so far (quarter start → today)** by running the bundled resolver:\n\n```bash\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" thisQuarter\n```\n\nIt prints a human-readable line plus a JSON record:\n\n- `start` / `end` — inclusive civil dates (`YYYY-MM-DD`) in your local timezone\n- `startUtc` / `endExclusiveUtc` — the same window as a half-open `[start, end)`\n  range of exact UTC instants, for timestamp-based queries\n- `days`, `timezone`, `asOf` — the span, your timezone, and when this resolved\n\nUse the returned dates as the time bounds for the task at hand. **Do not derive\ndates by hand** — this resolver is the source of truth. For the full window list\nor an arbitrary range (e.g. `last45days`, `last6months`), see the `/temporal` skill.\n",
+      "bodyMd": "## /thisQuarter\n\nGet the concrete date range for **this quarter so far (quarter start → today)** by running the bundled resolver:\n\n```bash\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" thisQuarter\n```\n\nIt prints a human-readable line plus a JSON record:\n\n- `start` / `end` — inclusive civil dates (`YYYY-MM-DD`) in your local timezone\n- `startUtc` / `endExclusiveUtc` — the same window as a half-open `[start, end)`\n  range of exact UTC instants, for timestamp-based queries\n- `days`, `timezone`, `asOf` — the span, your timezone, and when this resolved\n\nUse the returned dates as the time bounds for the task at hand. **Do not derive\ndates by hand** — this resolver is the source of truth. For the full window list\nor an arbitrary range (e.g. `last45days`, `last6months`), see the `/temporal` skill.\n"
+    },
+    {
+      "slug": "thisweek",
+      "name": "thisWeek",
+      "dir": "resources/skills/thisWeek",
+      "path": "resources/skills/thisWeek/SKILL.md",
+      "desc": "Resolve \"thisWeek\" to a concrete ISO date range relative to your run time — this week so far (Monday → today). Returns inclusive civil dates plus exact UTC instants so you have temporal context without computing dates by hand. Read-only: no writes, no network. Use before a week-to-date task (this week's activity, weekly standups).",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Bash"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "node"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HarnessMD/munder-difflin.git",
+        "copy": "cp -r resources/skills/thisWeek ~/.claude/skills/thisweek",
+        "raw": "https://raw.githubusercontent.com/HarnessMD/munder-difflin/9ffd373bdb89f57a572f2181a38e643f2a7d21d4/resources/skills/thisWeek/SKILL.md",
+        "saveAs": "~/.claude/skills/thisweek/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:a2e8d414f192894194d75aa077130bccc0526882945fc7492bea7e009de349bd",
+      "bytes": 1208,
+      "wordCount": 124,
+      "repoLicense": "MIT",
+      "commit": "9ffd373bdb89f57a572f2181a38e643f2a7d21d4",
+      "branch": "main",
+      "body": "---\nname: thisWeek\ndescription: |\n  Resolve \"thisWeek\" to a concrete ISO date range relative to your run time —\n  this week so far (Monday → today). Returns inclusive civil dates plus exact UTC instants so you have\n  temporal context without computing dates by hand. Read-only: no writes, no\n  network. Use before a week-to-date task (this week's activity, weekly standups).\nallowed-tools:\n  - Bash\n---\n\n## /thisWeek\n\nGet the concrete date range for **this week so far (Monday → today)** by running the bundled resolver:\n\n```bash\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" thisWeek\n```\n\nIt prints a human-readable line plus a JSON record:\n\n- `start` / `end` — inclusive civil dates (`YYYY-MM-DD`) in your local timezone\n- `startUtc` / `endExclusiveUtc` — the same window as a half-open `[start, end)`\n  range of exact UTC instants, for timestamp-based queries\n- `days`, `timezone`, `asOf` — the span, your timezone, and when this resolved\n\nUse the returned dates as the time bounds for the task at hand. **Do not derive\ndates by hand** — this resolver is the source of truth. For the full window list\nor an arbitrary range (e.g. `last45days`, `last6months`), see the `/temporal` skill.\n",
+      "bodyMd": "## /thisWeek\n\nGet the concrete date range for **this week so far (Monday → today)** by running the bundled resolver:\n\n```bash\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" thisWeek\n```\n\nIt prints a human-readable line plus a JSON record:\n\n- `start` / `end` — inclusive civil dates (`YYYY-MM-DD`) in your local timezone\n- `startUtc` / `endExclusiveUtc` — the same window as a half-open `[start, end)`\n  range of exact UTC instants, for timestamp-based queries\n- `days`, `timezone`, `asOf` — the span, your timezone, and when this resolved\n\nUse the returned dates as the time bounds for the task at hand. **Do not derive\ndates by hand** — this resolver is the source of truth. For the full window list\nor an arbitrary range (e.g. `last45days`, `last6months`), see the `/temporal` skill.\n"
+    },
+    {
+      "slug": "thisyear",
+      "name": "thisYear",
+      "dir": "resources/skills/thisYear",
+      "path": "resources/skills/thisYear/SKILL.md",
+      "desc": "Resolve \"thisYear\" to a concrete ISO date range relative to your run time — this year so far (Jan 1 → today). Returns inclusive civil dates plus exact UTC instants so you have temporal context without computing dates by hand. Read-only: no writes, no network. Use before a year-to-date task (YTD metrics, \"so far this year\").",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Bash"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "node"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HarnessMD/munder-difflin.git",
+        "copy": "cp -r resources/skills/thisYear ~/.claude/skills/thisyear",
+        "raw": "https://raw.githubusercontent.com/HarnessMD/munder-difflin/9ffd373bdb89f57a572f2181a38e643f2a7d21d4/resources/skills/thisYear/SKILL.md",
+        "saveAs": "~/.claude/skills/thisyear/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:dbca44d13a6470095c90ad765f83464a0bfebd3c942890793c9aeecacf2f2d86",
+      "bytes": 1200,
+      "wordCount": 125,
+      "repoLicense": "MIT",
+      "commit": "9ffd373bdb89f57a572f2181a38e643f2a7d21d4",
+      "branch": "main",
+      "body": "---\nname: thisYear\ndescription: |\n  Resolve \"thisYear\" to a concrete ISO date range relative to your run time —\n  this year so far (Jan 1 → today). Returns inclusive civil dates plus exact UTC instants so you have\n  temporal context without computing dates by hand. Read-only: no writes, no\n  network. Use before a year-to-date task (YTD metrics, \"so far this year\").\nallowed-tools:\n  - Bash\n---\n\n## /thisYear\n\nGet the concrete date range for **this year so far (Jan 1 → today)** by running the bundled resolver:\n\n```bash\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" thisYear\n```\n\nIt prints a human-readable line plus a JSON record:\n\n- `start` / `end` — inclusive civil dates (`YYYY-MM-DD`) in your local timezone\n- `startUtc` / `endExclusiveUtc` — the same window as a half-open `[start, end)`\n  range of exact UTC instants, for timestamp-based queries\n- `days`, `timezone`, `asOf` — the span, your timezone, and when this resolved\n\nUse the returned dates as the time bounds for the task at hand. **Do not derive\ndates by hand** — this resolver is the source of truth. For the full window list\nor an arbitrary range (e.g. `last45days`, `last6months`), see the `/temporal` skill.\n",
+      "bodyMd": "## /thisYear\n\nGet the concrete date range for **this year so far (Jan 1 → today)** by running the bundled resolver:\n\n```bash\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" thisYear\n```\n\nIt prints a human-readable line plus a JSON record:\n\n- `start` / `end` — inclusive civil dates (`YYYY-MM-DD`) in your local timezone\n- `startUtc` / `endExclusiveUtc` — the same window as a half-open `[start, end)`\n  range of exact UTC instants, for timestamp-based queries\n- `days`, `timezone`, `asOf` — the span, your timezone, and when this resolved\n\nUse the returned dates as the time bounds for the task at hand. **Do not derive\ndates by hand** — this resolver is the source of truth. For the full window list\nor an arbitrary range (e.g. `last45days`, `last6months`), see the `/temporal` skill.\n"
+    },
+    {
+      "slug": "today",
+      "name": "today",
+      "dir": "resources/skills/today",
+      "path": "resources/skills/today/SKILL.md",
+      "desc": "Resolve \"today\" to a concrete ISO date range relative to your run time — today. Returns inclusive civil dates plus exact UTC instants so you have temporal context without computing dates by hand. Read-only: no writes, no network. Use before any task scoped to today (today's logs, metrics, \"what happened today\").",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Bash"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "node"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HarnessMD/munder-difflin.git",
+        "copy": "cp -r resources/skills/today ~/.claude/skills/today",
+        "raw": "https://raw.githubusercontent.com/HarnessMD/munder-difflin/9ffd373bdb89f57a572f2181a38e643f2a7d21d4/resources/skills/today/SKILL.md",
+        "saveAs": "~/.claude/skills/today/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:b433d8b513abcd8e06b4f40ba89215909cb5a7e924bf196c15ffabd62aec9b8c",
+      "bytes": 1148,
+      "wordCount": 118,
+      "repoLicense": "MIT",
+      "commit": "9ffd373bdb89f57a572f2181a38e643f2a7d21d4",
+      "branch": "main",
+      "body": "---\nname: today\ndescription: |\n  Resolve \"today\" to a concrete ISO date range relative to your run time —\n  today. Returns inclusive civil dates plus exact UTC instants so you have\n  temporal context without computing dates by hand. Read-only: no writes, no\n  network. Use before any task scoped to today (today's logs, metrics, \"what happened today\").\nallowed-tools:\n  - Bash\n---\n\n## /today\n\nGet the concrete date range for **today** by running the bundled resolver:\n\n```bash\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" today\n```\n\nIt prints a human-readable line plus a JSON record:\n\n- `start` / `end` — inclusive civil dates (`YYYY-MM-DD`) in your local timezone\n- `startUtc` / `endExclusiveUtc` — the same window as a half-open `[start, end)`\n  range of exact UTC instants, for timestamp-based queries\n- `days`, `timezone`, `asOf` — the span, your timezone, and when this resolved\n\nUse the returned dates as the time bounds for the task at hand. **Do not derive\ndates by hand** — this resolver is the source of truth. For the full window list\nor an arbitrary range (e.g. `last45days`, `last6months`), see the `/temporal` skill.\n",
+      "bodyMd": "## /today\n\nGet the concrete date range for **today** by running the bundled resolver:\n\n```bash\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" today\n```\n\nIt prints a human-readable line plus a JSON record:\n\n- `start` / `end` — inclusive civil dates (`YYYY-MM-DD`) in your local timezone\n- `startUtc` / `endExclusiveUtc` — the same window as a half-open `[start, end)`\n  range of exact UTC instants, for timestamp-based queries\n- `days`, `timezone`, `asOf` — the span, your timezone, and when this resolved\n\nUse the returned dates as the time bounds for the task at hand. **Do not derive\ndates by hand** — this resolver is the source of truth. For the full window list\nor an arbitrary range (e.g. `last45days`, `last6months`), see the `/temporal` skill.\n"
+    },
+    {
+      "slug": "yesterday",
+      "name": "yesterday",
+      "dir": "resources/skills/yesterday",
+      "path": "resources/skills/yesterday/SKILL.md",
+      "desc": "Resolve \"yesterday\" to a concrete ISO date range relative to your run time — yesterday. Returns inclusive civil dates plus exact UTC instants so you have temporal context without computing dates by hand. Read-only: no writes, no network. Use before a task scoped to yesterday (daily reports, \"what changed yesterday\").",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Bash"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "node"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HarnessMD/munder-difflin.git",
+        "copy": "cp -r resources/skills/yesterday ~/.claude/skills/yesterday",
+        "raw": "https://raw.githubusercontent.com/HarnessMD/munder-difflin/9ffd373bdb89f57a572f2181a38e643f2a7d21d4/resources/skills/yesterday/SKILL.md",
+        "saveAs": "~/.claude/skills/yesterday/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:5b5cd296a7bcc9742d64342e41732b0b9425a0552e1dc7e83ca914e07291bec9",
+      "bytes": 1169,
+      "wordCount": 118,
+      "repoLicense": "MIT",
+      "commit": "9ffd373bdb89f57a572f2181a38e643f2a7d21d4",
+      "branch": "main",
+      "body": "---\nname: yesterday\ndescription: |\n  Resolve \"yesterday\" to a concrete ISO date range relative to your run time —\n  yesterday. Returns inclusive civil dates plus exact UTC instants so you have\n  temporal context without computing dates by hand. Read-only: no writes, no\n  network. Use before a task scoped to yesterday (daily reports, \"what changed yesterday\").\nallowed-tools:\n  - Bash\n---\n\n## /yesterday\n\nGet the concrete date range for **yesterday** by running the bundled resolver:\n\n```bash\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" yesterday\n```\n\nIt prints a human-readable line plus a JSON record:\n\n- `start` / `end` — inclusive civil dates (`YYYY-MM-DD`) in your local timezone\n- `startUtc` / `endExclusiveUtc` — the same window as a half-open `[start, end)`\n  range of exact UTC instants, for timestamp-based queries\n- `days`, `timezone`, `asOf` — the span, your timezone, and when this resolved\n\nUse the returned dates as the time bounds for the task at hand. **Do not derive\ndates by hand** — this resolver is the source of truth. For the full window list\nor an arbitrary range (e.g. `last45days`, `last6months`), see the `/temporal` skill.\n",
+      "bodyMd": "## /yesterday\n\nGet the concrete date range for **yesterday** by running the bundled resolver:\n\n```bash\nnode \"$AGENT_DIR/.claude/skills/temporal/when.mjs\" yesterday\n```\n\nIt prints a human-readable line plus a JSON record:\n\n- `start` / `end` — inclusive civil dates (`YYYY-MM-DD`) in your local timezone\n- `startUtc` / `endExclusiveUtc` — the same window as a half-open `[start, end)`\n  range of exact UTC instants, for timestamp-based queries\n- `days`, `timezone`, `asOf` — the span, your timezone, and when this resolved\n\nUse the returned dates as the time bounds for the task at hand. **Do not derive\ndates by hand** — this resolver is the source of truth. For the full window list\nor an arbitrary range (e.g. `last45days`, `last6months`), see the `/temporal` skill.\n"
+    }
+  ]
+}

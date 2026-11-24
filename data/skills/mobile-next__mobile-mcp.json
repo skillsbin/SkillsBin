@@ -1,0 +1,54 @@
+{
+  "repo": "mobile-next/mobile-mcp",
+  "commit": "6747dff92f61a48f2f8b4620236876f54a7779fc",
+  "branch": "main",
+  "fetchedAt": "2026-11-24T22:04:54.119Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "mobile-automation",
+      "name": "mobile-automation",
+      "dir": "skills/mobile-automation",
+      "path": "skills/mobile-automation/SKILL.md",
+      "desc": "Control Android and iOS devices, emulators and simulators — launch apps, tap, swipe, type, take screenshots, read the accessibility tree. Use when a task involves a mobile device or app, mobile UI testing, or reproducing a bug on a phone.",
+      "descZh": "",
+      "triggers": [
+        "app",
+        "mobile UI testing"
+      ],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/mobile-next/mobile-mcp.git",
+        "copy": "cp -r skills/mobile-automation ~/.claude/skills/mobile-automation",
+        "raw": "https://raw.githubusercontent.com/mobile-next/mobile-mcp/6747dff92f61a48f2f8b4620236876f54a7779fc/skills/mobile-automation/SKILL.md",
+        "saveAs": "~/.claude/skills/mobile-automation/SKILL.md",
+        "marketplace": "/plugin marketplace add mobile-next/mobile-mcp"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:ed8e37bdea822fa1a195bf8cd3bdfd565fa6a32bffb937671ce6a3c4d69f8fd8",
+      "bytes": 2345,
+      "wordCount": 250,
+      "repoLicense": "Apache-2.0",
+      "commit": "6747dff92f61a48f2f8b4620236876f54a7779fc",
+      "branch": "main",
+      "body": "---\nname: mobile-automation\ndescription: Control Android and iOS devices, emulators and simulators — launch apps, tap, swipe, type, take screenshots, read the accessibility tree. Use when a task involves a mobile device or app, mobile UI testing, or reproducing a bug on a phone.\nmetadata:\n  openclaw:\n    requires:\n      bins:\n        - npx\n---\n\n# Mobile Automation with Mobile MCP\n\nTools for driving real phones, emulators and simulators. All tools are\nprefixed `mobile_`.\n\n## Workflow\n\n1. **Pick a device.** Call `mobile_list_available_devices` and use one of the\n   returned devices for every subsequent call. If no device is available, ask\n   the user to connect one (Android: `adb devices` must show it; iOS:\n   simulator booted or device paired).\n2. **See the screen.** Prefer `mobile_list_elements_on_screen` — it returns\n   the accessibility tree with element labels and coordinates. It is faster,\n   cheaper, and more reliable than screenshots. Fall back to\n   `mobile_take_screenshot` only when elements are missing or you need visual\n   confirmation (games, canvas-drawn UI, image content).\n3. **Act.** `mobile_click_on_screen_at_coordinates`, `mobile_swipe_on_screen`,\n   `mobile_type_keys`, `mobile_press_button` (HOME, BACK, VOLUME, ENTER),\n   `mobile_launch_app` / `mobile_terminate_app` / `mobile_list_apps`,\n   `mobile_open_url`.\n4. **Verify after every action.** Re-list elements (or re-screenshot) to\n   confirm the UI changed as expected before the next step. Mobile UIs\n   animate; if the expected element is not there yet, wait briefly and check\n   again rather than tapping blind.\n\n## Tips\n\n- Click the **center** of an element's bounds, not its top-left corner.\n- To type, first tap the input field, confirm it is focused, then\n  `mobile_type_keys`.\n- Use `mobile_save_screenshot` when the user wants the image as a file;\n  `mobile_start_screen_recording` / `mobile_stop_screen_recording` for videos.\n- App crashed? `mobile_list_crashes` and `mobile_get_crash` fetch crash logs.\n- Screen size from `mobile_get_screen_size`; coordinates are in that space.\n- Real devices in the cloud (no local hardware): `mobile_login_to_cloud_provider`,\n  then `mobile_list_remote_devices` / `mobile_allocate_remote_device`, and\n  release with `mobile_release_remote_device` when done. See\n  https://mobilenext.ai/docs for details.\n",
+      "bodyMd": "# Mobile Automation with Mobile MCP\n\nTools for driving real phones, emulators and simulators. All tools are\nprefixed `mobile_`.\n\n## Workflow\n\n1. **Pick a device.** Call `mobile_list_available_devices` and use one of the\n   returned devices for every subsequent call. If no device is available, ask\n   the user to connect one (Android: `adb devices` must show it; iOS:\n   simulator booted or device paired).\n2. **See the screen.** Prefer `mobile_list_elements_on_screen` — it returns\n   the accessibility tree with element labels and coordinates. It is faster,\n   cheaper, and more reliable than screenshots. Fall back to\n   `mobile_take_screenshot` only when elements are missing or you need visual\n   confirmation (games, canvas-drawn UI, image content).\n3. **Act.** `mobile_click_on_screen_at_coordinates`, `mobile_swipe_on_screen`,\n   `mobile_type_keys`, `mobile_press_button` (HOME, BACK, VOLUME, ENTER),\n   `mobile_launch_app` / `mobile_terminate_app` / `mobile_list_apps`,\n   `mobile_open_url`.\n4. **Verify after every action.** Re-list elements (or re-screenshot) to\n   confirm the UI changed as expected before the next step. Mobile UIs\n   animate; if the expected element is not there yet, wait briefly and check\n   again rather than tapping blind.\n\n## Tips\n\n- Click the **center** of an element's bounds, not its top-left corner.\n- To type, first tap the input field, confirm it is focused, then\n  `mobile_type_keys`.\n- Use `mobile_save_screenshot` when the user wants the image as a file;\n  `mobile_start_screen_recording` / `mobile_stop_screen_recording` for videos.\n- App crashed? `mobile_list_crashes` and `mobile_get_crash` fetch crash logs.\n- Screen size from `mobile_get_screen_size`; coordinates are in that space.\n- Real devices in the cloud (no local hardware): `mobile_login_to_cloud_provider`,\n  then `mobile_list_remote_devices` / `mobile_allocate_remote_device`, and\n  release with `mobile_release_remote_device` when done. See\n  https://mobilenext.ai/docs for details.\n"
+    }
+  ]
+}
