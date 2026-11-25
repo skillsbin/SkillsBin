@@ -1,0 +1,59 @@
+{
+  "repo": "SawyerHood/dev-browser",
+  "commit": "520ba5cb4fa2856a501376cd8a62fe54a6576549",
+  "branch": "main",
+  "fetchedAt": "2026-11-25T07:23:05.765Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "dev-browser",
+      "name": "dev-browser",
+      "dir": "skills/dev-browser",
+      "path": "skills/dev-browser/SKILL.md",
+      "desc": "Browser automation with persistent named pages via the dev-browser CLI. Use when users ask to navigate websites, fill forms, take screenshots, extract web data, test web apps, log into sites, or automate browser workflows. Trigger phrases include \"go to [url]\", \"click on\", \"fill out the form\", \"take a screenshot\", \"scrape\", \"automate\", \"test the website\", \"log into\", \"open the browser\", or any browser interaction request.",
+      "descZh": "",
+      "triggers": [
+        "fill forms",
+        "take screenshots",
+        "extract web data",
+        "test web a"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "npm",
+          "bun",
+          "go"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/SawyerHood/dev-browser.git",
+        "copy": "cp -r skills/dev-browser ~/.claude/skills/dev-browser",
+        "raw": "https://raw.githubusercontent.com/SawyerHood/dev-browser/520ba5cb4fa2856a501376cd8a62fe54a6576549/skills/dev-browser/SKILL.md",
+        "saveAs": "~/.claude/skills/dev-browser/SKILL.md",
+        "marketplace": "/plugin marketplace add SawyerHood/dev-browser"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:0b4f7c456e49abe45b952fcd400279658a1c1a6dd236021c38016cc6cbd3011a",
+      "bytes": 1820,
+      "wordCount": 188,
+      "repoLicense": "MIT",
+      "commit": "520ba5cb4fa2856a501376cd8a62fe54a6576549",
+      "branch": "main",
+      "body": "---\nname: dev-browser\ndescription: Browser automation with persistent named pages via the dev-browser CLI. Use when users ask to navigate websites, fill forms, take screenshots, extract web data, test web apps, log into sites, or automate browser workflows. Trigger phrases include \"go to [url]\", \"click on\", \"fill out the form\", \"take a screenshot\", \"scrape\", \"automate\", \"test the website\", \"log into\", \"open the browser\", or any browser interaction request.\n---\n\n# dev-browser\n\nCLI for controlling a real Chrome with short Puppeteer scripts. One warm daemon; named pages persist between runs.\n\n```bash\nnpm install -g dev-browser   # bun add -g dev-browser works too; the first run downloads the binary if the install script was blocked\ndev-browser install          # only if the first run says \"No Chrome found\"\n```\n\nRun `dev-browser --help` (full guide; `dev-browser help <topic>` for one section) before non-trivial work. Quick start:\n\n```bash\ndev-browser <<'EOF'\nconst page = await browser.getPage(\"main\");        // named page persists across runs\nawait page.goto(\"https://example.com\");            // default waitUntil: domcontentloaded\nawait page.snapshot({ interactive: true })         // ARIA tree with refs; last expression is printed\nEOF\ndev-browser -e 'const p = await browser.getPage(\"main\"); await p.click(\"ref/e6\"); await p.waitForLoad(); p.url()'\n```\n\nGotchas: end lines with semicolons (a line starting with `(` continues the previous one); return an object as\n`({ a, b })`; `page.click` never waits (use `waitForSelector` first); page names are per browser (`--headless` and\nheaded are separate Chromes and profiles); refs reset on navigation — re-snapshot; file paths resolve against your cwd\n(uploadFile, screenshot/pdf `path`); do not run parallel dev-browser calls against the same named page.\n",
+      "bodyMd": "# dev-browser\n\nCLI for controlling a real Chrome with short Puppeteer scripts. One warm daemon; named pages persist between runs.\n\n```bash\nnpm install -g dev-browser   # bun add -g dev-browser works too; the first run downloads the binary if the install script was blocked\ndev-browser install          # only if the first run says \"No Chrome found\"\n```\n\nRun `dev-browser --help` (full guide; `dev-browser help <topic>` for one section) before non-trivial work. Quick start:\n\n```bash\ndev-browser <<'EOF'\nconst page = await browser.getPage(\"main\");        // named page persists across runs\nawait page.goto(\"https://example.com\");            // default waitUntil: domcontentloaded\nawait page.snapshot({ interactive: true })         // ARIA tree with refs; last expression is printed\nEOF\ndev-browser -e 'const p = await browser.getPage(\"main\"); await p.click(\"ref/e6\"); await p.waitForLoad(); p.url()'\n```\n\nGotchas: end lines with semicolons (a line starting with `(` continues the previous one); return an object as\n`({ a, b })`; `page.click` never waits (use `waitForSelector` first); page names are per browser (`--headless` and\nheaded are separate Chromes and profiles); refs reset on navigation — re-snapshot; file paths resolve against your cwd\n(uploadFile, screenshot/pdf `path`); do not run parallel dev-browser calls against the same named page.\n"
+    }
+  ]
+}

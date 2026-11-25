@@ -1,0 +1,630 @@
+{
+  "repo": "getsentry/MobileBuildMCP",
+  "commit": "2998ac77ebbca59544e88a27f34bfb830db9d924",
+  "branch": "main",
+  "fetchedAt": "2026-11-25T07:23:13.418Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "mobilebuildmcp-docs-command-review",
+      "name": "mobilebuildmcp-docs-command-review",
+      "dir": ".agents/skills/mobilebuildmcp-docs-command-review",
+      "path": ".agents/skills/mobilebuildmcp-docs-command-review/SKILL.md",
+      "desc": "Use when reviewing MobileBuildMCP changelog CLI command references for invalid current guidance while allowing historical migration examples.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Read Grep Glob"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/getsentry/MobileBuildMCP.git",
+        "copy": "cp -r .agents/skills/mobilebuildmcp-docs-command-review ~/.claude/skills/mobilebuildmcp-docs-command-review",
+        "raw": "https://raw.githubusercontent.com/getsentry/MobileBuildMCP/2998ac77ebbca59544e88a27f34bfb830db9d924/.agents/skills/mobilebuildmcp-docs-command-review/SKILL.md",
+        "saveAs": "~/.claude/skills/mobilebuildmcp-docs-command-review/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:94bc54ab4218ce9dab544b91310d0bc9ba32d233ba4a1170154c0380ba67f45f",
+      "bytes": 2013,
+      "wordCount": 265,
+      "repoLicense": "MIT",
+      "commit": "2998ac77ebbca59544e88a27f34bfb830db9d924",
+      "branch": "main",
+      "body": "---\nname: mobilebuildmcp-docs-command-review\ndescription: Use when reviewing MobileBuildMCP changelog CLI command references for invalid current guidance while allowing historical migration examples.\nallowed-tools: Read Grep Glob\n---\n\n# MobileBuildMCP Docs Command Review\n\nReview changed changelog entries for CLI command references that would mislead users or agents.\n\n## What to inspect\n\n- `CHANGELOG.md`\n- `manifests/tools/*.yaml` and `manifests/workflows/*.yaml` when you need to verify current CLI workflow/tool names\n- `src/cli/**` only when command wiring is unclear from manifests\n\n## Issue criteria\n\nReport a finding only when a command reference is presented as current guidance and appears invalid for the current CLI surface.\n\n### High severity\n\n- A changelog bullet, example, or migration instruction tells users to run a removed or invalid `mobilebuildmcp` command as the current path.\n- A Breaking change mentions a removed command but does not give a valid replacement.\n- A command reference uses the wrong workflow/tool pairing in a way a user or agent would likely copy.\n\n### Medium severity\n\n- A command reference is ambiguous enough that users may not know whether it is historical or current.\n- A migration example gives the right replacement but does not clearly label the old command as \"Before\", \"old\", \"removed\", or equivalent.\n\n## Explicitly allowed\n\nDo not report removed commands when they are clearly historical context, especially in:\n\n- Breaking-change migration sections\n- \"Before\" examples paired with valid \"After\" examples\n- Already-released changelog sections describing past behavior\n\nExample that should not be reported:\n\n```markdown\nBefore:\nmobilebuildmcp logging start-sim-log-cap\n\nAfter:\nmobilebuildmcp simulator build-and-run\n```\n\n## Output\n\nFor each finding, include:\n\n- Severity\n- File and line\n- The command reference\n- Why it reads as current guidance\n- Suggested replacement wording or command\n\nIf all command references are historical or valid, report no findings.\n",
+      "bodyMd": "# MobileBuildMCP Docs Command Review\n\nReview changed changelog entries for CLI command references that would mislead users or agents.\n\n## What to inspect\n\n- `CHANGELOG.md`\n- `manifests/tools/*.yaml` and `manifests/workflows/*.yaml` when you need to verify current CLI workflow/tool names\n- `src/cli/**` only when command wiring is unclear from manifests\n\n## Issue criteria\n\nReport a finding only when a command reference is presented as current guidance and appears invalid for the current CLI surface.\n\n### High severity\n\n- A changelog bullet, example, or migration instruction tells users to run a removed or invalid `mobilebuildmcp` command as the current path.\n- A Breaking change mentions a removed command but does not give a valid replacement.\n- A command reference uses the wrong workflow/tool pairing in a way a user or agent would likely copy.\n\n### Medium severity\n\n- A command reference is ambiguous enough that users may not know whether it is historical or current.\n- A migration example gives the right replacement but does not clearly label the old command as \"Before\", \"old\", \"removed\", or equivalent.\n\n## Explicitly allowed\n\nDo not report removed commands when they are clearly historical context, especially in:\n\n- Breaking-change migration sections\n- \"Before\" examples paired with valid \"After\" examples\n- Already-released changelog sections describing past behavior\n\nExample that should not be reported:\n\n```markdown\nBefore:\nmobilebuildmcp logging start-sim-log-cap\n\nAfter:\nmobilebuildmcp simulator build-and-run\n```\n\n## Output\n\nFor each finding, include:\n\n- Severity\n- File and line\n- The command reference\n- Why it reads as current guidance\n- Suggested replacement wording or command\n\nIf all command references are historical or valid, report no findings.\n"
+    },
+    {
+      "slug": "mobilebuildmcp-docs-release-review",
+      "name": "mobilebuildmcp-docs-release-review",
+      "dir": ".agents/skills/mobilebuildmcp-docs-release-review",
+      "path": ".agents/skills/mobilebuildmcp-docs-release-review/SKILL.md",
+      "desc": "Use when reviewing MobileBuildMCP documentation, CLI command references, website manifest generation, changelog, release notes, and release script changes.",
+      "descZh": "",
+      "triggers": [
+        "CLI command references"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "node",
+          "npm",
+          "npx"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/getsentry/MobileBuildMCP.git",
+        "copy": "cp -r .agents/skills/mobilebuildmcp-docs-release-review ~/.claude/skills/mobilebuildmcp-docs-release-review",
+        "raw": "https://raw.githubusercontent.com/getsentry/MobileBuildMCP/2998ac77ebbca59544e88a27f34bfb830db9d924/.agents/skills/mobilebuildmcp-docs-release-review/SKILL.md",
+        "saveAs": "~/.claude/skills/mobilebuildmcp-docs-release-review/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:65be088663ff5a8223ff2d1f547f83f14338a06f81f07bea4db9503282c0330c",
+      "bytes": 1555,
+      "wordCount": 158,
+      "repoLicense": "MIT",
+      "commit": "2998ac77ebbca59544e88a27f34bfb830db9d924",
+      "branch": "main",
+      "body": "---\nname: mobilebuildmcp-docs-release-review\ndescription: Use when reviewing MobileBuildMCP documentation, CLI command references, website manifest generation, changelog, release notes, and release script changes.\n---\n\n# MobileBuildMCP Docs and Release Review\n\nReview guardrails for documentation, generated references, and release flow consistency.\n\n## Review scope\n\n- Review-only by default.\n- Do not edit product code unless the user explicitly requests implementation changes.\n\n## Files to inspect\n\n- `README.md`\n- `CHANGELOG.md` when present\n- `scripts/build-website-manifest.mjs`\n- `scripts/generate-github-release-notes.mjs`\n- `scripts/release.sh`\n- `package.json`\n- `xcodebuildmcp.com/app/docs/_content/**`\n\n## Guardrails\n\n- CLI examples match generated CLI catalog/commands.\n- Docs do not reference unavailable tools or workflows.\n- User-facing behavior changes include changelog updates.\n- Release notes derive from a valid changelog section.\n- README install snippets align with release script tag replacement.\n- Website manifest generation preserves expected normalized fields.\n- Docs explain runtime/contracts without deprecated patterns.\n- Keep docs-only work from introducing product behavior changes.\n- CLI command references in changelog entries are reviewed by `mobilebuildmcp-docs-command-review`.\n\n## Validation\n\n- `npm run build`\n- Release notes check when touched:\n  - `node scripts/generate-github-release-notes.mjs --version <version> --changelog CHANGELOG.md`\n- `npx skill-check .agents/skills/mobilebuildmcp-docs-release-review`\n",
+      "bodyMd": "# MobileBuildMCP Docs and Release Review\n\nReview guardrails for documentation, generated references, and release flow consistency.\n\n## Review scope\n\n- Review-only by default.\n- Do not edit product code unless the user explicitly requests implementation changes.\n\n## Files to inspect\n\n- `README.md`\n- `CHANGELOG.md` when present\n- `scripts/build-website-manifest.mjs`\n- `scripts/generate-github-release-notes.mjs`\n- `scripts/release.sh`\n- `package.json`\n- `xcodebuildmcp.com/app/docs/_content/**`\n\n## Guardrails\n\n- CLI examples match generated CLI catalog/commands.\n- Docs do not reference unavailable tools or workflows.\n- User-facing behavior changes include changelog updates.\n- Release notes derive from a valid changelog section.\n- README install snippets align with release script tag replacement.\n- Website manifest generation preserves expected normalized fields.\n- Docs explain runtime/contracts without deprecated patterns.\n- Keep docs-only work from introducing product behavior changes.\n- CLI command references in changelog entries are reviewed by `mobilebuildmcp-docs-command-review`.\n\n## Validation\n\n- `npm run build`\n- Release notes check when touched:\n  - `node scripts/generate-github-release-notes.mjs --version <version> --changelog CHANGELOG.md`\n- `npx skill-check .agents/skills/mobilebuildmcp-docs-release-review`\n"
+    },
+    {
+      "slug": "mobilebuildmcp-packaging-resource-review",
+      "name": "mobilebuildmcp-packaging-resource-review",
+      "dir": ".agents/skills/mobilebuildmcp-packaging-resource-review",
+      "path": ".agents/skills/mobilebuildmcp-packaging-resource-review/SKILL.md",
+      "desc": "Use when reviewing MobileBuildMCP packaging, resource-root, build artifact, bundled AXe, schema, manifest, and portable macOS distribution changes.",
+      "descZh": "",
+      "triggers": [
+        "resource-root",
+        "build artifact",
+        "bundled AXe",
+        "schema",
+        "ma"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "npm",
+          "npx"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/getsentry/MobileBuildMCP.git",
+        "copy": "cp -r .agents/skills/mobilebuildmcp-packaging-resource-review ~/.claude/skills/mobilebuildmcp-packaging-resource-review",
+        "raw": "https://raw.githubusercontent.com/getsentry/MobileBuildMCP/2998ac77ebbca59544e88a27f34bfb830db9d924/.agents/skills/mobilebuildmcp-packaging-resource-review/SKILL.md",
+        "saveAs": "~/.claude/skills/mobilebuildmcp-packaging-resource-review/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:620378777e45a4d08e77f8513fbf4fdca541fdcfd94521f7ee0dba9dceeb36e0",
+      "bytes": 1538,
+      "wordCount": 154,
+      "repoLicense": "MIT",
+      "commit": "2998ac77ebbca59544e88a27f34bfb830db9d924",
+      "branch": "main",
+      "body": "---\nname: mobilebuildmcp-packaging-resource-review\ndescription: Use when reviewing MobileBuildMCP packaging, resource-root, build artifact, bundled AXe, schema, manifest, and portable macOS distribution changes.\n---\n\n# MobileBuildMCP Packaging and Resource Review\n\nReview guardrails for package/build/resource integrity and portable distribution.\n\n## Review scope\n\n- Review-only by default.\n- Do not edit product code unless the user explicitly requests implementation changes.\n\n## Files to inspect\n\n- `package.json`\n- `scripts/copy-build-assets.js`\n- `scripts/package-macos-portable.sh`\n- `scripts/build-website-manifest.mjs`\n- `schemas/**`\n- `manifests/**`\n- `skills/**`\n- `bundled/**` when present\n- Resource-root utilities when touched\n\n## Guardrails\n\n- Published package `files` includes required runtime resources.\n- Portable package includes `build`, `manifests`, `bundled`, `skills`, `package.json`, and production dependencies.\n- AXe binary/framework expectations remain verified.\n- Wrapper scripts preserve `MOBILEBUILDMCP_RESOURCE_ROOT` and `DYLD_FRAMEWORK_PATH`.\n- Schemas and manifests stay available in installed and portable layouts.\n- Do not assume build outputs exist before `npm run build`.\n- Avoid network-dependent packaging behavior without verification/checksums.\n\n## Validation\n\n- `npm run build`\n- Packaging-specific when touched:\n  - `npm run package:macos -- --help` (if supported)\n  - `npm run verify:portable` after artifact creation\n- `npx skill-check .agents/skills/mobilebuildmcp-packaging-resource-review`\n",
+      "bodyMd": "# MobileBuildMCP Packaging and Resource Review\n\nReview guardrails for package/build/resource integrity and portable distribution.\n\n## Review scope\n\n- Review-only by default.\n- Do not edit product code unless the user explicitly requests implementation changes.\n\n## Files to inspect\n\n- `package.json`\n- `scripts/copy-build-assets.js`\n- `scripts/package-macos-portable.sh`\n- `scripts/build-website-manifest.mjs`\n- `schemas/**`\n- `manifests/**`\n- `skills/**`\n- `bundled/**` when present\n- Resource-root utilities when touched\n\n## Guardrails\n\n- Published package `files` includes required runtime resources.\n- Portable package includes `build`, `manifests`, `bundled`, `skills`, `package.json`, and production dependencies.\n- AXe binary/framework expectations remain verified.\n- Wrapper scripts preserve `MOBILEBUILDMCP_RESOURCE_ROOT` and `DYLD_FRAMEWORK_PATH`.\n- Schemas and manifests stay available in installed and portable layouts.\n- Do not assume build outputs exist before `npm run build`.\n- Avoid network-dependent packaging behavior without verification/checksums.\n\n## Validation\n\n- `npm run build`\n- Packaging-specific when touched:\n  - `npm run package:macos -- --help` (if supported)\n  - `npm run verify:portable` after artifact creation\n- `npx skill-check .agents/skills/mobilebuildmcp-packaging-resource-review`\n"
+    },
+    {
+      "slug": "mobilebuildmcp-rendering-streaming-review",
+      "name": "mobilebuildmcp-rendering-streaming-review",
+      "dir": ".agents/skills/mobilebuildmcp-rendering-streaming-review",
+      "path": ".agents/skills/mobilebuildmcp-rendering-streaming-review/SKILL.md",
+      "desc": "Use when reviewing MobileBuildMCP rendering, streaming fragment, next-step, and CLI output mode changes for boundary violations.",
+      "descZh": "",
+      "triggers": [
+        "streaming fragment",
+        "next-step",
+        "and CLI output mode cha"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "npm",
+          "npx"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/getsentry/MobileBuildMCP.git",
+        "copy": "cp -r .agents/skills/mobilebuildmcp-rendering-streaming-review ~/.claude/skills/mobilebuildmcp-rendering-streaming-review",
+        "raw": "https://raw.githubusercontent.com/getsentry/MobileBuildMCP/2998ac77ebbca59544e88a27f34bfb830db9d924/.agents/skills/mobilebuildmcp-rendering-streaming-review/SKILL.md",
+        "saveAs": "~/.claude/skills/mobilebuildmcp-rendering-streaming-review/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:7fed2eebebf3546df3383a38616efdb1c638b100d7db92c6c5635034a27b2931",
+      "bytes": 1544,
+      "wordCount": 145,
+      "repoLicense": "MIT",
+      "commit": "2998ac77ebbca59544e88a27f34bfb830db9d924",
+      "branch": "main",
+      "body": "---\nname: mobilebuildmcp-rendering-streaming-review\ndescription: Use when reviewing MobileBuildMCP rendering, streaming fragment, next-step, and CLI output mode changes for boundary violations.\n---\n\n# MobileBuildMCP Rendering and Streaming Review\n\nReview guardrails for rendering boundaries, streaming fragments, and output modes.\n\n## Review scope\n\n- Review-only by default.\n- Do not edit product code unless the user explicitly requests implementation changes.\n\n## Files to inspect\n\n- `src/rendering/**`\n- `src/types/domain-fragments.ts`\n- `src/types/runtime-status.ts`\n- `src/runtime/tool-invoker.ts`\n- `src/runtime/__tests__/tool-invoker.test.ts`\n- `xcodebuildmcp.com/app/docs/_content/architecture-rendering-output.mdx`\n- `xcodebuildmcp.com/app/docs/_content/architecture-tool-lifecycle.mdx`\n- `xcodebuildmcp.com/app/docs/_content/output-formats.mdx`\n\n## Guardrails\n\n- Tool handlers do not branch on CLI vs MCP output mode.\n- Fragments represent progress, not final contract data.\n- Final structured output remains canonical.\n- Do not invent `json`/`jsonl` render strategies.\n- Streaming tools emit typed fragments and one final structured result.\n- Non-streaming tools do not emit unnecessary fragments.\n- Keep `ctx.emit` and xcodebuild pipeline `emitFragment` contexts separate.\n- Keep next-step rendering in runtime/rendering boundary.\n\n## Validation\n\n- `npm test -- src/runtime/__tests__/tool-invoker.test.ts`\n- `npm run test:snapshots`\n- `npm run typecheck`\n- `npx skill-check .agents/skills/mobilebuildmcp-rendering-streaming-review`\n",
+      "bodyMd": "# MobileBuildMCP Rendering and Streaming Review\n\nReview guardrails for rendering boundaries, streaming fragments, and output modes.\n\n## Review scope\n\n- Review-only by default.\n- Do not edit product code unless the user explicitly requests implementation changes.\n\n## Files to inspect\n\n- `src/rendering/**`\n- `src/types/domain-fragments.ts`\n- `src/types/runtime-status.ts`\n- `src/runtime/tool-invoker.ts`\n- `src/runtime/__tests__/tool-invoker.test.ts`\n- `xcodebuildmcp.com/app/docs/_content/architecture-rendering-output.mdx`\n- `xcodebuildmcp.com/app/docs/_content/architecture-tool-lifecycle.mdx`\n- `xcodebuildmcp.com/app/docs/_content/output-formats.mdx`\n\n## Guardrails\n\n- Tool handlers do not branch on CLI vs MCP output mode.\n- Fragments represent progress, not final contract data.\n- Final structured output remains canonical.\n- Do not invent `json`/`jsonl` render strategies.\n- Streaming tools emit typed fragments and one final structured result.\n- Non-streaming tools do not emit unnecessary fragments.\n- Keep `ctx.emit` and xcodebuild pipeline `emitFragment` contexts separate.\n- Keep next-step rendering in runtime/rendering boundary.\n\n## Validation\n\n- `npm test -- src/runtime/__tests__/tool-invoker.test.ts`\n- `npm run test:snapshots`\n- `npm run typecheck`\n- `npx skill-check .agents/skills/mobilebuildmcp-rendering-streaming-review`\n"
+    },
+    {
+      "slug": "mobilebuildmcp-runtime-boundary-review",
+      "name": "mobilebuildmcp-runtime-boundary-review",
+      "dir": ".agents/skills/mobilebuildmcp-runtime-boundary-review",
+      "path": ".agents/skills/mobilebuildmcp-runtime-boundary-review/SKILL.md",
+      "desc": "Use when reviewing MobileBuildMCP runtime boundary changes across MCP, direct CLI invocation, daemon-routed tools, and Xcode IDE bridge routing.",
+      "descZh": "",
+      "triggers": [
+        "direct CLI invocation",
+        "daemo"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "npm",
+          "npx"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/getsentry/MobileBuildMCP.git",
+        "copy": "cp -r .agents/skills/mobilebuildmcp-runtime-boundary-review ~/.claude/skills/mobilebuildmcp-runtime-boundary-review",
+        "raw": "https://raw.githubusercontent.com/getsentry/MobileBuildMCP/2998ac77ebbca59544e88a27f34bfb830db9d924/.agents/skills/mobilebuildmcp-runtime-boundary-review/SKILL.md",
+        "saveAs": "~/.claude/skills/mobilebuildmcp-runtime-boundary-review/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:8ebe2e7f85c698ced9fcf0cf8ee322c7d5894cc6bbfba9b73cd8483c987a4b77",
+      "bytes": 1450,
+      "wordCount": 139,
+      "repoLicense": "MIT",
+      "commit": "2998ac77ebbca59544e88a27f34bfb830db9d924",
+      "branch": "main",
+      "body": "---\nname: mobilebuildmcp-runtime-boundary-review\ndescription: Use when reviewing MobileBuildMCP runtime boundary changes across MCP, direct CLI invocation, daemon-routed tools, and Xcode IDE bridge routing.\n---\n\n# MobileBuildMCP Runtime Boundary Review\n\nReview guardrails for runtime routing and invocation boundaries.\n\n## Review scope\n\n- Review-only by default.\n- Do not edit product code unless the user explicitly requests implementation changes.\n\n## Files to inspect\n\n- `src/runtime/tool-catalog.ts`\n- `src/runtime/tool-invoker.ts`\n- `src/runtime/types.ts`\n- `src/cli/**`\n- `src/daemon/**`\n- `manifests/tools/*.yaml`\n- `manifests/workflows/*.yaml`\n- `xcodebuildmcp.com/app/docs/_content/architecture-runtime-boundaries.mdx`\n- `xcodebuildmcp.com/app/docs/_content/architecture-manifest-visibility.mdx`\n\n## Guardrails\n\n- MCP, CLI, and daemon paths use shared handlers.\n- Stateful CLI tools route through daemon only when `routing.stateful` requires it.\n- Do not treat daemon as a third manifest availability mode.\n- Dynamic Xcode IDE tools keep daemon routing semantics.\n- Catalog filtering respects availability, workflow selection, and predicates.\n- Runtime failures surface via runtime/rendering status and fragments.\n- Avoid silent fallbacks and parallel invocation paths.\n\n## Validation\n\n- `npm test -- src/runtime/__tests__/tool-invoker.test.ts`\n- `npm run typecheck`\n- `npx skill-check .agents/skills/mobilebuildmcp-runtime-boundary-review`\n",
+      "bodyMd": "# MobileBuildMCP Runtime Boundary Review\n\nReview guardrails for runtime routing and invocation boundaries.\n\n## Review scope\n\n- Review-only by default.\n- Do not edit product code unless the user explicitly requests implementation changes.\n\n## Files to inspect\n\n- `src/runtime/tool-catalog.ts`\n- `src/runtime/tool-invoker.ts`\n- `src/runtime/types.ts`\n- `src/cli/**`\n- `src/daemon/**`\n- `manifests/tools/*.yaml`\n- `manifests/workflows/*.yaml`\n- `xcodebuildmcp.com/app/docs/_content/architecture-runtime-boundaries.mdx`\n- `xcodebuildmcp.com/app/docs/_content/architecture-manifest-visibility.mdx`\n\n## Guardrails\n\n- MCP, CLI, and daemon paths use shared handlers.\n- Stateful CLI tools route through daemon only when `routing.stateful` requires it.\n- Do not treat daemon as a third manifest availability mode.\n- Dynamic Xcode IDE tools keep daemon routing semantics.\n- Catalog filtering respects availability, workflow selection, and predicates.\n- Runtime failures surface via runtime/rendering status and fragments.\n- Avoid silent fallbacks and parallel invocation paths.\n\n## Validation\n\n- `npm test -- src/runtime/__tests__/tool-invoker.test.ts`\n- `npm run typecheck`\n- `npx skill-check .agents/skills/mobilebuildmcp-runtime-boundary-review`\n"
+    },
+    {
+      "slug": "mobilebuildmcp-snapshot-fixture-review",
+      "name": "mobilebuildmcp-snapshot-fixture-review",
+      "dir": ".agents/skills/mobilebuildmcp-snapshot-fixture-review",
+      "path": ".agents/skills/mobilebuildmcp-snapshot-fixture-review/SKILL.md",
+      "desc": "Use when reviewing MobileBuildMCP snapshot fixture changes for MCP, CLI, and JSON output contract integrity.",
+      "descZh": "",
+      "triggers": [
+        "CLI"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/getsentry/MobileBuildMCP.git",
+        "copy": "cp -r .agents/skills/mobilebuildmcp-snapshot-fixture-review ~/.claude/skills/mobilebuildmcp-snapshot-fixture-review",
+        "raw": "https://raw.githubusercontent.com/getsentry/MobileBuildMCP/2998ac77ebbca59544e88a27f34bfb830db9d924/.agents/skills/mobilebuildmcp-snapshot-fixture-review/SKILL.md",
+        "saveAs": "~/.claude/skills/mobilebuildmcp-snapshot-fixture-review/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:6993b64e155d7dccf9767fbcb8bfc5dd4929382c58d79de5eaca18d4faf90aff",
+      "bytes": 1885,
+      "wordCount": 226,
+      "repoLicense": "MIT",
+      "commit": "2998ac77ebbca59544e88a27f34bfb830db9d924",
+      "branch": "main",
+      "body": "---\nname: mobilebuildmcp-snapshot-fixture-review\ndescription: Use when reviewing MobileBuildMCP snapshot fixture changes for MCP, CLI, and JSON output contract integrity.\n---\n\n# MobileBuildMCP Snapshot Fixture Review\n\nReview guardrails for fixture and snapshot contract integrity.\n\n## Review scope\n\n- Review-only by default.\n- Do not edit product code unless the user explicitly requests implementation changes.\n\n## Files to inspect\n\n- `src/snapshot-tests/__fixtures__/**`\n- `src/snapshot-tests/contracts.ts`\n- `src/snapshot-tests/fixture-io.ts`\n- `src/snapshot-tests/__tests__/fixture-io.test.ts`\n- `src/snapshot-tests/__tests__/json-normalize.test.ts`\n- `src/snapshot-tests/__tests__/json-fixture-schema.test.ts`\n- `xcodebuildmcp.com/app/docs/_content/testing.mdx`\n\n## Guardrails\n\n- Fixture updates map to intentional behavior changes.\n- Do not update fixtures only to make tests pass.\n- MCP, CLI, and JSON fixture updates stay aligned.\n- JSON fixtures preserve stable structured output envelopes.\n- Volatile values are normalized in code, not patched ad hoc in fixtures.\n- Missing fixtures are generated through the snapshot update flow.\n- Verify project-defined normalization sentinels in normalization code and tests before reporting\n  them as implausible fixture values. In particular, `99999` is an intentional sentinel for\n  volatile UI capture counts.\n- Group every occurrence of the same root cause into one finding and list the affected fixtures.\n  Do not emit separate findings for equivalent CLI, MCP, text, or JSON drift.\n- Do not repeat a finding that is already resolved by the current diff.\n\n## Review limits\n\n- Review the changed fixtures and the directly relevant normalization or contract code only.\n- Do not run snapshot or smoke suites as part of an automated PR review.\n- Prefer one high-confidence cross-fixture finding over multiple speculative discrepancies.\n",
+      "bodyMd": "# MobileBuildMCP Snapshot Fixture Review\n\nReview guardrails for fixture and snapshot contract integrity.\n\n## Review scope\n\n- Review-only by default.\n- Do not edit product code unless the user explicitly requests implementation changes.\n\n## Files to inspect\n\n- `src/snapshot-tests/__fixtures__/**`\n- `src/snapshot-tests/contracts.ts`\n- `src/snapshot-tests/fixture-io.ts`\n- `src/snapshot-tests/__tests__/fixture-io.test.ts`\n- `src/snapshot-tests/__tests__/json-normalize.test.ts`\n- `src/snapshot-tests/__tests__/json-fixture-schema.test.ts`\n- `xcodebuildmcp.com/app/docs/_content/testing.mdx`\n\n## Guardrails\n\n- Fixture updates map to intentional behavior changes.\n- Do not update fixtures only to make tests pass.\n- MCP, CLI, and JSON fixture updates stay aligned.\n- JSON fixtures preserve stable structured output envelopes.\n- Volatile values are normalized in code, not patched ad hoc in fixtures.\n- Missing fixtures are generated through the snapshot update flow.\n- Verify project-defined normalization sentinels in normalization code and tests before reporting\n  them as implausible fixture values. In particular, `99999` is an intentional sentinel for\n  volatile UI capture counts.\n- Group every occurrence of the same root cause into one finding and list the affected fixtures.\n  Do not emit separate findings for equivalent CLI, MCP, text, or JSON drift.\n- Do not repeat a finding that is already resolved by the current diff.\n\n## Review limits\n\n- Review the changed fixtures and the directly relevant normalization or contract code only.\n- Do not run snapshot or smoke suites as part of an automated PR review.\n- Prefer one high-confidence cross-fixture finding over multiple speculative discrepancies.\n"
+    },
+    {
+      "slug": "mobilebuildmcp-structured-output-review",
+      "name": "mobilebuildmcp-structured-output-review",
+      "dir": ".agents/skills/mobilebuildmcp-structured-output-review",
+      "path": ".agents/skills/mobilebuildmcp-structured-output-review/SKILL.md",
+      "desc": "Use when reviewing MobileBuildMCP structured output schema changes, schema versioning, manifest outputSchema metadata, and JSON fixture compatibility.",
+      "descZh": "",
+      "triggers": [
+        "schema versioning",
+        "manifest out"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "npm",
+          "npx"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/getsentry/MobileBuildMCP.git",
+        "copy": "cp -r .agents/skills/mobilebuildmcp-structured-output-review ~/.claude/skills/mobilebuildmcp-structured-output-review",
+        "raw": "https://raw.githubusercontent.com/getsentry/MobileBuildMCP/2998ac77ebbca59544e88a27f34bfb830db9d924/.agents/skills/mobilebuildmcp-structured-output-review/SKILL.md",
+        "saveAs": "~/.claude/skills/mobilebuildmcp-structured-output-review/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:3c877632460d6be085a631beac5108f98cc341d461c5a98b4a9cb42813a12608",
+      "bytes": 1525,
+      "wordCount": 128,
+      "repoLicense": "MIT",
+      "commit": "2998ac77ebbca59544e88a27f34bfb830db9d924",
+      "branch": "main",
+      "body": "---\nname: mobilebuildmcp-structured-output-review\ndescription: Use when reviewing MobileBuildMCP structured output schema changes, schema versioning, manifest outputSchema metadata, and JSON fixture compatibility.\n---\n\n# MobileBuildMCP Structured Output Review\n\nReview guardrails for structured output schema correctness and compatibility.\n\n## Review scope\n\n- Review-only by default.\n- Do not edit product code unless the user explicitly requests implementation changes.\n\n## Files to inspect\n\n- `schemas/structured-output/**`\n- `src/core/structured-output-schema.ts`\n- `src/core/__tests__/structured-output-schema.test.ts`\n- `src/snapshot-tests/__fixtures__/json/**`\n- `src/snapshot-tests/__tests__/json-fixture-schema.test.ts`\n- `xcodebuildmcp.com/app/docs/_content/schema-versioning.mdx`\n- `xcodebuildmcp.com/app/docs/_content/output-formats.mdx`\n\n## Guardrails\n\n- `schema` uses `mobilebuildmcp.output.<name>` format.\n- `schemaVersion` uses integer strings only.\n- Breaking schema changes create a new versioned schema file.\n- Published schema versions are not removed or mutated incompatibly.\n- Manifest `outputSchema` matches emitted `ctx.structuredOutput` payload.\n- JSON fixtures validate against current schema contracts.\n- `$ref` usage remains compatible with bundling in `structured-output-schema.ts`.\n\n## Validation\n\n- `npm run test:schema-fixtures`\n- `npm test -- src/core/__tests__/structured-output-schema.test.ts`\n- `npm run typecheck`\n- `npx skill-check .agents/skills/mobilebuildmcp-structured-output-review`\n",
+      "bodyMd": "# MobileBuildMCP Structured Output Review\n\nReview guardrails for structured output schema correctness and compatibility.\n\n## Review scope\n\n- Review-only by default.\n- Do not edit product code unless the user explicitly requests implementation changes.\n\n## Files to inspect\n\n- `schemas/structured-output/**`\n- `src/core/structured-output-schema.ts`\n- `src/core/__tests__/structured-output-schema.test.ts`\n- `src/snapshot-tests/__fixtures__/json/**`\n- `src/snapshot-tests/__tests__/json-fixture-schema.test.ts`\n- `xcodebuildmcp.com/app/docs/_content/schema-versioning.mdx`\n- `xcodebuildmcp.com/app/docs/_content/output-formats.mdx`\n\n## Guardrails\n\n- `schema` uses `mobilebuildmcp.output.<name>` format.\n- `schemaVersion` uses integer strings only.\n- Breaking schema changes create a new versioned schema file.\n- Published schema versions are not removed or mutated incompatibly.\n- Manifest `outputSchema` matches emitted `ctx.structuredOutput` payload.\n- JSON fixtures validate against current schema contracts.\n- `$ref` usage remains compatible with bundling in `structured-output-schema.ts`.\n\n## Validation\n\n- `npm run test:schema-fixtures`\n- `npm test -- src/core/__tests__/structured-output-schema.test.ts`\n- `npm run typecheck`\n- `npx skill-check .agents/skills/mobilebuildmcp-structured-output-review`\n"
+    },
+    {
+      "slug": "mobilebuildmcp-test-boundary-review",
+      "name": "mobilebuildmcp-test-boundary-review",
+      "dir": ".agents/skills/mobilebuildmcp-test-boundary-review",
+      "path": ".agents/skills/mobilebuildmcp-test-boundary-review/SKILL.md",
+      "desc": "Use when reviewing MobileBuildMCP tests for correct unit, snapshot, schema, smoke, and external process boundaries.",
+      "descZh": "",
+      "triggers": [
+        "snapshot",
+        "schema",
+        "smoke",
+        "and external pro"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "npm",
+          "npx"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/getsentry/MobileBuildMCP.git",
+        "copy": "cp -r .agents/skills/mobilebuildmcp-test-boundary-review ~/.claude/skills/mobilebuildmcp-test-boundary-review",
+        "raw": "https://raw.githubusercontent.com/getsentry/MobileBuildMCP/2998ac77ebbca59544e88a27f34bfb830db9d924/.agents/skills/mobilebuildmcp-test-boundary-review/SKILL.md",
+        "saveAs": "~/.claude/skills/mobilebuildmcp-test-boundary-review/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:f3e5b29650d9553f4090188bb7a3d3f5f25057d337eb9e77a5c58b0e7f1c7376",
+      "bytes": 1391,
+      "wordCount": 148,
+      "repoLicense": "MIT",
+      "commit": "2998ac77ebbca59544e88a27f34bfb830db9d924",
+      "branch": "main",
+      "body": "---\nname: mobilebuildmcp-test-boundary-review\ndescription: Use when reviewing MobileBuildMCP tests for correct unit, snapshot, schema, smoke, and external process boundaries.\n---\n\n# MobileBuildMCP Test Boundary Review\n\nReview guardrails for test isolation, scope, and contract validation.\n\n## Review scope\n\n- Review-only by default.\n- Do not edit product code unless the user explicitly requests implementation changes.\n\n## Files to inspect\n\n- `src/**/__tests__/**`\n- `src/test-utils/**`\n- `src/snapshot-tests/**`\n- `scripts/**/__tests__/**`\n- `package.json`\n- `xcodebuildmcp.com/app/docs/_content/testing.mdx`\n- `xcodebuildmcp.com/app/docs/_content/contributing.mdx`\n\n## Guardrails\n\n- Unit tests inject command/filesystem/external dependencies.\n- Unit tests do not call real `xcodebuild`, `xcrun`, AXe, devices, or simulators.\n- Prefer testing logic/executor functions over handler wrappers unless testing runtime integration.\n- Use existing mock executor helpers.\n- Treat snapshot updates as contract changes requiring review.\n- Do not add fake e2e/snapshot state to force test success.\n- Avoid unsafe TypeScript suppressions.\n\n## Validation\n\n- Run targeted Vitest command for touched tests.\n- `npm test`\n- `npm run typecheck`\n- If fixtures/schemas changed: `npm run test:snapshots` and `npm run test:schema-fixtures`\n- `npx skill-check .agents/skills/mobilebuildmcp-test-boundary-review`\n",
+      "bodyMd": "# MobileBuildMCP Test Boundary Review\n\nReview guardrails for test isolation, scope, and contract validation.\n\n## Review scope\n\n- Review-only by default.\n- Do not edit product code unless the user explicitly requests implementation changes.\n\n## Files to inspect\n\n- `src/**/__tests__/**`\n- `src/test-utils/**`\n- `src/snapshot-tests/**`\n- `scripts/**/__tests__/**`\n- `package.json`\n- `xcodebuildmcp.com/app/docs/_content/testing.mdx`\n- `xcodebuildmcp.com/app/docs/_content/contributing.mdx`\n\n## Guardrails\n\n- Unit tests inject command/filesystem/external dependencies.\n- Unit tests do not call real `xcodebuild`, `xcrun`, AXe, devices, or simulators.\n- Prefer testing logic/executor functions over handler wrappers unless testing runtime integration.\n- Use existing mock executor helpers.\n- Treat snapshot updates as contract changes requiring review.\n- Do not add fake e2e/snapshot state to force test success.\n- Avoid unsafe TypeScript suppressions.\n\n## Validation\n\n- Run targeted Vitest command for touched tests.\n- `npm test`\n- `npm run typecheck`\n- If fixtures/schemas changed: `npm run test:snapshots` and `npm run test:schema-fixtures`\n- `npx skill-check .agents/skills/mobilebuildmcp-test-boundary-review`\n"
+    },
+    {
+      "slug": "mobilebuildmcp-tool-contract-review",
+      "name": "mobilebuildmcp-tool-contract-review",
+      "dir": ".agents/skills/mobilebuildmcp-tool-contract-review",
+      "path": ".agents/skills/mobilebuildmcp-tool-contract-review/SKILL.md",
+      "desc": "Use when reviewing MobileBuildMCP tool contract changes across implementation, manifests, workflow membership, output schema metadata, and next-step templates.",
+      "descZh": "",
+      "triggers": [
+        "manifests",
+        "workflow"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "npm",
+          "npx"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/getsentry/MobileBuildMCP.git",
+        "copy": "cp -r .agents/skills/mobilebuildmcp-tool-contract-review ~/.claude/skills/mobilebuildmcp-tool-contract-review",
+        "raw": "https://raw.githubusercontent.com/getsentry/MobileBuildMCP/2998ac77ebbca59544e88a27f34bfb830db9d924/.agents/skills/mobilebuildmcp-tool-contract-review/SKILL.md",
+        "saveAs": "~/.claude/skills/mobilebuildmcp-tool-contract-review/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:ae4286016a3eea722565db8b78a0eed9e91182f56ca1a6881ffd6be2b33ca749",
+      "bytes": 1613,
+      "wordCount": 153,
+      "repoLicense": "MIT",
+      "commit": "2998ac77ebbca59544e88a27f34bfb830db9d924",
+      "branch": "main",
+      "body": "---\nname: mobilebuildmcp-tool-contract-review\ndescription: Use when reviewing MobileBuildMCP tool contract changes across implementation, manifests, workflow membership, output schema metadata, and next-step templates.\n---\n\n# MobileBuildMCP Tool Contract Review\n\nReview guardrails for tool contract changes across implementation, manifests, and workflow exposure.\n\n## Review scope\n\n- Review-only by default.\n- Do not edit product code unless the user explicitly requests implementation changes.\n\n## Files to inspect\n\n- `src/mcp/tools/**`\n- `manifests/tools/*.yaml`\n- `manifests/workflows/*.yaml`\n- `src/core/manifest/schema.ts`\n- `src/runtime/tool-catalog.ts`\n- `src/runtime/types.ts`\n- `xcodebuildmcp.com/app/docs/_content/tool-authoring.mdx`\n- `xcodebuildmcp.com/app/docs/_content/architecture-manifest-visibility.mdx`\n\n## Guardrails\n\n- Manifest `id` matches filename.\n- Manifest `module` points to implementation path without extension.\n- Tool module exports named `schema` and `handler`.\n- `names.mcp` remains globally unique.\n- `names.cli` stays workflow-local and consistent with CLI docs/fixtures.\n- Tool appears in at least one workflow unless intentionally hidden by availability.\n- `outputSchema` is present for tools that set `ctx.structuredOutput`.\n- `nextSteps.toolId` references existing manifest tool IDs.\n- Avoid parallel legacy paths or duplicate implementation paths.\n\n## Validation\n\n- `npm run typecheck`\n- `npm test -- src/core/manifest/__tests__/schema.test.ts`\n- `npm test -- src/runtime/__tests__/tool-invoker.test.ts`\n- `npx skill-check .agents/skills/mobilebuildmcp-tool-contract-review`\n",
+      "bodyMd": "# MobileBuildMCP Tool Contract Review\n\nReview guardrails for tool contract changes across implementation, manifests, and workflow exposure.\n\n## Review scope\n\n- Review-only by default.\n- Do not edit product code unless the user explicitly requests implementation changes.\n\n## Files to inspect\n\n- `src/mcp/tools/**`\n- `manifests/tools/*.yaml`\n- `manifests/workflows/*.yaml`\n- `src/core/manifest/schema.ts`\n- `src/runtime/tool-catalog.ts`\n- `src/runtime/types.ts`\n- `xcodebuildmcp.com/app/docs/_content/tool-authoring.mdx`\n- `xcodebuildmcp.com/app/docs/_content/architecture-manifest-visibility.mdx`\n\n## Guardrails\n\n- Manifest `id` matches filename.\n- Manifest `module` points to implementation path without extension.\n- Tool module exports named `schema` and `handler`.\n- `names.mcp` remains globally unique.\n- `names.cli` stays workflow-local and consistent with CLI docs/fixtures.\n- Tool appears in at least one workflow unless intentionally hidden by availability.\n- `outputSchema` is present for tools that set `ctx.structuredOutput`.\n- `nextSteps.toolId` references existing manifest tool IDs.\n- Avoid parallel legacy paths or duplicate implementation paths.\n\n## Validation\n\n- `npm run typecheck`\n- `npm test -- src/core/manifest/__tests__/schema.test.ts`\n- `npm test -- src/runtime/__tests__/tool-invoker.test.ts`\n- `npx skill-check .agents/skills/mobilebuildmcp-tool-contract-review`\n"
+    },
+    {
+      "slug": "warden-sweep",
+      "name": "warden-sweep",
+      "dir": ".agents/skills/warden-sweep",
+      "path": ".agents/skills/warden-sweep/SKILL.md",
+      "desc": "Full-repository code sweep. Scans every file with warden, verifies findings via deep tracing, creates draft PRs for validated issues. Use when asked to \"sweep the repo\", \"scan everything\", \"find all bugs\", \"full codebase review\", \"batch code analysis\", or run warden across the entire repository.",
+      "descZh": "",
+      "triggers": [
+        "asked to \"sweep the repo",
+        "scan everything",
+        "find all bugs",
+        "full codebase review",
+        "ba"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "git",
+          "uv",
+          "gh",
+          "jq"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/getsentry/MobileBuildMCP.git",
+        "copy": "cp -r .agents/skills/warden-sweep ~/.claude/skills/warden-sweep",
+        "raw": "https://raw.githubusercontent.com/getsentry/MobileBuildMCP/2998ac77ebbca59544e88a27f34bfb830db9d924/.agents/skills/warden-sweep/SKILL.md",
+        "saveAs": "~/.claude/skills/warden-sweep/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:c420431e44e62727bc608d8a9e8565fae141be8244f4e9ba25d739ea8fc0b900",
+      "bytes": 12666,
+      "wordCount": 1564,
+      "repoLicense": "MIT",
+      "commit": "2998ac77ebbca59544e88a27f34bfb830db9d924",
+      "branch": "main",
+      "body": "---\nname: warden-sweep\ndescription: Full-repository code sweep. Scans every file with warden, verifies findings via deep tracing, creates draft PRs for validated issues. Use when asked to \"sweep the repo\", \"scan everything\", \"find all bugs\", \"full codebase review\", \"batch code analysis\", or run warden across the entire repository.\ndisable-model-invocation: true\n---\n\n# Warden Sweep\n\nFull-repository code sweep: scan every file, verify findings with deep tracing, create draft PRs for validated issues.\n\n**Requires**: `warden`, `gh`, `git`, `jq`, `uv`\n\n**Important**: Run all scripts from the repository root using `${CLAUDE_SKILL_ROOT}`. Output goes to `.warden/sweeps/<run-id>/`.\n\n## Bundled Scripts\n\n### `scripts/scan.py`\n\nRuns setup and scan in one call: generates run ID, creates sweep dir, checks deps, creates `warden` label, enumerates files, runs warden per file, extracts findings.\n\n```bash\nuv run ${CLAUDE_SKILL_ROOT}/scripts/scan.py [file ...]\n  --sweep-dir DIR     # Resume into existing sweep dir\n```\n\n### `scripts/index_prs.py`\n\nFetches open warden-labeled PRs, builds file-to-PR dedup index, caches diffs for overlapping PRs.\n\n```bash\nuv run ${CLAUDE_SKILL_ROOT}/scripts/index_prs.py <sweep-dir>\n```\n\n### `scripts/create_issue.py`\n\nCreates a GitHub tracking issue summarizing sweep results. Run after verification, before patching.\n\n```bash\nuv run ${CLAUDE_SKILL_ROOT}/scripts/create_issue.py <sweep-dir>\n```\n\n### `scripts/organize.py`\n\nTags security findings, labels security PRs, updates finding reports with PR links, posts final results to tracking issue, generates summary report, finalizes manifest.\n\n```bash\nuv run ${CLAUDE_SKILL_ROOT}/scripts/organize.py <sweep-dir>\n```\n\n### `scripts/extract_findings.py`\n\nParses warden JSONL log files and extracts normalized findings. Called automatically by `scan.py`.\n\n```bash\nuv run ${CLAUDE_SKILL_ROOT}/scripts/extract_findings.py <log-path-or-directory> -o <output.jsonl>\n```\n\n### `scripts/generate_report.py`\n\nBuilds `summary.md` and `report.json` from sweep data. Called automatically by `organize.py`.\n\n```bash\nuv run ${CLAUDE_SKILL_ROOT}/scripts/generate_report.py <sweep-dir>\n```\n\n### `scripts/find_reviewers.py`\n\nFinds top 2 git contributors for a file (last 12 months).\n\n```bash\nuv run ${CLAUDE_SKILL_ROOT}/scripts/find_reviewers.py <file-path>\n```\n\nReturns JSON: `{\"reviewers\": [\"user1\", \"user2\"]}`\n\n---\n\n## Phase 1: Scan\n\n**Run** (1 tool call):\n\n```bash\nuv run ${CLAUDE_SKILL_ROOT}/scripts/scan.py\n```\n\nTo resume a partial scan:\n\n```bash\nuv run ${CLAUDE_SKILL_ROOT}/scripts/scan.py --sweep-dir .warden/sweeps/<run-id>\n```\n\nParse the JSON stdout. Save `runId` and `sweepDir` for subsequent phases.\n\n**Report** to user:\n\n```\n## Scan Complete\n\nScanned **{filesScanned}** files, **{filesTimedOut}** timed out, **{filesErrored}** errors.\n\n### Findings ({totalFindings} total)\n\n| # | Severity | Skill | File | Title |\n|---|----------|-------|------|-------|\n| 1 | **HIGH** | security-review | `src/db/query.ts:42` | SQL injection in query builder |\n...\n```\n\nRender every finding from the `findings` array. Bold severity for high and above.\n\n**On failure**: If exit code 1, show the error JSON and stop. If exit code 2, show the partial results. List timed-out files separately from errored files so users know which can be retried.\n\n---\n\n## Phase 2: Verify\n\nDeep-trace each finding using Task subagents to qualify or disqualify.\n\n**For each finding in `data/all-findings.jsonl`:**\n\nCheck if `data/verify/<finding-id>.json` already exists (incrementality). If it does, skip.\n\nLaunch a Task subagent (`subagent_type: \"general-purpose\"`) for each finding. Process findings in parallel batches of up to 8 to improve throughput.\n\n**Task prompt for each finding:**\n\nRead `${CLAUDE_SKILL_ROOT}/references/verify-prompt.md` for the prompt template. Substitute the finding's values into the `${...}` placeholders.\n\n**Process results:**\n\nParse the JSON from the subagent response and:\n- Write result to `data/verify/<finding-id>.json`\n- Append to `data/verified.jsonl` or `data/rejected.jsonl`\n- For verified findings, generate `findings/<finding-id>.md`:\n\n```markdown\n# ${TITLE}\n\n**ID**: ${FINDING_ID} | **Severity**: ${SEVERITY} | **Confidence**: ${CONFIDENCE}\n**Skill**: ${SKILL} | **File**: ${FILE_PATH}:${START_LINE}\n\n## Description\n${DESCRIPTION}\n\n## Verification\n**Verdict**: Verified (${VERIFICATION_CONFIDENCE})\n**Reasoning**: ${REASONING}\n**Code trace**: ${TRACE_NOTES}\n\n## Suggested Fix\n${FIX_DESCRIPTION}\n```diff\n${FIX_DIFF}\n```\n```\n\nUpdate manifest: set `phases.verify` to `\"complete\"`.\n\n**Report** to user after all verifications:\n\n```\n## Verification Complete\n\n**{verified}** verified, **{rejected}** rejected.\n\n### Verified Findings\n\n| # | Severity | Confidence | File | Title | Reasoning |\n|---|----------|------------|------|-------|-----------|\n| 1 | **HIGH** | high | `src/db/query.ts:42` | SQL injection in query builder | User input flows directly into... |\n...\n\n### Rejected ({rejected_count})\n\n- `{findingId}` {file}: {reasoning}\n...\n```\n\n---\n\n## Phase 3: Issue\n\nCreate a tracking issue that ties all PRs together and gives reviewers a single overview.\n\n**Run** (1 tool call):\n\n```bash\nuv run ${CLAUDE_SKILL_ROOT}/scripts/create_issue.py ${SWEEP_DIR}\n```\n\nParse the JSON stdout. Save `issueUrl` and `issueNumber` for Phase 4.\n\n**Report** to user:\n\n```\n## Tracking Issue Created\n\n{issueUrl}\n```\n\n**On failure**: Show the error. Continue to Phase 4 (PRs can still be created without a tracking issue).\n\n---\n\n## Phase 4: Patch\n\nFor each verified finding, create a worktree, fix the code, and open a draft PR. Process findings **sequentially** (one at a time) since parallel subagents cross-contaminate worktrees.\n\n**Severity triage**: Patch HIGH and above. For MEDIUM, only patch findings from bug-detection skills (e.g., `code-review`, `security-review`). Skip LOW and INFO findings.\n\n**Step 0: Setup** (run once before the loop):\n\n```bash\nuv run ${CLAUDE_SKILL_ROOT}/scripts/index_prs.py ${SWEEP_DIR}\n```\n\nParse the JSON stdout. Use `fileIndex` for dedup checks.\n\nDetermine the default branch and fetch latest so worktrees branch from current upstream:\n\n```bash\nDEFAULT_BRANCH=$(gh repo view --json defaultBranchRef --jq '.defaultBranchRef.name')\ngit fetch origin \"${DEFAULT_BRANCH}\"\n```\n\n**For each finding in `data/verified.jsonl`:**\n\nCheck if finding ID already exists in `data/patches.jsonl` (incrementality). If it does, skip.\n\n**Dedup check**: Use the file index from `index_prs.py` output to determine if an existing open PR already addresses the same issue.\n\n1. **File match**: Look up the finding's file path in the `fileIndex`. If no PR touches that file, no conflict; proceed to Step 1.\n2. **Chunk overlap**: If a PR does touch the same file, read its cached diff from `data/pr-diffs/<number>.diff` and check whether the PR's changed hunks overlap with the finding's line range (startLine-endLine). Overlapping or adjacent hunks (within ~10 lines) indicate the same code region.\n3. **Same concern**: If the hunks overlap, compare the PR title and the finding title/description. Are they fixing the same kind of defect? A PR fixing an off-by-one error and a finding about a null check in the same function are different issues; both should proceed.\n\nSkip the finding only when there is both chunk overlap AND the PR addresses the same concern. Record it in `data/patches.jsonl` with `\"status\": \"existing\"` and `\"prUrl\"` pointing to the matching PR, then continue to the next finding.\n\n**Step 1: Create worktree**\n\n```bash\nBRANCH=\"warden-sweep/${RUN_ID}/${FINDING_ID}\"\nWORKTREE=\"${SWEEP_DIR}/worktrees/${FINDING_ID}\"\ngit worktree add \"${WORKTREE}\" -b \"${BRANCH}\" \"origin/${DEFAULT_BRANCH}\"\n```\n\nEach finding branches from the repo's default branch so PRs contain only the fix commit.\n\n**Step 2: Generate fix**\n\nLaunch a Task subagent (`subagent_type: \"general-purpose\"`) to apply the fix in the worktree. Read `${CLAUDE_SKILL_ROOT}/references/patch-prompt.md` for the prompt template. Substitute the finding's values and worktree path into the `${...}` placeholders.\n\n**Step 2b: Handle skipped findings**\n\nIf the subagent returned `\"status\": \"skipped\"` (not `\"applied\"`), do NOT proceed to Steps 3-4. Instead:\n1. Record the finding in `data/patches.jsonl` with `\"status\": \"error\"` and `\"error\": \"Subagent skipped: ${skipReason}\"`\n2. Clean up the worktree\n3. Continue to the next finding\n\n**Step 3: Find reviewers**\n\n```bash\nuv run ${CLAUDE_SKILL_ROOT}/scripts/find_reviewers.py \"${FILE_PATH}\"\n```\n\n**Step 4: Create draft PR**\n\n```bash\ncd \"${WORKTREE}\" && git push -u origin HEAD:\"${BRANCH}\"\n```\n\nCreate the PR with a 1-2 sentence \"What\" summary based on the finding and fix, followed by the finding description and verification reasoning:\n\n```bash\nREVIEWERS=\"\"\n# If find_reviewers.py returned reviewers, build the flags\n# e.g., REVIEWERS=\"--reviewer user1 --reviewer user2\"\n\ngh pr create --draft \\\n  --label \"warden\" \\\n  --title \"fix: ${TITLE}\" \\\n  --body \"$(cat <<'EOF'\n${FIX_WHAT_DESCRIPTION}\n\n${DESCRIPTION}\n\n${REASONING}\n\nAutomated fix for Warden finding ${FINDING_ID} (${SEVERITY}, detected by ${SKILL}).\n\n<!-- Only include the next line if Phase 3 succeeded and ISSUE_NUMBER is available -->\nRef #${ISSUE_NUMBER}\n\n> This PR was auto-generated by a Warden Sweep (run ${RUN_ID}).\n> The finding has been validated through automated deep tracing,\n> but human confirmation is requested as this is batch work.\nEOF\n)\" ${REVIEWERS}\n```\n\nSave the PR URL.\n\n**Step 5: Record and cleanup**\n\nAppend to `data/patches.jsonl` (use `\"created\"` as status for successful PRs, not the subagent's `\"applied\"`):\n```json\n{\"findingId\": \"...\", \"prUrl\": \"https://...\", \"branch\": \"...\", \"reviewers\": [\"user1\", \"user2\"], \"filesChanged\": [\"...\"], \"status\": \"created|existing|error\"}\n```\n\nRemove the worktree:\n```bash\ncd \"$(git rev-parse --show-toplevel)\"\ngit worktree remove \"${WORKTREE}\" --force\n```\n\n**Error handling**: On failure at any step, write to `data/patches.jsonl` with `\"status\": \"error\"` and `\"error\": \"...\"`, clean up the worktree, and continue to the next finding.\n\nUpdate manifest: set `phases.patch` to `\"complete\"`.\n\n**Report** to user after all patches:\n\n```\n## PRs Created\n\n**{created}** created, **{skipped}** skipped (existing), **{failed}** failed.\n\n| # | Finding | PR | Status |\n|---|---------|-----|--------|\n| 1 | `security-review-a1b2c3d4` SQL injection in query builder | #142 | created |\n| 2 | `code-review-e5f6g7h8` Null pointer in handler | - | existing (#138) |\n...\n```\n\n---\n\n## Phase 5: Organize\n\n**Run** (1 tool call):\n\n```bash\nuv run ${CLAUDE_SKILL_ROOT}/scripts/organize.py ${SWEEP_DIR}\n```\n\nParse the JSON stdout.\n\n**Report** to user:\n\n```\n## Sweep Complete\n\n| Metric | Count |\n|--------|-------|\n| Files scanned | {filesScanned} |\n| Findings verified | {verified} |\n| PRs created | {prsCreated} |\n| Security findings | {securityFindings} |\n\nFull report: `{summaryPath}`\n```\n\n**On failure**: Show the error and note which steps completed.\n\n---\n\n## Resuming a Sweep\n\nEach phase is incremental. To resume from where you left off:\n\n1. Check `data/manifest.json` to see which phases are complete\n2. For scan: pass `--sweep-dir` to `scan.py`\n3. For verify: existing `data/verify/<id>.json` files are skipped\n4. For issue: `create_issue.py` is idempotent (skips if `issueUrl` in manifest)\n5. For patch: existing entries in `data/patches.jsonl` are skipped\n6. For organize: safe to re-run (idempotent)\n\n## Output Directory Structure\n\n```\n.warden/sweeps/<run-id>/\n  summary.md                        # Stats, key findings, PR links\n  findings/                         # One markdown per verified finding\n    <finding-id>.md\n  security/                         # Security-specific view\n    index.jsonl                     # Security findings index\n    <finding-id>.md                 # Copies of security findings\n  data/                             # Structured data for tooling\n    manifest.json                   # Run metadata, phase state\n    scan-index.jsonl                # Per-file scan tracking\n    all-findings.jsonl              # Every finding from scan\n    verified.jsonl                  # Findings that passed verification\n    rejected.jsonl                  # Findings that failed verification\n    patches.jsonl                   # Finding -> PR URL -> reviewers\n    existing-prs.json               # Cached open warden PRs\n    report.json                     # Machine-readable summary\n    verify/                         # Individual verification results\n      <finding-id>.json\n    logs/                           # Warden JSONL logs per file\n      <hash>.jsonl\n    pr-diffs/                       # Cached PR diffs for dedup\n      <number>.diff\n```\n",
+      "bodyMd": "# Warden Sweep\n\nFull-repository code sweep: scan every file, verify findings with deep tracing, create draft PRs for validated issues.\n\n**Requires**: `warden`, `gh`, `git`, `jq`, `uv`\n\n**Important**: Run all scripts from the repository root using `${CLAUDE_SKILL_ROOT}`. Output goes to `.warden/sweeps/<run-id>/`.\n\n## Bundled Scripts\n\n### `scripts/scan.py`\n\nRuns setup and scan in one call: generates run ID, creates sweep dir, checks deps, creates `warden` label, enumerates files, runs warden per file, extracts findings.\n\n```bash\nuv run ${CLAUDE_SKILL_ROOT}/scripts/scan.py [file ...]\n  --sweep-dir DIR     # Resume into existing sweep dir\n```\n\n### `scripts/index_prs.py`\n\nFetches open warden-labeled PRs, builds file-to-PR dedup index, caches diffs for overlapping PRs.\n\n```bash\nuv run ${CLAUDE_SKILL_ROOT}/scripts/index_prs.py <sweep-dir>\n```\n\n### `scripts/create_issue.py`\n\nCreates a GitHub tracking issue summarizing sweep results. Run after verification, before patching.\n\n```bash\nuv run ${CLAUDE_SKILL_ROOT}/scripts/create_issue.py <sweep-dir>\n```\n\n### `scripts/organize.py`\n\nTags security findings, labels security PRs, updates finding reports with PR links, posts final results to tracking issue, generates summary report, finalizes manifest.\n\n```bash\nuv run ${CLAUDE_SKILL_ROOT}/scripts/organize.py <sweep-dir>\n```\n\n### `scripts/extract_findings.py`\n\nParses warden JSONL log files and extracts normalized findings. Called automatically by `scan.py`.\n\n```bash\nuv run ${CLAUDE_SKILL_ROOT}/scripts/extract_findings.py <log-path-or-directory> -o <output.jsonl>\n```\n\n### `scripts/generate_report.py`\n\nBuilds `summary.md` and `report.json` from sweep data. Called automatically by `organize.py`.\n\n```bash\nuv run ${CLAUDE_SKILL_ROOT}/scripts/generate_report.py <sweep-dir>\n```\n\n### `scripts/find_reviewers.py`\n\nFinds top 2 git contributors for a file (last 12 months).\n\n```bash\nuv run ${CLAUDE_SKILL_ROOT}/scripts/find_reviewers.py <file-path>\n```\n\nReturns JSON: `{\"reviewers\": [\"user1\", \"user2\"]}`\n\n---\n\n## Phase 1: Scan\n\n**Run** (1 tool call):\n\n```bash\nuv run ${CLAUDE_SKILL_ROOT}/scripts/scan.py\n```\n\nTo resume a partial scan:\n\n```bash\nuv run ${CLAUDE_SKILL_ROOT}/scripts/scan.py --sweep-dir .warden/sweeps/<run-id>\n```\n\nParse the JSON stdout. Save `runId` and `sweepDir` for subsequent phases.\n\n**Report** to user:\n\n```\n## Scan Complete\n\nScanned **{filesScanned}** files, **{filesTimedOut}** timed out, **{filesErrored}** errors.\n\n### Findings ({totalFindings} total)\n\n| # | Severity | Skill | File | Title |\n|---|----------|-------|------|-------|\n| 1 | **HIGH** | security-review | `src/db/query.ts:42` | SQL injection in query builder |\n...\n```\n\nRender every finding from the `findings` array. Bold severity for high and above.\n\n**On failure**: If exit code 1, show the error JSON and stop. If exit code 2, show the partial results. List timed-out files separately from errored files so users know which can be retried.\n\n---\n\n## Phase 2: Verify\n\nDeep-trace each finding using Task subagents to qualify or disqualify.\n\n**For each finding in `data/all-findings.jsonl`:**\n\nCheck if `data/verify/<finding-id>.json` already exists (incrementality). If it does, skip.\n\nLaunch a Task subagent (`subagent_type: \"general-purpose\"`) for each finding. Process findings in parallel batches of up to 8 to improve throughput.\n\n**Task prompt for each finding:**\n\nRead `${CLAUDE_SKILL_ROOT}/references/verify-prompt.md` for the prompt template. Substitute the finding's values into the `${...}` placeholders.\n\n**Process results:**\n\nParse the JSON from the subagent response and:\n- Write result to `data/verify/<finding-id>.json`\n- Append to `data/verified.jsonl` or `data/rejected.jsonl`\n- For verified findings, generate `findings/<finding-id>.md`:\n\n```markdown\n# ${TITLE}\n\n**ID**: ${FINDING_ID} | **Severity**: ${SEVERITY} | **Confidence**: ${CONFIDENCE}\n**Skill**: ${SKILL} | **File**: ${FILE_PATH}:${START_LINE}\n\n## Description\n${DESCRIPTION}\n\n## Verification\n**Verdict**: Verified (${VERIFICATION_CONFIDENCE})\n**Reasoning**: ${REASONING}\n**Code trace**: ${TRACE_NOTES}\n\n## Suggested Fix\n${FIX_DESCRIPTION}\n```diff\n${FIX_DIFF}\n```\n```\n\nUpdate manifest: set `phases.verify` to `\"complete\"`.\n\n**Report** to user after all verifications:\n\n```\n## Verification Complete\n\n**{verified}** verified, **{rejected}** rejected.\n\n### Verified Findings\n\n| # | Severity | Confidence | File | Title | Reasoning |\n|---|----------|------------|------|-------|-----------|\n| 1 | **HIGH** | high | `src/db/query.ts:42` | SQL injection in query builder | User input flows directly into... |\n...\n\n### Rejected ({rejected_count})\n\n- `{findingId}` {file}: {reasoning}\n...\n```\n\n---\n\n## Phase 3: Issue\n\nCreate a tracking issue that ties all PRs together and gives reviewers a single overview.\n\n**Run** (1 tool call):\n\n```bash\nuv run ${CLAUDE_SKILL_ROOT}/scripts/create_issue.py ${SWEEP_DIR}\n```\n\nParse the JSON stdout. Save `issueUrl` and `issueNumber` for Phase 4.\n\n**Report** to user:\n\n```\n## Tracking Issue Created\n\n{issueUrl}\n```\n\n**On failure**: Show the error. Continue to Phase 4 (PRs can still be created without a tracking issue).\n\n---\n\n## Phase 4: Patch\n\nFor each verified finding, create a worktree, fix the code, and open a draft PR. Process findings **sequentially** (one at a time) since parallel subagents cross-contaminate worktrees.\n\n**Severity triage**: Patch HIGH and above. For MEDIUM, only patch findings from bug-detection skills (e.g., `code-review`, `security-review`). Skip LOW and INFO findings.\n\n**Step 0: Setup** (run once before the loop):\n\n```bash\nuv run ${CLAUDE_SKILL_ROOT}/scripts/index_prs.py ${SWEEP_DIR}\n```\n\nParse the JSON stdout. Use `fileIndex` for dedup checks.\n\nDetermine the default branch and fetch latest so worktrees branch from current upstream:\n\n```bash\nDEFAULT_BRANCH=$(gh repo view --json defaultBranchRef --jq '.defaultBranchRef.name')\ngit fetch origin \"${DEFAULT_BRANCH}\"\n```\n\n**For each finding in `data/verified.jsonl`:**\n\nCheck if finding ID already exists in `data/patches.jsonl` (incrementality). If it does, skip.\n\n**Dedup check**: Use the file index from `index_prs.py` output to determine if an existing open PR already addresses the same issue.\n\n1. **File match**: Look up the finding's file path in the `fileIndex`. If no PR touches that file, no conflict; proceed to Step 1.\n2. **Chunk overlap**: If a PR does touch the same file, read its cached diff from `data/pr-diffs/<number>.diff` and check whether the PR's changed hunks overlap with the finding's line range (startLine-endLine). Overlapping or adjacent hunks (within ~10 lines) indicate the same code region.\n3. **Same concern**: If the hunks overlap, compare the PR title and the finding title/description. Are they fixing the same kind of defect? A PR fixing an off-by-one error and a finding about a null check in the same function are different issues; both should proceed.\n\nSkip the finding only when there is both chunk overlap AND the PR addresses the same concern. Record it in `data/patches.jsonl` with `\"status\": \"existing\"` and `\"prUrl\"` pointing to the matching PR, then continue to the next finding.\n\n**Step 1: Create worktree**\n\n```bash\nBRANCH=\"warden-sweep/${RUN_ID}/${FINDING_ID}\"\nWORKTREE=\"${SWEEP_DIR}/worktrees/${FINDING_ID}\"\ngit worktree add \"${WORKTREE}\" -b \"${BRANCH}\" \"origin/${DEFAULT_BRANCH}\"\n```\n\nEach finding branches from the repo's default branch so PRs contain only the fix commit.\n\n**Step 2: Generate fix**\n\nLaunch a Task subagent (`subagent_type: \"general-purpose\"`) to apply the fix in the worktree. Read `${CLAUDE_SKILL_ROOT}/references/patch-prompt.md` for the prompt template. Substitute the finding's values and worktree path into the `${...}` placeholders.\n\n**Step 2b: Handle skipped findings**\n\nIf the subagent returned `\"status\": \"skipped\"` (not `\"applied\"`), do NOT proceed to Steps 3-4. Instead:\n1. Record the finding in `data/patches.jsonl` with `\"status\": \"error\"` and `\"error\": \"Subagent skipped: ${skipReason}\"`\n2. Clean up the worktree\n3. Continue to the next finding\n\n**Step 3: Find reviewers**\n\n```bash\nuv run ${CLAUDE_SKILL_ROOT}/scripts/find_reviewers.py \"${FILE_PATH}\"\n```\n\n**Step 4: Create draft PR**\n\n```bash\ncd \"${WORKTREE}\" && git push -u origin HEAD:\"${BRANCH}\"\n```\n\nCreate the PR with a 1-2 sentence \"What\" summary based on the finding and fix, followed by the finding description and verification reasoning:\n\n```bash\nREVIEWERS=\"\"\n# If find_reviewers.py returned reviewers, build the flags\n# e.g., REVIEWERS=\"--reviewer user1 --reviewer user2\"\n\ngh pr create --draft \\\n  --label \"warden\" \\\n  --title \"fix: ${TITLE}\" \\\n  --body \"$(cat <<'EOF'\n${FIX_WHAT_DESCRIPTION}\n\n${DESCRIPTION}\n\n${REASONING}\n\nAutomated fix for Warden finding ${FINDING_ID} (${SEVERITY}, detected by ${SKILL}).\n\n<!-- Only include the next line if Phase 3 succeeded and ISSUE_NUMBER is available -->\nRef #${ISSUE_NUMBER}\n\n> This PR was auto-generated by a Warden Sweep (run ${RUN_ID}).\n> The finding has been validated through automated deep tracing,\n> but human confirmation is requested as this is batch work.\nEOF\n)\" ${REVIEWERS}\n```\n\nSave the PR URL.\n\n**Step 5: Record and cleanup**\n\nAppend to `data/patches.jsonl` (use `\"created\"` as status for successful PRs, not the subagent's `\"applied\"`):\n```json\n{\"findingId\": \"...\", \"prUrl\": \"https://...\", \"branch\": \"...\", \"reviewers\": [\"user1\", \"user2\"], \"filesChanged\": [\"...\"], \"status\": \"created|existing|error\"}\n```\n\nRemove the worktree:\n```bash\ncd \"$(git rev-parse --show-toplevel)\"\ngit worktree remove \"${WORKTREE}\" --force\n```\n\n**Error handling**: On failure at any step, write to `data/patches.jsonl` with `\"status\": \"error\"` and `\"error\": \"...\"`, clean up the worktree, and continue to the next finding.\n\nUpdate manifest: set `phases.patch` to `\"complete\"`.\n\n**Report** to user after all patches:\n\n```\n## PRs Created\n\n**{created}** created, **{skipped}** skipped (existing), **{failed}** failed.\n\n| # | Finding | PR | Status |\n|---|---------|-----|--------|\n| 1 | `security-review-a1b2c3d4` SQL injection in query builder | #142 | created |\n| 2 | `code-review-e5f6g7h8` Null pointer in handler | - | existing (#138) |\n...\n```\n\n---\n\n## Phase 5: Organize\n\n**Run** (1 tool call):\n\n```bash\nuv run ${CLAUDE_SKILL_ROOT}/scripts/organize.py ${SWEEP_DIR}\n```\n\nParse the JSON stdout.\n\n**Report** to user:\n\n```\n## Sweep Complete\n\n| Metric | Count |\n|--------|-------|\n| Files scanned | {filesScanned} |\n| Findings verified | {verified} |\n| PRs created | {prsCreated} |\n| Security findings | {securityFindings} |\n\nFull report: `{summaryPath}`\n```\n\n**On failure**: Show the error and note which steps completed.\n\n---\n\n## Resuming a Sweep\n\nEach phase is incremental. To resume from where you left off:\n\n1. Check `data/manifest.json` to see which phases are complete\n2. For scan: pass `--sweep-dir` to `scan.py`\n3. For verify: existing `data/verify/<id>.json` files are skipped\n4. For issue: `create_issue.py` is idempotent (skips if `issueUrl` in manifest)\n5. For patch: existing entries in `data/patches.jsonl` are skipped\n6. For organize: safe to re-run (idempotent)\n\n## Output Directory Structure\n\n```\n.warden/sweeps/<run-id>/\n  summary.md                        # Stats, key findings, PR links\n  findings/                         # One markdown per verified finding\n    <finding-id>.md\n  security/                         # Security-specific view\n    index.jsonl                     # Security findings index\n    <finding-id>.md                 # Copies of security findings\n  data/                             # Structured data for tooling\n    manifest.json                   # Run metadata, phase state\n    scan-index.jsonl                # Per-file scan tracking\n    all-findings.jsonl              # Every finding from scan\n    verified.jsonl                  # Findings that passed verification\n    rejected.jsonl                  # Findings that failed verification\n    patches.jsonl                   # Finding -> PR URL -> reviewers\n    existing-prs.json               # Cached open warden PRs\n    report.json                     # Machine-readable summary\n    verify/                         # Individual verification results\n      <finding-id>.json\n    logs/                           # Warden JSONL logs per file\n      <hash>.jsonl\n    pr-diffs/                       # Cached PR diffs for dedup\n      <number>.diff\n```\n"
+    },
+    {
+      "slug": "warden",
+      "name": "warden",
+      "dir": ".agents/skills/warden",
+      "path": ".agents/skills/warden/SKILL.md",
+      "desc": "Run Warden to analyze code changes before committing. Use when asked to \"run warden\", \"check my changes\", \"review before commit\", \"warden config\", \"warden.toml\", \"create a warden skill\", \"add trigger\", or any Warden-related local development task.",
+      "descZh": "",
+      "triggers": [
+        "asked to \"run warden",
+        "check my changes",
+        "review before commit",
+        "warden config",
+        "warde"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": true,
+        "network": false,
+        "bins": [
+          "git"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/getsentry/MobileBuildMCP.git",
+        "copy": "cp -r .agents/skills/warden ~/.claude/skills/warden",
+        "raw": "https://raw.githubusercontent.com/getsentry/MobileBuildMCP/2998ac77ebbca59544e88a27f34bfb830db9d924/.agents/skills/warden/SKILL.md",
+        "saveAs": "~/.claude/skills/warden/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:f521ff421145db3fbcfbb8e1a8cbf78b36da72fe50d23ef6888c0ed997117fe8",
+      "bytes": 2464,
+      "wordCount": 303,
+      "repoLicense": "MIT",
+      "commit": "2998ac77ebbca59544e88a27f34bfb830db9d924",
+      "branch": "main",
+      "body": "---\nname: warden\ndescription: Run Warden to analyze code changes before committing. Use when asked to \"run warden\", \"check my changes\", \"review before commit\", \"warden config\", \"warden.toml\", \"create a warden skill\", \"add trigger\", or any Warden-related local development task.\n---\n\nRun Warden to analyze code changes before committing.\n\n## References\n\nRead the relevant reference when the task requires deeper detail:\n\n| Document | Read When |\n|----------|-----------|\n| `${CLAUDE_SKILL_ROOT}/references/cli-reference.md` | Full option details, per-command flags, examples |\n| `${CLAUDE_SKILL_ROOT}/references/configuration.md` | Editing warden.toml, triggers, patterns, troubleshooting |\n| `${CLAUDE_SKILL_ROOT}/references/config-schema.md` | Exact field names, types, and defaults |\n| `${CLAUDE_SKILL_ROOT}/references/creating-skills.md` | Writing custom skills, remote skills, skill discovery |\n\n## Running Warden\n\n```bash\n# Analyze uncommitted changes (uses warden.toml triggers)\nwarden\n\n# Run a specific skill\nwarden --skill <skill-name>\n\n# Analyze specific files\nwarden src/auth.ts src/database.ts\n\n# Analyze changes from a git ref\nwarden main..HEAD\nwarden HEAD~3\n\n# Auto-apply suggested fixes\nwarden --fix\n\n# Fail on high-severity findings\nwarden --fail-on high\n```\n\nSet `WARDEN_ANTHROPIC_API_KEY` or log in via `claude login` before running.\n\n## Pre-Commit Workflow\n\nAfter making code changes and before committing:\n\n1. Run `warden` to analyze uncommitted changes\n2. Review the findings\n3. Fix issues Warden reports (or use `warden --fix` to auto-apply)\n4. Commit the changes\n\nRun Warden once to validate work. Do not loop re-running Warden on the same changes.\n\n## Reading Output\n\n**Severity levels:**\n- `high` - Must fix before merge\n- `medium` - Worth reviewing\n- `low` - Minor improvement\n\n**Exit codes:** `0` = no findings at or above fail threshold. `1` = findings at or above fail threshold.\n\n**Verbosity:** `-v` shows real-time findings. `-vv` shows debug info (tokens, latency). `-q` shows errors and summary only.\n\n## Commands\n\n| Command | Description |\n|---------|-------------|\n| `warden` | Run analysis (default) |\n| `warden init` | Initialize warden.toml and GitHub workflow |\n| `warden add [skill]` | Add skill trigger to warden.toml |\n| `warden sync [remote]` | Update cached remote skills |\n| `warden setup-app` | Create GitHub App via manifest flow |\n\nFor full options and flags, read `${CLAUDE_SKILL_ROOT}/references/cli-reference.md`.\n",
+      "bodyMd": "Run Warden to analyze code changes before committing.\n\n## References\n\nRead the relevant reference when the task requires deeper detail:\n\n| Document | Read When |\n|----------|-----------|\n| `${CLAUDE_SKILL_ROOT}/references/cli-reference.md` | Full option details, per-command flags, examples |\n| `${CLAUDE_SKILL_ROOT}/references/configuration.md` | Editing warden.toml, triggers, patterns, troubleshooting |\n| `${CLAUDE_SKILL_ROOT}/references/config-schema.md` | Exact field names, types, and defaults |\n| `${CLAUDE_SKILL_ROOT}/references/creating-skills.md` | Writing custom skills, remote skills, skill discovery |\n\n## Running Warden\n\n```bash\n# Analyze uncommitted changes (uses warden.toml triggers)\nwarden\n\n# Run a specific skill\nwarden --skill <skill-name>\n\n# Analyze specific files\nwarden src/auth.ts src/database.ts\n\n# Analyze changes from a git ref\nwarden main..HEAD\nwarden HEAD~3\n\n# Auto-apply suggested fixes\nwarden --fix\n\n# Fail on high-severity findings\nwarden --fail-on high\n```\n\nSet `WARDEN_ANTHROPIC_API_KEY` or log in via `claude login` before running.\n\n## Pre-Commit Workflow\n\nAfter making code changes and before committing:\n\n1. Run `warden` to analyze uncommitted changes\n2. Review the findings\n3. Fix issues Warden reports (or use `warden --fix` to auto-apply)\n4. Commit the changes\n\nRun Warden once to validate work. Do not loop re-running Warden on the same changes.\n\n## Reading Output\n\n**Severity levels:**\n- `high` - Must fix before merge\n- `medium` - Worth reviewing\n- `low` - Minor improvement\n\n**Exit codes:** `0` = no findings at or above fail threshold. `1` = findings at or above fail threshold.\n\n**Verbosity:** `-v` shows real-time findings. `-vv` shows debug info (tokens, latency). `-q` shows errors and summary only.\n\n## Commands\n\n| Command | Description |\n|---------|-------------|\n| `warden` | Run analysis (default) |\n| `warden init` | Initialize warden.toml and GitHub workflow |\n| `warden add [skill]` | Add skill trigger to warden.toml |\n| `warden sync [remote]` | Update cached remote skills |\n| `warden setup-app` | Create GitHub App via manifest flow |\n\nFor full options and flags, read `${CLAUDE_SKILL_ROOT}/references/cli-reference.md`.\n"
+    },
+    {
+      "slug": "mobilebuildmcp-cli",
+      "name": "mobilebuildmcp-cli",
+      "dir": "skills/mobilebuildmcp-cli",
+      "path": "skills/mobilebuildmcp-cli/SKILL.md",
+      "desc": "Official skill for the MobileBuildMCP CLI. Use when doing iOS/macOS/watchOS/tvOS/visionOS work (build, test, run, debug, log, UI automation).",
+      "descZh": "",
+      "triggers": [
+        "test",
+        "run",
+        "debug",
+        "log",
+        "UI automation)"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "npm",
+          "brew"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/getsentry/MobileBuildMCP.git",
+        "copy": "cp -r skills/mobilebuildmcp-cli ~/.claude/skills/mobilebuildmcp-cli",
+        "raw": "https://raw.githubusercontent.com/getsentry/MobileBuildMCP/2998ac77ebbca59544e88a27f34bfb830db9d924/skills/mobilebuildmcp-cli/SKILL.md",
+        "saveAs": "~/.claude/skills/mobilebuildmcp-cli/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:754ec68f840f9d10a7530f54ed572b35e66f961f125fa2060dd2631e2ad176b0",
+      "bytes": 1671,
+      "wordCount": 201,
+      "repoLicense": "MIT",
+      "commit": "2998ac77ebbca59544e88a27f34bfb830db9d924",
+      "branch": "main",
+      "body": "---\nname: mobilebuildmcp-cli\ndescription: Official skill for the MobileBuildMCP CLI. Use when doing iOS/macOS/watchOS/tvOS/visionOS work (build, test, run, debug, log, UI automation).\n---\n\n# MobileBuildMCP CLI\n\nUse MobileBuildMCP tools via the `mobilebuildmcp` executable instead of raw `xcodebuild`, `xcrun`, or `simctl`.\n\n## Step 1: Ensure the CLI Exists\n\nCheck availability:\n```bash\nmobilebuildmcp --help\n```\n\nIf missing, install with one of:\n```bash\nbrew tap getsentry/xcodebuildmcp\nbrew install mobilebuildmcp\n```\n\n```bash\nnpm install -g mobilebuildmcp@latest\n```\n\nRe-check after install:\n```bash\nmobilebuildmcp --help\n```\n\n## Step 2: Use Help-First Discovery\n\nDiscover workflows and arguments from the CLI itself:\n```bash\nmobilebuildmcp --help\nmobilebuildmcp tools\nmobilebuildmcp <workflow> --help\nmobilebuildmcp <workflow> <tool> --help\n```\n\nUse this discovery path instead of memorizing static tool lists.\n\n## Step 3: Keep Execution Minimal\n\n- Choose the smallest command sequence that satisfies the request.\n- Prefer direct workflow commands over manual multi-step chains unless explicitly requested.\n- For simulator run intent, prefer the combined `build-and-run` command.\n- Do not chain `build` then `build-and-run` unless explicitly requested.\n\n## Capability Overview\n\n`mobilebuildmcp` supports:\n- simulator and device build/test/run\n- debugging and log capture\n- UI automation\n- project discovery and scaffolding\n- session defaults and workflow configuration\n\n## Exit Criteria\n\n- CLI presence is verified or installation steps are provided.\n- Commands are discovered via `--help` / `tools`.\n- Session defaults are checked before first build/run/test action.\n",
+      "bodyMd": "# MobileBuildMCP CLI\n\nUse MobileBuildMCP tools via the `mobilebuildmcp` executable instead of raw `xcodebuild`, `xcrun`, or `simctl`.\n\n## Step 1: Ensure the CLI Exists\n\nCheck availability:\n```bash\nmobilebuildmcp --help\n```\n\nIf missing, install with one of:\n```bash\nbrew tap getsentry/xcodebuildmcp\nbrew install mobilebuildmcp\n```\n\n```bash\nnpm install -g mobilebuildmcp@latest\n```\n\nRe-check after install:\n```bash\nmobilebuildmcp --help\n```\n\n## Step 2: Use Help-First Discovery\n\nDiscover workflows and arguments from the CLI itself:\n```bash\nmobilebuildmcp --help\nmobilebuildmcp tools\nmobilebuildmcp <workflow> --help\nmobilebuildmcp <workflow> <tool> --help\n```\n\nUse this discovery path instead of memorizing static tool lists.\n\n## Step 3: Keep Execution Minimal\n\n- Choose the smallest command sequence that satisfies the request.\n- Prefer direct workflow commands over manual multi-step chains unless explicitly requested.\n- For simulator run intent, prefer the combined `build-and-run` command.\n- Do not chain `build` then `build-and-run` unless explicitly requested.\n\n## Capability Overview\n\n`mobilebuildmcp` supports:\n- simulator and device build/test/run\n- debugging and log capture\n- UI automation\n- project discovery and scaffolding\n- session defaults and workflow configuration\n\n## Exit Criteria\n\n- CLI presence is verified or installation steps are provided.\n- Commands are discovered via `--help` / `tools`.\n- Session defaults are checked before first build/run/test action.\n"
+    },
+    {
+      "slug": "mobilebuildmcp",
+      "name": "mobilebuildmcp",
+      "dir": "skills/mobilebuildmcp",
+      "path": "skills/mobilebuildmcp/SKILL.md",
+      "desc": "Official skill for MobileBuildMCP. Use when doing iOS/macOS/watchOS/tvOS/visionOS work (build, test, run, debug, log, UI automation).",
+      "descZh": "",
+      "triggers": [
+        "test",
+        "run",
+        "debug",
+        "log",
+        "UI automation)"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/getsentry/MobileBuildMCP.git",
+        "copy": "cp -r skills/mobilebuildmcp ~/.claude/skills/mobilebuildmcp",
+        "raw": "https://raw.githubusercontent.com/getsentry/MobileBuildMCP/2998ac77ebbca59544e88a27f34bfb830db9d924/skills/mobilebuildmcp/SKILL.md",
+        "saveAs": "~/.claude/skills/mobilebuildmcp/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:a325c67ccfe8257d268832a81bdb741920f2bde7d925f8031ba131854ca55025",
+      "bytes": 2623,
+      "wordCount": 328,
+      "repoLicense": "MIT",
+      "commit": "2998ac77ebbca59544e88a27f34bfb830db9d924",
+      "branch": "main",
+      "body": "---\nname: mobilebuildmcp\ndescription: Official skill for MobileBuildMCP. Use when doing iOS/macOS/watchOS/tvOS/visionOS work (build, test, run, debug, log, UI automation).\n---\n\n# MobileBuildMCP\n\nUse MobileBuildMCP tools instead of raw `xcodebuild`, `xcrun`, or `simctl`.\n\nCapabilities:\n- Session defaults: Configure project, scheme, simulator, and device defaults to avoid repetitive parameters\n- Project discovery: Find Xcode projects/workspaces, list schemes, inspect build settings\n- Simulator workflows: Build, run, test, install, and launch apps on iOS simulators; manage simulator state (boot, erase, location, appearance)\n- Device workflows: Build, test, install, and launch apps on physical devices with code signing\n- macOS workflows: Build, run, and test macOS applications\n- Log capture: Stream and capture logs from simulators and devices\n- LLDB debugging: Attach debugger, set breakpoints, inspect stack traces and variables, execute LLDB commands\n- UI automation: Capture screenshots, inspect view hierarchy with coordinates, perform taps/swipes/gestures, type text, press hardware buttons\n- SwiftPM: Build, run, test, and manage Swift Package Manager projects\n- Project scaffolding: Generate new iOS/macOS project templates\n\nOnly simulator workflow tools are enabled by default. If capabilities like device, macOS, debugging, or UI automation are not available, the user must configure MobileBuildMCP to enable them. See https://github.com/getsentry/xcodebuildmcp.com/blob/main/app/docs/_content/configuration.mdx for workflow configuration.\n\n## Step 1: Establish Session Context\n\n- Call `session_show_defaults` before the first build/run/test action in a session.\n- Use `discover_projs` only when defaults show missing or incorrect project/workspace context.\n- Do not run discovery speculatively or in parallel with `session_show_defaults`.\n- For simulator run intent, prefer the combined build-and-run tool instead of separate build then run calls.\n- Do not chain build-only then build-and-run unless the user explicitly requests both.\n\n## Step 2: Understand Workflow-Scoped Tool Availability\n\n- Not all tools are enabled by default; tool availability depends on enabled workflows.\n- If a tool is expected but missing, check enabled workflows first.\n- Update enabled workflows in `.mobilebuildmcp/config.yaml`, then ask user to reload/restart the session to surface refreshes.\n\n## Step 3: Report Context Clearly\n\n- Return the active defaults context used for execution (project/workspace, scheme, simulator/device).\n- For failures, include the exact failing step and the next actionable command/tool call.\n",
+      "bodyMd": "# MobileBuildMCP\n\nUse MobileBuildMCP tools instead of raw `xcodebuild`, `xcrun`, or `simctl`.\n\nCapabilities:\n- Session defaults: Configure project, scheme, simulator, and device defaults to avoid repetitive parameters\n- Project discovery: Find Xcode projects/workspaces, list schemes, inspect build settings\n- Simulator workflows: Build, run, test, install, and launch apps on iOS simulators; manage simulator state (boot, erase, location, appearance)\n- Device workflows: Build, test, install, and launch apps on physical devices with code signing\n- macOS workflows: Build, run, and test macOS applications\n- Log capture: Stream and capture logs from simulators and devices\n- LLDB debugging: Attach debugger, set breakpoints, inspect stack traces and variables, execute LLDB commands\n- UI automation: Capture screenshots, inspect view hierarchy with coordinates, perform taps/swipes/gestures, type text, press hardware buttons\n- SwiftPM: Build, run, test, and manage Swift Package Manager projects\n- Project scaffolding: Generate new iOS/macOS project templates\n\nOnly simulator workflow tools are enabled by default. If capabilities like device, macOS, debugging, or UI automation are not available, the user must configure MobileBuildMCP to enable them. See https://github.com/getsentry/xcodebuildmcp.com/blob/main/app/docs/_content/configuration.mdx for workflow configuration.\n\n## Step 1: Establish Session Context\n\n- Call `session_show_defaults` before the first build/run/test action in a session.\n- Use `discover_projs` only when defaults show missing or incorrect project/workspace context.\n- Do not run discovery speculatively or in parallel with `session_show_defaults`.\n- For simulator run intent, prefer the combined build-and-run tool instead of separate build then run calls.\n- Do not chain build-only then build-and-run unless the user explicitly requests both.\n\n## Step 2: Understand Workflow-Scoped Tool Availability\n\n- Not all tools are enabled by default; tool availability depends on enabled workflows.\n- If a tool is expected but missing, check enabled workflows first.\n- Update enabled workflows in `.mobilebuildmcp/config.yaml`, then ask user to reload/restart the session to surface refreshes.\n\n## Step 3: Report Context Clearly\n\n- Return the active defaults context used for execution (project/workspace, scheme, simulator/device).\n- For failures, include the exact failing step and the next actionable command/tool call.\n"
+    }
+  ]
+}

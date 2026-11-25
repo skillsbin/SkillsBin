@@ -1,0 +1,314 @@
+{
+  "repo": "mufeedvh/code2prompt",
+  "commit": "d762d9bbd0b837b8217329e12b36f1df9bfdbf5f",
+  "branch": "main",
+  "fetchedAt": "2026-11-25T07:22:24.413Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "code2prompt-conventions",
+      "name": "code2prompt-conventions",
+      "dir": ".agents/skills/code2prompt-conventions",
+      "path": ".agents/skills/code2prompt-conventions/SKILL.md",
+      "desc": "Follow code2prompt architecture and implementation conventions when changing or reviewing code.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git",
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/mufeedvh/code2prompt.git",
+        "copy": "cp -r .agents/skills/code2prompt-conventions ~/.claude/skills/code2prompt-conventions",
+        "raw": "https://raw.githubusercontent.com/mufeedvh/code2prompt/d762d9bbd0b837b8217329e12b36f1df9bfdbf5f/.agents/skills/code2prompt-conventions/SKILL.md",
+        "saveAs": "~/.claude/skills/code2prompt-conventions/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:0835d03c5fe9e53409fe7906df5d9ba8e5eb20281283765ce8b386dc9707ae5e",
+      "bytes": 1660,
+      "wordCount": 197,
+      "repoLicense": "MIT",
+      "commit": "d762d9bbd0b837b8217329e12b36f1df9bfdbf5f",
+      "branch": "main",
+      "body": "---\nname: code2prompt-conventions\ndescription: Follow code2prompt architecture and implementation conventions when changing or reviewing code.\nmetadata:\n  internal: true\n---\n\n# code2prompt conventions\n\nBefore changing an unfamiliar area, read the target code, a nearby example, and relevant tests.\n\n## Ownership\n\n- `code2prompt-core`: reusable logic, configuration, files, Git, templates, tokenization, analysis, and sessions.\n- `code2prompt`: CLI, config precedence, stdout/stderr, clipboard, and TUI model/views/widgets.\n- `code2prompt-python`: thin PyO3 adapter over `code2prompt-core`.\n- `website`: site and product documentation, not product semantics.\n\nImplement behavior once, in the lowest appropriate layer.\n\n`Code2PromptSession` coordinates configuration, selection state, and loaded data.\n`SessionData` is the source of truth for loaded codebase and Git results, not for all\nsession state.\n\n## Preserve\n\n- deterministic output where order is visible;\n- optional-feature behavior with and without the feature;\n- intended fallbacks and useful error context;\n- stdout for prompt/data output and stderr for human diagnostics;\n- existing public names, defaults, serialized values, CLI behavior, and Python API unless intentionally changed.\n\n## Style\n\n- Prefer existing abstractions and dependencies.\n- Avoid unrelated refactors.\n- Use `Result`/`?`; add context at filesystem, Git, parsing, and rendering boundaries.\n- Avoid runtime panics for recoverable failures.\n- Comments explain why, invariants, compatibility, or non-obvious algorithms.\n- Put focused private Rust tests in local `#[cfg(test)] mod tests`; use integration tests for public behavior.\n",
+      "bodyMd": "# code2prompt conventions\n\nBefore changing an unfamiliar area, read the target code, a nearby example, and relevant tests.\n\n## Ownership\n\n- `code2prompt-core`: reusable logic, configuration, files, Git, templates, tokenization, analysis, and sessions.\n- `code2prompt`: CLI, config precedence, stdout/stderr, clipboard, and TUI model/views/widgets.\n- `code2prompt-python`: thin PyO3 adapter over `code2prompt-core`.\n- `website`: site and product documentation, not product semantics.\n\nImplement behavior once, in the lowest appropriate layer.\n\n`Code2PromptSession` coordinates configuration, selection state, and loaded data.\n`SessionData` is the source of truth for loaded codebase and Git results, not for all\nsession state.\n\n## Preserve\n\n- deterministic output where order is visible;\n- optional-feature behavior with and without the feature;\n- intended fallbacks and useful error context;\n- stdout for prompt/data output and stderr for human diagnostics;\n- existing public names, defaults, serialized values, CLI behavior, and Python API unless intentionally changed.\n\n## Style\n\n- Prefer existing abstractions and dependencies.\n- Avoid unrelated refactors.\n- Use `Result`/`?`; add context at filesystem, Git, parsing, and rendering boundaries.\n- Avoid runtime panics for recoverable failures.\n- Comments explain why, invariants, compatibility, or non-obvious algorithms.\n- Put focused private Rust tests in local `#[cfg(test)] mod tests`; use integration tests for public behavior.\n"
+    },
+    {
+      "slug": "documentation",
+      "name": "documentation",
+      "dir": ".agents/skills/documentation",
+      "path": ".agents/skills/documentation/SKILL.md",
+      "desc": "Update code2prompt documentation when public behavior or architecture changes.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "cargo"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/mufeedvh/code2prompt.git",
+        "copy": "cp -r .agents/skills/documentation ~/.claude/skills/documentation",
+        "raw": "https://raw.githubusercontent.com/mufeedvh/code2prompt/d762d9bbd0b837b8217329e12b36f1df9bfdbf5f/.agents/skills/documentation/SKILL.md",
+        "saveAs": "~/.claude/skills/documentation/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:ca5e2fd04bddab5412f032f19a4377ba69421dd0f7f52849db629e34537f8bde",
+      "bytes": 906,
+      "wordCount": 109,
+      "repoLicense": "MIT",
+      "commit": "d762d9bbd0b837b8217329e12b36f1df9bfdbf5f",
+      "branch": "main",
+      "body": "---\nname: documentation\ndescription: Update code2prompt documentation when public behavior or architecture changes.\nmetadata:\n  internal: true\n---\n\n# Documentation\n\nUpdate docs when a change affects public APIs, CLI flags/defaults/output, configuration,\ntemplate variables, feature flags, installation, or user workflows.\n\n- Use `//!` for module purpose and boundaries.\n- Use `///` for useful public API semantics, errors, or examples.\n- Use inline comments only for non-obvious intent, constraints, or tradeoffs.\n- Keep the root README, Python README, and website examples consistent with their surface.\n- Update localized pages when in scope; otherwise report which copies may be stale.\n\nDo not add comments that merely restate the code.\n\nFor changed CLI documentation, compare against:\n\n```bash\ncargo run --quiet -- --help\n```\n\nRun the relevant verification skill after documentation-sensitive changes.\n",
+      "bodyMd": "# Documentation\n\nUpdate docs when a change affects public APIs, CLI flags/defaults/output, configuration,\ntemplate variables, feature flags, installation, or user workflows.\n\n- Use `//!` for module purpose and boundaries.\n- Use `///` for useful public API semantics, errors, or examples.\n- Use inline comments only for non-obvious intent, constraints, or tradeoffs.\n- Keep the root README, Python README, and website examples consistent with their surface.\n- Update localized pages when in scope; otherwise report which copies may be stale.\n\nDo not add comments that merely restate the code.\n\nFor changed CLI documentation, compare against:\n\n```bash\ncargo run --quiet -- --help\n```\n\nRun the relevant verification skill after documentation-sensitive changes.\n"
+    },
+    {
+      "slug": "verify-cli",
+      "name": "verify-cli",
+      "dir": ".agents/skills/verify-cli",
+      "path": ".agents/skills/verify-cli/SKILL.md",
+      "desc": "Verify changes to the code2prompt CLI or TUI.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "cargo"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/mufeedvh/code2prompt.git",
+        "copy": "cp -r .agents/skills/verify-cli ~/.claude/skills/verify-cli",
+        "raw": "https://raw.githubusercontent.com/mufeedvh/code2prompt/d762d9bbd0b837b8217329e12b36f1df9bfdbf5f/.agents/skills/verify-cli/SKILL.md",
+        "saveAs": "~/.claude/skills/verify-cli/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:4ae1424008b3e264051d8ac08490e5e085c46072959676aea0392c6ca8b91144",
+      "bytes": 620,
+      "wordCount": 74,
+      "repoLicense": "MIT",
+      "commit": "d762d9bbd0b837b8217329e12b36f1df9bfdbf5f",
+      "branch": "main",
+      "body": "---\nname: verify-cli\ndescription: Verify changes to the code2prompt CLI or TUI.\nmetadata:\n  internal: true\n---\n\n# Verify CLI / TUI\n\nRun from the repository root:\n\n```bash\ncargo test\ncargo clippy --all-targets --all-features\n```\n\nFor changed flags, configuration, or output behavior, also run or add a representative\nintegration test and compare the CLI with:\n\n```bash\ncargo run --quiet -- --help\n```\n\nCheck CLI-over-config precedence, stdout versus stderr, quiet mode, and that TUI state\nstays in the model/session rather than widgets. Use temporary fixtures, not personal\nrepositories. Report failed checks explicitly.\n",
+      "bodyMd": "# Verify CLI / TUI\n\nRun from the repository root:\n\n```bash\ncargo test\ncargo clippy --all-targets --all-features\n```\n\nFor changed flags, configuration, or output behavior, also run or add a representative\nintegration test and compare the CLI with:\n\n```bash\ncargo run --quiet -- --help\n```\n\nCheck CLI-over-config precedence, stdout versus stderr, quiet mode, and that TUI state\nstays in the model/session rather than widgets. Use temporary fixtures, not personal\nrepositories. Report failed checks explicitly.\n"
+    },
+    {
+      "slug": "verify-core",
+      "name": "verify-core",
+      "dir": ".agents/skills/verify-core",
+      "path": ".agents/skills/verify-core/SKILL.md",
+      "desc": "Verify changes under crates/code2prompt-core.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "cargo"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/mufeedvh/code2prompt.git",
+        "copy": "cp -r .agents/skills/verify-core ~/.claude/skills/verify-core",
+        "raw": "https://raw.githubusercontent.com/mufeedvh/code2prompt/d762d9bbd0b837b8217329e12b36f1df9bfdbf5f/.agents/skills/verify-core/SKILL.md",
+        "saveAs": "~/.claude/skills/verify-core/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:9e0e8879ffb4a4b18bbfbbede3647ea25e4018d26f647ea94a08168b41827524",
+      "bytes": 528,
+      "wordCount": 58,
+      "repoLicense": "MIT",
+      "commit": "d762d9bbd0b837b8217329e12b36f1df9bfdbf5f",
+      "branch": "main",
+      "body": "---\nname: verify-core\ndescription: Verify changes under crates/code2prompt-core.\nmetadata:\n  internal: true\n---\n\n# Verify core\n\nRun from the repository root:\n\n```bash\ncargo test\ncargo clippy --all-targets --all-features\n```\n\nIf `entity-map` runtime behavior changed, also run:\n\n```bash\ncargo test --all-features\n```\n\nCheck that presentation logic did not leak into core, ordering stays deterministic,\nfallbacks and features still work, and changed behavior has a regression test when\npractical. Report failed checks explicitly.\n",
+      "bodyMd": "# Verify core\n\nRun from the repository root:\n\n```bash\ncargo test\ncargo clippy --all-targets --all-features\n```\n\nIf `entity-map` runtime behavior changed, also run:\n\n```bash\ncargo test --all-features\n```\n\nCheck that presentation logic did not leak into core, ordering stays deterministic,\nfallbacks and features still work, and changed behavior has a regression test when\npractical. Report failed checks explicitly.\n"
+    },
+    {
+      "slug": "verify-python",
+      "name": "verify-python",
+      "dir": ".agents/skills/verify-python",
+      "path": ".agents/skills/verify-python/SKILL.md",
+      "desc": "Verify changes to the code2prompt Python bindings.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "uv"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/mufeedvh/code2prompt.git",
+        "copy": "cp -r .agents/skills/verify-python ~/.claude/skills/verify-python",
+        "raw": "https://raw.githubusercontent.com/mufeedvh/code2prompt/d762d9bbd0b837b8217329e12b36f1df9bfdbf5f/.agents/skills/verify-python/SKILL.md",
+        "saveAs": "~/.claude/skills/verify-python/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:5bf899ab60b1ea2a3b38a9388eb7df59ff6bea3742859c57da4f14b4642e8b9f",
+      "bytes": 382,
+      "wordCount": 38,
+      "repoLicense": "MIT",
+      "commit": "d762d9bbd0b837b8217329e12b36f1df9bfdbf5f",
+      "branch": "main",
+      "body": "---\nname: verify-python\ndescription: Verify changes to the code2prompt Python bindings.\nmetadata:\n  internal: true\n---\n\n# Verify Python\n\nFrom `crates/code2prompt-python`:\n\n```bash\nuv sync\nuv run pytest --quiet\n```\n\nKeep Python a thin adapter over the core. Preserve public Python names and types unless\nintentionally changed. Report the Python version and failed checks explicitly.\n",
+      "bodyMd": "# Verify Python\n\nFrom `crates/code2prompt-python`:\n\n```bash\nuv sync\nuv run pytest --quiet\n```\n\nKeep Python a thin adapter over the core. Preserve public Python names and types unless\nintentionally changed. Report the Python version and failed checks explicitly.\n"
+    },
+    {
+      "slug": "verify-website",
+      "name": "verify-website",
+      "dir": ".agents/skills/verify-website",
+      "path": ".agents/skills/verify-website/SKILL.md",
+      "desc": "Verify changes under website/.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "pnpm"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/mufeedvh/code2prompt.git",
+        "copy": "cp -r .agents/skills/verify-website ~/.claude/skills/verify-website",
+        "raw": "https://raw.githubusercontent.com/mufeedvh/code2prompt/d762d9bbd0b837b8217329e12b36f1df9bfdbf5f/.agents/skills/verify-website/SKILL.md",
+        "saveAs": "~/.claude/skills/verify-website/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:59acb9668bc62bccd37fa078604a9fae2b0537fbdb474c442bf60456bfcc3f55",
+      "bytes": 523,
+      "wordCount": 57,
+      "repoLicense": "MIT",
+      "commit": "d762d9bbd0b837b8217329e12b36f1df9bfdbf5f",
+      "branch": "main",
+      "body": "---\nname: verify-website\ndescription: Verify changes under website/.\nmetadata:\n  internal: true\n---\n\n# Verify website\n\nFrom `website/`, run `pnpm install --frozen-lockfile` only when dependencies are missing\nor package metadata changed, then run:\n\n```bash\npnpm build\n```\n\nCheck changed pages for broken links or routes, incorrect examples, navigation changes,\nrelevant localized copies, and visual regressions when layout or styling changed.\n\nDo not commit `website/dist/`. Report build or environment failures explicitly.\n",
+      "bodyMd": "# Verify website\n\nFrom `website/`, run `pnpm install --frozen-lockfile` only when dependencies are missing\nor package metadata changed, then run:\n\n```bash\npnpm build\n```\n\nCheck changed pages for broken links or routes, incorrect examples, navigation changes,\nrelevant localized copies, and visual regressions when layout or styling changed.\n\nDo not commit `website/dist/`. Report build or environment failures explicitly.\n"
+    },
+    {
+      "slug": "code2prompt",
+      "name": "code2prompt",
+      "dir": "skills/code2prompt",
+      "path": "skills/code2prompt/SKILL.md",
+      "desc": "Explore codebases efficiently with code2prompt, using sem-backed entity maps and grouped source reads to reduce agent round trips. Use when understanding an unfamiliar repository, locating implementations, gathering context for changes or reviews, or installing code2prompt.",
+      "descZh": "",
+      "triggers": [
+        "locating implementations",
+        "gathering context for ch"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "python",
+          "pip",
+          "cargo",
+          "go",
+          "rg",
+          "brew"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/mufeedvh/code2prompt.git",
+        "copy": "cp -r skills/code2prompt ~/.claude/skills/code2prompt",
+        "raw": "https://raw.githubusercontent.com/mufeedvh/code2prompt/d762d9bbd0b837b8217329e12b36f1df9bfdbf5f/skills/code2prompt/SKILL.md",
+        "saveAs": "~/.claude/skills/code2prompt/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:8f2d45547a262cdc7961c79f0c4f325a51222f361e099d43454a00df047a23f0",
+      "bytes": 6825,
+      "wordCount": 934,
+      "repoLicense": "MIT",
+      "commit": "d762d9bbd0b837b8217329e12b36f1df9bfdbf5f",
+      "branch": "main",
+      "body": "---\nname: code2prompt\ndescription: Explore codebases efficiently with code2prompt, using sem-backed entity maps and grouped source reads to reduce agent round trips. Use when understanding an unfamiliar repository, locating implementations, gathering context for changes or reviews, or installing code2prompt.\n---\n\n# Code2Prompt\n\nLet code2prompt traverse, filter, parse, and assemble repository context locally.\nUse compact structural maps to choose relevant files, then read the implementation\nand its tests together. Prefer this over repeated `find`, `rg --files`, and\nindividual file reads for broad exploration.\n\nChoose the shortest useful workflow:\n\n- If the relevant paths are known, go directly to a grouped source read.\n- For an unfamiliar area, request one entity map, then use its paths and symbols\n  to select a grouped read. Reuse the map until relevant source files change.\n- For a small area, reading its source directly can be cheaper than mapping it.\n- If entity extraction is unavailable, use the directory map as a fallback.\n\nAdapt the scope to the task and context budget. Avoid scanning the whole repository\nagain for each question or dumping all source before identifying the relevant area.\n\n## Install the CLI\n\nCheck availability once per environment, not before every read:\n\n```sh\ncode2prompt --version\ncode2prompt --help\n```\n\nFor the sem-backed entity map, use a CLI built with the optional `entity-map`\nfeature. With Rust/Cargo available, build it from the code2prompt repository:\n\n```sh\ncargo install --git https://github.com/mufeedvh/code2prompt \\\n  --locked --features entity-map code2prompt\n```\n\nFor ordinary directory maps and source reads, a standard installation is enough:\n\n```sh\n# Choose one available package manager:\ncargo install code2prompt --locked\nbrew install code2prompt\n```\n\nAn existing CLI may list `--entity-map` in its help even when built without the\nfeature; in that case extraction returns no entities. If building with the feature\nis unavailable or unnecessary for the task, continue with ordinary source reads.\nThere is no separate `sem` executable or service to configure: code2prompt uses\n`sem-core` internally.\n\nPrebuilt binaries are available from the\n[GitHub releases](https://github.com/mufeedvh/code2prompt/releases).\nInstalling this skill adds instructions; the CLI is installed separately.\n`pip install code2prompt-rs` installs the Python SDK, not the CLI.\n\n## Map an unfamiliar area\n\nRun from the repository you want to inspect. Replace the example paths and\npatterns below with its actual layout. Set `CODE2PROMPT_SKILL_DIR` to the absolute\ndirectory containing this installed `SKILL.md`; the bundled template is\n[assets/code-map.hbs](assets/code-map.hbs). It is a skill resource, not a file in\nthe repository being analyzed.\n\nFor a source area and its tests:\n\n```sh\ncode2prompt . --include 'src/**' --include 'tests/**' \\\n  --exclude '**/*.snap' --entity-map \\\n  --template \"$CODE2PROMPT_SKILL_DIR/assets/code-map.hbs\" \\\n  --output-file - --quiet\n```\n\nFor an unknown layout, omit the includes and exclude generated/vendor paths, or\nget a directory map first. The template lists selected file paths and extracted\nentities: names, kinds, declaration snippets, parent names, and line ranges. It\ndoes not render full file contents; `--entity-map` with the default template does.\nDeclaration snippets are the first line of an entity and can contain inline code;\nexclude generated/minified files to keep the map useful.\nDo not combine entity extraction with `--exclude '**'` or `--deselected`: files\nmust be selected for code2prompt to parse them.\n\n`(no extracted entities)` means extraction returned nothing or the binary lacks\nthe feature. Some files yield generic `chunk` entries instead of declarations;\nthe template shows their ranges without content snippets. Neither case means the\nfile is irrelevant. Read manifests, documentation, or other such files directly\nas needed. This map is not a dependency graph or semantic text search.\n\nFallback directory map, without file contents:\n\n```sh\ncode2prompt . --full-directory-tree --exclude '**' --output-file - --quiet\n```\n\nThe full tree keeps excluded paths visible while respecting ignore rules and\nskipping hidden entries by default. To reduce this tree, analyze a subdirectory;\ninclude/exclude patterns do not prune a full directory tree.\n\n## Read the selected context together\n\nLoad the relevant implementation and tests together with line numbers:\n\n```sh\ncode2prompt . --include 'src/auth/**' --include 'tests/auth/**' \\\n  --exclude '**/*.snap' --line-numbers --output-file - --quiet\n```\n\nRead a small set of specific files when their paths are known:\n\n```sh\ncode2prompt . --include 'README.md' --include 'src/auth/session.ts' \\\n  --line-numbers --output-file - --quiet\n```\n\nUse the map to collect the likely implementation, its callers or interfaces, and\nrelated tests in one request. Add another batch only when the returned source\nreveals a missing dependency or leaves a concrete question unresolved. Narrow the\nselection if output is too large or truncated.\n\nFor an exact content match or a small line range within a very large file, use an\nappropriate text search or file-reading tool. code2prompt selects whole files by\npath; it does not offer a symbol-query or line-range CLI selector.\n\n## Useful controls\n\n- Quote glob patterns so the shell does not expand them. Patterns are relative to\n  the analyzed directory; repeat `--include` and `--exclude` for multiple patterns.\n  Use `**/*.rs` for a language or `src/**` for a subtree.\n- Use `--output-file -` to explicitly send the prompt to stdout, including when\n  configuration defaults to clipboard output. `--quiet` suppresses progress and\n  summary messages. Avoid `--tui` in automated agent workflows.\n- For structured output, add `--output-format json`. For a larger result, use\n  `--output-file` with a temporary file outside the analyzed directory, then read\n  that file. Omit `--quiet` to see the estimated token count on stderr.\n  The current estimate includes selected file contents even for a template that\n  omits their bodies; do not interpret it as the compact map's actual token size.\n- Hidden files require `--hidden`. Ignored files require `--no-ignore`; keep the\n  default ignore behavior for ordinary exploration and target any extra files\n  explicitly with include patterns.\n- If output differs from the requested scope, rerun without `--quiet` to see which\n  configuration was loaded. The CLI reads `.c2pconfig` from the working directory,\n  then falls back to the platform's user configuration directory. Supplying any\n  CLI include/exclude patterns replaces both configured pattern lists; a configured\n  `path` can override the positional directory.\n\nSee the [CLI guide](https://code2prompt.dev/docs/how_to/cli/) for more options.\n",
+      "bodyMd": "# Code2Prompt\n\nLet code2prompt traverse, filter, parse, and assemble repository context locally.\nUse compact structural maps to choose relevant files, then read the implementation\nand its tests together. Prefer this over repeated `find`, `rg --files`, and\nindividual file reads for broad exploration.\n\nChoose the shortest useful workflow:\n\n- If the relevant paths are known, go directly to a grouped source read.\n- For an unfamiliar area, request one entity map, then use its paths and symbols\n  to select a grouped read. Reuse the map until relevant source files change.\n- For a small area, reading its source directly can be cheaper than mapping it.\n- If entity extraction is unavailable, use the directory map as a fallback.\n\nAdapt the scope to the task and context budget. Avoid scanning the whole repository\nagain for each question or dumping all source before identifying the relevant area.\n\n## Install the CLI\n\nCheck availability once per environment, not before every read:\n\n```sh\ncode2prompt --version\ncode2prompt --help\n```\n\nFor the sem-backed entity map, use a CLI built with the optional `entity-map`\nfeature. With Rust/Cargo available, build it from the code2prompt repository:\n\n```sh\ncargo install --git https://github.com/mufeedvh/code2prompt \\\n  --locked --features entity-map code2prompt\n```\n\nFor ordinary directory maps and source reads, a standard installation is enough:\n\n```sh\n# Choose one available package manager:\ncargo install code2prompt --locked\nbrew install code2prompt\n```\n\nAn existing CLI may list `--entity-map` in its help even when built without the\nfeature; in that case extraction returns no entities. If building with the feature\nis unavailable or unnecessary for the task, continue with ordinary source reads.\nThere is no separate `sem` executable or service to configure: code2prompt uses\n`sem-core` internally.\n\nPrebuilt binaries are available from the\n[GitHub releases](https://github.com/mufeedvh/code2prompt/releases).\nInstalling this skill adds instructions; the CLI is installed separately.\n`pip install code2prompt-rs` installs the Python SDK, not the CLI.\n\n## Map an unfamiliar area\n\nRun from the repository you want to inspect. Replace the example paths and\npatterns below with its actual layout. Set `CODE2PROMPT_SKILL_DIR` to the absolute\ndirectory containing this installed `SKILL.md`; the bundled template is\n[assets/code-map.hbs](assets/code-map.hbs). It is a skill resource, not a file in\nthe repository being analyzed.\n\nFor a source area and its tests:\n\n```sh\ncode2prompt . --include 'src/**' --include 'tests/**' \\\n  --exclude '**/*.snap' --entity-map \\\n  --template \"$CODE2PROMPT_SKILL_DIR/assets/code-map.hbs\" \\\n  --output-file - --quiet\n```\n\nFor an unknown layout, omit the includes and exclude generated/vendor paths, or\nget a directory map first. The template lists selected file paths and extracted\nentities: names, kinds, declaration snippets, parent names, and line ranges. It\ndoes not render full file contents; `--entity-map` with the default template does.\nDeclaration snippets are the first line of an entity and can contain inline code;\nexclude generated/minified files to keep the map useful.\nDo not combine entity extraction with `--exclude '**'` or `--deselected`: files\nmust be selected for code2prompt to parse them.\n\n`(no extracted entities)` means extraction returned nothing or the binary lacks\nthe feature. Some files yield generic `chunk` entries instead of declarations;\nthe template shows their ranges without content snippets. Neither case means the\nfile is irrelevant. Read manifests, documentation, or other such files directly\nas needed. This map is not a dependency graph or semantic text search.\n\nFallback directory map, without file contents:\n\n```sh\ncode2prompt . --full-directory-tree --exclude '**' --output-file - --quiet\n```\n\nThe full tree keeps excluded paths visible while respecting ignore rules and\nskipping hidden entries by default. To reduce this tree, analyze a subdirectory;\ninclude/exclude patterns do not prune a full directory tree.\n\n## Read the selected context together\n\nLoad the relevant implementation and tests together with line numbers:\n\n```sh\ncode2prompt . --include 'src/auth/**' --include 'tests/auth/**' \\\n  --exclude '**/*.snap' --line-numbers --output-file - --quiet\n```\n\nRead a small set of specific files when their paths are known:\n\n```sh\ncode2prompt . --include 'README.md' --include 'src/auth/session.ts' \\\n  --line-numbers --output-file - --quiet\n```\n\nUse the map to collect the likely implementation, its callers or interfaces, and\nrelated tests in one request. Add another batch only when the returned source\nreveals a missing dependency or leaves a concrete question unresolved. Narrow the\nselection if output is too large or truncated.\n\nFor an exact content match or a small line range within a very large file, use an\nappropriate text search or file-reading tool. code2prompt selects whole files by\npath; it does not offer a symbol-query or line-range CLI selector.\n\n## Useful controls\n\n- Quote glob patterns so the shell does not expand them. Patterns are relative to\n  the analyzed directory; repeat `--include` and `--exclude` for multiple patterns.\n  Use `**/*.rs` for a language or `src/**` for a subtree.\n- Use `--output-file -` to explicitly send the prompt to stdout, including when\n  configuration defaults to clipboard output. `--quiet` suppresses progress and\n  summary messages. Avoid `--tui` in automated agent workflows.\n- For structured output, add `--output-format json`. For a larger result, use\n  `--output-file` with a temporary file outside the analyzed directory, then read\n  that file. Omit `--quiet` to see the estimated token count on stderr.\n  The current estimate includes selected file contents even for a template that\n  omits their bodies; do not interpret it as the compact map's actual token size.\n- Hidden files require `--hidden`. Ignored files require `--no-ignore`; keep the\n  default ignore behavior for ordinary exploration and target any extra files\n  explicitly with include patterns.\n- If output differs from the requested scope, rerun without `--quiet` to see which\n  configuration was loaded. The CLI reads `.c2pconfig` from the working directory,\n  then falls back to the platform's user configuration directory. Supplying any\n  CLI include/exclude patterns replaces both configured pattern lists; a configured\n  `path` can override the positional directory.\n\nSee the [CLI guide](https://code2prompt.dev/docs/how_to/cli/) for more options.\n"
+    }
+  ]
+}

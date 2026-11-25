@@ -1,0 +1,229 @@
+{
+  "repo": "microsoft/TokenEconomizer",
+  "commit": "fa5604a3673fb3fa8c9932b942dd210e7afb18f3",
+  "branch": "main",
+  "fetchedAt": "2026-11-25T07:22:11.077Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "config",
+      "name": "config",
+      "dir": "plugin/codex-skills/config",
+      "path": "plugin/codex-skills/config/SKILL.md",
+      "desc": "Show or change TokenEconomizer's settings: turn micro-skills, tool pruning or the loop guard on or off, or tune them, for this repository or (with --global) every repository. Use when the user asks to configure, enable or disable TokenEconomizer or one of its mechanisms.",
+      "descZh": "",
+      "triggers": [
+        "enable",
+        "disable TokenEconomizer",
+        "one of its mechanisms"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/microsoft/TokenEconomizer.git",
+        "copy": "cp -r plugin/codex-skills/config ~/.claude/skills/config",
+        "raw": "https://raw.githubusercontent.com/microsoft/TokenEconomizer/fa5604a3673fb3fa8c9932b942dd210e7afb18f3/plugin/codex-skills/config/SKILL.md",
+        "saveAs": "~/.claude/skills/config/SKILL.md",
+        "marketplace": "/plugin marketplace add microsoft/TokenEconomizer"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:a7b2eff340aa857e3cac2b1adce8d7686cc49ce779010028c53f7c148ab85bdc",
+      "bytes": 1381,
+      "wordCount": 161,
+      "repoLicense": "MIT",
+      "commit": "fa5604a3673fb3fa8c9932b942dd210e7afb18f3",
+      "branch": "main",
+      "body": "---\nname: \"config\"\ndescription: >\n  Show or change TokenEconomizer's settings: turn micro-skills, tool pruning or the loop guard on or off, or tune them, for this repository or (with --global) every repository. Use when the user asks to configure, enable or disable TokenEconomizer or one of its mechanisms.\n---\n\n# TokenEconomizer: config\n\nRun this command in the repository's root directory:\n\n```\n\"${TOKENECONOMIZER_HOME:-$HOME/.tokeneconomizer}/bin/te\" --host codex --cwd \"$(pwd)\" config ARGS\n```\n\nUse `show` as ARGS unless the user asked to change a setting; then `set KEY=VALUE ...` or `unset KEY ...`, adding `--global` only if they asked for every repository. Show the output verbatim in a code block; if a setting was rejected, say why in one sentence.\n\nChanging a setting (`set`, `unset`) writes TokenEconomizer's own state under `~/.tokeneconomizer`, outside the workspace, which the sandbox keeps read-only: run that command with `sandbox_permissions` set to `\"require_escalated\"` and a one-line `justification`, so that Codex asks the user to approve it. `show` reads only and needs no approval.\n\nThe command reads and writes only TokenEconomizer's own state (under `~/.tokeneconomizer`); it\nmakes no model call. If it reports that the launcher does not exist, the plugin has not run in a session yet:\nask the user to start a new Codex session in this repository first.\n",
+      "bodyMd": "# TokenEconomizer: config\n\nRun this command in the repository's root directory:\n\n```\n\"${TOKENECONOMIZER_HOME:-$HOME/.tokeneconomizer}/bin/te\" --host codex --cwd \"$(pwd)\" config ARGS\n```\n\nUse `show` as ARGS unless the user asked to change a setting; then `set KEY=VALUE ...` or `unset KEY ...`, adding `--global` only if they asked for every repository. Show the output verbatim in a code block; if a setting was rejected, say why in one sentence.\n\nChanging a setting (`set`, `unset`) writes TokenEconomizer's own state under `~/.tokeneconomizer`, outside the workspace, which the sandbox keeps read-only: run that command with `sandbox_permissions` set to `\"require_escalated\"` and a one-line `justification`, so that Codex asks the user to approve it. `show` reads only and needs no approval.\n\nThe command reads and writes only TokenEconomizer's own state (under `~/.tokeneconomizer`); it\nmakes no model call. If it reports that the launcher does not exist, the plugin has not run in a session yet:\nask the user to start a new Codex session in this repository first.\n"
+    },
+    {
+      "slug": "microskills",
+      "name": "microskills",
+      "dir": "plugin/codex-skills/microskills",
+      "path": "plugin/codex-skills/microskills/SKILL.md",
+      "desc": "Show the repository facts (micro-skills) TokenEconomizer learned and injects at the start of each session here, and the ones still forming. Use when the user asks what TokenEconomizer learned or injects, or about its facts or micro-skills.",
+      "descZh": "",
+      "triggers": [
+        "injects",
+        "about its facts",
+        "micro-skills"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/microsoft/TokenEconomizer.git",
+        "copy": "cp -r plugin/codex-skills/microskills ~/.claude/skills/microskills",
+        "raw": "https://raw.githubusercontent.com/microsoft/TokenEconomizer/fa5604a3673fb3fa8c9932b942dd210e7afb18f3/plugin/codex-skills/microskills/SKILL.md",
+        "saveAs": "~/.claude/skills/microskills/SKILL.md",
+        "marketplace": "/plugin marketplace add microsoft/TokenEconomizer"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:4d2bda0b9f8fcfdfcb480ea32c5d3f68844e2443252dc62541520d3a21ede238",
+      "bytes": 814,
+      "wordCount": 77,
+      "repoLicense": "MIT",
+      "commit": "fa5604a3673fb3fa8c9932b942dd210e7afb18f3",
+      "branch": "main",
+      "body": "---\nname: \"microskills\"\ndescription: >\n  Show the repository facts (micro-skills) TokenEconomizer learned and injects at the start of each session here, and the ones still forming. Use when the user asks what TokenEconomizer learned or injects, or about its facts or micro-skills.\n---\n\n# TokenEconomizer: microskills\n\nRun this command in the repository's root directory:\n\n```\n\"${TOKENECONOMIZER_HOME:-$HOME/.tokeneconomizer}/bin/te\" --host codex --cwd \"$(pwd)\" microskills\n```\n\nShow the output verbatim in a code block, with no commentary.\n\nThe command reads and writes only TokenEconomizer's own state (under `~/.tokeneconomizer`); it\nmakes no model call. If it reports that the launcher does not exist, the plugin has not run in a session yet:\nask the user to start a new Codex session in this repository first.\n",
+      "bodyMd": "# TokenEconomizer: microskills\n\nRun this command in the repository's root directory:\n\n```\n\"${TOKENECONOMIZER_HOME:-$HOME/.tokeneconomizer}/bin/te\" --host codex --cwd \"$(pwd)\" microskills\n```\n\nShow the output verbatim in a code block, with no commentary.\n\nThe command reads and writes only TokenEconomizer's own state (under `~/.tokeneconomizer`); it\nmakes no model call. If it reports that the launcher does not exist, the plugin has not run in a session yet:\nask the user to start a new Codex session in this repository first.\n"
+    },
+    {
+      "slug": "repos",
+      "name": "repos",
+      "dir": "plugin/codex-skills/repos",
+      "path": "plugin/codex-skills/repos/SKILL.md",
+      "desc": "List every repository TokenEconomizer keeps state for (how each was identified, its agents and sessions, the checkouts seen), or merge one repository's state into another. Use when the user asks which repositories TokenEconomizer tracks, why state looks split or missing, or asks to merge or migrate it.",
+      "descZh": "",
+      "triggers": [
+        "why state looks split",
+        "missing"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/microsoft/TokenEconomizer.git",
+        "copy": "cp -r plugin/codex-skills/repos ~/.claude/skills/repos",
+        "raw": "https://raw.githubusercontent.com/microsoft/TokenEconomizer/fa5604a3673fb3fa8c9932b942dd210e7afb18f3/plugin/codex-skills/repos/SKILL.md",
+        "saveAs": "~/.claude/skills/repos/SKILL.md",
+        "marketplace": "/plugin marketplace add microsoft/TokenEconomizer"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:5cf1ec45a5f5c977b839d1676121fbbca543376a030fe240891812a67256cd1b",
+      "bytes": 1500,
+      "wordCount": 172,
+      "repoLicense": "MIT",
+      "commit": "fa5604a3673fb3fa8c9932b942dd210e7afb18f3",
+      "branch": "main",
+      "body": "---\nname: \"repos\"\ndescription: >\n  List every repository TokenEconomizer keeps state for (how each was identified, its agents and sessions, the checkouts seen), or merge one repository's state into another. Use when the user asks which repositories TokenEconomizer tracks, why state looks split or missing, or asks to merge or migrate it.\n---\n\n# TokenEconomizer: repos\n\nRun this command in the repository's root directory:\n\n```\n\"${TOKENECONOMIZER_HOME:-$HOME/.tokeneconomizer}/bin/te\" --host codex --cwd \"$(pwd)\" repos ARGS\n```\n\nUse `list` as ARGS unless the user asked to `migrate`, or to `merge KEY [INTO]` (keys as the list shows them; INTO defaults to this repository). Never run `migrate` or `merge` unless the user asked for it. Show the output verbatim in a code block.\n\n`migrate` and `merge` move state between repositories; that writes TokenEconomizer's own state under `~/.tokeneconomizer`, outside the workspace, which the sandbox keeps read-only: run that command with `sandbox_permissions` set to `\"require_escalated\"` and a one-line `justification`, so that Codex asks the user to approve it. `list` reads only and needs no approval.\n\nThe command reads and writes only TokenEconomizer's own state (under `~/.tokeneconomizer`);\nit makes no model call, and a merge keeps the old state directory under\n`~/.tokeneconomizer/merged/`. If it reports that the launcher does not exist, the plugin has\nnot run in a session yet: ask the user to start a new Codex session in this repository first.\n",
+      "bodyMd": "# TokenEconomizer: repos\n\nRun this command in the repository's root directory:\n\n```\n\"${TOKENECONOMIZER_HOME:-$HOME/.tokeneconomizer}/bin/te\" --host codex --cwd \"$(pwd)\" repos ARGS\n```\n\nUse `list` as ARGS unless the user asked to `migrate`, or to `merge KEY [INTO]` (keys as the list shows them; INTO defaults to this repository). Never run `migrate` or `merge` unless the user asked for it. Show the output verbatim in a code block.\n\n`migrate` and `merge` move state between repositories; that writes TokenEconomizer's own state under `~/.tokeneconomizer`, outside the workspace, which the sandbox keeps read-only: run that command with `sandbox_permissions` set to `\"require_escalated\"` and a one-line `justification`, so that Codex asks the user to approve it. `list` reads only and needs no approval.\n\nThe command reads and writes only TokenEconomizer's own state (under `~/.tokeneconomizer`);\nit makes no model call, and a merge keeps the old state directory under\n`~/.tokeneconomizer/merged/`. If it reports that the launcher does not exist, the plugin has\nnot run in a session yet: ask the user to start a new Codex session in this repository first.\n"
+    },
+    {
+      "slug": "status",
+      "name": "status",
+      "dir": "plugin/codex-skills/status",
+      "path": "plugin/codex-skills/status/SKILL.md",
+      "desc": "Show what TokenEconomizer has learned for this repository, what it has done, and what this repository's sessions cost. Use when the user asks about TokenEconomizer, its status, its savings or overhead, or what it learned here.",
+      "descZh": "",
+      "triggers": [
+        "its status",
+        "its savings",
+        "overhead",
+        "what it learn"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/microsoft/TokenEconomizer.git",
+        "copy": "cp -r plugin/codex-skills/status ~/.claude/skills/status",
+        "raw": "https://raw.githubusercontent.com/microsoft/TokenEconomizer/fa5604a3673fb3fa8c9932b942dd210e7afb18f3/plugin/codex-skills/status/SKILL.md",
+        "saveAs": "~/.claude/skills/status/SKILL.md",
+        "marketplace": "/plugin marketplace add microsoft/TokenEconomizer"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:bc638a8b9e2109e5b5060a331e3d5509bc45b0457b991a9b4452932063920d13",
+      "bytes": 850,
+      "wordCount": 88,
+      "repoLicense": "MIT",
+      "commit": "fa5604a3673fb3fa8c9932b942dd210e7afb18f3",
+      "branch": "main",
+      "body": "---\nname: \"status\"\ndescription: >\n  Show what TokenEconomizer has learned for this repository, what it has done, and what this repository's sessions cost. Use when the user asks about TokenEconomizer, its status, its savings or overhead, or what it learned here.\n---\n\n# TokenEconomizer: status\n\nRun this command in the repository's root directory:\n\n```\n\"${TOKENECONOMIZER_HOME:-$HOME/.tokeneconomizer}/bin/te\" --host codex --cwd \"$(pwd)\" status\n```\n\nShow the output verbatim in a code block. Add nothing unless it contains a warning; then explain the warning in one sentence.\n\nThe command reads and writes only TokenEconomizer's own state (under `~/.tokeneconomizer`); it\nmakes no model call. If it reports that the launcher does not exist, the plugin has not run in a session yet:\nask the user to start a new Codex session in this repository first.\n",
+      "bodyMd": "# TokenEconomizer: status\n\nRun this command in the repository's root directory:\n\n```\n\"${TOKENECONOMIZER_HOME:-$HOME/.tokeneconomizer}/bin/te\" --host codex --cwd \"$(pwd)\" status\n```\n\nShow the output verbatim in a code block. Add nothing unless it contains a warning; then explain the warning in one sentence.\n\nThe command reads and writes only TokenEconomizer's own state (under `~/.tokeneconomizer`); it\nmakes no model call. If it reports that the launcher does not exist, the plugin has not run in a session yet:\nask the user to start a new Codex session in this repository first.\n"
+    },
+    {
+      "slug": "toolprune",
+      "name": "toolprune",
+      "dir": "plugin/codex-skills/toolprune",
+      "path": "plugin/codex-skills/toolprune/SKILL.md",
+      "desc": "Review, undo or apply TokenEconomizer's deny list of Codex capabilities this repository never uses (written to the project's .codex/config.toml). Use when the user asks about TokenEconomizer's tool pruning or deny list, or asks to restore or apply it.",
+      "descZh": "",
+      "triggers": [
+        "deny list",
+        "asks to restore",
+        "app"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/microsoft/TokenEconomizer.git",
+        "copy": "cp -r plugin/codex-skills/toolprune ~/.claude/skills/toolprune",
+        "raw": "https://raw.githubusercontent.com/microsoft/TokenEconomizer/fa5604a3673fb3fa8c9932b942dd210e7afb18f3/plugin/codex-skills/toolprune/SKILL.md",
+        "saveAs": "~/.claude/skills/toolprune/SKILL.md",
+        "marketplace": "/plugin marketplace add microsoft/TokenEconomizer"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:ca16bbf3a4e907cdfe528ced0292aa1a39026591dd140bd0b180fd9424285a4e",
+      "bytes": 1777,
+      "wordCount": 223,
+      "repoLicense": "MIT",
+      "commit": "fa5604a3673fb3fa8c9932b942dd210e7afb18f3",
+      "branch": "main",
+      "body": "---\nname: \"toolprune\"\ndescription: >\n  Review, undo or apply TokenEconomizer's deny list of Codex capabilities this repository never uses (written to the project's .codex/config.toml). Use when the user asks about TokenEconomizer's tool pruning or deny list, or asks to restore or apply it.\n---\n\n# TokenEconomizer: toolprune\n\nRun this command in the repository's root directory:\n\n```\n\"${TOKENECONOMIZER_HOME:-$HOME/.tokeneconomizer}/bin/te\" --host codex --cwd \"$(pwd)\" toolprune ARGS\n```\n\nUse `show` as ARGS unless the user asked to `apply`, `restore` or `measure` (optionally naming capabilities). Never run `apply` or `restore` unless the user asked for it. Show the output verbatim in a code block. If it shows a proposal waiting for `toolprune apply` (under `toolprune=propose`, or one the plugin could not write), end with one line saying how to apply it and that it takes effect from the next session; if it shows a pending list, say that it is written by itself once this repository's sessions have been idle, or now with `apply`.\n\n`apply` and `restore` edit the project's `.codex/config.toml` and record the change in TokenEconomizer's own state under `~/.tokeneconomizer`, outside the workspace, which the sandbox keeps read-only: run that command with `sandbox_permissions` set to `\"require_escalated\"` and a one-line `justification`, so that Codex asks the user to approve it. `show` and `measure` need no approval.\n\nThe command reads and writes only TokenEconomizer's own state (under `~/.tokeneconomizer`)\nand, for `toolprune apply` or `restore`, the project's `.codex/config.toml`; it makes no model\ncall. If it reports that the launcher does not exist, the plugin has not run in a session yet:\nask the user to start a new Codex session in this repository first.\n",
+      "bodyMd": "# TokenEconomizer: toolprune\n\nRun this command in the repository's root directory:\n\n```\n\"${TOKENECONOMIZER_HOME:-$HOME/.tokeneconomizer}/bin/te\" --host codex --cwd \"$(pwd)\" toolprune ARGS\n```\n\nUse `show` as ARGS unless the user asked to `apply`, `restore` or `measure` (optionally naming capabilities). Never run `apply` or `restore` unless the user asked for it. Show the output verbatim in a code block. If it shows a proposal waiting for `toolprune apply` (under `toolprune=propose`, or one the plugin could not write), end with one line saying how to apply it and that it takes effect from the next session; if it shows a pending list, say that it is written by itself once this repository's sessions have been idle, or now with `apply`.\n\n`apply` and `restore` edit the project's `.codex/config.toml` and record the change in TokenEconomizer's own state under `~/.tokeneconomizer`, outside the workspace, which the sandbox keeps read-only: run that command with `sandbox_permissions` set to `\"require_escalated\"` and a one-line `justification`, so that Codex asks the user to approve it. `show` and `measure` need no approval.\n\nThe command reads and writes only TokenEconomizer's own state (under `~/.tokeneconomizer`)\nand, for `toolprune apply` or `restore`, the project's `.codex/config.toml`; it makes no model\ncall. If it reports that the launcher does not exist, the plugin has not run in a session yet:\nask the user to start a new Codex session in this repository first.\n"
+    }
+  ]
+}

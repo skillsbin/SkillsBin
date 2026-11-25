@@ -1,0 +1,54 @@
+{
+  "repo": "vitali87/code-graph-rag",
+  "commit": "d59e31538034578343710df22975d67316623e4b",
+  "branch": "main",
+  "fetchedAt": "2026-11-25T07:24:12.376Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "code-review",
+      "name": "code-review",
+      "dir": ".github/skills/code-review",
+      "path": ".github/skills/code-review/SKILL.md",
+      "desc": "Review pull requests to code-graph-rag, a multi-language code graph parser. Focuses on graph-edge correctness in language parsers, cross-language consistency, and test fixtures that actually exercise the fix.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "node",
+          "python",
+          "uv"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/vitali87/code-graph-rag.git",
+        "copy": "cp -r .github/skills/code-review ~/.claude/skills/code-review",
+        "raw": "https://raw.githubusercontent.com/vitali87/code-graph-rag/d59e31538034578343710df22975d67316623e4b/.github/skills/code-review/SKILL.md",
+        "saveAs": "~/.claude/skills/code-review/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:f1c61a980a3e60f5606abf6fe4b98dd1be3d3846484052a5fd06b0a751e17567",
+      "bytes": 2730,
+      "wordCount": 392,
+      "repoLicense": "MIT",
+      "commit": "d59e31538034578343710df22975d67316623e4b",
+      "branch": "main",
+      "body": "---\nname: code-review\ndescription: Review pull requests to code-graph-rag, a multi-language code graph parser. Focuses on graph-edge correctness in language parsers, cross-language consistency, and test fixtures that actually exercise the fix.\n---\n\n# Reviewing code-graph-rag\n\nThis repository parses source in many languages with tree-sitter and ingests the\nresult into a code graph: nodes for modules, classes and functions, edges such as\n`CALLS`, `INSTANTIATES`, `DEFINES` and `IMPORTS`. Most defects that reach `main`\nare wrong or missing *edges* for a specific language construct, not crashes.\nWeight the review accordingly.\n\n## Highest-value checks\n\n### Graph-edge correctness\n- Does a new or changed construct produce every edge it should, and no edge it\n  should not? A constructor call is the recurring example: it should record\n  `INSTANTIATES` on the class *and* `CALLS` on the constructor when it has a\n  graph node.\n- Check the qualified name the edge is attached to. Name-mangling bugs recur\n  here: duplicate-suffixed classes, verbatim identifiers (`@class` in C#),\n  named constructors, generics (`Box<int>()`) and marker-stripping passes have\n  each produced an edge pointing at a name that no node has.\n- Resolution must respect scope. A local variable shadowing a type means the\n  receiver is not a construction; flag resolution that matches on bare name\n  without checking what is actually in scope.\n\n### Language coverage and consistency\n- A fix in one language's parser usually applies to its siblings. If the change\n  touches `dart/`, ask whether `csharp/`, `cpp/`, and the rest share the shape\n  and need the same fix — or say explicitly why they do not.\n- Code and tests must not assume a grammar is present; tests for one language\n  should skip cleanly without it.\n\n### Tests\n- Every behavioral fix needs a fixture reproducing the exact construct, and the\n  fixture must be *valid source in that language* — an invalid fixture can pass\n  for the wrong reason. Verify the assertion would fail without the fix.\n- Prefer asserting on specific edges between specific qualified names over\n  asserting on counts, which pass accidentally.\n\n## Repository conventions\n- Python 3.12, `ruff` (line length 88), and `uv` for dependencies. Any\n  dependency change must update `uv.lock`; CI fails on drift via `uv lock --check`.\n- Comments explain *why*, not what. Match the density of surrounding code.\n\n## Calibration\nReport correctness problems: a wrong edge, a missed construct, a fixture that\ndoes not test the fix, a resolution that ignores scope. Do not report style that\n`ruff` already enforces, and do not restate what the diff does. If the change is\ncorrect, say so briefly rather than inventing findings.\n",
+      "bodyMd": "# Reviewing code-graph-rag\n\nThis repository parses source in many languages with tree-sitter and ingests the\nresult into a code graph: nodes for modules, classes and functions, edges such as\n`CALLS`, `INSTANTIATES`, `DEFINES` and `IMPORTS`. Most defects that reach `main`\nare wrong or missing *edges* for a specific language construct, not crashes.\nWeight the review accordingly.\n\n## Highest-value checks\n\n### Graph-edge correctness\n- Does a new or changed construct produce every edge it should, and no edge it\n  should not? A constructor call is the recurring example: it should record\n  `INSTANTIATES` on the class *and* `CALLS` on the constructor when it has a\n  graph node.\n- Check the qualified name the edge is attached to. Name-mangling bugs recur\n  here: duplicate-suffixed classes, verbatim identifiers (`@class` in C#),\n  named constructors, generics (`Box<int>()`) and marker-stripping passes have\n  each produced an edge pointing at a name that no node has.\n- Resolution must respect scope. A local variable shadowing a type means the\n  receiver is not a construction; flag resolution that matches on bare name\n  without checking what is actually in scope.\n\n### Language coverage and consistency\n- A fix in one language's parser usually applies to its siblings. If the change\n  touches `dart/`, ask whether `csharp/`, `cpp/`, and the rest share the shape\n  and need the same fix — or say explicitly why they do not.\n- Code and tests must not assume a grammar is present; tests for one language\n  should skip cleanly without it.\n\n### Tests\n- Every behavioral fix needs a fixture reproducing the exact construct, and the\n  fixture must be *valid source in that language* — an invalid fixture can pass\n  for the wrong reason. Verify the assertion would fail without the fix.\n- Prefer asserting on specific edges between specific qualified names over\n  asserting on counts, which pass accidentally.\n\n## Repository conventions\n- Python 3.12, `ruff` (line length 88), and `uv` for dependencies. Any\n  dependency change must update `uv.lock`; CI fails on drift via `uv lock --check`.\n- Comments explain *why*, not what. Match the density of surrounding code.\n\n## Calibration\nReport correctness problems: a wrong edge, a missed construct, a fixture that\ndoes not test the fix, a resolution that ignores scope. Do not report style that\n`ruff` already enforces, and do not restate what the diff does. If the change is\ncorrect, say so briefly rather than inventing findings.\n"
+    }
+  ]
+}

@@ -1,0 +1,1114 @@
+{
+  "repo": "Manavarya09/design-extract",
+  "commit": "7d37734ef93c57daf358638322ffcb2c45118b3d",
+  "branch": "main",
+  "fetchedAt": "2026-11-25T07:24:25.063Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "extract-design",
+      "name": "extract-design",
+      "dir": "skills/extract-design",
+      "path": "skills/extract-design/SKILL.md",
+      "desc": "Extract the full design language from any website URL. Produces 8 output files including AI-optimized markdown, visual HTML preview, Tailwind config, React theme, shadcn/ui theme, Figma variables, W3C design tokens, and CSS variables. Also runs WCAG accessibility scoring. Use when user says 'extract design', 'get design system', 'design language', 'design tokens', 'what colors/fonts does this site use', 'turn this URL into design tokens', 'make a Tailwind theme from this site', or '/extract-design'. Do not use for building a new UI from scratch unless the user first wants to extract an existing website's design language.",
+      "descZh": "",
+      "triggers": [
+        "get design system",
+        "design language",
+        "design tokens",
+        "what"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Bash, Read, Write, Glob"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "npm",
+          "npx",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Manavarya09/design-extract.git",
+        "copy": "cp -r skills/extract-design ~/.claude/skills/extract-design",
+        "raw": "https://raw.githubusercontent.com/Manavarya09/design-extract/7d37734ef93c57daf358638322ffcb2c45118b3d/skills/extract-design/SKILL.md",
+        "saveAs": "~/.claude/skills/extract-design/SKILL.md",
+        "marketplace": "/plugin marketplace add Manavarya09/design-extract"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:b15b264a0ad220623b29f83e457a4251882df3d3c1314e6bd6a10ffdcf13a070",
+      "bytes": 3344,
+      "wordCount": 373,
+      "repoLicense": "MIT",
+      "commit": "7d37734ef93c57daf358638322ffcb2c45118b3d",
+      "branch": "main",
+      "body": "---\nname: extract-design\ndescription: \"Extract the full design language from any website URL. Produces 8 output files including AI-optimized markdown, visual HTML preview, Tailwind config, React theme, shadcn/ui theme, Figma variables, W3C design tokens, and CSS variables. Also runs WCAG accessibility scoring. Use when user says 'extract design', 'get design system', 'design language', 'design tokens', 'what colors/fonts does this site use', 'turn this URL into design tokens', 'make a Tailwind theme from this site', or '/extract-design'. Do not use for building a new UI from scratch unless the user first wants to extract an existing website's design language.\"\nallowed-tools: Bash, Read, Write, Glob\n---\n\n# Extract Design Language\n\nExtract the complete design language from any website URL. Generates 8 output files covering colors, typography, spacing, shadows, components, breakpoints, animations, and accessibility.\n\n## Prerequisites\n\nEnsure `designlang` is available. Install if needed:\n\n```bash\nnpm install -g designlang\n```\n\nOr use npx (no install required):\n\n```bash\nnpx designlang <url>\n```\n\n## Process\n\n1. **Run the extraction** on the provided URL:\n\n```bash\nnpx designlang <url> --screenshots\n```\n\nFor multi-page crawling: `npx designlang <url> --depth 3 --screenshots`\nFor dark mode: `npx designlang <url> --dark --screenshots`\n\n2. **Read the generated markdown file** to understand the design:\n\n```bash\ncat design-extract-output/*-design-language.md\n```\n\n3. **Present key findings** to the user:\n   - Primary color palette with hex codes\n   - Font families in use\n   - Spacing system (base unit if detected)\n   - WCAG accessibility score\n   - Component patterns found\n   - Notable design decisions (shadows, radii, etc.)\n\n4. **Offer next steps:**\n   - Copy `*-tailwind.config.js` into their project\n   - Import `*-variables.css` into their stylesheet\n   - Paste `*-shadcn-theme.css` into globals.css for shadcn/ui users\n   - Import `*-theme.js` for React/CSS-in-JS projects\n   - Import `*-figma-variables.json` into Figma for designer handoff\n   - Open `*-preview.html` in a browser for a visual overview\n   - Use the markdown file as context for AI-assisted development\n\n## Output Files (8)\n\n| File | Purpose |\n|------|---------|\n| `*-design-language.md` | AI-optimized markdown — the full design system for LLMs |\n| `*-preview.html` | Visual HTML report with swatches, type scale, shadows, a11y |\n| `*-design-tokens.json` | W3C Design Tokens format |\n| `*-tailwind.config.js` | Ready-to-use Tailwind CSS theme |\n| `*-variables.css` | CSS custom properties |\n| `*-figma-variables.json` | Figma Variables import format |\n| `*-theme.js` | React/CSS-in-JS theme object |\n| `*-shadcn-theme.css` | shadcn/ui theme CSS variables |\n\n## Additional Commands\n\n- **Compare two sites:** `npx designlang diff <urlA> <urlB>`\n- **View history:** `npx designlang history <url>`\n\n## Options\n\n| Flag | Description |\n|------|-------------|\n| `--out <dir>` | Output directory (default: `./design-extract-output`) |\n| `--dark` | Also extract dark mode color scheme |\n| `--depth <n>` | Crawl N internal pages for site-wide extraction |\n| `--screenshots` | Capture component screenshots (buttons, cards, nav) |\n| `--wait <ms>` | Wait time after page load for SPAs |\n| `--framework <type>` | Generate only specific theme (`react` or `shadcn`) |\n",
+      "bodyMd": "# Extract Design Language\n\nExtract the complete design language from any website URL. Generates 8 output files covering colors, typography, spacing, shadows, components, breakpoints, animations, and accessibility.\n\n## Prerequisites\n\nEnsure `designlang` is available. Install if needed:\n\n```bash\nnpm install -g designlang\n```\n\nOr use npx (no install required):\n\n```bash\nnpx designlang <url>\n```\n\n## Process\n\n1. **Run the extraction** on the provided URL:\n\n```bash\nnpx designlang <url> --screenshots\n```\n\nFor multi-page crawling: `npx designlang <url> --depth 3 --screenshots`\nFor dark mode: `npx designlang <url> --dark --screenshots`\n\n2. **Read the generated markdown file** to understand the design:\n\n```bash\ncat design-extract-output/*-design-language.md\n```\n\n3. **Present key findings** to the user:\n   - Primary color palette with hex codes\n   - Font families in use\n   - Spacing system (base unit if detected)\n   - WCAG accessibility score\n   - Component patterns found\n   - Notable design decisions (shadows, radii, etc.)\n\n4. **Offer next steps:**\n   - Copy `*-tailwind.config.js` into their project\n   - Import `*-variables.css` into their stylesheet\n   - Paste `*-shadcn-theme.css` into globals.css for shadcn/ui users\n   - Import `*-theme.js` for React/CSS-in-JS projects\n   - Import `*-figma-variables.json` into Figma for designer handoff\n   - Open `*-preview.html` in a browser for a visual overview\n   - Use the markdown file as context for AI-assisted development\n\n## Output Files (8)\n\n| File | Purpose |\n|------|---------|\n| `*-design-language.md` | AI-optimized markdown — the full design system for LLMs |\n| `*-preview.html` | Visual HTML report with swatches, type scale, shadows, a11y |\n| `*-design-tokens.json` | W3C Design Tokens format |\n| `*-tailwind.config.js` | Ready-to-use Tailwind CSS theme |\n| `*-variables.css` | CSS custom properties |\n| `*-figma-variables.json` | Figma Variables import format |\n| `*-theme.js` | React/CSS-in-JS theme object |\n| `*-shadcn-theme.css` | shadcn/ui theme CSS variables |\n\n## Additional Commands\n\n- **Compare two sites:** `npx designlang diff <urlA> <urlB>`\n- **View history:** `npx designlang history <url>`\n\n## Options\n\n| Flag | Description |\n|------|-------------|\n| `--out <dir>` | Output directory (default: `./design-extract-output`) |\n| `--dark` | Also extract dark mode color scheme |\n| `--depth <n>` | Crawl N internal pages for site-wide extraction |\n| `--screenshots` | Capture component screenshots (buttons, cards, nav) |\n| `--wait <ms>` | Wait time after page load for SPAs |\n| `--framework <type>` | Generate only specific theme (`react` or `shadcn`) |\n"
+    },
+    {
+      "slug": "designlang",
+      "name": "designlang-tokens",
+      "dir": "website/public/gallery/cal-com/.claude/skills/designlang",
+      "path": "website/public/gallery/cal-com/.claude/skills/designlang/SKILL.md",
+      "desc": "Use when styling UI for cal.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.",
+      "descZh": "",
+      "triggers": [
+        "styling UI for cal"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Manavarya09/design-extract.git",
+        "copy": "cp -r website/public/gallery/cal-com/.claude/skills/designlang ~/.claude/skills/designlang",
+        "raw": "https://raw.githubusercontent.com/Manavarya09/design-extract/7d37734ef93c57daf358638322ffcb2c45118b3d/website/public/gallery/cal-com/.claude/skills/designlang/SKILL.md",
+        "saveAs": "~/.claude/skills/designlang/SKILL.md",
+        "marketplace": "/plugin marketplace add Manavarya09/design-extract"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:f9e9ffdd424ccc69f6a3d5d805586236f8ead43c3c56c91838fc658cdd1b0f4c",
+      "bytes": 806,
+      "wordCount": 86,
+      "repoLicense": "MIT",
+      "commit": "7d37734ef93c57daf358638322ffcb2c45118b3d",
+      "branch": "main",
+      "body": "---\nname: designlang-tokens\ndescription: Use when styling UI for cal.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.\n---\n\n# designlang tokens\nSource: https://cal.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:26:30.283Z\n\n## Semantic tokens (use these)\n- color.action.primary: #0000ee\n- color.surface.default: #f4f4f4\n- color.text.body: #000000\n- radius.control: 2px\n- typography.body.fontFamily: Inter\n\n## Regions\n- content\n- testimonials\n- content\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n",
+      "bodyMd": "# designlang tokens\nSource: https://cal.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:26:30.283Z\n\n## Semantic tokens (use these)\n- color.action.primary: #0000ee\n- color.surface.default: #f4f4f4\n- color.text.body: #000000\n- radius.control: 2px\n- typography.body.fontFamily: Inter\n\n## Regions\n- content\n- testimonials\n- content\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n"
+    },
+    {
+      "slug": "designlang-2",
+      "name": "designlang-tokens",
+      "dir": "website/public/gallery/clerk-com/.claude/skills/designlang",
+      "path": "website/public/gallery/clerk-com/.claude/skills/designlang/SKILL.md",
+      "desc": "Use when styling UI for clerk.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.",
+      "descZh": "",
+      "triggers": [
+        "styling UI for clerk"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Manavarya09/design-extract.git",
+        "copy": "cp -r website/public/gallery/clerk-com/.claude/skills/designlang ~/.claude/skills/designlang-2",
+        "raw": "https://raw.githubusercontent.com/Manavarya09/design-extract/7d37734ef93c57daf358638322ffcb2c45118b3d/website/public/gallery/clerk-com/.claude/skills/designlang/SKILL.md",
+        "saveAs": "~/.claude/skills/designlang-2/SKILL.md",
+        "marketplace": "/plugin marketplace add Manavarya09/design-extract"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:f383f64e6862bfb622741237d054ba017601ea47f0c67b51a9a6cc6c298c65f6",
+      "bytes": 813,
+      "wordCount": 88,
+      "repoLicense": "MIT",
+      "commit": "7d37734ef93c57daf358638322ffcb2c45118b3d",
+      "branch": "main",
+      "body": "---\nname: designlang-tokens\ndescription: Use when styling UI for clerk.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.\n---\n\n# designlang tokens\nSource: https://clerk.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:26:23.976Z\n\n## Semantic tokens (use these)\n- color.action.primary: #6c47ff\n- color.surface.default: #f7f7f8\n- color.text.body: #000000\n- radius.control: 2px\n- typography.body.fontFamily: geistNumbers\n\n## Regions\n- nav\n- nav\n- pricing\n- footer\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n",
+      "bodyMd": "# designlang tokens\nSource: https://clerk.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:26:23.976Z\n\n## Semantic tokens (use these)\n- color.action.primary: #6c47ff\n- color.surface.default: #f7f7f8\n- color.text.body: #000000\n- radius.control: 2px\n- typography.body.fontFamily: geistNumbers\n\n## Regions\n- nav\n- nav\n- pricing\n- footer\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n"
+    },
+    {
+      "slug": "designlang-3",
+      "name": "designlang-tokens",
+      "dir": "website/public/gallery/coinbase-com/.claude/skills/designlang",
+      "path": "website/public/gallery/coinbase-com/.claude/skills/designlang/SKILL.md",
+      "desc": "Use when styling UI for coinbase.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.",
+      "descZh": "",
+      "triggers": [
+        "styling UI for coinbase"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Manavarya09/design-extract.git",
+        "copy": "cp -r website/public/gallery/coinbase-com/.claude/skills/designlang ~/.claude/skills/designlang-3",
+        "raw": "https://raw.githubusercontent.com/Manavarya09/design-extract/7d37734ef93c57daf358638322ffcb2c45118b3d/website/public/gallery/coinbase-com/.claude/skills/designlang/SKILL.md",
+        "saveAs": "~/.claude/skills/designlang-3/SKILL.md",
+        "marketplace": "/plugin marketplace add Manavarya09/design-extract"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:4ccaa8214b6bdf96f8c437a109b89a34535f1e16cd30e35cbf6bc1c41a231b94",
+      "bytes": 791,
+      "wordCount": 82,
+      "repoLicense": "MIT",
+      "commit": "7d37734ef93c57daf358638322ffcb2c45118b3d",
+      "branch": "main",
+      "body": "---\nname: designlang-tokens\ndescription: Use when styling UI for coinbase.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.\n---\n\n# designlang tokens\nSource: https://coinbase.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:28:07.567Z\n\n## Semantic tokens (use these)\n- color.action.primary: #0000ee\n- color.surface.default: #ffffff\n- color.text.body: #313131\n- radius.control: 50px\n- typography.body.fontFamily: Arial\n\n## Regions\n- footer\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n",
+      "bodyMd": "# designlang tokens\nSource: https://coinbase.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:28:07.567Z\n\n## Semantic tokens (use these)\n- color.action.primary: #0000ee\n- color.surface.default: #ffffff\n- color.text.body: #313131\n- radius.control: 50px\n- typography.body.fontFamily: Arial\n\n## Regions\n- footer\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n"
+    },
+    {
+      "slug": "designlang-4",
+      "name": "designlang-tokens",
+      "dir": "website/public/gallery/discord-com/.claude/skills/designlang",
+      "path": "website/public/gallery/discord-com/.claude/skills/designlang/SKILL.md",
+      "desc": "Use when styling UI for discord.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.",
+      "descZh": "",
+      "triggers": [
+        "styling UI for discord"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Manavarya09/design-extract.git",
+        "copy": "cp -r website/public/gallery/discord-com/.claude/skills/designlang ~/.claude/skills/designlang-4",
+        "raw": "https://raw.githubusercontent.com/Manavarya09/design-extract/7d37734ef93c57daf358638322ffcb2c45118b3d/website/public/gallery/discord-com/.claude/skills/designlang/SKILL.md",
+        "saveAs": "~/.claude/skills/designlang-4/SKILL.md",
+        "marketplace": "/plugin marketplace add Manavarya09/design-extract"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:f183045b24d9a2cf612fb2cd1da86ea182244818383cc76df6637ce0dc37d1e9",
+      "bytes": 918,
+      "wordCount": 122,
+      "repoLicense": "MIT",
+      "commit": "7d37734ef93c57daf358638322ffcb2c45118b3d",
+      "branch": "main",
+      "body": "---\nname: designlang-tokens\ndescription: Use when styling UI for discord.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.\n---\n\n# designlang tokens\nSource: https://discord.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:27:03.141Z\n\n## Semantic tokens (use these)\n- color.action.primary: #5865f2\n- color.surface.default: #1a2081\n- color.text.body: #000000\n- radius.control: 12px\n- typography.body.fontFamily: Ggsans\n\n## Regions\n- nav\n- nav\n- nav\n- nav\n- nav\n- nav\n- nav\n- nav\n- nav\n- nav\n- nav\n- nav\n- nav\n- pricing\n- sidebar\n- footer\n- nav\n- nav\n- nav\n- nav\n- nav\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n",
+      "bodyMd": "# designlang tokens\nSource: https://discord.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:27:03.141Z\n\n## Semantic tokens (use these)\n- color.action.primary: #5865f2\n- color.surface.default: #1a2081\n- color.text.body: #000000\n- radius.control: 12px\n- typography.body.fontFamily: Ggsans\n\n## Regions\n- nav\n- nav\n- nav\n- nav\n- nav\n- nav\n- nav\n- nav\n- nav\n- nav\n- nav\n- nav\n- nav\n- pricing\n- sidebar\n- footer\n- nav\n- nav\n- nav\n- nav\n- nav\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n"
+    },
+    {
+      "slug": "designlang-5",
+      "name": "designlang-tokens",
+      "dir": "website/public/gallery/duolingo-com/.claude/skills/designlang",
+      "path": "website/public/gallery/duolingo-com/.claude/skills/designlang/SKILL.md",
+      "desc": "Use when styling UI for duolingo.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.",
+      "descZh": "",
+      "triggers": [
+        "styling UI for duolingo"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Manavarya09/design-extract.git",
+        "copy": "cp -r website/public/gallery/duolingo-com/.claude/skills/designlang ~/.claude/skills/designlang-5",
+        "raw": "https://raw.githubusercontent.com/Manavarya09/design-extract/7d37734ef93c57daf358638322ffcb2c45118b3d/website/public/gallery/duolingo-com/.claude/skills/designlang/SKILL.md",
+        "saveAs": "~/.claude/skills/designlang-5/SKILL.md",
+        "marketplace": "/plugin marketplace add Manavarya09/design-extract"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:57698a61d49e9030ad960d6990837cd15656d4c17b4f95067d5f01f8c635c007",
+      "bytes": 942,
+      "wordCount": 114,
+      "repoLicense": "MIT",
+      "commit": "7d37734ef93c57daf358638322ffcb2c45118b3d",
+      "branch": "main",
+      "body": "---\nname: designlang-tokens\ndescription: Use when styling UI for duolingo.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.\n---\n\n# designlang tokens\nSource: https://duolingo.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:27:36.259Z\n\n## Semantic tokens (use these)\n- color.action.primary: #d7ffb8\n- color.surface.default: #ffffff\n- color.text.body: #000000\n- radius.control: 2px\n- typography.body.fontFamily: duolingo-sans\n\n## Regions\n- nav\n- nav\n- nav\n- pricing\n- pricing\n- pricing\n- content\n- content\n- content\n- content\n- pricing\n- pricing\n- content\n- pricing\n- pricing\n- cta\n- footer\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n",
+      "bodyMd": "# designlang tokens\nSource: https://duolingo.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:27:36.259Z\n\n## Semantic tokens (use these)\n- color.action.primary: #d7ffb8\n- color.surface.default: #ffffff\n- color.text.body: #000000\n- radius.control: 2px\n- typography.body.fontFamily: duolingo-sans\n\n## Regions\n- nav\n- nav\n- nav\n- pricing\n- pricing\n- pricing\n- content\n- content\n- content\n- content\n- pricing\n- pricing\n- content\n- pricing\n- pricing\n- cta\n- footer\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n"
+    },
+    {
+      "slug": "designlang-6",
+      "name": "designlang-tokens",
+      "dir": "website/public/gallery/framer-com/.claude/skills/designlang",
+      "path": "website/public/gallery/framer-com/.claude/skills/designlang/SKILL.md",
+      "desc": "Use when styling UI for framer.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.",
+      "descZh": "",
+      "triggers": [
+        "styling UI for framer"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Manavarya09/design-extract.git",
+        "copy": "cp -r website/public/gallery/framer-com/.claude/skills/designlang ~/.claude/skills/designlang-6",
+        "raw": "https://raw.githubusercontent.com/Manavarya09/design-extract/7d37734ef93c57daf358638322ffcb2c45118b3d/website/public/gallery/framer-com/.claude/skills/designlang/SKILL.md",
+        "saveAs": "~/.claude/skills/designlang-6/SKILL.md",
+        "marketplace": "/plugin marketplace add Manavarya09/design-extract"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:b3d5f9e82455495af6d415ad67876c728f6b3e14885eeba81ba8cfbb8eb5b100",
+      "bytes": 908,
+      "wordCount": 112,
+      "repoLicense": "MIT",
+      "commit": "7d37734ef93c57daf358638322ffcb2c45118b3d",
+      "branch": "main",
+      "body": "---\nname: designlang-tokens\ndescription: Use when styling UI for framer.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.\n---\n\n# designlang tokens\nSource: https://framer.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:25:38.646Z\n\n## Semantic tokens (use these)\n- color.action.primary: #0066ff\n- color.surface.default: #000000\n- color.text.body: #000000\n- radius.control: 1px\n- typography.body.fontFamily: Inter\n\n## Regions\n- nav\n- pricing\n- hero\n- nav\n- testimonials\n- nav\n- content\n- nav\n- testimonials\n- nav\n- hero\n- nav\n- content\n- nav\n- nav\n- footer\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n",
+      "bodyMd": "# designlang tokens\nSource: https://framer.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:25:38.646Z\n\n## Semantic tokens (use these)\n- color.action.primary: #0066ff\n- color.surface.default: #000000\n- color.text.body: #000000\n- radius.control: 1px\n- typography.body.fontFamily: Inter\n\n## Regions\n- nav\n- pricing\n- hero\n- nav\n- testimonials\n- nav\n- content\n- nav\n- testimonials\n- nav\n- hero\n- nav\n- content\n- nav\n- nav\n- footer\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n"
+    },
+    {
+      "slug": "designlang-7",
+      "name": "designlang-tokens",
+      "dir": "website/public/gallery/loom-com/.claude/skills/designlang",
+      "path": "website/public/gallery/loom-com/.claude/skills/designlang/SKILL.md",
+      "desc": "Use when styling UI for loom.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.",
+      "descZh": "",
+      "triggers": [
+        "styling UI for loom"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Manavarya09/design-extract.git",
+        "copy": "cp -r website/public/gallery/loom-com/.claude/skills/designlang ~/.claude/skills/designlang-7",
+        "raw": "https://raw.githubusercontent.com/Manavarya09/design-extract/7d37734ef93c57daf358638322ffcb2c45118b3d/website/public/gallery/loom-com/.claude/skills/designlang/SKILL.md",
+        "saveAs": "~/.claude/skills/designlang-7/SKILL.md",
+        "marketplace": "/plugin marketplace add Manavarya09/design-extract"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:d136e3f91ba7efde181701d0c7aebbd04fcdb739ed402f904621a90fe1e9f515",
+      "bytes": 1125,
+      "wordCount": 163,
+      "repoLicense": "MIT",
+      "commit": "7d37734ef93c57daf358638322ffcb2c45118b3d",
+      "branch": "main",
+      "body": "---\nname: designlang-tokens\ndescription: Use when styling UI for loom.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.\n---\n\n# designlang tokens\nSource: https://loom.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:28:20.943Z\n\n## Semantic tokens (use these)\n- color.action.primary: #1868db\n- color.surface.default: #ffffff\n- color.text.body: #000000\n- radius.control: 1px\n- typography.body.fontFamily: Charlie Text\n\n## Regions\n- nav\n- nav\n- pricing\n- pricing\n- nav\n- pricing\n- hero\n- nav\n- testimonials\n- nav\n- nav\n- content\n- nav\n- nav\n- nav\n- nav\n- testimonials\n- nav\n- testimonials\n- nav\n- testimonials\n- nav\n- nav\n- nav\n- nav\n- features\n- nav\n- content\n- nav\n- content\n- nav\n- nav\n- hero\n- nav\n- testimonials\n- sidebar\n- footer\n- content\n- content\n- content\n- content\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n",
+      "bodyMd": "# designlang tokens\nSource: https://loom.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:28:20.943Z\n\n## Semantic tokens (use these)\n- color.action.primary: #1868db\n- color.surface.default: #ffffff\n- color.text.body: #000000\n- radius.control: 1px\n- typography.body.fontFamily: Charlie Text\n\n## Regions\n- nav\n- nav\n- pricing\n- pricing\n- nav\n- pricing\n- hero\n- nav\n- testimonials\n- nav\n- nav\n- content\n- nav\n- nav\n- nav\n- nav\n- testimonials\n- nav\n- testimonials\n- nav\n- testimonials\n- nav\n- nav\n- nav\n- nav\n- features\n- nav\n- content\n- nav\n- content\n- nav\n- nav\n- hero\n- nav\n- testimonials\n- sidebar\n- footer\n- content\n- content\n- content\n- content\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n"
+    },
+    {
+      "slug": "designlang-8",
+      "name": "designlang-tokens",
+      "dir": "website/public/gallery/mintlify-com/.claude/skills/designlang",
+      "path": "website/public/gallery/mintlify-com/.claude/skills/designlang/SKILL.md",
+      "desc": "Use when styling UI for mintlify.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.",
+      "descZh": "",
+      "triggers": [
+        "styling UI for mintlify"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Manavarya09/design-extract.git",
+        "copy": "cp -r website/public/gallery/mintlify-com/.claude/skills/designlang ~/.claude/skills/designlang-8",
+        "raw": "https://raw.githubusercontent.com/Manavarya09/design-extract/7d37734ef93c57daf358638322ffcb2c45118b3d/website/public/gallery/mintlify-com/.claude/skills/designlang/SKILL.md",
+        "saveAs": "~/.claude/skills/designlang-8/SKILL.md",
+        "marketplace": "/plugin marketplace add Manavarya09/design-extract"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:97acf599044f1042f4de6529fae4755bf2963603bd9adb149f7d0266e21ba195",
+      "bytes": 940,
+      "wordCount": 120,
+      "repoLicense": "MIT",
+      "commit": "7d37734ef93c57daf358638322ffcb2c45118b3d",
+      "branch": "main",
+      "body": "---\nname: designlang-tokens\ndescription: Use when styling UI for mintlify.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.\n---\n\n# designlang tokens\nSource: https://mintlify.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:30:14.469Z\n\n## Semantic tokens (use these)\n- color.action.primary: #faf8f5\n- color.surface.default: #f9f6f3\n- color.text.body: #000000\n- radius.control: 2px\n- typography.body.fontFamily: inter\n\n## Regions\n- nav\n- nav\n- nav\n- testimonials\n- cta\n- testimonials\n- cta\n- nav\n- content\n- nav\n- content\n- nav\n- hero\n- nav\n- features\n- nav\n- content\n- nav\n- cta\n- footer\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n",
+      "bodyMd": "# designlang tokens\nSource: https://mintlify.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:30:14.469Z\n\n## Semantic tokens (use these)\n- color.action.primary: #faf8f5\n- color.surface.default: #f9f6f3\n- color.text.body: #000000\n- radius.control: 2px\n- typography.body.fontFamily: inter\n\n## Regions\n- nav\n- nav\n- nav\n- testimonials\n- cta\n- testimonials\n- cta\n- nav\n- content\n- nav\n- content\n- nav\n- hero\n- nav\n- features\n- nav\n- content\n- nav\n- cta\n- footer\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n"
+    },
+    {
+      "slug": "designlang-9",
+      "name": "designlang-tokens",
+      "dir": "website/public/gallery/netflix-com/.claude/skills/designlang",
+      "path": "website/public/gallery/netflix-com/.claude/skills/designlang/SKILL.md",
+      "desc": "Use when styling UI for netflix.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.",
+      "descZh": "",
+      "triggers": [
+        "styling UI for netflix"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Manavarya09/design-extract.git",
+        "copy": "cp -r website/public/gallery/netflix-com/.claude/skills/designlang ~/.claude/skills/designlang-9",
+        "raw": "https://raw.githubusercontent.com/Manavarya09/design-extract/7d37734ef93c57daf358638322ffcb2c45118b3d/website/public/gallery/netflix-com/.claude/skills/designlang/SKILL.md",
+        "saveAs": "~/.claude/skills/designlang-9/SKILL.md",
+        "marketplace": "/plugin marketplace add Manavarya09/design-extract"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:3dacd3f93dacc67aedbd31c93c0b7a41c94f302d7036ec9ae5118c3d611e6679",
+      "bytes": 837,
+      "wordCount": 93,
+      "repoLicense": "MIT",
+      "commit": "7d37734ef93c57daf358638322ffcb2c45118b3d",
+      "branch": "main",
+      "body": "---\nname: designlang-tokens\ndescription: Use when styling UI for netflix.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.\n---\n\n# designlang tokens\nSource: https://netflix.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:24:57.347Z\n\n## Semantic tokens (use these)\n- color.action.primary: #e50914\n- color.surface.default: #000000\n- color.text.body: #000000\n- radius.control: 2px\n- typography.body.fontFamily: Netflix Sans\n\n## Regions\n- nav\n- footer\n- nav\n- content\n- content\n- content\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n",
+      "bodyMd": "# designlang tokens\nSource: https://netflix.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:24:57.347Z\n\n## Semantic tokens (use these)\n- color.action.primary: #e50914\n- color.surface.default: #000000\n- color.text.body: #000000\n- radius.control: 2px\n- typography.body.fontFamily: Netflix Sans\n\n## Regions\n- nav\n- footer\n- nav\n- content\n- content\n- content\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n"
+    },
+    {
+      "slug": "designlang-10",
+      "name": "designlang-tokens",
+      "dir": "website/public/gallery/perplexity-ai/.claude/skills/designlang",
+      "path": "website/public/gallery/perplexity-ai/.claude/skills/designlang/SKILL.md",
+      "desc": "Use when styling UI for perplexity.ai — references the extracted design system tokens instead of inventing colors, spacing, or typography.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Manavarya09/design-extract.git",
+        "copy": "cp -r website/public/gallery/perplexity-ai/.claude/skills/designlang ~/.claude/skills/designlang-10",
+        "raw": "https://raw.githubusercontent.com/Manavarya09/design-extract/7d37734ef93c57daf358638322ffcb2c45118b3d/website/public/gallery/perplexity-ai/.claude/skills/designlang/SKILL.md",
+        "saveAs": "~/.claude/skills/designlang-10/SKILL.md",
+        "marketplace": "/plugin marketplace add Manavarya09/design-extract"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:ae2af3e34a4d4d0cead8c34dfa48c7fd3083b3582c4e0da100d3f5cd0c963eb2",
+      "bytes": 793,
+      "wordCount": 82,
+      "repoLicense": "MIT",
+      "commit": "7d37734ef93c57daf358638322ffcb2c45118b3d",
+      "branch": "main",
+      "body": "---\nname: designlang-tokens\ndescription: Use when styling UI for perplexity.ai — references the extracted design system tokens instead of inventing colors, spacing, or typography.\n---\n\n# designlang tokens\nSource: https://perplexity.ai\nExtracted by designlang v7.0.0 on 2026-06-25T08:30:56.417Z\n\n## Semantic tokens (use these)\n- color.action.primary: #0000ee\n- color.surface.default: #ffffff\n- color.text.body: #313131\n- radius.control: 50px\n- typography.body.fontFamily: Arial\n\n## Regions\n- footer\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n",
+      "bodyMd": "# designlang tokens\nSource: https://perplexity.ai\nExtracted by designlang v7.0.0 on 2026-06-25T08:30:56.417Z\n\n## Semantic tokens (use these)\n- color.action.primary: #0000ee\n- color.surface.default: #ffffff\n- color.text.body: #313131\n- radius.control: 50px\n- typography.body.fontFamily: Arial\n\n## Regions\n- footer\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n"
+    },
+    {
+      "slug": "designlang-11",
+      "name": "designlang-tokens",
+      "dir": "website/public/gallery/planetscale-com/.claude/skills/designlang",
+      "path": "website/public/gallery/planetscale-com/.claude/skills/designlang/SKILL.md",
+      "desc": "Use when styling UI for planetscale.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Manavarya09/design-extract.git",
+        "copy": "cp -r website/public/gallery/planetscale-com/.claude/skills/designlang ~/.claude/skills/designlang-11",
+        "raw": "https://raw.githubusercontent.com/Manavarya09/design-extract/7d37734ef93c57daf358638322ffcb2c45118b3d/website/public/gallery/planetscale-com/.claude/skills/designlang/SKILL.md",
+        "saveAs": "~/.claude/skills/designlang-11/SKILL.md",
+        "marketplace": "/plugin marketplace add Manavarya09/design-extract"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:537211ff414bde3a5e42e33ba2a62a93229067c6440290b8b49852b39e40bc45",
+      "bytes": 847,
+      "wordCount": 94,
+      "repoLicense": "MIT",
+      "commit": "7d37734ef93c57daf358638322ffcb2c45118b3d",
+      "branch": "main",
+      "body": "---\nname: designlang-tokens\ndescription: Use when styling UI for planetscale.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.\n---\n\n# designlang tokens\nSource: https://planetscale.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:31:33.183Z\n\n## Semantic tokens (use these)\n- color.action.primary: #f2b600\n- color.surface.default: #fafafa\n- color.text.body: #414141\n- radius.control: 9999px\n- typography.body.fontFamily: system-ui\n\n## Regions\n- nav\n- nav\n- nav\n- content\n- content\n- footer\n- nav\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n",
+      "bodyMd": "# designlang tokens\nSource: https://planetscale.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:31:33.183Z\n\n## Semantic tokens (use these)\n- color.action.primary: #f2b600\n- color.surface.default: #fafafa\n- color.text.body: #414141\n- radius.control: 9999px\n- typography.body.fontFamily: system-ui\n\n## Regions\n- nav\n- nav\n- nav\n- content\n- content\n- footer\n- nav\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n"
+    },
+    {
+      "slug": "designlang-12",
+      "name": "designlang-tokens",
+      "dir": "website/public/gallery/posthog-com/.claude/skills/designlang",
+      "path": "website/public/gallery/posthog-com/.claude/skills/designlang/SKILL.md",
+      "desc": "Use when styling UI for posthog.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.",
+      "descZh": "",
+      "triggers": [
+        "styling UI for posthog"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Manavarya09/design-extract.git",
+        "copy": "cp -r website/public/gallery/posthog-com/.claude/skills/designlang ~/.claude/skills/designlang-12",
+        "raw": "https://raw.githubusercontent.com/Manavarya09/design-extract/7d37734ef93c57daf358638322ffcb2c45118b3d/website/public/gallery/posthog-com/.claude/skills/designlang/SKILL.md",
+        "saveAs": "~/.claude/skills/designlang-12/SKILL.md",
+        "marketplace": "/plugin marketplace add Manavarya09/design-extract"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:c7be51e3e3c8ed5fe4afcae53c804effb0ad2da359203baaf864bf0365bfa355",
+      "bytes": 857,
+      "wordCount": 97,
+      "repoLicense": "MIT",
+      "commit": "7d37734ef93c57daf358638322ffcb2c45118b3d",
+      "branch": "main",
+      "body": "---\nname: designlang-tokens\ndescription: Use when styling UI for posthog.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.\n---\n\n# designlang tokens\nSource: https://posthog.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:30:19.935Z\n\n## Semantic tokens (use these)\n- color.action.primary: #e1d7c2\n- color.surface.default: #e5e7e0\n- color.text.body: #000000\n- radius.control: 2px\n- typography.body.fontFamily: IBM Plex Sans Variable\n\n## Regions\n- sidebar\n- nav\n- sidebar\n- pricing\n- pricing\n- footer\n- nav\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n",
+      "bodyMd": "# designlang tokens\nSource: https://posthog.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:30:19.935Z\n\n## Semantic tokens (use these)\n- color.action.primary: #e1d7c2\n- color.surface.default: #e5e7e0\n- color.text.body: #000000\n- radius.control: 2px\n- typography.body.fontFamily: IBM Plex Sans Variable\n\n## Regions\n- sidebar\n- nav\n- sidebar\n- pricing\n- pricing\n- footer\n- nav\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n"
+    },
+    {
+      "slug": "designlang-13",
+      "name": "designlang-tokens",
+      "dir": "website/public/gallery/postman-com/.claude/skills/designlang",
+      "path": "website/public/gallery/postman-com/.claude/skills/designlang/SKILL.md",
+      "desc": "Use when styling UI for postman.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.",
+      "descZh": "",
+      "triggers": [
+        "styling UI for postman"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Manavarya09/design-extract.git",
+        "copy": "cp -r website/public/gallery/postman-com/.claude/skills/designlang ~/.claude/skills/designlang-13",
+        "raw": "https://raw.githubusercontent.com/Manavarya09/design-extract/7d37734ef93c57daf358638322ffcb2c45118b3d/website/public/gallery/postman-com/.claude/skills/designlang/SKILL.md",
+        "saveAs": "~/.claude/skills/designlang-13/SKILL.md",
+        "marketplace": "/plugin marketplace add Manavarya09/design-extract"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:ce1d74c0ad48ab885b7484562ce274ab4e423019d05c28eb5816d68bf49a088e",
+      "bytes": 990,
+      "wordCount": 126,
+      "repoLicense": "MIT",
+      "commit": "7d37734ef93c57daf358638322ffcb2c45118b3d",
+      "branch": "main",
+      "body": "---\nname: designlang-tokens\ndescription: Use when styling UI for postman.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.\n---\n\n# designlang tokens\nSource: https://postman.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:29:28.842Z\n\n## Semantic tokens (use these)\n- color.action.primary: #e05320\n- color.surface.default: #ffffff\n- color.text.body: #000000\n- radius.control: 3px\n- typography.body.fontFamily: inter\n\n## Regions\n- nav\n- content\n- content\n- content\n- sidebar\n- testimonials\n- nav\n- content\n- content\n- content\n- sidebar\n- testimonials\n- pricing\n- content\n- content\n- content\n- pricing\n- footer\n- nav\n- nav\n- nav\n- nav\n- nav\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n",
+      "bodyMd": "# designlang tokens\nSource: https://postman.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:29:28.842Z\n\n## Semantic tokens (use these)\n- color.action.primary: #e05320\n- color.surface.default: #ffffff\n- color.text.body: #000000\n- radius.control: 3px\n- typography.body.fontFamily: inter\n\n## Regions\n- nav\n- content\n- content\n- content\n- sidebar\n- testimonials\n- nav\n- content\n- content\n- content\n- sidebar\n- testimonials\n- pricing\n- content\n- content\n- content\n- pricing\n- footer\n- nav\n- nav\n- nav\n- nav\n- nav\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n"
+    },
+    {
+      "slug": "designlang-14",
+      "name": "designlang-tokens",
+      "dir": "website/public/gallery/railway-app/.claude/skills/designlang",
+      "path": "website/public/gallery/railway-app/.claude/skills/designlang/SKILL.md",
+      "desc": "Use when styling UI for railway.app — references the extracted design system tokens instead of inventing colors, spacing, or typography.",
+      "descZh": "",
+      "triggers": [
+        "styling UI for railway"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Manavarya09/design-extract.git",
+        "copy": "cp -r website/public/gallery/railway-app/.claude/skills/designlang ~/.claude/skills/designlang-14",
+        "raw": "https://raw.githubusercontent.com/Manavarya09/design-extract/7d37734ef93c57daf358638322ffcb2c45118b3d/website/public/gallery/railway-app/.claude/skills/designlang/SKILL.md",
+        "saveAs": "~/.claude/skills/designlang-14/SKILL.md",
+        "marketplace": "/plugin marketplace add Manavarya09/design-extract"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:b83d0c96d0f30a2329641380b7133665d7b9fc8d2ef6e5d23eb080d76163a4bd",
+      "bytes": 892,
+      "wordCount": 102,
+      "repoLicense": "MIT",
+      "commit": "7d37734ef93c57daf358638322ffcb2c45118b3d",
+      "branch": "main",
+      "body": "---\nname: designlang-tokens\ndescription: Use when styling UI for railway.app — references the extracted design system tokens instead of inventing colors, spacing, or typography.\n---\n\n# designlang tokens\nSource: https://railway.app\nExtracted by designlang v7.0.0 on 2026-06-25T08:29:38.182Z\n\n## Semantic tokens (use these)\n- color.action.primary: #59497a\n- color.surface.default: #13111c\n- color.text.body: #ffffff\n- radius.control: 4px\n- typography.body.fontFamily: Inter\n\n## Regions\n- nav\n- hero\n- testimonials\n- content\n- content\n- testimonials\n- testimonials\n- pricing\n- pricing\n- nav\n- footer\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n",
+      "bodyMd": "# designlang tokens\nSource: https://railway.app\nExtracted by designlang v7.0.0 on 2026-06-25T08:29:38.182Z\n\n## Semantic tokens (use these)\n- color.action.primary: #59497a\n- color.surface.default: #13111c\n- color.text.body: #ffffff\n- radius.control: 4px\n- typography.body.fontFamily: Inter\n\n## Regions\n- nav\n- hero\n- testimonials\n- content\n- content\n- testimonials\n- testimonials\n- pricing\n- pricing\n- nav\n- footer\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n"
+    },
+    {
+      "slug": "designlang-15",
+      "name": "designlang-tokens",
+      "dir": "website/public/gallery/ramp-com/.claude/skills/designlang",
+      "path": "website/public/gallery/ramp-com/.claude/skills/designlang/SKILL.md",
+      "desc": "Use when styling UI for ramp.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.",
+      "descZh": "",
+      "triggers": [
+        "styling UI for ramp"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Manavarya09/design-extract.git",
+        "copy": "cp -r website/public/gallery/ramp-com/.claude/skills/designlang ~/.claude/skills/designlang-15",
+        "raw": "https://raw.githubusercontent.com/Manavarya09/design-extract/7d37734ef93c57daf358638322ffcb2c45118b3d/website/public/gallery/ramp-com/.claude/skills/designlang/SKILL.md",
+        "saveAs": "~/.claude/skills/designlang-15/SKILL.md",
+        "marketplace": "/plugin marketplace add Manavarya09/design-extract"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:3f5d2584cea14fb997a794d08776276fb711172c1fe86afe928ed3d78f3e6c25",
+      "bytes": 761,
+      "wordCount": 78,
+      "repoLicense": "MIT",
+      "commit": "7d37734ef93c57daf358638322ffcb2c45118b3d",
+      "branch": "main",
+      "body": "---\nname: designlang-tokens\ndescription: Use when styling UI for ramp.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.\n---\n\n# designlang tokens\nSource: https://ramp.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:30:57.905Z\n\n## Semantic tokens (use these)\n- color.action.primary: #000000\n- color.surface.default: #ffffff\n- color.text.body: #000000\n- radius.control: 0px\n- typography.body.fontFamily: Times\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n",
+      "bodyMd": "# designlang tokens\nSource: https://ramp.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:30:57.905Z\n\n## Semantic tokens (use these)\n- color.action.primary: #000000\n- color.surface.default: #ffffff\n- color.text.body: #000000\n- radius.control: 0px\n- typography.body.fontFamily: Times\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n"
+    },
+    {
+      "slug": "designlang-16",
+      "name": "designlang-tokens",
+      "dir": "website/public/gallery/raycast-com/.claude/skills/designlang",
+      "path": "website/public/gallery/raycast-com/.claude/skills/designlang/SKILL.md",
+      "desc": "Use when styling UI for raycast.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.",
+      "descZh": "",
+      "triggers": [
+        "styling UI for raycast"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Manavarya09/design-extract.git",
+        "copy": "cp -r website/public/gallery/raycast-com/.claude/skills/designlang ~/.claude/skills/designlang-16",
+        "raw": "https://raw.githubusercontent.com/Manavarya09/design-extract/7d37734ef93c57daf358638322ffcb2c45118b3d/website/public/gallery/raycast-com/.claude/skills/designlang/SKILL.md",
+        "saveAs": "~/.claude/skills/designlang-16/SKILL.md",
+        "marketplace": "/plugin marketplace add Manavarya09/design-extract"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:8aaa5bccc80867efa438e89ac9f27df899719c21520dbd44d8ccfada188497d3",
+      "bytes": 767,
+      "wordCount": 78,
+      "repoLicense": "MIT",
+      "commit": "7d37734ef93c57daf358638322ffcb2c45118b3d",
+      "branch": "main",
+      "body": "---\nname: designlang-tokens\ndescription: Use when styling UI for raycast.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.\n---\n\n# designlang tokens\nSource: https://raycast.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:25:22.001Z\n\n## Semantic tokens (use these)\n- color.action.primary: #ff6363\n- color.surface.default: #07080a\n- color.text.body: #ffffff\n- radius.control: 2px\n- typography.body.fontFamily: Inter\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n",
+      "bodyMd": "# designlang tokens\nSource: https://raycast.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:25:22.001Z\n\n## Semantic tokens (use these)\n- color.action.primary: #ff6363\n- color.surface.default: #07080a\n- color.text.body: #ffffff\n- radius.control: 2px\n- typography.body.fontFamily: Inter\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n"
+    },
+    {
+      "slug": "designlang-17",
+      "name": "designlang-tokens",
+      "dir": "website/public/gallery/render-com/.claude/skills/designlang",
+      "path": "website/public/gallery/render-com/.claude/skills/designlang/SKILL.md",
+      "desc": "Use when styling UI for render.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.",
+      "descZh": "",
+      "triggers": [
+        "styling UI for render"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Manavarya09/design-extract.git",
+        "copy": "cp -r website/public/gallery/render-com/.claude/skills/designlang ~/.claude/skills/designlang-17",
+        "raw": "https://raw.githubusercontent.com/Manavarya09/design-extract/7d37734ef93c57daf358638322ffcb2c45118b3d/website/public/gallery/render-com/.claude/skills/designlang/SKILL.md",
+        "saveAs": "~/.claude/skills/designlang-17/SKILL.md",
+        "marketplace": "/plugin marketplace add Manavarya09/design-extract"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:350018ca3a517de2ff46ae9d1c78763a37d724c2cfba0cd10a7c4970208a9e33",
+      "bytes": 842,
+      "wordCount": 92,
+      "repoLicense": "MIT",
+      "commit": "7d37734ef93c57daf358638322ffcb2c45118b3d",
+      "branch": "main",
+      "body": "---\nname: designlang-tokens\ndescription: Use when styling UI for render.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.\n---\n\n# designlang tokens\nSource: https://render.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:30:09.965Z\n\n## Semantic tokens (use these)\n- color.action.primary: #8a05ff\n- color.surface.default: #ffffff\n- color.text.body: #000000\n- radius.control: 2px\n- typography.body.fontFamily: PPNeueMontreal\n\n## Regions\n- pricing\n- nav\n- nav\n- pricing\n- testimonials\n- footer\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n",
+      "bodyMd": "# designlang tokens\nSource: https://render.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:30:09.965Z\n\n## Semantic tokens (use these)\n- color.action.primary: #8a05ff\n- color.surface.default: #ffffff\n- color.text.body: #000000\n- radius.control: 2px\n- typography.body.fontFamily: PPNeueMontreal\n\n## Regions\n- pricing\n- nav\n- nav\n- pricing\n- testimonials\n- footer\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n"
+    },
+    {
+      "slug": "designlang-18",
+      "name": "designlang-tokens",
+      "dir": "website/public/gallery/replit-com/.claude/skills/designlang",
+      "path": "website/public/gallery/replit-com/.claude/skills/designlang/SKILL.md",
+      "desc": "Use when styling UI for replit.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.",
+      "descZh": "",
+      "triggers": [
+        "styling UI for replit"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Manavarya09/design-extract.git",
+        "copy": "cp -r website/public/gallery/replit-com/.claude/skills/designlang ~/.claude/skills/designlang-18",
+        "raw": "https://raw.githubusercontent.com/Manavarya09/design-extract/7d37734ef93c57daf358638322ffcb2c45118b3d/website/public/gallery/replit-com/.claude/skills/designlang/SKILL.md",
+        "saveAs": "~/.claude/skills/designlang-18/SKILL.md",
+        "marketplace": "/plugin marketplace add Manavarya09/design-extract"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:d3ede675020677c7595797149749e405e190dbec95a31fd2c7c7b0cd90531b2a",
+      "bytes": 765,
+      "wordCount": 78,
+      "repoLicense": "MIT",
+      "commit": "7d37734ef93c57daf358638322ffcb2c45118b3d",
+      "branch": "main",
+      "body": "---\nname: designlang-tokens\ndescription: Use when styling UI for replit.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.\n---\n\n# designlang tokens\nSource: https://replit.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:29:30.217Z\n\n## Semantic tokens (use these)\n- color.action.primary: #0051c3\n- color.surface.default: #ffffff\n- color.text.body: #000000\n- radius.control: 2px\n- typography.body.fontFamily: Times\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n",
+      "bodyMd": "# designlang tokens\nSource: https://replit.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:29:30.217Z\n\n## Semantic tokens (use these)\n- color.action.primary: #0051c3\n- color.surface.default: #ffffff\n- color.text.body: #000000\n- radius.control: 2px\n- typography.body.fontFamily: Times\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n"
+    },
+    {
+      "slug": "designlang-19",
+      "name": "designlang-tokens",
+      "dir": "website/public/gallery/resend-com/.claude/skills/designlang",
+      "path": "website/public/gallery/resend-com/.claude/skills/designlang/SKILL.md",
+      "desc": "Use when styling UI for resend.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.",
+      "descZh": "",
+      "triggers": [
+        "styling UI for resend"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Manavarya09/design-extract.git",
+        "copy": "cp -r website/public/gallery/resend-com/.claude/skills/designlang ~/.claude/skills/designlang-19",
+        "raw": "https://raw.githubusercontent.com/Manavarya09/design-extract/7d37734ef93c57daf358638322ffcb2c45118b3d/website/public/gallery/resend-com/.claude/skills/designlang/SKILL.md",
+        "saveAs": "~/.claude/skills/designlang-19/SKILL.md",
+        "marketplace": "/plugin marketplace add Manavarya09/design-extract"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:a3f418ed67d33453f2b79a7ea7af1b872a0d49e1d55648c3da4a689f8755416d",
+      "bytes": 937,
+      "wordCount": 116,
+      "repoLicense": "MIT",
+      "commit": "7d37734ef93c57daf358638322ffcb2c45118b3d",
+      "branch": "main",
+      "body": "---\nname: designlang-tokens\ndescription: Use when styling UI for resend.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.\n---\n\n# designlang tokens\nSource: https://resend.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:26:02.698Z\n\n## Semantic tokens (use these)\n- color.action.primary: #d6ebfd\n- color.surface.default: #000000\n- color.text.body: #ffffff\n- radius.control: 4px\n- typography.body.fontFamily: inter\n\n## Regions\n- nav\n- cta\n- content\n- hero\n- nav\n- footer\n- testimonials\n- hero\n- content\n- pricing\n- nav\n- sidebar\n- hero\n- features\n- testimonials\n- cta\n- footer\n- content\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n",
+      "bodyMd": "# designlang tokens\nSource: https://resend.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:26:02.698Z\n\n## Semantic tokens (use these)\n- color.action.primary: #d6ebfd\n- color.surface.default: #000000\n- color.text.body: #ffffff\n- radius.control: 4px\n- typography.body.fontFamily: inter\n\n## Regions\n- nav\n- cta\n- content\n- hero\n- nav\n- footer\n- testimonials\n- hero\n- content\n- pricing\n- nav\n- sidebar\n- hero\n- features\n- testimonials\n- cta\n- footer\n- content\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n"
+    },
+    {
+      "slug": "designlang-20",
+      "name": "designlang-tokens",
+      "dir": "website/public/gallery/retool-com/.claude/skills/designlang",
+      "path": "website/public/gallery/retool-com/.claude/skills/designlang/SKILL.md",
+      "desc": "Use when styling UI for retool.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.",
+      "descZh": "",
+      "triggers": [
+        "styling UI for retool"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Manavarya09/design-extract.git",
+        "copy": "cp -r website/public/gallery/retool-com/.claude/skills/designlang ~/.claude/skills/designlang-20",
+        "raw": "https://raw.githubusercontent.com/Manavarya09/design-extract/7d37734ef93c57daf358638322ffcb2c45118b3d/website/public/gallery/retool-com/.claude/skills/designlang/SKILL.md",
+        "saveAs": "~/.claude/skills/designlang-20/SKILL.md",
+        "marketplace": "/plugin marketplace add Manavarya09/design-extract"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:f43d8a4a59249226c784f993177f7ef703b6af6867c260f9981c170aaa5dfe4e",
+      "bytes": 892,
+      "wordCount": 104,
+      "repoLicense": "MIT",
+      "commit": "7d37734ef93c57daf358638322ffcb2c45118b3d",
+      "branch": "main",
+      "body": "---\nname: designlang-tokens\ndescription: Use when styling UI for retool.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.\n---\n\n# designlang tokens\nSource: https://retool.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:31:29.643Z\n\n## Semantic tokens (use these)\n- color.action.primary: #e9ebdf\n- color.surface.default: #151515\n- color.text.body: #ffffff\n- radius.control: 4px\n- typography.body.fontFamily: saansFont\n\n## Regions\n- nav\n- nav\n- nav\n- pricing\n- hero\n- content\n- features\n- testimonials\n- features\n- pricing\n- content\n- footer\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n",
+      "bodyMd": "# designlang tokens\nSource: https://retool.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:31:29.643Z\n\n## Semantic tokens (use these)\n- color.action.primary: #e9ebdf\n- color.surface.default: #151515\n- color.text.body: #ffffff\n- radius.control: 4px\n- typography.body.fontFamily: saansFont\n\n## Regions\n- nav\n- nav\n- nav\n- pricing\n- hero\n- content\n- features\n- testimonials\n- features\n- pricing\n- content\n- footer\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n"
+    },
+    {
+      "slug": "designlang-21",
+      "name": "designlang-tokens",
+      "dir": "website/public/gallery/sentry-io/.claude/skills/designlang",
+      "path": "website/public/gallery/sentry-io/.claude/skills/designlang/SKILL.md",
+      "desc": "Use when styling UI for sentry.io — references the extracted design system tokens instead of inventing colors, spacing, or typography.",
+      "descZh": "",
+      "triggers": [
+        "styling UI for sentry"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Manavarya09/design-extract.git",
+        "copy": "cp -r website/public/gallery/sentry-io/.claude/skills/designlang ~/.claude/skills/designlang-21",
+        "raw": "https://raw.githubusercontent.com/Manavarya09/design-extract/7d37734ef93c57daf358638322ffcb2c45118b3d/website/public/gallery/sentry-io/.claude/skills/designlang/SKILL.md",
+        "saveAs": "~/.claude/skills/designlang-21/SKILL.md",
+        "marketplace": "/plugin marketplace add Manavarya09/design-extract"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:5c4369c3619e79f8e2e070666fae53223a415245e8e1ed07c2349ed655e80012",
+      "bytes": 974,
+      "wordCount": 120,
+      "repoLicense": "MIT",
+      "commit": "7d37734ef93c57daf358638322ffcb2c45118b3d",
+      "branch": "main",
+      "body": "---\nname: designlang-tokens\ndescription: Use when styling UI for sentry.io — references the extracted design system tokens instead of inventing colors, spacing, or typography.\n---\n\n# designlang tokens\nSource: https://sentry.io\nExtracted by designlang v7.0.0 on 2026-06-25T08:30:25.790Z\n\n## Semantic tokens (use these)\n- color.action.primary: #150f23\n- color.surface.default: #1f1633\n- color.text.body: #000000\n- radius.control: 2px\n- typography.body.fontFamily: Rubik\n\n## Regions\n- nav\n- nav\n- testimonials\n- testimonials\n- content\n- testimonials\n- features\n- features\n- features\n- features\n- content\n- testimonials\n- content\n- cta\n- pricing\n- footer\n- content\n- nav\n- nav\n- nav\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n",
+      "bodyMd": "# designlang tokens\nSource: https://sentry.io\nExtracted by designlang v7.0.0 on 2026-06-25T08:30:25.790Z\n\n## Semantic tokens (use these)\n- color.action.primary: #150f23\n- color.surface.default: #1f1633\n- color.text.body: #000000\n- radius.control: 2px\n- typography.body.fontFamily: Rubik\n\n## Regions\n- nav\n- nav\n- testimonials\n- testimonials\n- content\n- testimonials\n- features\n- features\n- features\n- features\n- content\n- testimonials\n- content\n- cta\n- pricing\n- footer\n- content\n- nav\n- nav\n- nav\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n"
+    },
+    {
+      "slug": "designlang-22",
+      "name": "designlang-tokens",
+      "dir": "website/public/gallery/supabase-com/.claude/skills/designlang",
+      "path": "website/public/gallery/supabase-com/.claude/skills/designlang/SKILL.md",
+      "desc": "Use when styling UI for supabase.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.",
+      "descZh": "",
+      "triggers": [
+        "styling UI for supabase"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Manavarya09/design-extract.git",
+        "copy": "cp -r website/public/gallery/supabase-com/.claude/skills/designlang ~/.claude/skills/designlang-22",
+        "raw": "https://raw.githubusercontent.com/Manavarya09/design-extract/7d37734ef93c57daf358638322ffcb2c45118b3d/website/public/gallery/supabase-com/.claude/skills/designlang/SKILL.md",
+        "saveAs": "~/.claude/skills/designlang-22/SKILL.md",
+        "marketplace": "/plugin marketplace add Manavarya09/design-extract"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:525253b6b0a3f0f41e622843a99ba65ce32e8b25c275a962bf83be2d24676c27",
+      "bytes": 820,
+      "wordCount": 88,
+      "repoLicense": "MIT",
+      "commit": "7d37734ef93c57daf358638322ffcb2c45118b3d",
+      "branch": "main",
+      "body": "---\nname: designlang-tokens\ndescription: Use when styling UI for supabase.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.\n---\n\n# designlang tokens\nSource: https://supabase.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:25:31.918Z\n\n## Semantic tokens (use these)\n- color.action.primary: #72e3ad\n- color.surface.default: #fcfcfc\n- color.text.body: #000000\n- radius.control: 6px\n- typography.body.fontFamily: Circular\n\n## Regions\n- nav\n- nav\n- testimonials\n- footer\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n",
+      "bodyMd": "# designlang tokens\nSource: https://supabase.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:25:31.918Z\n\n## Semantic tokens (use these)\n- color.action.primary: #72e3ad\n- color.surface.default: #fcfcfc\n- color.text.body: #000000\n- radius.control: 6px\n- typography.body.fontFamily: Circular\n\n## Regions\n- nav\n- nav\n- testimonials\n- footer\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n"
+    },
+    {
+      "slug": "designlang-23",
+      "name": "designlang-tokens",
+      "dir": "website/public/gallery/v0-dev/.claude/skills/designlang",
+      "path": "website/public/gallery/v0-dev/.claude/skills/designlang/SKILL.md",
+      "desc": "Use when styling UI for v0.dev — references the extracted design system tokens instead of inventing colors, spacing, or typography.",
+      "descZh": "",
+      "triggers": [
+        "styling UI for v0"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Manavarya09/design-extract.git",
+        "copy": "cp -r website/public/gallery/v0-dev/.claude/skills/designlang ~/.claude/skills/designlang-23",
+        "raw": "https://raw.githubusercontent.com/Manavarya09/design-extract/7d37734ef93c57daf358638322ffcb2c45118b3d/website/public/gallery/v0-dev/.claude/skills/designlang/SKILL.md",
+        "saveAs": "~/.claude/skills/designlang-23/SKILL.md",
+        "marketplace": "/plugin marketplace add Manavarya09/design-extract"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:ed71f451dc9e3a43ab89a912f2f7a633822554c7443c3a7fa02a30e49c4d5399",
+      "bytes": 873,
+      "wordCount": 102,
+      "repoLicense": "MIT",
+      "commit": "7d37734ef93c57daf358638322ffcb2c45118b3d",
+      "branch": "main",
+      "body": "---\nname: designlang-tokens\ndescription: Use when styling UI for v0.dev — references the extracted design system tokens instead of inventing colors, spacing, or typography.\n---\n\n# designlang tokens\nSource: https://v0.dev\nExtracted by designlang v7.0.0 on 2026-06-25T08:31:40.971Z\n\n## Semantic tokens (use these)\n- color.action.primary: #d2d2d2\n- color.surface.default: #f4f4f4\n- color.text.body: #000000\n- radius.control: 4px\n- typography.body.fontFamily: GeistSans\n\n## Regions\n- content\n- nav\n- nav\n- testimonials\n- hero\n- testimonials\n- content\n- hero\n- cta\n- footer\n- footer\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n",
+      "bodyMd": "# designlang tokens\nSource: https://v0.dev\nExtracted by designlang v7.0.0 on 2026-06-25T08:31:40.971Z\n\n## Semantic tokens (use these)\n- color.action.primary: #d2d2d2\n- color.surface.default: #f4f4f4\n- color.text.body: #000000\n- radius.control: 4px\n- typography.body.fontFamily: GeistSans\n\n## Regions\n- content\n- nav\n- nav\n- testimonials\n- hero\n- testimonials\n- content\n- hero\n- cta\n- footer\n- footer\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n"
+    },
+    {
+      "slug": "designlang-24",
+      "name": "designlang-tokens",
+      "dir": "website/public/gallery/webflow-com/.claude/skills/designlang",
+      "path": "website/public/gallery/webflow-com/.claude/skills/designlang/SKILL.md",
+      "desc": "Use when styling UI for webflow.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.",
+      "descZh": "",
+      "triggers": [
+        "styling UI for webflow"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Manavarya09/design-extract.git",
+        "copy": "cp -r website/public/gallery/webflow-com/.claude/skills/designlang ~/.claude/skills/designlang-24",
+        "raw": "https://raw.githubusercontent.com/Manavarya09/design-extract/7d37734ef93c57daf358638322ffcb2c45118b3d/website/public/gallery/webflow-com/.claude/skills/designlang/SKILL.md",
+        "saveAs": "~/.claude/skills/designlang-24/SKILL.md",
+        "marketplace": "/plugin marketplace add Manavarya09/design-extract"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:d9c9e001d11c2b5b8a4ab89c527a5b0e34a3c9f4484c4ae0bc4579c9833e9016",
+      "bytes": 977,
+      "wordCount": 127,
+      "repoLicense": "MIT",
+      "commit": "7d37734ef93c57daf358638322ffcb2c45118b3d",
+      "branch": "main",
+      "body": "---\nname: designlang-tokens\ndescription: Use when styling UI for webflow.com — references the extracted design system tokens instead of inventing colors, spacing, or typography.\n---\n\n# designlang tokens\nSource: https://webflow.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:28:55.721Z\n\n## Semantic tokens (use these)\n- color.action.primary: #146ef5\n- color.surface.default: #ffffff\n- color.text.body: #000000\n- radius.control: 2px\n- typography.body.fontFamily: WF Visual Sans Variable\n\n## Regions\n- sidebar\n- nav\n- nav\n- nav\n- nav\n- nav\n- nav\n- nav\n- nav\n- pricing\n- sidebar\n- nav\n- content\n- content\n- testimonials\n- content\n- content\n- content\n- nav\n- pricing\n- footer\n- nav\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n",
+      "bodyMd": "# designlang tokens\nSource: https://webflow.com\nExtracted by designlang v7.0.0 on 2026-06-25T08:28:55.721Z\n\n## Semantic tokens (use these)\n- color.action.primary: #146ef5\n- color.surface.default: #ffffff\n- color.text.body: #000000\n- radius.control: 2px\n- typography.body.fontFamily: WF Visual Sans Variable\n\n## Regions\n- sidebar\n- nav\n- nav\n- nav\n- nav\n- nav\n- nav\n- nav\n- nav\n- pricing\n- sidebar\n- nav\n- content\n- content\n- testimonials\n- content\n- content\n- content\n- nav\n- pricing\n- footer\n- nav\n\n## How to use\n- Prefer `semantic.*` tokens over `primitive.*`.\n- Never invent new tokens or hex values; reuse the ones above.\n- When a value is missing, pick the closest existing semantic token and flag the gap.\n- Reference tokens by their dotted path (e.g. `semantic.color.action.primary`).\n"
+    }
+  ]
+}

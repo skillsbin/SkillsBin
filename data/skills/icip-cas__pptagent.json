@@ -1,0 +1,51 @@
+{
+  "repo": "icip-cas/PPTAgent",
+  "commit": "9dacac53ac9ef39346461063df729396551d929e",
+  "branch": "main",
+  "fetchedAt": "2026-11-25T07:24:21.085Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "pptagent",
+      "name": "pptagent",
+      "dir": "skills/pptagent",
+      "path": "skills/pptagent/SKILL.md",
+      "desc": "Create and revise editable PowerPoint presentations from a brief using HTML slide sources, rendering, and visual review. Use when the requested deliverable is a PPTX deck. The host authors the slides; text-only hosts can use an external visual reviewer.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": true,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/icip-cas/PPTAgent.git",
+        "copy": "cp -r skills/pptagent ~/.claude/skills/pptagent",
+        "raw": "https://raw.githubusercontent.com/icip-cas/PPTAgent/9dacac53ac9ef39346461063df729396551d929e/skills/pptagent/SKILL.md",
+        "saveAs": "~/.claude/skills/pptagent/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:0d790792b14807f471614b985471ae6cd2c96b6dc7c536085f037783687e5c79",
+      "bytes": 3070,
+      "wordCount": 360,
+      "repoLicense": "MIT",
+      "commit": "9dacac53ac9ef39346461063df729396551d929e",
+      "branch": "main",
+      "body": "---\nname: pptagent\ndescription: Create and revise editable PowerPoint presentations from a brief using HTML slide sources, rendering, and visual review. Use when the requested deliverable is a PPTX deck. The host authors the slides; text-only hosts can use an external visual reviewer.\n---\n\n# PPTAgent\n\nUse the host agent to research and author slides. The CLI handles rendering,\neditable conversion, and verification that the delivered PPTX matches the\nreviewed sources. Do not start another authoring agent.\n\n## Setup\n\nResolve `SKILL_ROOT` to this directory. Use its `.venv/bin/python` when present,\notherwise an activated Python 3.11+ environment with the dependencies installed.\nSet `SKILL_PYTHON` to that interpreter and run:\n\n```bash\n\"$SKILL_PYTHON\" \"$SKILL_ROOT/scripts/pptagent.py\" doctor --workspace \"$PWD\"\n```\n\nRead [references/task-contract.md](references/task-contract.md) for file layout\nand HTML conversion constraints. The default `mode: multimodal` uses the host's\nimage viewer. Only for `mode: text`, read [references/text.md](references/text.md).\nWhen `review_slides` and `review_deck` MCP tools are available in text mode, use\nthem for the corresponding review steps. Configuration is optional; defaults\nlive in `config.example.yaml`.\n\n## Create or revise\n\n- Resolve the user's audience, message, page count, language, and aspect ratio.\n  For a new workspace, run `init --workspace \"$PWD\" --slides N`, with optional\n  `--aspect-ratio 16:9|4:3|A1` and `--language`. Existing tasks use `task.json`.\n- Use available research tools as needed and preserve sources for checkable\n  claims. A manuscript or asset manifest is useful for complex decks, not a\n  prerequisite for every edit.\n- Use `scaffold` if starter HTML is useful; it preserves existing slides.\n  Author exactly the requested page count and replace the starter text.\n- Run `review-slides`, inspect every returned image, then record each result:\n\n```bash\n\"$SKILL_PYTHON\" \"$SKILL_ROOT/scripts/pptagent.py\" record-slide-review   --workspace \"$PWD\" --slide slides/slide01.html --verdict pass   --summary \"Readable; no clipping, overlap, or broken images.\"\n```\n\n- Run `build`, then `review-deck`. Inspect the exported deck's contact sheets;\n  open full-size pages for dense content. Record `record-deck-review` with\n  `--verdict` and `--summary`. Text mode records visual results automatically.\n- Fix issues that affect the user's requirements or visible quality. Source\n  changes require fresh renders, reviews, and a build. Shared resource changes\n  invalidate all slide reviews. Rendering alone does not establish a pass.\n- Run `finalize`. Deliver `answer.pptx` only when `complete=true`. If the user\n  explicitly accepts an incomplete draft, set `delivery.mode: best-effort`;\n  `delivery_ready=true` then permits delivery with the failed checks disclosed.\n\nCommands take `--workspace` with an absolute path and emit JSON. Use `--help`\nfor arguments. A successful delivery includes a current `final-report.json`.\nKeep API keys in environment variables or the skill's `.env`, outside artifacts.\n",
+      "bodyMd": "# PPTAgent\n\nUse the host agent to research and author slides. The CLI handles rendering,\neditable conversion, and verification that the delivered PPTX matches the\nreviewed sources. Do not start another authoring agent.\n\n## Setup\n\nResolve `SKILL_ROOT` to this directory. Use its `.venv/bin/python` when present,\notherwise an activated Python 3.11+ environment with the dependencies installed.\nSet `SKILL_PYTHON` to that interpreter and run:\n\n```bash\n\"$SKILL_PYTHON\" \"$SKILL_ROOT/scripts/pptagent.py\" doctor --workspace \"$PWD\"\n```\n\nRead [references/task-contract.md](references/task-contract.md) for file layout\nand HTML conversion constraints. The default `mode: multimodal` uses the host's\nimage viewer. Only for `mode: text`, read [references/text.md](references/text.md).\nWhen `review_slides` and `review_deck` MCP tools are available in text mode, use\nthem for the corresponding review steps. Configuration is optional; defaults\nlive in `config.example.yaml`.\n\n## Create or revise\n\n- Resolve the user's audience, message, page count, language, and aspect ratio.\n  For a new workspace, run `init --workspace \"$PWD\" --slides N`, with optional\n  `--aspect-ratio 16:9|4:3|A1` and `--language`. Existing tasks use `task.json`.\n- Use available research tools as needed and preserve sources for checkable\n  claims. A manuscript or asset manifest is useful for complex decks, not a\n  prerequisite for every edit.\n- Use `scaffold` if starter HTML is useful; it preserves existing slides.\n  Author exactly the requested page count and replace the starter text.\n- Run `review-slides`, inspect every returned image, then record each result:\n\n```bash\n\"$SKILL_PYTHON\" \"$SKILL_ROOT/scripts/pptagent.py\" record-slide-review   --workspace \"$PWD\" --slide slides/slide01.html --verdict pass   --summary \"Readable; no clipping, overlap, or broken images.\"\n```\n\n- Run `build`, then `review-deck`. Inspect the exported deck's contact sheets;\n  open full-size pages for dense content. Record `record-deck-review` with\n  `--verdict` and `--summary`. Text mode records visual results automatically.\n- Fix issues that affect the user's requirements or visible quality. Source\n  changes require fresh renders, reviews, and a build. Shared resource changes\n  invalidate all slide reviews. Rendering alone does not establish a pass.\n- Run `finalize`. Deliver `answer.pptx` only when `complete=true`. If the user\n  explicitly accepts an incomplete draft, set `delivery.mode: best-effort`;\n  `delivery_ready=true` then permits delivery with the failed checks disclosed.\n\nCommands take `--workspace` with an absolute path and emit JSON. Use `--help`\nfor arguments. A successful delivery includes a current `final-report.json`.\nKeep API keys in environment variables or the skill's `.env`, outside artifacts.\n"
+    }
+  ]
+}
