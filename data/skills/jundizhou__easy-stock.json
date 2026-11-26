@@ -1,0 +1,149 @@
+{
+  "repo": "jundizhou/easy-stock",
+  "commit": "02e925f778a9ded18ece5a1d91c0b2d85959f5cc",
+  "branch": "main",
+  "fetchedAt": "2026-11-26T21:14:04.503Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "a-share-market-overview",
+      "name": "a-share-market-overview",
+      "dir": ".agents/skills/a-share-market-overview",
+      "path": ".agents/skills/a-share-market-overview/SKILL.md",
+      "desc": "用于分析 A 股大盘、市场宽度、行业动量、资金流向、涨跌停和市场情绪，回答“今天市场怎么样”“主线是什么”等问题时使用。",
+      "descZh": "",
+      "triggers": [
+        "分析 A 股大盘",
+        "市场宽度",
+        "行业动量",
+        "资金流向",
+        "涨跌停和市场情绪",
+        "回答“今天市场怎么样”“主线是什么”等问题时使用"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/jundizhou/easy-stock.git",
+        "copy": "cp -r .agents/skills/a-share-market-overview ~/.claude/skills/a-share-market-overview",
+        "raw": "https://raw.githubusercontent.com/jundizhou/easy-stock/02e925f778a9ded18ece5a1d91c0b2d85959f5cc/.agents/skills/a-share-market-overview/SKILL.md",
+        "saveAs": "~/.claude/skills/a-share-market-overview/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:dfcb00fa1f6f29a15c243237a2a04dc679afa87a8ac1a63a19b59f3a60a0e302",
+      "bytes": 579,
+      "wordCount": 11,
+      "repoLicense": "",
+      "commit": "02e925f778a9ded18ece5a1d91c0b2d85959f5cc",
+      "branch": "main",
+      "body": "---\nname: a-share-market-overview\ndescription: 用于分析 A 股大盘、市场宽度、行业动量、资金流向、涨跌停和市场情绪，回答“今天市场怎么样”“主线是什么”等问题时使用。\n---\n\n# A 股市场总览\n\n1. 先确认交易日期和数据来源，区分实时快照、收盘数据与历史数据。\n2. 综合指数、涨跌家数、成交额、涨跌停、行业动量和资金流向。\n3. 输出市场状态、可能的主线、风险信号和待验证条件。\n4. 不把单日涨跌直接解释为趋势反转，也不承诺收益。\n",
+      "bodyMd": "# A 股市场总览\n\n1. 先确认交易日期和数据来源，区分实时快照、收盘数据与历史数据。\n2. 综合指数、涨跌家数、成交额、涨跌停、行业动量和资金流向。\n3. 输出市场状态、可能的主线、风险信号和待验证条件。\n4. 不把单日涨跌直接解释为趋势反转，也不承诺收益。\n"
+    },
+    {
+      "slug": "a-share-review",
+      "name": "a-share-review",
+      "dir": ".agents/skills/a-share-review",
+      "path": ".agents/skills/a-share-review/SKILL.md",
+      "desc": "用于制作 A 股盘后复盘、题材演化、连板梯队、情绪周期和次日观察清单，用户询问复盘或明日计划时使用。",
+      "descZh": "",
+      "triggers": [
+        "制作 A 股盘后复盘",
+        "题材演化",
+        "连板梯队",
+        "情绪周期和次日观察清单",
+        "用户询问复盘或明日计划时使用"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/jundizhou/easy-stock.git",
+        "copy": "cp -r .agents/skills/a-share-review ~/.claude/skills/a-share-review",
+        "raw": "https://raw.githubusercontent.com/jundizhou/easy-stock/02e925f778a9ded18ece5a1d91c0b2d85959f5cc/.agents/skills/a-share-review/SKILL.md",
+        "saveAs": "~/.claude/skills/a-share-review/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:91f895842575bfec883e793b80596b8cf929dd5987765a781bc44eedc2e0511e",
+      "bytes": 516,
+      "wordCount": 11,
+      "repoLicense": "",
+      "commit": "02e925f778a9ded18ece5a1d91c0b2d85959f5cc",
+      "branch": "main",
+      "body": "---\nname: a-share-review\ndescription: 用于制作 A 股盘后复盘、题材演化、连板梯队、情绪周期和次日观察清单，用户询问复盘或明日计划时使用。\n---\n\n# A 股盘后复盘\n\n1. 先按交易日整理指数、市场宽度、涨跌停和成交额。\n2. 识别主线题材、核心个股、连板梯队、分歧与修复信号。\n3. 将盘后事实、历史经验、市场预期和次日假设分开。\n4. 输出观察清单和失效条件，避免把复盘内容写成收益保证。\n",
+      "bodyMd": "# A 股盘后复盘\n\n1. 先按交易日整理指数、市场宽度、涨跌停和成交额。\n2. 识别主线题材、核心个股、连板梯队、分歧与修复信号。\n3. 将盘后事实、历史经验、市场预期和次日假设分开。\n4. 输出观察清单和失效条件，避免把复盘内容写成收益保证。\n"
+    },
+    {
+      "slug": "a-share-stock-analysis",
+      "name": "a-share-stock-analysis",
+      "dir": ".agents/skills/a-share-stock-analysis",
+      "path": ".agents/skills/a-share-stock-analysis/SKILL.md",
+      "desc": "用于分析 A 股个股的行情、K 线、题材、主营业务、基本面和风险，用户询问某只股票是否值得关注时使用。",
+      "descZh": "",
+      "triggers": [
+        "分析 A 股个股的行情",
+        "K 线",
+        "题材",
+        "主营业务",
+        "基本面和风险",
+        "用户询问某只股票是否值得关注时使用"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/jundizhou/easy-stock.git",
+        "copy": "cp -r .agents/skills/a-share-stock-analysis ~/.claude/skills/a-share-stock-analysis",
+        "raw": "https://raw.githubusercontent.com/jundizhou/easy-stock/02e925f778a9ded18ece5a1d91c0b2d85959f5cc/.agents/skills/a-share-stock-analysis/SKILL.md",
+        "saveAs": "~/.claude/skills/a-share-stock-analysis/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:4dbc3fe6b8bd5b634b6988ce3db759ff0f95ed15a0581f13bfc4b1730e04415e",
+      "bytes": 544,
+      "wordCount": 11,
+      "repoLicense": "",
+      "commit": "02e925f778a9ded18ece5a1d91c0b2d85959f5cc",
+      "branch": "main",
+      "body": "---\nname: a-share-stock-analysis\ndescription: 用于分析 A 股个股的行情、K 线、题材、主营业务、基本面和风险，用户询问某只股票是否值得关注时使用。\n---\n\n# A 股个股研究\n\n1. 先确认股票代码、名称、交易日期和数据新鲜度。\n2. 分开描述行情事实、公司基本面、题材催化、市场预期和个人推断。\n3. 结合趋势、成交量、相对强弱和行业位置，列出支持与反对证据。\n4. 给出需要继续跟踪的条件，不输出确定性买卖承诺。\n",
+      "bodyMd": "# A 股个股研究\n\n1. 先确认股票代码、名称、交易日期和数据新鲜度。\n2. 分开描述行情事实、公司基本面、题材催化、市场预期和个人推断。\n3. 结合趋势、成交量、相对强弱和行业位置，列出支持与反对证据。\n4. 给出需要继续跟踪的条件，不输出确定性买卖承诺。\n"
+    }
+  ]
+}

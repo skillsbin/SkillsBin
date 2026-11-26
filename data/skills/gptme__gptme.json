@@ -1,0 +1,93 @@
+{
+  "repo": "gptme/gptme",
+  "commit": "bf1460a31a0c90ce0ca87c6cf6c9d1ba56edfba6",
+  "branch": "master",
+  "fetchedAt": "2026-11-26T21:12:08.810Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "codebase-classification",
+      "name": "codebase-classification",
+      "dir": "gptme/lessons/skills/codebase-classification",
+      "path": "gptme/lessons/skills/codebase-classification/SKILL.md",
+      "desc": "Classify codebases before modification to choose appropriate development approach",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/gptme/gptme.git",
+        "copy": "cp -r gptme/lessons/skills/codebase-classification ~/.claude/skills/codebase-classification",
+        "raw": "https://raw.githubusercontent.com/gptme/gptme/bf1460a31a0c90ce0ca87c6cf6c9d1ba56edfba6/gptme/lessons/skills/codebase-classification/SKILL.md",
+        "saveAs": "~/.claude/skills/codebase-classification/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:fa7a8ec0bb47ba973015a01bb9fd3ede111052f76fb9ba45587d27742510f4ea",
+      "bytes": 5019,
+      "wordCount": 700,
+      "repoLicense": "MIT",
+      "commit": "bf1460a31a0c90ce0ca87c6cf6c9d1ba56edfba6",
+      "branch": "master",
+      "body": "---\nname: codebase-classification\ndescription: Classify codebases before modification to choose appropriate development approach\n---\n\n# Codebase Classification Skill\n\nAnalyze and classify codebases before making changes to ensure appropriate development approach.\n\n## Overview\n\nBefore modifying any codebase, classify it to determine whether to:\n- **Follow existing patterns** (Disciplined)\n- **Gradually improve** while following conventions (Transitional)\n- **Propose improvements** to legacy patterns (Legacy)\n- **Establish best practices** from scratch (Greenfield)\n\n## Classification Types\n\n### 1. Disciplined Codebase\n**Signals:**\n- Consistent code style (formatting, naming conventions)\n- Comprehensive test coverage (>70%)\n- Clear module boundaries and interfaces\n- Type hints/annotations throughout\n- Up-to-date dependencies\n- Active CI/CD pipeline\n- Good documentation (README, docstrings)\n\n**Approach:** Follow existing patterns strictly. Don't introduce new conventions.\n\n### 2. Transitional Codebase\n**Signals:**\n- Mixed code quality (some areas good, others not)\n- Partial test coverage (30-70%)\n- Some type hints, inconsistent usage\n- Active development with modernization efforts\n- Dependencies somewhat current\n\n**Approach:** Follow existing conventions in touched areas. Propose improvements for new code.\n\n### 3. Legacy Codebase\n**Signals:**\n- Inconsistent patterns across the codebase\n- Minimal or no tests (<30% coverage)\n- No type hints\n- Outdated dependencies\n- Complex, undocumented logic\n- Possibly unmaintained\n\n**Approach:** Be careful with changes. Add tests before modifying. Propose gradual improvements.\n\n### 4. Greenfield Codebase\n**Signals:**\n- New project (<6 months old)\n- Few files (<20 source files)\n- No established patterns yet\n- Minimal or no tests (but not legacy)\n- Active initial development\n\n**Approach:** Establish best practices from the start. Set up proper structure, testing, CI.\n\n## Quick Classification Checklist\n\nRun this analysis before making significant changes:\n\n```txt\n1. Check test coverage: Is there a test/ or tests/ directory? How comprehensive?\n2. Check type hints: Are functions annotated? Is there py.typed or mypy config?\n3. Check CI/CD: Is there .github/workflows/, .gitlab-ci.yml, or similar?\n4. Check code style: Is there .pre-commit-config.yaml, ruff.toml, or similar?\n5. Check dependencies: When was requirements.txt/pyproject.toml last updated?\n6. Check documentation: Is there a comprehensive README? API docs?\n```\n\n## Decision Matrix\n\n| Signal | Disciplined | Transitional | Legacy | Greenfield |\n|--------|-------------|--------------|--------|------------|\n| Test coverage | >70% | 30-70% | <30% | Varies (new) |\n| Type hints | Comprehensive | Partial | None/minimal | Varies |\n| CI/CD | Active | Present | None/broken | May be new |\n| Code style | Consistent | Mixed | Inconsistent | Establishing |\n| Dependencies | Current | Somewhat current | Outdated | Latest |\n| Age | Any | Any | Usually old | <6 months |\n\n## Behavior Guidelines\n\n### When Disciplined\n- Study existing patterns before writing new code\n- Match naming conventions exactly\n- Follow established module structure\n- Add tests matching existing test style\n- Don't propose architectural changes without strong justification\n\n### When Transitional\n- Follow patterns in the specific area you're modifying\n- Match quality of surrounding code or slightly better\n- Add tests for new functionality\n- Document rationale for any pattern deviations\n\n### When Legacy\n- Add tests BEFORE modifying code\n- Make minimal changes to achieve goal\n- Document assumptions and findings\n- Propose improvements as separate follow-up work\n- Be extra careful with untested code paths\n\n### When Greenfield\n- Establish best practices immediately\n- Set up proper project structure\n- Configure linting, formatting, type checking\n- Write tests for new functionality\n- Create comprehensive documentation\n\n## Examples\n\n### Identifying Disciplined Codebase\n```txt\n$ ls -la\npyproject.toml          # Modern packaging\n.pre-commit-config.yaml # Style enforcement\nmypy.ini                # Type checking\n.github/workflows/      # CI/CD\n\n$ wc -l tests/**/*.py\n2500 total              # Substantial tests\n\n→ Classification: DISCIPLINED\n→ Approach: Follow existing patterns strictly\n```\n\n### Identifying Legacy Codebase\n```txt\n$ ls -la\nsetup.py                # Old-style packaging\nrequirements.txt        # Pinned 3 years ago\n# No tests directory\n# No CI configuration\n\n$ grep -r \"def \" src/ | head -5\ndef process_data(x):    # No type hints\ndef handle_input(data): # No docstrings\n\n→ Classification: LEGACY\n→ Approach: Careful changes, add tests first\n```\n\n## Integration\n\nThis skill helps agents:\n1. Avoid imposing new patterns on well-structured codebases\n2. Avoid perpetuating bad patterns in legacy codebases\n3. Make appropriate improvement suggestions\n4. Set up proper structure for new projects\n\n## Related\n\n- Tool: shell (for running analysis commands)\n- Tool: read (for examining codebase structure)\n",
+      "bodyMd": "# Codebase Classification Skill\n\nAnalyze and classify codebases before making changes to ensure appropriate development approach.\n\n## Overview\n\nBefore modifying any codebase, classify it to determine whether to:\n- **Follow existing patterns** (Disciplined)\n- **Gradually improve** while following conventions (Transitional)\n- **Propose improvements** to legacy patterns (Legacy)\n- **Establish best practices** from scratch (Greenfield)\n\n## Classification Types\n\n### 1. Disciplined Codebase\n**Signals:**\n- Consistent code style (formatting, naming conventions)\n- Comprehensive test coverage (>70%)\n- Clear module boundaries and interfaces\n- Type hints/annotations throughout\n- Up-to-date dependencies\n- Active CI/CD pipeline\n- Good documentation (README, docstrings)\n\n**Approach:** Follow existing patterns strictly. Don't introduce new conventions.\n\n### 2. Transitional Codebase\n**Signals:**\n- Mixed code quality (some areas good, others not)\n- Partial test coverage (30-70%)\n- Some type hints, inconsistent usage\n- Active development with modernization efforts\n- Dependencies somewhat current\n\n**Approach:** Follow existing conventions in touched areas. Propose improvements for new code.\n\n### 3. Legacy Codebase\n**Signals:**\n- Inconsistent patterns across the codebase\n- Minimal or no tests (<30% coverage)\n- No type hints\n- Outdated dependencies\n- Complex, undocumented logic\n- Possibly unmaintained\n\n**Approach:** Be careful with changes. Add tests before modifying. Propose gradual improvements.\n\n### 4. Greenfield Codebase\n**Signals:**\n- New project (<6 months old)\n- Few files (<20 source files)\n- No established patterns yet\n- Minimal or no tests (but not legacy)\n- Active initial development\n\n**Approach:** Establish best practices from the start. Set up proper structure, testing, CI.\n\n## Quick Classification Checklist\n\nRun this analysis before making significant changes:\n\n```txt\n1. Check test coverage: Is there a test/ or tests/ directory? How comprehensive?\n2. Check type hints: Are functions annotated? Is there py.typed or mypy config?\n3. Check CI/CD: Is there .github/workflows/, .gitlab-ci.yml, or similar?\n4. Check code style: Is there .pre-commit-config.yaml, ruff.toml, or similar?\n5. Check dependencies: When was requirements.txt/pyproject.toml last updated?\n6. Check documentation: Is there a comprehensive README? API docs?\n```\n\n## Decision Matrix\n\n| Signal | Disciplined | Transitional | Legacy | Greenfield |\n|--------|-------------|--------------|--------|------------|\n| Test coverage | >70% | 30-70% | <30% | Varies (new) |\n| Type hints | Comprehensive | Partial | None/minimal | Varies |\n| CI/CD | Active | Present | None/broken | May be new |\n| Code style | Consistent | Mixed | Inconsistent | Establishing |\n| Dependencies | Current | Somewhat current | Outdated | Latest |\n| Age | Any | Any | Usually old | <6 months |\n\n## Behavior Guidelines\n\n### When Disciplined\n- Study existing patterns before writing new code\n- Match naming conventions exactly\n- Follow established module structure\n- Add tests matching existing test style\n- Don't propose architectural changes without strong justification\n\n### When Transitional\n- Follow patterns in the specific area you're modifying\n- Match quality of surrounding code or slightly better\n- Add tests for new functionality\n- Document rationale for any pattern deviations\n\n### When Legacy\n- Add tests BEFORE modifying code\n- Make minimal changes to achieve goal\n- Document assumptions and findings\n- Propose improvements as separate follow-up work\n- Be extra careful with untested code paths\n\n### When Greenfield\n- Establish best practices immediately\n- Set up proper project structure\n- Configure linting, formatting, type checking\n- Write tests for new functionality\n- Create comprehensive documentation\n\n## Examples\n\n### Identifying Disciplined Codebase\n```txt\n$ ls -la\npyproject.toml          # Modern packaging\n.pre-commit-config.yaml # Style enforcement\nmypy.ini                # Type checking\n.github/workflows/      # CI/CD\n\n$ wc -l tests/**/*.py\n2500 total              # Substantial tests\n\n→ Classification: DISCIPLINED\n→ Approach: Follow existing patterns strictly\n```\n\n### Identifying Legacy Codebase\n```txt\n$ ls -la\nsetup.py                # Old-style packaging\nrequirements.txt        # Pinned 3 years ago\n# No tests directory\n# No CI configuration\n\n$ grep -r \"def \" src/ | head -5\ndef process_data(x):    # No type hints\ndef handle_input(data): # No docstrings\n\n→ Classification: LEGACY\n→ Approach: Careful changes, add tests first\n```\n\n## Integration\n\nThis skill helps agents:\n1. Avoid imposing new patterns on well-structured codebases\n2. Avoid perpetuating bad patterns in legacy codebases\n3. Make appropriate improvement suggestions\n4. Set up proper structure for new projects\n\n## Related\n\n- Tool: shell (for running analysis commands)\n- Tool: read (for examining codebase structure)\n"
+    },
+    {
+      "slug": "python-repl",
+      "name": "python-repl",
+      "dir": "gptme/lessons/skills/python-repl",
+      "path": "gptme/lessons/skills/python-repl/SKILL.md",
+      "desc": "Interactive Python REPL automation with common helpers and best practices",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/gptme/gptme.git",
+        "copy": "cp -r gptme/lessons/skills/python-repl ~/.claude/skills/python-repl",
+        "raw": "https://raw.githubusercontent.com/gptme/gptme/bf1460a31a0c90ce0ca87c6cf6c9d1ba56edfba6/gptme/lessons/skills/python-repl/SKILL.md",
+        "saveAs": "~/.claude/skills/python-repl/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:8aebcb0409241331437de7540f1cf2a3bf1b19c82870ad87942404b16e12eab9",
+      "bytes": 1855,
+      "wordCount": 221,
+      "repoLicense": "MIT",
+      "commit": "bf1460a31a0c90ce0ca87c6cf6c9d1ba56edfba6",
+      "branch": "master",
+      "body": "---\nname: python-repl\ndescription: Interactive Python REPL automation with common helpers and best practices\n---\n\n# Python REPL Skill\n\nEnhances Python REPL workflows with bundled utility functions for data analysis, debugging, and performance profiling.\n\n## Overview\n\nThis skill bundles Python REPL helpers, common imports, and execution patterns for efficient Python development in gptme.\n\n## Bundled Scripts\n\n### Helper Functions (python_helpers.py)\n\nThis skill includes bundled utility functions for common Python tasks:\n- Data inspection (inspect_df, describe_object)\n- Quick plotting (quick_plot)\n- Performance profiling (time_function)\n- Common imports setup (setup_common_imports)\n\n## Usage Patterns\n\n### Data Analysis\nWhen working with data, automatically import common libraries and set up display options:\n\n```python\nimport numpy as np\nimport pandas as pd\n\npd.set_option(\"display.max_rows\", 100)\n```\n\n### Debugging\nUse bundled helpers for debugging:\n\n```python\nfrom python_helpers import inspect_df, describe_object\n\ninspect_df(df)  # Quick dataframe overview\ndescribe_object(obj)  # Object introspection\n```\n\n## Dependencies\n\nRequired packages are listed in `requirements.txt`:\n- ipython: Interactive Python shell\n- numpy: Numerical computing\n- pandas: Data manipulation\n\n## Best Practices\n\n1. **Use helpers**: Leverage bundled helper functions instead of reimplementing\n2. **Import once**: Common imports are handled by pre-execute hook\n3. **Profile performance**: Use time_function for performance-sensitive code\n\n## Examples\n\n### Quick Data Analysis\n```python\n# Helpers auto-import pandas, numpy\ndf = pd.read_csv(\"data.csv\")\ninspect_df(df)  # Show overview\n```\n\n### Performance Profiling\n```python\nfrom python_helpers import time_function\n\n\n@time_function\ndef slow_operation():\n    # Your code here\n    pass\n```\n\n## Related\n\n- Tool: ipython\n",
+      "bodyMd": "# Python REPL Skill\n\nEnhances Python REPL workflows with bundled utility functions for data analysis, debugging, and performance profiling.\n\n## Overview\n\nThis skill bundles Python REPL helpers, common imports, and execution patterns for efficient Python development in gptme.\n\n## Bundled Scripts\n\n### Helper Functions (python_helpers.py)\n\nThis skill includes bundled utility functions for common Python tasks:\n- Data inspection (inspect_df, describe_object)\n- Quick plotting (quick_plot)\n- Performance profiling (time_function)\n- Common imports setup (setup_common_imports)\n\n## Usage Patterns\n\n### Data Analysis\nWhen working with data, automatically import common libraries and set up display options:\n\n```python\nimport numpy as np\nimport pandas as pd\n\npd.set_option(\"display.max_rows\", 100)\n```\n\n### Debugging\nUse bundled helpers for debugging:\n\n```python\nfrom python_helpers import inspect_df, describe_object\n\ninspect_df(df)  # Quick dataframe overview\ndescribe_object(obj)  # Object introspection\n```\n\n## Dependencies\n\nRequired packages are listed in `requirements.txt`:\n- ipython: Interactive Python shell\n- numpy: Numerical computing\n- pandas: Data manipulation\n\n## Best Practices\n\n1. **Use helpers**: Leverage bundled helper functions instead of reimplementing\n2. **Import once**: Common imports are handled by pre-execute hook\n3. **Profile performance**: Use time_function for performance-sensitive code\n\n## Examples\n\n### Quick Data Analysis\n```python\n# Helpers auto-import pandas, numpy\ndf = pd.read_csv(\"data.csv\")\ninspect_df(df)  # Show overview\n```\n\n### Performance Profiling\n```python\nfrom python_helpers import time_function\n\n\n@time_function\ndef slow_operation():\n    # Your code here\n    pass\n```\n\n## Related\n\n- Tool: ipython\n"
+    }
+  ]
+}

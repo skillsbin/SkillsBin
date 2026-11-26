@@ -1,0 +1,335 @@
+{
+  "repo": "Xiangyue-Zhang/auto-deep-researcher-24x7",
+  "commit": "dbf3df816c60a17a159b96c6f31191cd14bac5c3",
+  "branch": "main",
+  "fetchedAt": "2026-11-26T21:14:40.533Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "auto-experiment",
+      "name": "auto-experiment",
+      "dir": "skills/auto-experiment",
+      "path": "skills/auto-experiment/SKILL.md",
+      "desc": "Launch an autonomous THINK→EXECUTE→REFLECT experiment loop on a GPU project",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": true,
+        "network": true,
+        "bins": [
+          "python3"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Xiangyue-Zhang/auto-deep-researcher-24x7.git",
+        "copy": "cp -r skills/auto-experiment ~/.claude/skills/auto-experiment",
+        "raw": "https://raw.githubusercontent.com/Xiangyue-Zhang/auto-deep-researcher-24x7/dbf3df816c60a17a159b96c6f31191cd14bac5c3/skills/auto-experiment/SKILL.md",
+        "saveAs": "~/.claude/skills/auto-experiment/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:28bdf2fe05f66eb06a5416369ca7600a3ef857a897d7d9dc39f15784664a0cb7",
+      "bytes": 5600,
+      "wordCount": 788,
+      "repoLicense": "Apache-2.0",
+      "commit": "dbf3df816c60a17a159b96c6f31191cd14bac5c3",
+      "branch": "main",
+      "body": "---\nname: auto-experiment\ndescription: \"Launch an autonomous THINK→EXECUTE→REFLECT experiment loop on a GPU project\"\n---\n\n# auto-experiment\n\nLaunch an autonomous experiment agent that runs your deep learning experiments 24/7.\n\n## What This Does\n\nThis skill starts a **THINK → EXECUTE → REFLECT** loop that:\n1. Reads your `PROJECT_BRIEF.md` to understand the research goal\n2. Analyzes previous results in `MEMORY_LOG.md`\n3. Plans the next experiment (hypothesis + success criteria)\n4. Implements code changes and runs a **mandatory dry-run**\n5. Launches GPU training via `nohup` (tracks PID)\n6. **Monitors at zero LLM cost** (only `kill -0 PID` + `tail log` + `nvidia-smi`)\n7. Wakes up when training finishes to analyze results\n8. Updates memory and decides: iterate, pivot, or report\n9. Repeats\n\n## Usage\n\n```\nClaude Code: /auto-experiment\nClaude Code: /auto-experiment --project /path/to/my_project --gpu 0\nClaude Code: /auto-experiment --project . --max-cycles 5\nCodex: $auto-experiment\n```\n\n## Prerequisites\n\nThe project directory must contain:\n\n### `PROJECT_BRIEF.md` (required)\nA frozen reference describing your research goal. Example:\n\n```markdown\n# Goal\nTrain a ViT-B/16 on ImageNet to reach 78%+ top-1 accuracy.\n\n# Codebase\n- Training: train.py\n- Config: configs/vit_base.yaml\n- Data: /data/imagenet/\n\n# Constraints\n- GPU 0-3 available (use DDP)\n- Max 90 epochs per run\n- Report val accuracy after each run\n\n# Current Best\n- ResNet-50 baseline: 76.1%\n```\n\n### `config.yaml` (optional)\nOverride default agent settings:\n\n```yaml\nagent:\n  provider: \"anthropic\"    # or \"openai\" / \"claude_cli\" / \"codex_cli\"\n  model: \"claude-sonnet-4-6\"\n  base_url: \"\"             # optional compatible endpoint override\n  api_key_env: \"\"          # optional custom key env var\n  auth_token_env: \"\"       # optional custom bearer token env var\n  max_cycles: -1          # -1 = unlimited\n  max_steps_per_cycle: 3  # max sub-agent dispatches per cycle\n  cooldown_interval: 300  # 5 min smart polling\n\nmemory:\n  brief_max_chars: 3000\n  log_max_chars: 2000\n\nmonitor:\n  poll_interval: 900      # check every 15 min during training\n  zero_llm: true\n\nexperiment:\n  mandatory_dry_run: true\n```\n\nIf the user wants a compatible API endpoint instead of the official Anthropic\nor OpenAI API, keep the same `provider` values and set `base_url` plus a custom\n`api_key_env`. Do not invent provider names like `qwen` or `glm`.\n\nOptional remote execution over SSH:\n\n```yaml\nexecution:\n  mode: \"ssh\"\n  ssh_host: \"user@server\"\n  remote_workspace: \"/home/user/my_project/workspace\"\n  remote_python: \"python3\"\n```\n\nIn SSH mode, the controller state stays local (`PROJECT_BRIEF.md`,\n`workspace/MEMORY_LOG.md`, `workspace/HUMAN_DIRECTIVE.md`, `state.json`),\nwhile code edits, shell commands, training, log tailing, PID checks, and GPU\nqueries run on the configured remote host.\n\n## Workflow Details\n\n### Phase 1: THINK\n- Read `PROJECT_BRIEF.md` (frozen, max 3000 chars)\n- Read `MEMORY_LOG.md` (rolling, auto-compacted)\n- Check for `HUMAN_DIRECTIVE.md` (highest priority, auto-archived after reading)\n- Analyze: What's the current best? What hasn't been tried? What's most promising?\n- Output: experiment plan with hypothesis and success criteria\n\n### Phase 2: EXECUTE\n- Dispatch to Code Agent (5 tools: `run_shell`, `launch_experiment`, `write_file`, `read_file`, `list_files`)\n- Code Agent implements changes\n- **Mandatory dry-run** (2-step verify, abort if fails)\n- Launch training via `nohup`, capture PID\n- Enter zero-cost monitoring loop:\n  - backend PID check — is process alive?\n  - backend `nvidia-smi` — GPU utilization\n  - backend `tail -50 logfile` — latest training output\n  - **Zero LLM API calls during this phase**\n\n### Phase 3: REFLECT\n- Parse training logs for metrics (loss, accuracy, FGD, FID, etc.)\n- Compare against previous best\n- Log milestone if improved (auto-compacted at 1200 chars)\n- Log decision (rolling last 15 entries)\n- Decide: try another config / pivot direction / generate report\n\n### Human Override (anytime)\n```bash\n# Drop a directive file — agent reads it next cycle with highest priority\necho \"Try learning rate 1e-5 with cosine schedule\" > workspace/HUMAN_DIRECTIVE.md\n```\n\n## Memory System\n\nTwo-Tier, constant size (~5K chars / ~1500 tokens), no matter how long the agent runs:\n\n| Tier | File | Content | Cap |\n|------|------|---------|-----|\n| 1 | `PROJECT_BRIEF.md` | Frozen project reference | 3,000 chars |\n| 2 | `MEMORY_LOG.md` | Key Results + Recent Decisions | 2,000 chars |\n\n**Auto-compaction rules:**\n- Key Results: oldest dropped when section > 1,200 chars\n- Recent Decisions: only last 15 entries kept\n- Total log hard-capped at 2,000 chars\n\n## Cost\n\n| Phase | Duration | LLM Cost |\n|-------|----------|----------|\n| THINK | 5-10 min | ~$0.05 |\n| EXECUTE (training) | hours/days | **$0.00** |\n| REFLECT | 5-10 min | ~$0.03 |\n| **24h cycle total** | | **~$0.08** |\n\n## Example Output\n\nAfter a few cycles, your `workspace/MEMORY_LOG.md` will look like:\n\n```markdown\n# Memory Log\n\n## Key Results\n[04-07 14:30] Exp001: ResNet-50 baseline, lr=0.1, acc=76.1%\n[04-07 22:15] Exp002: ViT-B/16, lr=1e-3, acc=74.8% (underperforming, lr too high)\n[04-08 06:00] Exp003: ViT-B/16, lr=3e-4 + cosine, acc=77.9% (new best!)\n[04-08 14:45] Exp004: ViT-B/16, lr=3e-4 + cosine + mixup, acc=78.3% (target reached!)\n\n## Recent Decisions\n[04-07 14:30] Start with ResNet-50 baseline to establish reference\n[04-07 22:15] ViT lr=1e-3 too high, try 3e-4 next\n[04-08 06:00] Cosine schedule helped significantly, try adding regularization\n[04-08 14:45] Target reached! Generate final report.\n```\n",
+      "bodyMd": "# auto-experiment\n\nLaunch an autonomous experiment agent that runs your deep learning experiments 24/7.\n\n## What This Does\n\nThis skill starts a **THINK → EXECUTE → REFLECT** loop that:\n1. Reads your `PROJECT_BRIEF.md` to understand the research goal\n2. Analyzes previous results in `MEMORY_LOG.md`\n3. Plans the next experiment (hypothesis + success criteria)\n4. Implements code changes and runs a **mandatory dry-run**\n5. Launches GPU training via `nohup` (tracks PID)\n6. **Monitors at zero LLM cost** (only `kill -0 PID` + `tail log` + `nvidia-smi`)\n7. Wakes up when training finishes to analyze results\n8. Updates memory and decides: iterate, pivot, or report\n9. Repeats\n\n## Usage\n\n```\nClaude Code: /auto-experiment\nClaude Code: /auto-experiment --project /path/to/my_project --gpu 0\nClaude Code: /auto-experiment --project . --max-cycles 5\nCodex: $auto-experiment\n```\n\n## Prerequisites\n\nThe project directory must contain:\n\n### `PROJECT_BRIEF.md` (required)\nA frozen reference describing your research goal. Example:\n\n```markdown\n# Goal\nTrain a ViT-B/16 on ImageNet to reach 78%+ top-1 accuracy.\n\n# Codebase\n- Training: train.py\n- Config: configs/vit_base.yaml\n- Data: /data/imagenet/\n\n# Constraints\n- GPU 0-3 available (use DDP)\n- Max 90 epochs per run\n- Report val accuracy after each run\n\n# Current Best\n- ResNet-50 baseline: 76.1%\n```\n\n### `config.yaml` (optional)\nOverride default agent settings:\n\n```yaml\nagent:\n  provider: \"anthropic\"    # or \"openai\" / \"claude_cli\" / \"codex_cli\"\n  model: \"claude-sonnet-4-6\"\n  base_url: \"\"             # optional compatible endpoint override\n  api_key_env: \"\"          # optional custom key env var\n  auth_token_env: \"\"       # optional custom bearer token env var\n  max_cycles: -1          # -1 = unlimited\n  max_steps_per_cycle: 3  # max sub-agent dispatches per cycle\n  cooldown_interval: 300  # 5 min smart polling\n\nmemory:\n  brief_max_chars: 3000\n  log_max_chars: 2000\n\nmonitor:\n  poll_interval: 900      # check every 15 min during training\n  zero_llm: true\n\nexperiment:\n  mandatory_dry_run: true\n```\n\nIf the user wants a compatible API endpoint instead of the official Anthropic\nor OpenAI API, keep the same `provider` values and set `base_url` plus a custom\n`api_key_env`. Do not invent provider names like `qwen` or `glm`.\n\nOptional remote execution over SSH:\n\n```yaml\nexecution:\n  mode: \"ssh\"\n  ssh_host: \"user@server\"\n  remote_workspace: \"/home/user/my_project/workspace\"\n  remote_python: \"python3\"\n```\n\nIn SSH mode, the controller state stays local (`PROJECT_BRIEF.md`,\n`workspace/MEMORY_LOG.md`, `workspace/HUMAN_DIRECTIVE.md`, `state.json`),\nwhile code edits, shell commands, training, log tailing, PID checks, and GPU\nqueries run on the configured remote host.\n\n## Workflow Details\n\n### Phase 1: THINK\n- Read `PROJECT_BRIEF.md` (frozen, max 3000 chars)\n- Read `MEMORY_LOG.md` (rolling, auto-compacted)\n- Check for `HUMAN_DIRECTIVE.md` (highest priority, auto-archived after reading)\n- Analyze: What's the current best? What hasn't been tried? What's most promising?\n- Output: experiment plan with hypothesis and success criteria\n\n### Phase 2: EXECUTE\n- Dispatch to Code Agent (5 tools: `run_shell`, `launch_experiment`, `write_file`, `read_file`, `list_files`)\n- Code Agent implements changes\n- **Mandatory dry-run** (2-step verify, abort if fails)\n- Launch training via `nohup`, capture PID\n- Enter zero-cost monitoring loop:\n  - backend PID check — is process alive?\n  - backend `nvidia-smi` — GPU utilization\n  - backend `tail -50 logfile` — latest training output\n  - **Zero LLM API calls during this phase**\n\n### Phase 3: REFLECT\n- Parse training logs for metrics (loss, accuracy, FGD, FID, etc.)\n- Compare against previous best\n- Log milestone if improved (auto-compacted at 1200 chars)\n- Log decision (rolling last 15 entries)\n- Decide: try another config / pivot direction / generate report\n\n### Human Override (anytime)\n```bash\n# Drop a directive file — agent reads it next cycle with highest priority\necho \"Try learning rate 1e-5 with cosine schedule\" > workspace/HUMAN_DIRECTIVE.md\n```\n\n## Memory System\n\nTwo-Tier, constant size (~5K chars / ~1500 tokens), no matter how long the agent runs:\n\n| Tier | File | Content | Cap |\n|------|------|---------|-----|\n| 1 | `PROJECT_BRIEF.md` | Frozen project reference | 3,000 chars |\n| 2 | `MEMORY_LOG.md` | Key Results + Recent Decisions | 2,000 chars |\n\n**Auto-compaction rules:**\n- Key Results: oldest dropped when section > 1,200 chars\n- Recent Decisions: only last 15 entries kept\n- Total log hard-capped at 2,000 chars\n\n## Cost\n\n| Phase | Duration | LLM Cost |\n|-------|----------|----------|\n| THINK | 5-10 min | ~$0.05 |\n| EXECUTE (training) | hours/days | **$0.00** |\n| REFLECT | 5-10 min | ~$0.03 |\n| **24h cycle total** | | **~$0.08** |\n\n## Example Output\n\nAfter a few cycles, your `workspace/MEMORY_LOG.md` will look like:\n\n```markdown\n# Memory Log\n\n## Key Results\n[04-07 14:30] Exp001: ResNet-50 baseline, lr=0.1, acc=76.1%\n[04-07 22:15] Exp002: ViT-B/16, lr=1e-3, acc=74.8% (underperforming, lr too high)\n[04-08 06:00] Exp003: ViT-B/16, lr=3e-4 + cosine, acc=77.9% (new best!)\n[04-08 14:45] Exp004: ViT-B/16, lr=3e-4 + cosine + mixup, acc=78.3% (target reached!)\n\n## Recent Decisions\n[04-07 14:30] Start with ResNet-50 baseline to establish reference\n[04-07 22:15] ViT lr=1e-3 too high, try 3e-4 next\n[04-08 06:00] Cosine schedule helped significantly, try adding regularization\n[04-08 14:45] Target reached! Generate final report.\n```\n"
+    },
+    {
+      "slug": "conf-search",
+      "name": "conf-search",
+      "dir": "skills/conf-search",
+      "path": "skills/conf-search/SKILL.md",
+      "desc": "Search papers from top AI/ML conferences",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Xiangyue-Zhang/auto-deep-researcher-24x7.git",
+        "copy": "cp -r skills/conf-search ~/.claude/skills/conf-search",
+        "raw": "https://raw.githubusercontent.com/Xiangyue-Zhang/auto-deep-researcher-24x7/dbf3df816c60a17a159b96c6f31191cd14bac5c3/skills/conf-search/SKILL.md",
+        "saveAs": "~/.claude/skills/conf-search/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:26764414160066c01e2a9d16258ad764e18864648bda385361282fa5f5920d20",
+      "bytes": 705,
+      "wordCount": 94,
+      "repoLicense": "Apache-2.0",
+      "commit": "dbf3df816c60a17a159b96c6f31191cd14bac5c3",
+      "branch": "main",
+      "body": "---\nname: conf-search\ndescription: \"Search papers from top AI/ML conferences\"\n---\n\n# conf-search\n\nSearch for papers from top venues.\n\n## Usage\n\n```\nClaude Code: /conf-search --venue CVPR2025 --query \"gesture generation\"\nClaude Code: /conf-search --venue NeurIPS2025 --query \"diffusion models\"\nCodex: $conf-search\n```\n\n## Supported Venues\n\nCVPR, ICCV, ECCV, NeurIPS, ICML, ICLR, AAAI, IJCAI, ACL, EMNLP, NAACL, SIGGRAPH, and more.\n\n## Behavior\n\n1. Parse venue and query from user input\n2. Search via Semantic Scholar API with venue filter\n3. Sort by relevance and citation count\n4. Present results with title, authors, abstract snippet, citation count\n5. Offer to do deep analysis on any paper of interest\n",
+      "bodyMd": "# conf-search\n\nSearch for papers from top venues.\n\n## Usage\n\n```\nClaude Code: /conf-search --venue CVPR2025 --query \"gesture generation\"\nClaude Code: /conf-search --venue NeurIPS2025 --query \"diffusion models\"\nCodex: $conf-search\n```\n\n## Supported Venues\n\nCVPR, ICCV, ECCV, NeurIPS, ICML, ICLR, AAAI, IJCAI, ACL, EMNLP, NAACL, SIGGRAPH, and more.\n\n## Behavior\n\n1. Parse venue and query from user input\n2. Search via Semantic Scholar API with venue filter\n3. Sort by relevance and citation count\n4. Present results with title, authors, abstract snippet, citation count\n5. Offer to do deep analysis on any paper of interest\n"
+    },
+    {
+      "slug": "daily-papers",
+      "name": "daily-papers",
+      "dir": "skills/daily-papers",
+      "path": "skills/daily-papers/SKILL.md",
+      "desc": "Daily arXiv paper recommendations with automatic deduplication",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Xiangyue-Zhang/auto-deep-researcher-24x7.git",
+        "copy": "cp -r skills/daily-papers ~/.claude/skills/daily-papers",
+        "raw": "https://raw.githubusercontent.com/Xiangyue-Zhang/auto-deep-researcher-24x7/dbf3df816c60a17a159b96c6f31191cd14bac5c3/skills/daily-papers/SKILL.md",
+        "saveAs": "~/.claude/skills/daily-papers/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:d5aa9c877550163d39a300422d85903c6439e50760a404ce421ca2db9e409a16",
+      "bytes": 1239,
+      "wordCount": 171,
+      "repoLicense": "Apache-2.0",
+      "commit": "dbf3df816c60a17a159b96c6f31191cd14bac5c3",
+      "branch": "main",
+      "body": "---\nname: daily-papers\ndescription: \"Daily arXiv paper recommendations with automatic deduplication\"\n---\n\n# daily-papers\n\nSearch arXiv for the latest papers relevant to the user's research interests.\n\nInvoke as `/daily-papers` in Claude Code or `$daily-papers` in Codex.\n\n## Behavior\n\n1. Ask the user for topics if not provided (or use defaults from config)\n2. Search arXiv for papers published in the last 1-3 days\n3. Check against previously recommended papers (dedup)\n4. Rank by relevance to the user's research\n5. For top 5: provide detailed analysis (motivation, method, key results, insights)\n6. For next 5: provide brief summaries\n7. Save recommendations to a dated markdown file\n\n## Deduplication\n\nMaintain a list of previously recommended paper IDs. Never recommend the same paper twice.\n\n## Output Format\n\n```markdown\n# Daily Paper Recommendations — YYYY-MM-DD\n\n## Top Picks (Detailed)\n\n### 1. [Paper Title](arxiv_url)\n**Authors**: ...\n**Relevance**: Why this matters for your research\n**Motivation**: What problem they solve\n**Method**: Key technical approach\n**Results**: Main findings\n**Insight**: What you can learn from this\n\n### 2. ...\n\n## Also Worth Reading\n\n### 6. [Paper Title](arxiv_url) — One-line summary\n...\n```\n",
+      "bodyMd": "# daily-papers\n\nSearch arXiv for the latest papers relevant to the user's research interests.\n\nInvoke as `/daily-papers` in Claude Code or `$daily-papers` in Codex.\n\n## Behavior\n\n1. Ask the user for topics if not provided (or use defaults from config)\n2. Search arXiv for papers published in the last 1-3 days\n3. Check against previously recommended papers (dedup)\n4. Rank by relevance to the user's research\n5. For top 5: provide detailed analysis (motivation, method, key results, insights)\n6. For next 5: provide brief summaries\n7. Save recommendations to a dated markdown file\n\n## Deduplication\n\nMaintain a list of previously recommended paper IDs. Never recommend the same paper twice.\n\n## Output Format\n\n```markdown\n# Daily Paper Recommendations — YYYY-MM-DD\n\n## Top Picks (Detailed)\n\n### 1. [Paper Title](arxiv_url)\n**Authors**: ...\n**Relevance**: Why this matters for your research\n**Motivation**: What problem they solve\n**Method**: Key technical approach\n**Results**: Main findings\n**Insight**: What you can learn from this\n\n### 2. ...\n\n## Also Worth Reading\n\n### 6. [Paper Title](arxiv_url) — One-line summary\n...\n```\n"
+    },
+    {
+      "slug": "experiment-status",
+      "name": "experiment-status",
+      "dir": "skills/experiment-status",
+      "path": "skills/experiment-status/SKILL.md",
+      "desc": "Check status of running autonomous experiment loops",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Xiangyue-Zhang/auto-deep-researcher-24x7.git",
+        "copy": "cp -r skills/experiment-status ~/.claude/skills/experiment-status",
+        "raw": "https://raw.githubusercontent.com/Xiangyue-Zhang/auto-deep-researcher-24x7/dbf3df816c60a17a159b96c6f31191cd14bac5c3/skills/experiment-status/SKILL.md",
+        "saveAs": "~/.claude/skills/experiment-status/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:8b0aab21e39b655b281a30226b7b16fc228d86f30ee87dab0853ac7025bb0d2d",
+      "bytes": 1530,
+      "wordCount": 208,
+      "repoLicense": "Apache-2.0",
+      "commit": "dbf3df816c60a17a159b96c6f31191cd14bac5c3",
+      "branch": "main",
+      "body": "---\nname: experiment-status\ndescription: \"Check status of running autonomous experiment loops\"\n---\n\n# experiment-status\n\nCheck the current status of your autonomous experiment agent.\n\n## Usage\n\n```\nClaude Code: /experiment-status\nClaude Code: /experiment-status --project /path/to/project\nCodex: $experiment-status\n```\n\n## Behavior\n\n1. Read `PROJECT_BRIEF.md` — show the research goal\n2. Read `MEMORY_LOG.md` — show key results and recent decisions  \n3. Read `.cycle_counter` — show how many cycles completed\n4. Check for running training processes via the configured execution backend\n5. If training is running, tail the log file for latest output\n6. Show GPU utilization through the configured backend\n7. Check if `HUMAN_DIRECTIVE.md` exists (pending directive)\n\nIf `execution.mode=ssh`, controller state still comes from the local project\ndirectory, but PID checks, training logs, and GPU status come from the\nconfigured remote host.\n\n## Output Format\n\n```markdown\n# Experiment Status — my-project\n\n## Goal\nTrain ViT-B/16 on ImageNet to 78%+ accuracy\n\n## Progress\n- Cycles completed: 4\n- Current best: 78.3% (Exp004, ViT-B/16 + cosine + mixup)\n- Status: TRAINING (PID 12345, GPU 0, running 3.2h)\n\n## Latest Training Log\nEpoch 45/90 | loss: 2.134 | acc: 77.1% | lr: 1.2e-4\n\n## Recent Decisions\n1. [04-08 14:45] Target reached with mixup, trying stronger augmentation\n2. [04-08 06:00] Cosine schedule helped, adding regularization\n\n## Pending Directive\nNone (drop a file at workspace/HUMAN_DIRECTIVE.md to intervene)\n```\n",
+      "bodyMd": "# experiment-status\n\nCheck the current status of your autonomous experiment agent.\n\n## Usage\n\n```\nClaude Code: /experiment-status\nClaude Code: /experiment-status --project /path/to/project\nCodex: $experiment-status\n```\n\n## Behavior\n\n1. Read `PROJECT_BRIEF.md` — show the research goal\n2. Read `MEMORY_LOG.md` — show key results and recent decisions  \n3. Read `.cycle_counter` — show how many cycles completed\n4. Check for running training processes via the configured execution backend\n5. If training is running, tail the log file for latest output\n6. Show GPU utilization through the configured backend\n7. Check if `HUMAN_DIRECTIVE.md` exists (pending directive)\n\nIf `execution.mode=ssh`, controller state still comes from the local project\ndirectory, but PID checks, training logs, and GPU status come from the\nconfigured remote host.\n\n## Output Format\n\n```markdown\n# Experiment Status — my-project\n\n## Goal\nTrain ViT-B/16 on ImageNet to 78%+ accuracy\n\n## Progress\n- Cycles completed: 4\n- Current best: 78.3% (Exp004, ViT-B/16 + cosine + mixup)\n- Status: TRAINING (PID 12345, GPU 0, running 3.2h)\n\n## Latest Training Log\nEpoch 45/90 | loss: 2.134 | acc: 77.1% | lr: 1.2e-4\n\n## Recent Decisions\n1. [04-08 14:45] Target reached with mixup, trying stronger augmentation\n2. [04-08 06:00] Cosine schedule helped, adding regularization\n\n## Pending Directive\nNone (drop a file at workspace/HUMAN_DIRECTIVE.md to intervene)\n```\n"
+    },
+    {
+      "slug": "gpu-monitor",
+      "name": "gpu-monitor",
+      "dir": "skills/gpu-monitor",
+      "path": "skills/gpu-monitor/SKILL.md",
+      "desc": "Check GPU status, running experiments, and available resources",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Xiangyue-Zhang/auto-deep-researcher-24x7.git",
+        "copy": "cp -r skills/gpu-monitor ~/.claude/skills/gpu-monitor",
+        "raw": "https://raw.githubusercontent.com/Xiangyue-Zhang/auto-deep-researcher-24x7/dbf3df816c60a17a159b96c6f31191cd14bac5c3/skills/gpu-monitor/SKILL.md",
+        "saveAs": "~/.claude/skills/gpu-monitor/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:53eeff159b21bde04236de624bb6d9546e307a1d4b1aa35a6d804da6ae646974",
+      "bytes": 1213,
+      "wordCount": 146,
+      "repoLicense": "Apache-2.0",
+      "commit": "dbf3df816c60a17a159b96c6f31191cd14bac5c3",
+      "branch": "main",
+      "body": "---\nname: gpu-monitor\ndescription: \"Check GPU status, running experiments, and available resources\"\n---\n\n# gpu-monitor\n\nQuick GPU status check for experiment management.\n\n## Usage\n\n```\nClaude Code: /gpu-monitor\nClaude Code: /gpu-monitor --server user@remote-host\nCodex: $gpu-monitor\n```\n\n## Behavior\n\n1. Run `nvidia-smi` to get current GPU status\n2. Display a clean summary table:\n   - GPU ID, Name, Memory (used/total), Utilization %, Temperature\n   - Running processes on each GPU\n3. Identify which GPUs are free (< 1GB memory used)\n4. Identify which GPUs are running experiments (check for python/torchrun processes)\n5. If `--server` is provided, SSH to remote server first\n\n## Output Format\n\n```\nGPU Status\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n GPU  Name          Memory         Util  Temp\n  0   L20X 144GB    45123/147456   98%   72°C  ← training (PID 12345)\n  1   L20X 144GB      234/147456    0%   35°C  ← FREE\n  2   L20X 144GB    43210/147456   95%   70°C  ← training (PID 12346)\n  3   L20X 144GB     1024/147456   12%   40°C  ← keeper\n\nFree GPUs: [1]\nTraining: GPU 0 (PID 12345), GPU 2 (PID 12346)\n```\n",
+      "bodyMd": "# gpu-monitor\n\nQuick GPU status check for experiment management.\n\n## Usage\n\n```\nClaude Code: /gpu-monitor\nClaude Code: /gpu-monitor --server user@remote-host\nCodex: $gpu-monitor\n```\n\n## Behavior\n\n1. Run `nvidia-smi` to get current GPU status\n2. Display a clean summary table:\n   - GPU ID, Name, Memory (used/total), Utilization %, Temperature\n   - Running processes on each GPU\n3. Identify which GPUs are free (< 1GB memory used)\n4. Identify which GPUs are running experiments (check for python/torchrun processes)\n5. If `--server` is provided, SSH to remote server first\n\n## Output Format\n\n```\nGPU Status\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n GPU  Name          Memory         Util  Temp\n  0   L20X 144GB    45123/147456   98%   72°C  ← training (PID 12345)\n  1   L20X 144GB      234/147456    0%   35°C  ← FREE\n  2   L20X 144GB    43210/147456   95%   70°C  ← training (PID 12346)\n  3   L20X 144GB     1024/147456   12%   40°C  ← keeper\n\nFree GPUs: [1]\nTraining: GPU 0 (PID 12345), GPU 2 (PID 12346)\n```\n"
+    },
+    {
+      "slug": "obsidian-sync",
+      "name": "obsidian-sync",
+      "dir": "skills/obsidian-sync",
+      "path": "skills/obsidian-sync/SKILL.md",
+      "desc": "Refresh Obsidian dashboard and daily notes from current experiment state",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Xiangyue-Zhang/auto-deep-researcher-24x7.git",
+        "copy": "cp -r skills/obsidian-sync ~/.claude/skills/obsidian-sync",
+        "raw": "https://raw.githubusercontent.com/Xiangyue-Zhang/auto-deep-researcher-24x7/dbf3df816c60a17a159b96c6f31191cd14bac5c3/skills/obsidian-sync/SKILL.md",
+        "saveAs": "~/.claude/skills/obsidian-sync/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:484a1252f5f0a25e4f829147da077edb7d732187d07d3d732781136cee8a5fd4",
+      "bytes": 986,
+      "wordCount": 101,
+      "repoLicense": "Apache-2.0",
+      "commit": "dbf3df816c60a17a159b96c6f31191cd14bac5c3",
+      "branch": "main",
+      "body": "---\nname: obsidian-sync\ndescription: \"Refresh Obsidian dashboard and daily notes from current experiment state\"\n---\n\n# obsidian-sync\n\nRefresh progress notes for a Deep Researcher project.\n\n## Usage\n\n```bash\nClaude Code: /obsidian-sync --project /path/to/project\nClaude Code: /obsidian-sync --project /path/to/project --dashboard-only\nClaude Code: /obsidian-sync --project /path/to/project --daily-only\nCodex: $obsidian-sync\n```\n\n## Behavior\n\n1. Read project config and check `obsidian.enabled`\n2. Read `PROJECT_BRIEF.md`, `workspace/MEMORY_LOG.md`, `workspace/state.json`, and `.cycle_counter`\n3. Refresh `Dashboard.md` in Obsidian, or `workspace/progress_tracking/Dashboard.txt` if no vault is configured\n4. Optionally append a new daily note entry\n\n## Command\n\n```bash\npython -m core.obsidian --project /path/to/project\n```\n\nIf progress export is disabled, tell the user to set `obsidian.enabled: true`. If `obsidian.vault_path` is empty, notes fall back to project-local text files.\n",
+      "bodyMd": "# obsidian-sync\n\nRefresh progress notes for a Deep Researcher project.\n\n## Usage\n\n```bash\nClaude Code: /obsidian-sync --project /path/to/project\nClaude Code: /obsidian-sync --project /path/to/project --dashboard-only\nClaude Code: /obsidian-sync --project /path/to/project --daily-only\nCodex: $obsidian-sync\n```\n\n## Behavior\n\n1. Read project config and check `obsidian.enabled`\n2. Read `PROJECT_BRIEF.md`, `workspace/MEMORY_LOG.md`, `workspace/state.json`, and `.cycle_counter`\n3. Refresh `Dashboard.md` in Obsidian, or `workspace/progress_tracking/Dashboard.txt` if no vault is configured\n4. Optionally append a new daily note entry\n\n## Command\n\n```bash\npython -m core.obsidian --project /path/to/project\n```\n\nIf progress export is disabled, tell the user to set `obsidian.enabled: true`. If `obsidian.vault_path` is empty, notes fall back to project-local text files.\n"
+    },
+    {
+      "slug": "paper-analyze",
+      "name": "paper-analyze",
+      "dir": "skills/paper-analyze",
+      "path": "skills/paper-analyze/SKILL.md",
+      "desc": "Deep analysis of a single paper with figure extraction from arXiv source",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Xiangyue-Zhang/auto-deep-researcher-24x7.git",
+        "copy": "cp -r skills/paper-analyze ~/.claude/skills/paper-analyze",
+        "raw": "https://raw.githubusercontent.com/Xiangyue-Zhang/auto-deep-researcher-24x7/dbf3df816c60a17a159b96c6f31191cd14bac5c3/skills/paper-analyze/SKILL.md",
+        "saveAs": "~/.claude/skills/paper-analyze/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:5601a69165c8993435feaf1d39301e53aee3e10c0d45d557bbd34c339c154614",
+      "bytes": 1226,
+      "wordCount": 163,
+      "repoLicense": "Apache-2.0",
+      "commit": "dbf3df816c60a17a159b96c6f31191cd14bac5c3",
+      "branch": "main",
+      "body": "---\nname: paper-analyze\ndescription: \"Deep analysis of a single paper with figure extraction from arXiv source\"\n---\n\n# paper-analyze\n\nPerform deep analysis of a single academic paper.\n\n## Usage\n\n```\nClaude Code: /paper-analyze <arxiv_id or url>\nCodex: $paper-analyze\n```\n\n## Behavior\n\n1. Fetch paper metadata from arXiv API\n2. Attempt to download arXiv source package (.tar.gz)\n3. Extract actual figures from source (not screenshots)\n4. Read the full paper (PDF if source unavailable)\n5. Generate structured analysis\n\n## Figure Extraction\n\nPriority order:\n1. arXiv source package → extract .png/.jpg/.pdf figures\n2. PDF extraction as fallback\n3. Name files with arxiv_id prefix to avoid collisions\n\n## Output Format\n\n```markdown\n# [Paper Title]\n\n**arXiv**: [id] | **Authors**: ... | **Year**: ...\n\n## Problem\nWhat specific problem does this paper address?\n\n## Motivation  \nWhy is this problem important? What gap exists?\n\n## Method\nDetailed technical approach with key equations/algorithms.\n\n![Figure 1](figures/arxiv_id_fig1.png)\n\n## Experiments\n- Datasets, baselines, metrics\n- Key results table\n- Ablation findings\n\n## Insights\n- What can we learn and apply?\n- Strengths and limitations\n- Connections to our research\n```\n",
+      "bodyMd": "# paper-analyze\n\nPerform deep analysis of a single academic paper.\n\n## Usage\n\n```\nClaude Code: /paper-analyze <arxiv_id or url>\nCodex: $paper-analyze\n```\n\n## Behavior\n\n1. Fetch paper metadata from arXiv API\n2. Attempt to download arXiv source package (.tar.gz)\n3. Extract actual figures from source (not screenshots)\n4. Read the full paper (PDF if source unavailable)\n5. Generate structured analysis\n\n## Figure Extraction\n\nPriority order:\n1. arXiv source package → extract .png/.jpg/.pdf figures\n2. PDF extraction as fallback\n3. Name files with arxiv_id prefix to avoid collisions\n\n## Output Format\n\n```markdown\n# [Paper Title]\n\n**arXiv**: [id] | **Authors**: ... | **Year**: ...\n\n## Problem\nWhat specific problem does this paper address?\n\n## Motivation  \nWhy is this problem important? What gap exists?\n\n## Method\nDetailed technical approach with key equations/algorithms.\n\n![Figure 1](figures/arxiv_id_fig1.png)\n\n## Experiments\n- Datasets, baselines, metrics\n- Key results table\n- Ablation findings\n\n## Insights\n- What can we learn and apply?\n- Strengths and limitations\n- Connections to our research\n```\n"
+    },
+    {
+      "slug": "progress-report",
+      "name": "progress-report",
+      "dir": "skills/progress-report",
+      "path": "skills/progress-report/SKILL.md",
+      "desc": "Generate structured research progress reports",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Xiangyue-Zhang/auto-deep-researcher-24x7.git",
+        "copy": "cp -r skills/progress-report ~/.claude/skills/progress-report",
+        "raw": "https://raw.githubusercontent.com/Xiangyue-Zhang/auto-deep-researcher-24x7/dbf3df816c60a17a159b96c6f31191cd14bac5c3/skills/progress-report/SKILL.md",
+        "saveAs": "~/.claude/skills/progress-report/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:6ef89e8c885761c23294c592bd69477f5e60c2526933c10e61ed05acaf926226",
+      "bytes": 854,
+      "wordCount": 116,
+      "repoLicense": "Apache-2.0",
+      "commit": "dbf3df816c60a17a159b96c6f31191cd14bac5c3",
+      "branch": "main",
+      "body": "---\nname: progress-report\ndescription: \"Generate structured research progress reports\"\n---\n\n# progress-report\n\nGenerate a structured progress report for the current research project.\n\nInvoke as `/progress-report` in Claude Code or `$progress-report` in Codex.\n\n## Behavior\n\n1. Read the project's MEMORY_LOG.md for milestones and decisions\n2. Check recent experiment logs in workspace\n3. Compile results into a structured report\n\n## Output Format\n\n```markdown\n# Progress Report — YYYY-MM-DD\n\n## Current Status\n- Best result: [metric]\n- Total experiments: [N]\n- Current direction: [description]\n\n## Recent Experiments\n| # | Config | Metric | Date | Notes |\n|---|--------|--------|------|-------|\n\n## Key Insights\n- What we learned\n- What works / doesn't work\n\n## Next Steps\n1. Planned experiments\n2. Open questions\n\n## Blockers\n- Any issues or risks\n```\n",
+      "bodyMd": "# progress-report\n\nGenerate a structured progress report for the current research project.\n\nInvoke as `/progress-report` in Claude Code or `$progress-report` in Codex.\n\n## Behavior\n\n1. Read the project's MEMORY_LOG.md for milestones and decisions\n2. Check recent experiment logs in workspace\n3. Compile results into a structured report\n\n## Output Format\n\n```markdown\n# Progress Report — YYYY-MM-DD\n\n## Current Status\n- Best result: [metric]\n- Total experiments: [N]\n- Current direction: [description]\n\n## Recent Experiments\n| # | Config | Metric | Date | Notes |\n|---|--------|--------|------|-------|\n\n## Key Insights\n- What we learned\n- What works / doesn't work\n\n## Next Steps\n1. Planned experiments\n2. Open questions\n\n## Blockers\n- Any issues or risks\n```\n"
+    }
+  ]
+}

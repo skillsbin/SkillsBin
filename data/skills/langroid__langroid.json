@@ -1,0 +1,93 @@
+{
+  "repo": "langroid/langroid",
+  "commit": "fc879d6c2dd222d51c6a347108d9ce11d3026214",
+  "branch": "main",
+  "fetchedAt": "2026-11-26T21:12:35.699Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "add-pattern",
+      "name": "add-pattern",
+      "dir": "plugins/langroid/skills/add-pattern",
+      "path": "plugins/langroid/skills/add-pattern/SKILL.md",
+      "desc": "Use this skill when you learn one or more design pattern(s) in the",
+      "descZh": "",
+      "triggers": [
+        "you learn one"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/langroid/langroid.git",
+        "copy": "cp -r plugins/langroid/skills/add-pattern ~/.claude/skills/add-pattern",
+        "raw": "https://raw.githubusercontent.com/langroid/langroid/fc879d6c2dd222d51c6a347108d9ce11d3026214/plugins/langroid/skills/add-pattern/SKILL.md",
+        "saveAs": "~/.claude/skills/add-pattern/SKILL.md",
+        "marketplace": "/plugin marketplace add langroid/langroid"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:b0d3c7f7f359ad2ff3f2a50165cb5604a8657c64f32b1d4a2f45653cb1751ad3",
+      "bytes": 1031,
+      "wordCount": 114,
+      "repoLicense": "MIT",
+      "commit": "fc879d6c2dd222d51c6a347108d9ce11d3026214",
+      "branch": "main",
+      "body": "---\nname: add-pattern\ndescription: Use this skill when you learn one or more design pattern(s) in the\n  Langroid (multi) agent framework, and want to make a note for future reference\n  for yourself. Use this either autonomously, or when asked by the user to record \n  a new pattern.\n---\n\n# add-pattern\n\n## Instructions\n\nWhen you learn a new Langroid design pattern, do the following:\n\n1. Add an entry in the sibling `patterns/SKILL.md` file in the appropriate category\n   section, containing a DESCRIPTION of the goal of the pattern (i.e. what it enables\n   you to implement), accompanied by a `- Reference:` pointer to a markdown DOCUMENT\n   in the `patterns/` directory.\n\n   IMPORTANT - The DESCRIPTION should be clear enough that future YOU can effectively\n   use it to MATCH design problems you may encounter in future.\n\n2. In that DOCUMENT, describe the idea of the implementation along with code examples.\n   Follow the format of existing pattern files (Problem, Solution, Complete Code\n   Example, Key Points, When to Use).\n",
+      "bodyMd": "# add-pattern\n\n## Instructions\n\nWhen you learn a new Langroid design pattern, do the following:\n\n1. Add an entry in the sibling `patterns/SKILL.md` file in the appropriate category\n   section, containing a DESCRIPTION of the goal of the pattern (i.e. what it enables\n   you to implement), accompanied by a `- Reference:` pointer to a markdown DOCUMENT\n   in the `patterns/` directory.\n\n   IMPORTANT - The DESCRIPTION should be clear enough that future YOU can effectively\n   use it to MATCH design problems you may encounter in future.\n\n2. In that DOCUMENT, describe the idea of the implementation along with code examples.\n   Follow the format of existing pattern files (Problem, Solution, Complete Code\n   Example, Key Points, When to Use).\n"
+    },
+    {
+      "slug": "patterns",
+      "name": "patterns",
+      "dir": "plugins/langroid/skills/patterns",
+      "path": "plugins/langroid/skills/patterns/SKILL.md",
+      "desc": "Design patterns for the Langroid multi-agent LLM framework. Covers",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/langroid/langroid.git",
+        "copy": "cp -r plugins/langroid/skills/patterns ~/.claude/skills/patterns",
+        "raw": "https://raw.githubusercontent.com/langroid/langroid/fc879d6c2dd222d51c6a347108d9ce11d3026214/plugins/langroid/skills/patterns/SKILL.md",
+        "saveAs": "~/.claude/skills/patterns/SKILL.md",
+        "marketplace": "/plugin marketplace add langroid/langroid"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:a5f10e981edf3c28c6c47ea2657457665e74e222ea849a949a70c2222f092c35",
+      "bytes": 4680,
+      "wordCount": 644,
+      "repoLicense": "MIT",
+      "commit": "fc879d6c2dd222d51c6a347108d9ce11d3026214",
+      "branch": "main",
+      "body": "---\nname: patterns\ndescription: Design patterns for the Langroid multi-agent LLM framework. Covers\n  agent configuration, tools, task control, and integrations.\n---\n\n# Langroid Patterns\n\n## Instructions\n\nBelow is an INDEX of design patterns organized by category. Each item describes\nWHAT you might want to implement, followed by a REFERENCE to a document with\na complete code example.\n\nScan this index to find patterns matching your needs, then consult the\ncorresponding document.\n\n---\n\n## Agent & Task Basics\n\n1. **Task Returns Tool Directly**\n\n   Create a Langroid Agent equipped with a single Tool (a ToolMessage), and wrap\n   it in a Task so that running the task returns that ToolMessage directly. Use\n   this pattern when you want a simple LLM agent that returns a structured\n   response.\n\n   - Reference: `./task-return-tool.md`\n\n---\n\n## Tool Handlers\n\n2. **Stateful Handler on Agent**\n\n   Define a STATEFUL tool handler as a METHOD on the agent (not inside the\n   ToolMessage). Use this pattern when: (a) the tool handler needs to execute\n   external operations (API calls, database queries, file I/O), (b) you need to\n   track state across retries (e.g., failure counter), (c) the handler needs\n   access to agent-level resources (connections, configs), or (d) you want\n   Langroid to automatically loop errors back to the LLM for self-correction.\n   The method name must match the `request` field of the ToolMessage. Return a\n   string for errors (LLM sees it and can retry), or DoneTool(content=result)\n   to terminate successfully.\n\n   - Reference: `./agent-tool-handler-with-state.md`\n\n3. **Handler with Validation**\n\n   Validate tool output against agent state before accepting it. Use this\n   pattern when: (a) the LLM's tool output must preserve certain content from\n   the input (e.g., placeholders, required fields), (b) you want automatic\n   retry if validation fails, (c) you need to compare tool output against\n   context the LLM received. Define a handler method on a custom agent class\n   that stores the input context as state, validates the tool output, and\n   returns an error string for retry or AgentDoneTool for success (note: use\n   AgentDoneTool, NOT DoneTool). Use `done_sequences=[\"T[ToolName], A\"]` so the\n   handler runs before task termination.\n\n   - Reference: `./agent-handler-validation-with-state.md`\n\n---\n\n## Task Control\n\n4. **Terminate on Specific Tool**\n\n   Terminate a Task only when a SPECIFIC tool is called. Use\n   `TaskConfig(done_sequences=[\"T[ToolName]\"])` to exit immediately when that\n   tool is emitted, or `TaskConfig(done_sequences=[\"T[ToolName], A\"])` to exit\n   after the tool is emitted AND handled by the agent. Use this when an agent\n   has multiple tools but you only want one specific tool to trigger task\n   termination.\n\n   - Reference: `./done-sequences-specific-tool.md`\n\n5. **Batch Processing**\n\n   Run the SAME task on MULTIPLE inputs concurrently using `run_batch_tasks()`.\n   Use this pattern when: (a) you need to process many items with the same\n   agent/task logic, (b) you want parallelism without manual asyncio/threading,\n   (c) you need state isolation between items (each gets a cloned agent with\n   fresh message history), (d) you want to avoid connection exhaustion from\n   creating too many agents manually. Each item gets a cloned task+agent, runs\n   independently, results collected in order. Supports batch_size for\n   concurrency limiting.\n\n   - Reference: `./run-batch-tasks.md`\n\n---\n\n## Integration & Output\n\n6. **MCP Tools Integration**\n\n   Enable a Langroid agent to use MCP (Model Context Protocol) tools from an\n   external MCP server like Claude Code. Use this pattern when: (a) you want\n   your agent to use file editing tools (Read, Edit, Write) from Claude Code,\n   (b) you need to connect to any MCP server via stdio transport, (c) you want\n   to enable ALL tools from an MCP server or just SPECIFIC tools selectively,\n   (d) you want to customize/post-process MCP tool results before returning to\n   the LLM. Uses `@mcp_tool` decorator for specific tools or `get_tools_async()`\n   for all tools.\n\n   - Reference: `./mcp-tool-integration.md`\n\n7. **Quiet Mode**\n\n   Suppress verbose Langroid agent output (streaming, tool JSON, intermediate\n   messages) while showing your own custom progress messages. Use this pattern\n   when: (a) you want clean CLI output showing only milestone events, (b) you're\n   running a multi-step workflow and want to show progress without agent noise,\n   (c) you need thread-safe output control. Use `quiet_mode()` context manager\n   to wrap agent task.run() calls, then print your own messages outside the\n   context.\n\n   - Reference: `./quiet-mode.md`\n",
+      "bodyMd": "# Langroid Patterns\n\n## Instructions\n\nBelow is an INDEX of design patterns organized by category. Each item describes\nWHAT you might want to implement, followed by a REFERENCE to a document with\na complete code example.\n\nScan this index to find patterns matching your needs, then consult the\ncorresponding document.\n\n---\n\n## Agent & Task Basics\n\n1. **Task Returns Tool Directly**\n\n   Create a Langroid Agent equipped with a single Tool (a ToolMessage), and wrap\n   it in a Task so that running the task returns that ToolMessage directly. Use\n   this pattern when you want a simple LLM agent that returns a structured\n   response.\n\n   - Reference: `./task-return-tool.md`\n\n---\n\n## Tool Handlers\n\n2. **Stateful Handler on Agent**\n\n   Define a STATEFUL tool handler as a METHOD on the agent (not inside the\n   ToolMessage). Use this pattern when: (a) the tool handler needs to execute\n   external operations (API calls, database queries, file I/O), (b) you need to\n   track state across retries (e.g., failure counter), (c) the handler needs\n   access to agent-level resources (connections, configs), or (d) you want\n   Langroid to automatically loop errors back to the LLM for self-correction.\n   The method name must match the `request` field of the ToolMessage. Return a\n   string for errors (LLM sees it and can retry), or DoneTool(content=result)\n   to terminate successfully.\n\n   - Reference: `./agent-tool-handler-with-state.md`\n\n3. **Handler with Validation**\n\n   Validate tool output against agent state before accepting it. Use this\n   pattern when: (a) the LLM's tool output must preserve certain content from\n   the input (e.g., placeholders, required fields), (b) you want automatic\n   retry if validation fails, (c) you need to compare tool output against\n   context the LLM received. Define a handler method on a custom agent class\n   that stores the input context as state, validates the tool output, and\n   returns an error string for retry or AgentDoneTool for success (note: use\n   AgentDoneTool, NOT DoneTool). Use `done_sequences=[\"T[ToolName], A\"]` so the\n   handler runs before task termination.\n\n   - Reference: `./agent-handler-validation-with-state.md`\n\n---\n\n## Task Control\n\n4. **Terminate on Specific Tool**\n\n   Terminate a Task only when a SPECIFIC tool is called. Use\n   `TaskConfig(done_sequences=[\"T[ToolName]\"])` to exit immediately when that\n   tool is emitted, or `TaskConfig(done_sequences=[\"T[ToolName], A\"])` to exit\n   after the tool is emitted AND handled by the agent. Use this when an agent\n   has multiple tools but you only want one specific tool to trigger task\n   termination.\n\n   - Reference: `./done-sequences-specific-tool.md`\n\n5. **Batch Processing**\n\n   Run the SAME task on MULTIPLE inputs concurrently using `run_batch_tasks()`.\n   Use this pattern when: (a) you need to process many items with the same\n   agent/task logic, (b) you want parallelism without manual asyncio/threading,\n   (c) you need state isolation between items (each gets a cloned agent with\n   fresh message history), (d) you want to avoid connection exhaustion from\n   creating too many agents manually. Each item gets a cloned task+agent, runs\n   independently, results collected in order. Supports batch_size for\n   concurrency limiting.\n\n   - Reference: `./run-batch-tasks.md`\n\n---\n\n## Integration & Output\n\n6. **MCP Tools Integration**\n\n   Enable a Langroid agent to use MCP (Model Context Protocol) tools from an\n   external MCP server like Claude Code. Use this pattern when: (a) you want\n   your agent to use file editing tools (Read, Edit, Write) from Claude Code,\n   (b) you need to connect to any MCP server via stdio transport, (c) you want\n   to enable ALL tools from an MCP server or just SPECIFIC tools selectively,\n   (d) you want to customize/post-process MCP tool results before returning to\n   the LLM. Uses `@mcp_tool` decorator for specific tools or `get_tools_async()`\n   for all tools.\n\n   - Reference: `./mcp-tool-integration.md`\n\n7. **Quiet Mode**\n\n   Suppress verbose Langroid agent output (streaming, tool JSON, intermediate\n   messages) while showing your own custom progress messages. Use this pattern\n   when: (a) you want clean CLI output showing only milestone events, (b) you're\n   running a multi-step workflow and want to show progress without agent noise,\n   (c) you need thread-safe output control. Use `quiet_mode()` context manager\n   to wrap agent task.run() calls, then print your own messages outside the\n   context.\n\n   - Reference: `./quiet-mode.md`\n"
+    }
+  ]
+}

@@ -1,0 +1,396 @@
+{
+  "repo": "4thfever/cultivation-world-simulator",
+  "commit": "471fe745e7c3d582048d647257c74ae566cd235f",
+  "branch": "main",
+  "fetchedAt": "2026-11-26T21:13:56.901Z",
+  "parseFail": 1,
+  "skills": [
+    {
+      "slug": "external-control-api",
+      "name": "external-control-api",
+      "dir": ".cursor/skills/external-control-api",
+      "path": ".cursor/skills/external-control-api/SKILL.md",
+      "desc": "规划或实现面向外部 agent / Claw 的稳定控制 API，优先做底层分层、query/command 收口、runtime 串行化与契约文档，而不是零散补接口",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "npm"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/4thfever/cultivation-world-simulator.git",
+        "copy": "cp -r .cursor/skills/external-control-api ~/.claude/skills/external-control-api",
+        "raw": "https://raw.githubusercontent.com/4thfever/cultivation-world-simulator/471fe745e7c3d582048d647257c74ae566cd235f/.cursor/skills/external-control-api/SKILL.md",
+        "saveAs": "~/.claude/skills/external-control-api/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:94d27bce9aaae9798e731fb015abe0de53763c6c1e3c75e640857ea6528389aa",
+      "bytes": 5345,
+      "wordCount": 388,
+      "repoLicense": "",
+      "commit": "471fe745e7c3d582048d647257c74ae566cd235f",
+      "branch": "main",
+      "body": "---\nname: external-control-api\ndescription: 规划或实现面向外部 agent / Claw 的稳定控制 API，优先做底层分层、query/command 收口、runtime 串行化与契约文档，而不是零散补接口\n---\n\n## 适用场景\n\n当任务涉及以下任一方向时使用本技能：\n\n- 设计或重构外接控制 API\n- 让项目更适合被 Claw / agent / 自动化脚本调用\n- 把现有前端私有接口收口为稳定公共契约\n- 规划 query / command 分层\n- 规划 runtime/session 抽象与 mutation 串行化\n\n## 目标\n\n本技能的目标不是“快补几个 endpoint”，而是确保 API 方向具备长期可演进性：\n\n1. 明确 Query 与 Command 边界\n2. 明确 Runtime / Service / API 三层职责\n3. 建立统一的 mutation 串行化模型\n4. 形成稳定 DTO、错误码和文档\n\n## 首先检查什么\n\n1. 当前能力是不是其实已经存在，只是散落在旧接口里？\n2. 这次任务是“补接口”，还是“给之后打基础”？\n3. 是否涉及 `src/server/main.py` 中直接读写 `game_instance` 的路径？\n4. 是否会与 `game_loop()` / `sim.step()` 产生并发写 world 风险？\n5. 前端当前是否依赖旧 JSON 结构？如果重构会影响哪些 store / mapper？\n\n## 推荐工作流\n\n### 1. 先梳理现状\n\n优先查看：\n\n- `src/server/main.py`\n- `src/server/services/*.py`\n- `src/sim/simulator_engine/simulator.py`\n- `web/src/api/**/*.ts`\n- `web/src/types/api.ts`\n- `docs/specs/external-control-api.md`\n- `.cursor/rules/external-control-api.mdc`\n\n目标：\n\n- 列出现有 Query API\n- 列出现有 Command API\n- 标出哪些接口是“前端私有历史接口”\n- 标出哪些逻辑应该抽到 service/runtime\n\n### 2. 再定边界\n\n在改代码前先明确：\n\n- 新接口命名空间是什么\n- 哪些属于 Query，哪些属于 Command\n- 哪些旧接口这次可以直接替换，不做兼容\n- 哪些字段要进入稳定 DTO\n\n### 3. 先做底盘，再做接口\n\n如果任务范围足够大，优先顺序应是：\n\n1. runtime/session 抽象\n2. mutation 锁 / 串行化\n3. service 收口\n4. public v1 query\n5. public v1 command\n6. 前端适配\n7. 文档与 README\n\n不要反过来先加一堆 endpoint，再回头补底盘。\n\n### 4. 保持“有语义的命令”设计\n\n优先：\n\n- `set_long_term_objective`\n- `set_world_phenomenon`\n- `create_avatar`\n- `delete_avatar`\n- `update_avatar_adjustment`\n\n避免直接引入：\n\n- 任意对象通用 patch\n- 任意字段透传写入\n- 没有明确副作用边界的“万能控制接口”\n\n## 代码改动建议\n\n### 路由层\n\n- 路由层只做参数解析与响应包装\n- 不在路由中直接写复杂 world 逻辑\n\n### Service 层\n\n- 把角色控制、世界控制、生命周期控制分开\n- 复用已有 service，不要重复实现\n- 对未来可能被测试 patch、运行时 reload 或继续拆模块的依赖，优先注入 getter，例如：\n  - `get_load_game`\n  - `get_generate_custom_content_draft`\n  - `get_generate_custom_goldfinger_draft`\n  - `get_apply_runtime_content_locale`\n  - `get_config`\n\n### Runtime 层\n\n- 任何会修改 world/sim 的操作都优先接入统一 runtime\n- 如果新增的 command 绕过 runtime，通常说明设计有问题\n\n### 配置与存档目录\n\n- 配置真源可能在测试中被 reload 或被 patch；不要默认某个模块级 `CONFIG` 一直是最新对象。\n- 读写存档时优先在调用时解析当前 saves dir；如果是基础设施层 helper，可以考虑同时兼容 `main.CONFIG` 与当前配置模块中的最新 `CONFIG`，避免全量测试或数据根切换时读错目录。\n- 这类动态读取主要是为了“底盘稳”，不是为了保留旧 public API。\n\n## 文档要求\n\n改动外接控制 API 时，优先同步：\n\n- `docs/specs/external-control-api.md`\n- `README.md`\n- `AGENTS.md`\n\n如果引入新规则或新的长期约束，记得同步 `.cursor/rules/*.mdc` 和仓库根 `AGENTS.md`。\n\n## 测试建议\n\n至少考虑：\n\n- query 契约测试\n- command 契约测试\n- 状态守卫测试\n- runtime 串行化测试\n- 初始化/读档/事件查询的回归测试\n\n若涉及前端同步迁移，还应运行：\n\n```bash\npytest\ncd web && npm run test\ncd web && npm run type-check\n```\n\n## Claw 最小模板\n\n如果目标是尽快做出一个可用的 Claw / agent 控制 skill，优先按下面套路实现：\n\n1. 每轮先查 `GET /api/v1/query/runtime/status`\n2. 若未 ready：\n   - 未开局就调用 `POST /api/v1/command/game/start`\n   - 初始化中就继续轮询\n   - 错误态就读取错误信息并考虑 `reinit`\n3. ready 后再查：\n   - `GET /api/v1/query/world/state`\n   - `GET /api/v1/query/events`\n   - 必要时 `GET /api/v1/query/detail`\n4. 只调用“有语义的 command”，例如：\n   - `avatar/set-long-term-objective`\n   - `world/set-phenomenon`\n   - `avatar/create`\n   - `avatar/update-adjustment`\n5. command 之后重新 query，不要假设本地缓存一定正确\n\n## 新增接口时怎么落\n\n- 新 query：\n  - 先看是否已有 service 可复用\n  - 再接到 `src/server/public_query_builders.py`\n  - 最后挂到 `src/server/api/public_v1/query.py`\n- 新 command：\n  - 业务逻辑优先落 service\n  - 编排接到 `src/server/command_handlers.py`\n  - 最后挂到 `src/server/api/public_v1/command.py`\n- 会修改 world / sim 的接口：\n  - 必须经过统一 runtime mutation 入口\n",
+      "bodyMd": "## 适用场景\n\n当任务涉及以下任一方向时使用本技能：\n\n- 设计或重构外接控制 API\n- 让项目更适合被 Claw / agent / 自动化脚本调用\n- 把现有前端私有接口收口为稳定公共契约\n- 规划 query / command 分层\n- 规划 runtime/session 抽象与 mutation 串行化\n\n## 目标\n\n本技能的目标不是“快补几个 endpoint”，而是确保 API 方向具备长期可演进性：\n\n1. 明确 Query 与 Command 边界\n2. 明确 Runtime / Service / API 三层职责\n3. 建立统一的 mutation 串行化模型\n4. 形成稳定 DTO、错误码和文档\n\n## 首先检查什么\n\n1. 当前能力是不是其实已经存在，只是散落在旧接口里？\n2. 这次任务是“补接口”，还是“给之后打基础”？\n3. 是否涉及 `src/server/main.py` 中直接读写 `game_instance` 的路径？\n4. 是否会与 `game_loop()` / `sim.step()` 产生并发写 world 风险？\n5. 前端当前是否依赖旧 JSON 结构？如果重构会影响哪些 store / mapper？\n\n## 推荐工作流\n\n### 1. 先梳理现状\n\n优先查看：\n\n- `src/server/main.py`\n- `src/server/services/*.py`\n- `src/sim/simulator_engine/simulator.py`\n- `web/src/api/**/*.ts`\n- `web/src/types/api.ts`\n- `docs/specs/external-control-api.md`\n- `.cursor/rules/external-control-api.mdc`\n\n目标：\n\n- 列出现有 Query API\n- 列出现有 Command API\n- 标出哪些接口是“前端私有历史接口”\n- 标出哪些逻辑应该抽到 service/runtime\n\n### 2. 再定边界\n\n在改代码前先明确：\n\n- 新接口命名空间是什么\n- 哪些属于 Query，哪些属于 Command\n- 哪些旧接口这次可以直接替换，不做兼容\n- 哪些字段要进入稳定 DTO\n\n### 3. 先做底盘，再做接口\n\n如果任务范围足够大，优先顺序应是：\n\n1. runtime/session 抽象\n2. mutation 锁 / 串行化\n3. service 收口\n4. public v1 query\n5. public v1 command\n6. 前端适配\n7. 文档与 README\n\n不要反过来先加一堆 endpoint，再回头补底盘。\n\n### 4. 保持“有语义的命令”设计\n\n优先：\n\n- `set_long_term_objective`\n- `set_world_phenomenon`\n- `create_avatar`\n- `delete_avatar`\n- `update_avatar_adjustment`\n\n避免直接引入：\n\n- 任意对象通用 patch\n- 任意字段透传写入\n- 没有明确副作用边界的“万能控制接口”\n\n## 代码改动建议\n\n### 路由层\n\n- 路由层只做参数解析与响应包装\n- 不在路由中直接写复杂 world 逻辑\n\n### Service 层\n\n- 把角色控制、世界控制、生命周期控制分开\n- 复用已有 service，不要重复实现\n- 对未来可能被测试 patch、运行时 reload 或继续拆模块的依赖，优先注入 getter，例如：\n  - `get_load_game`\n  - `get_generate_custom_content_draft`\n  - `get_generate_custom_goldfinger_draft`\n  - `get_apply_runtime_content_locale`\n  - `get_config`\n\n### Runtime 层\n\n- 任何会修改 world/sim 的操作都优先接入统一 runtime\n- 如果新增的 command 绕过 runtime，通常说明设计有问题\n\n### 配置与存档目录\n\n- 配置真源可能在测试中被 reload 或被 patch；不要默认某个模块级 `CONFIG` 一直是最新对象。\n- 读写存档时优先在调用时解析当前 saves dir；如果是基础设施层 helper，可以考虑同时兼容 `main.CONFIG` 与当前配置模块中的最新 `CONFIG`，避免全量测试或数据根切换时读错目录。\n- 这类动态读取主要是为了“底盘稳”，不是为了保留旧 public API。\n\n## 文档要求\n\n改动外接控制 API 时，优先同步：\n\n- `docs/specs/external-control-api.md`\n- `README.md`\n- `AGENTS.md`\n\n如果引入新规则或新的长期约束，记得同步 `.cursor/rules/*.mdc` 和仓库根 `AGENTS.md`。\n\n## 测试建议\n\n至少考虑：\n\n- query 契约测试\n- command 契约测试\n- 状态守卫测试\n- runtime 串行化测试\n- 初始化/读档/事件查询的回归测试\n\n若涉及前端同步迁移，还应运行：\n\n```bash\npytest\ncd web && npm run test\ncd web && npm run type-check\n```\n\n## Claw 最小模板\n\n如果目标是尽快做出一个可用的 Claw / agent 控制 skill，优先按下面套路实现：\n\n1. 每轮先查 `GET /api/v1/query/runtime/status`\n2. 若未 ready：\n   - 未开局就调用 `POST /api/v1/command/game/start`\n   - 初始化中就继续轮询\n   - 错误态就读取错误信息并考虑 `reinit`\n3. ready 后再查：\n   - `GET /api/v1/query/world/state`\n   - `GET /api/v1/query/events`\n   - 必要时 `GET /api/v1/query/detail`\n4. 只调用“有语义的 command”，例如：\n   - `avatar/set-long-term-objective`\n   - `world/set-phenomenon`\n   - `avatar/create`\n   - `avatar/update-adjustment`\n5. command 之后重新 query，不要假设本地缓存一定正确\n\n## 新增接口时怎么落\n\n- 新 query：\n  - 先看是否已有 service 可复用\n  - 再接到 `src/server/public_query_builders.py`\n  - 最后挂到 `src/server/api/public_v1/query.py`\n- 新 command：\n  - 业务逻辑优先落 service\n  - 编排接到 `src/server/command_handlers.py`\n  - 最后挂到 `src/server/api/public_v1/command.py`\n- 会修改 world / sim 的接口：\n  - 必须经过统一 runtime mutation 入口\n"
+    },
+    {
+      "slug": "fill-i18n-phase2",
+      "name": "fill-i18n-phase2",
+      "dir": ".cursor/skills/fill-i18n-phase2",
+      "path": ".cursor/skills/fill-i18n-phase2/SKILL.md",
+      "desc": "运行 Phase 2 工作流。执行脚本扫描缺失的多语言词条，并按注册表补全启用语言（如 en-US、zh-TW、vi-VN、ja-JP、fr-FR），最后修复相关测试。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/4thfever/cultivation-world-simulator.git",
+        "copy": "cp -r .cursor/skills/fill-i18n-phase2 ~/.claude/skills/fill-i18n-phase2",
+        "raw": "https://raw.githubusercontent.com/4thfever/cultivation-world-simulator/471fe745e7c3d582048d647257c74ae566cd235f/.cursor/skills/fill-i18n-phase2/SKILL.md",
+        "saveAs": "~/.claude/skills/fill-i18n-phase2/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:029784d476d9a51ff53093c4ff7f349b0223948a5090a3f7a7b61456c5719ce6",
+      "bytes": 2136,
+      "wordCount": 82,
+      "repoLicense": "",
+      "commit": "471fe745e7c3d582048d647257c74ae566cd235f",
+      "branch": "main",
+      "body": "---\nname: fill-i18n-phase2\ndescription: 运行 Phase 2 工作流。执行脚本扫描缺失的多语言词条，并按注册表补全启用语言（如 en-US、zh-TW、vi-VN、ja-JP、fr-FR），最后修复相关测试。\n---\n\n# 多语言补全：Phase 2 工作流\n\n当你被要求执行此技能时，说明我们现在进入了 **Phase 2**，你可以暂时忽略 \"Phase 1\" 的限制规则。你的目标是补齐所有缺失的翻译，并让测试变绿。\n\n此技能也适用于两类场景：\n\n1. 正式补全 `registry.json` 中已启用语言的缺失词条。\n2. 正式接入一门新语言（例如 `fr-FR`），并补齐其前后端、模板、配置与测试链路。\n\n请严格执行以下步骤：\n\n1. **生成缺失报告**：运行 `python tools/i18n/generate_missing_report.py`（该脚本会对比 zh-CN 和其他语言，输出 Markdown 报告到根目录）。\n2. **阅读报告**：读取生成的 `i18n_missing_report.md` 报告文件。\n3. **Vibe Coding 补全**：\n   - 遍历报告中的文件路径和缺失项。\n   - 运用你对“修仙(Cultivation)”背景的理解，将中文原意翻译为 `static/locales/registry.json` 中已启用且需要补全的目标语言。常见包括英文 (`en-US`)、繁体中文 (`zh-TW`)、越南语 (`vi-VN`)、日语 (`ja-JP`) 与法语 (`fr-FR`)。\n   - 使用文件编辑工具，将对应的键值对或 msgid/msgstr 正确地插入到目标文件中。保持现有格式和缩进。对于 JSON 文件要确保逗号正确，不要破坏语法。对于 PO 文件要在 msgstr 中填入正确的翻译，并且条目之间保持一个空行。\n4. **编译与验证**：\n   - 如果修改了后端 `.po` 文件，必须运行 `python tools/i18n/build_mo.py`。但是不要去修改 `messages.po` 文件，这个是通过 `python tools/i18n/build_mo.py` 生成出来的，你不需要修改也不需要去阅读任何语言的 `messages.po` 文件。\n   - 运行 `pytest tests/test_frontend_locales.py tests/test_backend_locales.py` 进行终检。如果有缺失，重复步骤 3 直到全部通过。\n   - 全部ok后，删除生成的i18n_missing_report.md文件\n",
+      "bodyMd": "# 多语言补全：Phase 2 工作流\n\n当你被要求执行此技能时，说明我们现在进入了 **Phase 2**，你可以暂时忽略 \"Phase 1\" 的限制规则。你的目标是补齐所有缺失的翻译，并让测试变绿。\n\n此技能也适用于两类场景：\n\n1. 正式补全 `registry.json` 中已启用语言的缺失词条。\n2. 正式接入一门新语言（例如 `fr-FR`），并补齐其前后端、模板、配置与测试链路。\n\n请严格执行以下步骤：\n\n1. **生成缺失报告**：运行 `python tools/i18n/generate_missing_report.py`（该脚本会对比 zh-CN 和其他语言，输出 Markdown 报告到根目录）。\n2. **阅读报告**：读取生成的 `i18n_missing_report.md` 报告文件。\n3. **Vibe Coding 补全**：\n   - 遍历报告中的文件路径和缺失项。\n   - 运用你对“修仙(Cultivation)”背景的理解，将中文原意翻译为 `static/locales/registry.json` 中已启用且需要补全的目标语言。常见包括英文 (`en-US`)、繁体中文 (`zh-TW`)、越南语 (`vi-VN`)、日语 (`ja-JP`) 与法语 (`fr-FR`)。\n   - 使用文件编辑工具，将对应的键值对或 msgid/msgstr 正确地插入到目标文件中。保持现有格式和缩进。对于 JSON 文件要确保逗号正确，不要破坏语法。对于 PO 文件要在 msgstr 中填入正确的翻译，并且条目之间保持一个空行。\n4. **编译与验证**：\n   - 如果修改了后端 `.po` 文件，必须运行 `python tools/i18n/build_mo.py`。但是不要去修改 `messages.po` 文件，这个是通过 `python tools/i18n/build_mo.py` 生成出来的，你不需要修改也不需要去阅读任何语言的 `messages.po` 文件。\n   - 运行 `pytest tests/test_frontend_locales.py tests/test_backend_locales.py` 进行终检。如果有缺失，重复步骤 3 直到全部通过。\n   - 全部ok后，删除生成的i18n_missing_report.md文件\n"
+    },
+    {
+      "slug": "git-pr",
+      "name": "git-pr",
+      "dir": ".cursor/skills/git-pr",
+      "path": ".cursor/skills/git-pr/SKILL.md",
+      "desc": "创建包含正确远程处理的 Pull Request",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "git",
+          "gh"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/4thfever/cultivation-world-simulator.git",
+        "copy": "cp -r .cursor/skills/git-pr ~/.claude/skills/git-pr",
+        "raw": "https://raw.githubusercontent.com/4thfever/cultivation-world-simulator/471fe745e7c3d582048d647257c74ae566cd235f/.cursor/skills/git-pr/SKILL.md",
+        "saveAs": "~/.claude/skills/git-pr/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:ebef3a95c7092ea72fd65c65f3847e9511224fc8b973d1fa36a5db74bcb5627d",
+      "bytes": 844,
+      "wordCount": 84,
+      "repoLicense": "",
+      "commit": "471fe745e7c3d582048d647257c74ae566cd235f",
+      "branch": "main",
+      "body": "---\nname: git-pr\ndescription: 创建包含正确远程处理的 Pull Request\n---\n\n## 飞行前检查\n\n```bash\ngit remote -v\n# 如果 origin URL 过期，请修复它：\n# git remote set-url origin https://github.com/AI-Cultivation/cultivation-world-simulator.git\n```\n\n## 命令\n\n```bash\ngit checkout main && git pull origin main\ngit checkout -b <github-username>/<branch-name>\ngit add <files>\ngit commit -m \"<type>: <description>\"\ngit push -u origin <github-username>/<branch-name>\ngh pr create --head <github-username>/<branch-name> --base main --title \"<type>: <description>\" --body \"<body>\"\n```\n\n## 注意事项\n\n- 始终从 `main` 分支拉取新分支，而不是从当前分支\n- 遵循 `.github/PULL_REQUEST_TEMPLATE.md` 中的 PR 模板\n- `<github-username>`：例如 `xzhseh`\n- `<type>`：`feat` | `fix` | `refactor` | `test` | `docs`\n",
+      "bodyMd": "## 飞行前检查\n\n```bash\ngit remote -v\n# 如果 origin URL 过期，请修复它：\n# git remote set-url origin https://github.com/AI-Cultivation/cultivation-world-simulator.git\n```\n\n## 命令\n\n```bash\ngit checkout main && git pull origin main\ngit checkout -b <github-username>/<branch-name>\ngit add <files>\ngit commit -m \"<type>: <description>\"\ngit push -u origin <github-username>/<branch-name>\ngh pr create --head <github-username>/<branch-name> --base main --title \"<type>: <description>\" --body \"<body>\"\n```\n\n## 注意事项\n\n- 始终从 `main` 分支拉取新分支，而不是从当前分支\n- 遵循 `.github/PULL_REQUEST_TEMPLATE.md` 中的 PR 模板\n- `<github-username>`：例如 `xzhseh`\n- `<type>`：`feat` | `fix` | `refactor` | `test` | `docs`\n"
+    },
+    {
+      "slug": "grave-poi-death-test",
+      "name": "grave-poi-death-test",
+      "dir": ".cursor/skills/grave-poi-death-test",
+      "path": ".cursor/skills/grave-poi-death-test/SKILL.md",
+      "desc": "通过真实游戏模拟验证角色死亡、墓碑 POI 创建、地图渲染和点击详情。用于需要测试寿元死亡或其他游戏内死亡流程、墓碑 POI，且不得直接调用 handle_death 的任务。",
+      "descZh": "",
+      "triggers": [
+        "需要测试寿元死亡或其他游戏内死亡流程",
+        "墓碑 POI",
+        "且不得直接调用 handle_death 的任务"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "npm",
+          "playwright"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/4thfever/cultivation-world-simulator.git",
+        "copy": "cp -r .cursor/skills/grave-poi-death-test ~/.claude/skills/grave-poi-death-test",
+        "raw": "https://raw.githubusercontent.com/4thfever/cultivation-world-simulator/471fe745e7c3d582048d647257c74ae566cd235f/.cursor/skills/grave-poi-death-test/SKILL.md",
+        "saveAs": "~/.claude/skills/grave-poi-death-test/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:4fcabf31f34114eabc83d071f6af2fb706dcb6d700123ad2a12883394e1f1849",
+      "bytes": 2191,
+      "wordCount": 77,
+      "repoLicense": "",
+      "commit": "471fe745e7c3d582048d647257c74ae566cd235f",
+      "branch": "main",
+      "body": "---\nname: grave-poi-death-test\ndescription: \"通过真实游戏模拟验证角色死亡、墓碑 POI 创建、地图渲染和点击详情。用于需要测试寿元死亡或其他游戏内死亡流程、墓碑 POI，且不得直接调用 handle_death 的任务。\"\n---\n\n# 墓碑死亡验证\n\n以独立数据目录启动测试局，绝不污染用户当前存档或设置。死亡必须由 `Simulator.step()` 的正常结算路径产生，不能为了测试直接调用 `handle_death()`、手工注册墓碑或伪造死亡事件。\n\n## 流程\n\n1. 阅读 `docs/specs/external-control-api.md`，通过 `/api/v1/command/*` 创建或配置测试角色，不直接改 `game_instance`。\n2. 为测试角色设置一个会自然到达的死亡条件。寿元死亡最稳定：创建高龄 avatar，再运行完整月度模拟步骤，直到死亡结算完成。\n3. 如果完整模拟依赖 LLM，使用仅限本次测试的本地 OpenAI 兼容 stub；其数据目录、监听端口和进程名必须与正常开发服务隔离。\n4. 通过 API 核对完整因果链：\n   - 角色 detail 中 `is_dead` 为真，并包含 `death_info`。\n   - `world/map` 的 `pois` 含 `kind: \"grave\"`，位置与死者死亡位置一致。\n   - 墓碑摘要含 `deceased_avatar_id`，用作前端进入角色详情的关联。\n5. 在实际前端地图中确认图标已加载、尺寸接近头像且可点击。点击墓碑应选中 `avatar` 并打开死者现有的角色详情，不应打开独立墓碑详情面板。\n\n## 最小验证\n\n```powershell\npytest tests/test_death.py\ncd web\nnpm run type-check\nnpm run test -- src/__tests__/composables/useTextures.test.ts\n```\n\nUI 验证优先使用可用的浏览器控制工具；不可用时才以本地 Playwright 打开隔离的前端服务。不要用直接调用死亡处理函数来替代端到端验证。\n\n## 清理\n\n测试结束后先暂停测试局，再停止本次启动的前端、后端和 LLM stub 进程。删除本次专用的数据目录、stub、日志和截图；仅保留仓库内的正式实现与回归测试。清理前核对所有目标都位于仓库 `tmp/` 或 `web/tmp/`，不得触碰用户的常规数据目录或正在使用的服务。\n",
+      "bodyMd": "# 墓碑死亡验证\n\n以独立数据目录启动测试局，绝不污染用户当前存档或设置。死亡必须由 `Simulator.step()` 的正常结算路径产生，不能为了测试直接调用 `handle_death()`、手工注册墓碑或伪造死亡事件。\n\n## 流程\n\n1. 阅读 `docs/specs/external-control-api.md`，通过 `/api/v1/command/*` 创建或配置测试角色，不直接改 `game_instance`。\n2. 为测试角色设置一个会自然到达的死亡条件。寿元死亡最稳定：创建高龄 avatar，再运行完整月度模拟步骤，直到死亡结算完成。\n3. 如果完整模拟依赖 LLM，使用仅限本次测试的本地 OpenAI 兼容 stub；其数据目录、监听端口和进程名必须与正常开发服务隔离。\n4. 通过 API 核对完整因果链：\n   - 角色 detail 中 `is_dead` 为真，并包含 `death_info`。\n   - `world/map` 的 `pois` 含 `kind: \"grave\"`，位置与死者死亡位置一致。\n   - 墓碑摘要含 `deceased_avatar_id`，用作前端进入角色详情的关联。\n5. 在实际前端地图中确认图标已加载、尺寸接近头像且可点击。点击墓碑应选中 `avatar` 并打开死者现有的角色详情，不应打开独立墓碑详情面板。\n\n## 最小验证\n\n```powershell\npytest tests/test_death.py\ncd web\nnpm run type-check\nnpm run test -- src/__tests__/composables/useTextures.test.ts\n```\n\nUI 验证优先使用可用的浏览器控制工具；不可用时才以本地 Playwright 打开隔离的前端服务。不要用直接调用死亡处理函数来替代端到端验证。\n\n## 清理\n\n测试结束后先暂停测试局，再停止本次启动的前端、后端和 LLM stub 进程。删除本次专用的数据目录、stub、日志和截图；仅保留仓库内的正式实现与回归测试。清理前核对所有目标都位于仓库 `tmp/` 或 `web/tmp/`，不得触碰用户的常规数据目录或正在使用的服务。\n"
+    },
+    {
+      "slug": "i18n-development",
+      "name": "i18n-development",
+      "dir": ".cursor/skills/i18n-development",
+      "path": ".cursor/skills/i18n-development/SKILL.md",
+      "desc": "国际化 (i18n) 开发指南。在添加新文本、创建物品/事件、修改翻译或管理 PO/MO 文件时使用。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/4thfever/cultivation-world-simulator.git",
+        "copy": "cp -r .cursor/skills/i18n-development ~/.claude/skills/i18n-development",
+        "raw": "https://raw.githubusercontent.com/4thfever/cultivation-world-simulator/471fe745e7c3d582048d647257c74ae566cd235f/.cursor/skills/i18n-development/SKILL.md",
+        "saveAs": "~/.claude/skills/i18n-development/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:a99da9d4a42cf91d220df854f09cbc579d6410dcf78f733185723e26ff4f62f5",
+      "bytes": 2916,
+      "wordCount": 210,
+      "repoLicense": "",
+      "commit": "471fe745e7c3d582048d647257c74ae566cd235f",
+      "branch": "main",
+      "body": "---\nname: i18n-development\ndescription: 国际化 (i18n) 开发指南。在添加新文本、创建物品/事件、修改翻译或管理 PO/MO 文件时使用。\n---\n\n# I18n 国际化开发指南\n\n## ⭐ 核心日常操作 (最重要)\n\n### 1. 如何添加新消息\n将新条目追加到 `static/locales/{lang}/modules/` 或 `game_configs_modules/` 中相应的 `.po` 文件里。\n\n**格式要求:**\n- 条目之间保持 **一个空行**。\n- `msgid` 必须是准确的英文字符串。\n- `msgstr` 是翻译内容。\n\n```po\nmsgid \"Found {amount} spirit stone\"\nmsgstr \"发现了 {amount} 块灵石\"\n```\n\n### 2. 如何添加新的 PO 文件\n如果正在开发新功能，请创建一个新的 `.po` 文件（例如，`modules/new_feature.po`）。\n- **规则**: **不要**向这些拆分的模块文件添加 PO 头部信息（如 `Project-Id-Version`）。构建脚本会处理头部信息。直接开始编写 `msgid` 即可。\n\n### 2.1 语言注册表\n仓库中的语言列表单一真相源位于 `static/locales/registry.json`。\n\n- Python 侧 i18n 工具、校验脚本和新增语言流程应优先读取该文件。\n- 如果未来需要新增语言，请先更新该文件，再补目录和资源骨架。\n- 不要在新脚本里重新写死 `zh-CN / zh-TW / en-US / vi-VN / ja-JP / fr-FR`。\n\n### 3. ⚠️ 关键: 始终重新构建\n`.po` 或 `.csv` 文件中的更改在编译为 `.mo` 文件之前 **不会** 在游戏中生效。\n**在任何翻译更改后，始终运行构建脚本:**\n```bash\npython tools/i18n/build_mo.py\n```\n\n---\n\n## 🔴 关键规则 (简述)\n\n- **绝对不要**在 Windows PowerShell 中使用重定向 (`>>`) 追加内容到 PO 文件（这会导致 UTF-16LE 编码和 `\\x00` 损坏）。\n- **编码**: 必须使用无 BOM 的 UTF-8。\n- **不要直接编辑** `LC_MESSAGES/messages.po`。请编辑 `modules/` 或 `game_configs_modules/` 中拆分的 `.po` 文件。\n- **语言列表**: 优先从 `static/locales/registry.json` 读取，不要在工具或测试里重新维护一份手写语言列表。\n- **设置页语言入口**: `web/src/components/SystemMenu.vue` 中的语言设置项，对非英语 UI 必须保留可见的 `Language` 英文提示（例如 `语言 / Language`、`言語 / Language`），不要在后续润色或本地化时去掉这个 `Language`。\n\n## 🧩 工作流与模式 (简述)\n\n### Python 动态文本\n使用 `src.i18n` 中的 `t()`。\n```python\nfrom src.i18n import t\nmsg = t(\"{actor} performs action\", actor=self.avatar.name)\n```\n\n### CSV 游戏配置\n1. 编辑 CSV（添加 `name_id` 和 `desc_id`）。\n2. 提取 POT: `python tools/i18n/extract_csv.py`\n3. 在 `game_configs_modules/{category}.po` 中进行翻译。\n4. 重新构建: `python tools/i18n/build_mo.py`\n\n### 效果 (JSON) & 角色信息\n- **JSON**: 使用 `_desc` 和 `when_desc` 通过翻译键覆盖描述。\n- **字典**: 直接翻译键（例如，`t(\"Name\"): self.name`）。\n",
+      "bodyMd": "# I18n 国际化开发指南\n\n## ⭐ 核心日常操作 (最重要)\n\n### 1. 如何添加新消息\n将新条目追加到 `static/locales/{lang}/modules/` 或 `game_configs_modules/` 中相应的 `.po` 文件里。\n\n**格式要求:**\n- 条目之间保持 **一个空行**。\n- `msgid` 必须是准确的英文字符串。\n- `msgstr` 是翻译内容。\n\n```po\nmsgid \"Found {amount} spirit stone\"\nmsgstr \"发现了 {amount} 块灵石\"\n```\n\n### 2. 如何添加新的 PO 文件\n如果正在开发新功能，请创建一个新的 `.po` 文件（例如，`modules/new_feature.po`）。\n- **规则**: **不要**向这些拆分的模块文件添加 PO 头部信息（如 `Project-Id-Version`）。构建脚本会处理头部信息。直接开始编写 `msgid` 即可。\n\n### 2.1 语言注册表\n仓库中的语言列表单一真相源位于 `static/locales/registry.json`。\n\n- Python 侧 i18n 工具、校验脚本和新增语言流程应优先读取该文件。\n- 如果未来需要新增语言，请先更新该文件，再补目录和资源骨架。\n- 不要在新脚本里重新写死 `zh-CN / zh-TW / en-US / vi-VN / ja-JP / fr-FR`。\n\n### 3. ⚠️ 关键: 始终重新构建\n`.po` 或 `.csv` 文件中的更改在编译为 `.mo` 文件之前 **不会** 在游戏中生效。\n**在任何翻译更改后，始终运行构建脚本:**\n```bash\npython tools/i18n/build_mo.py\n```\n\n---\n\n## 🔴 关键规则 (简述)\n\n- **绝对不要**在 Windows PowerShell 中使用重定向 (`>>`) 追加内容到 PO 文件（这会导致 UTF-16LE 编码和 `\\x00` 损坏）。\n- **编码**: 必须使用无 BOM 的 UTF-8。\n- **不要直接编辑** `LC_MESSAGES/messages.po`。请编辑 `modules/` 或 `game_configs_modules/` 中拆分的 `.po` 文件。\n- **语言列表**: 优先从 `static/locales/registry.json` 读取，不要在工具或测试里重新维护一份手写语言列表。\n- **设置页语言入口**: `web/src/components/SystemMenu.vue` 中的语言设置项，对非英语 UI 必须保留可见的 `Language` 英文提示（例如 `语言 / Language`、`言語 / Language`），不要在后续润色或本地化时去掉这个 `Language`。\n\n## 🧩 工作流与模式 (简述)\n\n### Python 动态文本\n使用 `src.i18n` 中的 `t()`。\n```python\nfrom src.i18n import t\nmsg = t(\"{actor} performs action\", actor=self.avatar.name)\n```\n\n### CSV 游戏配置\n1. 编辑 CSV（添加 `name_id` 和 `desc_id`）。\n2. 提取 POT: `python tools/i18n/extract_csv.py`\n3. 在 `game_configs_modules/{category}.po` 中进行翻译。\n4. 重新构建: `python tools/i18n/build_mo.py`\n\n### 效果 (JSON) & 角色信息\n- **JSON**: 使用 `_desc` 和 `when_desc` 通过翻译键覆盖描述。\n- **字典**: 直接翻译键（例如，`t(\"Name\"): self.name`）。\n"
+    },
+    {
+      "slug": "img-gen-avatar",
+      "name": "img-gen-avatar",
+      "dir": ".cursor/skills/img-gen-avatar",
+      "path": ".cursor/skills/img-gen-avatar/SKILL.md",
+      "desc": "Use when working on tools/img_gen avatar image generation, OpenAI-compatible image API config, human or yaoguai portrait prompts, qi-refining base generation, image-to-image realm edits, white-background postprocessing, manifests, or prompt rules that preserve pixel-art identity while changing cultivation realms.",
+      "descZh": "",
+      "triggers": [
+        "huma"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor"
+      ],
+      "requires": {
+        "apiKey": true,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/4thfever/cultivation-world-simulator.git",
+        "copy": "cp -r .cursor/skills/img-gen-avatar ~/.claude/skills/img-gen-avatar",
+        "raw": "https://raw.githubusercontent.com/4thfever/cultivation-world-simulator/471fe745e7c3d582048d647257c74ae566cd235f/.cursor/skills/img-gen-avatar/SKILL.md",
+        "saveAs": "~/.claude/skills/img-gen-avatar/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:8a1601df3abb57876715be47a2349c23569ddea7d1129cb98e29c5b1cc96cc57",
+      "bytes": 2590,
+      "wordCount": 300,
+      "repoLicense": "",
+      "commit": "471fe745e7c3d582048d647257c74ae566cd235f",
+      "branch": "main",
+      "body": "---\nname: img-gen-avatar\ndescription: Use when working on tools/img_gen avatar image generation, OpenAI-compatible image API config, human or yaoguai portrait prompts, qi-refining base generation, image-to-image realm edits, white-background postprocessing, manifests, or prompt rules that preserve pixel-art identity while changing cultivation realms.\n---\n\n# Img Gen Avatar\n\n## Core Files\n\n- Read `tools/img_gen/README.md` for runnable commands.\n- Read `tools/img_gen/DESIGN.md` before changing prompt structure, realm edit behavior, file naming, or postprocessing assumptions.\n- Keep real API keys only in ignored `tools/img_gen/image_api.env` or environment variables. Never commit keys.\n\n## Workflow Rules\n\nUse the two-stage avatar workflow:\n\n1. Generate only qi-refining base portraits with text-to-image.\n2. Generate foundation, golden core, and nascent soul portraits with image edits based directly on the qi-refining image.\n\nDo not use chained edits such as qi-refining -> foundation -> golden core -> nascent soul. Do not generate four-grid images.\n\nDefault scripts must remain serial, skip existing files unless `--overwrite` is provided, show `tqdm` progress, and write manifests/failure JSON files.\n\n## Prompt Rules\n\nDescribe visible appearance only. Avoid invisible identity/background labels such as丹修、咒修、宗门、背景设定.\n\nFor text-to-image base prompts, keep:\n\n- pixel-art style\n- low detail\n- Q-style 2D anime portrait\n- front-facing head-and-shoulders composition\n- clean pure white background\n- no texture, shadow, gradient, fog, glow, border, or scene background\n\nFor image-to-image realm edits, preserve:\n\n- input pixel-art style, low detail, and Q-style 2D anime look\n- face shape, facial proportions, skin tone tendency, hairstyle, hair color\n- eye color, pupil shape, expression baseline\n- original facial marks, main accessories, subject size, head-shoulder ratio\n- front-facing composition and pure white background\n\nFor yaoguai edits, also preserve species traits and their positions/basic shapes, such as fox ears, wolf ears, ear feathers, vertical pupils, scales, turtle-shell patterns, and cheek markings.\n\nRealm edits may visibly strengthen gaze, pupil highlights, collar layering, accessory refinement, existing markings, and close-to-body glow. Keep the change obvious enough to show realm advancement, but never at the cost of pixel style or character identity.\n\nExplicitly forbid realistic style, high-definition illustration style, painterly rendering, over-detailed rendering, scene backgrounds, halos, frames, and large-area effects.\n",
+      "bodyMd": "# Img Gen Avatar\n\n## Core Files\n\n- Read `tools/img_gen/README.md` for runnable commands.\n- Read `tools/img_gen/DESIGN.md` before changing prompt structure, realm edit behavior, file naming, or postprocessing assumptions.\n- Keep real API keys only in ignored `tools/img_gen/image_api.env` or environment variables. Never commit keys.\n\n## Workflow Rules\n\nUse the two-stage avatar workflow:\n\n1. Generate only qi-refining base portraits with text-to-image.\n2. Generate foundation, golden core, and nascent soul portraits with image edits based directly on the qi-refining image.\n\nDo not use chained edits such as qi-refining -> foundation -> golden core -> nascent soul. Do not generate four-grid images.\n\nDefault scripts must remain serial, skip existing files unless `--overwrite` is provided, show `tqdm` progress, and write manifests/failure JSON files.\n\n## Prompt Rules\n\nDescribe visible appearance only. Avoid invisible identity/background labels such as丹修、咒修、宗门、背景设定.\n\nFor text-to-image base prompts, keep:\n\n- pixel-art style\n- low detail\n- Q-style 2D anime portrait\n- front-facing head-and-shoulders composition\n- clean pure white background\n- no texture, shadow, gradient, fog, glow, border, or scene background\n\nFor image-to-image realm edits, preserve:\n\n- input pixel-art style, low detail, and Q-style 2D anime look\n- face shape, facial proportions, skin tone tendency, hairstyle, hair color\n- eye color, pupil shape, expression baseline\n- original facial marks, main accessories, subject size, head-shoulder ratio\n- front-facing composition and pure white background\n\nFor yaoguai edits, also preserve species traits and their positions/basic shapes, such as fox ears, wolf ears, ear feathers, vertical pupils, scales, turtle-shell patterns, and cheek markings.\n\nRealm edits may visibly strengthen gaze, pupil highlights, collar layering, accessory refinement, existing markings, and close-to-body glow. Keep the change obvious enough to show realm advancement, but never at the cost of pixel style or character identity.\n\nExplicitly forbid realistic style, high-definition illustration style, painterly rendering, over-detailed rendering, scene backgrounds, halos, frames, and large-area effects.\n"
+    },
+    {
+      "slug": "roleplay-mode-implementation",
+      "name": "roleplay-mode-implementation",
+      "dir": ".cursor/skills/roleplay-mode-implementation",
+      "path": ".cursor/skills/roleplay-mode-implementation/SKILL.md",
+      "desc": "规划、实现或重构角色扮演模式（默认上帝视角下的单角色接管）时使用。适用于一期文本决策、二期统一有限选择框架、三期依附 Conversation 动作的自由对话，以及对应的 runtime/API/frontend/test 收口。",
+      "descZh": "",
+      "triggers": [
+        "一期文本决策",
+        "二期统一有限选择框架"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "npm"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/4thfever/cultivation-world-simulator.git",
+        "copy": "cp -r .cursor/skills/roleplay-mode-implementation ~/.claude/skills/roleplay-mode-implementation",
+        "raw": "https://raw.githubusercontent.com/4thfever/cultivation-world-simulator/471fe745e7c3d582048d647257c74ae566cd235f/.cursor/skills/roleplay-mode-implementation/SKILL.md",
+        "saveAs": "~/.claude/skills/roleplay-mode-implementation/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:d7a493d10eb320a6c5d33b88fac5a071eec3826e2b0beadba943b9507ac70d45",
+      "bytes": 4310,
+      "wordCount": 285,
+      "repoLicense": "",
+      "commit": "471fe745e7c3d582048d647257c74ae566cd235f",
+      "branch": "main",
+      "body": "---\nname: roleplay-mode-implementation\ndescription: 规划、实现或重构角色扮演模式（默认上帝视角下的单角色接管）时使用。适用于一期文本决策、二期统一有限选择框架、三期依附 Conversation 动作的自由对话，以及对应的 runtime/API/frontend/test 收口。\n---\n\n## 适用场景\n\n当任务涉及以下任一方向时使用本技能：\n\n- 实现或重构角色扮演模式\n- 调整 `RoleplaySession`、`pending_request`、`conversation_session`\n- 给一期文本决策补能力或修回归\n- 给二期 `single_choice` / mutual action choice 接玩家接管\n- 给三期 `Conversation` 对话链、summary、dock chat UI 做改动\n\n## 先确认什么\n\n1. 这次改动属于一期、二期还是三期？\n2. 这次改动是在补主链，还是在做收尾/UI/测试？\n3. 是否会影响 runtime 暂停语义、存档语义、continuation 语义？\n4. 是否正在无意中把“上帝视角下的单角色接管”做回成独立个人模式？\n\n## 必守心智\n\n### 1. 默认始终是上帝视角\n\n- 不把个人扮演做成与上帝模式并列的全局模式。\n- 玩家扮演时仍可观察全世界，不做信息收窄。\n\n### 2. 只在决策边界暂停\n\n- 不能打断执行到一半的动作链。\n- 只能在“当前动作已空 + planned actions 已空，需要新决策”时等待玩家。\n\n### 3. 扮演态不进存档\n\n- `RoleplaySession`\n- `pending_request`\n- `conversation_session`\n- choice continuation\n\n以上都属于 runtime，必须在 `load / reinit / reset / start` 后清空。\n\n### 4. 二期优先走统一有限决策框架\n\n- 不在每个业务点散落 `if roleplay ... else ...`\n- 优先让业务层只保留：\n  - `build_request()`\n  - `apply_decision(...)`\n- 决策来源交给统一 resolver / continuation\n\n### 5. 三期对话必须依附 `Conversation`\n\n- 不新增脱离动作语义的自由聊天入口\n- 玩家只控制一侧发言，对方仍由 LLM 回复\n- 原始聊天记录不进长期事件流，只以 summary 落地\n\n## 推荐工作流\n\n### 1. 先看锚点文档\n\n优先查看：\n\n- `docs/specs/avatar-roleplay-mode.md`\n- `docs/specs/single-choice-unified-framework.md`\n- `.cursor/rules/roleplay-mode.mdc`\n\n如果改动涉及外接 API，再补看：\n\n- `docs/specs/external-control-api.md`\n- `.cursor/rules/external-control-api.mdc`\n\n### 2. 再看当前落点\n\n后端常见入口：\n\n- `src/server/runtime/session.py`\n- `src/server/services/roleplay_service.py`\n- `src/server/api/public_v1/command.py`\n- `src/server/api/public_v1/query.py`\n- `src/systems/single_choice/**/*.py`\n- `src/classes/mutual_action/conversation.py`\n\n前端常见入口：\n\n- `web/src/stores/roleplay.ts`\n- `web/src/components/game/RoleplayDock.vue`\n- `web/src/components/game/roleplay/*.vue`\n- `web/src/api/modules/avatar.ts`\n- `web/src/types/api.ts`\n\n### 3. 判断改动层级\n\n- 改运行时语义：优先改 runtime/service，不要先改 UI\n- 改 API：先定 query/command 边界和 DTO\n- 改二期选择：先看能否接入统一 choice resolver\n- 改三期对话：先看是否仍依附 `Conversation`\n\n## 实现检查清单\n\n### 一期\n\n1. 是否仍是 `decision` 型 request？\n2. 是否保持“无效输入不恢复世界运行”？\n3. 是否在动作链结束才创建 pending request？\n\n### 二期\n\n1. 是否复用统一 `choice` 请求？\n2. 是否通过统一 continuation 恢复流程？\n3. 是否避免在业务场景里硬编码 roleplay 分支？\n\n### 三期\n\n1. 是否由 `Conversation` 动作触发？\n2. 是否保持“玩家一句、LLM 一句”？\n3. 是否只有玩家能结束？\n4. 是否只把 summary 落到长期事件流？\n\n## 前端约束\n\n- `RoleplayDock` 应维持统一骨架：\n  - Header\n  - Active Request\n  - Activity Stream\n- `decision / choice / conversation` 只切 request body，不重新发明整页布局\n- 事件流优先复用统一高密度 event list 组件\n\n## 文档与测试\n\n改动 roleplay 主链时，优先同步：\n\n- `docs/specs/avatar-roleplay-mode.md`\n- `docs/specs/single-choice-unified-framework.md`\n- `.cursor/rules/roleplay-mode.mdc`\n- `AGENTS.md`\n\n建议至少运行：\n\n```bash\npytest tests/test_public_api_v1.py tests/test_single_choice.py tests/test_action_social.py tests/test_mutual_actions.py -q\ncd web && npm run type-check\ncd web && npm run test\n```\n",
+      "bodyMd": "## 适用场景\n\n当任务涉及以下任一方向时使用本技能：\n\n- 实现或重构角色扮演模式\n- 调整 `RoleplaySession`、`pending_request`、`conversation_session`\n- 给一期文本决策补能力或修回归\n- 给二期 `single_choice` / mutual action choice 接玩家接管\n- 给三期 `Conversation` 对话链、summary、dock chat UI 做改动\n\n## 先确认什么\n\n1. 这次改动属于一期、二期还是三期？\n2. 这次改动是在补主链，还是在做收尾/UI/测试？\n3. 是否会影响 runtime 暂停语义、存档语义、continuation 语义？\n4. 是否正在无意中把“上帝视角下的单角色接管”做回成独立个人模式？\n\n## 必守心智\n\n### 1. 默认始终是上帝视角\n\n- 不把个人扮演做成与上帝模式并列的全局模式。\n- 玩家扮演时仍可观察全世界，不做信息收窄。\n\n### 2. 只在决策边界暂停\n\n- 不能打断执行到一半的动作链。\n- 只能在“当前动作已空 + planned actions 已空，需要新决策”时等待玩家。\n\n### 3. 扮演态不进存档\n\n- `RoleplaySession`\n- `pending_request`\n- `conversation_session`\n- choice continuation\n\n以上都属于 runtime，必须在 `load / reinit / reset / start` 后清空。\n\n### 4. 二期优先走统一有限决策框架\n\n- 不在每个业务点散落 `if roleplay ... else ...`\n- 优先让业务层只保留：\n  - `build_request()`\n  - `apply_decision(...)`\n- 决策来源交给统一 resolver / continuation\n\n### 5. 三期对话必须依附 `Conversation`\n\n- 不新增脱离动作语义的自由聊天入口\n- 玩家只控制一侧发言，对方仍由 LLM 回复\n- 原始聊天记录不进长期事件流，只以 summary 落地\n\n## 推荐工作流\n\n### 1. 先看锚点文档\n\n优先查看：\n\n- `docs/specs/avatar-roleplay-mode.md`\n- `docs/specs/single-choice-unified-framework.md`\n- `.cursor/rules/roleplay-mode.mdc`\n\n如果改动涉及外接 API，再补看：\n\n- `docs/specs/external-control-api.md`\n- `.cursor/rules/external-control-api.mdc`\n\n### 2. 再看当前落点\n\n后端常见入口：\n\n- `src/server/runtime/session.py`\n- `src/server/services/roleplay_service.py`\n- `src/server/api/public_v1/command.py`\n- `src/server/api/public_v1/query.py`\n- `src/systems/single_choice/**/*.py`\n- `src/classes/mutual_action/conversation.py`\n\n前端常见入口：\n\n- `web/src/stores/roleplay.ts`\n- `web/src/components/game/RoleplayDock.vue`\n- `web/src/components/game/roleplay/*.vue`\n- `web/src/api/modules/avatar.ts`\n- `web/src/types/api.ts`\n\n### 3. 判断改动层级\n\n- 改运行时语义：优先改 runtime/service，不要先改 UI\n- 改 API：先定 query/command 边界和 DTO\n- 改二期选择：先看能否接入统一 choice resolver\n- 改三期对话：先看是否仍依附 `Conversation`\n\n## 实现检查清单\n\n### 一期\n\n1. 是否仍是 `decision` 型 request？\n2. 是否保持“无效输入不恢复世界运行”？\n3. 是否在动作链结束才创建 pending request？\n\n### 二期\n\n1. 是否复用统一 `choice` 请求？\n2. 是否通过统一 continuation 恢复流程？\n3. 是否避免在业务场景里硬编码 roleplay 分支？\n\n### 三期\n\n1. 是否由 `Conversation` 动作触发？\n2. 是否保持“玩家一句、LLM 一句”？\n3. 是否只有玩家能结束？\n4. 是否只把 summary 落到长期事件流？\n\n## 前端约束\n\n- `RoleplayDock` 应维持统一骨架：\n  - Header\n  - Active Request\n  - Activity Stream\n- `decision / choice / conversation` 只切 request body，不重新发明整页布局\n- 事件流优先复用统一高密度 event list 组件\n\n## 文档与测试\n\n改动 roleplay 主链时，优先同步：\n\n- `docs/specs/avatar-roleplay-mode.md`\n- `docs/specs/single-choice-unified-framework.md`\n- `.cursor/rules/roleplay-mode.mdc`\n- `AGENTS.md`\n\n建议至少运行：\n\n```bash\npytest tests/test_public_api_v1.py tests/test_single_choice.py tests/test_action_social.py tests/test_mutual_actions.py -q\ncd web && npm run type-check\ncd web && npm run test\n```\n"
+    },
+    {
+      "slug": "spec-interview",
+      "name": "spec-interview",
+      "dir": ".cursor/skills/spec-interview",
+      "path": ".cursor/skills/spec-interview/SKILL.md",
+      "desc": "进行深入访谈以收集需求并编写详细的规格说明书 (spec)",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/4thfever/cultivation-world-simulator.git",
+        "copy": "cp -r .cursor/skills/spec-interview ~/.claude/skills/spec-interview",
+        "raw": "https://raw.githubusercontent.com/4thfever/cultivation-world-simulator/471fe745e7c3d582048d647257c74ae566cd235f/.cursor/skills/spec-interview/SKILL.md",
+        "saveAs": "~/.claude/skills/spec-interview/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:00b3c2039beb5222e0ec1e63c289ab350b36f365462783a6c0d15fbc358d434f",
+      "bytes": 2023,
+      "wordCount": 80,
+      "repoLicense": "",
+      "commit": "471fe745e7c3d582048d647257c74ae566cd235f",
+      "branch": "main",
+      "body": "---\nname: spec-interview\ndescription: 进行深入访谈以收集需求并编写详细的规格说明书 (spec)\n---\n\n## 概述\n\n使用 `AskUserQuestion` 进行深入的访谈，在编写规格说明书之前深入理解一个功能、系统或想法。\n\n## 核心原则\n\n1. **运用你的判断力** - 根据主题调整问题的深度和重点。一个小的 UI 更改需要的问题与一个新的认证系统不同。\n\n2. **问非显而易见的问题** - 跳过表面问题。探究：\n   - 用户尚未表达的隐藏假设\n   - 他们尚未考虑的边缘情况\n   - 他们隐式做出的权衡\n   - 他们忘记提及的约束条件\n   - 故障模式和恢复路径\n\n3. **跟随有趣的线索** - 当答案揭示了复杂性或不确定性时，在继续之前深入挖掘。\n\n4. **温和地挑战** - 问“如果 X 失败了怎么办？”或“为什么不改用 Y？”来对设计进行压力测试。\n\n5. **知道何时停止** - 当你有足够的清晰度来编写有用的规格说明书时结束访谈。并非每个主题都需要详尽的覆盖。\n\n## 问题领域（根据需要使用，而不是作为清单）\n\n- **问题与动机**：为什么是现在？不这样做的代价是什么？\n- **技术设计**：数据模型、状态、API、性能、数据迁移\n- **用户体验**：错误状态、加载、边缘情况、无障碍访问\n- **集成**：这还会影响什么？安全性？可观测性？\n- **权衡**：你**不**构建什么？你接受了什么技术债务？\n- **风险**：哪些假设可能是错的？什么会导致这个项目失败？\n\n## 访谈流程\n\n1. 每轮通过 `AskUserQuestion` 开始 2-4 个问题。\n2. 综合答案并跟进空白或模糊之处。\n3. 定期总结以确认理解。\n4. 当足够完整时，与用户确认并编写规格说明书。\n\n## 输出\n\n将规格说明书写入 `docs/specs/<feature-name>.md`（或询问用户首选路径）。包含任何相关的部分——不要强求死板的模板。\n\n## 调用\n\n```\n/spec-interview [主题]\n```\n",
+      "bodyMd": "## 概述\n\n使用 `AskUserQuestion` 进行深入的访谈，在编写规格说明书之前深入理解一个功能、系统或想法。\n\n## 核心原则\n\n1. **运用你的判断力** - 根据主题调整问题的深度和重点。一个小的 UI 更改需要的问题与一个新的认证系统不同。\n\n2. **问非显而易见的问题** - 跳过表面问题。探究：\n   - 用户尚未表达的隐藏假设\n   - 他们尚未考虑的边缘情况\n   - 他们隐式做出的权衡\n   - 他们忘记提及的约束条件\n   - 故障模式和恢复路径\n\n3. **跟随有趣的线索** - 当答案揭示了复杂性或不确定性时，在继续之前深入挖掘。\n\n4. **温和地挑战** - 问“如果 X 失败了怎么办？”或“为什么不改用 Y？”来对设计进行压力测试。\n\n5. **知道何时停止** - 当你有足够的清晰度来编写有用的规格说明书时结束访谈。并非每个主题都需要详尽的覆盖。\n\n## 问题领域（根据需要使用，而不是作为清单）\n\n- **问题与动机**：为什么是现在？不这样做的代价是什么？\n- **技术设计**：数据模型、状态、API、性能、数据迁移\n- **用户体验**：错误状态、加载、边缘情况、无障碍访问\n- **集成**：这还会影响什么？安全性？可观测性？\n- **权衡**：你**不**构建什么？你接受了什么技术债务？\n- **风险**：哪些假设可能是错的？什么会导致这个项目失败？\n\n## 访谈流程\n\n1. 每轮通过 `AskUserQuestion` 开始 2-4 个问题。\n2. 综合答案并跟进空白或模糊之处。\n3. 定期总结以确认理解。\n4. 当足够完整时，与用户确认并编写规格说明书。\n\n## 输出\n\n将规格说明书写入 `docs/specs/<feature-name>.md`（或询问用户首选路径）。包含任何相关的部分——不要强求死板的模板。\n\n## 调用\n\n```\n/spec-interview [主题]\n```\n"
+    },
+    {
+      "slug": "test-validate",
+      "name": "test-validate",
+      "dir": ".cursor/skills/test-validate",
+      "path": ".cursor/skills/test-validate/SKILL.md",
+      "desc": "运行项目测试（涵盖 Python 后端、Vue 前端及多语言校验）",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "node",
+          "npm",
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/4thfever/cultivation-world-simulator.git",
+        "copy": "cp -r .cursor/skills/test-validate ~/.claude/skills/test-validate",
+        "raw": "https://raw.githubusercontent.com/4thfever/cultivation-world-simulator/471fe745e7c3d582048d647257c74ae566cd235f/.cursor/skills/test-validate/SKILL.md",
+        "saveAs": "~/.claude/skills/test-validate/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:191cc452377111b10ea3f5a3d3b508a12c912b5082c8e3634b338cd133a0bf66",
+      "bytes": 1696,
+      "wordCount": 122,
+      "repoLicense": "",
+      "commit": "471fe745e7c3d582048d647257c74ae566cd235f",
+      "branch": "main",
+      "body": "---\nname: test-validate\ndescription: 运行项目测试（涵盖 Python 后端、Vue 前端及多语言校验）\n---\n\n## 🚀 常用测试命令\n\n### 后端 (Python)\n推荐在已激活虚拟环境的情况下执行：\n\n```bash\n# 运行所有后端测试\npytest\n\n# 运行特定测试文件\npytest tests/test_<name>.py -v\npytest tests/test_frontend_locales.py  # 检查前端多语言一致性\npytest tests/test_backend_locales.py   # 检查后端多语言一致性\n\n# 运行并生成覆盖率报告\npytest --cov=src\n\n# 运行服务器（开发模式）\npython src/server/main.py --dev\n```\n\n### 前端 (Vue/Node)\n必须在 `web` 目录下执行：\n\n```bash\n# 运行所有前端单元测试\ncd web && npm run test\n\n# 运行并生成前端覆盖率报告\ncd web && npm run test:coverage\n\n# 运行 TypeScript 类型检查\ncd web && npm run type-check\n```\n\n## 📊 测试覆盖率与规范指南\n\n在进行代码更改后，考虑是否需要测试：\n\n| 更改类型 | 测试建议 |\n|-------------|---------------------|\n| 修复 Bug | 添加回归测试以防止再次发生，确保测试在**修复前会失败**并且在**修复后会通过** |\n| 新功能 | 单元测试 + 如果影响多个模块则添加集成测试 |\n| 重构 | 现有测试应通过；如果行为改变则添加测试 |\n| 配置/文档 | 通常不需要测试 |\n| 新增多语言词条 | **必须**运行 `test_frontend_locales.py` / `test_backend_locales.py` 确保各语言 Key 结构对齐 |\n\n> **提示:** 如果你在编写后端测试，请参考 `.cursor/rules/testing.mdc`，优先使用项目中已经提供的 `dummy_avatar`、`mock_llm_managers` 等现成的 fixtures，避免重复 mock 或消耗真实 Token。",
+      "bodyMd": "## 🚀 常用测试命令\n\n### 后端 (Python)\n推荐在已激活虚拟环境的情况下执行：\n\n```bash\n# 运行所有后端测试\npytest\n\n# 运行特定测试文件\npytest tests/test_<name>.py -v\npytest tests/test_frontend_locales.py  # 检查前端多语言一致性\npytest tests/test_backend_locales.py   # 检查后端多语言一致性\n\n# 运行并生成覆盖率报告\npytest --cov=src\n\n# 运行服务器（开发模式）\npython src/server/main.py --dev\n```\n\n### 前端 (Vue/Node)\n必须在 `web` 目录下执行：\n\n```bash\n# 运行所有前端单元测试\ncd web && npm run test\n\n# 运行并生成前端覆盖率报告\ncd web && npm run test:coverage\n\n# 运行 TypeScript 类型检查\ncd web && npm run type-check\n```\n\n## 📊 测试覆盖率与规范指南\n\n在进行代码更改后，考虑是否需要测试：\n\n| 更改类型 | 测试建议 |\n|-------------|---------------------|\n| 修复 Bug | 添加回归测试以防止再次发生，确保测试在**修复前会失败**并且在**修复后会通过** |\n| 新功能 | 单元测试 + 如果影响多个模块则添加集成测试 |\n| 重构 | 现有测试应通过；如果行为改变则添加测试 |\n| 配置/文档 | 通常不需要测试 |\n| 新增多语言词条 | **必须**运行 `test_frontend_locales.py` / `test_backend_locales.py` 确保各语言 Key 结构对齐 |\n\n> **提示:** 如果你在编写后端测试，请参考 `.cursor/rules/testing.mdc`，优先使用项目中已经提供的 `dummy_avatar`、`mock_llm_managers` 等现成的 fixtures，避免重复 mock 或消耗真实 Token。"
+    }
+  ]
+}

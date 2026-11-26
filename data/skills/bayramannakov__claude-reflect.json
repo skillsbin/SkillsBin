@@ -1,0 +1,53 @@
+{
+  "repo": "BayramAnnakov/claude-reflect",
+  "commit": "b6c42326903af3dd2bf3772b979730a44d8548ca",
+  "branch": "main",
+  "fetchedAt": "2026-11-26T21:14:11.521Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "claude-reflect",
+      "name": "claude-reflect",
+      "dir": "",
+      "path": "SKILL.md",
+      "desc": "Self-learning system that captures corrections during sessions and reminds users to run /reflect to update CLAUDE.md. Use when discussing learnings, corrections, or when the user mentions remembering something for future sessions.",
+      "descZh": "",
+      "triggers": [
+        "discussing learnings",
+        "corrections"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/BayramAnnakov/claude-reflect.git",
+        "copy": "",
+        "raw": "https://raw.githubusercontent.com/BayramAnnakov/claude-reflect/b6c42326903af3dd2bf3772b979730a44d8548ca/SKILL.md",
+        "saveAs": "~/.claude/skills/claude-reflect/SKILL.md",
+        "marketplace": "/plugin marketplace add BayramAnnakov/claude-reflect"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:7d035c84ea96ba9808bc9731533e1bafdbbdf113317ef151ead458d18242067b",
+      "bytes": 2508,
+      "wordCount": 317,
+      "repoLicense": "MIT",
+      "commit": "b6c42326903af3dd2bf3772b979730a44d8548ca",
+      "branch": "main",
+      "body": "---\nname: claude-reflect\ndescription: Self-learning system that captures corrections during sessions and reminds users to run /reflect to update CLAUDE.md. Use when discussing learnings, corrections, or when the user mentions remembering something for future sessions.\n---\n\n# Claude Reflect - Self-Learning System\n\nA two-stage system that helps Claude Code learn from user corrections.\n\n## How It Works\n\n**Stage 1: Capture (Automatic)**\nHooks detect correction patterns (\"no, use X\", \"actually...\", \"use X not Y\") and queue them to `~/.claude/learnings-queue.json`.\n\n**Stage 2: Process (Manual)**\nUser runs `/reflect` to review and apply queued learnings to CLAUDE.md files.\n\n## Available Commands\n\n| Command | Purpose |\n|---------|---------|\n| `/reflect` | Process queued learnings with human review |\n| `/reflect --scan-history` | Scan past sessions for missed learnings |\n| `/reflect --dry-run` | Preview changes without applying |\n| `/reflect-skills` | Discover skill candidates from repeating patterns |\n| `/skip-reflect` | Discard all queued learnings |\n| `/view-queue` | View pending learnings without processing |\n\n## When to Remind Users\n\nRemind users about `/reflect` when:\n- They complete a feature or meaningful work unit\n- They make corrections you should remember for future sessions\n- They explicitly say \"remember this\" or similar\n- Context is about to compact and queue has items\n\n## Correction Detection Patterns\n\nHigh-confidence corrections:\n- Tool rejections (user stops an action with guidance)\n- \"no, use X\" / \"don't use Y\"\n- \"actually...\" / \"I meant...\"\n- \"use X not Y\" / \"X instead of Y\"\n- \"remember:\" (explicit marker)\n\n## Learning Destinations\n\n- `~/.claude/CLAUDE.md` - Global learnings (model names, general patterns)\n- `./CLAUDE.md` - Project-specific learnings (conventions, tools, structure)\n- `./CLAUDE.local.md` - Personal learnings (machine-specific, gitignored)\n- `./.claude/rules/*.md` - Modular rules with optional path-scoping\n- `~/.claude/rules/*.md` - Global modular rules\n- `~/.claude/projects/<project>/memory/*.md` - Auto memory (low-confidence, exploratory)\n- `commands/*.md` - Skill improvements (corrections during skill execution)\n\n## Example Interaction\n\n```\nUser: no, use gpt-5.1 not gpt-5 for reasoning tasks\nClaude: Got it, I'll use gpt-5.1 for reasoning tasks.\n\n[Hook captures this correction to queue]\n\nUser: /reflect\nClaude: Found 1 learning queued. \"Use gpt-5.1 for reasoning tasks\"\n        Scope: global\n        Apply to ~/.claude/CLAUDE.md? [y/n]\n```\n",
+      "bodyMd": "# Claude Reflect - Self-Learning System\n\nA two-stage system that helps Claude Code learn from user corrections.\n\n## How It Works\n\n**Stage 1: Capture (Automatic)**\nHooks detect correction patterns (\"no, use X\", \"actually...\", \"use X not Y\") and queue them to `~/.claude/learnings-queue.json`.\n\n**Stage 2: Process (Manual)**\nUser runs `/reflect` to review and apply queued learnings to CLAUDE.md files.\n\n## Available Commands\n\n| Command | Purpose |\n|---------|---------|\n| `/reflect` | Process queued learnings with human review |\n| `/reflect --scan-history` | Scan past sessions for missed learnings |\n| `/reflect --dry-run` | Preview changes without applying |\n| `/reflect-skills` | Discover skill candidates from repeating patterns |\n| `/skip-reflect` | Discard all queued learnings |\n| `/view-queue` | View pending learnings without processing |\n\n## When to Remind Users\n\nRemind users about `/reflect` when:\n- They complete a feature or meaningful work unit\n- They make corrections you should remember for future sessions\n- They explicitly say \"remember this\" or similar\n- Context is about to compact and queue has items\n\n## Correction Detection Patterns\n\nHigh-confidence corrections:\n- Tool rejections (user stops an action with guidance)\n- \"no, use X\" / \"don't use Y\"\n- \"actually...\" / \"I meant...\"\n- \"use X not Y\" / \"X instead of Y\"\n- \"remember:\" (explicit marker)\n\n## Learning Destinations\n\n- `~/.claude/CLAUDE.md` - Global learnings (model names, general patterns)\n- `./CLAUDE.md` - Project-specific learnings (conventions, tools, structure)\n- `./CLAUDE.local.md` - Personal learnings (machine-specific, gitignored)\n- `./.claude/rules/*.md` - Modular rules with optional path-scoping\n- `~/.claude/rules/*.md` - Global modular rules\n- `~/.claude/projects/<project>/memory/*.md` - Auto memory (low-confidence, exploratory)\n- `commands/*.md` - Skill improvements (corrections during skill execution)\n\n## Example Interaction\n\n```\nUser: no, use gpt-5.1 not gpt-5 for reasoning tasks\nClaude: Got it, I'll use gpt-5.1 for reasoning tasks.\n\n[Hook captures this correction to queue]\n\nUser: /reflect\nClaude: Found 1 learning queued. \"Use gpt-5.1 for reasoning tasks\"\n        Scope: global\n        Apply to ~/.claude/CLAUDE.md? [y/n]\n```\n"
+    }
+  ]
+}

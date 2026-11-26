@@ -1,0 +1,999 @@
+{
+  "repo": "composio-community/awesome-claude-plugins",
+  "commit": "c511c77b6e4860bc076e5c5b3ac55c51030d602d",
+  "branch": "master",
+  "fetchedAt": "2026-11-26T21:14:09.106Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "artifacts-builder",
+      "name": "artifacts-builder",
+      "dir": "artifacts-builder/skills/artifacts-builder",
+      "path": "artifacts-builder/skills/artifacts-builder/SKILL.md",
+      "desc": "Suite of tools for creating elaborate, multi-component claude.ai HTML artifacts using modern frontend web technologies (React, Tailwind CSS, shadcn/ui). Use for complex artifacts requiring state management, routing, or shadcn/ui components - not for simple single-file HTML/JSX artifacts.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "node",
+          "playwright"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/composio-community/awesome-claude-plugins.git",
+        "copy": "cp -r artifacts-builder/skills/artifacts-builder ~/.claude/skills/artifacts-builder",
+        "raw": "https://raw.githubusercontent.com/composio-community/awesome-claude-plugins/c511c77b6e4860bc076e5c5b3ac55c51030d602d/artifacts-builder/skills/artifacts-builder/SKILL.md",
+        "saveAs": "~/.claude/skills/artifacts-builder/SKILL.md",
+        "marketplace": "/plugin marketplace add composio-community/awesome-claude-plugins"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:d2b8467b1ed46d713339135c827bd23ce8041aa3555bdb64eee02ca4178ce565",
+      "bytes": 3013,
+      "wordCount": 391,
+      "repoLicense": "",
+      "commit": "c511c77b6e4860bc076e5c5b3ac55c51030d602d",
+      "branch": "master",
+      "body": "---\nname: artifacts-builder\ndescription: Suite of tools for creating elaborate, multi-component claude.ai HTML artifacts using modern frontend web technologies (React, Tailwind CSS, shadcn/ui). Use for complex artifacts requiring state management, routing, or shadcn/ui components - not for simple single-file HTML/JSX artifacts.\n---\n\n# Artifacts Builder\n\nTo build powerful frontend claude.ai artifacts, follow these steps:\n1. Initialize the frontend repo using `scripts/init-artifact.sh`\n2. Develop your artifact by editing the generated code\n3. Bundle all code into a single HTML file using `scripts/bundle-artifact.sh`\n4. Display artifact to user\n5. (Optional) Test the artifact\n\n**Stack**: React 18 + TypeScript + Vite + Parcel (bundling) + Tailwind CSS + shadcn/ui\n\n## Design & Style Guidelines\n\nVERY IMPORTANT: To avoid what is often referred to as \"AI slop\", avoid using excessive centered layouts, purple gradients, uniform rounded corners, and Inter font.\n\n## Quick Start\n\n### Step 1: Initialize Project\n\nRun the initialization script to create a new React project:\n```bash\nbash scripts/init-artifact.sh <project-name>\ncd <project-name>\n```\n\nThis creates a fully configured project with:\n- React + TypeScript (via Vite)\n- Tailwind CSS 3.4.1 with shadcn/ui theming system\n- Path aliases (`@/`) configured\n- 40+ shadcn/ui components pre-installed\n- All Radix UI dependencies included\n- Parcel configured for bundling (via .parcelrc)\n- Node 18+ compatibility (auto-detects and pins Vite version)\n\n### Step 2: Develop Your Artifact\n\nTo build the artifact, edit the generated files. See **Common Development Tasks** below for guidance.\n\n### Step 3: Bundle to Single HTML File\n\nTo bundle the React app into a single HTML artifact:\n```bash\nbash scripts/bundle-artifact.sh\n```\n\nThis creates `bundle.html` - a self-contained artifact with all JavaScript, CSS, and dependencies inlined. This file can be directly shared in Claude conversations as an artifact.\n\n**Requirements**: Your project must have an `index.html` in the root directory.\n\n**What the script does**:\n- Installs bundling dependencies (parcel, @parcel/config-default, parcel-resolver-tspaths, html-inline)\n- Creates `.parcelrc` config with path alias support\n- Builds with Parcel (no source maps)\n- Inlines all assets into single HTML using html-inline\n\n### Step 4: Share Artifact with User\n\nFinally, share the bundled HTML file in conversation with the user so they can view it as an artifact.\n\n### Step 5: Testing/Visualizing the Artifact (Optional)\n\nNote: This is a completely optional step. Only perform if necessary or requested.\n\nTo test/visualize the artifact, use available tools (including other Skills or built-in tools like Playwright or Puppeteer). In general, avoid testing the artifact upfront as it adds latency between the request and when the finished artifact can be seen. Test later, after presenting the artifact, if requested or if issues arise.\n\n## Reference\n\n- **shadcn/ui components**: https://ui.shadcn.com/docs/components\n",
+      "bodyMd": "# Artifacts Builder\n\nTo build powerful frontend claude.ai artifacts, follow these steps:\n1. Initialize the frontend repo using `scripts/init-artifact.sh`\n2. Develop your artifact by editing the generated code\n3. Bundle all code into a single HTML file using `scripts/bundle-artifact.sh`\n4. Display artifact to user\n5. (Optional) Test the artifact\n\n**Stack**: React 18 + TypeScript + Vite + Parcel (bundling) + Tailwind CSS + shadcn/ui\n\n## Design & Style Guidelines\n\nVERY IMPORTANT: To avoid what is often referred to as \"AI slop\", avoid using excessive centered layouts, purple gradients, uniform rounded corners, and Inter font.\n\n## Quick Start\n\n### Step 1: Initialize Project\n\nRun the initialization script to create a new React project:\n```bash\nbash scripts/init-artifact.sh <project-name>\ncd <project-name>\n```\n\nThis creates a fully configured project with:\n- React + TypeScript (via Vite)\n- Tailwind CSS 3.4.1 with shadcn/ui theming system\n- Path aliases (`@/`) configured\n- 40+ shadcn/ui components pre-installed\n- All Radix UI dependencies included\n- Parcel configured for bundling (via .parcelrc)\n- Node 18+ compatibility (auto-detects and pins Vite version)\n\n### Step 2: Develop Your Artifact\n\nTo build the artifact, edit the generated files. See **Common Development Tasks** below for guidance.\n\n### Step 3: Bundle to Single HTML File\n\nTo bundle the React app into a single HTML artifact:\n```bash\nbash scripts/bundle-artifact.sh\n```\n\nThis creates `bundle.html` - a self-contained artifact with all JavaScript, CSS, and dependencies inlined. This file can be directly shared in Claude conversations as an artifact.\n\n**Requirements**: Your project must have an `index.html` in the root directory.\n\n**What the script does**:\n- Installs bundling dependencies (parcel, @parcel/config-default, parcel-resolver-tspaths, html-inline)\n- Creates `.parcelrc` config with path alias support\n- Builds with Parcel (no source maps)\n- Inlines all assets into single HTML using html-inline\n\n### Step 4: Share Artifact with User\n\nFinally, share the bundled HTML file in conversation with the user so they can view it as an artifact.\n\n### Step 5: Testing/Visualizing the Artifact (Optional)\n\nNote: This is a completely optional step. Only perform if necessary or requested.\n\nTo test/visualize the artifact, use available tools (including other Skills or built-in tools like Playwright or Puppeteer). In general, avoid testing the artifact upfront as it adds latency between the request and when the finished artifact can be seen. Test later, after presenting the artifact, if requested or if issues arise.\n\n## Reference\n\n- **shadcn/ui components**: https://ui.shadcn.com/docs/components\n"
+    },
+    {
+      "slug": "canvas-design",
+      "name": "canvas-design",
+      "dir": "canvas-design/skills/canvas-design",
+      "path": "canvas-design/skills/canvas-design/SKILL.md",
+      "desc": "Create beautiful visual art in .png and .pdf documents using design philosophy. You should use this skill when the user asks to create a poster, piece of art, design, or other static piece. Create original visual designs, never copying existing artists' work to avoid copyright violations.",
+      "descZh": "",
+      "triggers": [
+        "piece of art",
+        "design",
+        "other static piece"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "make",
+          "poetry"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/composio-community/awesome-claude-plugins.git",
+        "copy": "cp -r canvas-design/skills/canvas-design ~/.claude/skills/canvas-design",
+        "raw": "https://raw.githubusercontent.com/composio-community/awesome-claude-plugins/c511c77b6e4860bc076e5c5b3ac55c51030d602d/canvas-design/skills/canvas-design/SKILL.md",
+        "saveAs": "~/.claude/skills/canvas-design/SKILL.md",
+        "marketplace": "/plugin marketplace add composio-community/awesome-claude-plugins"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:ce24ba78482b243b1fcf2933a5b9248eef2fc3eecbb1788c528169225e0a97bc",
+      "bytes": 4474,
+      "wordCount": 607,
+      "repoLicense": "",
+      "commit": "c511c77b6e4860bc076e5c5b3ac55c51030d602d",
+      "branch": "master",
+      "body": "---\nname: canvas-design\ndescription: Create beautiful visual art in .png and .pdf documents using design philosophy. You should use this skill when the user asks to create a poster, piece of art, design, or other static piece. Create original visual designs, never copying existing artists' work to avoid copyright violations.\n---\n\nThese are instructions for creating design philosophies - aesthetic movements that are then EXPRESSED VISUALLY. Output only .md files, .pdf files, and .png files.\n\nComplete this in two steps:\n1. Design Philosophy Creation (.md file)\n2. Express by creating it on a canvas (.pdf file or .png file)\n\n## DESIGN PHILOSOPHY CREATION\n\nTo begin, create a VISUAL PHILOSOPHY (not layouts or templates) that will be interpreted through:\n- Form, space, color, composition\n- Images, graphics, shapes, patterns\n- Minimal text as visual accent\n\n### THE CRITICAL UNDERSTANDING\n- What is received: Some subtle input or instructions by the user that should be taken into account, but used as a foundation; it should not constrain creative freedom.\n- What is created: A design philosophy/aesthetic movement.\n- What happens next: Then, the same version receives the philosophy and EXPRESSES IT VISUALLY - creating artifacts that are 90% visual design, 10% essential text.\n\n### HOW TO GENERATE A VISUAL PHILOSOPHY\n\n**Name the movement** (1-2 words): \"Brutalist Joy\" / \"Chromatic Silence\" / \"Metabolist Dreams\"\n\n**Articulate the philosophy** (4-6 paragraphs - concise but complete):\n\nTo capture the VISUAL essence, express how the philosophy manifests through:\n- Space and form\n- Color and material\n- Scale and rhythm\n- Composition and balance\n- Visual hierarchy\n\n**CRITICAL GUIDELINES:**\n- **Avoid redundancy**: Each design aspect should be mentioned once.\n- **Emphasize craftsmanship REPEATEDLY**: The philosophy MUST stress multiple times that the final work should appear as though it took countless hours to create, was labored over with care, and comes from someone at the absolute top of their field.\n- **Leave creative space**: Remain specific about the aesthetic direction, but concise enough that there's room for interpretive choices.\n\n### PHILOSOPHY EXAMPLES\n\n**\"Concrete Poetry\"**\nPhilosophy: Communication through monumental form and bold geometry.\nVisual expression: Massive color blocks, sculptural typography (huge single words, tiny labels), Brutalist spatial divisions, Polish poster energy meets Le Corbusier.\n\n**\"Chromatic Language\"**\nPhilosophy: Color as the primary information system.\nVisual expression: Geometric precision where color zones create meaning. Typography minimal - small sans-serif labels letting chromatic fields communicate. Think Josef Albers' interaction meets data visualization.\n\n**\"Analog Meditation\"**\nPhilosophy: Quiet visual contemplation through texture and breathing room.\nVisual expression: Paper grain, ink bleeds, vast negative space. Photography and illustration dominate. Typography whispered (small, restrained, serving the visual). Japanese photobook aesthetic.\n\n## CANVAS CREATION\n\nWith both the philosophy and the conceptual framework established, express it on a canvas. Use the design philosophy created and the instructions below to craft a masterpiece.\n\n**IMPORTANT**: For any type of content, even if the user requests something for a movie/game/book, the approach should still be sophisticated. Never lose sight of the idea that this should be art, not something that's cartoony or amateur.\n\nTo create museum or magazine quality work, use the design philosophy as the foundation. Create one single page, highly visual, design-forward PDF or PNG output. Generally use repeating patterns and perfect shapes. Treat the abstract philosophical design as if it were a scientific bible.\n\n**Text as a contextual element**: Text is always minimal and visual-first, but let context guide whether that means whisper-quiet labels or bold typographic gestures. Most of the time, font should be thin. All use of fonts must be design-forward and prioritize visual communication. Regardless of text scale, nothing falls off the page and nothing overlaps.\n\n**CRITICAL**: To achieve human-crafted quality (not AI-generated), create work that looks like it took countless hours. Make it appear as though someone at the absolute top of their field labored over every detail with painstaking care.\n\nOutput the final result as a single, downloadable .pdf or .png file, alongside the design philosophy used as a .md file.\n",
+      "bodyMd": "These are instructions for creating design philosophies - aesthetic movements that are then EXPRESSED VISUALLY. Output only .md files, .pdf files, and .png files.\n\nComplete this in two steps:\n1. Design Philosophy Creation (.md file)\n2. Express by creating it on a canvas (.pdf file or .png file)\n\n## DESIGN PHILOSOPHY CREATION\n\nTo begin, create a VISUAL PHILOSOPHY (not layouts or templates) that will be interpreted through:\n- Form, space, color, composition\n- Images, graphics, shapes, patterns\n- Minimal text as visual accent\n\n### THE CRITICAL UNDERSTANDING\n- What is received: Some subtle input or instructions by the user that should be taken into account, but used as a foundation; it should not constrain creative freedom.\n- What is created: A design philosophy/aesthetic movement.\n- What happens next: Then, the same version receives the philosophy and EXPRESSES IT VISUALLY - creating artifacts that are 90% visual design, 10% essential text.\n\n### HOW TO GENERATE A VISUAL PHILOSOPHY\n\n**Name the movement** (1-2 words): \"Brutalist Joy\" / \"Chromatic Silence\" / \"Metabolist Dreams\"\n\n**Articulate the philosophy** (4-6 paragraphs - concise but complete):\n\nTo capture the VISUAL essence, express how the philosophy manifests through:\n- Space and form\n- Color and material\n- Scale and rhythm\n- Composition and balance\n- Visual hierarchy\n\n**CRITICAL GUIDELINES:**\n- **Avoid redundancy**: Each design aspect should be mentioned once.\n- **Emphasize craftsmanship REPEATEDLY**: The philosophy MUST stress multiple times that the final work should appear as though it took countless hours to create, was labored over with care, and comes from someone at the absolute top of their field.\n- **Leave creative space**: Remain specific about the aesthetic direction, but concise enough that there's room for interpretive choices.\n\n### PHILOSOPHY EXAMPLES\n\n**\"Concrete Poetry\"**\nPhilosophy: Communication through monumental form and bold geometry.\nVisual expression: Massive color blocks, sculptural typography (huge single words, tiny labels), Brutalist spatial divisions, Polish poster energy meets Le Corbusier.\n\n**\"Chromatic Language\"**\nPhilosophy: Color as the primary information system.\nVisual expression: Geometric precision where color zones create meaning. Typography minimal - small sans-serif labels letting chromatic fields communicate. Think Josef Albers' interaction meets data visualization.\n\n**\"Analog Meditation\"**\nPhilosophy: Quiet visual contemplation through texture and breathing room.\nVisual expression: Paper grain, ink bleeds, vast negative space. Photography and illustration dominate. Typography whispered (small, restrained, serving the visual). Japanese photobook aesthetic.\n\n## CANVAS CREATION\n\nWith both the philosophy and the conceptual framework established, express it on a canvas. Use the design philosophy created and the instructions below to craft a masterpiece.\n\n**IMPORTANT**: For any type of content, even if the user requests something for a movie/game/book, the approach should still be sophisticated. Never lose sight of the idea that this should be art, not something that's cartoony or amateur.\n\nTo create museum or magazine quality work, use the design philosophy as the foundation. Create one single page, highly visual, design-forward PDF or PNG output. Generally use repeating patterns and perfect shapes. Treat the abstract philosophical design as if it were a scientific bible.\n\n**Text as a contextual element**: Text is always minimal and visual-first, but let context guide whether that means whisper-quiet labels or bold typographic gestures. Most of the time, font should be thin. All use of fonts must be design-forward and prioritize visual communication. Regardless of text scale, nothing falls off the page and nothing overlaps.\n\n**CRITICAL**: To achieve human-crafted quality (not AI-generated), create work that looks like it took countless hours. Make it appear as though someone at the absolute top of their field labored over every detail with painstaking care.\n\nOutput the final result as a single, downloadable .pdf or .png file, alongside the design philosophy used as a .md file.\n"
+    },
+    {
+      "slug": "changelog-generator",
+      "name": "changelog-generator",
+      "dir": "changelog-generator/skills/changelog-generator",
+      "path": "changelog-generator/skills/changelog-generator/SKILL.md",
+      "desc": "Automatically creates user-facing changelogs from git commits by analyzing commit history, categorizing changes, and transforming technical commits into clear, customer-friendly release notes. Turns hours of manual changelog writing into minutes of automated generation.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/composio-community/awesome-claude-plugins.git",
+        "copy": "cp -r changelog-generator/skills/changelog-generator ~/.claude/skills/changelog-generator",
+        "raw": "https://raw.githubusercontent.com/composio-community/awesome-claude-plugins/c511c77b6e4860bc076e5c5b3ac55c51030d602d/changelog-generator/skills/changelog-generator/SKILL.md",
+        "saveAs": "~/.claude/skills/changelog-generator/SKILL.md",
+        "marketplace": "/plugin marketplace add composio-community/awesome-claude-plugins"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:9cb81ea812334789ad33a11c5533eacdd6127c404e2875d96f8d58ad2463eca9",
+      "bytes": 2954,
+      "wordCount": 386,
+      "repoLicense": "",
+      "commit": "c511c77b6e4860bc076e5c5b3ac55c51030d602d",
+      "branch": "master",
+      "body": "---\nname: changelog-generator\ndescription: Automatically creates user-facing changelogs from git commits by analyzing commit history, categorizing changes, and transforming technical commits into clear, customer-friendly release notes. Turns hours of manual changelog writing into minutes of automated generation.\n---\n\n# Changelog Generator\n\nThis skill transforms technical git commits into polished, user-friendly changelogs that your customers and users will actually understand and appreciate.\n\n## When to Use This Skill\n\n- Preparing release notes for a new version\n- Creating weekly or monthly product update summaries\n- Documenting changes for customers\n- Writing changelog entries for app store submissions\n- Generating update notifications\n- Creating internal release documentation\n- Maintaining a public changelog/product updates page\n\n## What This Skill Does\n\n1. **Scans Git History**: Analyzes commits from a specific time period or between versions\n2. **Categorizes Changes**: Groups commits into logical categories (features, improvements, bug fixes, breaking changes, security)\n3. **Translates Technical → User-Friendly**: Converts developer commits into customer language\n4. **Formats Professionally**: Creates clean, structured changelog entries\n5. **Filters Noise**: Excludes internal commits (refactoring, tests, etc.)\n6. **Follows Best Practices**: Applies changelog guidelines and your brand voice\n\n## How to Use\n\n### Basic Usage\n\nFrom your project repository:\n\n```\nCreate a changelog from commits since last release\n```\n\n```\nGenerate changelog for all commits from the past week\n```\n\n```\nCreate release notes for version 2.5.0\n```\n\n### With Specific Date Range\n\n```\nCreate a changelog for all commits between March 1 and March 15\n```\n\n### With Custom Guidelines\n\n```\nCreate a changelog for commits since v2.4.0, using my changelog\nguidelines from CHANGELOG_STYLE.md\n```\n\n## Example Output\n\n```markdown\n# Updates - Week of March 10, 2024\n\n## ✨ New Features\n\n- **Team Workspaces**: Create separate workspaces for different\n  projects. Invite team members and keep everything organized.\n\n- **Keyboard Shortcuts**: Press ? to see all available shortcuts.\n  Navigate faster without touching your mouse.\n\n## 🔧 Improvements\n\n- **Faster Sync**: Files now sync 2x faster across devices\n- **Better Search**: Search now includes file contents, not just titles\n\n## 🐛 Fixes\n\n- Fixed issue where large images wouldn't upload\n- Resolved timezone confusion in scheduled posts\n- Corrected notification badge count\n```\n\n## Tips\n\n- Run from your git repository root\n- Specify date ranges for focused changelogs\n- Use your CHANGELOG_STYLE.md for consistent formatting\n- Review and adjust the generated changelog before publishing\n- Save output directly to CHANGELOG.md\n\n## Related Use Cases\n\n- Creating GitHub release notes\n- Writing app store update descriptions\n- Generating email updates for users\n- Creating social media announcement posts\n",
+      "bodyMd": "# Changelog Generator\n\nThis skill transforms technical git commits into polished, user-friendly changelogs that your customers and users will actually understand and appreciate.\n\n## When to Use This Skill\n\n- Preparing release notes for a new version\n- Creating weekly or monthly product update summaries\n- Documenting changes for customers\n- Writing changelog entries for app store submissions\n- Generating update notifications\n- Creating internal release documentation\n- Maintaining a public changelog/product updates page\n\n## What This Skill Does\n\n1. **Scans Git History**: Analyzes commits from a specific time period or between versions\n2. **Categorizes Changes**: Groups commits into logical categories (features, improvements, bug fixes, breaking changes, security)\n3. **Translates Technical → User-Friendly**: Converts developer commits into customer language\n4. **Formats Professionally**: Creates clean, structured changelog entries\n5. **Filters Noise**: Excludes internal commits (refactoring, tests, etc.)\n6. **Follows Best Practices**: Applies changelog guidelines and your brand voice\n\n## How to Use\n\n### Basic Usage\n\nFrom your project repository:\n\n```\nCreate a changelog from commits since last release\n```\n\n```\nGenerate changelog for all commits from the past week\n```\n\n```\nCreate release notes for version 2.5.0\n```\n\n### With Specific Date Range\n\n```\nCreate a changelog for all commits between March 1 and March 15\n```\n\n### With Custom Guidelines\n\n```\nCreate a changelog for commits since v2.4.0, using my changelog\nguidelines from CHANGELOG_STYLE.md\n```\n\n## Example Output\n\n```markdown\n# Updates - Week of March 10, 2024\n\n## ✨ New Features\n\n- **Team Workspaces**: Create separate workspaces for different\n  projects. Invite team members and keep everything organized.\n\n- **Keyboard Shortcuts**: Press ? to see all available shortcuts.\n  Navigate faster without touching your mouse.\n\n## 🔧 Improvements\n\n- **Faster Sync**: Files now sync 2x faster across devices\n- **Better Search**: Search now includes file contents, not just titles\n\n## 🐛 Fixes\n\n- Fixed issue where large images wouldn't upload\n- Resolved timezone confusion in scheduled posts\n- Corrected notification badge count\n```\n\n## Tips\n\n- Run from your git repository root\n- Specify date ranges for focused changelogs\n- Use your CHANGELOG_STYLE.md for consistent formatting\n- Review and adjust the generated changelog before publishing\n- Save output directly to CHANGELOG.md\n\n## Related Use Cases\n\n- Creating GitHub release notes\n- Writing app store update descriptions\n- Generating email updates for users\n- Creating social media announcement posts\n"
+    },
+    {
+      "slug": "developer-growth-analysis",
+      "name": "developer-growth-analysis",
+      "dir": "developer-growth-analysis/skills/developer-growth-analysis",
+      "path": "developer-growth-analysis/skills/developer-growth-analysis/SKILL.md",
+      "desc": "Analyzes your recent Claude Code chat history to identify coding patterns, development gaps, and areas for improvement, curates relevant learning resources from HackerNews, and automatically sends a personalized growth report to your Slack DMs.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/composio-community/awesome-claude-plugins.git",
+        "copy": "cp -r developer-growth-analysis/skills/developer-growth-analysis ~/.claude/skills/developer-growth-analysis",
+        "raw": "https://raw.githubusercontent.com/composio-community/awesome-claude-plugins/c511c77b6e4860bc076e5c5b3ac55c51030d602d/developer-growth-analysis/skills/developer-growth-analysis/SKILL.md",
+        "saveAs": "~/.claude/skills/developer-growth-analysis/SKILL.md",
+        "marketplace": "/plugin marketplace add composio-community/awesome-claude-plugins"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:75c9441864d00dea14b12870b4462f70ab5c201becb546bec768afc5017e60c6",
+      "bytes": 3500,
+      "wordCount": 490,
+      "repoLicense": "",
+      "commit": "c511c77b6e4860bc076e5c5b3ac55c51030d602d",
+      "branch": "master",
+      "body": "---\nname: developer-growth-analysis\ndescription: Analyzes your recent Claude Code chat history to identify coding patterns, development gaps, and areas for improvement, curates relevant learning resources from HackerNews, and automatically sends a personalized growth report to your Slack DMs.\n---\n\n# Developer Growth Analysis\n\nThis skill provides personalized feedback on your recent coding work by analyzing your Claude Code chat interactions and identifying patterns that reveal strengths and areas for growth.\n\n## When to Use This Skill\n\nUse this skill when you want to:\n- Understand your development patterns and habits from recent work\n- Identify specific technical gaps or recurring challenges\n- Discover which topics would benefit from deeper study\n- Get curated learning resources tailored to your actual work patterns\n- Track improvement areas across your recent projects\n\n## What This Skill Does\n\nThis skill performs a six-step analysis of your development work:\n\n1. **Reads Your Chat History**: Accesses your local Claude Code chat history from the past 24-48 hours\n2. **Identifies Development Patterns**: Analyzes the types of problems you're solving, technologies you're using, and challenges you encounter\n3. **Detects Improvement Areas**: Recognizes patterns that suggest skill gaps or areas where you might benefit from deeper knowledge\n4. **Generates a Personalized Report**: Creates a comprehensive report showing your work summary, identified improvement areas, and specific recommendations\n5. **Finds Learning Resources**: Curates high-quality articles and discussions directly relevant to your improvement areas\n6. **Delivers the Report**: Sends the complete report to your Slack DMs for easy reference\n\n## How to Use\n\nAsk Claude to analyze your recent coding work:\n\n```\nAnalyze my developer growth from my recent chats\n```\n\nOr be more specific about which time period:\n\n```\nAnalyze my work from today and suggest areas for improvement\n```\n\n## Report Structure\n\nThe skill generates a formatted report with:\n\n### Work Summary\n2-3 paragraphs summarizing what you worked on, projects touched, technologies used, and overall focus areas.\n\n### Improvement Areas (Prioritized)\n\nFor each improvement area:\n- **Why This Matters**: Explanation of why this skill is important\n- **What Was Observed**: Specific evidence from chat history\n- **Recommendation**: Concrete steps to improve\n- **Time to Skill Up**: Brief estimate of effort required\n\n### Strengths Observed\nBullet points highlighting things you're doing well\n\n### Action Items\nPriority-ordered list of actionable improvements\n\n### Learning Resources\nCurated articles from HackerNews relevant to each improvement area\n\n## Example Improvement Areas\n\n- \"Advanced TypeScript patterns (generics, utility types, type guards) - you struggled with type safety in [specific project]\"\n- \"Error handling and validation - I noticed you patched several bugs related to missing null checks\"\n- \"Async/await patterns - your recent work shows some race conditions and timing issues\"\n- \"Database query optimization - you rewrote the same query multiple times\"\n\n## Tips and Best Practices\n\n- Run this analysis once a week to track your improvement trajectory over time\n- Pick one improvement area at a time and focus on it for a few days\n- Use the learning resources as a study guide\n- Revisit this report after focusing on an area to see how your work patterns change\n- The learning resources are curated for your actual work, not generic topics\n",
+      "bodyMd": "# Developer Growth Analysis\n\nThis skill provides personalized feedback on your recent coding work by analyzing your Claude Code chat interactions and identifying patterns that reveal strengths and areas for growth.\n\n## When to Use This Skill\n\nUse this skill when you want to:\n- Understand your development patterns and habits from recent work\n- Identify specific technical gaps or recurring challenges\n- Discover which topics would benefit from deeper study\n- Get curated learning resources tailored to your actual work patterns\n- Track improvement areas across your recent projects\n\n## What This Skill Does\n\nThis skill performs a six-step analysis of your development work:\n\n1. **Reads Your Chat History**: Accesses your local Claude Code chat history from the past 24-48 hours\n2. **Identifies Development Patterns**: Analyzes the types of problems you're solving, technologies you're using, and challenges you encounter\n3. **Detects Improvement Areas**: Recognizes patterns that suggest skill gaps or areas where you might benefit from deeper knowledge\n4. **Generates a Personalized Report**: Creates a comprehensive report showing your work summary, identified improvement areas, and specific recommendations\n5. **Finds Learning Resources**: Curates high-quality articles and discussions directly relevant to your improvement areas\n6. **Delivers the Report**: Sends the complete report to your Slack DMs for easy reference\n\n## How to Use\n\nAsk Claude to analyze your recent coding work:\n\n```\nAnalyze my developer growth from my recent chats\n```\n\nOr be more specific about which time period:\n\n```\nAnalyze my work from today and suggest areas for improvement\n```\n\n## Report Structure\n\nThe skill generates a formatted report with:\n\n### Work Summary\n2-3 paragraphs summarizing what you worked on, projects touched, technologies used, and overall focus areas.\n\n### Improvement Areas (Prioritized)\n\nFor each improvement area:\n- **Why This Matters**: Explanation of why this skill is important\n- **What Was Observed**: Specific evidence from chat history\n- **Recommendation**: Concrete steps to improve\n- **Time to Skill Up**: Brief estimate of effort required\n\n### Strengths Observed\nBullet points highlighting things you're doing well\n\n### Action Items\nPriority-ordered list of actionable improvements\n\n### Learning Resources\nCurated articles from HackerNews relevant to each improvement area\n\n## Example Improvement Areas\n\n- \"Advanced TypeScript patterns (generics, utility types, type guards) - you struggled with type safety in [specific project]\"\n- \"Error handling and validation - I noticed you patched several bugs related to missing null checks\"\n- \"Async/await patterns - your recent work shows some race conditions and timing issues\"\n- \"Database query optimization - you rewrote the same query multiple times\"\n\n## Tips and Best Practices\n\n- Run this analysis once a week to track your improvement trajectory over time\n- Pick one improvement area at a time and focus on it for a few days\n- Use the learning resources as a study guide\n- Revisit this report after focusing on an area to see how your work patterns change\n- The learning resources are curated for your actual work, not generic topics\n"
+    },
+    {
+      "slug": "frontend-design",
+      "name": "frontend-design",
+      "dir": "frontend-design/skills/frontend-design",
+      "path": "frontend-design/skills/frontend-design/SKILL.md",
+      "desc": "Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, or applications. Generates creative, polished code that avoids generic AI aesthetics.",
+      "descZh": "",
+      "triggers": [
+        "pages",
+        "applications"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/composio-community/awesome-claude-plugins.git",
+        "copy": "cp -r frontend-design/skills/frontend-design ~/.claude/skills/frontend-design",
+        "raw": "https://raw.githubusercontent.com/composio-community/awesome-claude-plugins/c511c77b6e4860bc076e5c5b3ac55c51030d602d/frontend-design/skills/frontend-design/SKILL.md",
+        "saveAs": "~/.claude/skills/frontend-design/SKILL.md",
+        "marketplace": "/plugin marketplace add composio-community/awesome-claude-plugins"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:8cd2c6dd0b7d9055b999508a464a73971de58219d3ce7ef567bfb3035722c82a",
+      "bytes": 4236,
+      "wordCount": 520,
+      "repoLicense": "",
+      "commit": "c511c77b6e4860bc076e5c5b3ac55c51030d602d",
+      "branch": "master",
+      "body": "---\nname: frontend-design\ndescription: Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, or applications. Generates creative, polished code that avoids generic AI aesthetics.\n---\n\nThis skill guides creation of distinctive, production-grade frontend interfaces that avoid generic \"AI slop\" aesthetics. Implement real working code with exceptional attention to aesthetic details and creative choices.\n\nThe user provides frontend requirements: a component, page, application, or interface to build. They may include context about the purpose, audience, or technical constraints.\n\n## Design Thinking\n\nBefore coding, understand the context and commit to a BOLD aesthetic direction:\n- **Purpose**: What problem does this interface solve? Who uses it?\n- **Tone**: Pick an extreme: brutally minimal, maximalist chaos, retro-futuristic, organic/natural, luxury/refined, playful/toy-like, editorial/magazine, brutalist/raw, art deco/geometric, soft/pastel, industrial/utilitarian, etc. There are so many flavors to choose from. Use these for inspiration but design one that is true to the aesthetic direction.\n- **Constraints**: Technical requirements (framework, performance, accessibility).\n- **Differentiation**: What makes this UNFORGETTABLE? What's the one thing someone will remember?\n\n**CRITICAL**: Choose a clear conceptual direction and execute it with precision. Bold maximalism and refined minimalism both work - the key is intentionality, not intensity.\n\nThen implement working code (HTML/CSS/JS, React, Vue, etc.) that is:\n- Production-grade and functional\n- Visually striking and memorable\n- Cohesive with a clear aesthetic point-of-view\n- Meticulously refined in every detail\n\n## Frontend Aesthetics Guidelines\n\nFocus on:\n- **Typography**: Choose fonts that are beautiful, unique, and interesting. Avoid generic fonts like Arial and Inter; opt instead for distinctive choices that elevate the frontend's aesthetics; unexpected, characterful font choices. Pair a distinctive display font with a refined body font.\n- **Color & Theme**: Commit to a cohesive aesthetic. Use CSS variables for consistency. Dominant colors with sharp accents outperform timid, evenly-distributed palettes.\n- **Motion**: Use animations for effects and micro-interactions. Prioritize CSS-only solutions for HTML. Use Motion library for React when available. Focus on high-impact moments: one well-orchestrated page load with staggered reveals (animation-delay) creates more delight than scattered micro-interactions. Use scroll-triggering and hover states that surprise.\n- **Spatial Composition**: Unexpected layouts. Asymmetry. Overlap. Diagonal flow. Grid-breaking elements. Generous negative space OR controlled density.\n- **Backgrounds & Visual Details**: Create atmosphere and depth rather than defaulting to solid colors. Add contextual effects and textures that match the overall aesthetic. Apply creative forms like gradient meshes, noise textures, geometric patterns, layered transparencies, dramatic shadows, decorative borders, custom cursors, and grain overlays.\n\nNEVER use generic AI-generated aesthetics like overused font families (Inter, Roboto, Arial, system fonts), cliched color schemes (particularly purple gradients on white backgrounds), predictable layouts and component patterns, and cookie-cutter design that lacks context-specific character.\n\nInterpret creatively and make unexpected choices that feel genuinely designed for the context. No design should be the same. Vary between light and dark themes, different fonts, different aesthetics. NEVER converge on common choices (Space Grotesk, for example) across generations.\n\n**IMPORTANT**: Match implementation complexity to the aesthetic vision. Maximalist designs need elaborate code with extensive animations and effects. Minimalist or refined designs need restraint, precision, and careful attention to spacing, typography, and subtle details. Elegance comes from executing the vision well.\n\nRemember: Claude is capable of extraordinary creative work. Don't hold back, show what can truly be created when thinking outside the box and committing fully to a distinctive vision.\n",
+      "bodyMd": "This skill guides creation of distinctive, production-grade frontend interfaces that avoid generic \"AI slop\" aesthetics. Implement real working code with exceptional attention to aesthetic details and creative choices.\n\nThe user provides frontend requirements: a component, page, application, or interface to build. They may include context about the purpose, audience, or technical constraints.\n\n## Design Thinking\n\nBefore coding, understand the context and commit to a BOLD aesthetic direction:\n- **Purpose**: What problem does this interface solve? Who uses it?\n- **Tone**: Pick an extreme: brutally minimal, maximalist chaos, retro-futuristic, organic/natural, luxury/refined, playful/toy-like, editorial/magazine, brutalist/raw, art deco/geometric, soft/pastel, industrial/utilitarian, etc. There are so many flavors to choose from. Use these for inspiration but design one that is true to the aesthetic direction.\n- **Constraints**: Technical requirements (framework, performance, accessibility).\n- **Differentiation**: What makes this UNFORGETTABLE? What's the one thing someone will remember?\n\n**CRITICAL**: Choose a clear conceptual direction and execute it with precision. Bold maximalism and refined minimalism both work - the key is intentionality, not intensity.\n\nThen implement working code (HTML/CSS/JS, React, Vue, etc.) that is:\n- Production-grade and functional\n- Visually striking and memorable\n- Cohesive with a clear aesthetic point-of-view\n- Meticulously refined in every detail\n\n## Frontend Aesthetics Guidelines\n\nFocus on:\n- **Typography**: Choose fonts that are beautiful, unique, and interesting. Avoid generic fonts like Arial and Inter; opt instead for distinctive choices that elevate the frontend's aesthetics; unexpected, characterful font choices. Pair a distinctive display font with a refined body font.\n- **Color & Theme**: Commit to a cohesive aesthetic. Use CSS variables for consistency. Dominant colors with sharp accents outperform timid, evenly-distributed palettes.\n- **Motion**: Use animations for effects and micro-interactions. Prioritize CSS-only solutions for HTML. Use Motion library for React when available. Focus on high-impact moments: one well-orchestrated page load with staggered reveals (animation-delay) creates more delight than scattered micro-interactions. Use scroll-triggering and hover states that surprise.\n- **Spatial Composition**: Unexpected layouts. Asymmetry. Overlap. Diagonal flow. Grid-breaking elements. Generous negative space OR controlled density.\n- **Backgrounds & Visual Details**: Create atmosphere and depth rather than defaulting to solid colors. Add contextual effects and textures that match the overall aesthetic. Apply creative forms like gradient meshes, noise textures, geometric patterns, layered transparencies, dramatic shadows, decorative borders, custom cursors, and grain overlays.\n\nNEVER use generic AI-generated aesthetics like overused font families (Inter, Roboto, Arial, system fonts), cliched color schemes (particularly purple gradients on white backgrounds), predictable layouts and component patterns, and cookie-cutter design that lacks context-specific character.\n\nInterpret creatively and make unexpected choices that feel genuinely designed for the context. No design should be the same. Vary between light and dark themes, different fonts, different aesthetics. NEVER converge on common choices (Space Grotesk, for example) across generations.\n\n**IMPORTANT**: Match implementation complexity to the aesthetic vision. Maximalist designs need elaborate code with extensive animations and effects. Minimalist or refined designs need restraint, precision, and careful attention to spacing, typography, and subtle details. Elegance comes from executing the vision well.\n\nRemember: Claude is capable of extraordinary creative work. Don't hold back, show what can truly be created when thinking outside the box and committing fully to a distinctive vision.\n"
+    },
+    {
+      "slug": "mcp-builder",
+      "name": "mcp-builder",
+      "dir": "mcp-builder/skills/mcp-builder",
+      "path": "mcp-builder/skills/mcp-builder/SKILL.md",
+      "desc": "Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK).",
+      "descZh": "",
+      "triggers": [
+        "services"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "node",
+          "python",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/composio-community/awesome-claude-plugins.git",
+        "copy": "cp -r mcp-builder/skills/mcp-builder ~/.claude/skills/mcp-builder",
+        "raw": "https://raw.githubusercontent.com/composio-community/awesome-claude-plugins/c511c77b6e4860bc076e5c5b3ac55c51030d602d/mcp-builder/skills/mcp-builder/SKILL.md",
+        "saveAs": "~/.claude/skills/mcp-builder/SKILL.md",
+        "marketplace": "/plugin marketplace add composio-community/awesome-claude-plugins"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:5d5b121c1cb06becc8f18120f422c4d6fdf7bb370dbf95d8b93840191df3bd3f",
+      "bytes": 4617,
+      "wordCount": 571,
+      "repoLicense": "",
+      "commit": "c511c77b6e4860bc076e5c5b3ac55c51030d602d",
+      "branch": "master",
+      "body": "---\nname: mcp-builder\ndescription: Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK).\n---\n\n# MCP Server Development Guide\n\n## Overview\n\nTo create high-quality MCP (Model Context Protocol) servers that enable LLMs to effectively interact with external services, use this skill. An MCP server provides tools that allow LLMs to access external services and APIs.\n\n## High-Level Workflow\n\nCreating a high-quality MCP server involves four main phases:\n\n### Phase 1: Deep Research and Planning\n\n#### Agent-Centric Design Principles\n\n**Build for Workflows, Not Just API Endpoints:**\n- Don't simply wrap existing API endpoints - build thoughtful, high-impact workflow tools\n- Consolidate related operations (e.g., `schedule_event` that both checks availability and creates event)\n- Focus on tools that enable complete tasks, not just individual API calls\n\n**Optimize for Limited Context:**\n- Agents have constrained context windows - make every token count\n- Return high-signal information, not exhaustive data dumps\n- Provide \"concise\" vs \"detailed\" response format options\n- Default to human-readable identifiers over technical codes\n\n**Design Actionable Error Messages:**\n- Error messages should guide agents toward correct usage patterns\n- Suggest specific next steps: \"Try using filter='active_only' to reduce results\"\n- Make errors educational, not just diagnostic\n\n#### Study MCP Protocol Documentation\n\n**Fetch the latest MCP protocol documentation:**\nUse WebFetch to load: `https://modelcontextprotocol.io/llms-full.txt`\n\n**For Python implementations:**\n- Python SDK: `https://raw.githubusercontent.com/modelcontextprotocol/python-sdk/main/README.md`\n\n**For Node/TypeScript implementations:**\n- TypeScript SDK: `https://raw.githubusercontent.com/modelcontextprotocol/typescript-sdk/main/README.md`\n\n### Phase 2: Implementation\n\n#### Set Up Project Structure\n\n**For Python:**\n- Create a single `.py` file or organize into modules if complex\n- Use the MCP Python SDK for tool registration\n- Define Pydantic models for input validation\n\n**For Node/TypeScript:**\n- Create proper project structure\n- Set up `package.json` and `tsconfig.json`\n- Use MCP TypeScript SDK\n- Define Zod schemas for input validation\n\n#### Implement Core Infrastructure First\n\nCreate shared utilities before implementing tools:\n- API request helper functions\n- Error handling utilities\n- Response formatting functions (JSON and Markdown)\n- Pagination helpers\n- Authentication/token management\n\n#### Implement Tools Systematically\n\nFor each tool:\n\n**Define Input Schema:**\n- Use Pydantic (Python) or Zod (TypeScript) for validation\n- Include proper constraints (min/max length, regex patterns)\n- Provide clear, descriptive field descriptions\n\n**Write Comprehensive Docstrings:**\n- One-line summary of what the tool does\n- Detailed explanation of purpose and functionality\n- Explicit parameter types with examples\n- Complete return type schema\n- Usage examples\n\n**Add Tool Annotations:**\n- `readOnlyHint`: true (for read-only operations)\n- `destructiveHint`: false (for non-destructive operations)\n- `idempotentHint`: true (if repeated calls have same effect)\n- `openWorldHint`: true (if interacting with external systems)\n\n### Phase 3: Review and Refine\n\n#### Code Quality Review\n\nReview the code for:\n- **DRY Principle**: No duplicated code between tools\n- **Composability**: Shared logic extracted into functions\n- **Consistency**: Similar operations return similar formats\n- **Error Handling**: All external calls have error handling\n- **Type Safety**: Full type coverage\n- **Documentation**: Every tool has comprehensive docstrings\n\n### Phase 4: Create Evaluations\n\nCreate comprehensive evaluations to test MCP server effectiveness.\n\nEach evaluation question must be:\n- **Independent**: Not dependent on other questions\n- **Read-only**: Only non-destructive operations required\n- **Complex**: Requiring multiple tool calls and deep exploration\n- **Realistic**: Based on real use cases\n- **Verifiable**: Single, clear answer that can be verified\n\n## Best Practices Summary\n\n1. Build for workflows, not just API endpoints\n2. Optimize for limited context windows\n3. Design actionable error messages\n4. Follow natural task subdivisions\n5. Use evaluation-driven development\n6. Study framework documentation thoroughly\n7. Implement core infrastructure first\n8. Add proper tool annotations\n9. Test with realistic scenarios\n",
+      "bodyMd": "# MCP Server Development Guide\n\n## Overview\n\nTo create high-quality MCP (Model Context Protocol) servers that enable LLMs to effectively interact with external services, use this skill. An MCP server provides tools that allow LLMs to access external services and APIs.\n\n## High-Level Workflow\n\nCreating a high-quality MCP server involves four main phases:\n\n### Phase 1: Deep Research and Planning\n\n#### Agent-Centric Design Principles\n\n**Build for Workflows, Not Just API Endpoints:**\n- Don't simply wrap existing API endpoints - build thoughtful, high-impact workflow tools\n- Consolidate related operations (e.g., `schedule_event` that both checks availability and creates event)\n- Focus on tools that enable complete tasks, not just individual API calls\n\n**Optimize for Limited Context:**\n- Agents have constrained context windows - make every token count\n- Return high-signal information, not exhaustive data dumps\n- Provide \"concise\" vs \"detailed\" response format options\n- Default to human-readable identifiers over technical codes\n\n**Design Actionable Error Messages:**\n- Error messages should guide agents toward correct usage patterns\n- Suggest specific next steps: \"Try using filter='active_only' to reduce results\"\n- Make errors educational, not just diagnostic\n\n#### Study MCP Protocol Documentation\n\n**Fetch the latest MCP protocol documentation:**\nUse WebFetch to load: `https://modelcontextprotocol.io/llms-full.txt`\n\n**For Python implementations:**\n- Python SDK: `https://raw.githubusercontent.com/modelcontextprotocol/python-sdk/main/README.md`\n\n**For Node/TypeScript implementations:**\n- TypeScript SDK: `https://raw.githubusercontent.com/modelcontextprotocol/typescript-sdk/main/README.md`\n\n### Phase 2: Implementation\n\n#### Set Up Project Structure\n\n**For Python:**\n- Create a single `.py` file or organize into modules if complex\n- Use the MCP Python SDK for tool registration\n- Define Pydantic models for input validation\n\n**For Node/TypeScript:**\n- Create proper project structure\n- Set up `package.json` and `tsconfig.json`\n- Use MCP TypeScript SDK\n- Define Zod schemas for input validation\n\n#### Implement Core Infrastructure First\n\nCreate shared utilities before implementing tools:\n- API request helper functions\n- Error handling utilities\n- Response formatting functions (JSON and Markdown)\n- Pagination helpers\n- Authentication/token management\n\n#### Implement Tools Systematically\n\nFor each tool:\n\n**Define Input Schema:**\n- Use Pydantic (Python) or Zod (TypeScript) for validation\n- Include proper constraints (min/max length, regex patterns)\n- Provide clear, descriptive field descriptions\n\n**Write Comprehensive Docstrings:**\n- One-line summary of what the tool does\n- Detailed explanation of purpose and functionality\n- Explicit parameter types with examples\n- Complete return type schema\n- Usage examples\n\n**Add Tool Annotations:**\n- `readOnlyHint`: true (for read-only operations)\n- `destructiveHint`: false (for non-destructive operations)\n- `idempotentHint`: true (if repeated calls have same effect)\n- `openWorldHint`: true (if interacting with external systems)\n\n### Phase 3: Review and Refine\n\n#### Code Quality Review\n\nReview the code for:\n- **DRY Principle**: No duplicated code between tools\n- **Composability**: Shared logic extracted into functions\n- **Consistency**: Similar operations return similar formats\n- **Error Handling**: All external calls have error handling\n- **Type Safety**: Full type coverage\n- **Documentation**: Every tool has comprehensive docstrings\n\n### Phase 4: Create Evaluations\n\nCreate comprehensive evaluations to test MCP server effectiveness.\n\nEach evaluation question must be:\n- **Independent**: Not dependent on other questions\n- **Read-only**: Only non-destructive operations required\n- **Complex**: Requiring multiple tool calls and deep exploration\n- **Realistic**: Based on real use cases\n- **Verifiable**: Single, clear answer that can be verified\n\n## Best Practices Summary\n\n1. Build for workflows, not just API endpoints\n2. Optimize for limited context windows\n3. Design actionable error messages\n4. Follow natural task subdivisions\n5. Use evaluation-driven development\n6. Study framework documentation thoroughly\n7. Implement core infrastructure first\n8. Add proper tool annotations\n9. Test with realistic scenarios\n"
+    },
+    {
+      "slug": "analyzer",
+      "name": "perf-analyzer",
+      "dir": "perf/skills/analyzer",
+      "path": "perf/skills/analyzer/SKILL.md",
+      "desc": "Use when synthesizing perf findings into evidence-backed recommendations and decisions.",
+      "descZh": "",
+      "triggers": [],
+      "version": "1.0.0",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/composio-community/awesome-claude-plugins.git",
+        "copy": "cp -r perf/skills/analyzer ~/.claude/skills/analyzer",
+        "raw": "https://raw.githubusercontent.com/composio-community/awesome-claude-plugins/c511c77b6e4860bc076e5c5b3ac55c51030d602d/perf/skills/analyzer/SKILL.md",
+        "saveAs": "~/.claude/skills/analyzer/SKILL.md",
+        "marketplace": "/plugin marketplace add composio-community/awesome-claude-plugins"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:14e95a1cab2642f571d19e77a235ea06adac3763bb35b5b6821fa8198901b079",
+      "bytes": 779,
+      "wordCount": 88,
+      "repoLicense": "",
+      "commit": "c511c77b6e4860bc076e5c5b3ac55c51030d602d",
+      "branch": "master",
+      "body": "---\nname: perf-analyzer\ndescription: \"Use when synthesizing perf findings into evidence-backed recommendations and decisions.\"\nversion: 1.0.0\n---\n\n# perf-analyzer\n\nSynthesize performance investigation results into clear recommendations.\n\nFollow `docs/perf-requirements.md` as the canonical contract.\n\n## Inputs\n\n- Baseline data\n- Experiment results\n- Profiling evidence\n- Hypotheses tested\n- Breaking point results\n\n## Output Format\n\n```\nsummary: <2-3 sentences>\nrecommendations:\n  - <actionable recommendation 1>\n  - <actionable recommendation 2>\nabandoned:\n  - <hypothesis or experiment that failed>\nnext_steps:\n  - <if user should continue or stop>\n```\n\n## Constraints\n\n- Only cite evidence that exists in logs or code.\n- If data is insufficient, say so and request a re-run.\n",
+      "bodyMd": "# perf-analyzer\n\nSynthesize performance investigation results into clear recommendations.\n\nFollow `docs/perf-requirements.md` as the canonical contract.\n\n## Inputs\n\n- Baseline data\n- Experiment results\n- Profiling evidence\n- Hypotheses tested\n- Breaking point results\n\n## Output Format\n\n```\nsummary: <2-3 sentences>\nrecommendations:\n  - <actionable recommendation 1>\n  - <actionable recommendation 2>\nabandoned:\n  - <hypothesis or experiment that failed>\nnext_steps:\n  - <if user should continue or stop>\n```\n\n## Constraints\n\n- Only cite evidence that exists in logs or code.\n- If data is insufficient, say so and request a re-run.\n"
+    },
+    {
+      "slug": "baseline",
+      "name": "perf-baseline-manager",
+      "dir": "perf/skills/baseline",
+      "path": "perf/skills/baseline/SKILL.md",
+      "desc": "Use when managing perf baselines, consolidating results, or comparing versions. Ensures one baseline JSON per version.",
+      "descZh": "",
+      "triggers": [
+        "managing perf baselines",
+        "consolidating results",
+        "comparing versions"
+      ],
+      "version": "1.0.0",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/composio-community/awesome-claude-plugins.git",
+        "copy": "cp -r perf/skills/baseline ~/.claude/skills/baseline",
+        "raw": "https://raw.githubusercontent.com/composio-community/awesome-claude-plugins/c511c77b6e4860bc076e5c5b3ac55c51030d602d/perf/skills/baseline/SKILL.md",
+        "saveAs": "~/.claude/skills/baseline/SKILL.md",
+        "marketplace": "/plugin marketplace add composio-community/awesome-claude-plugins"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:82fc394f2c8ca20faac0658a80bc1c52845bb9227d6770c229d50bd24a4d64bc",
+      "bytes": 668,
+      "wordCount": 62,
+      "repoLicense": "",
+      "commit": "c511c77b6e4860bc076e5c5b3ac55c51030d602d",
+      "branch": "master",
+      "body": "---\nname: perf-baseline-manager\ndescription: \"Use when managing perf baselines, consolidating results, or comparing versions. Ensures one baseline JSON per version.\"\nversion: 1.0.0\n---\n\n# perf-baseline-manager\n\nManage baseline storage and comparison.\n\nFollow `docs/perf-requirements.md` as the canonical contract.\n\n## Required Rules\n\n- One baseline JSON per version.\n- Store under `{state-dir}/perf/baselines/<version>.json`.\n- Record metrics + environment metadata.\n\n## Output Format\n\n```\nbaseline_version: <version>\nmetrics: <summary>\nfile: <path>\n```\n\n## Constraints\n\n- Overwrite older baseline for the same version.\n- Do not create multiple files for one version.\n",
+      "bodyMd": "# perf-baseline-manager\n\nManage baseline storage and comparison.\n\nFollow `docs/perf-requirements.md` as the canonical contract.\n\n## Required Rules\n\n- One baseline JSON per version.\n- Store under `{state-dir}/perf/baselines/<version>.json`.\n- Record metrics + environment metadata.\n\n## Output Format\n\n```\nbaseline_version: <version>\nmetrics: <summary>\nfile: <path>\n```\n\n## Constraints\n\n- Overwrite older baseline for the same version.\n- Do not create multiple files for one version.\n"
+    },
+    {
+      "slug": "benchmark",
+      "name": "perf-benchmarker",
+      "dir": "perf/skills/benchmark",
+      "path": "perf/skills/benchmark/SKILL.md",
+      "desc": "Use when running performance benchmarks, establishing baselines, or validating regressions with sequential runs. Enforces 60s minimum runs (30s only for binary search) and no parallel benchmarks.",
+      "descZh": "",
+      "triggers": [
+        "establishing baselines"
+      ],
+      "version": "1.0.0",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/composio-community/awesome-claude-plugins.git",
+        "copy": "cp -r perf/skills/benchmark ~/.claude/skills/benchmark",
+        "raw": "https://raw.githubusercontent.com/composio-community/awesome-claude-plugins/c511c77b6e4860bc076e5c5b3ac55c51030d602d/perf/skills/benchmark/SKILL.md",
+        "saveAs": "~/.claude/skills/benchmark/SKILL.md",
+        "marketplace": "/plugin marketplace add composio-community/awesome-claude-plugins"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:d861b65d23dac24488b8998b07717def754862d037a81201f24279e1b2ca892a",
+      "bytes": 1074,
+      "wordCount": 97,
+      "repoLicense": "",
+      "commit": "c511c77b6e4860bc076e5c5b3ac55c51030d602d",
+      "branch": "master",
+      "body": "---\nname: perf-benchmarker\ndescription: \"Use when running performance benchmarks, establishing baselines, or validating regressions with sequential runs. Enforces 60s minimum runs (30s only for binary search) and no parallel benchmarks.\"\nversion: 1.0.0\nargument-hint: \"<command> [duration]\"\n---\n\n# perf-benchmarker\n\nRun sequential benchmarks with strict duration rules.\n\nFollow `docs/perf-requirements.md` as the canonical contract.\n\n## Required Rules\n\n- Benchmarks MUST run sequentially (never parallel).\n- Minimum duration: 60s per run (30s only for binary search).\n- Warmup: 10s minimum before measurement.\n- Re-run anomalies.\n\n## Output Format\n\n```\ncommand: <benchmark command>\nduration: <seconds>\nwarmup: <seconds>\nresults: <metrics summary>\nnotes: <anomalies or reruns>\n```\n\n## Output Contract\n\nBenchmarks MUST emit a JSON metrics block between markers:\n\n```\nPERF_METRICS_START\n{\"scenarios\":{\"low\":{\"latency_ms\":120},\"high\":{\"latency_ms\":450}}}\nPERF_METRICS_END\n```\n\n## Constraints\n\n- No short runs unless binary-search phase.\n- Do not change code while benchmarking.\n",
+      "bodyMd": "# perf-benchmarker\n\nRun sequential benchmarks with strict duration rules.\n\nFollow `docs/perf-requirements.md` as the canonical contract.\n\n## Required Rules\n\n- Benchmarks MUST run sequentially (never parallel).\n- Minimum duration: 60s per run (30s only for binary search).\n- Warmup: 10s minimum before measurement.\n- Re-run anomalies.\n\n## Output Format\n\n```\ncommand: <benchmark command>\nduration: <seconds>\nwarmup: <seconds>\nresults: <metrics summary>\nnotes: <anomalies or reruns>\n```\n\n## Output Contract\n\nBenchmarks MUST emit a JSON metrics block between markers:\n\n```\nPERF_METRICS_START\n{\"scenarios\":{\"low\":{\"latency_ms\":120},\"high\":{\"latency_ms\":450}}}\nPERF_METRICS_END\n```\n\n## Constraints\n\n- No short runs unless binary-search phase.\n- Do not change code while benchmarking.\n"
+    },
+    {
+      "slug": "code-paths",
+      "name": "perf-code-paths",
+      "dir": "perf/skills/code-paths",
+      "path": "perf/skills/code-paths/SKILL.md",
+      "desc": "Use when mapping code paths, entrypoints, and likely hot files before profiling.",
+      "descZh": "",
+      "triggers": [
+        "mapping code paths",
+        "entrypoints"
+      ],
+      "version": "1.0.0",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "go"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/composio-community/awesome-claude-plugins.git",
+        "copy": "cp -r perf/skills/code-paths ~/.claude/skills/code-paths",
+        "raw": "https://raw.githubusercontent.com/composio-community/awesome-claude-plugins/c511c77b6e4860bc076e5c5b3ac55c51030d602d/perf/skills/code-paths/SKILL.md",
+        "saveAs": "~/.claude/skills/code-paths/SKILL.md",
+        "marketplace": "/plugin marketplace add composio-community/awesome-claude-plugins"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:e5b89587e7e9412e5cc7f2cd87a265fe996302180405fbd589215627c1b3462f",
+      "bytes": 779,
+      "wordCount": 87,
+      "repoLicense": "",
+      "commit": "c511c77b6e4860bc076e5c5b3ac55c51030d602d",
+      "branch": "master",
+      "body": "---\nname: perf-code-paths\ndescription: \"Use when mapping code paths, entrypoints, and likely hot files before profiling.\"\nversion: 1.0.0\n---\n\n# perf-code-paths\n\nIdentify likely implementation paths for a performance scenario.\n\nFollow `docs/perf-requirements.md` as the canonical contract.\n\n## Required Steps\n\n1. Use repo-map if available; otherwise use grep for entrypoints and handlers.\n2. List top candidate files/symbols tied to the scenario.\n3. Include imports/exports or call chains when relevant.\n\n## Output Format\n\n```\nkeywords: <comma-separated list>\npaths:\n  - file: <path>\n    symbols: [<symbol1>, <symbol2>]\n    evidence: <short reason>\n```\n\n## Constraints\n\n- Focus only on supported languages (Rust, Java, JS/TS, Go, Python).\n- Keep to the most relevant 10-15 files.\n",
+      "bodyMd": "# perf-code-paths\n\nIdentify likely implementation paths for a performance scenario.\n\nFollow `docs/perf-requirements.md` as the canonical contract.\n\n## Required Steps\n\n1. Use repo-map if available; otherwise use grep for entrypoints and handlers.\n2. List top candidate files/symbols tied to the scenario.\n3. Include imports/exports or call chains when relevant.\n\n## Output Format\n\n```\nkeywords: <comma-separated list>\npaths:\n  - file: <path>\n    symbols: [<symbol1>, <symbol2>]\n    evidence: <short reason>\n```\n\n## Constraints\n\n- Focus only on supported languages (Rust, Java, JS/TS, Go, Python).\n- Keep to the most relevant 10-15 files.\n"
+    },
+    {
+      "slug": "investigation-logger",
+      "name": "perf-investigation-logger",
+      "dir": "perf/skills/investigation-logger",
+      "path": "perf/skills/investigation-logger/SKILL.md",
+      "desc": "Use when appending structured perf investigation notes and evidence.",
+      "descZh": "",
+      "triggers": [],
+      "version": "1.0.0",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/composio-community/awesome-claude-plugins.git",
+        "copy": "cp -r perf/skills/investigation-logger ~/.claude/skills/investigation-logger",
+        "raw": "https://raw.githubusercontent.com/composio-community/awesome-claude-plugins/c511c77b6e4860bc076e5c5b3ac55c51030d602d/perf/skills/investigation-logger/SKILL.md",
+        "saveAs": "~/.claude/skills/investigation-logger/SKILL.md",
+        "marketplace": "/plugin marketplace add composio-community/awesome-claude-plugins"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:bdebe26ba5856894cb5f025bba2f3d19c0770902ed732a3c07885b1b160bc248",
+      "bytes": 750,
+      "wordCount": 78,
+      "repoLicense": "",
+      "commit": "c511c77b6e4860bc076e5c5b3ac55c51030d602d",
+      "branch": "master",
+      "body": "---\nname: perf-investigation-logger\ndescription: \"Use when appending structured perf investigation notes and evidence.\"\nversion: 1.0.0\n---\n\n# perf-investigation-logger\n\nAppend structured investigation notes to `{state-dir}/perf/investigations/<id>.md`.\n\nFollow `docs/perf-requirements.md` as the canonical contract.\n\n## Required Content\n\n1. Exact user quotes (verbatim)\n2. Phase summary\n3. Decisions and rationale\n4. Evidence pointers (files, metrics, commands)\n\n## Output Format\n\n```\n## <Phase Name> - <YYYY-MM-DD>\n\n**User Quote:** \"<exact quote>\"\n\n**Summary**\n- ...\n\n**Evidence**\n- Command: `...`\n- File: `path:line`\n\n**Decision**\n- ...\n```\n\n## Constraints\n\n- Use `AI_STATE_DIR` for state path (default `.claude`).\n- Do not paraphrase user quotes.\n",
+      "bodyMd": "# perf-investigation-logger\n\nAppend structured investigation notes to `{state-dir}/perf/investigations/<id>.md`.\n\nFollow `docs/perf-requirements.md` as the canonical contract.\n\n## Required Content\n\n1. Exact user quotes (verbatim)\n2. Phase summary\n3. Decisions and rationale\n4. Evidence pointers (files, metrics, commands)\n\n## Output Format\n\n```\n## <Phase Name> - <YYYY-MM-DD>\n\n**User Quote:** \"<exact quote>\"\n\n**Summary**\n- ...\n\n**Evidence**\n- Command: `...`\n- File: `path:line`\n\n**Decision**\n- ...\n```\n\n## Constraints\n\n- Use `AI_STATE_DIR` for state path (default `.claude`).\n- Do not paraphrase user quotes.\n"
+    },
+    {
+      "slug": "profile",
+      "name": "perf-profiler",
+      "dir": "perf/skills/profile",
+      "path": "perf/skills/profile/SKILL.md",
+      "desc": "Use when profiling CPU/memory hot paths, generating flame graphs, or capturing JFR/perf evidence.",
+      "descZh": "",
+      "triggers": [
+        "generating flame graphs"
+      ],
+      "version": "1.0.0",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/composio-community/awesome-claude-plugins.git",
+        "copy": "cp -r perf/skills/profile ~/.claude/skills/profile",
+        "raw": "https://raw.githubusercontent.com/composio-community/awesome-claude-plugins/c511c77b6e4860bc076e5c5b3ac55c51030d602d/perf/skills/profile/SKILL.md",
+        "saveAs": "~/.claude/skills/profile/SKILL.md",
+        "marketplace": "/plugin marketplace add composio-community/awesome-claude-plugins"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:056e7d39cc3ec811a373cb7ab7e4acf5502e913bdfddd75bba6d8c18dc548aed",
+      "bytes": 726,
+      "wordCount": 76,
+      "repoLicense": "",
+      "commit": "c511c77b6e4860bc076e5c5b3ac55c51030d602d",
+      "branch": "master",
+      "body": "---\nname: perf-profiler\ndescription: \"Use when profiling CPU/memory hot paths, generating flame graphs, or capturing JFR/perf evidence.\"\nversion: 1.0.0\nargument-hint: \"<tool> <command>\"\n---\n\n# perf-profiler\n\nRun profiling tools and capture hotspots with evidence.\n\nFollow `docs/perf-requirements.md` as the canonical contract.\n\n## Required Rules\n\n- Verify debug symbols before profiling.\n- Capture file:line for hotspots.\n- Provide flame graph or equivalent output when possible.\n\n## Output Format\n\n```\ntool: <profiler>\ncommand: <command>\nhotspots:\n  - file:line - reason\nartifacts:\n  - <path to flame graph or profile>\n```\n\n## Constraints\n\n- No profiling without a clear scenario.\n- Keep outputs minimal and evidence-backed.\n",
+      "bodyMd": "# perf-profiler\n\nRun profiling tools and capture hotspots with evidence.\n\nFollow `docs/perf-requirements.md` as the canonical contract.\n\n## Required Rules\n\n- Verify debug symbols before profiling.\n- Capture file:line for hotspots.\n- Provide flame graph or equivalent output when possible.\n\n## Output Format\n\n```\ntool: <profiler>\ncommand: <command>\nhotspots:\n  - file:line - reason\nartifacts:\n  - <path to flame graph or profile>\n```\n\n## Constraints\n\n- No profiling without a clear scenario.\n- Keep outputs minimal and evidence-backed.\n"
+    },
+    {
+      "slug": "theory-tester",
+      "name": "perf-theory-tester",
+      "dir": "perf/skills/theory-tester",
+      "path": "perf/skills/theory-tester/SKILL.md",
+      "desc": "Use when running controlled perf experiments to validate hypotheses.",
+      "descZh": "",
+      "triggers": [],
+      "version": "1.0.0",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/composio-community/awesome-claude-plugins.git",
+        "copy": "cp -r perf/skills/theory-tester ~/.claude/skills/theory-tester",
+        "raw": "https://raw.githubusercontent.com/composio-community/awesome-claude-plugins/c511c77b6e4860bc076e5c5b3ac55c51030d602d/perf/skills/theory-tester/SKILL.md",
+        "saveAs": "~/.claude/skills/theory-tester/SKILL.md",
+        "marketplace": "/plugin marketplace add composio-community/awesome-claude-plugins"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:f6e800b92e391cb9928def1d6b86656437fd38879ac4e31d749d0ff429d2579c",
+      "bytes": 731,
+      "wordCount": 82,
+      "repoLicense": "",
+      "commit": "c511c77b6e4860bc076e5c5b3ac55c51030d602d",
+      "branch": "master",
+      "body": "---\nname: perf-theory-tester\ndescription: \"Use when running controlled perf experiments to validate hypotheses.\"\nversion: 1.0.0\n---\n\n# perf-theory-tester\n\nTest hypotheses using controlled experiments.\n\nFollow `docs/perf-requirements.md` as the canonical contract.\n\n## Required Steps\n\n1. Confirm baseline is clean.\n2. Apply a single change tied to the hypothesis.\n3. Run 2+ validation passes.\n4. Revert to baseline before the next experiment.\n\n## Output Format\n\n```\nhypothesis: <id>\nchange: <summary>\ndelta: <metrics>\nverdict: accept|reject|inconclusive\nevidence:\n  - command: <benchmark command>\n  - files: <changed files>\n```\n\n## Constraints\n\n- One change per experiment.\n- No parallel benchmarks.\n- Record evidence for each run.\n",
+      "bodyMd": "# perf-theory-tester\n\nTest hypotheses using controlled experiments.\n\nFollow `docs/perf-requirements.md` as the canonical contract.\n\n## Required Steps\n\n1. Confirm baseline is clean.\n2. Apply a single change tied to the hypothesis.\n3. Run 2+ validation passes.\n4. Revert to baseline before the next experiment.\n\n## Output Format\n\n```\nhypothesis: <id>\nchange: <summary>\ndelta: <metrics>\nverdict: accept|reject|inconclusive\nevidence:\n  - command: <benchmark command>\n  - files: <changed files>\n```\n\n## Constraints\n\n- One change per experiment.\n- No parallel benchmarks.\n- Record evidence for each run.\n"
+    },
+    {
+      "slug": "theory",
+      "name": "perf-theory-gatherer",
+      "dir": "perf/skills/theory",
+      "path": "perf/skills/theory/SKILL.md",
+      "desc": "Use when generating performance hypotheses backed by git history and code evidence.",
+      "descZh": "",
+      "triggers": [],
+      "version": "1.0.0",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/composio-community/awesome-claude-plugins.git",
+        "copy": "cp -r perf/skills/theory ~/.claude/skills/theory",
+        "raw": "https://raw.githubusercontent.com/composio-community/awesome-claude-plugins/c511c77b6e4860bc076e5c5b3ac55c51030d602d/perf/skills/theory/SKILL.md",
+        "saveAs": "~/.claude/skills/theory/SKILL.md",
+        "marketplace": "/plugin marketplace add composio-community/awesome-claude-plugins"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:d47fb50a0e1f8e2dd98372f83964ea810d9fef9b84380e9f0c82cb2190442fae",
+      "bytes": 831,
+      "wordCount": 94,
+      "repoLicense": "",
+      "commit": "c511c77b6e4860bc076e5c5b3ac55c51030d602d",
+      "branch": "master",
+      "body": "---\nname: perf-theory-gatherer\ndescription: \"Use when generating performance hypotheses backed by git history and code evidence.\"\nversion: 1.0.0\n---\n\n# perf-theory-gatherer\n\nGenerate performance hypotheses for a specific scenario.\n\nFollow `docs/perf-requirements.md` as the canonical contract.\n\n## Required Steps\n\n1. Review recent git history (scope to relevant paths when possible).\n2. Identify code paths involved in the scenario (repo-map or grep).\n3. Produce up to 5 hypotheses with evidence + confidence.\n\n## Output Format\n\n```\nhypotheses:\n  - id: H1\n    hypothesis: <short description>\n    evidence: <file/path or git change>\n    confidence: low|medium|high\n  - id: H2\n    ...\n```\n\n## Constraints\n\n- MUST check git history before hypothesizing.\n- No optimization suggestions; only hypotheses.\n- Keep to 5 hypotheses maximum.\n",
+      "bodyMd": "# perf-theory-gatherer\n\nGenerate performance hypotheses for a specific scenario.\n\nFollow `docs/perf-requirements.md` as the canonical contract.\n\n## Required Steps\n\n1. Review recent git history (scope to relevant paths when possible).\n2. Identify code paths involved in the scenario (repo-map or grep).\n3. Produce up to 5 hypotheses with evidence + confidence.\n\n## Output Format\n\n```\nhypotheses:\n  - id: H1\n    hypothesis: <short description>\n    evidence: <file/path or git change>\n    confidence: low|medium|high\n  - id: H2\n    ...\n```\n\n## Constraints\n\n- MUST check git history before hypothesizing.\n- No optimization suggestions; only hypotheses.\n- Keep to 5 hypotheses maximum.\n"
+    },
+    {
+      "slug": "senior-frontend",
+      "name": "senior-frontend",
+      "dir": "senior-frontend/skills/senior-frontend",
+      "path": "senior-frontend/skills/senior-frontend/SKILL.md",
+      "desc": "Frontend development skill for React, Next.js, TypeScript, and Tailwind CSS applications. Use when building React components, optimizing Next.js performance, analyzing bundle sizes, scaffolding frontend projects, implementing accessibility, or reviewing frontend code quality.",
+      "descZh": "",
+      "triggers": [
+        "optimizing Next"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/composio-community/awesome-claude-plugins.git",
+        "copy": "cp -r senior-frontend/skills/senior-frontend ~/.claude/skills/senior-frontend",
+        "raw": "https://raw.githubusercontent.com/composio-community/awesome-claude-plugins/c511c77b6e4860bc076e5c5b3ac55c51030d602d/senior-frontend/skills/senior-frontend/SKILL.md",
+        "saveAs": "~/.claude/skills/senior-frontend/SKILL.md",
+        "marketplace": "/plugin marketplace add composio-community/awesome-claude-plugins"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:8be04c6277d69016360013b3464b2973cbe9036f0ee21aab3afeb82270980fc7",
+      "bytes": 4899,
+      "wordCount": 600,
+      "repoLicense": "",
+      "commit": "c511c77b6e4860bc076e5c5b3ac55c51030d602d",
+      "branch": "master",
+      "body": "---\nname: senior-frontend\ndescription: Frontend development skill for React, Next.js, TypeScript, and Tailwind CSS applications. Use when building React components, optimizing Next.js performance, analyzing bundle sizes, scaffolding frontend projects, implementing accessibility, or reviewing frontend code quality.\n---\n\n# Senior Frontend\n\nFrontend development patterns, performance optimization, and automation tools for React/Next.js applications.\n\n## Project Scaffolding\n\nGenerate a new Next.js or React project with TypeScript, Tailwind CSS, and best practice configurations.\n\n### Scaffolder Options\n\n| Option | Description |\n|--------|-------------|\n| `--template nextjs` | Next.js 14+ with App Router and Server Components |\n| `--template react` | React + Vite with TypeScript |\n| `--features auth` | Add NextAuth.js authentication |\n| `--features api` | Add React Query + API client |\n| `--features forms` | Add React Hook Form + Zod validation |\n| `--features testing` | Add Vitest + Testing Library |\n\n### Generated Structure (Next.js)\n\n```\nmy-app/\n├── app/\n│   ├── layout.tsx        # Root layout with fonts\n│   ├── page.tsx          # Home page\n│   ├── globals.css       # Tailwind + CSS variables\n│   └── api/health/route.ts\n├── components/\n│   ├── ui/               # Button, Input, Card\n│   └── layout/           # Header, Footer, Sidebar\n├── hooks/                # useDebounce, useLocalStorage\n├── lib/                  # utils (cn), constants\n├── types/                # TypeScript interfaces\n├── tailwind.config.ts\n├── next.config.js\n└── package.json\n```\n\n## Component Generation\n\nGenerate React components with TypeScript, tests, and Storybook stories.\n\n### Generator Options\n\n| Option | Description |\n|--------|-------------|\n| `--type client` | Client component with 'use client' (default) |\n| `--type server` | Async server component |\n| `--type hook` | Custom React hook |\n| `--with-test` | Include test file |\n| `--with-story` | Include Storybook story |\n\n## Bundle Analysis\n\nAnalyze package.json and project structure for bundle optimization opportunities.\n\n### Heavy Dependencies to Replace\n\n| Package | Size | Alternative |\n|---------|------|-------------|\n| moment | 290KB | date-fns (12KB) or dayjs (2KB) |\n| lodash | 71KB | lodash-es with tree-shaking |\n| axios | 14KB | Native fetch or ky (3KB) |\n| jquery | 87KB | Native DOM APIs |\n| @mui/material | Large | shadcn/ui or Radix UI |\n\n## React Patterns\n\n### Compound Components\n\n```tsx\nconst Tabs = ({ children }) => {\n  const [active, setActive] = useState(0);\n  return (\n    <TabsContext.Provider value={{ active, setActive }}>\n      {children}\n    </TabsContext.Provider>\n  );\n};\n\nTabs.List = TabList;\nTabs.Panel = TabPanel;\n```\n\n### Custom Hooks\n\n```tsx\nfunction useDebounce<T>(value: T, delay = 500): T {\n  const [debouncedValue, setDebouncedValue] = useState(value);\n\n  useEffect(() => {\n    const timer = setTimeout(() => setDebouncedValue(value), delay);\n    return () => clearTimeout(timer);\n  }, [value, delay]);\n\n  return debouncedValue;\n}\n```\n\n## Next.js Optimization\n\n### Server vs Client Components\n\nUse Server Components by default. Add 'use client' only when you need:\n- Event handlers (onClick, onChange)\n- State (useState, useReducer)\n- Effects (useEffect)\n- Browser APIs\n\n### Image Optimization\n\n```tsx\nimport Image from 'next/image';\n\n// Above the fold - load immediately\n<Image\n  src=\"/hero.jpg\"\n  alt=\"Hero\"\n  width={1200}\n  height={600}\n  priority\n/>\n\n// Responsive image with fill\n<div className=\"relative aspect-video\">\n  <Image\n    src=\"/product.jpg\"\n    alt=\"Product\"\n    fill\n    sizes=\"(max-width: 768px) 100vw, 50vw\"\n    className=\"object-cover\"\n  />\n</div>\n```\n\n## Accessibility Checklist\n\n1. **Semantic HTML**: Use proper elements (`<button>`, `<nav>`, `<main>`)\n2. **Keyboard Navigation**: All interactive elements focusable\n3. **ARIA Labels**: Provide labels for icons and complex widgets\n4. **Color Contrast**: Minimum 4.5:1 for normal text\n5. **Focus Indicators**: Visible focus states\n\n```tsx\n// Accessible button\n<button\n  type=\"button\"\n  aria-label=\"Close dialog\"\n  onClick={onClose}\n  className=\"focus-visible:ring-2 focus-visible:ring-blue-500\"\n>\n  <XIcon aria-hidden=\"true\" />\n</button>\n```\n\n## Quick Reference\n\n### Tailwind CSS Utilities\n\n```tsx\nimport { cn } from '@/lib/utils';\n\n<button className={cn(\n  'px-4 py-2 rounded',\n  variant === 'primary' && 'bg-blue-500 text-white',\n  disabled && 'opacity-50 cursor-not-allowed'\n)} />\n```\n\n### TypeScript Patterns\n\n```tsx\n// Props with children\ninterface CardProps {\n  className?: string;\n  children: React.ReactNode;\n}\n\n// Generic component\ninterface ListProps<T> {\n  items: T[];\n  renderItem: (item: T) => React.ReactNode;\n}\n\nfunction List<T>({ items, renderItem }: ListProps<T>) {\n  return <ul>{items.map(renderItem)}</ul>;\n}\n```\n",
+      "bodyMd": "# Senior Frontend\n\nFrontend development patterns, performance optimization, and automation tools for React/Next.js applications.\n\n## Project Scaffolding\n\nGenerate a new Next.js or React project with TypeScript, Tailwind CSS, and best practice configurations.\n\n### Scaffolder Options\n\n| Option | Description |\n|--------|-------------|\n| `--template nextjs` | Next.js 14+ with App Router and Server Components |\n| `--template react` | React + Vite with TypeScript |\n| `--features auth` | Add NextAuth.js authentication |\n| `--features api` | Add React Query + API client |\n| `--features forms` | Add React Hook Form + Zod validation |\n| `--features testing` | Add Vitest + Testing Library |\n\n### Generated Structure (Next.js)\n\n```\nmy-app/\n├── app/\n│   ├── layout.tsx        # Root layout with fonts\n│   ├── page.tsx          # Home page\n│   ├── globals.css       # Tailwind + CSS variables\n│   └── api/health/route.ts\n├── components/\n│   ├── ui/               # Button, Input, Card\n│   └── layout/           # Header, Footer, Sidebar\n├── hooks/                # useDebounce, useLocalStorage\n├── lib/                  # utils (cn), constants\n├── types/                # TypeScript interfaces\n├── tailwind.config.ts\n├── next.config.js\n└── package.json\n```\n\n## Component Generation\n\nGenerate React components with TypeScript, tests, and Storybook stories.\n\n### Generator Options\n\n| Option | Description |\n|--------|-------------|\n| `--type client` | Client component with 'use client' (default) |\n| `--type server` | Async server component |\n| `--type hook` | Custom React hook |\n| `--with-test` | Include test file |\n| `--with-story` | Include Storybook story |\n\n## Bundle Analysis\n\nAnalyze package.json and project structure for bundle optimization opportunities.\n\n### Heavy Dependencies to Replace\n\n| Package | Size | Alternative |\n|---------|------|-------------|\n| moment | 290KB | date-fns (12KB) or dayjs (2KB) |\n| lodash | 71KB | lodash-es with tree-shaking |\n| axios | 14KB | Native fetch or ky (3KB) |\n| jquery | 87KB | Native DOM APIs |\n| @mui/material | Large | shadcn/ui or Radix UI |\n\n## React Patterns\n\n### Compound Components\n\n```tsx\nconst Tabs = ({ children }) => {\n  const [active, setActive] = useState(0);\n  return (\n    <TabsContext.Provider value={{ active, setActive }}>\n      {children}\n    </TabsContext.Provider>\n  );\n};\n\nTabs.List = TabList;\nTabs.Panel = TabPanel;\n```\n\n### Custom Hooks\n\n```tsx\nfunction useDebounce<T>(value: T, delay = 500): T {\n  const [debouncedValue, setDebouncedValue] = useState(value);\n\n  useEffect(() => {\n    const timer = setTimeout(() => setDebouncedValue(value), delay);\n    return () => clearTimeout(timer);\n  }, [value, delay]);\n\n  return debouncedValue;\n}\n```\n\n## Next.js Optimization\n\n### Server vs Client Components\n\nUse Server Components by default. Add 'use client' only when you need:\n- Event handlers (onClick, onChange)\n- State (useState, useReducer)\n- Effects (useEffect)\n- Browser APIs\n\n### Image Optimization\n\n```tsx\nimport Image from 'next/image';\n\n// Above the fold - load immediately\n<Image\n  src=\"/hero.jpg\"\n  alt=\"Hero\"\n  width={1200}\n  height={600}\n  priority\n/>\n\n// Responsive image with fill\n<div className=\"relative aspect-video\">\n  <Image\n    src=\"/product.jpg\"\n    alt=\"Product\"\n    fill\n    sizes=\"(max-width: 768px) 100vw, 50vw\"\n    className=\"object-cover\"\n  />\n</div>\n```\n\n## Accessibility Checklist\n\n1. **Semantic HTML**: Use proper elements (`<button>`, `<nav>`, `<main>`)\n2. **Keyboard Navigation**: All interactive elements focusable\n3. **ARIA Labels**: Provide labels for icons and complex widgets\n4. **Color Contrast**: Minimum 4.5:1 for normal text\n5. **Focus Indicators**: Visible focus states\n\n```tsx\n// Accessible button\n<button\n  type=\"button\"\n  aria-label=\"Close dialog\"\n  onClick={onClose}\n  className=\"focus-visible:ring-2 focus-visible:ring-blue-500\"\n>\n  <XIcon aria-hidden=\"true\" />\n</button>\n```\n\n## Quick Reference\n\n### Tailwind CSS Utilities\n\n```tsx\nimport { cn } from '@/lib/utils';\n\n<button className={cn(\n  'px-4 py-2 rounded',\n  variant === 'primary' && 'bg-blue-500 text-white',\n  disabled && 'opacity-50 cursor-not-allowed'\n)} />\n```\n\n### TypeScript Patterns\n\n```tsx\n// Props with children\ninterface CardProps {\n  className?: string;\n  children: React.ReactNode;\n}\n\n// Generic component\ninterface ListProps<T> {\n  items: T[];\n  renderItem: (item: T) => React.ReactNode;\n}\n\nfunction List<T>({ items, renderItem }: ListProps<T>) {\n  return <ul>{items.map(renderItem)}</ul>;\n}\n```\n"
+    },
+    {
+      "slug": "add-sub",
+      "name": "add-sub",
+      "dir": "skill-bus/skills/add-sub",
+      "path": "skill-bus/skills/add-sub/SKILL.md",
+      "desc": "Subscribe to a skill event. Adds a subscription that injects context before or after a skill runs. Supports optional conditions at both insert-level (inherited by all subscriptions) and subscription-level (AND-stacked). Conditions include fileExists, gitBranch, envSet, envEquals, fileContains (with optional regex).",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/composio-community/awesome-claude-plugins.git",
+        "copy": "cp -r skill-bus/skills/add-sub ~/.claude/skills/add-sub",
+        "raw": "https://raw.githubusercontent.com/composio-community/awesome-claude-plugins/c511c77b6e4860bc076e5c5b3ac55c51030d602d/skill-bus/skills/add-sub/SKILL.md",
+        "saveAs": "~/.claude/skills/add-sub/SKILL.md",
+        "marketplace": "/plugin marketplace add composio-community/awesome-claude-plugins"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:47176767b03b93d3c2b577035913c6d0b6ce65f49222483303ec9284f0ee391c",
+      "bytes": 520,
+      "wordCount": 22,
+      "repoLicense": "",
+      "commit": "c511c77b6e4860bc076e5c5b3ac55c51030d602d",
+      "branch": "master",
+      "body": "---\nname: add-sub\ndescription: Subscribe to a skill event. Adds a subscription that injects context before or after a skill runs. Supports optional conditions at both insert-level (inherited by all subscriptions) and subscription-level (AND-stacked). Conditions include fileExists, gitBranch, envSet, envEquals, fileContains (with optional regex).\n---\n\n# Subscribe to Skill Event\n\nThis skill delegates to the `/skill-bus:add-sub` command for the full interactive process.\n\nRun the command directly: `/skill-bus:add-sub`\n",
+      "bodyMd": "# Subscribe to Skill Event\n\nThis skill delegates to the `/skill-bus:add-sub` command for the full interactive process.\n\nRun the command directly: `/skill-bus:add-sub`\n"
+    },
+    {
+      "slug": "help",
+      "name": "help",
+      "dir": "skill-bus/skills/help",
+      "path": "skill-bus/skills/help/SKILL.md",
+      "desc": "Show skill-bus overview, status, and available commands. Quick reference for all skill-bus features.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/composio-community/awesome-claude-plugins.git",
+        "copy": "cp -r skill-bus/skills/help ~/.claude/skills/help",
+        "raw": "https://raw.githubusercontent.com/composio-community/awesome-claude-plugins/c511c77b6e4860bc076e5c5b3ac55c51030d602d/skill-bus/skills/help/SKILL.md",
+        "saveAs": "~/.claude/skills/help/SKILL.md",
+        "marketplace": "/plugin marketplace add composio-community/awesome-claude-plugins"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:4d3b1cc041f0a766eae906631eec68798eb6e17f96748ec6b17db83ee78c43dd",
+      "bytes": 252,
+      "wordCount": 16,
+      "repoLicense": "",
+      "commit": "c511c77b6e4860bc076e5c5b3ac55c51030d602d",
+      "branch": "master",
+      "body": "---\nname: help\ndescription: Show skill-bus overview, status, and available commands. Quick reference for all skill-bus features.\n---\n\n# Skill Bus Help\n\nThis skill delegates to the `/skill-bus:help` command.\n\nRun the command directly: `/skill-bus:help`\n",
+      "bodyMd": "# Skill Bus Help\n\nThis skill delegates to the `/skill-bus:help` command.\n\nRun the command directly: `/skill-bus:help`\n"
+    },
+    {
+      "slug": "list-subs",
+      "name": "list-subs",
+      "dir": "skill-bus/skills/list-subs",
+      "path": "skill-bus/skills/list-subs/SKILL.md",
+      "desc": "List all active skill-bus subscriptions across global and project scopes, showing merge status, insert-level and subscription-level conditions, effective condition stacking, and what would fire for each skill.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/composio-community/awesome-claude-plugins.git",
+        "copy": "cp -r skill-bus/skills/list-subs ~/.claude/skills/list-subs",
+        "raw": "https://raw.githubusercontent.com/composio-community/awesome-claude-plugins/c511c77b6e4860bc076e5c5b3ac55c51030d602d/skill-bus/skills/list-subs/SKILL.md",
+        "saveAs": "~/.claude/skills/list-subs/SKILL.md",
+        "marketplace": "/plugin marketplace add composio-community/awesome-claude-plugins"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:dfacf069fb681846abfe26db9d712511c6ca1517578ad08ec73ab49b156d69fb",
+      "bytes": 865,
+      "wordCount": 82,
+      "repoLicense": "",
+      "commit": "c511c77b6e4860bc076e5c5b3ac55c51030d602d",
+      "branch": "master",
+      "body": "---\nname: list-subs\ndescription: List all active skill-bus subscriptions across global and project scopes, showing merge status, insert-level and subscription-level conditions, effective condition stacking, and what would fire for each skill.\n---\n\n# List Skill Bus Subscriptions\n\n**Announce:** \"Listing skill-bus subscriptions.\"\n\n## Process\n\n### Step 1: Load Configs\n\nRead both config files:\n- `~/.claude/skill-bus.json` (global)\n- `.claude/skill-bus.json` (project, if exists)\n\n### Step 2: Show Settings\n\n(See `/skill-bus:list-subs` command for full display format)\n\n### Step 3: Show All Subscriptions\n\nPresent merged view showing effective state with insert-level and subscription-level conditions.\n\n### Step 4: Simulate (optional)\n\nIf the user asks \"what would fire for X?\", simulate matching with per-condition pass/fail at both insert and subscription levels.\n",
+      "bodyMd": "# List Skill Bus Subscriptions\n\n**Announce:** \"Listing skill-bus subscriptions.\"\n\n## Process\n\n### Step 1: Load Configs\n\nRead both config files:\n- `~/.claude/skill-bus.json` (global)\n- `.claude/skill-bus.json` (project, if exists)\n\n### Step 2: Show Settings\n\n(See `/skill-bus:list-subs` command for full display format)\n\n### Step 3: Show All Subscriptions\n\nPresent merged view showing effective state with insert-level and subscription-level conditions.\n\n### Step 4: Simulate (optional)\n\nIf the user asks \"what would fire for X?\", simulate matching with per-condition pass/fail at both insert and subscription levels.\n"
+    },
+    {
+      "slug": "pause-subs",
+      "name": "pause-subs",
+      "dir": "skill-bus/skills/pause-subs",
+      "path": "skill-bus/skills/pause-subs/SKILL.md",
+      "desc": "Temporarily disable the skill bus. Quick toggle to stop all subscriptions from firing without removing them.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/composio-community/awesome-claude-plugins.git",
+        "copy": "cp -r skill-bus/skills/pause-subs ~/.claude/skills/pause-subs",
+        "raw": "https://raw.githubusercontent.com/composio-community/awesome-claude-plugins/c511c77b6e4860bc076e5c5b3ac55c51030d602d/skill-bus/skills/pause-subs/SKILL.md",
+        "saveAs": "~/.claude/skills/pause-subs/SKILL.md",
+        "marketplace": "/plugin marketplace add composio-community/awesome-claude-plugins"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:c0d67327e69ecaf40dad533fb99b924e5160edd2e432e3d349c2bb955c5b5fbe",
+      "bytes": 888,
+      "wordCount": 105,
+      "repoLicense": "",
+      "commit": "c511c77b6e4860bc076e5c5b3ac55c51030d602d",
+      "branch": "master",
+      "body": "---\nname: pause-subs\ndescription: Temporarily disable the skill bus. Quick toggle to stop all subscriptions from firing without removing them.\n---\n\n# Pause Skill Bus\n\n**Announce:** \"Pausing skill-bus.\"\n\n## Process\n\n### Step 1: Determine Scope\n\nAsk using AskUserQuestion:\n**\"Pause at which level?\"**\n- **Global** - Pauses skill-bus everywhere. Sets `enabled: false` in `~/.claude/skill-bus.json`\n- **Project** - Pauses skill-bus for this project only. Sets `enabled: false` in `.claude/skill-bus.json`\n\n### Step 2: Update Config\n\nRead the appropriate config file. Set `settings.enabled` to `false`. If the file doesn't exist, create the directory first (`mkdir -p .claude` for project scope) then create the file with just:\n\n```json\n{\n  \"settings\": {\n    \"enabled\": false\n  }\n}\n```\n\n### Step 3: Confirm\n\nShow: \"Skill bus paused at [scope] level. Run /skill-bus:unpause-subs to re-enable.\"\n",
+      "bodyMd": "# Pause Skill Bus\n\n**Announce:** \"Pausing skill-bus.\"\n\n## Process\n\n### Step 1: Determine Scope\n\nAsk using AskUserQuestion:\n**\"Pause at which level?\"**\n- **Global** - Pauses skill-bus everywhere. Sets `enabled: false` in `~/.claude/skill-bus.json`\n- **Project** - Pauses skill-bus for this project only. Sets `enabled: false` in `.claude/skill-bus.json`\n\n### Step 2: Update Config\n\nRead the appropriate config file. Set `settings.enabled` to `false`. If the file doesn't exist, create the directory first (`mkdir -p .claude` for project scope) then create the file with just:\n\n```json\n{\n  \"settings\": {\n    \"enabled\": false\n  }\n}\n```\n\n### Step 3: Confirm\n\nShow: \"Skill bus paused at [scope] level. Run /skill-bus:unpause-subs to re-enable.\"\n"
+    },
+    {
+      "slug": "reflecting-on-sessions",
+      "name": "reflecting-on-sessions",
+      "dir": "skill-bus/skills/reflecting-on-sessions",
+      "path": "skill-bus/skills/reflecting-on-sessions/SKILL.md",
+      "desc": "Use when completing a plan, finishing a development branch, wrapping up a session, or at any natural transition between work phases — reviews skill-bus telemetry to identify subscription gaps and suggest improvements",
+      "descZh": "",
+      "triggers": [
+        "completing a plan",
+        "wrapping up a session",
+        "at any natura"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python3"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/composio-community/awesome-claude-plugins.git",
+        "copy": "cp -r skill-bus/skills/reflecting-on-sessions ~/.claude/skills/reflecting-on-sessions",
+        "raw": "https://raw.githubusercontent.com/composio-community/awesome-claude-plugins/c511c77b6e4860bc076e5c5b3ac55c51030d602d/skill-bus/skills/reflecting-on-sessions/SKILL.md",
+        "saveAs": "~/.claude/skills/reflecting-on-sessions/SKILL.md",
+        "marketplace": "/plugin marketplace add composio-community/awesome-claude-plugins"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:76ffcf442c71f2ae92538d2a65b76e3ca9544c9bbeec9d5a356daf6e843f2336",
+      "bytes": 2284,
+      "wordCount": 287,
+      "repoLicense": "",
+      "commit": "c511c77b6e4860bc076e5c5b3ac55c51030d602d",
+      "branch": "master",
+      "body": "---\nname: reflecting-on-sessions\ndescription: Use when completing a plan, finishing a development branch, wrapping up a session, or at any natural transition between work phases — reviews skill-bus telemetry to identify subscription gaps and suggest improvements\n---\n\n# Reflecting on Sessions\n\n**Announce:** \"[skill-bus] Reflecting on this session's skill-bus activity.\"\n\n## When to Reflect\n\nThis skill is for natural transition moments:\n- After executing a plan (all tasks complete)\n- After finishing a development branch\n- Before session wrap-up or handover\n- At any natural pause between work phases\n- When asked about skill-bus effectiveness\n\n## Process\n\n### Step 1: Check telemetry status\n\n```bash\nSB_CLI=$(ls ~/.claude/plugins/cache/*/skill-bus/*/lib/cli.py ~/.claude/plugins/repos/skill-bus/lib/cli.py 2>/dev/null | tail -1)\npython3 \"$SB_CLI\" status --cwd \"$PWD\"\n```\n\nIf telemetry is off, tell the user:\n> \"Skill-bus telemetry is disabled for this project. To enable session reflection, add `\"telemetry\": true` to your skill-bus config. For full coverage visibility, also add `\"observeUnmatched\": true`.\"\n\nStop here if telemetry is off.\n\n### Step 2: Run stats for this session\n\n```bash\nSB_CLI=$(ls ~/.claude/plugins/cache/*/skill-bus/*/lib/cli.py ~/.claude/plugins/repos/skill-bus/lib/cli.py 2>/dev/null | tail -1)\npython3 \"$SB_CLI\" stats --cwd \"$PWD\"\n```\n\n### Step 3: Interpret and present\n\nPresent the stats output to the user with brief interpretation:\n\n**If there are suggestions**, highlight the top 1-2:\n- For uncovered skills: \"I noticed [skill] ran N times without any subscription. Would you like to add one? I can run `/skill-bus:add-sub`.\"\n- For condition skips: \"[insert] was skipped N times due to conditions. This might mean the condition is too restrictive for your current workflow.\"\n\n**If everything looks healthy** (matches > 0, no suggestions):\n- \"Skill-bus is working well this session — N skills intercepted, M inserts injected. No gaps detected.\"\n\n**If no telemetry data**:\n- \"No telemetry data for this project yet. Have you invoked any skills this session?\"\n\n### Step 4: Offer next steps\n\nIf there are actionable suggestions:\n- \"Would you like me to run `/skill-bus:add-sub` for any of these?\"\n- \"Run `/skill-bus:report` anytime to check coverage.\"\n",
+      "bodyMd": "# Reflecting on Sessions\n\n**Announce:** \"[skill-bus] Reflecting on this session's skill-bus activity.\"\n\n## When to Reflect\n\nThis skill is for natural transition moments:\n- After executing a plan (all tasks complete)\n- After finishing a development branch\n- Before session wrap-up or handover\n- At any natural pause between work phases\n- When asked about skill-bus effectiveness\n\n## Process\n\n### Step 1: Check telemetry status\n\n```bash\nSB_CLI=$(ls ~/.claude/plugins/cache/*/skill-bus/*/lib/cli.py ~/.claude/plugins/repos/skill-bus/lib/cli.py 2>/dev/null | tail -1)\npython3 \"$SB_CLI\" status --cwd \"$PWD\"\n```\n\nIf telemetry is off, tell the user:\n> \"Skill-bus telemetry is disabled for this project. To enable session reflection, add `\"telemetry\": true` to your skill-bus config. For full coverage visibility, also add `\"observeUnmatched\": true`.\"\n\nStop here if telemetry is off.\n\n### Step 2: Run stats for this session\n\n```bash\nSB_CLI=$(ls ~/.claude/plugins/cache/*/skill-bus/*/lib/cli.py ~/.claude/plugins/repos/skill-bus/lib/cli.py 2>/dev/null | tail -1)\npython3 \"$SB_CLI\" stats --cwd \"$PWD\"\n```\n\n### Step 3: Interpret and present\n\nPresent the stats output to the user with brief interpretation:\n\n**If there are suggestions**, highlight the top 1-2:\n- For uncovered skills: \"I noticed [skill] ran N times without any subscription. Would you like to add one? I can run `/skill-bus:add-sub`.\"\n- For condition skips: \"[insert] was skipped N times due to conditions. This might mean the condition is too restrictive for your current workflow.\"\n\n**If everything looks healthy** (matches > 0, no suggestions):\n- \"Skill-bus is working well this session — N skills intercepted, M inserts injected. No gaps detected.\"\n\n**If no telemetry data**:\n- \"No telemetry data for this project yet. Have you invoked any skills this session?\"\n\n### Step 4: Offer next steps\n\nIf there are actionable suggestions:\n- \"Would you like me to run `/skill-bus:add-sub` for any of these?\"\n- \"Run `/skill-bus:report` anytime to check coverage.\"\n"
+    },
+    {
+      "slug": "remove-sub",
+      "name": "remove-sub",
+      "dir": "skill-bus/skills/remove-sub",
+      "path": "skill-bus/skills/remove-sub/SKILL.md",
+      "desc": "Unsubscribe from a skill event. Removes or disables subscriptions with scope-aware options.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/composio-community/awesome-claude-plugins.git",
+        "copy": "cp -r skill-bus/skills/remove-sub ~/.claude/skills/remove-sub",
+        "raw": "https://raw.githubusercontent.com/composio-community/awesome-claude-plugins/c511c77b6e4860bc076e5c5b3ac55c51030d602d/skill-bus/skills/remove-sub/SKILL.md",
+        "saveAs": "~/.claude/skills/remove-sub/SKILL.md",
+        "marketplace": "/plugin marketplace add composio-community/awesome-claude-plugins"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:ae160d90e7aa0569fe265ad69beb85fff4b5caba9012b4bff82c279c6e1480b2",
+      "bytes": 308,
+      "wordCount": 22,
+      "repoLicense": "",
+      "commit": "c511c77b6e4860bc076e5c5b3ac55c51030d602d",
+      "branch": "master",
+      "body": "---\nname: remove-sub\ndescription: Unsubscribe from a skill event. Removes or disables subscriptions with scope-aware options.\n---\n\n# Unsubscribe from Skill Event\n\nThis skill delegates to the `/skill-bus:remove-sub` command for the full interactive process.\n\nRun the command directly: `/skill-bus:remove-sub`\n",
+      "bodyMd": "# Unsubscribe from Skill Event\n\nThis skill delegates to the `/skill-bus:remove-sub` command for the full interactive process.\n\nRun the command directly: `/skill-bus:remove-sub`\n"
+    },
+    {
+      "slug": "unpause-subs",
+      "name": "unpause-subs",
+      "dir": "skill-bus/skills/unpause-subs",
+      "path": "skill-bus/skills/unpause-subs/SKILL.md",
+      "desc": "Re-enable the skill bus after pausing. Restores subscription processing.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/composio-community/awesome-claude-plugins.git",
+        "copy": "cp -r skill-bus/skills/unpause-subs ~/.claude/skills/unpause-subs",
+        "raw": "https://raw.githubusercontent.com/composio-community/awesome-claude-plugins/c511c77b6e4860bc076e5c5b3ac55c51030d602d/skill-bus/skills/unpause-subs/SKILL.md",
+        "saveAs": "~/.claude/skills/unpause-subs/SKILL.md",
+        "marketplace": "/plugin marketplace add composio-community/awesome-claude-plugins"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:443ae3a33f1b90f3e309c640148147f97f51c9f5e8e10cdd46834a3ae5f6359e",
+      "bytes": 777,
+      "wordCount": 100,
+      "repoLicense": "",
+      "commit": "c511c77b6e4860bc076e5c5b3ac55c51030d602d",
+      "branch": "master",
+      "body": "---\nname: unpause-subs\ndescription: Re-enable the skill bus after pausing. Restores subscription processing.\n---\n\n# Resume Skill Bus\n\n**Announce:** \"Resuming skill-bus.\"\n\n## Process\n\n### Step 1: Check Current State\n\nRead both config files. Identify which level(s) are paused.\n\n### Step 2: Resume\n\nIf only one level is paused, resume it automatically.\n\nIf both levels are paused, ask:\n**\"Both global and project are paused. Resume which?\"**\n- **Both**\n- **Global only**\n- **Project only**\n\nSet `settings.enabled` to `true` in the appropriate file(s).\n\nIf the project config file only contains `{\"settings\": {\"enabled\": false}}` and nothing else, delete it entirely (clean state).\n\n### Step 3: Confirm\n\nShow: \"Skill bus resumed at [scope] level. Subscriptions are active again.\"\n",
+      "bodyMd": "# Resume Skill Bus\n\n**Announce:** \"Resuming skill-bus.\"\n\n## Process\n\n### Step 1: Check Current State\n\nRead both config files. Identify which level(s) are paused.\n\n### Step 2: Resume\n\nIf only one level is paused, resume it automatically.\n\nIf both levels are paused, ask:\n**\"Both global and project are paused. Resume which?\"**\n- **Both**\n- **Global only**\n- **Project only**\n\nSet `settings.enabled` to `true` in the appropriate file(s).\n\nIf the project config file only contains `{\"settings\": {\"enabled\": false}}` and nothing else, delete it entirely (clean state).\n\n### Step 3: Confirm\n\nShow: \"Skill bus resumed at [scope] level. Subscriptions are active again.\"\n"
+    },
+    {
+      "slug": "theme-factory",
+      "name": "theme-factory",
+      "dir": "theme-factory/skills/theme-factory",
+      "path": "theme-factory/skills/theme-factory/SKILL.md",
+      "desc": "Toolkit for styling artifacts with a theme. These artifacts can be slides, docs, reportings, HTML landing pages, etc. There are 10 pre-set themes with colors/fonts that you can apply to any artifact that has been creating, or can generate a new theme on-the-fly.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/composio-community/awesome-claude-plugins.git",
+        "copy": "cp -r theme-factory/skills/theme-factory ~/.claude/skills/theme-factory",
+        "raw": "https://raw.githubusercontent.com/composio-community/awesome-claude-plugins/c511c77b6e4860bc076e5c5b3ac55c51030d602d/theme-factory/skills/theme-factory/SKILL.md",
+        "saveAs": "~/.claude/skills/theme-factory/SKILL.md",
+        "marketplace": "/plugin marketplace add composio-community/awesome-claude-plugins"
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:36a3c51af6169c059f7f9910cd5da6638f279ce85429734e2a0e07b89838e710",
+      "bytes": 2851,
+      "wordCount": 396,
+      "repoLicense": "",
+      "commit": "c511c77b6e4860bc076e5c5b3ac55c51030d602d",
+      "branch": "master",
+      "body": "---\nname: theme-factory\ndescription: Toolkit for styling artifacts with a theme. These artifacts can be slides, docs, reportings, HTML landing pages, etc. There are 10 pre-set themes with colors/fonts that you can apply to any artifact that has been creating, or can generate a new theme on-the-fly.\n---\n\n# Theme Factory Skill\n\nThis skill provides a curated collection of professional font and color themes, each with carefully selected color palettes and font pairings. Once a theme is chosen, it can be applied to any artifact.\n\n## Purpose\n\nTo apply consistent, professional styling to presentation slide decks, use this skill. Each theme includes:\n- A cohesive color palette with hex codes\n- Complementary font pairings for headers and body text\n- A distinct visual identity suitable for different contexts and audiences\n\n## Usage Instructions\n\nTo apply styling to a slide deck or other artifact:\n\n1. **Show the theme showcase**: Display all available themes visually\n2. **Ask for their choice**: Ask which theme to apply to the deck\n3. **Wait for selection**: Get explicit confirmation about the chosen theme\n4. **Apply the theme**: Once a theme has been chosen, apply the selected theme's colors and fonts to the deck/artifact\n\n## Themes Available\n\nThe following 10 themes are available:\n\n1. **Ocean Depths** - Professional and calming maritime theme\n2. **Sunset Boulevard** - Warm and vibrant sunset colors\n3. **Forest Canopy** - Natural and grounded earth tones\n4. **Modern Minimalist** - Clean and contemporary grayscale\n5. **Golden Hour** - Rich and warm autumnal palette\n6. **Arctic Frost** - Cool and crisp winter-inspired theme\n7. **Desert Rose** - Soft and sophisticated dusty tones\n8. **Tech Innovation** - Bold and modern tech aesthetic\n9. **Botanical Garden** - Fresh and organic garden colors\n10. **Midnight Galaxy** - Dramatic and cosmic deep tones\n\n## Theme Details\n\nEach theme includes complete specifications:\n- Cohesive color palette with hex codes\n- Complementary font pairings for headers and body text\n- Distinct visual identity suitable for different contexts and audiences\n\n## Application Process\n\nAfter a preferred theme is selected:\n1. Read the corresponding theme specifications\n2. Apply the specified colors and fonts consistently throughout the deck\n3. Ensure proper contrast and readability\n4. Maintain the theme's visual identity across all slides\n\n## Create your Own Theme\n\nTo handle cases where none of the existing themes work for an artifact, create a custom theme. Based on provided inputs, generate a new theme similar to the ones above. Give the theme a similar name describing what the font/color combinations represent. Use any basic description provided to choose appropriate colors/fonts. After generating the theme, show it for review and verification. Following that, apply the theme as described above.\n",
+      "bodyMd": "# Theme Factory Skill\n\nThis skill provides a curated collection of professional font and color themes, each with carefully selected color palettes and font pairings. Once a theme is chosen, it can be applied to any artifact.\n\n## Purpose\n\nTo apply consistent, professional styling to presentation slide decks, use this skill. Each theme includes:\n- A cohesive color palette with hex codes\n- Complementary font pairings for headers and body text\n- A distinct visual identity suitable for different contexts and audiences\n\n## Usage Instructions\n\nTo apply styling to a slide deck or other artifact:\n\n1. **Show the theme showcase**: Display all available themes visually\n2. **Ask for their choice**: Ask which theme to apply to the deck\n3. **Wait for selection**: Get explicit confirmation about the chosen theme\n4. **Apply the theme**: Once a theme has been chosen, apply the selected theme's colors and fonts to the deck/artifact\n\n## Themes Available\n\nThe following 10 themes are available:\n\n1. **Ocean Depths** - Professional and calming maritime theme\n2. **Sunset Boulevard** - Warm and vibrant sunset colors\n3. **Forest Canopy** - Natural and grounded earth tones\n4. **Modern Minimalist** - Clean and contemporary grayscale\n5. **Golden Hour** - Rich and warm autumnal palette\n6. **Arctic Frost** - Cool and crisp winter-inspired theme\n7. **Desert Rose** - Soft and sophisticated dusty tones\n8. **Tech Innovation** - Bold and modern tech aesthetic\n9. **Botanical Garden** - Fresh and organic garden colors\n10. **Midnight Galaxy** - Dramatic and cosmic deep tones\n\n## Theme Details\n\nEach theme includes complete specifications:\n- Cohesive color palette with hex codes\n- Complementary font pairings for headers and body text\n- Distinct visual identity suitable for different contexts and audiences\n\n## Application Process\n\nAfter a preferred theme is selected:\n1. Read the corresponding theme specifications\n2. Apply the specified colors and fonts consistently throughout the deck\n3. Ensure proper contrast and readability\n4. Maintain the theme's visual identity across all slides\n\n## Create your Own Theme\n\nTo handle cases where none of the existing themes work for an artifact, create a custom theme. Based on provided inputs, generate a new theme similar to the ones above. Give the theme a similar name describing what the font/color combinations represent. Use any basic description provided to choose appropriate colors/fonts. After generating the theme, show it for review and verification. Following that, apply the theme as described above.\n"
+    }
+  ]
+}

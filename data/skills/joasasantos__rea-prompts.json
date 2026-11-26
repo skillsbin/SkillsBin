@@ -1,0 +1,1036 @@
+{
+  "repo": "JoasASantos/REA-Prompts",
+  "commit": "9756618f25af1920c8965f8969820eed22247936",
+  "branch": "main",
+  "fetchedAt": "2026-11-26T21:12:16.430Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "reap-00-install-and-verify",
+      "name": "reap-00-install-and-verify",
+      "dir": "Skills/reap-00-install-and-verify",
+      "path": "Skills/reap-00-install-and-verify/SKILL.md",
+      "desc": "REA prompt pack:  Install & verify (0 ready-to-paste prompts). Use when doing reverse-engineering investigation of install & verify with REA (rea.tools) via an AI coding agent.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "npx"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/JoasASantos/REA-Prompts.git",
+        "copy": "cp -r Skills/reap-00-install-and-verify ~/.claude/skills/reap-00-install-and-verify",
+        "raw": "https://raw.githubusercontent.com/JoasASantos/REA-Prompts/9756618f25af1920c8965f8969820eed22247936/Skills/reap-00-install-and-verify/SKILL.md",
+        "saveAs": "~/.claude/skills/reap-00-install-and-verify/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:0a605c1c921549c50c0f56fed886b15f640c1df560aa6fb1d27525854e64ff45",
+      "bytes": 726,
+      "wordCount": 74,
+      "repoLicense": "MIT",
+      "commit": "9756618f25af1920c8965f8969820eed22247936",
+      "branch": "main",
+      "body": "---\nname: reap-00-install-and-verify\ndescription: REA prompt pack:  Install & verify (0 ready-to-paste prompts). Use when doing reverse-engineering investigation of install & verify with REA (rea.tools) via an AI coding agent.\n---\n\n# REAP — 0. Install & verify\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n```text\nInstall REA and connect it to this agent using: npx rea-agents@latest setup\n\nFirst, show me the installation plan and the configuration changes for my\napproval. After the install, verify the connection and list the available\ntools and workflows.\n```\n\n---\n",
+      "bodyMd": "# REAP — 0. Install & verify\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n```text\nInstall REA and connect it to this agent using: npx rea-agents@latest setup\n\nFirst, show me the installation plan and the configuration changes for my\napproval. After the install, verify the connection and list the available\ntools and workflows.\n```\n\n---\n"
+    },
+    {
+      "slug": "reap-01-getting-started",
+      "name": "reap-01-getting-started",
+      "dir": "Skills/reap-01-getting-started",
+      "path": "Skills/reap-01-getting-started/SKILL.md",
+      "desc": "REA prompt pack:  Getting started (2 ready-to-paste prompts). Use when doing reverse-engineering investigation of getting started with REA (rea.tools) via an AI coding agent.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/JoasASantos/REA-Prompts.git",
+        "copy": "cp -r Skills/reap-01-getting-started ~/.claude/skills/reap-01-getting-started",
+        "raw": "https://raw.githubusercontent.com/JoasASantos/REA-Prompts/9756618f25af1920c8965f8969820eed22247936/Skills/reap-01-getting-started/SKILL.md",
+        "saveAs": "~/.claude/skills/reap-01-getting-started/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:006f358c2d9e27267fdb738b878f66c184e3b8c39812f14a946d0c38a2a22090",
+      "bytes": 1061,
+      "wordCount": 132,
+      "repoLicense": "MIT",
+      "commit": "9756618f25af1920c8965f8969820eed22247936",
+      "branch": "main",
+      "body": "---\nname: reap-01-getting-started\ndescription: REA prompt pack:  Getting started (2 ready-to-paste prompts). Use when doing reverse-engineering investigation of getting started with REA (rea.tools) via an AI coding agent.\n---\n\n# REAP — 1. Getting started\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n### First exercise — trace a CSV export\n\n```text\nDownload https://rea.tools/examples/notes-example.zip into a new folder and\nextract the contents.\n\nUse REA to investigate what happens when I click \"Export notes\". Trace the\nflow from the button to the file write.\n\nShow where notes.csv is created, which fields it contains, and the files and\nfunctions that prove each step.\n```\n\n### First look at an unfamiliar app\n\n```text\nUse REA to give me a map of <program>: its main parts, entry points and the\nthree features worth investigating first. Keep it short and point to evidence\nfor each claim.\n```\n\n---\n",
+      "bodyMd": "# REAP — 1. Getting started\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n### First exercise — trace a CSV export\n\n```text\nDownload https://rea.tools/examples/notes-example.zip into a new folder and\nextract the contents.\n\nUse REA to investigate what happens when I click \"Export notes\". Trace the\nflow from the button to the file write.\n\nShow where notes.csv is created, which fields it contains, and the files and\nfunctions that prove each step.\n```\n\n### First look at an unfamiliar app\n\n```text\nUse REA to give me a map of <program>: its main parts, entry points and the\nthree features worth investigating first. Keep it short and point to evidence\nfor each claim.\n```\n\n---\n"
+    },
+    {
+      "slug": "reap-02-feature-tracing-any-program",
+      "name": "reap-02-feature-tracing-any-program",
+      "dir": "Skills/reap-02-feature-tracing-any-program",
+      "path": "Skills/reap-02-feature-tracing-any-program/SKILL.md",
+      "desc": "REA prompt pack:  Feature tracing (any program) (3 ready-to-paste prompts). Use when doing reverse-engineering investigation of feature tracing (any program) with REA (rea.tools) via an AI coding agent.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/JoasASantos/REA-Prompts.git",
+        "copy": "cp -r Skills/reap-02-feature-tracing-any-program ~/.claude/skills/reap-02-feature-tracing-any-program",
+        "raw": "https://raw.githubusercontent.com/JoasASantos/REA-Prompts/9756618f25af1920c8965f8969820eed22247936/Skills/reap-02-feature-tracing-any-program/SKILL.md",
+        "saveAs": "~/.claude/skills/reap-02-feature-tracing-any-program/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:e9919b65ccd2e7df32adaf1d92f22ee951291e61a47c6d2db91953592816d2ab",
+      "bytes": 1420,
+      "wordCount": 186,
+      "repoLicense": "MIT",
+      "commit": "9756618f25af1920c8965f8969820eed22247936",
+      "branch": "main",
+      "body": "---\nname: reap-02-feature-tracing-any-program\ndescription: REA prompt pack:  Feature tracing (any program) (3 ready-to-paste prompts). Use when doing reverse-engineering investigation of feature tracing (any program) with REA (rea.tools) via an AI coding agent.\n---\n\n# REAP — 2. Feature tracing (any program)\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n### Explain one feature\n\n```text\nUse REA to investigate how <FEATURE> works in <PATH TO APPLICATION>.\n\nIdentify the entry point, the functions involved, the data flow, the\ndependencies and the observable effects.\n\nFor every conclusion, present evidence: file, function, address or relevant\nsnippet. Separate confirmed facts, inferences and points that remain unknown.\n\nDo not execute the application in this step.\n```\n\n### Trace a button to its effect\n\n```text\nUse REA on <app>. Start at the <button name> button and trace what happens\nuntil the result is written, sent or shown. Name every module or function on\nthe path and what each one does.\n```\n\n### Recover a rule and rebuild it\n\n```text\nUse REA to find the rule that controls <behaviour> in <program>. Write the\nrule in plain words, then build a minimal standalone version I can run, and\ngive me one input that proves it matches the original.\n```\n\n---\n",
+      "bodyMd": "# REAP — 2. Feature tracing (any program)\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n### Explain one feature\n\n```text\nUse REA to investigate how <FEATURE> works in <PATH TO APPLICATION>.\n\nIdentify the entry point, the functions involved, the data flow, the\ndependencies and the observable effects.\n\nFor every conclusion, present evidence: file, function, address or relevant\nsnippet. Separate confirmed facts, inferences and points that remain unknown.\n\nDo not execute the application in this step.\n```\n\n### Trace a button to its effect\n\n```text\nUse REA on <app>. Start at the <button name> button and trace what happens\nuntil the result is written, sent or shown. Name every module or function on\nthe path and what each one does.\n```\n\n### Recover a rule and rebuild it\n\n```text\nUse REA to find the rule that controls <behaviour> in <program>. Write the\nrule in plain words, then build a minimal standalone version I can run, and\ngive me one input that proves it matches the original.\n```\n\n---\n"
+    },
+    {
+      "slug": "reap-03-native-binary-exploration",
+      "name": "reap-03-native-binary-exploration",
+      "dir": "Skills/reap-03-native-binary-exploration",
+      "path": "Skills/reap-03-native-binary-exploration/SKILL.md",
+      "desc": "REA prompt pack:  Native binary exploration (5 ready-to-paste prompts). Use when doing reverse-engineering investigation of native binary exploration with REA (rea.tools) via an AI coding agent.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/JoasASantos/REA-Prompts.git",
+        "copy": "cp -r Skills/reap-03-native-binary-exploration ~/.claude/skills/reap-03-native-binary-exploration",
+        "raw": "https://raw.githubusercontent.com/JoasASantos/REA-Prompts/9756618f25af1920c8965f8969820eed22247936/Skills/reap-03-native-binary-exploration/SKILL.md",
+        "saveAs": "~/.claude/skills/reap-03-native-binary-exploration/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:34dbb3a246fc3dbb9b7e5a092bf6aaf185bbf0114cff8215d195c535d8d8b4a6",
+      "bytes": 2147,
+      "wordCount": 273,
+      "repoLicense": "MIT",
+      "commit": "9756618f25af1920c8965f8969820eed22247936",
+      "branch": "main",
+      "body": "---\nname: reap-03-native-binary-exploration\ndescription: REA prompt pack:  Native binary exploration (5 ready-to-paste prompts). Use when doing reverse-engineering investigation of native binary exploration with REA (rea.tools) via an AI coding agent.\n---\n\n# REAP — 3. Native binary exploration\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n### Understand an executable\n\n```text\nAnalyze <PATH TO EXECUTABLE> with REA.\n\nIdentify format, architecture, runtime, libraries, relevant strings and\npossible entry points.\n\nMap the main components and explain their responsibilities with evidence.\nState which analysis engine is available and its limitations.\n\nStart with static analysis.\n```\n\n### Function deep-dive\n\n```text\nUse REA on <binary>. Pick the function that handles <operation> and produce:\ndecompiled pseudocode, its callers and callees, the data structures it reads\nor writes, and every string/global it touches. Annotate each finding with the\naddress range that proves it.\n```\n\n### Imports, strings and triage map\n\n```text\nUse REA on <binary>. Produce a triage map: file format and architecture,\nsection layout, linked libraries and imports grouped by capability (network,\nfilesystem, crypto, process/thread, registry/IPC), interesting strings with\ntheir addresses, and the top candidate entry points for <FEATURE>. Flag any\nsigns of packing, obfuscation or control-flow flattening.\n```\n\n### File-format reverse engineering\n\n```text\nUse REA on <program> to work out how it reads and writes <file type>.\nDescribe the structure field by field, show where each field is parsed, and\nwrite a small reader that prints a sample file.\n```\n\n### Protocol / serialization extraction\n\n```text\nUse REA on <binary> to recover the wire format used for <feature>'s network or\nIPC traffic. Show the marshal/unmarshal functions with addresses, list every\nfield (size, endianness, encoding), and produce a Python struct/proto\ndefinition plus one example message built from the code's constants.\n```\n\n---\n",
+      "bodyMd": "# REAP — 3. Native binary exploration\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n### Understand an executable\n\n```text\nAnalyze <PATH TO EXECUTABLE> with REA.\n\nIdentify format, architecture, runtime, libraries, relevant strings and\npossible entry points.\n\nMap the main components and explain their responsibilities with evidence.\nState which analysis engine is available and its limitations.\n\nStart with static analysis.\n```\n\n### Function deep-dive\n\n```text\nUse REA on <binary>. Pick the function that handles <operation> and produce:\ndecompiled pseudocode, its callers and callees, the data structures it reads\nor writes, and every string/global it touches. Annotate each finding with the\naddress range that proves it.\n```\n\n### Imports, strings and triage map\n\n```text\nUse REA on <binary>. Produce a triage map: file format and architecture,\nsection layout, linked libraries and imports grouped by capability (network,\nfilesystem, crypto, process/thread, registry/IPC), interesting strings with\ntheir addresses, and the top candidate entry points for <FEATURE>. Flag any\nsigns of packing, obfuscation or control-flow flattening.\n```\n\n### File-format reverse engineering\n\n```text\nUse REA on <program> to work out how it reads and writes <file type>.\nDescribe the structure field by field, show where each field is parsed, and\nwrite a small reader that prints a sample file.\n```\n\n### Protocol / serialization extraction\n\n```text\nUse REA on <binary> to recover the wire format used for <feature>'s network or\nIPC traffic. Show the marshal/unmarshal functions with addresses, list every\nfield (size, endianness, encoding), and produce a Python struct/proto\ndefinition plus one example message built from the code's constants.\n```\n\n---\n"
+    },
+    {
+      "slug": "reap-04-software-and-feature-cloning",
+      "name": "reap-04-software-and-feature-cloning",
+      "dir": "Skills/reap-04-software-and-feature-cloning",
+      "path": "Skills/reap-04-software-and-feature-cloning/SKILL.md",
+      "desc": "REA prompt pack:  Software & feature cloning (4 ready-to-paste prompts). Use when doing reverse-engineering investigation of software & feature cloning with REA (rea.tools) via an AI coding agent.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/JoasASantos/REA-Prompts.git",
+        "copy": "cp -r Skills/reap-04-software-and-feature-cloning ~/.claude/skills/reap-04-software-and-feature-cloning",
+        "raw": "https://raw.githubusercontent.com/JoasASantos/REA-Prompts/9756618f25af1920c8965f8969820eed22247936/Skills/reap-04-software-and-feature-cloning/SKILL.md",
+        "saveAs": "~/.claude/skills/reap-04-software-and-feature-cloning/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:02dc563d06ed4a8085b21210b03e1e030ecce81d3b4bc1f0a5a5b8c4ddc19ab8",
+      "bytes": 2336,
+      "wordCount": 293,
+      "repoLicense": "MIT",
+      "commit": "9756618f25af1920c8965f8969820eed22247936",
+      "branch": "main",
+      "body": "---\nname: reap-04-software-and-feature-cloning\ndescription: REA prompt pack:  Software & feature cloning (4 ready-to-paste prompts). Use when doing reverse-engineering investigation of software & feature cloning with REA (rea.tools) via an AI coding agent.\n---\n\n# REAP — 4. Software & feature cloning\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n> Clean-room methodology: extract *behavior*, not code. Never copy\n> proprietary source, assets, branding or licensing mechanisms.\n\n### Full application clone (behavioral)\n\n```text\nUse REA to study <application> as a black box for a clean-room clone.\n\nProduce CLONE_SPEC.md covering: every user-visible feature, screen and state\nmachine; inputs, outputs and edge cases; file formats and network protocols it\nuses; settings and persistence layout; error behaviors.\n\nFor each requirement, cite the evidence (function, address, string, captured\nrequest). Mark anything unconfirmed as UNKNOWN. Do not copy code or assets —\nI will implement from the spec only.\n```\n\n### Clone one feature into my own app\n\n```text\nUse REA to recover the exact behavior of <FEATURE> in <application>: trigger,\ninputs, processing steps, outputs, side effects and failure modes.\n\nThen implement <FEATURE> from scratch in <MY LANGUAGE/PROJECT> matching that\nbehavior, with tests derived from the recovered rules. List every observable\ndifference that remains between my version and the original.\n```\n\n### Validate a clone against the original\n\n```text\nCompare <MY IMPLEMENTATION> with the observed behavior of <ORIGINAL\nAPPLICATION>.\n\nUse verify_reconstruction, if available. Check results, errors, limits and\nstate transitions.\n\nPresent passing cases, divergences and behaviors not yet tested. Do not\nconsider equivalence demonstrated just because a few examples passed.\n```\n\n### UI/UX behavior cloning without assets\n\n```text\nUse REA on <application> to document its interaction model: layout logic,\nkeyboard shortcuts, command dispatch, undo/redo semantics and clipboard\nformats. Recreate the behavior in <my framework> using only my own visual\nassets, matching the documented semantics. Show which original function\nproves each documented rule.\n```\n\n---\n",
+      "bodyMd": "# REAP — 4. Software & feature cloning\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n> Clean-room methodology: extract *behavior*, not code. Never copy\n> proprietary source, assets, branding or licensing mechanisms.\n\n### Full application clone (behavioral)\n\n```text\nUse REA to study <application> as a black box for a clean-room clone.\n\nProduce CLONE_SPEC.md covering: every user-visible feature, screen and state\nmachine; inputs, outputs and edge cases; file formats and network protocols it\nuses; settings and persistence layout; error behaviors.\n\nFor each requirement, cite the evidence (function, address, string, captured\nrequest). Mark anything unconfirmed as UNKNOWN. Do not copy code or assets —\nI will implement from the spec only.\n```\n\n### Clone one feature into my own app\n\n```text\nUse REA to recover the exact behavior of <FEATURE> in <application>: trigger,\ninputs, processing steps, outputs, side effects and failure modes.\n\nThen implement <FEATURE> from scratch in <MY LANGUAGE/PROJECT> matching that\nbehavior, with tests derived from the recovered rules. List every observable\ndifference that remains between my version and the original.\n```\n\n### Validate a clone against the original\n\n```text\nCompare <MY IMPLEMENTATION> with the observed behavior of <ORIGINAL\nAPPLICATION>.\n\nUse verify_reconstruction, if available. Check results, errors, limits and\nstate transitions.\n\nPresent passing cases, divergences and behaviors not yet tested. Do not\nconsider equivalence demonstrated just because a few examples passed.\n```\n\n### UI/UX behavior cloning without assets\n\n```text\nUse REA on <application> to document its interaction model: layout logic,\nkeyboard shortcuts, command dispatch, undo/redo semantics and clipboard\nformats. Recreate the behavior in <my framework> using only my own visual\nassets, matching the documented semantics. Show which original function\nproves each documented rule.\n```\n\n---\n"
+    },
+    {
+      "slug": "reap-05-games",
+      "name": "reap-05-games",
+      "dir": "Skills/reap-05-games",
+      "path": "Skills/reap-05-games/SKILL.md",
+      "desc": "REA prompt pack:  Games (4 ready-to-paste prompts). Use when doing reverse-engineering investigation of games with REA (rea.tools) via an AI coding agent.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/JoasASantos/REA-Prompts.git",
+        "copy": "cp -r Skills/reap-05-games ~/.claude/skills/reap-05-games",
+        "raw": "https://raw.githubusercontent.com/JoasASantos/REA-Prompts/9756618f25af1920c8965f8969820eed22247936/Skills/reap-05-games/SKILL.md",
+        "saveAs": "~/.claude/skills/reap-05-games/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:2f7f47c7f4a389bf8c995947adb69a72ecc3a85a3c84f0ad1d9338bbffdeb234",
+      "bytes": 1695,
+      "wordCount": 231,
+      "repoLicense": "MIT",
+      "commit": "9756618f25af1920c8965f8969820eed22247936",
+      "branch": "main",
+      "body": "---\nname: reap-05-games\ndescription: REA prompt pack:  Games (4 ready-to-paste prompts). Use when doing reverse-engineering investigation of games with REA (rea.tools) via an AI coding agent.\n---\n\n# REAP — 5. Games\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n### Gameplay logic recovery\n\n```text\nUse REA to reconstruct <GAME> from its executable. Recover the gameplay logic\nin C and test it against the original.\n\nFor each mechanic (movement, physics, scoring, spawning), show the function,\nthe constants and the update loop that prove the rule.\n```\n\n### Speed / difficulty rule (dino-style)\n\n```text\nUse REA to inspect <game>. Why does <difficulty/speed> change over time? Show\nthe exact rule and the constants behind it, then build a small standalone\nversion with an adjustable parameter.\n```\n\n### Engine & asset pipeline map\n\n```text\nUse REA on <game executable/data folder>. Identify the engine or framework,\nthe render loop, the update/tick order, how levels and assets are loaded and\nserialized, and where gameplay data lives (tables, scripts, archives). Map\neach component to functions/addresses and describe the load pipeline step by\nstep.\n```\n\n### Single-player mod support (offline only)\n\n```text\nUse REA on <offline single-player game> to locate the code that controls\n<weapon stats / spawn rates / economy>. Show the data tables or functions with\naddresses. I only want to understand where the values live so I can build my\nown offline trainer for personal experimentation — no multiplayer, no\npersistence tricks.\n```\n\n---\n",
+      "bodyMd": "# REAP — 5. Games\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n### Gameplay logic recovery\n\n```text\nUse REA to reconstruct <GAME> from its executable. Recover the gameplay logic\nin C and test it against the original.\n\nFor each mechanic (movement, physics, scoring, spawning), show the function,\nthe constants and the update loop that prove the rule.\n```\n\n### Speed / difficulty rule (dino-style)\n\n```text\nUse REA to inspect <game>. Why does <difficulty/speed> change over time? Show\nthe exact rule and the constants behind it, then build a small standalone\nversion with an adjustable parameter.\n```\n\n### Engine & asset pipeline map\n\n```text\nUse REA on <game executable/data folder>. Identify the engine or framework,\nthe render loop, the update/tick order, how levels and assets are loaded and\nserialized, and where gameplay data lives (tables, scripts, archives). Map\neach component to functions/addresses and describe the load pipeline step by\nstep.\n```\n\n### Single-player mod support (offline only)\n\n```text\nUse REA on <offline single-player game> to locate the code that controls\n<weapon stats / spawn rates / economy>. Show the data tables or functions with\naddresses. I only want to understand where the values live so I can build my\nown offline trainer for personal experimentation — no multiplayer, no\npersistence tricks.\n```\n\n---\n"
+    },
+    {
+      "slug": "reap-06-game-portability-to-wasm",
+      "name": "reap-06-game-portability-to-wasm",
+      "dir": "Skills/reap-06-game-portability-to-wasm",
+      "path": "Skills/reap-06-game-portability-to-wasm/SKILL.md",
+      "desc": "REA prompt pack:  Game portability to WASM (3 ready-to-paste prompts). Use when doing reverse-engineering investigation of game portability to wasm with REA (rea.tools) via an AI coding agent.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/JoasASantos/REA-Prompts.git",
+        "copy": "cp -r Skills/reap-06-game-portability-to-wasm ~/.claude/skills/reap-06-game-portability-to-wasm",
+        "raw": "https://raw.githubusercontent.com/JoasASantos/REA-Prompts/9756618f25af1920c8965f8969820eed22247936/Skills/reap-06-game-portability-to-wasm/SKILL.md",
+        "saveAs": "~/.claude/skills/reap-06-game-portability-to-wasm/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:a74f66af32814fb2796d0f79a2369959ed06f0012ec6f2f10afa7eb2e5bb64dd",
+      "bytes": 1878,
+      "wordCount": 245,
+      "repoLicense": "MIT",
+      "commit": "9756618f25af1920c8965f8969820eed22247936",
+      "branch": "main",
+      "body": "---\nname: reap-06-game-portability-to-wasm\ndescription: REA prompt pack:  Game portability to WASM (3 ready-to-paste prompts). Use when doing reverse-engineering investigation of game portability to wasm with REA (rea.tools) via an AI coding agent.\n---\n\n# REAP — 6. Game portability to WASM\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n### Port a native game to the browser\n\n```text\nUse REA to analyze <game executable/source> as a portability target for WASM.\n\nMap: the main loop and frame pacing, the rendering backend (OpenGL/DirectX/\nSDL/Vulkan calls), filesystem and save paths, threading model, audio output,\ninput handling, and any platform-specific APIs or inline assembly.\n\nFor each, classify as: portable as-is / needs shim / must be rewritten. Cite\nthe functions and call sites that prove each classification.\n```\n\n### Build the port plan\n\n```text\nBased on the REA findings for <game>, produce a WASM port plan:\n- toolchain choice (Emscripten or manual recompile) and required shims\n  (GL→WebGL, SDL→SDL2-compat, pthreads→SharedArrayBuffer/threads);\n- the minimal set of source modules to compile;\n- how saves move to IndexedDB and assets to fetch/streaming;\n- performance risks found in the native code (allocation per frame, busy\n  loops, 64-bit assumptions) with function evidence;\n- a milestone list ending in a playable index.html.\n```\n\n### Port the logic core first (headless)\n\n```text\nUse REA to isolate <game>'s pure simulation logic (physics, AI, rules) from\nrendering and OS calls. Extract the exact rules with evidence, then implement\nthat logic core in C/Rust compiled to WASM with a test harness that replays\nrecorded inputs and compares state hashes against the original behavior.\n```\n\n---\n",
+      "bodyMd": "# REAP — 6. Game portability to WASM\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n### Port a native game to the browser\n\n```text\nUse REA to analyze <game executable/source> as a portability target for WASM.\n\nMap: the main loop and frame pacing, the rendering backend (OpenGL/DirectX/\nSDL/Vulkan calls), filesystem and save paths, threading model, audio output,\ninput handling, and any platform-specific APIs or inline assembly.\n\nFor each, classify as: portable as-is / needs shim / must be rewritten. Cite\nthe functions and call sites that prove each classification.\n```\n\n### Build the port plan\n\n```text\nBased on the REA findings for <game>, produce a WASM port plan:\n- toolchain choice (Emscripten or manual recompile) and required shims\n  (GL→WebGL, SDL→SDL2-compat, pthreads→SharedArrayBuffer/threads);\n- the minimal set of source modules to compile;\n- how saves move to IndexedDB and assets to fetch/streaming;\n- performance risks found in the native code (allocation per frame, busy\n  loops, 64-bit assumptions) with function evidence;\n- a milestone list ending in a playable index.html.\n```\n\n### Port the logic core first (headless)\n\n```text\nUse REA to isolate <game>'s pure simulation logic (physics, AI, rules) from\nrendering and OS calls. Extract the exact rules with evidence, then implement\nthat logic core in C/Rust compiled to WASM with a test harness that replays\nrecorded inputs and compares state hashes against the original behavior.\n```\n\n---\n"
+    },
+    {
+      "slug": "reap-07-firmware-and-embedded",
+      "name": "reap-07-firmware-and-embedded",
+      "dir": "Skills/reap-07-firmware-and-embedded",
+      "path": "Skills/reap-07-firmware-and-embedded/SKILL.md",
+      "desc": "REA prompt pack:  Firmware & embedded (3 ready-to-paste prompts). Use when doing reverse-engineering investigation of firmware & embedded with REA (rea.tools) via an AI coding agent.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/JoasASantos/REA-Prompts.git",
+        "copy": "cp -r Skills/reap-07-firmware-and-embedded ~/.claude/skills/reap-07-firmware-and-embedded",
+        "raw": "https://raw.githubusercontent.com/JoasASantos/REA-Prompts/9756618f25af1920c8965f8969820eed22247936/Skills/reap-07-firmware-and-embedded/SKILL.md",
+        "saveAs": "~/.claude/skills/reap-07-firmware-and-embedded/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:cc9e5a15099ad7fa8059a36be3b94486894195da27e92a5f6eb4efd5afbb8f71",
+      "bytes": 1755,
+      "wordCount": 228,
+      "repoLicense": "MIT",
+      "commit": "9756618f25af1920c8965f8969820eed22247936",
+      "branch": "main",
+      "body": "---\nname: reap-07-firmware-and-embedded\ndescription: REA prompt pack:  Firmware & embedded (3 ready-to-paste prompts). Use when doing reverse-engineering investigation of firmware & embedded with REA (rea.tools) via an AI coding agent.\n---\n\n# REAP — 7. Firmware & embedded\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n### Firmware image triage\n\n```text\nUse REA to analyze <firmware image / bin / img>.\n\nIdentify the container format, extract partitions/filesystems (JFFS2, SquashFS,\nUBI, cramfs...), map each region to architecture and load address, locate the\nkernel and rootfs, and list boot entries, init scripts and services.\n\nShow offsets, entropy observations and the evidence for every claim. Start\nwith static analysis; do not flash or run anything.\n```\n\n### MCU / IoT binary analysis\n\n```text\nUse REA on <firmware blob> for a <ARM Cortex-M / MIPS / AVR / ESP32> target.\n\nFind the vector table and reset handler, reconstruct the memory map from\nliteral pools and peripheral base addresses, identify the RTOS (FreeRTOS,\nZephyr...) from symbol/string fingerprints, and map the main task loop and\nperipheral drivers (UART, SPI, I2C, radio stack) with function addresses.\n```\n\n### Embedded protocol & update mechanism\n\n```text\nUse REA on <firmware> to recover: the network stack usage (hardcoded IPs,\nDNS, MQTT/HTTP endpoints, ports), the OTA update path (download URL, signature\ncheck, flash write), and credential material (keys, default passwords, debug\ntokens). For each finding give the function/address and say whether the\nbehavior is confirmed statically or still a hypothesis.\n```\n\n---\n",
+      "bodyMd": "# REAP — 7. Firmware & embedded\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n### Firmware image triage\n\n```text\nUse REA to analyze <firmware image / bin / img>.\n\nIdentify the container format, extract partitions/filesystems (JFFS2, SquashFS,\nUBI, cramfs...), map each region to architecture and load address, locate the\nkernel and rootfs, and list boot entries, init scripts and services.\n\nShow offsets, entropy observations and the evidence for every claim. Start\nwith static analysis; do not flash or run anything.\n```\n\n### MCU / IoT binary analysis\n\n```text\nUse REA on <firmware blob> for a <ARM Cortex-M / MIPS / AVR / ESP32> target.\n\nFind the vector table and reset handler, reconstruct the memory map from\nliteral pools and peripheral base addresses, identify the RTOS (FreeRTOS,\nZephyr...) from symbol/string fingerprints, and map the main task loop and\nperipheral drivers (UART, SPI, I2C, radio stack) with function addresses.\n```\n\n### Embedded protocol & update mechanism\n\n```text\nUse REA on <firmware> to recover: the network stack usage (hardcoded IPs,\nDNS, MQTT/HTTP endpoints, ports), the OTA update path (download URL, signature\ncheck, flash write), and credential material (keys, default passwords, debug\ntokens). For each finding give the function/address and say whether the\nbehavior is confirmed statically or still a hypothesis.\n```\n\n---\n"
+    },
+    {
+      "slug": "reap-08-android",
+      "name": "reap-08-android",
+      "dir": "Skills/reap-08-android",
+      "path": "Skills/reap-08-android/SKILL.md",
+      "desc": "REA prompt pack:  Android (4 ready-to-paste prompts). Use when doing reverse-engineering investigation of android with REA (rea.tools) via an AI coding agent.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/JoasASantos/REA-Prompts.git",
+        "copy": "cp -r Skills/reap-08-android ~/.claude/skills/reap-08-android",
+        "raw": "https://raw.githubusercontent.com/JoasASantos/REA-Prompts/9756618f25af1920c8965f8969820eed22247936/Skills/reap-08-android/SKILL.md",
+        "saveAs": "~/.claude/skills/reap-08-android/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:95cfa3782b769f70a8192de6f15e1db83cff87a1e7d2b9e8474d92a1a7320ea7",
+      "bytes": 1924,
+      "wordCount": 259,
+      "repoLicense": "MIT",
+      "commit": "9756618f25af1920c8965f8969820eed22247936",
+      "branch": "main",
+      "body": "---\nname: reap-08-android\ndescription: REA prompt pack:  Android (4 ready-to-paste prompts). Use when doing reverse-engineering investigation of android with REA (rea.tools) via an AI coding agent.\n---\n\n# REAP — 8. Android\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n### Audit an APK\n\n```text\nUse REA to analyze <PATH TO APK>.\n\nList declared permissions, exported components, analytics/tracking SDKs,\ndomains found and local storage mechanisms.\n\nFor each finding, show the corresponding class, method or file.\n\nDistinguish references present in the code from behaviors actually observed.\nDo not conclude that a domain is accessed just because it appears in a string.\n```\n\n### Trace a feature through Java/Kotlin and native code\n\n```text\nUse REA on <APK> to trace <FEATURE> end to end: UI entry point (Activity/\nFragment/Composable), the Java/Kotlin call chain, any JNI boundaries\n(RegisterNatives / native library loads), the .so functions involved, and the\nfinal effect (network call, file write, database row). Show class, method and\noffset evidence at every hop.\n```\n\n### Storage, crypto and secrets review\n\n```text\nUse REA on <APK>. Determine how the app stores <data>: SharedPreferences,\nSQLite, files, keystore. Recover any embedded crypto (hardcoded keys/IVs,\nobfuscation routines) with the class/method that uses them. State whether\ndata is encrypted at rest and in transit, with evidence, and list concrete\nrisks.\n```\n\n### Obfuscated / packed app triage\n\n```text\nUse REA on <APK> that appears obfuscated or packed. Identify the packer or\nprotector (string/class fingerprints, loader stub in the native libs), map\nwhat is statically visible vs. deferred to runtime, and propose the minimal\nsafe steps to reach the real dex/native code for analysis.\n```\n\n---\n",
+      "bodyMd": "# REAP — 8. Android\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n### Audit an APK\n\n```text\nUse REA to analyze <PATH TO APK>.\n\nList declared permissions, exported components, analytics/tracking SDKs,\ndomains found and local storage mechanisms.\n\nFor each finding, show the corresponding class, method or file.\n\nDistinguish references present in the code from behaviors actually observed.\nDo not conclude that a domain is accessed just because it appears in a string.\n```\n\n### Trace a feature through Java/Kotlin and native code\n\n```text\nUse REA on <APK> to trace <FEATURE> end to end: UI entry point (Activity/\nFragment/Composable), the Java/Kotlin call chain, any JNI boundaries\n(RegisterNatives / native library loads), the .so functions involved, and the\nfinal effect (network call, file write, database row). Show class, method and\noffset evidence at every hop.\n```\n\n### Storage, crypto and secrets review\n\n```text\nUse REA on <APK>. Determine how the app stores <data>: SharedPreferences,\nSQLite, files, keystore. Recover any embedded crypto (hardcoded keys/IVs,\nobfuscation routines) with the class/method that uses them. State whether\ndata is encrypted at rest and in transit, with evidence, and list concrete\nrisks.\n```\n\n### Obfuscated / packed app triage\n\n```text\nUse REA on <APK> that appears obfuscated or packed. Identify the packer or\nprotector (string/class fingerprints, loader stub in the native libs), map\nwhat is statically visible vs. deferred to runtime, and propose the minimal\nsafe steps to reach the real dex/native code for analysis.\n```\n\n---\n"
+    },
+    {
+      "slug": "reap-09-kernel-analysis",
+      "name": "reap-09-kernel-analysis",
+      "dir": "Skills/reap-09-kernel-analysis",
+      "path": "Skills/reap-09-kernel-analysis/SKILL.md",
+      "desc": "REA prompt pack:  Kernel analysis (3 ready-to-paste prompts). Use when doing reverse-engineering investigation of kernel analysis with REA (rea.tools) via an AI coding agent.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/JoasASantos/REA-Prompts.git",
+        "copy": "cp -r Skills/reap-09-kernel-analysis ~/.claude/skills/reap-09-kernel-analysis",
+        "raw": "https://raw.githubusercontent.com/JoasASantos/REA-Prompts/9756618f25af1920c8965f8969820eed22247936/Skills/reap-09-kernel-analysis/SKILL.md",
+        "saveAs": "~/.claude/skills/reap-09-kernel-analysis/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:a0a356e45f41af6d887f67d9108fd42aed5c8699f721887156fd9b1928de9de2",
+      "bytes": 1621,
+      "wordCount": 202,
+      "repoLicense": "MIT",
+      "commit": "9756618f25af1920c8965f8969820eed22247936",
+      "branch": "main",
+      "body": "---\nname: reap-09-kernel-analysis\ndescription: REA prompt pack:  Kernel analysis (3 ready-to-paste prompts). Use when doing reverse-engineering investigation of kernel analysis with REA (rea.tools) via an AI coding agent.\n---\n\n# REAP — 9. Kernel analysis\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n### Driver inspection (Windows / Linux)\n\n```text\nUse REA on <driver binary: .sys / .ko>.\n\nIdentify the format and target OS version, the entry/init routine, the device\nobject and driver dispatch table, every IOCTL code with its input/output\nbuffer validation, the callbacks/notifications it registers, and the memory it\nreads or writes outside its own allocations.\n\nMap each finding to function/address evidence. Static analysis only — do not\nload the driver.\n```\n\n### IOCTL attack-surface enumeration\n\n```text\nUse REA on <driver>. Enumerate all control codes handled, and for each:\nthe handler function, how it validates input/output buffers (probe methods,\nsize checks, IRQL assumptions), and any copy_to_user/copy_from_user or\nmemcpy with attacker-controlled length. Rank the handlers by risk with\nevidence for the ranking.\n```\n\n### Kernel subsystem / syscall behavior\n\n```text\nUse REA on <kernel binary or module> to explain how <subsystem/syscall>\nprocesses <input>. Trace from the syscall/dispatch entry to the parsing\nfunctions, show bounds checks (or their absence), the data structures\npopulated, and error paths. Cite addresses for each step.\n```\n\n---\n",
+      "bodyMd": "# REAP — 9. Kernel analysis\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n### Driver inspection (Windows / Linux)\n\n```text\nUse REA on <driver binary: .sys / .ko>.\n\nIdentify the format and target OS version, the entry/init routine, the device\nobject and driver dispatch table, every IOCTL code with its input/output\nbuffer validation, the callbacks/notifications it registers, and the memory it\nreads or writes outside its own allocations.\n\nMap each finding to function/address evidence. Static analysis only — do not\nload the driver.\n```\n\n### IOCTL attack-surface enumeration\n\n```text\nUse REA on <driver>. Enumerate all control codes handled, and for each:\nthe handler function, how it validates input/output buffers (probe methods,\nsize checks, IRQL assumptions), and any copy_to_user/copy_from_user or\nmemcpy with attacker-controlled length. Rank the handlers by risk with\nevidence for the ranking.\n```\n\n### Kernel subsystem / syscall behavior\n\n```text\nUse REA on <kernel binary or module> to explain how <subsystem/syscall>\nprocesses <input>. Trace from the syscall/dispatch entry to the parsing\nfunctions, show bounds checks (or their absence), the data structures\npopulated, and error paths. Cite addresses for each step.\n```\n\n---\n"
+    },
+    {
+      "slug": "reap-10-vulnerability-research",
+      "name": "reap-10-vulnerability-research",
+      "dir": "Skills/reap-10-vulnerability-research",
+      "path": "Skills/reap-10-vulnerability-research/SKILL.md",
+      "desc": "REA prompt pack:  Vulnerability research (5 ready-to-paste prompts). Use when doing reverse-engineering investigation of vulnerability research with REA (rea.tools) via an AI coding agent.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/JoasASantos/REA-Prompts.git",
+        "copy": "cp -r Skills/reap-10-vulnerability-research ~/.claude/skills/reap-10-vulnerability-research",
+        "raw": "https://raw.githubusercontent.com/JoasASantos/REA-Prompts/9756618f25af1920c8965f8969820eed22247936/Skills/reap-10-vulnerability-research/SKILL.md",
+        "saveAs": "~/.claude/skills/reap-10-vulnerability-research/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:478e92f1fda727a03fef84fbfa3ea464d99f797f6a04ba3adb56218742d4655a",
+      "bytes": 2588,
+      "wordCount": 339,
+      "repoLicense": "MIT",
+      "commit": "9756618f25af1920c8965f8969820eed22247936",
+      "branch": "main",
+      "body": "---\nname: reap-10-vulnerability-research\ndescription: REA prompt pack:  Vulnerability research (5 ready-to-paste prompts). Use when doing reverse-engineering investigation of vulnerability research with REA (rea.tools) via an AI coding agent.\n---\n\n# REAP — 10. Vulnerability research\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n### Trust-boundary audit\n\n```text\nUse REA to review the security of <authorized application or binary>.\n\nPrioritize trust boundaries, untrusted input, privileged operations,\ncredential storage, IPC, file handling and command execution.\n\nFor each possible vulnerability, present:\n- the input origin and the sensitive operation;\n- the code path and existing checks;\n- preconditions and impact;\n- evidence and uncertainties;\n- a proposal for controlled validation.\n\nDo not classify a hypothesis as a confirmed vulnerability without sufficient\nevidence.\n```\n\n### Sink hunt from untrusted input\n\n```text\nUse REA on <binary>. List every place untrusted data enters (network sockets,\nfiles, IPC, command-line, clipboard, URL handlers) and follow each source to\ndangerous sinks: memcpy/strcpy with unchecked length, system/exec, dynamic\nloading, deserialization, path concatenation. For each source→sink path give\nthe function chain with addresses and state which validation exists in\nbetween.\n```\n\n### Patch diffing (1-day to incomplete-fix hunting)\n\n```text\nUse REA to compare <vulnerable version> and <patched version> of <component>.\n\nDiff the security-relevant functions: what check was added, where else in the\nbinary the same pattern exists without the fix, and whether the fix covers\nevery caller of the vulnerable routine. Report candidate incomplete-fix\nlocations with function/address evidence, clearly labeled as hypotheses until\nvalidated in a controlled environment.\n```\n\n### Crash triage to root cause\n\n```text\nUse REA to investigate this crash in <application>.\n\nAvailable evidence:\n<STACK TRACE, LOGS, DUMP OR REPRO STEPS>\n\nRelate the error to the functions involved, formulate hypotheses and indicate\nwhich evidence supports each one.\n\nPropose the smallest experiment needed to distinguish the hypotheses and\nvalidate the cause.\n```\n\n### How is my data handled?\n\n```text\nI am allowed to analyse <program>. Use REA to find where it stores or sends\n<kind of data>. Show the code paths, say whether the data is encrypted at rest\nand in transit, and list concrete risks with evidence.\n```\n\n---\n",
+      "bodyMd": "# REAP — 10. Vulnerability research\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n### Trust-boundary audit\n\n```text\nUse REA to review the security of <authorized application or binary>.\n\nPrioritize trust boundaries, untrusted input, privileged operations,\ncredential storage, IPC, file handling and command execution.\n\nFor each possible vulnerability, present:\n- the input origin and the sensitive operation;\n- the code path and existing checks;\n- preconditions and impact;\n- evidence and uncertainties;\n- a proposal for controlled validation.\n\nDo not classify a hypothesis as a confirmed vulnerability without sufficient\nevidence.\n```\n\n### Sink hunt from untrusted input\n\n```text\nUse REA on <binary>. List every place untrusted data enters (network sockets,\nfiles, IPC, command-line, clipboard, URL handlers) and follow each source to\ndangerous sinks: memcpy/strcpy with unchecked length, system/exec, dynamic\nloading, deserialization, path concatenation. For each source→sink path give\nthe function chain with addresses and state which validation exists in\nbetween.\n```\n\n### Patch diffing (1-day to incomplete-fix hunting)\n\n```text\nUse REA to compare <vulnerable version> and <patched version> of <component>.\n\nDiff the security-relevant functions: what check was added, where else in the\nbinary the same pattern exists without the fix, and whether the fix covers\nevery caller of the vulnerable routine. Report candidate incomplete-fix\nlocations with function/address evidence, clearly labeled as hypotheses until\nvalidated in a controlled environment.\n```\n\n### Crash triage to root cause\n\n```text\nUse REA to investigate this crash in <application>.\n\nAvailable evidence:\n<STACK TRACE, LOGS, DUMP OR REPRO STEPS>\n\nRelate the error to the functions involved, formulate hypotheses and indicate\nwhich evidence supports each one.\n\nPropose the smallest experiment needed to distinguish the hypotheses and\nvalidate the cause.\n```\n\n### How is my data handled?\n\n```text\nI am allowed to analyse <program>. Use REA to find where it stores or sends\n<kind of data>. Show the code paths, say whether the data is encrypted at rest\nand in transit, and list concrete risks with evidence.\n```\n\n---\n"
+    },
+    {
+      "slug": "reap-11-electron-and-javascript",
+      "name": "reap-11-electron-and-javascript",
+      "dir": "Skills/reap-11-electron-and-javascript",
+      "path": "Skills/reap-11-electron-and-javascript/SKILL.md",
+      "desc": "REA prompt pack:  Electron & JavaScript (11 ready-to-paste prompts). Use when doing reverse-engineering investigation of electron & javascript with REA (rea.tools) via an AI coding agent.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "go"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/JoasASantos/REA-Prompts.git",
+        "copy": "cp -r Skills/reap-11-electron-and-javascript ~/.claude/skills/reap-11-electron-and-javascript",
+        "raw": "https://raw.githubusercontent.com/JoasASantos/REA-Prompts/9756618f25af1920c8965f8969820eed22247936/Skills/reap-11-electron-and-javascript/SKILL.md",
+        "saveAs": "~/.claude/skills/reap-11-electron-and-javascript/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:87cb2dfd912a403cf56b0f1fad1bfee27de5881317ab3e614f2b73321d3e5828",
+      "bytes": 5095,
+      "wordCount": 736,
+      "repoLicense": "MIT",
+      "commit": "9756618f25af1920c8965f8969820eed22247936",
+      "branch": "main",
+      "body": "---\nname: reap-11-electron-and-javascript\ndescription: REA prompt pack:  Electron & JavaScript (11 ready-to-paste prompts). Use when doing reverse-engineering investigation of electron & javascript with REA (rea.tools) via an AI coding agent.\n---\n\n# REAP — 11. Electron & JavaScript\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n### Electron app anatomy\n\n```text\nUse REA to analyze <PATH TO ELECTRON APP>.\n\nLocate the JavaScript files and any app.asar archives. Map the main and\nrenderer processes, the preload scripts and the IPC channels.\n\nThen trace <FEATURE> from the UI to its implementation, including network\ncalls and filesystem operations. Show the evidence.\n```\n\n### IPC & contextIsolation security review\n\n```text\nUse REA on <Electron app>. Enumerate every ipcMain handler and the channels\nexposed via contextBridge/preload. For each channel: what arguments it\naccepts, whether it reaches shell.openExternal, child_process, fs, or webview\nnavigation, and what validation exists. Flag any handler where renderer-\ncontrolled input reaches a privileged sink without checks — with file and\nfunction evidence.\n```\n\n### Minified / bundled JS feature tracing\n\n```text\nUse REA on <app.asar / bundle.js> to trace <FEATURE> through minified code.\nIdentify the module boundaries, recover the relevant functions with readable\nnames, follow the data flow from the UI event to the network/filesystem\neffect, and produce a call graph. Cite offsets in the bundle for each hop.\n```\n\n### Web feature mapping\n\n```text\nUse REA to observe <site> while I use <feature>. List the requests, scripts\nand state changes involved, then summarise how the feature works and which\nparts run on the client versus the server.\n```\n\n### Website clone (structure + behavior)\n\n```text\nUse REA to inspect https://<site>/. Recover the page structure, the client\nroutes, the API calls each view makes and the state management pattern.\nRebuild a functional equivalent with my own assets and styling, matching the\nobserved behavior. List requests and scripts as evidence per view.\n```\n\n### Web app API-surface mapping\n\n```text\nUse REA on <web app URL> (authorized testing of an app I own or am permitted\nto assess). Enumerate the client's full API surface: every endpoint the\nbundled JavaScript calls, HTTP method, request/response shape, auth header or\ntoken source, and where in the bundle each call is made (file + offset).\nGroup endpoints by feature and flag any that are called from the client but\nvalidated only client-side. Separate endpoints proven in code from ones only\nseen in traffic.\n```\n\n### Source-map & bundle recovery\n\n```text\nUse REA on <web app>. Check for exposed source maps (.map references in the\nbundles or 404-then-200 probing of known paths). If maps exist, reconstruct\nthe original module tree, name the components/functions and map the recovered\nsources to the shipped bundles. If they don't, de-minify the hot modules for\n<FEATURE> by hand: rename locals, split the bundle into logical modules and\nproduce a readable equivalent. State clearly which names are recovered from\nmaps versus inferred.\n```\n\n### Auth & token flow analysis (web)\n\n```text\nUse REA on <web app> to document its authentication flow end to end: where\nthe login form posts, how tokens are stored (cookie flags HttpOnly/Secure/\nSameSite, localStorage, IndexedDB), refresh/renewal logic in the client code,\nand which requests attach the token and how. Give the bundle offset proving\neach step. Flag client-side-only authorization checks (UI gating without\nserver validation) as hypotheses to confirm with controlled requests.\n```\n\n### WASM module inside a web app\n\n```text\nUse REA on <web app / .wasm module>. Identify the toolchain that produced the\nWASM (Emscripten, Rust/wasm-bindgen, Go/WASM), map the exported functions and\ntheir JS callers, recover the linear-memory layout and any embedded strings or\ndata tables. For <FEATURE>, trace the JS→WASM boundary: arguments crossing,\nreturn values and side effects. Cite export indices and JS call-site offsets.\n```\n\n### Browser extension (MV3) audit\n\n```text\nUse REA on <extension folder / .crx> I own or am authorized to review.\nEnumerate manifest permissions, service worker and content-script entry\npoints, every host the extension can reach, message-passing channels between\ncontent script / worker / page, and any remote code loading (eval, dynamic\nscript injection, update endpoints). Map each capability to the file and\nfunction that implements it. Distinguish declared permissions from observed\nbehavior.\n```\n\n### PWA / service-worker offline logic\n\n```text\nUse REA on <web app> to recover the service worker's behavior: cache strategy\nper resource class (cache-first, network-first, stale-while-revalidate), what\ndata persists offline (IndexedDB stores and their schemas from the code), and\nhow queued actions sync when connectivity returns. Show the worker file and\nthe functions proving each rule.\n```\n\n---\n",
+      "bodyMd": "# REAP — 11. Electron & JavaScript\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n### Electron app anatomy\n\n```text\nUse REA to analyze <PATH TO ELECTRON APP>.\n\nLocate the JavaScript files and any app.asar archives. Map the main and\nrenderer processes, the preload scripts and the IPC channels.\n\nThen trace <FEATURE> from the UI to its implementation, including network\ncalls and filesystem operations. Show the evidence.\n```\n\n### IPC & contextIsolation security review\n\n```text\nUse REA on <Electron app>. Enumerate every ipcMain handler and the channels\nexposed via contextBridge/preload. For each channel: what arguments it\naccepts, whether it reaches shell.openExternal, child_process, fs, or webview\nnavigation, and what validation exists. Flag any handler where renderer-\ncontrolled input reaches a privileged sink without checks — with file and\nfunction evidence.\n```\n\n### Minified / bundled JS feature tracing\n\n```text\nUse REA on <app.asar / bundle.js> to trace <FEATURE> through minified code.\nIdentify the module boundaries, recover the relevant functions with readable\nnames, follow the data flow from the UI event to the network/filesystem\neffect, and produce a call graph. Cite offsets in the bundle for each hop.\n```\n\n### Web feature mapping\n\n```text\nUse REA to observe <site> while I use <feature>. List the requests, scripts\nand state changes involved, then summarise how the feature works and which\nparts run on the client versus the server.\n```\n\n### Website clone (structure + behavior)\n\n```text\nUse REA to inspect https://<site>/. Recover the page structure, the client\nroutes, the API calls each view makes and the state management pattern.\nRebuild a functional equivalent with my own assets and styling, matching the\nobserved behavior. List requests and scripts as evidence per view.\n```\n\n### Web app API-surface mapping\n\n```text\nUse REA on <web app URL> (authorized testing of an app I own or am permitted\nto assess). Enumerate the client's full API surface: every endpoint the\nbundled JavaScript calls, HTTP method, request/response shape, auth header or\ntoken source, and where in the bundle each call is made (file + offset).\nGroup endpoints by feature and flag any that are called from the client but\nvalidated only client-side. Separate endpoints proven in code from ones only\nseen in traffic.\n```\n\n### Source-map & bundle recovery\n\n```text\nUse REA on <web app>. Check for exposed source maps (.map references in the\nbundles or 404-then-200 probing of known paths). If maps exist, reconstruct\nthe original module tree, name the components/functions and map the recovered\nsources to the shipped bundles. If they don't, de-minify the hot modules for\n<FEATURE> by hand: rename locals, split the bundle into logical modules and\nproduce a readable equivalent. State clearly which names are recovered from\nmaps versus inferred.\n```\n\n### Auth & token flow analysis (web)\n\n```text\nUse REA on <web app> to document its authentication flow end to end: where\nthe login form posts, how tokens are stored (cookie flags HttpOnly/Secure/\nSameSite, localStorage, IndexedDB), refresh/renewal logic in the client code,\nand which requests attach the token and how. Give the bundle offset proving\neach step. Flag client-side-only authorization checks (UI gating without\nserver validation) as hypotheses to confirm with controlled requests.\n```\n\n### WASM module inside a web app\n\n```text\nUse REA on <web app / .wasm module>. Identify the toolchain that produced the\nWASM (Emscripten, Rust/wasm-bindgen, Go/WASM), map the exported functions and\ntheir JS callers, recover the linear-memory layout and any embedded strings or\ndata tables. For <FEATURE>, trace the JS→WASM boundary: arguments crossing,\nreturn values and side effects. Cite export indices and JS call-site offsets.\n```\n\n### Browser extension (MV3) audit\n\n```text\nUse REA on <extension folder / .crx> I own or am authorized to review.\nEnumerate manifest permissions, service worker and content-script entry\npoints, every host the extension can reach, message-passing channels between\ncontent script / worker / page, and any remote code loading (eval, dynamic\nscript injection, update endpoints). Map each capability to the file and\nfunction that implements it. Distinguish declared permissions from observed\nbehavior.\n```\n\n### PWA / service-worker offline logic\n\n```text\nUse REA on <web app> to recover the service worker's behavior: cache strategy\nper resource class (cache-first, network-first, stale-while-revalidate), what\ndata persists offline (IndexedDB stores and their schemas from the code), and\nhow queued actions sync when connectivity returns. Show the worker file and\nthe functions proving each rule.\n```\n\n---\n"
+    },
+    {
+      "slug": "reap-12-anti-cheat-and-protection-research",
+      "name": "reap-12-anti-cheat-and-protection-research",
+      "dir": "Skills/reap-12-anti-cheat-and-protection-research",
+      "path": "Skills/reap-12-anti-cheat-and-protection-research/SKILL.md",
+      "desc": "REA prompt pack:  Anti-cheat & protection research (4 ready-to-paste prompts). Use when doing reverse-engineering investigation of anti-cheat & protection research with REA (rea.tools) via an AI coding agent.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/JoasASantos/REA-Prompts.git",
+        "copy": "cp -r Skills/reap-12-anti-cheat-and-protection-research ~/.claude/skills/reap-12-anti-cheat-and-protection-research",
+        "raw": "https://raw.githubusercontent.com/JoasASantos/REA-Prompts/9756618f25af1920c8965f8969820eed22247936/Skills/reap-12-anti-cheat-and-protection-research/SKILL.md",
+        "saveAs": "~/.claude/skills/reap-12-anti-cheat-and-protection-research/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:5ccfc2b4125474621801618f88dd197fda7dae1fd7f11153449896d0ac4eb138",
+      "bytes": 2614,
+      "wordCount": 354,
+      "repoLicense": "MIT",
+      "commit": "9756618f25af1920c8965f8969820eed22247936",
+      "branch": "main",
+      "body": "---\nname: reap-12-anti-cheat-and-protection-research\ndescription: REA prompt pack:  Anti-cheat & protection research (4 ready-to-paste prompts). Use when doing reverse-engineering investigation of anti-cheat & protection research with REA (rea.tools) via an AI coding agent.\n---\n\n# REAP — 12. Anti-cheat & protection research\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n> Scope these at **your own machine, your own software, a vendor bug bounty,\n> a CTF, or academic study**. Never at other players' live game sessions.\n\n### Map an anti-cheat's detection surface\n\n```text\nUse REA to analyze <anti-cheat driver/service binary> on a lab machine I own.\n\nIdentify: what it enumerates (processes, modules, handles, callbacks), which\nintegrity checks it performs, what it hooks or registers with the kernel, and\nwhat data it sends out (endpoints, intervals, payload fields).\n\nFor each finding cite the function/address. Separate \"code present\" from\n\"behavior observed\". Do not run the target game; static analysis first.\n```\n\n### Test my own product's protections\n\n```text\nI own <my application> and its protection scheme. Use REA to assess it as an\nattacker would: locate the license check, the integrity checks, the\nanti-debug/anti-VM tricks, and trace what a failed check does. Report which\nchecks are trivially bypassable, which are load-bearing, and concrete fixes —\neach claim backed by file/function/address evidence.\n```\n\n### User-mode anti-cheat DLL anatomy\n\n```text\nUse REA on <anti-cheat user-mode DLL/service> from a game I own, on a lab\nmachine, for defensive research. Map: what it enumerates at startup (loaded\nmodules, handle counts, window titles, device paths), which hooks it installs\n(IAT/EAT, inline, syscall stubs), how it detects debuggers and memory\nreaders, and how it packages + ships detections (endpoint, payload fields,\nhashing of module code sections). For each mechanism give the function/\naddress and say whether it is confirmed statically or needs runtime\nobservation. Do not attach to or interfere with a live game session.\n```\n\n### DRM / license flow analysis (interoperability)\n\n```text\nUse REA on <application> to document its licensing flow: where entitlement is\nvalidated, what local and remote checks exist, what state is stored on disk,\nand how offline mode behaves. Goal is interoperability and security review of\nsoftware I legitimately own. Report facts with evidence; flag anything you\ncould not confirm.\n```\n\n---\n",
+      "bodyMd": "# REAP — 12. Anti-cheat & protection research\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n> Scope these at **your own machine, your own software, a vendor bug bounty,\n> a CTF, or academic study**. Never at other players' live game sessions.\n\n### Map an anti-cheat's detection surface\n\n```text\nUse REA to analyze <anti-cheat driver/service binary> on a lab machine I own.\n\nIdentify: what it enumerates (processes, modules, handles, callbacks), which\nintegrity checks it performs, what it hooks or registers with the kernel, and\nwhat data it sends out (endpoints, intervals, payload fields).\n\nFor each finding cite the function/address. Separate \"code present\" from\n\"behavior observed\". Do not run the target game; static analysis first.\n```\n\n### Test my own product's protections\n\n```text\nI own <my application> and its protection scheme. Use REA to assess it as an\nattacker would: locate the license check, the integrity checks, the\nanti-debug/anti-VM tricks, and trace what a failed check does. Report which\nchecks are trivially bypassable, which are load-bearing, and concrete fixes —\neach claim backed by file/function/address evidence.\n```\n\n### User-mode anti-cheat DLL anatomy\n\n```text\nUse REA on <anti-cheat user-mode DLL/service> from a game I own, on a lab\nmachine, for defensive research. Map: what it enumerates at startup (loaded\nmodules, handle counts, window titles, device paths), which hooks it installs\n(IAT/EAT, inline, syscall stubs), how it detects debuggers and memory\nreaders, and how it packages + ships detections (endpoint, payload fields,\nhashing of module code sections). For each mechanism give the function/\naddress and say whether it is confirmed statically or needs runtime\nobservation. Do not attach to or interfere with a live game session.\n```\n\n### DRM / license flow analysis (interoperability)\n\n```text\nUse REA on <application> to document its licensing flow: where entitlement is\nvalidated, what local and remote checks exist, what state is stored on disk,\nand how offline mode behaves. Goal is interoperability and security review of\nsoftware I legitimately own. Report facts with evidence; flag anything you\ncould not confirm.\n```\n\n---\n"
+    },
+    {
+      "slug": "reap-13-dma-and-hardware-assisted-cheat-research-defensive",
+      "name": "reap-13-dma-and-hardware-assisted-cheat-research-defensive",
+      "dir": "Skills/reap-13-dma-and-hardware-assisted-cheat-research-defensive",
+      "path": "Skills/reap-13-dma-and-hardware-assisted-cheat-research-defensive/SKILL.md",
+      "desc": "REA prompt pack:  DMA & hardware-assisted cheat research (defensive) (4 ready-to-paste prompts). Use when doing reverse-engineering investigation of dma & hardware-assisted cheat research (defensive) with REA (rea.tools) via an AI coding agent.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/JoasASantos/REA-Prompts.git",
+        "copy": "cp -r Skills/reap-13-dma-and-hardware-assisted-cheat-research-defensive ~/.claude/skills/reap-13-dma-and-hardware-assisted-cheat-research-defensive",
+        "raw": "https://raw.githubusercontent.com/JoasASantos/REA-Prompts/9756618f25af1920c8965f8969820eed22247936/Skills/reap-13-dma-and-hardware-assisted-cheat-research-defensive/SKILL.md",
+        "saveAs": "~/.claude/skills/reap-13-dma-and-hardware-assisted-cheat-research-defensive/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:69b5e7bdd42e0fc0042a540d13011aa1a5e50cb7a691d0a1dcf9224d6f47ac30",
+      "bytes": 2791,
+      "wordCount": 354,
+      "repoLicense": "MIT",
+      "commit": "9756618f25af1920c8965f8969820eed22247936",
+      "branch": "main",
+      "body": "---\nname: reap-13-dma-and-hardware-assisted-cheat-research-defensive\ndescription: REA prompt pack:  DMA & hardware-assisted cheat research (defensive) (4 ready-to-paste prompts). Use when doing reverse-engineering investigation of dma & hardware-assisted cheat research (defensive) with REA (rea.tools) via an AI coding agent.\n---\n\n# REAP — 13. DMA & hardware-assisted cheat research (defensive)\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n> DMA attacks are a real anti-cheat and platform-security problem. Use these\n> to **study how detection works** and to **harden your own product/lab** —\n> on machines you own, offline targets, or with vendor authorization. Reading\n> another machine's memory over PCIe without authorization is illegal in most\n> jurisdictions.\n\n### How DMA memory access works on a target platform\n\n```text\nUse REA on <anti-cheat driver / DMA-protection firmware (e.g. Thunderbolt\nsecurity, IOMMU/VT-d config)> in my lab.\n\nExplain, with function/address evidence: how the platform restricts external\nPCIe memory reads (IOMMU mappings, Thunderbolt ACLs, kernel DMA protection),\nwhat the anti-cheat enumerates to spot a DMA device (PCIe topology, BAR\nregions, unknown root ports, timing anomalies), and which checks are\nload-bearing versus cosmetic.\n```\n\n### Analyze a DMA-cheat toolchain sample (malware-style)\n\n```text\nI have a sample <DMA firmware / PCILeech-style driver / user-mode reader> for\ndefensive research. Use REA to document: how it opens physical memory\n(XNVIPHYSTREE-style access, PCIe BAR mapping), how it locates the game process\n(PEB walking, page-table traversal), what it reads/writes, and any\nanti-detection tricks (pattern scanning avoidance, timing padding). Give the\nfunction chain with addresses for each stage. Do not run it against any live\ngame — analysis only.\n```\n\n### Detection-gap analysis for my own product\n\n```text\nUse REA to evaluate how <my application/my anti-cheat component> would react\nto external physical memory access: which integrity checks exist, whether\nsensitive values sit in predictable memory, what side-channel validation the\nserver performs. Propose concrete hardening (value obfuscation, server-side\nvalidation, memory layout randomization) mapped to the code locations that\nneed each change.\n```\n\n### FPGA/microcontroller device firmware study\n\n```text\nUse REA on <device firmware dump> from a PCIe/USB device I own. Identify the\nMCU/FPGA soft-core, the protocol it speaks to the host, the memory-read\nprimitives it implements, and how it hides from host enumeration. Show\nevidence per claim and label anything that needs runtime confirmation.\n```\n\n---\n",
+      "bodyMd": "# REAP — 13. DMA & hardware-assisted cheat research (defensive)\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n> DMA attacks are a real anti-cheat and platform-security problem. Use these\n> to **study how detection works** and to **harden your own product/lab** —\n> on machines you own, offline targets, or with vendor authorization. Reading\n> another machine's memory over PCIe without authorization is illegal in most\n> jurisdictions.\n\n### How DMA memory access works on a target platform\n\n```text\nUse REA on <anti-cheat driver / DMA-protection firmware (e.g. Thunderbolt\nsecurity, IOMMU/VT-d config)> in my lab.\n\nExplain, with function/address evidence: how the platform restricts external\nPCIe memory reads (IOMMU mappings, Thunderbolt ACLs, kernel DMA protection),\nwhat the anti-cheat enumerates to spot a DMA device (PCIe topology, BAR\nregions, unknown root ports, timing anomalies), and which checks are\nload-bearing versus cosmetic.\n```\n\n### Analyze a DMA-cheat toolchain sample (malware-style)\n\n```text\nI have a sample <DMA firmware / PCILeech-style driver / user-mode reader> for\ndefensive research. Use REA to document: how it opens physical memory\n(XNVIPHYSTREE-style access, PCIe BAR mapping), how it locates the game process\n(PEB walking, page-table traversal), what it reads/writes, and any\nanti-detection tricks (pattern scanning avoidance, timing padding). Give the\nfunction chain with addresses for each stage. Do not run it against any live\ngame — analysis only.\n```\n\n### Detection-gap analysis for my own product\n\n```text\nUse REA to evaluate how <my application/my anti-cheat component> would react\nto external physical memory access: which integrity checks exist, whether\nsensitive values sit in predictable memory, what side-channel validation the\nserver performs. Propose concrete hardening (value obfuscation, server-side\nvalidation, memory layout randomization) mapped to the code locations that\nneed each change.\n```\n\n### FPGA/microcontroller device firmware study\n\n```text\nUse REA on <device firmware dump> from a PCIe/USB device I own. Identify the\nMCU/FPGA soft-core, the protocol it speaks to the host, the memory-read\nprimitives it implements, and how it hides from host enumeration. Show\nevidence per claim and label anything that needs runtime confirmation.\n```\n\n---\n"
+    },
+    {
+      "slug": "reap-14-software-cracking-research",
+      "name": "reap-14-software-cracking-research",
+      "dir": "Skills/reap-14-software-cracking-research",
+      "path": "Skills/reap-14-software-cracking-research/SKILL.md",
+      "desc": "REA prompt pack:  Software cracking research (3 ready-to-paste prompts). Use when doing reverse-engineering investigation of software cracking research with REA (rea.tools) via an AI coding agent.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/JoasASantos/REA-Prompts.git",
+        "copy": "cp -r Skills/reap-14-software-cracking-research ~/.claude/skills/reap-14-software-cracking-research",
+        "raw": "https://raw.githubusercontent.com/JoasASantos/REA-Prompts/9756618f25af1920c8965f8969820eed22247936/Skills/reap-14-software-cracking-research/SKILL.md",
+        "saveAs": "~/.claude/skills/reap-14-software-cracking-research/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:0324cb4f9e1c471971dbcd56edd1185f462f578f558e8ad9c716d675e48e5e1d",
+      "bytes": 1768,
+      "wordCount": 215,
+      "repoLicense": "MIT",
+      "commit": "9756618f25af1920c8965f8969820eed22247936",
+      "branch": "main",
+      "body": "---\nname: reap-14-software-cracking-research\ndescription: REA prompt pack:  Software cracking research (3 ready-to-paste prompts). Use when doing reverse-engineering investigation of software cracking research with REA (rea.tools) via an AI coding agent.\n---\n\n# REAP — 14. Software cracking research\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n> For studying protection schemes, crackmes/CTFs, malware-adjacent RE, and\n> hardening your own software. Not a guide to pirate other people's products.\n\n### Keygen-repair style analysis (document, don't bypass)\n\n```text\nUse REA on <binary> to find the validation routine for <license key / serial>.\nRecover the algorithm (decompile it), identify the input encoding, the\nchecksum/transform steps and the success/failure branches with addresses.\nThen write a test harness that exercises the recovered algorithm against\nsample inputs. Do not patch or bypass anything — I want the algorithm\ndocumented, not the check removed.\n```\n\n### Crackme / CTF challenge solving\n\n```text\nUse REA on this crackme: <path>. Enumerate entry points, strings, imports and\nany packer/protection indicators. Identify the flag-checking logic, decompile\nit, and derive the correct input from the recovered algorithm. Show the full\nevidence chain: address → instruction → conclusion.\n```\n\n### Protection-diffing between versions\n\n```text\nUse REA to compare <protected app v1> and <v2>. Identify what changed in the\nprotection layer: new integrity checks, new anti-debug tricks, changed\nvalidation paths. Map each change to functions/addresses and explain the\nhardening intent.\n```\n\n---\n",
+      "bodyMd": "# REAP — 14. Software cracking research\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n> For studying protection schemes, crackmes/CTFs, malware-adjacent RE, and\n> hardening your own software. Not a guide to pirate other people's products.\n\n### Keygen-repair style analysis (document, don't bypass)\n\n```text\nUse REA on <binary> to find the validation routine for <license key / serial>.\nRecover the algorithm (decompile it), identify the input encoding, the\nchecksum/transform steps and the success/failure branches with addresses.\nThen write a test harness that exercises the recovered algorithm against\nsample inputs. Do not patch or bypass anything — I want the algorithm\ndocumented, not the check removed.\n```\n\n### Crackme / CTF challenge solving\n\n```text\nUse REA on this crackme: <path>. Enumerate entry points, strings, imports and\nany packer/protection indicators. Identify the flag-checking logic, decompile\nit, and derive the correct input from the recovered algorithm. Show the full\nevidence chain: address → instruction → conclusion.\n```\n\n### Protection-diffing between versions\n\n```text\nUse REA to compare <protected app v1> and <v2>. Identify what changed in the\nprotection layer: new integrity checks, new anti-debug tricks, changed\nvalidation paths. Map each change to functions/addresses and explain the\nhardening intent.\n```\n\n---\n"
+    },
+    {
+      "slug": "reap-15-version-comparison-and-crash-work",
+      "name": "reap-15-version-comparison-and-crash-work",
+      "dir": "Skills/reap-15-version-comparison-and-crash-work",
+      "path": "Skills/reap-15-version-comparison-and-crash-work/SKILL.md",
+      "desc": "REA prompt pack:  Version comparison & crash work (1 ready-to-paste prompts). Use when doing reverse-engineering investigation of version comparison & crash work with REA (rea.tools) via an AI coding agent.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/JoasASantos/REA-Prompts.git",
+        "copy": "cp -r Skills/reap-15-version-comparison-and-crash-work ~/.claude/skills/reap-15-version-comparison-and-crash-work",
+        "raw": "https://raw.githubusercontent.com/JoasASantos/REA-Prompts/9756618f25af1920c8965f8969820eed22247936/Skills/reap-15-version-comparison-and-crash-work/SKILL.md",
+        "saveAs": "~/.claude/skills/reap-15-version-comparison-and-crash-work/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:e4b8449a2539e3cbc51f0388cea1df2c7afb985d34d7effd86a9ca484a8c5171",
+      "bytes": 928,
+      "wordCount": 89,
+      "repoLicense": "MIT",
+      "commit": "9756618f25af1920c8965f8969820eed22247936",
+      "branch": "main",
+      "body": "---\nname: reap-15-version-comparison-and-crash-work\ndescription: REA prompt pack:  Version comparison & crash work (1 ready-to-paste prompts). Use when doing reverse-engineering investigation of version comparison & crash work with REA (rea.tools) via an AI coding agent.\n---\n\n# REAP — 15. Version comparison & crash work\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n### Compare two versions\n\n```text\nUse the compare_application_versions workflow, if available, to compare\n<OLD VERSION> and <NEW VERSION> of <application>.\n\nIdentify functional changes, API changes, dependency and permission changes,\nand possible security fixes.\n\nMap each change to the corresponding functions or files and explain the\nimpact. Differentiate build changes from behavior changes.\n```\n\n---\n",
+      "bodyMd": "# REAP — 15. Version comparison & crash work\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n### Compare two versions\n\n```text\nUse the compare_application_versions workflow, if available, to compare\n<OLD VERSION> and <NEW VERSION> of <application>.\n\nIdentify functional changes, API changes, dependency and permission changes,\nand possible security fixes.\n\nMap each change to the corresponding functions or files and explain the\nimpact. Differentiate build changes from behavior changes.\n```\n\n---\n"
+    },
+    {
+      "slug": "reap-16-long-running-investigations",
+      "name": "reap-16-long-running-investigations",
+      "dir": "Skills/reap-16-long-running-investigations",
+      "path": "Skills/reap-16-long-running-investigations/SKILL.md",
+      "desc": "REA prompt pack:  Long-running investigations (1 ready-to-paste prompts). Use when doing reverse-engineering investigation of long-running investigations with REA (rea.tools) via an AI coding agent.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/JoasASantos/REA-Prompts.git",
+        "copy": "cp -r Skills/reap-16-long-running-investigations ~/.claude/skills/reap-16-long-running-investigations",
+        "raw": "https://raw.githubusercontent.com/JoasASantos/REA-Prompts/9756618f25af1920c8965f8969820eed22247936/Skills/reap-16-long-running-investigations/SKILL.md",
+        "saveAs": "~/.claude/skills/reap-16-long-running-investigations/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:a11fac42fc2d425d502b7473334c8618c6b7202ea6365aed8bab943ba3e84064",
+      "bytes": 862,
+      "wordCount": 84,
+      "repoLicense": "MIT",
+      "commit": "9756618f25af1920c8965f8969820eed22247936",
+      "branch": "main",
+      "body": "---\nname: reap-16-long-running-investigations\ndescription: REA prompt pack:  Long-running investigations (1 ready-to-paste prompts). Use when doing reverse-engineering investigation of long-running investigations with REA (rea.tools) via an AI coding agent.\n---\n\n# REAP — 16. Long-running investigations\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n### Continue where you left off\n\n```text\nReview the evidence and notes of this investigation.\n\nUse audit_residual_unknowns, if available, to list what has not been\ndemonstrated yet.\n\nPrioritize the next analyses by how much they can reduce uncertainty. Update\nan INVESTIGATION.md file with findings, evidence, discarded hypotheses and\nnext steps.\n```\n\n---\n",
+      "bodyMd": "# REAP — 16. Long-running investigations\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n### Continue where you left off\n\n```text\nReview the evidence and notes of this investigation.\n\nUse audit_residual_unknowns, if available, to list what has not been\ndemonstrated yet.\n\nPrioritize the next analyses by how much they can reduce uncertainty. Update\nan INVESTIGATION.md file with findings, evidence, discarded hypotheses and\nnext steps.\n```\n\n---\n"
+    },
+    {
+      "slug": "reap-17-malware-analysis",
+      "name": "reap-17-malware-analysis",
+      "dir": "Skills/reap-17-malware-analysis",
+      "path": "Skills/reap-17-malware-analysis/SKILL.md",
+      "desc": "REA prompt pack:  Malware analysis (8 ready-to-paste prompts). Use when doing reverse-engineering investigation of malware analysis with REA (rea.tools) via an AI coding agent.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/JoasASantos/REA-Prompts.git",
+        "copy": "cp -r Skills/reap-17-malware-analysis ~/.claude/skills/reap-17-malware-analysis",
+        "raw": "https://raw.githubusercontent.com/JoasASantos/REA-Prompts/9756618f25af1920c8965f8969820eed22247936/Skills/reap-17-malware-analysis/SKILL.md",
+        "saveAs": "~/.claude/skills/reap-17-malware-analysis/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:a3fba9a8c1603fda02f2dd8c4e1e26e554bf104689893261ab745c90f09461ea",
+      "bytes": 5024,
+      "wordCount": 675,
+      "repoLicense": "MIT",
+      "commit": "9756618f25af1920c8965f8969820eed22247936",
+      "branch": "main",
+      "body": "---\nname: reap-17-malware-analysis\ndescription: REA prompt pack:  Malware analysis (8 ready-to-paste prompts). Use when doing reverse-engineering investigation of malware analysis with REA (rea.tools) via an AI coding agent.\n---\n\n# REAP — 17. Malware analysis\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n> Authorized contexts: your own incident response, a sandboxed lab, threat-intel\n> work, or samples you have explicit permission to handle. Never run malware on\n> a production machine; these prompts are static-first and ask for runtime\n> observation only inside an isolated VM.\n\n### Static triage and capability map\n\n```text\nUse REA on this malware sample: <PATH> (collected for authorized incident\nresponse / threat-intel analysis).\n\nProduce a triage report: file type, compiler/packer indicators, first-run\nartifacts, imports grouped by malicious capability (persistence, credential\ntheft, keylogging, screen capture, network C2, process injection, defense\nevasion), suspicious strings with addresses, and any embedded configs\n(URLs, wallet addresses, mutexes, encryption keys).\n\nFor every capability claim, cite the function/address that proves it. Separate\nconfirmed static findings from behaviors that still need sandbox confirmation.\nDo not execute the sample in this step.\n```\n\n### C2 protocol and config extraction\n\n```text\nUse REA on <malware sample> to recover its command-and-control protocol.\n\nFind the C2 endpoint construction (hardcoded strings, DGA, XOR/base64-encoded\nbuffers — show the decode routine and its key), the beacon format (fields,\nencoding, encryption), the tasking commands the bot accepts and what each one\ndoes, and any fallback infrastructure.\n\nOutput: a written protocol spec, a Python parser for a captured beacon if you\nhave one, and the addresses proving each field. Label anything inferred.\n```\n\n### Persistence, injection and evasion inventory\n\n```text\nUse REA on <malware sample>. Enumerate every persistence mechanism (registry\nRun keys, scheduled tasks, services, startup folder, WMI subscriptions),\nevery injection technique (CreateRemoteThread, APC, process hollowing, DLL\nside-loading) and every evasion trick (anti-VM checks, anti-debug, sandbox\ntiming checks, sleep evasion, AMSI/ETW patching).\n\nFor each: the function/address, the exact API calls used, and the trigger\ncondition. Rank them by which runs first in the execution flow.\n```\n\n### YARA / IOC generation from recovered code\n\n```text\nUse REA on <malware sample> and, from the functions you have already located,\ngenerate detection artifacts: YARA rules built on stable code sequences (not\nobfuscated strings), a list of file/registry/network IOCs with the addresses\nwhere each appears, and a threat-hunt query outline. Explain why each pattern\nis family-stable versus sample-specific.\n```\n\n### Family correlation between samples\n\n```text\nUse REA to compare <sample A> and <sample B>. Identify shared code: matching\nfunctions (by structure, not just hash), common string-encoding routines,\nshared C2 protocol fields, reused constants or PDB paths.\n\nConclude whether they are the same family, same builder, or unrelated, with\nthe function-pair evidence behind each claim.\n```\n\n### Loader / dropper stage chain\n\n```text\nUse REA on <loader sample>. Reconstruct the stage chain: what the first-stage\nstub does (process hollowing, DLL side-loading, reflective loading,\nAPC injection — show the API sequence with addresses), where the second-stage\npayload comes from (embedded blob offset, download URL, decode routine), and\nhow integrity/decryption of the payload is verified before transfer of\nexecution. Deliver a stage diagram: stage → mechanism → artifact → evidence\naddress. Do not execute the sample.\n```\n\n### Sandbox-evasion decision tree\n\n```text\nUse REA on <malware sample>. Find every environment check that gates\nexecution: VM/GPU/CPU fingerprinting, disk-size and MAC-prefix checks,\ndebugger and analysis-tool enumeration, timing-based sleep inflation,\nhuman-interaction probes (mouse jitter, cursor checks). Map each check to the\nbranch it controls and the threshold constants it compares against, with\naddresses. Produce a decision tree: which conditions must hold for the\npayload to run — useful for building a detonation environment, not for\nevasion.\n```\n\n### Ransomware / wiper behavior documentation (defensive)\n\n```text\nUse REA on <ransomware sample> for authorized incident response. Document the\nencryption routine as code: algorithm and mode (from API calls or embedded\nprimitives), key generation and where the key/material leaves (C2, embedded,\ndiscarded), file-targeting rules (extension allow/deny lists, path exclusions\nwith addresses), shadow-copy and backup destruction calls, and ransom-note\ngeneration logic. Deliver an IOC + behavior report with evidence per claim;\ndo not attempt key recovery or decryption.\n```\n\n---\n",
+      "bodyMd": "# REAP — 17. Malware analysis\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n> Authorized contexts: your own incident response, a sandboxed lab, threat-intel\n> work, or samples you have explicit permission to handle. Never run malware on\n> a production machine; these prompts are static-first and ask for runtime\n> observation only inside an isolated VM.\n\n### Static triage and capability map\n\n```text\nUse REA on this malware sample: <PATH> (collected for authorized incident\nresponse / threat-intel analysis).\n\nProduce a triage report: file type, compiler/packer indicators, first-run\nartifacts, imports grouped by malicious capability (persistence, credential\ntheft, keylogging, screen capture, network C2, process injection, defense\nevasion), suspicious strings with addresses, and any embedded configs\n(URLs, wallet addresses, mutexes, encryption keys).\n\nFor every capability claim, cite the function/address that proves it. Separate\nconfirmed static findings from behaviors that still need sandbox confirmation.\nDo not execute the sample in this step.\n```\n\n### C2 protocol and config extraction\n\n```text\nUse REA on <malware sample> to recover its command-and-control protocol.\n\nFind the C2 endpoint construction (hardcoded strings, DGA, XOR/base64-encoded\nbuffers — show the decode routine and its key), the beacon format (fields,\nencoding, encryption), the tasking commands the bot accepts and what each one\ndoes, and any fallback infrastructure.\n\nOutput: a written protocol spec, a Python parser for a captured beacon if you\nhave one, and the addresses proving each field. Label anything inferred.\n```\n\n### Persistence, injection and evasion inventory\n\n```text\nUse REA on <malware sample>. Enumerate every persistence mechanism (registry\nRun keys, scheduled tasks, services, startup folder, WMI subscriptions),\nevery injection technique (CreateRemoteThread, APC, process hollowing, DLL\nside-loading) and every evasion trick (anti-VM checks, anti-debug, sandbox\ntiming checks, sleep evasion, AMSI/ETW patching).\n\nFor each: the function/address, the exact API calls used, and the trigger\ncondition. Rank them by which runs first in the execution flow.\n```\n\n### YARA / IOC generation from recovered code\n\n```text\nUse REA on <malware sample> and, from the functions you have already located,\ngenerate detection artifacts: YARA rules built on stable code sequences (not\nobfuscated strings), a list of file/registry/network IOCs with the addresses\nwhere each appears, and a threat-hunt query outline. Explain why each pattern\nis family-stable versus sample-specific.\n```\n\n### Family correlation between samples\n\n```text\nUse REA to compare <sample A> and <sample B>. Identify shared code: matching\nfunctions (by structure, not just hash), common string-encoding routines,\nshared C2 protocol fields, reused constants or PDB paths.\n\nConclude whether they are the same family, same builder, or unrelated, with\nthe function-pair evidence behind each claim.\n```\n\n### Loader / dropper stage chain\n\n```text\nUse REA on <loader sample>. Reconstruct the stage chain: what the first-stage\nstub does (process hollowing, DLL side-loading, reflective loading,\nAPC injection — show the API sequence with addresses), where the second-stage\npayload comes from (embedded blob offset, download URL, decode routine), and\nhow integrity/decryption of the payload is verified before transfer of\nexecution. Deliver a stage diagram: stage → mechanism → artifact → evidence\naddress. Do not execute the sample.\n```\n\n### Sandbox-evasion decision tree\n\n```text\nUse REA on <malware sample>. Find every environment check that gates\nexecution: VM/GPU/CPU fingerprinting, disk-size and MAC-prefix checks,\ndebugger and analysis-tool enumeration, timing-based sleep inflation,\nhuman-interaction probes (mouse jitter, cursor checks). Map each check to the\nbranch it controls and the threshold constants it compares against, with\naddresses. Produce a decision tree: which conditions must hold for the\npayload to run — useful for building a detonation environment, not for\nevasion.\n```\n\n### Ransomware / wiper behavior documentation (defensive)\n\n```text\nUse REA on <ransomware sample> for authorized incident response. Document the\nencryption routine as code: algorithm and mode (from API calls or embedded\nprimitives), key generation and where the key/material leaves (C2, embedded,\ndiscarded), file-targeting rules (extension allow/deny lists, path exclusions\nwith addresses), shadow-copy and backup destruction calls, and ransom-note\ngeneration logic. Deliver an IOC + behavior report with evidence per claim;\ndo not attempt key recovery or decryption.\n```\n\n---\n"
+    },
+    {
+      "slug": "reap-18-advanced-binary-exploration-and-deobfuscation",
+      "name": "reap-18-advanced-binary-exploration-and-deobfuscation",
+      "dir": "Skills/reap-18-advanced-binary-exploration-and-deobfuscation",
+      "path": "Skills/reap-18-advanced-binary-exploration-and-deobfuscation/SKILL.md",
+      "desc": "REA prompt pack:  Advanced binary exploration & deobfuscation (8 ready-to-paste prompts). Use when doing reverse-engineering investigation of advanced binary exploration & deobfuscation with REA (rea.tools) via an AI coding agent.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/JoasASantos/REA-Prompts.git",
+        "copy": "cp -r Skills/reap-18-advanced-binary-exploration-and-deobfuscation ~/.claude/skills/reap-18-advanced-binary-exploration-and-deobfuscation",
+        "raw": "https://raw.githubusercontent.com/JoasASantos/REA-Prompts/9756618f25af1920c8965f8969820eed22247936/Skills/reap-18-advanced-binary-exploration-and-deobfuscation/SKILL.md",
+        "saveAs": "~/.claude/skills/reap-18-advanced-binary-exploration-and-deobfuscation/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:1423832bf46cddf8af6c8d0d7460c812cef84867980f20d33fc43445ddd0d458",
+      "bytes": 4438,
+      "wordCount": 603,
+      "repoLicense": "MIT",
+      "commit": "9756618f25af1920c8965f8969820eed22247936",
+      "branch": "main",
+      "body": "---\nname: reap-18-advanced-binary-exploration-and-deobfuscation\ndescription: REA prompt pack:  Advanced binary exploration & deobfuscation (8 ready-to-paste prompts). Use when doing reverse-engineering investigation of advanced binary exploration & deobfuscation with REA (rea.tools) via an AI coding agent.\n---\n\n# REAP — 18. Advanced binary exploration & deobfuscation\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n### Control-flow flattening recovery\n\n```text\nUse REA on <binary>. The function(s) handling <FEATURE> appear\ncontrol-flow-flattened (dispatcher state variable, giant switch/branch chain).\n\nIdentify the state variable, map each state to its real block, and reconstruct\nthe original logical flow as pseudocode or a graph. Show the address ranges for\nthe dispatcher, the states, and the reconstructed sequence. Note which parts\nremain ambiguous.\n```\n\n### String and constant decryption pass\n\n```text\nUse REA on <binary>. Locate the string-decryption routine(s) (per-call\ndecoding, single init loop, or lazy decryption), recover the algorithm and\nkeys with addresses, then produce a decrypted string table: offset, encoded\nform, decoded form, and the function(s) that reference each string. If the\nscheme is uniform, write a script that reproduces the decryption offline.\n```\n\n### Opaque predicates and dead-code stripping\n\n```text\nUse REA on <binary> around <function/address range>. Identify opaque\npredicates (always-true/false branches built from constant arithmetic or\nself-referencing checks) and dead code inserted to mislead analysis.\n\nFor each: the address, why it is provably constant, and which branch is real.\nProduce a cleaned control-flow view of the function with the noise removed,\nkeeping the evidence for every removal decision.\n```\n\n### Virtualized / threaded code identification\n\n```text\nUse REA on <binary>. Determine whether <function> is native or runs inside a\nVM-style handler (opcode dispatch loop, context structure, handler table).\n\nMap the handler table: opcode → handler address → operation class (load,\nstore, arithmetic, branch, call). Estimate how many distinct opcodes exist and\nwhich original operations you can already recognize. Do not attempt to defeat\nthe protection — I want the structure documented first.\n```\n\n### Mixed-mode binary: managed + native boundary\n\n```text\nUse REA on <application> that mixes .NET/Java managed code with native\nlibraries. Locate every P/Invoke, JNI, or COM boundary relevant to <FEATURE>,\ntrace the call from managed code into the native function and back, and\ndocument what data crosses each boundary in what form. Cite managed\nmethod tokens/names and native addresses for each hop.\n```\n\n### Struct & type recovery from access patterns\n\n```text\nUse REA on <binary>. Pick the structure that <function> operates on and\nreconstruct it field by field: every access offset in the code proves a\nfield's position, and the width of each load/store proves its size. Infer\nfield semantics from how each is used (counter, pointer, flag, length,\ncallback). Emit a C header with recovered struct definitions, named fields\nand a comment per field citing the address range that proves it. Propose\ntype annotations I can load into the decompiler.\n```\n\n### Calling-convention & stack-frame reconstruction\n\n```text\nUse REA on <binary> around <function/address>. The decompiler mis-models\nthis function. Reconstruct the real frame: prologue/epilogue, saved\nregisters, local slots, stack canary handling, and the argument registers/\nstack slots at entry. Determine the calling convention from how callers pass\narguments and how the callee cleans the stack. Rewrite the signature and\nre-decompile with the corrected frame; show the instruction evidence for each\nframe slot.\n```\n\n### Cross-binary function matching (diffing two builds)\n\n```text\nUse REA to match functions between <binary v1> and <binary v2> of the same\nprogram. Use structural similarity (CFG shape, instruction counts, call\ngraph, string/global references), not just hashes, so compiler reordering\ndoesn't break the mapping. Produce a matched-pairs table with confidence,\nthen list the functions that changed most between versions and what the\nchange appears to be (added check, new branch, refactored loop) with\naddresses on both sides.\n```\n\n---\n",
+      "bodyMd": "# REAP — 18. Advanced binary exploration & deobfuscation\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n### Control-flow flattening recovery\n\n```text\nUse REA on <binary>. The function(s) handling <FEATURE> appear\ncontrol-flow-flattened (dispatcher state variable, giant switch/branch chain).\n\nIdentify the state variable, map each state to its real block, and reconstruct\nthe original logical flow as pseudocode or a graph. Show the address ranges for\nthe dispatcher, the states, and the reconstructed sequence. Note which parts\nremain ambiguous.\n```\n\n### String and constant decryption pass\n\n```text\nUse REA on <binary>. Locate the string-decryption routine(s) (per-call\ndecoding, single init loop, or lazy decryption), recover the algorithm and\nkeys with addresses, then produce a decrypted string table: offset, encoded\nform, decoded form, and the function(s) that reference each string. If the\nscheme is uniform, write a script that reproduces the decryption offline.\n```\n\n### Opaque predicates and dead-code stripping\n\n```text\nUse REA on <binary> around <function/address range>. Identify opaque\npredicates (always-true/false branches built from constant arithmetic or\nself-referencing checks) and dead code inserted to mislead analysis.\n\nFor each: the address, why it is provably constant, and which branch is real.\nProduce a cleaned control-flow view of the function with the noise removed,\nkeeping the evidence for every removal decision.\n```\n\n### Virtualized / threaded code identification\n\n```text\nUse REA on <binary>. Determine whether <function> is native or runs inside a\nVM-style handler (opcode dispatch loop, context structure, handler table).\n\nMap the handler table: opcode → handler address → operation class (load,\nstore, arithmetic, branch, call). Estimate how many distinct opcodes exist and\nwhich original operations you can already recognize. Do not attempt to defeat\nthe protection — I want the structure documented first.\n```\n\n### Mixed-mode binary: managed + native boundary\n\n```text\nUse REA on <application> that mixes .NET/Java managed code with native\nlibraries. Locate every P/Invoke, JNI, or COM boundary relevant to <FEATURE>,\ntrace the call from managed code into the native function and back, and\ndocument what data crosses each boundary in what form. Cite managed\nmethod tokens/names and native addresses for each hop.\n```\n\n### Struct & type recovery from access patterns\n\n```text\nUse REA on <binary>. Pick the structure that <function> operates on and\nreconstruct it field by field: every access offset in the code proves a\nfield's position, and the width of each load/store proves its size. Infer\nfield semantics from how each is used (counter, pointer, flag, length,\ncallback). Emit a C header with recovered struct definitions, named fields\nand a comment per field citing the address range that proves it. Propose\ntype annotations I can load into the decompiler.\n```\n\n### Calling-convention & stack-frame reconstruction\n\n```text\nUse REA on <binary> around <function/address>. The decompiler mis-models\nthis function. Reconstruct the real frame: prologue/epilogue, saved\nregisters, local slots, stack canary handling, and the argument registers/\nstack slots at entry. Determine the calling convention from how callers pass\narguments and how the callee cleans the stack. Rewrite the signature and\nre-decompile with the corrected frame; show the instruction evidence for each\nframe slot.\n```\n\n### Cross-binary function matching (diffing two builds)\n\n```text\nUse REA to match functions between <binary v1> and <binary v2> of the same\nprogram. Use structural similarity (CFG shape, instruction counts, call\ngraph, string/global references), not just hashes, so compiler reordering\ndoesn't break the mapping. Produce a matched-pairs table with confidence,\nthen list the functions that changed most between versions and what the\nchange appears to be (added check, new branch, refactored loop) with\naddresses on both sides.\n```\n\n---\n"
+    },
+    {
+      "slug": "reap-19-kernel-and-driver-exploitation-research",
+      "name": "reap-19-kernel-and-driver-exploitation-research",
+      "dir": "Skills/reap-19-kernel-and-driver-exploitation-research",
+      "path": "Skills/reap-19-kernel-and-driver-exploitation-research/SKILL.md",
+      "desc": "REA prompt pack:  Kernel & driver exploitation research (7 ready-to-paste prompts). Use when doing reverse-engineering investigation of kernel & driver exploitation research with REA (rea.tools) via an AI coding agent.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/JoasASantos/REA-Prompts.git",
+        "copy": "cp -r Skills/reap-19-kernel-and-driver-exploitation-research ~/.claude/skills/reap-19-kernel-and-driver-exploitation-research",
+        "raw": "https://raw.githubusercontent.com/JoasASantos/REA-Prompts/9756618f25af1920c8965f8969820eed22247936/Skills/reap-19-kernel-and-driver-exploitation-research/SKILL.md",
+        "saveAs": "~/.claude/skills/reap-19-kernel-and-driver-exploitation-research/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:6e0d96628e3f26367d65edafb28b14a18deac222e2b97938d7eb16b9f1430a03",
+      "bytes": 4462,
+      "wordCount": 627,
+      "repoLicense": "MIT",
+      "commit": "9756618f25af1920c8965f8969820eed22247936",
+      "branch": "main",
+      "body": "---\nname: reap-19-kernel-and-driver-exploitation-research\ndescription: REA prompt pack:  Kernel & driver exploitation research (7 ready-to-paste prompts). Use when doing reverse-engineering investigation of kernel & driver exploitation research with REA (rea.tools) via an AI coding agent.\n---\n\n# REAP — 19. Kernel & driver exploitation research\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n> Authorized contexts only: your own vulnerable driver, a CVE you are validating\n> for a bug bounty, a CTF kernel challenge, or defensive hardening review.\n> \"Exploitation research\" here means proving reachability of a flaw and\n> documenting the primitive — not building public weaponized exploits.\n\n### Vulnerable-driver primitive analysis (BYOVD-style, own driver)\n\n```text\nUse REA on <driver .sys> that I own/am authorized to assess (e.g. a known\nvulnerable driver used in my lab).\n\nDocument the read/write primitive: which IOCTL gives arbitrary physical or\nvirtual memory R/W, exactly how the handler validates (or fails to validate)\nthe input buffer, the struct layout the driver expects, and the shortest\nreproducible sequence that demonstrates the primitive against my own test\nbuffer. Give handler addresses and the missing check that makes it possible.\n```\n\n### CVE reachability validation on a patched build\n\n```text\nUse REA on <kernel binary / module version X> to check whether the fix for\n<CVE-ID> is complete for this build.\n\nLocate the patched function, verify the added check exists and covers every\ncaller path that reaches it, then search the rest of the binary for the same\nunchecked pattern (similar copy, same struct, different entry point). Report:\nfix present/absent, any bypass path found, and any sibling location still\nmissing the check — each labeled hypothesis vs confirmed, with addresses.\n```\n\n### Race condition / TOCTOU hunt in a driver\n\n```text\nUse REA on <driver>. Find handlers that touch shared state (global buffers,\ndevice extension fields, linked lists) from multiple IRQLs or concurrent IOCTLs.\n\nIdentify where a check and the subsequent use are separated without a lock or\natomic reference (TOCTOU), or where a use-after-free window opens between\nclose/unload and a pending operation. For each candidate: the two racing code\npaths with addresses, the shared object, and the smallest controlled test that\nwould confirm or refute the race.\n```\n\n### Kernel attack-surface ranking\n\n```text\nUse REA on <kernel module / driver>. Enumerate every user-reachable entry point\n(IOCTLs, syscalls, netlink/socket handlers, minifilter callbacks), and for each\nrecord: input validation depth (probe method, size checks, pointer\ndereference), state it touches, and privilege context.\n\nRank the entry points by exploitable-risk with evidence for the ranking, and\nname the top 3 worth a deeper source-level or crash-driven look.\n```\n\n### Windows/Linux kernel structure recovery\n\n```text\nUse REA on <kernel image / driver>. Reconstruct the key data structures used by\n<subsystem>: field-by-field layout inferred from access offsets in the code,\nwith the address of every access that proves each field's offset and width.\nAnnotate the decompiler output with recovered struct names and types.\n```\n\n### Reference-count / lifetime bug hunt (UAF candidates)\n\n```text\nUse REA on <driver / kernel module>. For every object type that is allocated\nand later freed (look for the alloc/free or ref-count increment/decrement\npairs), trace whether any code path can use the object after its last\nrelease: missing reference taken before storing a pointer, decrement-then-use\nordering, callbacks registered without a hold. For each candidate: the\nalloc/free/use address triple, the path that reaches the stale use, and the\nsmallest controlled test that would confirm it. Label every finding as\nhypothesis until validated.\n```\n\n### Windows syscall / SSDT surface walk\n\n```text\nUse REA on <ntoskrnl / win32k image or a documented syscall number> to\nexplain how <NtUserXxx/NtXxx> handles attacker-controlled arguments: the\nentry stub, parameter validation (probe, capture, alignment), the user-mode\nstructures it reads, and the kernel objects it touches. Show the dispatch\npath with addresses and flag any argument that reaches a sensitive operation\nwithout a visible check. Static analysis only.\n```\n\n---\n",
+      "bodyMd": "# REAP — 19. Kernel & driver exploitation research\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n> Authorized contexts only: your own vulnerable driver, a CVE you are validating\n> for a bug bounty, a CTF kernel challenge, or defensive hardening review.\n> \"Exploitation research\" here means proving reachability of a flaw and\n> documenting the primitive — not building public weaponized exploits.\n\n### Vulnerable-driver primitive analysis (BYOVD-style, own driver)\n\n```text\nUse REA on <driver .sys> that I own/am authorized to assess (e.g. a known\nvulnerable driver used in my lab).\n\nDocument the read/write primitive: which IOCTL gives arbitrary physical or\nvirtual memory R/W, exactly how the handler validates (or fails to validate)\nthe input buffer, the struct layout the driver expects, and the shortest\nreproducible sequence that demonstrates the primitive against my own test\nbuffer. Give handler addresses and the missing check that makes it possible.\n```\n\n### CVE reachability validation on a patched build\n\n```text\nUse REA on <kernel binary / module version X> to check whether the fix for\n<CVE-ID> is complete for this build.\n\nLocate the patched function, verify the added check exists and covers every\ncaller path that reaches it, then search the rest of the binary for the same\nunchecked pattern (similar copy, same struct, different entry point). Report:\nfix present/absent, any bypass path found, and any sibling location still\nmissing the check — each labeled hypothesis vs confirmed, with addresses.\n```\n\n### Race condition / TOCTOU hunt in a driver\n\n```text\nUse REA on <driver>. Find handlers that touch shared state (global buffers,\ndevice extension fields, linked lists) from multiple IRQLs or concurrent IOCTLs.\n\nIdentify where a check and the subsequent use are separated without a lock or\natomic reference (TOCTOU), or where a use-after-free window opens between\nclose/unload and a pending operation. For each candidate: the two racing code\npaths with addresses, the shared object, and the smallest controlled test that\nwould confirm or refute the race.\n```\n\n### Kernel attack-surface ranking\n\n```text\nUse REA on <kernel module / driver>. Enumerate every user-reachable entry point\n(IOCTLs, syscalls, netlink/socket handlers, minifilter callbacks), and for each\nrecord: input validation depth (probe method, size checks, pointer\ndereference), state it touches, and privilege context.\n\nRank the entry points by exploitable-risk with evidence for the ranking, and\nname the top 3 worth a deeper source-level or crash-driven look.\n```\n\n### Windows/Linux kernel structure recovery\n\n```text\nUse REA on <kernel image / driver>. Reconstruct the key data structures used by\n<subsystem>: field-by-field layout inferred from access offsets in the code,\nwith the address of every access that proves each field's offset and width.\nAnnotate the decompiler output with recovered struct names and types.\n```\n\n### Reference-count / lifetime bug hunt (UAF candidates)\n\n```text\nUse REA on <driver / kernel module>. For every object type that is allocated\nand later freed (look for the alloc/free or ref-count increment/decrement\npairs), trace whether any code path can use the object after its last\nrelease: missing reference taken before storing a pointer, decrement-then-use\nordering, callbacks registered without a hold. For each candidate: the\nalloc/free/use address triple, the path that reaches the stale use, and the\nsmallest controlled test that would confirm it. Label every finding as\nhypothesis until validated.\n```\n\n### Windows syscall / SSDT surface walk\n\n```text\nUse REA on <ntoskrnl / win32k image or a documented syscall number> to\nexplain how <NtUserXxx/NtXxx> handles attacker-controlled arguments: the\nentry stub, parameter validation (probe, capture, alignment), the user-mode\nstructures it reads, and the kernel objects it touches. Show the dispatch\npath with addresses and flag any argument that reaches a sensitive operation\nwithout a visible check. Static analysis only.\n```\n\n---\n"
+    },
+    {
+      "slug": "reap-20-advanced-software-cloning-and-feature-reconstruction",
+      "name": "reap-20-advanced-software-cloning-and-feature-reconstruction",
+      "dir": "Skills/reap-20-advanced-software-cloning-and-feature-reconstruction",
+      "path": "Skills/reap-20-advanced-software-cloning-and-feature-reconstruction/SKILL.md",
+      "desc": "REA prompt pack:  Advanced software cloning & feature reconstruction (5 ready-to-paste prompts). Use when doing reverse-engineering investigation of advanced software cloning & feature reconstruction with REA (rea.tools) via an AI coding agent.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/JoasASantos/REA-Prompts.git",
+        "copy": "cp -r Skills/reap-20-advanced-software-cloning-and-feature-reconstruction ~/.claude/skills/reap-20-advanced-software-cloning-and-feature-reconstruction",
+        "raw": "https://raw.githubusercontent.com/JoasASantos/REA-Prompts/9756618f25af1920c8965f8969820eed22247936/Skills/reap-20-advanced-software-cloning-and-feature-reconstruction/SKILL.md",
+        "saveAs": "~/.claude/skills/reap-20-advanced-software-cloning-and-feature-reconstruction/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:65b1412cc3b42d71c74b650636d57ab1bb12c467c2f960fc1cebc63578b99690",
+      "bytes": 3219,
+      "wordCount": 414,
+      "repoLicense": "MIT",
+      "commit": "9756618f25af1920c8965f8969820eed22247936",
+      "branch": "main",
+      "body": "---\nname: reap-20-advanced-software-cloning-and-feature-reconstruction\ndescription: REA prompt pack:  Advanced software cloning & feature reconstruction (5 ready-to-paste prompts). Use when doing reverse-engineering investigation of advanced software cloning & feature reconstruction with REA (rea.tools) via an AI coding agent.\n---\n\n# REAP — 20. Advanced software cloning & feature reconstruction\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n> Clean-room rules unchanged: extract behavior and interfaces, never code,\n> assets, branding or licensing mechanisms. Interoperability and research use.\n\n### Full protocol reimplementation for interoperability\n\n```text\nUse REA on <application> to recover its <network protocol / file format>\ncompletely enough to interoperate: every message or record type, field\nlayouts, endianness, state machine transitions, handshake/auth sequence,\nerror codes and keep-alive behavior.\n\nDeliver: a machine-readable spec (JSON Schema or protobuf), a working\nclient/server implementation in <language> that speaks the recovered protocol\nagainst the original application, and a test log proving each message type\nround-trips. Cite the marshal/unmarshal functions with addresses for every\nfield. Mark anything untested as UNKNOWN.\n```\n\n### Algorithm extraction to a standalone library\n\n```text\nUse REA on <application>. Isolate the pure algorithm behind <feature> (its\nmath, tables, constants and edge-case handling) from all UI, I/O and platform\ncode. Reimplement it from scratch in <language> as a library with a public API\nmatching the observable behavior, then run a differential test: same inputs\nthrough original and clone, compare outputs across normal, boundary and\nmalformed cases. Report the match rate and every divergence.\n```\n\n### State machine / business-logic reconstruction\n\n```text\nUse REA on <application> to document the state machine governing <workflow>:\nenumerate states (from enums, flags, or dispatch tables with addresses),\ntransitions, guards, and side effects per transition. Render it as a diagram\nplus a table, then implement the same machine in <my project> and write tests\nthat replay every transition you documented.\n```\n\n### Plugin/extension ABI reconstruction\n\n```text\nUse REA on <host application> to recover its plugin interface: the exported\nfunctions a plugin must provide, the callback table the host passes in, the\nstruct versions, and how plugins are discovered and loaded. Build a minimal\nworking plugin for my own feature using only the recovered ABI, and document\neach ABI element with the address that proves it.\n```\n\n### Behavioral equivalence harness\n\n```text\nBuild a differential-testing harness between <MY CLONE> and <ORIGINAL\nAPPLICATION>: derive the observable-behavior matrix from the CLONE_SPEC.md\nalready produced (inputs, outputs, errors, state transitions, file formats),\nrun both sides against the same corpus, and emit a divergence report. Do not\ndeclare equivalence from spot checks — the report must cover every spec item,\nwith PASS / FAIL / NOT-TESTED per item.\n```\n\n---\n",
+      "bodyMd": "# REAP — 20. Advanced software cloning & feature reconstruction\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n> Clean-room rules unchanged: extract behavior and interfaces, never code,\n> assets, branding or licensing mechanisms. Interoperability and research use.\n\n### Full protocol reimplementation for interoperability\n\n```text\nUse REA on <application> to recover its <network protocol / file format>\ncompletely enough to interoperate: every message or record type, field\nlayouts, endianness, state machine transitions, handshake/auth sequence,\nerror codes and keep-alive behavior.\n\nDeliver: a machine-readable spec (JSON Schema or protobuf), a working\nclient/server implementation in <language> that speaks the recovered protocol\nagainst the original application, and a test log proving each message type\nround-trips. Cite the marshal/unmarshal functions with addresses for every\nfield. Mark anything untested as UNKNOWN.\n```\n\n### Algorithm extraction to a standalone library\n\n```text\nUse REA on <application>. Isolate the pure algorithm behind <feature> (its\nmath, tables, constants and edge-case handling) from all UI, I/O and platform\ncode. Reimplement it from scratch in <language> as a library with a public API\nmatching the observable behavior, then run a differential test: same inputs\nthrough original and clone, compare outputs across normal, boundary and\nmalformed cases. Report the match rate and every divergence.\n```\n\n### State machine / business-logic reconstruction\n\n```text\nUse REA on <application> to document the state machine governing <workflow>:\nenumerate states (from enums, flags, or dispatch tables with addresses),\ntransitions, guards, and side effects per transition. Render it as a diagram\nplus a table, then implement the same machine in <my project> and write tests\nthat replay every transition you documented.\n```\n\n### Plugin/extension ABI reconstruction\n\n```text\nUse REA on <host application> to recover its plugin interface: the exported\nfunctions a plugin must provide, the callback table the host passes in, the\nstruct versions, and how plugins are discovered and loaded. Build a minimal\nworking plugin for my own feature using only the recovered ABI, and document\neach ABI element with the address that proves it.\n```\n\n### Behavioral equivalence harness\n\n```text\nBuild a differential-testing harness between <MY CLONE> and <ORIGINAL\nAPPLICATION>: derive the observable-behavior matrix from the CLONE_SPEC.md\nalready produced (inputs, outputs, errors, state transitions, file formats),\nrun both sides against the same corpus, and emit a divergence report. Do not\ndeclare equivalence from spot checks — the report must cover every spec item,\nwith PASS / FAIL / NOT-TESTED per item.\n```\n\n---\n"
+    },
+    {
+      "slug": "reap-21-protector-and-obfuscator-research",
+      "name": "reap-21-protector-and-obfuscator-research",
+      "dir": "Skills/reap-21-protector-and-obfuscator-research",
+      "path": "Skills/reap-21-protector-and-obfuscator-research/SKILL.md",
+      "desc": "REA prompt pack:  Protector & obfuscator research (7 ready-to-paste prompts). Use when doing reverse-engineering investigation of protector & obfuscator research with REA (rea.tools) via an AI coding agent.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/JoasASantos/REA-Prompts.git",
+        "copy": "cp -r Skills/reap-21-protector-and-obfuscator-research ~/.claude/skills/reap-21-protector-and-obfuscator-research",
+        "raw": "https://raw.githubusercontent.com/JoasASantos/REA-Prompts/9756618f25af1920c8965f8969820eed22247936/Skills/reap-21-protector-and-obfuscator-research/SKILL.md",
+        "saveAs": "~/.claude/skills/reap-21-protector-and-obfuscator-research/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:35f3a2f74f7b7080fd84ba1bba4a66a7d3a19bbd4e383f42457aa9e6b43bc58e",
+      "bytes": 5327,
+      "wordCount": 693,
+      "repoLicense": "MIT",
+      "commit": "9756618f25af1920c8965f8969820eed22247936",
+      "branch": "main",
+      "body": "---\nname: reap-21-protector-and-obfuscator-research\ndescription: REA prompt pack:  Protector & obfuscator research (7 ready-to-paste prompts). Use when doing reverse-engineering investigation of protector & obfuscator research with REA (rea.tools) via an AI coding agent.\n---\n\n# REAP — 21. Protector & obfuscator research\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n> Scope: protectors on **software you own** (hardening assessment), malware\n> samples, crackmes/CTFs, or vendor-authorized research. These prompts ask the\n> agent to *identify, characterize and document* protections and to plan\n> analysis — not to produce weaponized bypasses of third-party commercial\n> software.\n\n### Protector fingerprinting\n\n```text\nUse REA on <binary>. Determine whether it is protected/packed and by what:\nUPX (section names, entry stub, low entropy after unpacking), VMProtect/Themida\n(.vmp/.themida sections, huge virtualized functions, handler tables), Arxan\n(embedded watermark checks, code mutation markers), .NET obfuscators\n(SmartAssembly/GuardSquare-style renamed types, control-flow-encoded methods),\nAndroid packers/hardening (Appdome/WhiteCrypt-style native stubs, extra .so\nloaders, DexGuard string encryption).\n\nReport: which protector(s), the version indicators you can see, which sections\nare original vs. synthetic, and which code regions are protected versus plain.\nCite section headers, addresses and string fingerprints for each conclusion.\n```\n\n### UPX / simple packer: unpack-and-verify\n\n```text\nUse REA on <packed binary>. Confirm the packer (UPX header, stub\ncharacteristics), then produce the unpacked image: either a clean static\nunpack or the reconstructed original sections from the runtime layout. Verify\nthe result — entry point, imports rebuilt, section entropy — and diff the\nunpacked binary's capability map against the packed one so nothing was lost.\nDocument each step with addresses.\n```\n\n### VMProtect / Themida region mapping (own software or CTF)\n\n```text\nUse REA on <binary I own or a crackme> that uses VM-style protection.\n\nMap the protection surface without trying to defeat it: locate the VM entry\nstubs, the context structure, the handler dispatch table, and classify which\nfunctions are virtualized versus native. For the virtualized regions, estimate\nthe opcode set size and identify handlers you can already recognize (memory\nread/write, arithmetic, branch). Deliver a coverage map: function → protected\nor plain → confidence, with evidence. This map is the input for a later\ndeobfuscation plan, not a bypass.\n```\n\n### Anti-debug / anti-VM / anti-tamper inventory\n\n```text\nUse REA on <binary> to inventory its self-protection checks: anti-debug\n(Peek/Push/IsDebuggerPresent, timing checks, hardware-breakpoint flags),\nanti-VM (registry/firmware artifacts, MAC/vendor strings, CPUID tricks),\nintegrity checks (self-hashing regions, CRC tables), and tamper responses\n(silent flags vs. crash vs. report-to-server).\n\nFor each check: the function/address, what triggers it, and what happens on\nfailure. Then — for software I own — state which checks are load-bearing for\nsecurity and which are cosmetic, with recommended fixes.\n```\n\n### Appdome / WhiteCrypt / Proton Shield-style mobile hardening study\n\n```text\nUse REA on <APK/AAB> that uses a commercial hardening layer (Appdome-style\nruntime protection, WhiteCrypt-style embedded crypto, DexGuard/GuardSquare-style\nJava obfuscation).\n\nDocument: where the hardening stub lives (loader .so, injected classes, manifest\nhooks), what it wraps (DEX decryption, string decryption, root/hook/emulator\ndetection), which original classes are deferred to runtime, and what remains\nstatically analyzable. Identify the detection callbacks the protection exposes\nto the app. Give file/class/address evidence per finding and label anything\nthat needs dynamic confirmation in an isolated lab device.\n```\n\n### Arxan-style watermark & mutation analysis\n\n```text\nUse REA on <binary I own or am authorized to study> suspected of embedding\ncode-mutation watermarks (Arxan-style per-copy variants).\n\nIdentify the mutation sites: instruction-level variants between two builds of\nthe same function, redundant/mutated code inserted at call sites, and the\nverification routine that reads the watermark. Explain how the scheme\ndistinguishes copies and which regions are watermark-bearing versus real\nlogic, with addresses for each variant pair. Goal: understand the attribution\nmechanism for a security review of my own product.\n```\n\n### Protection hardening assessment for my own product\n\n```text\nI own <my application> and its protection stack (<protector names>). Use REA to\nassess the protection as an attacker would measure it: coverage (what % of\nlicense-critical and security-critical code is actually protected vs. plain),\nlayered checks (which fail silently vs. loudly), the weakest protected path to\n<the feature being protected>, and anti-analysis depth.\n\nDeliver a risk-ranked report: each weakness with function/address evidence,\nthe protection feature that should have covered it, and a concrete hardening\nrecommendation. Document weaknesses; do not produce a working bypass.\n```\n\n---\n",
+      "bodyMd": "# REAP — 21. Protector & obfuscator research\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n> Scope: protectors on **software you own** (hardening assessment), malware\n> samples, crackmes/CTFs, or vendor-authorized research. These prompts ask the\n> agent to *identify, characterize and document* protections and to plan\n> analysis — not to produce weaponized bypasses of third-party commercial\n> software.\n\n### Protector fingerprinting\n\n```text\nUse REA on <binary>. Determine whether it is protected/packed and by what:\nUPX (section names, entry stub, low entropy after unpacking), VMProtect/Themida\n(.vmp/.themida sections, huge virtualized functions, handler tables), Arxan\n(embedded watermark checks, code mutation markers), .NET obfuscators\n(SmartAssembly/GuardSquare-style renamed types, control-flow-encoded methods),\nAndroid packers/hardening (Appdome/WhiteCrypt-style native stubs, extra .so\nloaders, DexGuard string encryption).\n\nReport: which protector(s), the version indicators you can see, which sections\nare original vs. synthetic, and which code regions are protected versus plain.\nCite section headers, addresses and string fingerprints for each conclusion.\n```\n\n### UPX / simple packer: unpack-and-verify\n\n```text\nUse REA on <packed binary>. Confirm the packer (UPX header, stub\ncharacteristics), then produce the unpacked image: either a clean static\nunpack or the reconstructed original sections from the runtime layout. Verify\nthe result — entry point, imports rebuilt, section entropy — and diff the\nunpacked binary's capability map against the packed one so nothing was lost.\nDocument each step with addresses.\n```\n\n### VMProtect / Themida region mapping (own software or CTF)\n\n```text\nUse REA on <binary I own or a crackme> that uses VM-style protection.\n\nMap the protection surface without trying to defeat it: locate the VM entry\nstubs, the context structure, the handler dispatch table, and classify which\nfunctions are virtualized versus native. For the virtualized regions, estimate\nthe opcode set size and identify handlers you can already recognize (memory\nread/write, arithmetic, branch). Deliver a coverage map: function → protected\nor plain → confidence, with evidence. This map is the input for a later\ndeobfuscation plan, not a bypass.\n```\n\n### Anti-debug / anti-VM / anti-tamper inventory\n\n```text\nUse REA on <binary> to inventory its self-protection checks: anti-debug\n(Peek/Push/IsDebuggerPresent, timing checks, hardware-breakpoint flags),\nanti-VM (registry/firmware artifacts, MAC/vendor strings, CPUID tricks),\nintegrity checks (self-hashing regions, CRC tables), and tamper responses\n(silent flags vs. crash vs. report-to-server).\n\nFor each check: the function/address, what triggers it, and what happens on\nfailure. Then — for software I own — state which checks are load-bearing for\nsecurity and which are cosmetic, with recommended fixes.\n```\n\n### Appdome / WhiteCrypt / Proton Shield-style mobile hardening study\n\n```text\nUse REA on <APK/AAB> that uses a commercial hardening layer (Appdome-style\nruntime protection, WhiteCrypt-style embedded crypto, DexGuard/GuardSquare-style\nJava obfuscation).\n\nDocument: where the hardening stub lives (loader .so, injected classes, manifest\nhooks), what it wraps (DEX decryption, string decryption, root/hook/emulator\ndetection), which original classes are deferred to runtime, and what remains\nstatically analyzable. Identify the detection callbacks the protection exposes\nto the app. Give file/class/address evidence per finding and label anything\nthat needs dynamic confirmation in an isolated lab device.\n```\n\n### Arxan-style watermark & mutation analysis\n\n```text\nUse REA on <binary I own or am authorized to study> suspected of embedding\ncode-mutation watermarks (Arxan-style per-copy variants).\n\nIdentify the mutation sites: instruction-level variants between two builds of\nthe same function, redundant/mutated code inserted at call sites, and the\nverification routine that reads the watermark. Explain how the scheme\ndistinguishes copies and which regions are watermark-bearing versus real\nlogic, with addresses for each variant pair. Goal: understand the attribution\nmechanism for a security review of my own product.\n```\n\n### Protection hardening assessment for my own product\n\n```text\nI own <my application> and its protection stack (<protector names>). Use REA to\nassess the protection as an attacker would measure it: coverage (what % of\nlicense-critical and security-critical code is actually protected vs. plain),\nlayered checks (which fail silently vs. loudly), the weakest protected path to\n<the feature being protected>, and anti-analysis depth.\n\nDeliver a risk-ranked report: each weakness with function/address evidence,\nthe protection feature that should have covered it, and a concrete hardening\nrecommendation. Document weaknesses; do not produce a working bypass.\n```\n\n---\n"
+    },
+    {
+      "slug": "reap-22-go-and-rust-binary-source-recovery",
+      "name": "reap-22-go-and-rust-binary-source-recovery",
+      "dir": "Skills/reap-22-go-and-rust-binary-source-recovery",
+      "path": "Skills/reap-22-go-and-rust-binary-source-recovery/SKILL.md",
+      "desc": "REA prompt pack:  Go & Rust binary source recovery (7 ready-to-paste prompts). Use when doing reverse-engineering investigation of go & rust binary source recovery with REA (rea.tools) via an AI coding agent.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "go",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/JoasASantos/REA-Prompts.git",
+        "copy": "cp -r Skills/reap-22-go-and-rust-binary-source-recovery ~/.claude/skills/reap-22-go-and-rust-binary-source-recovery",
+        "raw": "https://raw.githubusercontent.com/JoasASantos/REA-Prompts/9756618f25af1920c8965f8969820eed22247936/Skills/reap-22-go-and-rust-binary-source-recovery/SKILL.md",
+        "saveAs": "~/.claude/skills/reap-22-go-and-rust-binary-source-recovery/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:ecb68ba9cd48fb56470bbefd67cf96714cc0a346a2256eb7070cfbae04383927",
+      "bytes": 4801,
+      "wordCount": 653,
+      "repoLicense": "MIT",
+      "commit": "9756618f25af1920c8965f8969820eed22247936",
+      "branch": "main",
+      "body": "---\nname: reap-22-go-and-rust-binary-source-recovery\ndescription: REA prompt pack:  Go & Rust binary source recovery (7 ready-to-paste prompts). Use when doing reverse-engineering investigation of go & rust binary source recovery with REA (rea.tools) via an AI coding agent.\n---\n\n# REAP — 22. Go & Rust binary source recovery\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n> Go and Rust ship rich metadata in their binaries (Go: pclntab, moduledata,\n> full type/goroutine runtime; Rust: panic strings, `core::` symbols, crate\n> names, monomorphized function names). Recovery here means reconstructing\n> *structure and logic* — readable pseudocode, package/module layout, type\n> definitions — not literally the original `.go`/`.rs` files. Say so honestly\n> in the report. Scope: binaries you own or are authorized to analyze.\n\n### Go binary: symbol & package map\n\n```text\nUse REA on <Go binary (.exe or Linux ELF) built with Golang>.\n\nRecover the package layout from the pclntab / moduledata: every function\nsymbol with its full package path (main.*, vendor/*, dependency modules),\nthe Go version and build ID, and the dependency list embedded in the binary.\nMap main.main and main.init to their call graph. Deliver a package tree with\nfunction counts per package and the addresses proving each symbol.\n```\n\n### Go binary: function-level logic recovery\n\n```text\nUse REA on <Go binary>. For the functions in package <package or main> that\nimplement <FEATURE>, produce readable pseudocode: recover the Go calling\nconvention (stack-based args, ABIInternal registers), map defer/panic\nhandling, goroutine/channel operations (runtime.chanrecv/chansend sites) and\ninterface dispatch (itab/iface calls). Reconstruct each function's signature\nfrom argument loads and return stores. Cite address ranges per recovered\nstatement group; separate confirmed logic from inference.\n```\n\n### Go binary: type & struct reconstruction\n\n```text\nUse REA on <Go binary>. Walk the Go type metadata (runtime.types / itab\ntables) reachable from <FEATURE>'s code path and reconstruct the struct\ndefinitions: field offsets, widths and likely types from how each field is\naccessed, plus interface method sets from itabs. Emit Go-style type\ndeclarations with a comment citing the metadata address that proves each\nfield. Note where GC bitmaps or padding make a field uncertain.\n```\n\n### Rust binary: crate & symbol map\n\n```text\nUse REA on <Rust binary (.exe or Linux ELF)>. Identify the Rust version and\nprofile (debug vs release: presence of panic-location strings, `core::fmt`\nshims) from embedded metadata and panic strings. Enumerate crate names from\nsymbol paths and panic locations (file paths leaked in `#[track_caller]`\nstrings), map monomorphized generics back to their generic parents, and\nproduce a crate/module tree with the addresses proving each entry.\n```\n\n### Rust binary: logic recovery with trait-dispatch awareness\n\n```text\nUse REA on <Rust binary>. For the functions implementing <FEATURE>, produce\nreadable pseudocode that accounts for Rust idioms: Result/Option propagation\n(branch-on-discriminant patterns), drop glue and ownership transfers,\nvtable-based trait-object dispatch (recover the vtable at its data address\nand name each slot), iterator adapters (inlined loop state machines), and\npanic/fmt call sites as string anchors. Reconstruct signatures from the\nItanium/mangling where symbols survive; where stripped, infer from register\nusage. Cite addresses per claim and mark inferred names as hypotheses.\n```\n\n### Stripped Go/Rust binary: metadata-first triage\n\n```text\nUse REA on <stripped Go or Rust binary>. Before touching code, extract what\nsurvives stripping: Go pclntab still yields full function names and line\ntables even after `strip`/`-ldflags -s -w` (locate the tab via runtime\npointers and rebuild the symbol table); Rust panic strings and file paths\nstill name crates and source files. Rebuild the function-name → address map\nfrom whichever metadata is present, then start the <FEATURE> trace from the\nrecovered names. Report exactly which metadata you found and what is\nirrecoverably gone.\n```\n\n### Binary-to-source fidelity report\n\n```text\nBased on the REA findings for <Go/Rust binary>, write a RECOVERY_REPORT.md:\nfor each recovered module, state whether the reconstruction is (a) symbol-\nexact (names from metadata), (b) structure-exact (types/fields proven by\naccess offsets), or (c) behavior-only (pseudocode with inferred names).\nInclude the reconstructed source tree layout, per-file confidence level, and\nthe evidence addresses behind each classification. Do not present inferred\ncode as the original source.\n```\n\n---\n",
+      "bodyMd": "# REAP — 22. Go & Rust binary source recovery\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n> Go and Rust ship rich metadata in their binaries (Go: pclntab, moduledata,\n> full type/goroutine runtime; Rust: panic strings, `core::` symbols, crate\n> names, monomorphized function names). Recovery here means reconstructing\n> *structure and logic* — readable pseudocode, package/module layout, type\n> definitions — not literally the original `.go`/`.rs` files. Say so honestly\n> in the report. Scope: binaries you own or are authorized to analyze.\n\n### Go binary: symbol & package map\n\n```text\nUse REA on <Go binary (.exe or Linux ELF) built with Golang>.\n\nRecover the package layout from the pclntab / moduledata: every function\nsymbol with its full package path (main.*, vendor/*, dependency modules),\nthe Go version and build ID, and the dependency list embedded in the binary.\nMap main.main and main.init to their call graph. Deliver a package tree with\nfunction counts per package and the addresses proving each symbol.\n```\n\n### Go binary: function-level logic recovery\n\n```text\nUse REA on <Go binary>. For the functions in package <package or main> that\nimplement <FEATURE>, produce readable pseudocode: recover the Go calling\nconvention (stack-based args, ABIInternal registers), map defer/panic\nhandling, goroutine/channel operations (runtime.chanrecv/chansend sites) and\ninterface dispatch (itab/iface calls). Reconstruct each function's signature\nfrom argument loads and return stores. Cite address ranges per recovered\nstatement group; separate confirmed logic from inference.\n```\n\n### Go binary: type & struct reconstruction\n\n```text\nUse REA on <Go binary>. Walk the Go type metadata (runtime.types / itab\ntables) reachable from <FEATURE>'s code path and reconstruct the struct\ndefinitions: field offsets, widths and likely types from how each field is\naccessed, plus interface method sets from itabs. Emit Go-style type\ndeclarations with a comment citing the metadata address that proves each\nfield. Note where GC bitmaps or padding make a field uncertain.\n```\n\n### Rust binary: crate & symbol map\n\n```text\nUse REA on <Rust binary (.exe or Linux ELF)>. Identify the Rust version and\nprofile (debug vs release: presence of panic-location strings, `core::fmt`\nshims) from embedded metadata and panic strings. Enumerate crate names from\nsymbol paths and panic locations (file paths leaked in `#[track_caller]`\nstrings), map monomorphized generics back to their generic parents, and\nproduce a crate/module tree with the addresses proving each entry.\n```\n\n### Rust binary: logic recovery with trait-dispatch awareness\n\n```text\nUse REA on <Rust binary>. For the functions implementing <FEATURE>, produce\nreadable pseudocode that accounts for Rust idioms: Result/Option propagation\n(branch-on-discriminant patterns), drop glue and ownership transfers,\nvtable-based trait-object dispatch (recover the vtable at its data address\nand name each slot), iterator adapters (inlined loop state machines), and\npanic/fmt call sites as string anchors. Reconstruct signatures from the\nItanium/mangling where symbols survive; where stripped, infer from register\nusage. Cite addresses per claim and mark inferred names as hypotheses.\n```\n\n### Stripped Go/Rust binary: metadata-first triage\n\n```text\nUse REA on <stripped Go or Rust binary>. Before touching code, extract what\nsurvives stripping: Go pclntab still yields full function names and line\ntables even after `strip`/`-ldflags -s -w` (locate the tab via runtime\npointers and rebuild the symbol table); Rust panic strings and file paths\nstill name crates and source files. Rebuild the function-name → address map\nfrom whichever metadata is present, then start the <FEATURE> trace from the\nrecovered names. Report exactly which metadata you found and what is\nirrecoverably gone.\n```\n\n### Binary-to-source fidelity report\n\n```text\nBased on the REA findings for <Go/Rust binary>, write a RECOVERY_REPORT.md:\nfor each recovered module, state whether the reconstruction is (a) symbol-\nexact (names from metadata), (b) structure-exact (types/fields proven by\naccess offsets), or (c) behavior-only (pseudocode with inferred names).\nInclude the reconstructed source tree layout, per-file confidence level, and\nthe evidence addresses behind each classification. Do not present inferred\ncode as the original source.\n```\n\n---\n"
+    },
+    {
+      "slug": "reap-prompt-writing-tips",
+      "name": "reap-prompt-writing-tips",
+      "dir": "Skills/reap-prompt-writing-tips",
+      "path": "Skills/reap-prompt-writing-tips/SKILL.md",
+      "desc": "REA prompt pack:  Prompt-writing tips (0 ready-to-paste prompts). Use when doing reverse-engineering investigation of prompt-writing tips with REA (rea.tools) via an AI coding agent.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/JoasASantos/REA-Prompts.git",
+        "copy": "cp -r Skills/reap-prompt-writing-tips ~/.claude/skills/reap-prompt-writing-tips",
+        "raw": "https://raw.githubusercontent.com/JoasASantos/REA-Prompts/9756618f25af1920c8965f8969820eed22247936/Skills/reap-prompt-writing-tips/SKILL.md",
+        "saveAs": "~/.claude/skills/reap-prompt-writing-tips/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:5b27df9f071b49d2f468653ffdd3d72627243d7f3fad99a77556d27b2b10ebc1",
+      "bytes": 1268,
+      "wordCount": 151,
+      "repoLicense": "MIT",
+      "commit": "9756618f25af1920c8965f8969820eed22247936",
+      "branch": "main",
+      "body": "---\nname: reap-prompt-writing-tips\ndescription: REA prompt pack:  Prompt-writing tips (0 ready-to-paste prompts). Use when doing reverse-engineering investigation of prompt-writing tips with REA (rea.tools) via an AI coding agent.\n---\n\n# REAP — Prompt-writing tips (why these work)\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n1. **One feature per prompt.** Broad \"explain the whole app\" questions return shallow maps; narrow ones return call chains and addresses.\n2. **Demand evidence.** Every prompt here requires file/function/address citations — it stops the agent from confabulating.\n3. **Separate fact / inference / unknown.** The three-bucket format keeps hypotheses honest.\n4. **Static first.** Say \"do not execute the application\" until you actually need runtime observation.\n5. **End with a deliverable.** SPEC.md, a reader script, a port plan, a minimal rebuild — a concrete artifact forces the agent to verify its own claims.\n6. **State the scope out loud.** \"Lab machine I own\", \"offline single-player\", \"document, don't bypass\" — the framing keeps results usable for research and reporting.\n",
+      "bodyMd": "# REAP — Prompt-writing tips (why these work)\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n1. **One feature per prompt.** Broad \"explain the whole app\" questions return shallow maps; narrow ones return call chains and addresses.\n2. **Demand evidence.** Every prompt here requires file/function/address citations — it stops the agent from confabulating.\n3. **Separate fact / inference / unknown.** The three-bucket format keeps hypotheses honest.\n4. **Static first.** Say \"do not execute the application\" until you actually need runtime observation.\n5. **End with a deliverable.** SPEC.md, a reader script, a port plan, a minimal rebuild — a concrete artifact forces the agent to verify its own claims.\n6. **State the scope out loud.** \"Lab machine I own\", \"offline single-player\", \"document, don't bypass\" — the framing keeps results usable for research and reporting.\n"
+    },
+    {
+      "slug": "reap-prompts",
+      "name": "reap-prompts",
+      "dir": "Skills/reap-prompts",
+      "path": "Skills/reap-prompts/SKILL.md",
+      "desc": "REAP master index: curated REA prompts for reverse engineering with AI coding agents (native binaries, Go/Rust source recovery, web/Electron, games, firmware, Android, kernel, malware, anti-cheat, protectors, cloning). Use when pointing an agent at RE work.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "go"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/JoasASantos/REA-Prompts.git",
+        "copy": "cp -r Skills/reap-prompts ~/.claude/skills/reap-prompts",
+        "raw": "https://raw.githubusercontent.com/JoasASantos/REA-Prompts/9756618f25af1920c8965f8969820eed22247936/Skills/reap-prompts/SKILL.md",
+        "saveAs": "~/.claude/skills/reap-prompts/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:be5e452750b1fa66b828735045a6d5a56eadc49d88f60a61cb8e03d0ad14d7f1",
+      "bytes": 4097,
+      "wordCount": 543,
+      "repoLicense": "MIT",
+      "commit": "9756618f25af1920c8965f8969820eed22247936",
+      "branch": "main",
+      "body": "---\nname: reap-prompts\ndescription: REAP master index: curated REA prompts for reverse engineering with AI coding agents (native binaries, Go/Rust source recovery, web/Electron, games, firmware, Android, kernel, malware, anti-cheat, protectors, cloning). Use when pointing an agent at RE work.\n---\n\n# REAP — REA Investigation Prompts (skill index)\n\nA curated collection of prompts for [REA](https://rea.tools/) — the toolset that lets your AI coding agent inspect how software works. Each pack below is a sibling skill folder in this directory; load the one matching the target, paste a prompt and replace <angle brackets>.\n\n> Use responsibly. Only analyze software you own or are explicitly authorized to test. Anti-cheat, DMA, DRM, kernel and vulnerability packs are for security research, interoperability, CTFs, bug bounties and testing your own software.\n\n| Skill | Section | Prompts |\n|---|---|---|\n| `reap-00-install-and-verify` | 0. Install & verify | 0 |\n| `reap-01-getting-started` | 1. Getting started | 2 |\n| `reap-02-feature-tracing-any-program` | 2. Feature tracing (any program) | 3 |\n| `reap-03-native-binary-exploration` | 3. Native binary exploration | 5 |\n| `reap-04-software-and-feature-cloning` | 4. Software & feature cloning | 4 |\n| `reap-05-games` | 5. Games | 4 |\n| `reap-06-game-portability-to-wasm` | 6. Game portability to WASM | 3 |\n| `reap-07-firmware-and-embedded` | 7. Firmware & embedded | 3 |\n| `reap-08-android` | 8. Android | 4 |\n| `reap-09-kernel-analysis` | 9. Kernel analysis | 3 |\n| `reap-10-vulnerability-research` | 10. Vulnerability research | 5 |\n| `reap-11-electron-and-javascript` | 11. Electron & JavaScript | 11 |\n| `reap-12-anti-cheat-and-protection-research` | 12. Anti-cheat & protection research | 4 |\n| `reap-13-dma-and-hardware-assisted-cheat-research-defensive` | 13. DMA & hardware-assisted cheat research (defensive) | 4 |\n| `reap-14-software-cracking-research` | 14. Software cracking research | 3 |\n| `reap-15-version-comparison-and-crash-work` | 15. Version comparison & crash work | 1 |\n| `reap-16-long-running-investigations` | 16. Long-running investigations | 1 |\n| `reap-17-malware-analysis` | 17. Malware analysis | 8 |\n| `reap-18-advanced-binary-exploration-and-deobfuscation` | 18. Advanced binary exploration & deobfuscation | 8 |\n| `reap-19-kernel-and-driver-exploitation-research` | 19. Kernel & driver exploitation research | 7 |\n| `reap-20-advanced-software-cloning-and-feature-reconstruction` | 20. Advanced software cloning & feature reconstruction | 5 |\n| `reap-21-protector-and-obfuscator-research` | 21. Protector & obfuscator research | 7 |\n| `reap-22-go-and-rust-binary-source-recovery` | 22. Go & Rust binary source recovery | 7 |\n| `reap-prompt-writing-tips` | Prompt-writing tips (why these work) | 0 |\n| `reap-wildcard` | Wildcard prompt (start here) | 0 |\n\n## Wildcard prompt (start here)\n\n```text\nUse REA to understand how <FEATURE> works in <PATH TO APPLICATION>.\n\nCheck first which tools are actually available. Start with static analysis\nand trace the feature down to the responsible functions.\n\nPresent evidence for each conclusion, separate facts from hypotheses, and\nrecord the limitations. At the end, generate a behavioral specification and\npropose tests to verify it.\n```\n\n## Prompt-writing tips (why these work)\n\n1. **One feature per prompt.** Broad \"explain the whole app\" questions return shallow maps; narrow ones return call chains and addresses.\n2. **Demand evidence.** Every prompt here requires file/function/address citations — it stops the agent from confabulating.\n3. **Separate fact / inference / unknown.** The three-bucket format keeps hypotheses honest.\n4. **Static first.** Say \"do not execute the application\" until you actually need runtime observation.\n5. **End with a deliverable.** SPEC.md, a reader script, a port plan, a minimal rebuild — a concrete artifact forces the agent to verify its own claims.\n6. **State the scope out loud.** \"Lab machine I own\", \"offline single-player\", \"document, don't bypass\" — the framing keeps results usable for research and reporting.\n",
+      "bodyMd": "# REAP — REA Investigation Prompts (skill index)\n\nA curated collection of prompts for [REA](https://rea.tools/) — the toolset that lets your AI coding agent inspect how software works. Each pack below is a sibling skill folder in this directory; load the one matching the target, paste a prompt and replace <angle brackets>.\n\n> Use responsibly. Only analyze software you own or are explicitly authorized to test. Anti-cheat, DMA, DRM, kernel and vulnerability packs are for security research, interoperability, CTFs, bug bounties and testing your own software.\n\n| Skill | Section | Prompts |\n|---|---|---|\n| `reap-00-install-and-verify` | 0. Install & verify | 0 |\n| `reap-01-getting-started` | 1. Getting started | 2 |\n| `reap-02-feature-tracing-any-program` | 2. Feature tracing (any program) | 3 |\n| `reap-03-native-binary-exploration` | 3. Native binary exploration | 5 |\n| `reap-04-software-and-feature-cloning` | 4. Software & feature cloning | 4 |\n| `reap-05-games` | 5. Games | 4 |\n| `reap-06-game-portability-to-wasm` | 6. Game portability to WASM | 3 |\n| `reap-07-firmware-and-embedded` | 7. Firmware & embedded | 3 |\n| `reap-08-android` | 8. Android | 4 |\n| `reap-09-kernel-analysis` | 9. Kernel analysis | 3 |\n| `reap-10-vulnerability-research` | 10. Vulnerability research | 5 |\n| `reap-11-electron-and-javascript` | 11. Electron & JavaScript | 11 |\n| `reap-12-anti-cheat-and-protection-research` | 12. Anti-cheat & protection research | 4 |\n| `reap-13-dma-and-hardware-assisted-cheat-research-defensive` | 13. DMA & hardware-assisted cheat research (defensive) | 4 |\n| `reap-14-software-cracking-research` | 14. Software cracking research | 3 |\n| `reap-15-version-comparison-and-crash-work` | 15. Version comparison & crash work | 1 |\n| `reap-16-long-running-investigations` | 16. Long-running investigations | 1 |\n| `reap-17-malware-analysis` | 17. Malware analysis | 8 |\n| `reap-18-advanced-binary-exploration-and-deobfuscation` | 18. Advanced binary exploration & deobfuscation | 8 |\n| `reap-19-kernel-and-driver-exploitation-research` | 19. Kernel & driver exploitation research | 7 |\n| `reap-20-advanced-software-cloning-and-feature-reconstruction` | 20. Advanced software cloning & feature reconstruction | 5 |\n| `reap-21-protector-and-obfuscator-research` | 21. Protector & obfuscator research | 7 |\n| `reap-22-go-and-rust-binary-source-recovery` | 22. Go & Rust binary source recovery | 7 |\n| `reap-prompt-writing-tips` | Prompt-writing tips (why these work) | 0 |\n| `reap-wildcard` | Wildcard prompt (start here) | 0 |\n\n## Wildcard prompt (start here)\n\n```text\nUse REA to understand how <FEATURE> works in <PATH TO APPLICATION>.\n\nCheck first which tools are actually available. Start with static analysis\nand trace the feature down to the responsible functions.\n\nPresent evidence for each conclusion, separate facts from hypotheses, and\nrecord the limitations. At the end, generate a behavioral specification and\npropose tests to verify it.\n```\n\n## Prompt-writing tips (why these work)\n\n1. **One feature per prompt.** Broad \"explain the whole app\" questions return shallow maps; narrow ones return call chains and addresses.\n2. **Demand evidence.** Every prompt here requires file/function/address citations — it stops the agent from confabulating.\n3. **Separate fact / inference / unknown.** The three-bucket format keeps hypotheses honest.\n4. **Static first.** Say \"do not execute the application\" until you actually need runtime observation.\n5. **End with a deliverable.** SPEC.md, a reader script, a port plan, a minimal rebuild — a concrete artifact forces the agent to verify its own claims.\n6. **State the scope out loud.** \"Lab machine I own\", \"offline single-player\", \"document, don't bypass\" — the framing keeps results usable for research and reporting.\n"
+    },
+    {
+      "slug": "reap-wildcard",
+      "name": "reap-wildcard",
+      "dir": "Skills/reap-wildcard",
+      "path": "Skills/reap-wildcard/SKILL.md",
+      "desc": "REA prompt pack:  Wildcard prompt (0 ready-to-paste prompts). Use when doing reverse-engineering investigation of wildcard prompt with REA (rea.tools) via an AI coding agent.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/JoasASantos/REA-Prompts.git",
+        "copy": "cp -r Skills/reap-wildcard ~/.claude/skills/reap-wildcard",
+        "raw": "https://raw.githubusercontent.com/JoasASantos/REA-Prompts/9756618f25af1920c8965f8969820eed22247936/Skills/reap-wildcard/SKILL.md",
+        "saveAs": "~/.claude/skills/reap-wildcard/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:d00a97a074c3b4ebbbe1b694615747c5614ee31d72416396d6d5a78fb884870b",
+      "bytes": 854,
+      "wordCount": 93,
+      "repoLicense": "MIT",
+      "commit": "9756618f25af1920c8965f8969820eed22247936",
+      "branch": "main",
+      "body": "---\nname: reap-wildcard\ndescription: REA prompt pack:  Wildcard prompt (0 ready-to-paste prompts). Use when doing reverse-engineering investigation of wildcard prompt with REA (rea.tools) via an AI coding agent.\n---\n\n# REAP — Wildcard prompt (start here)\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n```text\nUse REA to understand how <FEATURE> works in <PATH TO APPLICATION>.\n\nCheck first which tools are actually available. Start with static analysis\nand trace the feature down to the responsible functions.\n\nPresent evidence for each conclusion, separate facts from hypotheses, and\nrecord the limitations. At the end, generate a behavioral specification and\npropose tests to verify it.\n```\n\n---\n",
+      "bodyMd": "# REAP — Wildcard prompt (start here)\n\nPart of REAP (REA Investigation Prompts). Replace everything in <angle brackets>; keep each request focused on one feature. Demand file/function/address evidence and separate facts from hypotheses.\n\n```text\nUse REA to understand how <FEATURE> works in <PATH TO APPLICATION>.\n\nCheck first which tools are actually available. Start with static analysis\nand trace the feature down to the responsible functions.\n\nPresent evidence for each conclusion, separate facts from hypotheses, and\nrecord the limitations. At the end, generate a behavioral specification and\npropose tests to verify it.\n```\n\n---\n"
+    }
+  ]
+}

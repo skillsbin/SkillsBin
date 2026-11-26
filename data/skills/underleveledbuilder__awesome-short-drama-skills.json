@@ -1,0 +1,55 @@
+{
+  "repo": "UnderleveledBuilder/awesome-short-drama-skills",
+  "commit": "3e25ab13b0454c22192b163ca3b3949f2ee4c5d3",
+  "branch": "main",
+  "fetchedAt": "2026-11-26T21:13:25.311Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "short-drama-skill-finder",
+      "name": "short-drama-skill-finder",
+      "dir": "skills/short-drama-skill-finder",
+      "path": "skills/short-drama-skill-finder/SKILL.md",
+      "desc": "Recommend AI short drama, micro drama and manju (漫剧) skills from a hand-checked list of 90+ projects, matched to the user's stage (novel adaptation, episode outlines and hooks, script writing, review, storyboards, character consistency, video prompts, production), video model (Seedance/即梦, Kling/可灵, MiniMax, Wan, Veo, Sora, ComfyUI) and agent (Claude Code, Codex, OpenClaw/龙虾, Qwen, Doubao, WorkBuddy). Use when someone asks which skill or tool to use for an AI short drama or 短剧/漫剧, or how to install one. 帮你从人工核对过的短剧、漫剧 skill 清单里挑合适的：小说改编、集纲钩子、剧本、审稿、分镜、角色一致性、视频提示词、出片。",
+      "descZh": "",
+      "triggers": [
+        "someone asks which skill",
+        "短剧/漫剧",
+        "how to install"
+      ],
+      "version": "",
+      "license": "CC0-1.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "npx"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/UnderleveledBuilder/awesome-short-drama-skills.git",
+        "copy": "cp -r skills/short-drama-skill-finder ~/.claude/skills/short-drama-skill-finder",
+        "raw": "https://raw.githubusercontent.com/UnderleveledBuilder/awesome-short-drama-skills/3e25ab13b0454c22192b163ca3b3949f2ee4c5d3/skills/short-drama-skill-finder/SKILL.md",
+        "saveAs": "~/.claude/skills/short-drama-skill-finder/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:6775b6772ff4005ac292d168ea6ff17857e6d1580f4ffbb0d3b2e750ea10ecec",
+      "bytes": 4149,
+      "wordCount": 530,
+      "repoLicense": "CC0-1.0",
+      "commit": "3e25ab13b0454c22192b163ca3b3949f2ee4c5d3",
+      "branch": "main",
+      "body": "---\nname: short-drama-skill-finder\ndescription: Recommend AI short drama, micro drama and manju (漫剧) skills from a hand-checked list of 90+ projects, matched to the user's stage (novel adaptation, episode outlines and hooks, script writing, review, storyboards, character consistency, video prompts, production), video model (Seedance/即梦, Kling/可灵, MiniMax, Wan, Veo, Sora, ComfyUI) and agent (Claude Code, Codex, OpenClaw/龙虾, Qwen, Doubao, WorkBuddy). Use when someone asks which skill or tool to use for an AI short drama or 短剧/漫剧, or how to install one. 帮你从人工核对过的短剧、漫剧 skill 清单里挑合适的：小说改编、集纲钩子、剧本、审稿、分镜、角色一致性、视频提示词、出片。\n---\n\n# Short drama skill finder\n\nPick skills for an AI short drama project from the Awesome Short Drama Skills list (https://shortdramaskills.com). Every entry in the list was checked by hand and tagged by type, production stage, video model and supported agents.\n\n## 1. Get the data\n\nFetch `https://shortdramaskills.com/data.json`. If that fails, read the same list from `https://raw.githubusercontent.com/UnderleveledBuilder/awesome-short-drama-skills/main/README.md` (English: `README.en.md`), which has the same entries without the structured fields.\n\n`data.json` has `updated`, `taxonomy` (labels for `types`, `stages` and `models` in `zh` and `en`) and `items`. Each item has:\n\n| Field | Meaning |\n|---|---|\n| `repo`, `github` | GitHub repo |\n| `desc`, `overview`, `note` | Summary, longer overview and editor's note, each with `zh` and `en` (`note` may be null) |\n| `page` | Detail page on the site, `zh` and `en` |\n| `type` | `pipeline` all-in-one, `writing`, `visual`, `source`, `craft`, `companion`, `platform` (a full app, not a skill) |\n| `stages` | `market` `adaptation` `character` `structure` `drafting` `revision` `storyboard` `prompt` `production` |\n| `models` | Video models it targets, such as `seedance` `kling` `minimax` `wan` `veo` `sora` `comfyui` |\n| `agents` | Agents the author says it supports; empty means not stated (most SKILL.md skills work in any agent that loads skills) |\n| `format` | `skill` (standard SKILL.md) or prompt files |\n| `install` | Install command when there is one, such as `npx skills add owner/repo` |\n| `language` | Main output language |\n| `featured`, `checked`, `stars`, `pushed_at`, `license`, `archived` | Editor's pick, date checked, GitHub stars, last push, license, archived flag |\n\n## 2. Understand the need\n\nWork out, asking at most one short question if it is unclear:\n- the stage or stages they need help with (map their words to `stages`; \"改编/小说转剧本\" is `adaptation`, \"钩子/付费卡点/集纲\" is `structure`, \"分镜\" is `storyboard`, \"提示词\" is `prompt`, \"出片/剪辑/配音\" is `production`);\n- the video model, if any;\n- the agent they use;\n- whether they want one all-in-one pipeline or a few focused skills;\n- output language and any license constraint (for commercial use).\n\n## 3. Choose\n\n- Drop `archived` items, and `platform` items unless the user wants a full app.\n- Keep items whose `stages` and `models` match. Prefer, in order: `featured`, a matching agent in `agents`, `format` = `skill`, recent `pushed_at`, a license that fits. Use `stars` only to break ties.\n- Recommend 3 to 5 items. For a full workflow, suggest one `pipeline` item, or one focused skill per stage.\n\n## 4. Answer\n\nAnswer in the user's language, using the `zh` or `en` fields to match. For each pick give:\n- name, linked to `github`;\n- one sentence on why it fits, from `desc`, `overview` or `note`;\n- the `install` command, or \"see the repo README\" when there is none;\n- supported agents, license and last update;\n- the `page` link for details.\n\nThen:\n- say the list was last updated on `updated`;\n- for script skills, point to the side-by-side tests at https://shortdramaskills.com/evals/;\n- remind the user that skills can ship scripts, so read a skill's SKILL.md before installing it. Do not run install commands without the user's go-ahead.\n\nIf nothing in the list fits, say so plainly instead of stretching a match.\n",
+      "bodyMd": "# Short drama skill finder\n\nPick skills for an AI short drama project from the Awesome Short Drama Skills list (https://shortdramaskills.com). Every entry in the list was checked by hand and tagged by type, production stage, video model and supported agents.\n\n## 1. Get the data\n\nFetch `https://shortdramaskills.com/data.json`. If that fails, read the same list from `https://raw.githubusercontent.com/UnderleveledBuilder/awesome-short-drama-skills/main/README.md` (English: `README.en.md`), which has the same entries without the structured fields.\n\n`data.json` has `updated`, `taxonomy` (labels for `types`, `stages` and `models` in `zh` and `en`) and `items`. Each item has:\n\n| Field | Meaning |\n|---|---|\n| `repo`, `github` | GitHub repo |\n| `desc`, `overview`, `note` | Summary, longer overview and editor's note, each with `zh` and `en` (`note` may be null) |\n| `page` | Detail page on the site, `zh` and `en` |\n| `type` | `pipeline` all-in-one, `writing`, `visual`, `source`, `craft`, `companion`, `platform` (a full app, not a skill) |\n| `stages` | `market` `adaptation` `character` `structure` `drafting` `revision` `storyboard` `prompt` `production` |\n| `models` | Video models it targets, such as `seedance` `kling` `minimax` `wan` `veo` `sora` `comfyui` |\n| `agents` | Agents the author says it supports; empty means not stated (most SKILL.md skills work in any agent that loads skills) |\n| `format` | `skill` (standard SKILL.md) or prompt files |\n| `install` | Install command when there is one, such as `npx skills add owner/repo` |\n| `language` | Main output language |\n| `featured`, `checked`, `stars`, `pushed_at`, `license`, `archived` | Editor's pick, date checked, GitHub stars, last push, license, archived flag |\n\n## 2. Understand the need\n\nWork out, asking at most one short question if it is unclear:\n- the stage or stages they need help with (map their words to `stages`; \"改编/小说转剧本\" is `adaptation`, \"钩子/付费卡点/集纲\" is `structure`, \"分镜\" is `storyboard`, \"提示词\" is `prompt`, \"出片/剪辑/配音\" is `production`);\n- the video model, if any;\n- the agent they use;\n- whether they want one all-in-one pipeline or a few focused skills;\n- output language and any license constraint (for commercial use).\n\n## 3. Choose\n\n- Drop `archived` items, and `platform` items unless the user wants a full app.\n- Keep items whose `stages` and `models` match. Prefer, in order: `featured`, a matching agent in `agents`, `format` = `skill`, recent `pushed_at`, a license that fits. Use `stars` only to break ties.\n- Recommend 3 to 5 items. For a full workflow, suggest one `pipeline` item, or one focused skill per stage.\n\n## 4. Answer\n\nAnswer in the user's language, using the `zh` or `en` fields to match. For each pick give:\n- name, linked to `github`;\n- one sentence on why it fits, from `desc`, `overview` or `note`;\n- the `install` command, or \"see the repo README\" when there is none;\n- supported agents, license and last update;\n- the `page` link for details.\n\nThen:\n- say the list was last updated on `updated`;\n- for script skills, point to the side-by-side tests at https://shortdramaskills.com/evals/;\n- remind the user that skills can ship scripts, so read a skill's SKILL.md before installing it. Do not run install commands without the user's go-ahead.\n\nIf nothing in the list fits, say so plainly instead of stretching a match.\n"
+    }
+  ]
+}

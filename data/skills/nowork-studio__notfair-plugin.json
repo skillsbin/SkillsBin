@@ -1,0 +1,1940 @@
+{
+  "repo": "nowork-studio/notfair-plugin",
+  "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+  "branch": "main",
+  "fetchedAt": "2026-11-26T21:12:24.287Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "backlink-audit",
+      "name": "backlink-audit",
+      "dir": "skills/backlink-audit",
+      "path": "skills/backlink-audit/SKILL.md",
+      "desc": "Backlink / off-page SEO audit. Works WITHOUT a paid tool by default — it uses the Google Search Console Links report (your top linking sites, most-linked pages, and anchor text) plus any backlink export the user provides (Ahrefs / Semrush / Majestic / DataForSEO CSV). Analyzes referring-domain profile, anchor-text distribution (over-optimized / spammy patterns), most-linked pages vs. money pages (internal-linking opportunity), toxic/spam link signals, and link-building priorities. Use this skill when the user asks about backlinks, link building, off-page SEO, referring domains, anchor text, toxic/spam links, disavow, or their link profile. Trigger on: \"backlinks\", \"backlink audit\", \"link building\", \"off- page SEO\", \"referring domains\", \"anchor text\", \"toxic links\", \"spam links\", \"disavow file\", \"who links to me\", \"link profile\", \"domain authority\". NOTE: rich third-party metrics (DR/DA, full link index) require a paid data source; this skill is explicit about what it can and can't see without one.",
+      "descZh": "",
+      "triggers": [
+        "link building",
+        "off-page SEO",
+        "referring domains",
+        "anchor text"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/backlink-audit ~/.claude/skills/backlink-audit",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/backlink-audit/SKILL.md",
+        "saveAs": "~/.claude/skills/backlink-audit/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:3ba8657c0b9d3666087596939aa4526f0802ab877df385d4936488e50e10c06c",
+      "bytes": 1336,
+      "wordCount": 23,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: backlink-audit\ndescription: >\n  Backlink / off-page SEO audit. Works WITHOUT a paid tool by default — it uses the\n  Google Search Console Links report (your top linking sites, most-linked pages,\n  and anchor text) plus any backlink export the user provides (Ahrefs / Semrush /\n  Majestic / DataForSEO CSV). Analyzes referring-domain profile, anchor-text\n  distribution (over-optimized / spammy patterns), most-linked pages vs. money\n  pages (internal-linking opportunity), toxic/spam link signals, and link-building\n  priorities. Use this skill when the user asks about backlinks, link building,\n  off-page SEO, referring domains, anchor text, toxic/spam links, disavow, or their\n  link profile. Trigger on: \"backlinks\", \"backlink audit\", \"link building\", \"off-\n  page SEO\", \"referring domains\", \"anchor text\", \"toxic links\", \"spam links\",\n  \"disavow file\", \"who links to me\", \"link profile\", \"domain authority\". NOTE: rich\n  third-party metrics (DR/DA, full link index) require a paid data source; this\n  skill is explicit about what it can and can't see without one.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../seo/backlink-audit/WORKFLOW.md`](../../seo/backlink-audit/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/backlink-audit/`.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../seo/backlink-audit/WORKFLOW.md`](../../seo/backlink-audit/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/backlink-audit/`.\n"
+    },
+    {
+      "slug": "broken-link-checker",
+      "name": "broken-link-checker",
+      "dir": "skills/broken-link-checker",
+      "path": "skills/broken-link-checker/SKILL.md",
+      "desc": "Inspect public page links or a supplied crawl report for confirmed broken links and redirect issues. Report source URLs, evidence, and coverage limits; no crawler is bundled. Use for broken-link checks, 404 diagnosis, link audits, or website health reviews.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/broken-link-checker ~/.claude/skills/broken-link-checker",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/broken-link-checker/SKILL.md",
+        "saveAs": "~/.claude/skills/broken-link-checker/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:62f64902b345052f3f5cc2e4ad85d263550fc1b63746ba087f2ae366973e1246",
+      "bytes": 573,
+      "wordCount": 23,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: broken-link-checker\ndescription: \"Inspect public page links or a supplied crawl report for confirmed broken links and redirect issues. Report source URLs, evidence, and coverage limits; no crawler is bundled. Use for broken-link checks, 404 diagnosis, link audits, or website health reviews.\"\n---\n\n# Canonical NotFair workflow\n\nRead [`../../seo/broken-link-checker/WORKFLOW.md`](../../seo/broken-link-checker/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/broken-link-checker/`.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../seo/broken-link-checker/WORKFLOW.md`](../../seo/broken-link-checker/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/broken-link-checker/`.\n"
+    },
+    {
+      "slug": "competitor-pages",
+      "name": "competitor-pages",
+      "dir": "skills/competitor-pages",
+      "path": "skills/competitor-pages/SKILL.md",
+      "desc": "Competitor page gap analysis — take a query you want to win and the pages currently outranking you, and produce a concrete brief on what to add or change to compete. Compares content depth and coverage (subtopics they cover that you don't), structure (headings, format, tables, media), search-intent match, E-E-A-T signals, schema/rich-result eligibility, internal linking, and on-page optimization — across your page vs. the top-ranking competitors. Use this skill whenever the user wants to know why a competitor outranks them on a specific query, what a top-ranking page does better, a content-gap analysis against specific competitor URLs, or a brief to beat a specific SERP. Trigger on: \"why does competitor X outrank me\", \"content gap analysis\", \"competitor page analysis\", \"what does the top result have that I don't\", \"how do I beat this page\", \"analyze competitor pages\", \"SERP gap\", \"compete for [keyword]\". For seed keyword discovery use /keyword-research; for a content calendar use /content-planner.",
+      "descZh": "",
+      "triggers": [
+        "what a top"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/competitor-pages ~/.claude/skills/competitor-pages",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/competitor-pages/SKILL.md",
+        "saveAs": "~/.claude/skills/competitor-pages/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:5df3697751ee3e6028beca3720238794c0875009e137f9d66d7d4b8df152672e",
+      "bytes": 1348,
+      "wordCount": 23,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: competitor-pages\ndescription: >\n  Competitor page gap analysis — take a query you want to win and the pages\n  currently outranking you, and produce a concrete brief on what to add or change\n  to compete. Compares content depth and coverage (subtopics they cover that you\n  don't), structure (headings, format, tables, media), search-intent match, E-E-A-T\n  signals, schema/rich-result eligibility, internal linking, and on-page\n  optimization — across your page vs. the top-ranking competitors. Use this skill\n  whenever the user wants to know why a competitor outranks them on a specific\n  query, what a top-ranking page does better, a content-gap analysis against\n  specific competitor URLs, or a brief to beat a specific SERP. Trigger on:\n  \"why does competitor X outrank me\", \"content gap analysis\", \"competitor page\n  analysis\", \"what does the top result have that I don't\", \"how do I beat this\n  page\", \"analyze competitor pages\", \"SERP gap\", \"compete for [keyword]\". For seed\n  keyword discovery use /keyword-research; for a content calendar use\n  /content-planner.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../seo/competitor-pages/WORKFLOW.md`](../../seo/competitor-pages/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/competitor-pages/`.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../seo/competitor-pages/WORKFLOW.md`](../../seo/competitor-pages/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/competitor-pages/`.\n"
+    },
+    {
+      "slug": "content-planner",
+      "name": "content-planner",
+      "dir": "skills/content-planner",
+      "path": "skills/content-planner/SKILL.md",
+      "desc": "Build a dated editorial calendar from connected or supplied Search Console data. Prioritize striking-distance queries, content gaps, CTR refreshes, and cannibalization issues. Return Markdown and optional JSON without a local viewer or automatic publishing. Use for content planning, editorial calendars, or choosing what to write next.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/content-planner ~/.claude/skills/content-planner",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/content-planner/SKILL.md",
+        "saveAs": "~/.claude/skills/content-planner/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:b3085739766af3f6a2b08faf603726ac01b46a7698593fbd4e098ce6b083d4d8",
+      "bytes": 636,
+      "wordCount": 23,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: content-planner\ndescription: \"Build a dated editorial calendar from connected or supplied Search Console data. Prioritize striking-distance queries, content gaps, CTR refreshes, and cannibalization issues. Return Markdown and optional JSON without a local viewer or automatic publishing. Use for content planning, editorial calendars, or choosing what to write next.\"\n---\n\n# Canonical NotFair workflow\n\nRead [`../../seo/content-planner/WORKFLOW.md`](../../seo/content-planner/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/content-planner/`.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../seo/content-planner/WORKFLOW.md`](../../seo/content-planner/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/content-planner/`.\n"
+    },
+    {
+      "slug": "content-writer",
+      "name": "content-writer",
+      "dir": "skills/content-writer",
+      "path": "skills/content-writer/SKILL.md",
+      "desc": "Write SEO-optimized blog posts, landing pages, and content improvements following Google's E-E-A-T and Helpful Content guidelines. Handles new content creation from a keyword or topic, and improving existing pages. Use when asked to \"write a blog post\", \"create a landing page\", \"improve this page\", \"write content about X\", \"content for keyword X\", \"draft an article\", \"blog post about\", \"landing page for\", \"service page\", \"product page copy\", \"rewrite this page\", \"make this page rank better\", \"content brief\", \"how-to guide\", \"listicle\", or any content creation or improvement task for a website.",
+      "descZh": "",
+      "triggers": [
+        "create a landing page",
+        "improve this page",
+        "write content"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/content-writer ~/.claude/skills/content-writer",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/content-writer/SKILL.md",
+        "saveAs": "~/.claude/skills/content-writer/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:abb01398168f93a2377966c3f99b27aec8699c7d4f2cffaeec59fcd952e63d7d",
+      "bytes": 912,
+      "wordCount": 23,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: content-writer\ndescription: >\n  Write SEO-optimized blog posts, landing pages, and content improvements\n  following Google's E-E-A-T and Helpful Content guidelines. Handles new content\n  creation from a keyword or topic, and improving existing pages. Use when asked\n  to \"write a blog post\", \"create a landing page\", \"improve this page\", \"write\n  content about X\", \"content for keyword X\", \"draft an article\", \"blog post\n  about\", \"landing page for\", \"service page\", \"product page copy\", \"rewrite\n  this page\", \"make this page rank better\", \"content brief\", \"how-to guide\",\n  \"listicle\", or any content creation or improvement task for a website.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../seo/content-writer/WORKFLOW.md`](../../seo/content-writer/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/content-writer/`.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../seo/content-writer/WORKFLOW.md`](../../seo/content-writer/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/content-writer/`.\n"
+    },
+    {
+      "slug": "ecommerce-seo",
+      "name": "ecommerce-seo",
+      "dir": "skills/ecommerce-seo",
+      "path": "skills/ecommerce-seo/SKILL.md",
+      "desc": "E-commerce SEO audit for online stores (WooCommerce, Shopify, Magento, custom). Covers category / product listing pages (PLP), product detail pages (PDP), faceted navigation and its crawl-budget and duplicate-content traps, pagination, canonicals for variants and filters, out-of-stock / discontinued products, internal linking and breadcrumbs, and Product / Offer / Review / AggregateRating / BreadcrumbList structured data. Use whenever the user runs an online store and asks about product or category page SEO, filter URLs being indexed, product rich results, or thin/duplicate product pages. Trigger on: \"e-commerce SEO\", \"ecommerce SEO\", \"product page SEO\", \"category page SEO\", \"WooCommerce SEO\", \"Shopify SEO\", \"faceted navigation\", \"filter URLs in Google\", \"product schema\", \"rich snippets for products\", \"out of stock SEO\", \"duplicate product pages\". For a single URL use /seo-page; for full-site use /seo-analysis.",
+      "descZh": "",
+      "triggers": [
+        "category page SEO",
+        "filter URL"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/ecommerce-seo ~/.claude/skills/ecommerce-seo",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/ecommerce-seo/SKILL.md",
+        "saveAs": "~/.claude/skills/ecommerce-seo/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:bcc0de28cb8f8a6767d2354f617e8c8edaa3c0903b670cda67a5dc21e8663b60",
+      "bytes": 1240,
+      "wordCount": 23,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: ecommerce-seo\ndescription: >\n  E-commerce SEO audit for online stores (WooCommerce, Shopify, Magento, custom).\n  Covers category / product listing pages (PLP), product detail pages (PDP), faceted\n  navigation and its crawl-budget and duplicate-content traps, pagination,\n  canonicals for variants and filters, out-of-stock / discontinued products,\n  internal linking and breadcrumbs, and Product / Offer / Review / AggregateRating /\n  BreadcrumbList structured data. Use whenever the user runs an online store and\n  asks about product or category page SEO, filter URLs being indexed, product rich\n  results, or thin/duplicate product pages. Trigger on: \"e-commerce SEO\", \"ecommerce\n  SEO\", \"product page SEO\", \"category page SEO\", \"WooCommerce SEO\", \"Shopify SEO\",\n  \"faceted navigation\", \"filter URLs in Google\", \"product schema\", \"rich snippets\n  for products\", \"out of stock SEO\", \"duplicate product pages\". For a single URL use\n  /seo-page; for full-site use /seo-analysis.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../seo/ecommerce-seo/WORKFLOW.md`](../../seo/ecommerce-seo/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/ecommerce-seo/`.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../seo/ecommerce-seo/WORKFLOW.md`](../../seo/ecommerce-seo/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/ecommerce-seo/`.\n"
+    },
+    {
+      "slug": "geo-optimizer",
+      "name": "geo-optimizer",
+      "dir": "skills/geo-optimizer",
+      "path": "skills/geo-optimizer/SKILL.md",
+      "desc": "Audit, improve, and measure visibility in AI search answers from ChatGPT, Claude, Perplexity, Gemini, and Google AI Overviews. Use for GEO, AEO, LLM SEO, AI citation and search crawler audits, AI visibility strategy, buyer-question baselines, brand mentions and fact checks in AI answers, or analysis of supplied Bing AI Performance and Search Console Generative AI reports.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/geo-optimizer ~/.claude/skills/geo-optimizer",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/geo-optimizer/SKILL.md",
+        "saveAs": "~/.claude/skills/geo-optimizer/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:76dc057285ff543cb237ffd38ed8eeda096d8cc3c2ac93721bf691b04c65d9e4",
+      "bytes": 676,
+      "wordCount": 23,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: geo-optimizer\ndescription: >\n  Audit, improve, and measure visibility in AI search answers from ChatGPT,\n  Claude, Perplexity, Gemini, and Google AI Overviews. Use for GEO, AEO, LLM SEO,\n  AI citation and search crawler audits, AI visibility strategy, buyer-question\n  baselines, brand mentions and fact checks in AI answers, or analysis of supplied\n  Bing AI Performance and Search Console Generative AI reports.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../seo/geo-optimizer/WORKFLOW.md`](../../seo/geo-optimizer/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/geo-optimizer/`.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../seo/geo-optimizer/WORKFLOW.md`](../../seo/geo-optimizer/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/geo-optimizer/`.\n"
+    },
+    {
+      "slug": "gohighlevel",
+      "name": "gohighlevel",
+      "dir": "skills/gohighlevel",
+      "path": "skills/gohighlevel/SKILL.md",
+      "desc": "Operate connected GoHighLevel CRM accounts through the NotFair MCP. Use for GoHighLevel, HighLevel, GHL contacts, conversations, opportunities, calendars, pipelines, tags, tasks, forms, invoices, products, or approved CRM changes.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/gohighlevel ~/.claude/skills/gohighlevel",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/gohighlevel/SKILL.md",
+        "saveAs": "~/.claude/skills/gohighlevel/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:5963fc49aeee7e6eeafeb19abe6c8a4437df040c45976e5d3c25d7339a7c0f67",
+      "bytes": 845,
+      "wordCount": 62,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: gohighlevel\ndescription: Operate connected GoHighLevel CRM accounts through the NotFair MCP. Use for GoHighLevel, HighLevel, GHL contacts, conversations, opportunities, calendars, pipelines, tags, tasks, forms, invoices, products, or approved CRM changes.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../gohighlevel/WORKFLOW.md`](../../gohighlevel/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/gohighlevel/WORKFLOW.md`, not `<plugin-root>/skills/gohighlevel/gohighlevel/WORKFLOW.md`. Resolve every relative reference from the canonical file against `<plugin-root>/gohighlevel/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../gohighlevel/WORKFLOW.md`](../../gohighlevel/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/gohighlevel/WORKFLOW.md`, not `<plugin-root>/skills/gohighlevel/gohighlevel/WORKFLOW.md`. Resolve every relative reference from the canonical file against `<plugin-root>/gohighlevel/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n"
+    },
+    {
+      "slug": "google-ads-assets",
+      "name": "google-ads-assets",
+      "dir": "skills/google-ads-assets",
+      "path": "skills/google-ads-assets/SKILL.md",
+      "desc": "Plan, validate, and safely publish Google Ads assets, including sitelinks, callouts, structured snippets, image assets, and Performance Max asset briefs. Use when asked for Google Ads assets, ad extensions, sitelinks, callouts, snippets, image assets, Performance Max assets, PMax creative, or an asset audit.",
+      "descZh": "",
+      "triggers": [
+        "ad extensions",
+        "sitelinks",
+        "callouts",
+        "snippets",
+        "image assets"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/google-ads-assets ~/.claude/skills/google-ads-assets",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/google-ads-assets/SKILL.md",
+        "saveAs": "~/.claude/skills/google-ads-assets/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:5a78ecaba1c8a44e47d209c9becd3e7bf1189e5aa77eb344be46f06b803d3b43",
+      "bytes": 952,
+      "wordCount": 62,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: google-ads-assets\ndescription: Plan, validate, and safely publish Google Ads assets, including sitelinks, callouts, structured snippets, image assets, and Performance Max asset briefs. Use when asked for Google Ads assets, ad extensions, sitelinks, callouts, snippets, image assets, Performance Max assets, PMax creative, or an asset audit.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../google-ads/assets/WORKFLOW.md`](../../google-ads/assets/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/google-ads/assets/WORKFLOW.md`, not `<plugin-root>/skills/google-ads-assets/assets/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/google-ads/assets/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../google-ads/assets/WORKFLOW.md`](../../google-ads/assets/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/google-ads/assets/WORKFLOW.md`, not `<plugin-root>/skills/google-ads-assets/assets/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/google-ads/assets/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n"
+    },
+    {
+      "slug": "google-ads-audit",
+      "name": "google-ads-audit",
+      "dir": "skills/google-ads-audit",
+      "path": "skills/google-ads-audit/SKILL.md",
+      "desc": "Google Ads account audit and business context setup. Use for account-health audits and business-context setup. Trigger on \"audit my ads\", \"ads audit\", \"set up my ads\", \"onboard\", \"account overview\", \"how's my account\", \"ads health check\", \"what should I fix in my ads\", or when the user is new to NotFair and hasn't run an audit before.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/google-ads-audit ~/.claude/skills/google-ads-audit",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/google-ads-audit/SKILL.md",
+        "saveAs": "~/.claude/skills/google-ads-audit/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:941d21d5ef239087b194ae417af75b8f11ee1800bfa631c5fb0228efa2f4d8f5",
+      "bytes": 972,
+      "wordCount": 62,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: google-ads-audit\ndescription: Google Ads account audit and business context setup. Use for account-health audits and business-context setup. Trigger on \"audit my ads\", \"ads audit\", \"set up my ads\", \"onboard\", \"account overview\", \"how's my account\", \"ads health check\", \"what should I fix in my ads\", or when the user is new to NotFair and hasn't run an audit before.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../google-ads/audit/WORKFLOW.md`](../../google-ads/audit/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/google-ads/audit/WORKFLOW.md`, not `<plugin-root>/skills/google-ads-audit/audit/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/google-ads/audit/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../google-ads/audit/WORKFLOW.md`](../../google-ads/audit/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/google-ads/audit/WORKFLOW.md`, not `<plugin-root>/skills/google-ads-audit/audit/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/google-ads/audit/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n"
+    },
+    {
+      "slug": "google-ads-copy",
+      "name": "google-ads-copy",
+      "dir": "skills/google-ads-copy",
+      "path": "skills/google-ads-copy/SKILL.md",
+      "desc": "Generate and A/B test Google Ads copy. Use when asked to write ad copy, headlines, descriptions, create ad variants, test ad messaging, improve CTR, or generate RSA (Responsive Search Ad) components. Trigger on \"ad copy\", \"write ads\", \"headlines\", \"descriptions\", \"RSA\", \"responsive search ad\", \"ad text\", \"ad creative\", \"improve CTR\", \"ad A/B test\", \"ad variants\", \"write me an ad\", \"ad variation experiment\", or when the user wants to improve click-through rate on existing ads.",
+      "descZh": "",
+      "triggers": [
+        "asked to write ad copy",
+        "headlines",
+        "descriptions",
+        "create ad variants",
+        "test ad messaging",
+        "im"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/google-ads-copy ~/.claude/skills/google-ads-copy",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/google-ads-copy/SKILL.md",
+        "saveAs": "~/.claude/skills/google-ads-copy/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:73b13ee45ce7f377bd344e9aeb2fd4ef985d72bdf0e1198eb35270979ebf1b86",
+      "bytes": 1109,
+      "wordCount": 62,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: google-ads-copy\ndescription: Generate and A/B test Google Ads copy. Use when asked to write ad copy, headlines, descriptions, create ad variants, test ad messaging, improve CTR, or generate RSA (Responsive Search Ad) components. Trigger on \"ad copy\", \"write ads\", \"headlines\", \"descriptions\", \"RSA\", \"responsive search ad\", \"ad text\", \"ad creative\", \"improve CTR\", \"ad A/B test\", \"ad variants\", \"write me an ad\", \"ad variation experiment\", or when the user wants to improve click-through rate on existing ads.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../google-ads/copy/WORKFLOW.md`](../../google-ads/copy/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/google-ads/copy/WORKFLOW.md`, not `<plugin-root>/skills/google-ads-copy/copy/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/google-ads/copy/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../google-ads/copy/WORKFLOW.md`](../../google-ads/copy/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/google-ads/copy/WORKFLOW.md`, not `<plugin-root>/skills/google-ads-copy/copy/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/google-ads/copy/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n"
+    },
+    {
+      "slug": "google-ads-landing",
+      "name": "google-ads-landing",
+      "dir": "skills/google-ads-landing",
+      "path": "skills/google-ads-landing/SKILL.md",
+      "desc": "Score and diagnose Google Ads landing pages. Use when asked to audit a landing page, check landing page quality, diagnose high-CTR but low-conversion-rate ad groups, improve Quality Score's Landing Page Experience component, or compare an ad group's messaging against its landing page. Trigger on \"landing page audit\", \"landing page score\", \"landing page quality\", \"why is my conversion rate low\", \"LPX\", \"landing page experience\", \"ad to page match\", or when `/google-ads-audit` surfaces a high-CTR / low-CVR ad group.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/google-ads-landing ~/.claude/skills/google-ads-landing",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/google-ads-landing/SKILL.md",
+        "saveAs": "~/.claude/skills/google-ads-landing/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:6fdd7bab65af4efe9ced1b4a71c89e92cc7459cf868a2d3603d346f55421ea84",
+      "bytes": 1169,
+      "wordCount": 62,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: google-ads-landing\ndescription: Score and diagnose Google Ads landing pages. Use when asked to audit a landing page, check landing page quality, diagnose high-CTR but low-conversion-rate ad groups, improve Quality Score's Landing Page Experience component, or compare an ad group's messaging against its landing page. Trigger on \"landing page audit\", \"landing page score\", \"landing page quality\", \"why is my conversion rate low\", \"LPX\", \"landing page experience\", \"ad to page match\", or when `/google-ads-audit` surfaces a high-CTR / low-CVR ad group.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../google-ads/landing/WORKFLOW.md`](../../google-ads/landing/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/google-ads/landing/WORKFLOW.md`, not `<plugin-root>/skills/google-ads-landing/landing/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/google-ads/landing/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../google-ads/landing/WORKFLOW.md`](../../google-ads/landing/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/google-ads/landing/WORKFLOW.md`, not `<plugin-root>/skills/google-ads-landing/landing/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/google-ads/landing/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n"
+    },
+    {
+      "slug": "google-ads",
+      "name": "google-ads",
+      "dir": "skills/google-ads",
+      "path": "skills/google-ads/SKILL.md",
+      "desc": "Manage Google Ads — performance, keywords, bids, budgets, negatives, campaigns, ads, search terms, QS, location targeting, bulk operations, experiments, asset management, portfolio bidding, offline conversions. Use for any mention of Google Ads, CPA, ROAS, ad spend, or campaign settings.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/google-ads ~/.claude/skills/google-ads",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/google-ads/SKILL.md",
+        "saveAs": "~/.claude/skills/google-ads/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:a4402cbeb1623b6e5b00c61c83c97a95bb7d8207a83b2aeeb08be2037ed02ee8",
+      "bytes": 922,
+      "wordCount": 62,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: google-ads\ndescription: Manage Google Ads — performance, keywords, bids, budgets, negatives, campaigns, ads, search terms, QS, location targeting, bulk operations, experiments, asset management, portfolio bidding, offline conversions. Use for any mention of Google Ads, CPA, ROAS, ad spend, or campaign settings.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../google-ads/manage/WORKFLOW.md`](../../google-ads/manage/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/google-ads/manage/WORKFLOW.md`, not `<plugin-root>/skills/google-ads/manage/WORKFLOW.md`. Resolve every relative reference from the canonical file against `<plugin-root>/google-ads/manage/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../google-ads/manage/WORKFLOW.md`](../../google-ads/manage/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/google-ads/manage/WORKFLOW.md`, not `<plugin-root>/skills/google-ads/manage/WORKFLOW.md`. Resolve every relative reference from the canonical file against `<plugin-root>/google-ads/manage/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n"
+    },
+    {
+      "slug": "google-analytics",
+      "name": "google-analytics",
+      "dir": "skills/google-analytics",
+      "path": "skills/google-analytics/SKILL.md",
+      "desc": "Analyze connected Google Analytics 4 traffic, acquisition, engagement, landing pages, ecommerce, events, and conversions, and safely manage supported GA4 key events or custom dimensions through NotFair MCP. Use for GA4, Google Analytics, traffic or conversion drops, channel attribution, realtime activity, report requests, measurement configuration, or Analytics MCP setup.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/google-analytics ~/.claude/skills/google-analytics",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/google-analytics/SKILL.md",
+        "saveAs": "~/.claude/skills/google-analytics/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:52b744c9b7b2cac3b396a36f45a7c2d686d7f73a2a310af9203579abd7448486",
+      "bytes": 694,
+      "wordCount": 23,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: google-analytics\ndescription: Analyze connected Google Analytics 4 traffic, acquisition, engagement, landing pages, ecommerce, events, and conversions, and safely manage supported GA4 key events or custom dimensions through NotFair MCP. Use for GA4, Google Analytics, traffic or conversion drops, channel attribution, realtime activity, report requests, measurement configuration, or Analytics MCP setup.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../analytics/google-analytics/WORKFLOW.md`](../../analytics/google-analytics/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../analytics/google-analytics/`.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../analytics/google-analytics/WORKFLOW.md`](../../analytics/google-analytics/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../analytics/google-analytics/`.\n"
+    },
+    {
+      "slug": "hreflang-international",
+      "name": "hreflang-international",
+      "dir": "skills/hreflang-international",
+      "path": "skills/hreflang-international/SKILL.md",
+      "desc": "International / multilingual SEO audit focused on hreflang correctness: missing or broken return tags, wrong language/region codes, missing x-default, self-referencing errors, hreflang vs canonical conflicts, and inconsistent signals across HTML head, HTTP headers and XML sitemap. Also reviews URL structure (ccTLD vs subdirectory vs subdomain), language targeting and geo signals. Use whenever the user runs a multi-language or multi-region site and asks about hreflang, international or multilingual SEO, the wrong-language page showing in search, or duplicate content across country versions. Trigger on: \"hreflang\", \"international SEO\", \"multilingual SEO\", \"multi-region\", \"wrong language in Google\", \"x-default\", \"ccTLD vs subdirectory\", \"geo targeting\", \"language targeting\", \"my English page shows for Thai users\", \"th/en page ranking in the wrong country\", or any cross-language/cross-country ranking question. For full-site audits use /seo-analysis; for a single URL use /seo-page.",
+      "descZh": "",
+      "triggers": [
+        "internat"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/hreflang-international ~/.claude/skills/hreflang-international",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/hreflang-international/SKILL.md",
+        "saveAs": "~/.claude/skills/hreflang-international/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:b1ee7817b0bed6d3630ee6f7baa4dec3696d6fa2b016cc9c3389873effc055f3",
+      "bytes": 1345,
+      "wordCount": 23,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: hreflang-international\ndescription: >\n  International / multilingual SEO audit focused on hreflang correctness: missing or\n  broken return tags, wrong language/region codes, missing x-default,\n  self-referencing errors, hreflang vs canonical conflicts, and inconsistent signals\n  across HTML head, HTTP headers and XML sitemap. Also reviews URL structure (ccTLD\n  vs subdirectory vs subdomain), language targeting and geo signals. Use whenever\n  the user runs a multi-language or multi-region site and asks about hreflang,\n  international or multilingual SEO, the wrong-language page showing in search, or\n  duplicate content across country versions. Trigger on: \"hreflang\", \"international\n  SEO\", \"multilingual SEO\", \"multi-region\", \"wrong language in Google\", \"x-default\",\n  \"ccTLD vs subdirectory\", \"geo targeting\", \"language targeting\", \"my English page\n  shows for Thai users\", \"th/en page ranking in the wrong country\", or any\n  cross-language/cross-country ranking question. For full-site audits use\n  /seo-analysis; for a single URL use /seo-page.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../seo/hreflang-international/WORKFLOW.md`](../../seo/hreflang-international/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/hreflang-international/`.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../seo/hreflang-international/WORKFLOW.md`](../../seo/hreflang-international/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/hreflang-international/`.\n"
+    },
+    {
+      "slug": "image-seo",
+      "name": "image-seo",
+      "dir": "skills/image-seo",
+      "path": "skills/image-seo/SKILL.md",
+      "desc": "Image SEO audit — make a site's images discoverable in Google Images and stop them from dragging down Core Web Vitals. Audits alt text quality and coverage, descriptive file names, modern formats (WebP/AVIF), dimensions and compression, responsive srcset, lazy-loading, explicit width/height (CLS), image sitemaps, and ImageObject structured data. Use this skill whenever the user asks about image SEO, alt text, Google Images ranking, image optimization for search, image file size hurting page speed, WebP/AVIF, or image structured data. Trigger on: \"image SEO\", \"alt text\", \"rank in Google Images\", \"optimize my images for search\", \"image alt tags\", \"WebP\", \"image compression SEO\", \"image sitemap\", \"ImageObject schema\", or any image-discoverability / image-performance question. For overall page speed use /seo-analysis; for generating new images use the brand image skills.",
+      "descZh": "",
+      "triggers": [
+        "alt text",
+        "Google Images ranking",
+        "image optimization fo"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/image-seo ~/.claude/skills/image-seo",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/image-seo/SKILL.md",
+        "saveAs": "~/.claude/skills/image-seo/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:6bdf87dcc64730c340e391ad33badb904e1499cce9ee5a36da85969711516852",
+      "bytes": 1181,
+      "wordCount": 23,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: image-seo\ndescription: >\n  Image SEO audit — make a site's images discoverable in Google Images and stop\n  them from dragging down Core Web Vitals. Audits alt text quality and coverage,\n  descriptive file names, modern formats (WebP/AVIF), dimensions and compression,\n  responsive srcset, lazy-loading, explicit width/height (CLS), image sitemaps,\n  and ImageObject structured data. Use this skill whenever the user asks about\n  image SEO, alt text, Google Images ranking, image optimization for search,\n  image file size hurting page speed, WebP/AVIF, or image structured data.\n  Trigger on: \"image SEO\", \"alt text\", \"rank in Google Images\", \"optimize my\n  images for search\", \"image alt tags\", \"WebP\", \"image compression SEO\", \"image\n  sitemap\", \"ImageObject schema\", or any image-discoverability / image-performance\n  question. For overall page speed use /seo-analysis; for generating new images use\n  the brand image skills.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../seo/image-seo/WORKFLOW.md`](../../seo/image-seo/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/image-seo/`.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../seo/image-seo/WORKFLOW.md`](../../seo/image-seo/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/image-seo/`.\n"
+    },
+    {
+      "slug": "keyword-research",
+      "name": "keyword-research",
+      "dir": "skills/keyword-research",
+      "path": "skills/keyword-research/SKILL.md",
+      "desc": "Discover, analyze, and prioritize keywords for SEO and GEO content strategies from a seed keyword or niche. Identifies high-value opportunities based on search volume, competition, intent, and business relevance. Generates topic clusters. For building a dated editorial calendar from your own Search Console data, use `content-planner` instead — this skill is seed-driven keyword discovery, not calendar scheduling. Use when asked to \"find keywords\", \"keyword research\", \"keyword analysis\", \"search volume\", \"keyword difficulty\", \"content ideas from a seed\", or any keyword discovery task.",
+      "descZh": "",
+      "triggers": [
+        "asked to \"find keywords",
+        "keyword research",
+        "keyword analysis",
+        "search volume",
+        "keywor"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/keyword-research ~/.claude/skills/keyword-research",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/keyword-research/SKILL.md",
+        "saveAs": "~/.claude/skills/keyword-research/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:ce1ccdbc42ef85048ece600b3b9864f29f163b5b9fe0a9782e663faa4ed24dbb",
+      "bytes": 911,
+      "wordCount": 23,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: keyword-research\ndescription: >\n  Discover, analyze, and prioritize keywords for SEO and GEO content strategies\n  from a seed keyword or niche. Identifies high-value opportunities based on\n  search volume, competition, intent, and business relevance. Generates topic\n  clusters. For building a dated editorial calendar from your own Search\n  Console data, use `content-planner` instead — this skill is seed-driven\n  keyword discovery, not calendar scheduling. Use when asked to \"find\n  keywords\", \"keyword research\", \"keyword analysis\", \"search volume\", \"keyword\n  difficulty\", \"content ideas from a seed\", or any keyword discovery task.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../seo/keyword-research/WORKFLOW.md`](../../seo/keyword-research/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/keyword-research/`.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../seo/keyword-research/WORKFLOW.md`](../../seo/keyword-research/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/keyword-research/`.\n"
+    },
+    {
+      "slug": "local-seo",
+      "name": "local-seo",
+      "dir": "skills/local-seo",
+      "path": "skills/local-seo/SKILL.md",
+      "desc": "Local SEO and Google Business Profile audit: diagnose why a business isn't ranking in the local pack / map results and produce a fix plan. Covers GBP completeness, NAP (name/address/phone) consistency across the site and citations, local pack and \"near me\" ranking factors, review velocity and responses, local landing pages, service-area pages, and LocalBusiness JSON-LD. Use whenever the user asks about local rankings, map results, Google Maps ranking, NAP consistency, store/branch pages, or multi-location SEO. Trigger on: \"local SEO\", \"Google Business Profile\", \"GBP audit\", \"rank on Google Maps\", \"local pack\", \"map pack\", \"near me ranking\", \"NAP\", \"local citations\", \"my business isn't on the map\", \"why don't I show up on Google Maps\", \"store locator SEO\", \"multi-location SEO\", \"service area pages\", or any location-based ranking question. For full-site (non-local) audits use /seo-analysis; for a single URL use /seo-page.",
+      "descZh": "",
+      "triggers": [
+        "map results",
+        "Google Maps ranking",
+        "NAP consistency"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/local-seo ~/.claude/skills/local-seo",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/local-seo/SKILL.md",
+        "saveAs": "~/.claude/skills/local-seo/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:22708e6d2dc4840e839ce3363221148d64a6440e4726fad8ff469e9c43a18a44",
+      "bytes": 1233,
+      "wordCount": 23,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: local-seo\ndescription: >\n  Local SEO and Google Business Profile audit: diagnose why a business isn't ranking\n  in the local pack / map results and produce a fix plan. Covers GBP completeness,\n  NAP (name/address/phone) consistency across the site and citations, local pack and\n  \"near me\" ranking factors, review velocity and responses, local landing pages,\n  service-area pages, and LocalBusiness JSON-LD. Use whenever the user asks about\n  local rankings, map results, Google Maps ranking, NAP consistency, store/branch\n  pages, or multi-location SEO. Trigger on: \"local SEO\", \"Google Business Profile\",\n  \"GBP audit\", \"rank on Google Maps\", \"local pack\", \"map pack\", \"near me ranking\",\n  \"NAP\", \"local citations\", \"my business isn't on the map\", \"why don't I show up on\n  Google Maps\", \"store locator SEO\", \"multi-location SEO\", \"service area pages\", or\n  any location-based ranking question. For full-site (non-local) audits use\n  /seo-analysis; for a single URL use /seo-page.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../seo/local-seo/WORKFLOW.md`](../../seo/local-seo/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/local-seo/`.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../seo/local-seo/WORKFLOW.md`](../../seo/local-seo/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/local-seo/`.\n"
+    },
+    {
+      "slug": "meta-ads-audit",
+      "name": "meta-ads-audit",
+      "dir": "skills/meta-ads-audit",
+      "path": "skills/meta-ads-audit/SKILL.md",
+      "desc": "Meta Ads (Facebook + Instagram) account audit and business context setup. Use for account-health audits and business-context setup. Trigger on \"audit my Meta ads\", \"audit my Facebook ads\", \"Meta ads audit\", \"set up my Meta ads\", \"onboard Meta\", \"Meta account overview\", \"how's my Meta account\", \"Meta health check\", \"what should I fix in my Facebook ads\", or when the user is new to NotFair Meta and hasn't run an audit before.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/meta-ads-audit ~/.claude/skills/meta-ads-audit",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/meta-ads-audit/SKILL.md",
+        "saveAs": "~/.claude/skills/meta-ads-audit/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:cd97ba85c107ede8f5e511c1850e9deff64eea7f7caa01cc18ba8400040a0c0a",
+      "bytes": 1051,
+      "wordCount": 62,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: meta-ads-audit\ndescription: Meta Ads (Facebook + Instagram) account audit and business context setup. Use for account-health audits and business-context setup. Trigger on \"audit my Meta ads\", \"audit my Facebook ads\", \"Meta ads audit\", \"set up my Meta ads\", \"onboard Meta\", \"Meta account overview\", \"how's my Meta account\", \"Meta health check\", \"what should I fix in my Facebook ads\", or when the user is new to NotFair Meta and hasn't run an audit before.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../meta-ads/audit/WORKFLOW.md`](../../meta-ads/audit/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/meta-ads/audit/WORKFLOW.md`, not `<plugin-root>/skills/meta-ads-audit/audit/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/meta-ads/audit/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../meta-ads/audit/WORKFLOW.md`](../../meta-ads/audit/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/meta-ads/audit/WORKFLOW.md`, not `<plugin-root>/skills/meta-ads-audit/audit/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/meta-ads/audit/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n"
+    },
+    {
+      "slug": "meta-ads-creative",
+      "name": "meta-ads-creative",
+      "dir": "skills/meta-ads-creative",
+      "path": "skills/meta-ads-creative/SKILL.md",
+      "desc": "Create evidence-based Meta ad creative briefs, copy angles, and testable asset concepts for Facebook and Instagram. Use when asked for Meta ad creative, Facebook ads copy, Instagram ad assets, UGC concepts, creative briefs, new ad concepts, or creative refreshes.",
+      "descZh": "",
+      "triggers": [
+        "Facebook ads copy",
+        "Instagram ad assets",
+        "UGC concepts",
+        "creative"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/meta-ads-creative ~/.claude/skills/meta-ads-creative",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/meta-ads-creative/SKILL.md",
+        "saveAs": "~/.claude/skills/meta-ads-creative/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:f4ea86fcfe6443bedbd37881a625d9036f36f17e12a7702f74bbc8bbd3f30022",
+      "bytes": 908,
+      "wordCount": 62,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: meta-ads-creative\ndescription: Create evidence-based Meta ad creative briefs, copy angles, and testable asset concepts for Facebook and Instagram. Use when asked for Meta ad creative, Facebook ads copy, Instagram ad assets, UGC concepts, creative briefs, new ad concepts, or creative refreshes.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../meta-ads/creative/WORKFLOW.md`](../../meta-ads/creative/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/meta-ads/creative/WORKFLOW.md`, not `<plugin-root>/skills/meta-ads-creative/creative/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/meta-ads/creative/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../meta-ads/creative/WORKFLOW.md`](../../meta-ads/creative/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/meta-ads/creative/WORKFLOW.md`, not `<plugin-root>/skills/meta-ads-creative/creative/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/meta-ads/creative/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n"
+    },
+    {
+      "slug": "meta-ads",
+      "name": "meta-ads",
+      "dir": "skills/meta-ads",
+      "path": "skills/meta-ads/SKILL.md",
+      "desc": "Manage Meta Ads (Facebook + Instagram) — performance, ROAS, CPM, frequency, audience overlap, learning phase, creative fatigue, budgets, ad sets, campaigns, ads. Use for any mention of Meta Ads, Facebook Ads, Instagram Ads, ROAS, CPM, ad spend, or campaign settings on Meta.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/meta-ads ~/.claude/skills/meta-ads",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/meta-ads/SKILL.md",
+        "saveAs": "~/.claude/skills/meta-ads/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:5c6d2cb70ff307ad3709fe2937b8d2f8ba9f9cfad055430dcfb3793e21b08a9c",
+      "bytes": 896,
+      "wordCount": 62,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: meta-ads\ndescription: Manage Meta Ads (Facebook + Instagram) — performance, ROAS, CPM, frequency, audience overlap, learning phase, creative fatigue, budgets, ad sets, campaigns, ads. Use for any mention of Meta Ads, Facebook Ads, Instagram Ads, ROAS, CPM, ad spend, or campaign settings on Meta.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../meta-ads/manage/WORKFLOW.md`](../../meta-ads/manage/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/meta-ads/manage/WORKFLOW.md`, not `<plugin-root>/skills/meta-ads/manage/WORKFLOW.md`. Resolve every relative reference from the canonical file against `<plugin-root>/meta-ads/manage/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../meta-ads/manage/WORKFLOW.md`](../../meta-ads/manage/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/meta-ads/manage/WORKFLOW.md`, not `<plugin-root>/skills/meta-ads/manage/WORKFLOW.md`. Resolve every relative reference from the canonical file against `<plugin-root>/meta-ads/manage/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n"
+    },
+    {
+      "slug": "meta-tags-optimizer",
+      "name": "meta-tags-optimizer",
+      "dir": "skills/meta-tags-optimizer",
+      "path": "skills/meta-tags-optimizer/SKILL.md",
+      "desc": "Optimize title tags, meta descriptions, Open Graph, and Twitter cards for maximum click-through rate. Generates multiple A/B test variations with character counting and SERP preview. Use when asked to \"optimize title tag\", \"write meta description\", \"improve CTR\", \"Open Graph tags\", \"fix my meta tags\", \"social media preview\", \"my click rate is low\", \"title optimization\", or any meta tag task.",
+      "descZh": "",
+      "triggers": [
+        "write meta description",
+        "improve CTR",
+        "Open Graph tags"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/meta-tags-optimizer ~/.claude/skills/meta-tags-optimizer",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/meta-tags-optimizer/SKILL.md",
+        "saveAs": "~/.claude/skills/meta-tags-optimizer/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:06b89455df38348cd5f782dea61e8151bcbc95d093dbc789ed76f7c9e0b5228e",
+      "bytes": 722,
+      "wordCount": 23,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: meta-tags-optimizer\ndescription: >\n  Optimize title tags, meta descriptions, Open Graph, and Twitter cards for\n  maximum click-through rate. Generates multiple A/B test variations with\n  character counting and SERP preview. Use when asked to \"optimize title tag\",\n  \"write meta description\", \"improve CTR\", \"Open Graph tags\", \"fix my meta\n  tags\", \"social media preview\", \"my click rate is low\", \"title optimization\",\n  or any meta tag task.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../seo/meta-tags-optimizer/WORKFLOW.md`](../../seo/meta-tags-optimizer/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/meta-tags-optimizer/`.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../seo/meta-tags-optimizer/WORKFLOW.md`](../../seo/meta-tags-optimizer/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/meta-tags-optimizer/`.\n"
+    },
+    {
+      "slug": "paid-ads-amazon",
+      "name": "paid-ads-amazon",
+      "dir": "skills/paid-ads-amazon",
+      "path": "skills/paid-ads-amazon/SKILL.md",
+      "desc": "Plan and review Amazon Ads with margin-aware ACoS, product, and search-term guardrails. Use for Amazon advertising, Sponsored Products, Sponsored Brands, Sponsored Display, ASIN targeting, Amazon ACoS, or Amazon Ads performance exports.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/paid-ads-amazon ~/.claude/skills/paid-ads-amazon",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/paid-ads-amazon/SKILL.md",
+        "saveAs": "~/.claude/skills/paid-ads-amazon/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:5176d7b5bb65e6fb0ee732b4f1d23e0d61e29f9ed833e77596a059e32e603d73",
+      "bytes": 912,
+      "wordCount": 62,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: paid-ads-amazon\ndescription: Plan and review Amazon Ads with margin-aware ACoS, product, and search-term guardrails. Use for Amazon advertising, Sponsored Products, Sponsored Brands, Sponsored Display, ASIN targeting, Amazon ACoS, or Amazon Ads performance exports.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../paid-ads/paid-ads-amazon/WORKFLOW.md`](../../paid-ads/paid-ads-amazon/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/paid-ads/paid-ads-amazon/WORKFLOW.md`, not `<plugin-root>/skills/paid-ads-amazon/paid-ads-amazon/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/paid-ads/paid-ads-amazon/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../paid-ads/paid-ads-amazon/WORKFLOW.md`](../../paid-ads/paid-ads-amazon/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/paid-ads/paid-ads-amazon/WORKFLOW.md`, not `<plugin-root>/skills/paid-ads-amazon/paid-ads-amazon/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/paid-ads/paid-ads-amazon/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n"
+    },
+    {
+      "slug": "paid-ads-chatgpt",
+      "name": "paid-ads-chatgpt",
+      "dir": "skills/paid-ads-chatgpt",
+      "path": "skills/paid-ads-chatgpt/SKILL.md",
+      "desc": "Plan and review ChatGPT Ads experiments without assuming ad inventory, account access, or platform capabilities. Use for ChatGPT advertising, OpenAI ads, conversational ad concepts, ChatGPT campaign plans, or performance reviews from a verified export.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/paid-ads-chatgpt ~/.claude/skills/paid-ads-chatgpt",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/paid-ads-chatgpt/SKILL.md",
+        "saveAs": "~/.claude/skills/paid-ads-chatgpt/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:5d85ba819344a49495e773a75f184e791aeba53ec9006ac636aea04793f7ae53",
+      "bytes": 935,
+      "wordCount": 62,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: paid-ads-chatgpt\ndescription: Plan and review ChatGPT Ads experiments without assuming ad inventory, account access, or platform capabilities. Use for ChatGPT advertising, OpenAI ads, conversational ad concepts, ChatGPT campaign plans, or performance reviews from a verified export.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../paid-ads/paid-ads-chatgpt/WORKFLOW.md`](../../paid-ads/paid-ads-chatgpt/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/paid-ads/paid-ads-chatgpt/WORKFLOW.md`, not `<plugin-root>/skills/paid-ads-chatgpt/paid-ads-chatgpt/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/paid-ads/paid-ads-chatgpt/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../paid-ads/paid-ads-chatgpt/WORKFLOW.md`](../../paid-ads/paid-ads-chatgpt/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/paid-ads/paid-ads-chatgpt/WORKFLOW.md`, not `<plugin-root>/skills/paid-ads-chatgpt/paid-ads-chatgpt/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/paid-ads/paid-ads-chatgpt/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n"
+    },
+    {
+      "slug": "paid-ads-creative",
+      "name": "paid-ads-creative",
+      "dir": "skills/paid-ads-creative",
+      "path": "skills/paid-ads-creative/SKILL.md",
+      "desc": "Create grounded paid-media creative concepts, copy angles, refresh hypotheses, and measurable test briefs across advertising platforms. Use for ad copy, creative briefs, UGC concepts, headlines, creative fatigue, asset ideas, or a creative refresh.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/paid-ads-creative ~/.claude/skills/paid-ads-creative",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/paid-ads-creative/SKILL.md",
+        "saveAs": "~/.claude/skills/paid-ads-creative/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:9c5734b0171a64a0643888908d096ba513c0defc3db7eeaa1279797ee3d78ae7",
+      "bytes": 938,
+      "wordCount": 62,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: paid-ads-creative\ndescription: Create grounded paid-media creative concepts, copy angles, refresh hypotheses, and measurable test briefs across advertising platforms. Use for ad copy, creative briefs, UGC concepts, headlines, creative fatigue, asset ideas, or a creative refresh.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../paid-ads/paid-ads-creative/WORKFLOW.md`](../../paid-ads/paid-ads-creative/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/paid-ads/paid-ads-creative/WORKFLOW.md`, not `<plugin-root>/skills/paid-ads-creative/paid-ads-creative/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/paid-ads/paid-ads-creative/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../paid-ads/paid-ads-creative/WORKFLOW.md`](../../paid-ads/paid-ads-creative/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/paid-ads/paid-ads-creative/WORKFLOW.md`, not `<plugin-root>/skills/paid-ads-creative/paid-ads-creative/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/paid-ads/paid-ads-creative/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n"
+    },
+    {
+      "slug": "paid-ads-guide",
+      "name": "paid-ads-guide",
+      "dir": "skills/paid-ads-guide",
+      "path": "skills/paid-ads-guide/SKILL.md",
+      "desc": "Explain NotFair's paid-ads skills, installation, platform boundaries, account connections, and current product capabilities. Use for questions about how NotFair works, what it supports, how to install or connect it, plans or limits, or paid-media troubleshooting that is not an account-performance request.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/paid-ads-guide ~/.claude/skills/paid-ads-guide",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/paid-ads-guide/SKILL.md",
+        "saveAs": "~/.claude/skills/paid-ads-guide/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:c6aa41f7a1999044afb7809a88ebe96538739a075a413ffd9c7e10808889dcb8",
+      "bytes": 975,
+      "wordCount": 62,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: paid-ads-guide\ndescription: Explain NotFair's paid-ads skills, installation, platform boundaries, account connections, and current product capabilities. Use for questions about how NotFair works, what it supports, how to install or connect it, plans or limits, or paid-media troubleshooting that is not an account-performance request.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../paid-ads/paid-ads-guide/WORKFLOW.md`](../../paid-ads/paid-ads-guide/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/paid-ads/paid-ads-guide/WORKFLOW.md`, not `<plugin-root>/skills/paid-ads-guide/paid-ads-guide/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/paid-ads/paid-ads-guide/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../paid-ads/paid-ads-guide/WORKFLOW.md`](../../paid-ads/paid-ads-guide/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/paid-ads/paid-ads-guide/WORKFLOW.md`, not `<plugin-root>/skills/paid-ads-guide/paid-ads-guide/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/paid-ads/paid-ads-guide/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n"
+    },
+    {
+      "slug": "paid-ads-integrations",
+      "name": "paid-ads-integrations",
+      "dir": "skills/paid-ads-integrations",
+      "path": "skills/paid-ads-integrations/SKILL.md",
+      "desc": "Discover, connect, and verify NotFair paid-ad integrations and their actual capabilities. Use when asked to connect an ad account, configure an ads MCP, check available tools, troubleshoot access, or determine whether NotFair can read or change a platform.",
+      "descZh": "",
+      "triggers": [
+        "configure an ads MCP",
+        "check available tools",
+        "troubleshoot"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/paid-ads-integrations ~/.claude/skills/paid-ads-integrations",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/paid-ads-integrations/SKILL.md",
+        "saveAs": "~/.claude/skills/paid-ads-integrations/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:3671c1e1ab7f910ee1ddd8bd2f8607921865b15950ea27a568f89577e5d68520",
+      "bytes": 974,
+      "wordCount": 62,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: paid-ads-integrations\ndescription: Discover, connect, and verify NotFair paid-ad integrations and their actual capabilities. Use when asked to connect an ad account, configure an ads MCP, check available tools, troubleshoot access, or determine whether NotFair can read or change a platform.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../paid-ads/paid-ads-integrations/WORKFLOW.md`](../../paid-ads/paid-ads-integrations/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/paid-ads/paid-ads-integrations/WORKFLOW.md`, not `<plugin-root>/skills/paid-ads-integrations/paid-ads-integrations/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/paid-ads/paid-ads-integrations/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../paid-ads/paid-ads-integrations/WORKFLOW.md`](../../paid-ads/paid-ads-integrations/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/paid-ads/paid-ads-integrations/WORKFLOW.md`, not `<plugin-root>/skills/paid-ads-integrations/paid-ads-integrations/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/paid-ads/paid-ads-integrations/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n"
+    },
+    {
+      "slug": "paid-ads-launch",
+      "name": "paid-ads-launch",
+      "dir": "skills/paid-ads-launch",
+      "path": "skills/paid-ads-launch/SKILL.md",
+      "desc": "Plan and prepare a new paid-media campaign or cross-channel test before it can spend. Use when asked to create, launch, start, set up, or allocate budget to an advertising campaign on any supported platform.",
+      "descZh": "",
+      "triggers": [
+        "asked to create",
+        "launch",
+        "start",
+        "set up"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/paid-ads-launch ~/.claude/skills/paid-ads-launch",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/paid-ads-launch/SKILL.md",
+        "saveAs": "~/.claude/skills/paid-ads-launch/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:f2a77ffa422e10401e2714499017a9f272506e6e6f78665c12ad7fa016c7e339",
+      "bytes": 883,
+      "wordCount": 62,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: paid-ads-launch\ndescription: Plan and prepare a new paid-media campaign or cross-channel test before it can spend. Use when asked to create, launch, start, set up, or allocate budget to an advertising campaign on any supported platform.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../paid-ads/paid-ads-launch/WORKFLOW.md`](../../paid-ads/paid-ads-launch/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/paid-ads/paid-ads-launch/WORKFLOW.md`, not `<plugin-root>/skills/paid-ads-launch/paid-ads-launch/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/paid-ads/paid-ads-launch/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../paid-ads/paid-ads-launch/WORKFLOW.md`](../../paid-ads/paid-ads-launch/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/paid-ads/paid-ads-launch/WORKFLOW.md`, not `<plugin-root>/skills/paid-ads-launch/paid-ads-launch/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/paid-ads/paid-ads-launch/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n"
+    },
+    {
+      "slug": "paid-ads-linkedin",
+      "name": "paid-ads-linkedin",
+      "dir": "skills/paid-ads-linkedin",
+      "path": "skills/paid-ads-linkedin/SKILL.md",
+      "desc": "Audit, diagnose, plan, and safely operate connected LinkedIn Ads accounts through the NotFair MCP, with an export-based fallback. Use for LinkedIn advertising, sponsored content, lead-generation forms, job-title or company targeting, campaign groups, creatives, conversions, lead quality, budgets, bids, or approved LinkedIn campaign changes.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/paid-ads-linkedin ~/.claude/skills/paid-ads-linkedin",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/paid-ads-linkedin/SKILL.md",
+        "saveAs": "~/.claude/skills/paid-ads-linkedin/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:d90159cf956870269baa8a1467fed481ae4ecd33eeb44444a0efd8483649ca13",
+      "bytes": 1032,
+      "wordCount": 62,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: paid-ads-linkedin\ndescription: Audit, diagnose, plan, and safely operate connected LinkedIn Ads accounts through the NotFair MCP, with an export-based fallback. Use for LinkedIn advertising, sponsored content, lead-generation forms, job-title or company targeting, campaign groups, creatives, conversions, lead quality, budgets, bids, or approved LinkedIn campaign changes.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../paid-ads/paid-ads-linkedin/WORKFLOW.md`](../../paid-ads/paid-ads-linkedin/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/paid-ads/paid-ads-linkedin/WORKFLOW.md`, not `<plugin-root>/skills/paid-ads-linkedin/paid-ads-linkedin/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/paid-ads/paid-ads-linkedin/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../paid-ads/paid-ads-linkedin/WORKFLOW.md`](../../paid-ads/paid-ads-linkedin/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/paid-ads/paid-ads-linkedin/WORKFLOW.md`, not `<plugin-root>/skills/paid-ads-linkedin/paid-ads-linkedin/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/paid-ads/paid-ads-linkedin/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n"
+    },
+    {
+      "slug": "paid-ads-optimize",
+      "name": "paid-ads-optimize",
+      "dir": "skills/paid-ads-optimize",
+      "path": "skills/paid-ads-optimize/SKILL.md",
+      "desc": "Diagnose wasted paid-ad spend, pacing, and allocation, then propose safe evidence-backed optimizations. Use for waste, negatives, budgets, bid changes, poor CPA or ROAS, underpacing, overspend, or scaling decisions.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/paid-ads-optimize ~/.claude/skills/paid-ads-optimize",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/paid-ads-optimize/SKILL.md",
+        "saveAs": "~/.claude/skills/paid-ads-optimize/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:30eec72801f5fbb6b1c6362e4a5c77c46441273ac054249b2165f6fe4366fea1",
+      "bytes": 905,
+      "wordCount": 62,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: paid-ads-optimize\ndescription: Diagnose wasted paid-ad spend, pacing, and allocation, then propose safe evidence-backed optimizations. Use for waste, negatives, budgets, bid changes, poor CPA or ROAS, underpacing, overspend, or scaling decisions.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../paid-ads/paid-ads-optimize/WORKFLOW.md`](../../paid-ads/paid-ads-optimize/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/paid-ads/paid-ads-optimize/WORKFLOW.md`, not `<plugin-root>/skills/paid-ads-optimize/paid-ads-optimize/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/paid-ads/paid-ads-optimize/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../paid-ads/paid-ads-optimize/WORKFLOW.md`](../../paid-ads/paid-ads-optimize/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/paid-ads/paid-ads-optimize/WORKFLOW.md`, not `<plugin-root>/skills/paid-ads-optimize/paid-ads-optimize/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/paid-ads/paid-ads-optimize/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n"
+    },
+    {
+      "slug": "paid-ads-reddit",
+      "name": "paid-ads-reddit",
+      "dir": "skills/paid-ads-reddit",
+      "path": "skills/paid-ads-reddit/SKILL.md",
+      "desc": "Audit, diagnose, and safely operate connected Reddit Ads accounts through the NotFair MCP. Use for Reddit advertising, Reddit Ads performance, campaign or ad-group analysis, spend, conversions, targeting, audiences, pixels, budgets, bids, creative, campaign setup, or approved Reddit Ads changes.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/paid-ads-reddit ~/.claude/skills/paid-ads-reddit",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/paid-ads-reddit/SKILL.md",
+        "saveAs": "~/.claude/skills/paid-ads-reddit/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:7dfc97dfab5d87f6af8ca87bdb0e80bd5978c6229d9217a0c5c9949f790834f6",
+      "bytes": 972,
+      "wordCount": 62,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: paid-ads-reddit\ndescription: Audit, diagnose, and safely operate connected Reddit Ads accounts through the NotFair MCP. Use for Reddit advertising, Reddit Ads performance, campaign or ad-group analysis, spend, conversions, targeting, audiences, pixels, budgets, bids, creative, campaign setup, or approved Reddit Ads changes.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../paid-ads/paid-ads-reddit/WORKFLOW.md`](../../paid-ads/paid-ads-reddit/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/paid-ads/paid-ads-reddit/WORKFLOW.md`, not `<plugin-root>/skills/paid-ads-reddit/paid-ads-reddit/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/paid-ads/paid-ads-reddit/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../paid-ads/paid-ads-reddit/WORKFLOW.md`](../../paid-ads/paid-ads-reddit/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/paid-ads/paid-ads-reddit/WORKFLOW.md`, not `<plugin-root>/skills/paid-ads-reddit/paid-ads-reddit/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/paid-ads/paid-ads-reddit/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n"
+    },
+    {
+      "slug": "paid-ads-review",
+      "name": "paid-ads-review",
+      "dir": "skills/paid-ads-review",
+      "path": "skills/paid-ads-review/SKILL.md",
+      "desc": "Produce a read-only, evidence-based paid-media performance review across connected platforms or supplied exports. Use for weekly or monthly reports, scorecards, performance, CPA, ROAS, CTR, spend trends, pacing, or conversion-tracking health.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/paid-ads-review ~/.claude/skills/paid-ads-review",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/paid-ads-review/SKILL.md",
+        "saveAs": "~/.claude/skills/paid-ads-review/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:14928562b6f4616dc7bb1d2ba5ba8a7fe8b2f8fda4ed25ce68415eef98f53342",
+      "bytes": 918,
+      "wordCount": 62,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: paid-ads-review\ndescription: Produce a read-only, evidence-based paid-media performance review across connected platforms or supplied exports. Use for weekly or monthly reports, scorecards, performance, CPA, ROAS, CTR, spend trends, pacing, or conversion-tracking health.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../paid-ads/paid-ads-review/WORKFLOW.md`](../../paid-ads/paid-ads-review/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/paid-ads/paid-ads-review/WORKFLOW.md`, not `<plugin-root>/skills/paid-ads-review/paid-ads-review/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/paid-ads/paid-ads-review/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../paid-ads/paid-ads-review/WORKFLOW.md`](../../paid-ads/paid-ads-review/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/paid-ads/paid-ads-review/WORKFLOW.md`, not `<plugin-root>/skills/paid-ads-review/paid-ads-review/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/paid-ads/paid-ads-review/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n"
+    },
+    {
+      "slug": "paid-ads-setup",
+      "name": "paid-ads-setup",
+      "dir": "skills/paid-ads-setup",
+      "path": "skills/paid-ads-setup/SKILL.md",
+      "desc": "Connect NotFair paid-ad accounts and establish reusable campaign context. Use when setting up paid media in a new workspace, connecting Google, Meta, X, LinkedIn, Reddit, or TikTok Ads, refreshing brand context, or preparing an agent to work on ads safely.",
+      "descZh": "",
+      "triggers": [
+        "connecting Google",
+        "Meta",
+        "LinkedIn",
+        "Reddit",
+        "or"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/paid-ads-setup ~/.claude/skills/paid-ads-setup",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/paid-ads-setup/SKILL.md",
+        "saveAs": "~/.claude/skills/paid-ads-setup/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:acb8c9b374689364ed3cfac24535210b112c1f654755471fd86ba3c2edf20e1c",
+      "bytes": 925,
+      "wordCount": 62,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: paid-ads-setup\ndescription: Connect NotFair paid-ad accounts and establish reusable campaign context. Use when setting up paid media in a new workspace, connecting Google, Meta, X, LinkedIn, Reddit, or TikTok Ads, refreshing brand context, or preparing an agent to work on ads safely.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../paid-ads/paid-ads-setup/WORKFLOW.md`](../../paid-ads/paid-ads-setup/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/paid-ads/paid-ads-setup/WORKFLOW.md`, not `<plugin-root>/skills/paid-ads-setup/paid-ads-setup/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/paid-ads/paid-ads-setup/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../paid-ads/paid-ads-setup/WORKFLOW.md`](../../paid-ads/paid-ads-setup/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/paid-ads/paid-ads-setup/WORKFLOW.md`, not `<plugin-root>/skills/paid-ads-setup/paid-ads-setup/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/paid-ads/paid-ads-setup/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n"
+    },
+    {
+      "slug": "paid-ads-tiktok",
+      "name": "paid-ads-tiktok",
+      "dir": "skills/paid-ads-tiktok",
+      "path": "skills/paid-ads-tiktok/SKILL.md",
+      "desc": "Audit, diagnose, and safely operate connected TikTok Ads accounts through the NotFair MCP. Use for TikTok advertising, Spark Ads, short-form video ads, campaign or ad-group analysis, spend, conversions, targeting, creative, budgets, bids, creator briefs, campaign setup, or approved TikTok Ads changes.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/paid-ads-tiktok ~/.claude/skills/paid-ads-tiktok",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/paid-ads-tiktok/SKILL.md",
+        "saveAs": "~/.claude/skills/paid-ads-tiktok/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:1d661b6742fee0bdbf9b86a1544446215f21f6a452a773c88915fd8945811f96",
+      "bytes": 978,
+      "wordCount": 62,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: paid-ads-tiktok\ndescription: Audit, diagnose, and safely operate connected TikTok Ads accounts through the NotFair MCP. Use for TikTok advertising, Spark Ads, short-form video ads, campaign or ad-group analysis, spend, conversions, targeting, creative, budgets, bids, creator briefs, campaign setup, or approved TikTok Ads changes.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../paid-ads/paid-ads-tiktok/WORKFLOW.md`](../../paid-ads/paid-ads-tiktok/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/paid-ads/paid-ads-tiktok/WORKFLOW.md`, not `<plugin-root>/skills/paid-ads-tiktok/paid-ads-tiktok/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/paid-ads/paid-ads-tiktok/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../paid-ads/paid-ads-tiktok/WORKFLOW.md`](../../paid-ads/paid-ads-tiktok/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/paid-ads/paid-ads-tiktok/WORKFLOW.md`, not `<plugin-root>/skills/paid-ads-tiktok/paid-ads-tiktok/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/paid-ads/paid-ads-tiktok/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n"
+    },
+    {
+      "slug": "paid-ads-x",
+      "name": "paid-ads-x",
+      "dir": "skills/paid-ads-x",
+      "path": "skills/paid-ads-x/SKILL.md",
+      "desc": "Audit, diagnose, and safely operate connected X Ads (Twitter Ads) accounts through the NotFair MCP. Use for X Ads performance, campaign or line-item analysis, spend, conversions, targeting, promoted posts, audiences, budgets, bids, creative, campaign setup, or approved X Ads changes.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/paid-ads-x ~/.claude/skills/paid-ads-x",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/paid-ads-x/SKILL.md",
+        "saveAs": "~/.claude/skills/paid-ads-x/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:d2542a58c6021261174b7d91ce7e5ff0972dd58cb58e492bbc0682c47803aefa",
+      "bytes": 925,
+      "wordCount": 62,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: paid-ads-x\ndescription: Audit, diagnose, and safely operate connected X Ads (Twitter Ads) accounts through the NotFair MCP. Use for X Ads performance, campaign or line-item analysis, spend, conversions, targeting, promoted posts, audiences, budgets, bids, creative, campaign setup, or approved X Ads changes.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../paid-ads/paid-ads-x/WORKFLOW.md`](../../paid-ads/paid-ads-x/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/paid-ads/paid-ads-x/WORKFLOW.md`, not `<plugin-root>/skills/paid-ads-x/paid-ads-x/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/paid-ads/paid-ads-x/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../paid-ads/paid-ads-x/WORKFLOW.md`](../../paid-ads/paid-ads-x/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/paid-ads/paid-ads-x/WORKFLOW.md`, not `<plugin-root>/skills/paid-ads-x/paid-ads-x/SKILL.md`. Resolve every relative reference from the canonical file against `<plugin-root>/paid-ads/paid-ads-x/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n"
+    },
+    {
+      "slug": "paid-ads",
+      "name": "paid-ads",
+      "dir": "skills/paid-ads",
+      "path": "skills/paid-ads/SKILL.md",
+      "desc": "Coordinate safe, evidence-based paid-media work across Google Ads, Meta Ads, X Ads, LinkedIn Ads, Reddit Ads, TikTok Ads, Amazon, and ChatGPT Ads. Use for broad ads questions, multi-channel strategy, budgets, CPA or ROAS, campaign requests, spend, ad performance, or when routing to the right NotFair paid-ads skill.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/paid-ads ~/.claude/skills/paid-ads",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/paid-ads/SKILL.md",
+        "saveAs": "~/.claude/skills/paid-ads/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:37de94528bd589e3506942e7ddb5765989609f759e50ec677889cc867c456cd9",
+      "bytes": 946,
+      "wordCount": 62,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: paid-ads\ndescription: Coordinate safe, evidence-based paid-media work across Google Ads, Meta Ads, X Ads, LinkedIn Ads, Reddit Ads, TikTok Ads, Amazon, and ChatGPT Ads. Use for broad ads questions, multi-channel strategy, budgets, CPA or ROAS, campaign requests, spend, ad performance, or when routing to the right NotFair paid-ads skill.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../paid-ads/paid-ads/WORKFLOW.md`](../../paid-ads/paid-ads/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/paid-ads/paid-ads/WORKFLOW.md`, not `<plugin-root>/skills/paid-ads/paid-ads/WORKFLOW.md`. Resolve every relative reference from the canonical file against `<plugin-root>/paid-ads/paid-ads/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../paid-ads/paid-ads/WORKFLOW.md`](../../paid-ads/paid-ads/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/paid-ads/paid-ads/WORKFLOW.md`, not `<plugin-root>/skills/paid-ads/paid-ads/WORKFLOW.md`. Resolve every relative reference from the canonical file against `<plugin-root>/paid-ads/paid-ads/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n"
+    },
+    {
+      "slug": "programmatic-seo",
+      "name": "programmatic-seo",
+      "dir": "skills/programmatic-seo",
+      "path": "skills/programmatic-seo/SKILL.md",
+      "desc": "Programmatic SEO planning and audit: building or evaluating large sets of template-generated pages that target long-tail query patterns (e.g. \"[service] in [city]\", \"[product] vs [product]\", \"[tool] for [use-case]\"). Covers data-source and template design, thin/duplicate-content and doorway-page risks, per-page uniqueness and value thresholds, internal linking and hubs, indexation management (publish vs. noindex), and scaling without a manual action. Use whenever the user wants to generate many pages from a template/dataset, build location/comparison/use-case pages at scale, or asks why generated pages aren't indexing. Trigger on: \"programmatic SEO\", \"pSEO\", \"generate pages at scale\", \"templated pages\", \"location pages at scale\", \"comparison pages\", \"[city] pages\", \"my generated pages aren't indexed\", \"doorway pages\", \"scale content\". For one-off content use /content-writer; for keyword discovery use /keyword-research.",
+      "descZh": "",
+      "triggers": [
+        "build location/compari"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/programmatic-seo ~/.claude/skills/programmatic-seo",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/programmatic-seo/SKILL.md",
+        "saveAs": "~/.claude/skills/programmatic-seo/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:bf5e66fa1fddb93d48e417350e57bfcd634ca8cf70a2135b9817e725b5adc0e9",
+      "bytes": 1260,
+      "wordCount": 23,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: programmatic-seo\ndescription: >\n  Programmatic SEO planning and audit: building or evaluating large sets of\n  template-generated pages that target long-tail query patterns (e.g. \"[service] in\n  [city]\", \"[product] vs [product]\", \"[tool] for [use-case]\"). Covers data-source\n  and template design, thin/duplicate-content and doorway-page risks, per-page\n  uniqueness and value thresholds, internal linking and hubs, indexation management\n  (publish vs. noindex), and scaling without a manual action. Use whenever the user\n  wants to generate many pages from a template/dataset, build\n  location/comparison/use-case pages at scale, or asks why generated pages aren't\n  indexing. Trigger on: \"programmatic SEO\", \"pSEO\", \"generate pages at scale\",\n  \"templated pages\", \"location pages at scale\", \"comparison pages\", \"[city] pages\",\n  \"my generated pages aren't indexed\", \"doorway pages\", \"scale content\". For one-off\n  content use /content-writer; for keyword discovery use /keyword-research.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../seo/programmatic-seo/WORKFLOW.md`](../../seo/programmatic-seo/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/programmatic-seo/`.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../seo/programmatic-seo/WORKFLOW.md`](../../seo/programmatic-seo/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/programmatic-seo/`.\n"
+    },
+    {
+      "slug": "schema-markup-generator",
+      "name": "schema-markup-generator",
+      "dir": "skills/schema-markup-generator",
+      "path": "skills/schema-markup-generator/SKILL.md",
+      "desc": "Generate and validate Schema.org JSON-LD, and assess Google rich result eligibility where applicable. Supports FAQ, HowTo, Article, Product, LocalBusiness, and multi-type schemas. Use when asked to \"add schema markup\", \"generate structured data\", \"JSON-LD\", \"rich snippets\", \"FAQ schema\", \"product markup\", \"add structured data to my page\", \"how to get rich snippets\", or any structured data task.",
+      "descZh": "",
+      "triggers": [
+        "generate structured data",
+        "JSON-LD",
+        "rich snippets",
+        "FAQ"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/schema-markup-generator ~/.claude/skills/schema-markup-generator",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/schema-markup-generator/SKILL.md",
+        "saveAs": "~/.claude/skills/schema-markup-generator/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:725f4bf183ee9edd8e1c1ff7bb01860a738fc37e14565fa04659b5ec23a9624a",
+      "bytes": 741,
+      "wordCount": 23,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: schema-markup-generator\ndescription: >\n  Generate and validate Schema.org JSON-LD, and assess Google rich result\n  eligibility where applicable. Supports FAQ, HowTo, Article, Product,\n  LocalBusiness, and multi-type schemas.\n  Use when asked to \"add schema markup\", \"generate structured data\", \"JSON-LD\",\n  \"rich snippets\", \"FAQ schema\", \"product markup\", \"add structured data to my\n  page\", \"how to get rich snippets\", or any structured data task.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../seo/schema-markup-generator/WORKFLOW.md`](../../seo/schema-markup-generator/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/schema-markup-generator/`.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../seo/schema-markup-generator/WORKFLOW.md`](../../seo/schema-markup-generator/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/schema-markup-generator/`.\n"
+    },
+    {
+      "slug": "search-console",
+      "name": "search-console",
+      "dir": "skills/search-console",
+      "path": "skills/search-console/SKILL.md",
+      "desc": "Query and operate connected Google Search Console properties through NotFair MCP. Use for live GSC query or page performance, clicks, impressions, CTR, position, traffic changes, indexing status, URL inspection, sitemap reads or approved sitemap submission/removal, and Search Console MCP setup. Route full-site SEO audits to seo-analysis.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/search-console ~/.claude/skills/search-console",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/search-console/SKILL.md",
+        "saveAs": "~/.claude/skills/search-console/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:a86280759f2d2829a9cbd1c15a052a1ab715175a08ee6d057970a0499b8f4983",
+      "bytes": 651,
+      "wordCount": 23,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: search-console\ndescription: Query and operate connected Google Search Console properties through NotFair MCP. Use for live GSC query or page performance, clicks, impressions, CTR, position, traffic changes, indexing status, URL inspection, sitemap reads or approved sitemap submission/removal, and Search Console MCP setup. Route full-site SEO audits to seo-analysis.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../analytics/search-console/WORKFLOW.md`](../../analytics/search-console/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../analytics/search-console/`.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../analytics/search-console/WORKFLOW.md`](../../analytics/search-console/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../analytics/search-console/`.\n"
+    },
+    {
+      "slug": "seo-analysis",
+      "name": "seo-analysis",
+      "dir": "skills/seo-analysis",
+      "path": "skills/seo-analysis/SKILL.md",
+      "desc": "Audit site SEO using connected Search Console data, public page inspections, and supplied crawl or performance reports. Diagnose traffic drops, indexing, metadata, schema, content gaps, and Core Web Vitals with explicit evidence and coverage limits. Use for site-wide SEO audits, organic traffic changes, technical SEO, or prioritized search improvements.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/seo-analysis ~/.claude/skills/seo-analysis",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/seo-analysis/SKILL.md",
+        "saveAs": "~/.claude/skills/seo-analysis/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:b2b4f6eff27a18d49bec89534c09d046d9cc3cc588bbed6991430607f8bab670",
+      "bytes": 643,
+      "wordCount": 23,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: seo-analysis\ndescription: \"Audit site SEO using connected Search Console data, public page inspections, and supplied crawl or performance reports. Diagnose traffic drops, indexing, metadata, schema, content gaps, and Core Web Vitals with explicit evidence and coverage limits. Use for site-wide SEO audits, organic traffic changes, technical SEO, or prioritized search improvements.\"\n---\n\n# Canonical NotFair workflow\n\nRead [`../../seo/seo-analysis/WORKFLOW.md`](../../seo/seo-analysis/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/seo-analysis/`.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../seo/seo-analysis/WORKFLOW.md`](../../seo/seo-analysis/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/seo-analysis/`.\n"
+    },
+    {
+      "slug": "seo-drift",
+      "name": "seo-drift",
+      "dir": "skills/seo-drift",
+      "path": "skills/seo-drift/SKILL.md",
+      "desc": "SEO drift monitoring — snapshot a site's SEO state and detect regressions over time. Captures a baseline (rankings/positions, indexed page count, titles & meta descriptions, canonical/robots directives, schema presence, key on-page elements) and on later runs diffs against it to surface what changed: ranking drops, pages that fell out of the index, titles/metas that were accidentally overwritten (a CMS/redeploy classic), canonicals or noindex flipped, schema that disappeared. Use this skill when the user wants to monitor SEO over time, catch regressions after a site change / migration / redeploy, set a baseline, diff against a previous state, or asks \"what changed on my site's SEO\" or \"did my redesign break SEO\". Trigger on: \"SEO drift\", \"SEO monitoring\", \"track SEO over time\", \"did my site change break SEO\", \"after migration SEO\", \"SEO regression\", \"baseline my SEO\", \"compare SEO to last month\", \"my titles changed\", \"pages fell out of the index\". For a one-time full audit use /seo-analysis.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/seo-drift ~/.claude/skills/seo-drift",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/seo-drift/SKILL.md",
+        "saveAs": "~/.claude/skills/seo-drift/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:24686293a4f8c1867d6de88ec45d1d963b1ed838d50f67a379b248d53012bfed",
+      "bytes": 1310,
+      "wordCount": 23,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: seo-drift\ndescription: >\n  SEO drift monitoring — snapshot a site's SEO state and detect regressions over\n  time. Captures a baseline (rankings/positions, indexed page count, titles & meta\n  descriptions, canonical/robots directives, schema presence, key on-page\n  elements) and on later runs diffs against it to surface what changed: ranking\n  drops, pages that fell out of the index, titles/metas that were accidentally\n  overwritten (a CMS/redeploy classic), canonicals or noindex flipped, schema that\n  disappeared. Use this skill when the user wants to monitor SEO over time, catch\n  regressions after a site change / migration / redeploy, set a baseline, diff\n  against a previous state, or asks \"what changed on my site's SEO\" or \"did my\n  redesign break SEO\". Trigger on: \"SEO drift\", \"SEO monitoring\", \"track SEO over\n  time\", \"did my site change break SEO\", \"after migration SEO\", \"SEO regression\",\n  \"baseline my SEO\", \"compare SEO to last month\", \"my titles changed\", \"pages fell\n  out of the index\". For a one-time full audit use /seo-analysis.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../seo/seo-drift/WORKFLOW.md`](../../seo/seo-drift/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/seo-drift/`.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../seo/seo-drift/WORKFLOW.md`](../../seo/seo-drift/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/seo-drift/`.\n"
+    },
+    {
+      "slug": "seo-page",
+      "name": "seo-page",
+      "dir": "skills/seo-page",
+      "path": "skills/seo-page/SKILL.md",
+      "desc": "Audit one page for search intent, content quality, E-E-A-T, metadata, schema, links, and technical SEO. Use public page inspection and optional connected Search Console data or supplied reports. State missing evidence. Use for single-page SEO audits, URL reviews, landing-page content quality, or on-page fixes.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/seo-page ~/.claude/skills/seo-page",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/seo-page/SKILL.md",
+        "saveAs": "~/.claude/skills/seo-page/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:799d1d7f9e48e1687be40f106e98f80946b7e9af3b713f43937a4b11f831f350",
+      "bytes": 583,
+      "wordCount": 23,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: seo-page\ndescription: \"Audit one page for search intent, content quality, E-E-A-T, metadata, schema, links, and technical SEO. Use public page inspection and optional connected Search Console data or supplied reports. State missing evidence. Use for single-page SEO audits, URL reviews, landing-page content quality, or on-page fixes.\"\n---\n\n# Canonical NotFair workflow\n\nRead [`../../seo/seo-page/WORKFLOW.md`](../../seo/seo-page/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/seo-page/`.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../seo/seo-page/WORKFLOW.md`](../../seo/seo-page/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/seo-page/`.\n"
+    },
+    {
+      "slug": "sitemap-audit",
+      "name": "sitemap-audit",
+      "dir": "skills/sitemap-audit",
+      "path": "skills/sitemap-audit/SKILL.md",
+      "desc": "XML sitemap audit — find and fix the sitemap problems that quietly waste crawl budget and slow indexing. Discovers the sitemap (robots.txt, /sitemap.xml, sitemap index), validates structure and size limits, and cross-checks the URLs it lists against reality: non-200 / redirected / noindex / canonicalized-away URLs that shouldn't be in a sitemap, plus indexable pages that are missing from it. Reviews lastmod accuracy, sitemap-index organization, and robots.txt reference. Use this skill whenever the user asks about sitemaps, sitemap errors in Search Console, \"sitemap couldn't fetch / has errors\", crawl budget, pages not getting indexed, or whether their sitemap is clean. Trigger on: \"sitemap\", \"sitemap.xml\", \"XML sitemap\", \"sitemap errors\", \"sitemap audit\", \"couldn't fetch sitemap\", \"crawl budget\", \"pages not indexed sitemap\", \"sitemap index\", \"lastmod\", \"robots.txt sitemap\", or any sitemap/crawl-coverage question. For a full-site SEO audit use /seo-analysis; for broken links use /broken-link-checker.",
+      "descZh": "",
+      "triggers": [
+        "sitemap couldn't fet"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/sitemap-audit ~/.claude/skills/sitemap-audit",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/sitemap-audit/SKILL.md",
+        "saveAs": "~/.claude/skills/sitemap-audit/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:1d0ff48d0ad2594da0b6595e5f08b7048e4a48238316d56d64cf4bb2d2670730",
+      "bytes": 1334,
+      "wordCount": 23,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: sitemap-audit\ndescription: >\n  XML sitemap audit — find and fix the sitemap problems that quietly waste crawl\n  budget and slow indexing. Discovers the sitemap (robots.txt, /sitemap.xml,\n  sitemap index), validates structure and size limits, and cross-checks the URLs\n  it lists against reality: non-200 / redirected / noindex / canonicalized-away\n  URLs that shouldn't be in a sitemap, plus indexable pages that are missing from\n  it. Reviews lastmod accuracy, sitemap-index organization, and robots.txt\n  reference. Use this skill whenever the user asks about sitemaps, sitemap errors\n  in Search Console, \"sitemap couldn't fetch / has errors\", crawl budget, pages\n  not getting indexed, or whether their sitemap is clean. Trigger on: \"sitemap\",\n  \"sitemap.xml\", \"XML sitemap\", \"sitemap errors\", \"sitemap audit\", \"couldn't\n  fetch sitemap\", \"crawl budget\", \"pages not indexed sitemap\", \"sitemap index\",\n  \"lastmod\", \"robots.txt sitemap\", or any sitemap/crawl-coverage question. For a\n  full-site SEO audit use /seo-analysis; for broken links use /broken-link-checker.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../seo/sitemap-audit/WORKFLOW.md`](../../seo/sitemap-audit/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/sitemap-audit/`.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../seo/sitemap-audit/WORKFLOW.md`](../../seo/sitemap-audit/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/sitemap-audit/`.\n"
+    },
+    {
+      "slug": "sxo",
+      "name": "sxo",
+      "dir": "skills/sxo",
+      "path": "skills/sxo/SKILL.md",
+      "desc": "Search Experience Optimization (SXO), the bridge between SEO and UX/CRO. Audits the journey from the SERP click to the on-page goal: click-through factors (title, meta, rich results), then post-click signals that keep users and drive conversions: above-the-fold relevance and intent match, page speed / Core Web Vitals, readability, clear CTAs, mobile usability, and what causes pogo-sticking back to Google. Use when the user has decent rankings but poor CTR or poor on-page conversion, wants better dwell time / engagement, less bounce, or a page experience aligned with search intent. Trigger on: \"SXO\", \"search experience optimization\", \"good rankings but low CTR\", \"high bounce rate from search\", \"pogo-sticking\", \"improve dwell time\", \"SEO and conversion\", \"ranking but not converting\", \"engagement signals\", \"make this page convert search traffic\". For pure landing-page conversion in ads use /google-ads-landing; for content quality use /seo-page.",
+      "descZh": "",
+      "triggers": [
+        "poor on-page conversion",
+        "wants better dwell t"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "make",
+          "convert"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/sxo ~/.claude/skills/sxo",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/sxo/SKILL.md",
+        "saveAs": "~/.claude/skills/sxo/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:9b7cb9aa9800cf7ca85301c69e837cbe7ea5a52b146750336069fc0120dd1e5b",
+      "bytes": 1233,
+      "wordCount": 23,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: sxo\ndescription: >\n  Search Experience Optimization (SXO), the bridge between SEO and UX/CRO. Audits\n  the journey from the SERP click to the on-page goal: click-through factors (title,\n  meta, rich results), then post-click signals that keep users and drive\n  conversions: above-the-fold relevance and intent match, page speed / Core Web\n  Vitals, readability, clear CTAs, mobile usability, and what causes pogo-sticking\n  back to Google. Use when the user has decent rankings but poor CTR or poor on-page\n  conversion, wants better dwell time / engagement, less bounce, or a page\n  experience aligned with search intent. Trigger on: \"SXO\", \"search experience\n  optimization\", \"good rankings but low CTR\", \"high bounce rate from search\",\n  \"pogo-sticking\", \"improve dwell time\", \"SEO and conversion\", \"ranking but not\n  converting\", \"engagement signals\", \"make this page convert search traffic\". For\n  pure landing-page conversion in ads use /google-ads-landing; for content quality\n  use /seo-page.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../seo/sxo/WORKFLOW.md`](../../seo/sxo/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/sxo/`.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../seo/sxo/WORKFLOW.md`](../../seo/sxo/WORKFLOW.md) completely, then follow it as the active workflow. Resolve every relative reference from that file against `../../seo/sxo/`.\n"
+    },
+    {
+      "slug": "wordpress",
+      "name": "wordpress",
+      "dir": "skills/wordpress",
+      "path": "skills/wordpress/SKILL.md",
+      "desc": "Operate connected WordPress sites through the NotFair MCP. Use for WordPress content, posts, pages, media, comments, terms, design, settings, plugins, themes, HTML files, or approved WordPress changes on a NotFair-connected site. Not the local Application-Password CMS setup used by SEO scripts.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/nowork-studio/notfair-plugin.git",
+        "copy": "cp -r skills/wordpress ~/.claude/skills/wordpress",
+        "raw": "https://raw.githubusercontent.com/nowork-studio/notfair-plugin/be3a43233c8836525fafcfdb85f78fb08e56a43f/skills/wordpress/SKILL.md",
+        "saveAs": "~/.claude/skills/wordpress/SKILL.md",
+        "marketplace": "/plugin marketplace add nowork-studio/notfair-plugin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:b6816416dd674b6436723c1b8fff37a8dd02de1000c5ed593af6d8179b627971",
+      "bytes": 896,
+      "wordCount": 62,
+      "repoLicense": "MIT",
+      "commit": "be3a43233c8836525fafcfdb85f78fb08e56a43f",
+      "branch": "main",
+      "body": "---\nname: wordpress\ndescription: Operate connected WordPress sites through the NotFair MCP. Use for WordPress content, posts, pages, media, comments, terms, design, settings, plugins, themes, HTML files, or approved WordPress changes on a NotFair-connected site. Not the local Application-Password CMS setup used by SEO scripts.\n---\n\n# Canonical NotFair workflow\n\nRead [`../../wordpress/WORKFLOW.md`](../../wordpress/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/wordpress/WORKFLOW.md`, not `<plugin-root>/skills/wordpress/wordpress/WORKFLOW.md`. Resolve every relative reference from the canonical file against `<plugin-root>/wordpress/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n",
+      "bodyMd": "# Canonical NotFair workflow\n\nRead [`../../wordpress/WORKFLOW.md`](../../wordpress/WORKFLOW.md) completely, then follow it as the active workflow. Normalize that path from the directory containing this wrapper: the canonical file is `<plugin-root>/wordpress/WORKFLOW.md`, not `<plugin-root>/skills/wordpress/wordpress/WORKFLOW.md`. Resolve every relative reference from the canonical file against `<plugin-root>/wordpress/`. If the canonical file cannot be read, stop and report the packaging error; never substitute a similarly named skill from another plugin.\n"
+    }
+  ]
+}

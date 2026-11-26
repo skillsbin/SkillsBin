@@ -1,0 +1,442 @@
+{
+  "repo": "HughYau/qiushi-skill",
+  "commit": "5ace7173b2d71fa7848c56a29f74b39d611c6cb3",
+  "branch": "main",
+  "fetchedAt": "2026-11-26T21:12:49.073Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "arming-thought",
+      "name": "arming-thought",
+      "dir": "skills/arming-thought",
+      "path": "skills/arming-thought/SKILL.md",
+      "desc": "求是方法论的入口与总原则。在每次新的顶层会话开始时加载一次，用「实事求是」约束全部判断，并只在明确适用时把任务路由到对应的方法论 skill；被派遣执行单一具体任务的子 agent 直接跳过。 English: Entry point and governing principle of the Qiushi methodology. Load once at the start of a top-level session to enforce \"seek truth from facts\" and route to a downstream skill only when it clearly helps. Delegated sub-agents on narrow tasks should skip it.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HughYau/qiushi-skill.git",
+        "copy": "cp -r skills/arming-thought ~/.claude/skills/arming-thought",
+        "raw": "https://raw.githubusercontent.com/HughYau/qiushi-skill/5ace7173b2d71fa7848c56a29f74b39d611c6cb3/skills/arming-thought/SKILL.md",
+        "saveAs": "~/.claude/skills/arming-thought/SKILL.md",
+        "marketplace": "/plugin marketplace add HughYau/qiushi-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:3eb32a1fa26fe5e0a2c565d23618cfe5e8d1ec48d4a863b22f466f2d3ffbc6c0",
+      "bytes": 3079,
+      "wordCount": 136,
+      "repoLicense": "MIT",
+      "commit": "5ace7173b2d71fa7848c56a29f74b39d611c6cb3",
+      "branch": "main",
+      "body": "---\nname: arming-thought\ndescription: |\n  求是方法论的入口与总原则。在每次新的顶层会话开始时加载一次，用「实事求是」约束全部判断，并只在明确适用时把任务路由到对应的方法论 skill；被派遣执行单一具体任务的子 agent 直接跳过。\n  English: Entry point and governing principle of the Qiushi methodology. Load once at the start of a top-level session to enforce \"seek truth from facts\" and route to a downstream skill only when it clearly helps. Delegated sub-agents on narrow tasks should skip it.\n---\n\n# 武装思想\n\n> \"'实事'就是客观存在着的一切事物，'是'就是客观事物的内部联系，即规律性，'求'就是我们去研究。\" —— 《改造我们的学习》\n\n**子 agent 执行单一具体任务时：跳过本 skill。**\n\n## 总原则：实事求是（四条硬规则）\n\n| 规则 | 做法 | 违反信号 |\n|---|---|---|\n| 结论跟着证据走 | 每个判断标出依据：读了什么、跑了什么、看到了什么 | 有判断，无依据 |\n| 分清三种话 | 区分「已核实的事实」「推断」「未知」；未知就写\"不知道，需确认\" | 用猜测填空 |\n| 验证过才算完成 | 声称完成前先跑一遍、看输出、比对预期，并写出验证动作 | 写完即宣布完成 |\n| 遇阻先诊断 | 失败时先说清原因，再补调查或换路径；不在第一次受阻就停 | \"超出能力范围\"式放弃 |\n\n事实与预想冲突时，改的是判断，不是事实。\n\n## 路由：什么时候用哪件武器\n\n先判断任务类型。**直接执行类任务（改个名、格式化、按明确指令实现）不触发任何下游 skill**，只吸收上面四条规则。\n\n| 你遇到的情况 | 调用 |\n|---|---|\n| 要下判断，但事实、上下文不够 | `investigation-first` 调查研究 |\n| 问题复杂、多头牵制、不知先解决什么 | `contradiction-analysis` 矛盾分析法 |\n| 有了假说或方案，要验证、试错、迭代 | `practice-cognition` 实践认识论 |\n| 多方意见分歧，或方案要带回真实使用者对齐 | `mass-line` 群众路线 |\n| 工作做完了，要审视质量或处理批评 | `criticism-self-criticism` 批评与自我批评 |\n| 任务长期、短期不可能速胜 | `protracted-strategy` 持久战略 |\n| 多件事争抢注意力，要定主攻 | `concentrate-forces` 集中兵力 |\n| 从零起步、资源极少、要选切入口 | `spark-prairie-fire` 星火燎原 |\n| 多个目标互相牵制，要平衡 | `overall-planning` 统筹兼顾 |\n| 明显要几件武器接力 | `workflows` 工作流组合 |\n\n调用纪律：\n\n1. 一次只选一个主 skill，需要时再交接给第二个。\n2. 宿主已有等价流程（内置的 plan、review、todo）时，以宿主流程为准，在其内部吸收方法论，不重复输出模板。\n3. 不为\"形式完整\"而机械调用；方法论只在能明显改善判断或行动时才用。\n\n## 指令优先级\n\n用户明确指示 > 宿主平台的系统规则与安全约束 > 本方法论。\n\n认真，但不机械。\n",
+      "bodyMd": "# 武装思想\n\n> \"'实事'就是客观存在着的一切事物，'是'就是客观事物的内部联系，即规律性，'求'就是我们去研究。\" —— 《改造我们的学习》\n\n**子 agent 执行单一具体任务时：跳过本 skill。**\n\n## 总原则：实事求是（四条硬规则）\n\n| 规则 | 做法 | 违反信号 |\n|---|---|---|\n| 结论跟着证据走 | 每个判断标出依据：读了什么、跑了什么、看到了什么 | 有判断，无依据 |\n| 分清三种话 | 区分「已核实的事实」「推断」「未知」；未知就写\"不知道，需确认\" | 用猜测填空 |\n| 验证过才算完成 | 声称完成前先跑一遍、看输出、比对预期，并写出验证动作 | 写完即宣布完成 |\n| 遇阻先诊断 | 失败时先说清原因，再补调查或换路径；不在第一次受阻就停 | \"超出能力范围\"式放弃 |\n\n事实与预想冲突时，改的是判断，不是事实。\n\n## 路由：什么时候用哪件武器\n\n先判断任务类型。**直接执行类任务（改个名、格式化、按明确指令实现）不触发任何下游 skill**，只吸收上面四条规则。\n\n| 你遇到的情况 | 调用 |\n|---|---|\n| 要下判断，但事实、上下文不够 | `investigation-first` 调查研究 |\n| 问题复杂、多头牵制、不知先解决什么 | `contradiction-analysis` 矛盾分析法 |\n| 有了假说或方案，要验证、试错、迭代 | `practice-cognition` 实践认识论 |\n| 多方意见分歧，或方案要带回真实使用者对齐 | `mass-line` 群众路线 |\n| 工作做完了，要审视质量或处理批评 | `criticism-self-criticism` 批评与自我批评 |\n| 任务长期、短期不可能速胜 | `protracted-strategy` 持久战略 |\n| 多件事争抢注意力，要定主攻 | `concentrate-forces` 集中兵力 |\n| 从零起步、资源极少、要选切入口 | `spark-prairie-fire` 星火燎原 |\n| 多个目标互相牵制，要平衡 | `overall-planning` 统筹兼顾 |\n| 明显要几件武器接力 | `workflows` 工作流组合 |\n\n调用纪律：\n\n1. 一次只选一个主 skill，需要时再交接给第二个。\n2. 宿主已有等价流程（内置的 plan、review、todo）时，以宿主流程为准，在其内部吸收方法论，不重复输出模板。\n3. 不为\"形式完整\"而机械调用；方法论只在能明显改善判断或行动时才用。\n\n## 指令优先级\n\n用户明确指示 > 宿主平台的系统规则与安全约束 > 本方法论。\n\n认真，但不机械。\n"
+    },
+    {
+      "slug": "concentrate-forces",
+      "name": "concentrate-forces",
+      "dir": "skills/concentrate-forces",
+      "path": "skills/concentrate-forces/SKILL.md",
+      "desc": "集中兵力：多件事同时争抢时间、注意力或预算时，列出全部待办，选定唯一主攻目标并公开锁定，彻底解决、验证后再转向下一个。当待办过多、推进分散、\"每件都做了一点但都没做完\"、需要决定先做什么时触发；只有一个任务、任务彼此独立可并行、用户明确要求同时推进时不触发。 English: Concentrate forces. When several tasks compete for time, attention, or budget, enumerate them, lock onto a single main target, finish and verify it completely, then move on. Trigger when priorities sprawl, effort is scattered, or you must decide what to do first; skip when there is one task, tasks are independent and parallel, or the user explicitly wants them advanced together.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HughYau/qiushi-skill.git",
+        "copy": "cp -r skills/concentrate-forces ~/.claude/skills/concentrate-forces",
+        "raw": "https://raw.githubusercontent.com/HughYau/qiushi-skill/5ace7173b2d71fa7848c56a29f74b39d611c6cb3/skills/concentrate-forces/SKILL.md",
+        "saveAs": "~/.claude/skills/concentrate-forces/SKILL.md",
+        "marketplace": "/plugin marketplace add HughYau/qiushi-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:a0a1b973bfa7a8f6ddb4b9d33b4140f67a4f98104139ccf46c4425f56a46e2da",
+      "bytes": 2904,
+      "wordCount": 114,
+      "repoLicense": "MIT",
+      "commit": "5ace7173b2d71fa7848c56a29f74b39d611c6cb3",
+      "branch": "main",
+      "body": "---\nname: concentrate-forces\ndescription: |\n  集中兵力：多件事同时争抢时间、注意力或预算时，列出全部待办，选定唯一主攻目标并公开锁定，彻底解决、验证后再转向下一个。当待办过多、推进分散、\"每件都做了一点但都没做完\"、需要决定先做什么时触发；只有一个任务、任务彼此独立可并行、用户明确要求同时推进时不触发。\n  English: Concentrate forces. When several tasks compete for time, attention, or budget, enumerate them, lock onto a single main target, finish and verify it completely, then move on. Trigger when priorities sprawl, effort is scattered, or you must decide what to do first; skip when there is one task, tasks are independent and parallel, or the user explicitly wants them advanced together.\n---\n\n# 集中兵力\n\n> \"伤其十指不如断其一指。\" —— 《中国革命战争的战略问题》\n\n## 用 / 不用\n\n用：\n- 多个任务或问题同时摆在面前\n- 正在同时推进多件事，但哪件都没做好\n- 面对一个大问题，要决定从哪部分突破\n\n不用：\n- 只有一个任务\n- 任务彼此独立、无资源竞争，可以并行\n- 用户明确要求同时推进（用户指令优先）\n- 已在执行选定的主攻，不需要重新决策\n\n## 操作规程\n\n1. **盘点全部待办**（宿主有 todo 工具就用它），每项标：影响范围 高 / 中 / 低、难度 高 / 中 / 低、是否被其他任务依赖。\n2. **选唯一主攻**，优先级：\n   - 首选：影响高 + 被依赖（解锁阻塞）\n   - 次选：影响高 + 难度中（性价比最高）\n   - 末选：难度低（先易后难，积累势能）\n   主攻目标最好就是主要矛盾；不确定时先 `contradiction-analysis`。\n3. **不打无准备之仗**：对主攻目标是否已充分了解？没有 → 先 `investigation-first`。\n4. **宣告并锁定**（模板见下）。\n5. **执行期规则**：新需求进来先问\"属于当前主攻范围吗？\"是 → 纳入；否 → 记入待办并告知\"当前集中处理 X，完成后立即处理\"。\n6. **彻底 + 验证**：解决到确认不留后患为止，不做一半就转向。\n7. **战役间隙**：完成后短暂总结，重估剩余任务（第一个的解决可能改变了格局），再选下一个。\n\n## 输出模板\n\n```\n🎯 当前主攻目标：……\n原因：……\n完成信号：……（可观测）\n\n暂缓（主攻完成后处理）：\n- ……：为何暂缓\n- ……\n```\n\n## 纪律\n\n- 同一时间只有一个主攻目标。\n- 击溃十个不如歼灭一个：解决一半就转向等于没解决。\n- 先打分散孤立之敌，后打集中强大之敌。\n\n## 交接\n\n- 主攻完成 → `criticism-self-criticism` 短复盘 → 回到第 1 步选下一个\n- 主攻方向本身拿不准 → `contradiction-analysis`\n\n> 原著依据：[original-texts.md](original-texts.md)\n",
+      "bodyMd": "# 集中兵力\n\n> \"伤其十指不如断其一指。\" —— 《中国革命战争的战略问题》\n\n## 用 / 不用\n\n用：\n- 多个任务或问题同时摆在面前\n- 正在同时推进多件事，但哪件都没做好\n- 面对一个大问题，要决定从哪部分突破\n\n不用：\n- 只有一个任务\n- 任务彼此独立、无资源竞争，可以并行\n- 用户明确要求同时推进（用户指令优先）\n- 已在执行选定的主攻，不需要重新决策\n\n## 操作规程\n\n1. **盘点全部待办**（宿主有 todo 工具就用它），每项标：影响范围 高 / 中 / 低、难度 高 / 中 / 低、是否被其他任务依赖。\n2. **选唯一主攻**，优先级：\n   - 首选：影响高 + 被依赖（解锁阻塞）\n   - 次选：影响高 + 难度中（性价比最高）\n   - 末选：难度低（先易后难，积累势能）\n   主攻目标最好就是主要矛盾；不确定时先 `contradiction-analysis`。\n3. **不打无准备之仗**：对主攻目标是否已充分了解？没有 → 先 `investigation-first`。\n4. **宣告并锁定**（模板见下）。\n5. **执行期规则**：新需求进来先问\"属于当前主攻范围吗？\"是 → 纳入；否 → 记入待办并告知\"当前集中处理 X，完成后立即处理\"。\n6. **彻底 + 验证**：解决到确认不留后患为止，不做一半就转向。\n7. **战役间隙**：完成后短暂总结，重估剩余任务（第一个的解决可能改变了格局），再选下一个。\n\n## 输出模板\n\n```\n🎯 当前主攻目标：……\n原因：……\n完成信号：……（可观测）\n\n暂缓（主攻完成后处理）：\n- ……：为何暂缓\n- ……\n```\n\n## 纪律\n\n- 同一时间只有一个主攻目标。\n- 击溃十个不如歼灭一个：解决一半就转向等于没解决。\n- 先打分散孤立之敌，后打集中强大之敌。\n\n## 交接\n\n- 主攻完成 → `criticism-self-criticism` 短复盘 → 回到第 1 步选下一个\n- 主攻方向本身拿不准 → `contradiction-analysis`\n\n> 原著依据：[original-texts.md](original-texts.md)\n"
+    },
+    {
+      "slug": "contradiction-analysis",
+      "name": "contradiction-analysis",
+      "dir": "skills/contradiction-analysis",
+      "path": "skills/contradiction-analysis/SKILL.md",
+      "desc": "矛盾分析法：把复杂问题拆成若干对立面，找出规定其他矛盾的主要矛盾及其主要方面，判定对抗性 / 非对抗性，并据此选择处理方式。当问题头绪多、多个因素互相牵制、优先级不清、根因不明、反复修不好、trade-off 说不清时触发；直接执行类任务或用户已定方案时不触发。 English: Contradiction analysis. Decompose a tangled problem into opposing forces, isolate the principal contradiction and its dominant side, classify it as antagonistic or non-antagonistic, and choose the response accordingly. Trigger on unclear priorities, unknown root causes, recurring failures, or trade-offs that resist explanation; skip for direct execution or when the user has already chosen the solution.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HughYau/qiushi-skill.git",
+        "copy": "cp -r skills/contradiction-analysis ~/.claude/skills/contradiction-analysis",
+        "raw": "https://raw.githubusercontent.com/HughYau/qiushi-skill/5ace7173b2d71fa7848c56a29f74b39d611c6cb3/skills/contradiction-analysis/SKILL.md",
+        "saveAs": "~/.claude/skills/contradiction-analysis/SKILL.md",
+        "marketplace": "/plugin marketplace add HughYau/qiushi-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:a70dd71905141a275a2a849309cd98d2e6bf4083855c9cecb257e9b798d7e4d7",
+      "bytes": 3745,
+      "wordCount": 130,
+      "repoLicense": "MIT",
+      "commit": "5ace7173b2d71fa7848c56a29f74b39d611c6cb3",
+      "branch": "main",
+      "body": "---\nname: contradiction-analysis\ndescription: |\n  矛盾分析法：把复杂问题拆成若干对立面，找出规定其他矛盾的主要矛盾及其主要方面，判定对抗性 / 非对抗性，并据此选择处理方式。当问题头绪多、多个因素互相牵制、优先级不清、根因不明、反复修不好、trade-off 说不清时触发；直接执行类任务或用户已定方案时不触发。\n  English: Contradiction analysis. Decompose a tangled problem into opposing forces, isolate the principal contradiction and its dominant side, classify it as antagonistic or non-antagonistic, and choose the response accordingly. Trigger on unclear priorities, unknown root causes, recurring failures, or trade-offs that resist explanation; skip for direct execution or when the user has already chosen the solution.\n---\n\n# 矛盾分析法\n\n> \"研究任何过程，如果是存在着两个以上矛盾的复杂过程的话，就要用全力找出它的主要矛盾。捉住了这个主要矛盾，一切问题就迎刃而解了。\" —— 《矛盾论》\n\n## 用 / 不用\n\n用：\n- 问题复杂，不知从哪下手\n- 多个问题互相牵制，解决一个牵动另一个\n- 反复出现的故障、反复失败的尝试，怀疑没打中根源\n- 需要在多个\"都重要\"的事里判断哪个最重要\n\n不用：\n- 任务是单维度的直接执行\n- 用户已经指定方案，只需实现\n- 问题属于已知模式，直接套用已验证方案更快\n\n## 操作规程\n\n先保证事实基础：矛盾清单里的每一项都要能指向调查得到的现象，不能凭印象。事实不够先做 `investigation-first`。\n\n1. **列矛盾清单**：`[A] vs [B]` 格式，写清两个对立面各自要什么。透过现象看内在张力，不只列表面症状。\n2. **判定主要矛盾**：标 ⭐ 并给理由。三个检验：\n   - 因果：解决了它，别的矛盾是否随之缓解？\n   - 根源：它是不是别的矛盾的来源？\n   - 阶段：它是否处于当前阶段的中心？\n3. **找主要方面**：主要矛盾内部，哪一方当前占支配地位？这决定问题现在的性质。\n4. **定性质**：\n   - 对抗性（根本利益冲突，不能兼得）→ 明确取舍，果断二选一\n   - 非对抗性（共同目标下的分歧）→ 团结—批评—团结：先找共同点，再通过讨论解决分歧\n5. **选处理方向**，写出「接下来我将……」：\n   - 技术性矛盾 → 形成假说，交 `practice-cognition` 验证\n   - 资源性矛盾 → `concentrate-forces` 集中解决主要矛盾\n   - 多目标平衡 → `overall-planning`\n6. **设监控提示**：哪个次要矛盾可能上升为主要矛盾？哪个非对抗性矛盾可能因处理不当激化？\n\n## 输出模板\n\n```\n矛盾清单：\n- [A] vs [B]：……\n- ⭐ [C] vs [D]：主要矛盾。理由：解决了它，[X]、[Y] 随之缓解\n  - 主要方面：当前 [C / D] 占支配地位，因为 ……\n  - 性质：对抗性 / 非对抗性\n接下来我将：……\n⚠️ 需监控：[次要矛盾] 是否上升为主要矛盾；[矛盾] 是否激化\n```\n\n## 纪律\n\n- 禁止只输出分析文字不给结论；六项缺一不可。\n- 禁止一刀切：对具体的事物作具体的分析，不套模板。\n- 主要矛盾只能有一个。列出两个\"都是主要\"的，说明分析还没做完。\n- 矛盾会转化：解决过程中主次可能对调，随时更新。\n\n## 交接\n\n- 主要矛盾确定 → `concentrate-forces` 集中解决，或 `practice-cognition` 验证假说\n- 处理对抗性矛盾前需要更多事实 → `investigation-first`\n\n> 原著依据：[original-texts.md](original-texts.md)；场景速查：[contradiction-types-reference.md](contradiction-types-reference.md)\n",
+      "bodyMd": "# 矛盾分析法\n\n> \"研究任何过程，如果是存在着两个以上矛盾的复杂过程的话，就要用全力找出它的主要矛盾。捉住了这个主要矛盾，一切问题就迎刃而解了。\" —— 《矛盾论》\n\n## 用 / 不用\n\n用：\n- 问题复杂，不知从哪下手\n- 多个问题互相牵制，解决一个牵动另一个\n- 反复出现的故障、反复失败的尝试，怀疑没打中根源\n- 需要在多个\"都重要\"的事里判断哪个最重要\n\n不用：\n- 任务是单维度的直接执行\n- 用户已经指定方案，只需实现\n- 问题属于已知模式，直接套用已验证方案更快\n\n## 操作规程\n\n先保证事实基础：矛盾清单里的每一项都要能指向调查得到的现象，不能凭印象。事实不够先做 `investigation-first`。\n\n1. **列矛盾清单**：`[A] vs [B]` 格式，写清两个对立面各自要什么。透过现象看内在张力，不只列表面症状。\n2. **判定主要矛盾**：标 ⭐ 并给理由。三个检验：\n   - 因果：解决了它，别的矛盾是否随之缓解？\n   - 根源：它是不是别的矛盾的来源？\n   - 阶段：它是否处于当前阶段的中心？\n3. **找主要方面**：主要矛盾内部，哪一方当前占支配地位？这决定问题现在的性质。\n4. **定性质**：\n   - 对抗性（根本利益冲突，不能兼得）→ 明确取舍，果断二选一\n   - 非对抗性（共同目标下的分歧）→ 团结—批评—团结：先找共同点，再通过讨论解决分歧\n5. **选处理方向**，写出「接下来我将……」：\n   - 技术性矛盾 → 形成假说，交 `practice-cognition` 验证\n   - 资源性矛盾 → `concentrate-forces` 集中解决主要矛盾\n   - 多目标平衡 → `overall-planning`\n6. **设监控提示**：哪个次要矛盾可能上升为主要矛盾？哪个非对抗性矛盾可能因处理不当激化？\n\n## 输出模板\n\n```\n矛盾清单：\n- [A] vs [B]：……\n- ⭐ [C] vs [D]：主要矛盾。理由：解决了它，[X]、[Y] 随之缓解\n  - 主要方面：当前 [C / D] 占支配地位，因为 ……\n  - 性质：对抗性 / 非对抗性\n接下来我将：……\n⚠️ 需监控：[次要矛盾] 是否上升为主要矛盾；[矛盾] 是否激化\n```\n\n## 纪律\n\n- 禁止只输出分析文字不给结论；六项缺一不可。\n- 禁止一刀切：对具体的事物作具体的分析，不套模板。\n- 主要矛盾只能有一个。列出两个\"都是主要\"的，说明分析还没做完。\n- 矛盾会转化：解决过程中主次可能对调，随时更新。\n\n## 交接\n\n- 主要矛盾确定 → `concentrate-forces` 集中解决，或 `practice-cognition` 验证假说\n- 处理对抗性矛盾前需要更多事实 → `investigation-first`\n\n> 原著依据：[original-texts.md](original-texts.md)；场景速查：[contradiction-types-reference.md](contradiction-types-reference.md)\n"
+    },
+    {
+      "slug": "criticism-self-criticism",
+      "name": "criticism-self-criticism",
+      "dir": "skills/criticism-self-criticism",
+      "path": "skills/criticism-self-criticism/SKILL.md",
+      "desc": "批评与自我批评：在工作完成、阶段验收、收到批评或同类错误反复出现时，对成果和过程做诚实、具体、基于事实的审视，输出可执行的改进项，并处理外来批评而不辩解。触发信号包括 review、复盘、审查、\"帮我看看有没有问题\"、\"你确定吗\"；任务刚开始或只是单步查询时不触发。 English: Criticism and self-criticism. After delivery, at a review checkpoint, on receiving criticism, or when the same mistake recurs, examine the result and the process honestly and concretely, produce actionable fixes, and accept valid criticism without defensiveness. Triggers include review, retrospective, audit, \"check this for problems\", \"are you sure\"; skip at the start of a task or for one-step lookups.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HughYau/qiushi-skill.git",
+        "copy": "cp -r skills/criticism-self-criticism ~/.claude/skills/criticism-self-criticism",
+        "raw": "https://raw.githubusercontent.com/HughYau/qiushi-skill/5ace7173b2d71fa7848c56a29f74b39d611c6cb3/skills/criticism-self-criticism/SKILL.md",
+        "saveAs": "~/.claude/skills/criticism-self-criticism/SKILL.md",
+        "marketplace": "/plugin marketplace add HughYau/qiushi-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:b479d79e3b8728a66d548d9ee8e3d964eed5d063e2c4957d7679d0137c1e6369",
+      "bytes": 3265,
+      "wordCount": 129,
+      "repoLicense": "MIT",
+      "commit": "5ace7173b2d71fa7848c56a29f74b39d611c6cb3",
+      "branch": "main",
+      "body": "---\nname: criticism-self-criticism\ndescription: |\n  批评与自我批评：在工作完成、阶段验收、收到批评或同类错误反复出现时，对成果和过程做诚实、具体、基于事实的审视，输出可执行的改进项，并处理外来批评而不辩解。触发信号包括 review、复盘、审查、\"帮我看看有没有问题\"、\"你确定吗\"；任务刚开始或只是单步查询时不触发。\n  English: Criticism and self-criticism. After delivery, at a review checkpoint, on receiving criticism, or when the same mistake recurs, examine the result and the process honestly and concretely, produce actionable fixes, and accept valid criticism without defensiveness. Triggers include review, retrospective, audit, \"check this for problems\", \"are you sure\"; skip at the start of a task or for one-step lookups.\n---\n\n# 批评与自我批评\n\n> \"房子是应该经常打扫的，不打扫就会积满了灰尘。\" —— 《论联合政府》\n\n目的是治病救人：每指出一个问题，就给一个改进；肯定做得好的部分；对事不对人。\n\n## 用 / 不用\n\n用：\n- 一项工作完成，交付前审视\n- 收到用户或审查者的批评\n- 同类错误反复出现，要找根本原因\n- 阶段性节点复盘\n\n不用：\n- 任务刚开始，没有可审视的成果\n- 用户在实时指导，反馈已即时纳入\n- 紧急修复进行中：先修完，再复盘\n\n## 操作规程\n\n**自我批评**\n\n1. 复述原定目标与验收标准。\n2. **重新看制品本身**（diff、输出、测试结果），不看自己的叙述；自己知道的问题必须主动暴露。\n3. 逐项对照 [review-checklist.md](review-checklist.md)：完整性、正确性、方法论、质量。\n4. 问题写具体：哪一步、哪个文件、造成什么影响、根本原因是哪条方法论失误（跳过了调查？没验证？分散了力量？）。\n5. 输出审视报告（模板见下）。问题表为空时，必须写\"未发现需要改正的问题，原因是 ……\"。\n6. 需要独立视角时，派遣 `self-critic` 子 agent 在新鲜上下文中审查制品；主线不得替它预填结论。\n\n**处理外来批评**\n\n1. 先完整听完，不急于辩解。\n2. 用事实核对：对 → 立即接受并改正，说明改了什么；不对 → 用证据说明，不情绪化。\n3. 表面接受实际不改，比拒绝批评更坏。\n\n## 输出模板\n\n```\n## 工作审视报告\n原定目标 / 验收标准：……\n完成情况：[x] …… [ ] ……（原因）\n\n| 严重程度 | 问题（具体到步骤 / 文件） | 根本原因 | 改进 |\n|---|---|---|---|\n| 必须改正 | | | |\n| 应当改正 | | | |\n| 建议改进 | | | |\n\n做得好的地方：……\n下次重点关注：……\n```\n\n## 纪律\n\n- 禁止\"做得不够好\"这类无信息量描述。\n- 禁止没有改进建议的批评，禁止针对性格的评价。\n- 禁止基于猜测的批评；不确定的标\"存疑\"。\n- 报告末尾把\"下次重点关注\"直接交给用户：这是跨会话唯一可靠的跟进机制。\n\n## 交接\n\n- 报告中的\"必须改正\" → 立即修复并回到 `practice-cognition` 验证\n- 问题根源是主要矛盾没抓对 → `contradiction-analysis`\n\n> 原著依据：[original-texts.md](original-texts.md)\n",
+      "bodyMd": "# 批评与自我批评\n\n> \"房子是应该经常打扫的，不打扫就会积满了灰尘。\" —— 《论联合政府》\n\n目的是治病救人：每指出一个问题，就给一个改进；肯定做得好的部分；对事不对人。\n\n## 用 / 不用\n\n用：\n- 一项工作完成，交付前审视\n- 收到用户或审查者的批评\n- 同类错误反复出现，要找根本原因\n- 阶段性节点复盘\n\n不用：\n- 任务刚开始，没有可审视的成果\n- 用户在实时指导，反馈已即时纳入\n- 紧急修复进行中：先修完，再复盘\n\n## 操作规程\n\n**自我批评**\n\n1. 复述原定目标与验收标准。\n2. **重新看制品本身**（diff、输出、测试结果），不看自己的叙述；自己知道的问题必须主动暴露。\n3. 逐项对照 [review-checklist.md](review-checklist.md)：完整性、正确性、方法论、质量。\n4. 问题写具体：哪一步、哪个文件、造成什么影响、根本原因是哪条方法论失误（跳过了调查？没验证？分散了力量？）。\n5. 输出审视报告（模板见下）。问题表为空时，必须写\"未发现需要改正的问题，原因是 ……\"。\n6. 需要独立视角时，派遣 `self-critic` 子 agent 在新鲜上下文中审查制品；主线不得替它预填结论。\n\n**处理外来批评**\n\n1. 先完整听完，不急于辩解。\n2. 用事实核对：对 → 立即接受并改正，说明改了什么；不对 → 用证据说明，不情绪化。\n3. 表面接受实际不改，比拒绝批评更坏。\n\n## 输出模板\n\n```\n## 工作审视报告\n原定目标 / 验收标准：……\n完成情况：[x] …… [ ] ……（原因）\n\n| 严重程度 | 问题（具体到步骤 / 文件） | 根本原因 | 改进 |\n|---|---|---|---|\n| 必须改正 | | | |\n| 应当改正 | | | |\n| 建议改进 | | | |\n\n做得好的地方：……\n下次重点关注：……\n```\n\n## 纪律\n\n- 禁止\"做得不够好\"这类无信息量描述。\n- 禁止没有改进建议的批评，禁止针对性格的评价。\n- 禁止基于猜测的批评；不确定的标\"存疑\"。\n- 报告末尾把\"下次重点关注\"直接交给用户：这是跨会话唯一可靠的跟进机制。\n\n## 交接\n\n- 报告中的\"必须改正\" → 立即修复并回到 `practice-cognition` 验证\n- 问题根源是主要矛盾没抓对 → `contradiction-analysis`\n\n> 原著依据：[original-texts.md](original-texts.md)\n"
+    },
+    {
+      "slug": "investigation-first",
+      "name": "investigation-first",
+      "dir": "skills/investigation-first",
+      "path": "skills/investigation-first/SKILL.md",
+      "desc": "调查研究：在下判断、做决策、给建议之前，先用第一手材料弄清现状，产出「事实 / 推断 / 未知」三栏调查结论。当上下文不完整、证据薄弱、领域陌生、用户说\"先别动手\"、或你发现自己在凭印象作答时触发；已充分调查后的执行阶段不要重复触发。 English: Investigate before judging. Gather firsthand facts and produce a fact / inference / unknown ledger before any recommendation. Trigger when context is incomplete, evidence is thin, the domain is unfamiliar, the user says \"look first\", or you notice yourself answering from impression; skip when investigation is already done and the task is pure execution.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HughYau/qiushi-skill.git",
+        "copy": "cp -r skills/investigation-first ~/.claude/skills/investigation-first",
+        "raw": "https://raw.githubusercontent.com/HughYau/qiushi-skill/5ace7173b2d71fa7848c56a29f74b39d611c6cb3/skills/investigation-first/SKILL.md",
+        "saveAs": "~/.claude/skills/investigation-first/SKILL.md",
+        "marketplace": "/plugin marketplace add HughYau/qiushi-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:8acf90776bd0931588b20cdabae04a3e5e04649463a1bc225e93a22955f8cb89",
+      "bytes": 3461,
+      "wordCount": 132,
+      "repoLicense": "MIT",
+      "commit": "5ace7173b2d71fa7848c56a29f74b39d611c6cb3",
+      "branch": "main",
+      "body": "---\nname: investigation-first\ndescription: |\n  调查研究：在下判断、做决策、给建议之前，先用第一手材料弄清现状，产出「事实 / 推断 / 未知」三栏调查结论。当上下文不完整、证据薄弱、领域陌生、用户说\"先别动手\"、或你发现自己在凭印象作答时触发；已充分调查后的执行阶段不要重复触发。\n  English: Investigate before judging. Gather firsthand facts and produce a fact / inference / unknown ledger before any recommendation. Trigger when context is incomplete, evidence is thin, the domain is unfamiliar, the user says \"look first\", or you notice yourself answering from impression; skip when investigation is already done and the task is pure execution.\n---\n\n# 调查研究\n\n> \"没有调查，没有发言权。\" —— 《反对本本主义》\n\n调查研究是落实「实事求是」的入口：不是为既定结论找材料，而是让事实规定判断。\n\n## 用 / 不用\n\n用：\n- 要做决策，但对实际情况了解不够\n- 面对陌生的代码库、系统或领域\n- 别人的方案听起来合理，但你不清楚其适用条件\n- 发现自己在用\"应该是\"\"一般来说\"作答\n\n不用：\n- 已经调查过，现在是执行阶段\n- 用户已提供完整上下文和决策依据\n- 答案可以直接跑一下验证，跑比查快\n\n## 操作规程\n\n1. **一句话写出调查目的**：「我要弄清楚的是：……」。没有目的的调查是漫游。\n2. **列调查提纲**（checkbox），覆盖四个面：\n   - 现状：现在是什么样（读源码、配置、数据，不只看文档）\n   - 历史：为什么变成这样（git log、blame、变更记录）\n   - 关联：牵涉哪些约束（接口、依赖、调用方、部署环境）\n   - 多方：有哪些不同说法（文档 vs 代码 vs 运行结果 vs 用户描述）\n3. **亲自接触第一手材料**：直接读、直接跑、直接看日志。二手总结只能作线索，不能作证据。\n4. **边查边记，分三栏**：每条发现标注来源；把\"看到的\"和\"推出来的\"分开。\n5. **输出调查结论**（模板见下）。结论必须先于任何行动方案；不得边查边给方案。\n6. 事实与预期不符时，改判断，不改事实。查不清的，诚实写\"未知\"。\n\n## 输出模板\n\n```\n调查目的：……\n调查范围：读了 …… / 跑了 …… / 问了 ……\n\n已核实的事实（附来源）：\n- ……（来源：文件:行 / 命令输出 / 日志）\n合理推断（说明推理链）：\n- ……（因为 …… 所以 ……）\n未知 / 存疑：\n- ……（需要 …… 才能确认）\n\n调查结论：\n- 现状是：……\n- 关键约束是：……\n- 我原来不知道、现在知道的是：……\n- 基于以上，我的判断是：……（置信度：高 / 中 / 低）\n```\n\n## 纪律\n\n- 禁止在\"未知\"栏非空且关系到结论时下定论：要么补查，要么把不确定性写进结论。\n- 禁止走马观花：只看目录结构和 README 就总结的，不算调查。\n- 调查有预算：先写提纲，按提纲查完即止；发现新的大问题时另开一轮，而不是无限扩张。\n\n## 交接\n\n- 调查揭示多头矛盾、抓不住重点 → `contradiction-analysis`\n- 结论已形成、需要验证 → `practice-cognition`\n- 范围大、可分头查 → 派遣 `investigator` 子 agent 并行调查，主线只汇总三栏\n\n> 原著依据：[original-texts.md](original-texts.md)\n",
+      "bodyMd": "# 调查研究\n\n> \"没有调查，没有发言权。\" —— 《反对本本主义》\n\n调查研究是落实「实事求是」的入口：不是为既定结论找材料，而是让事实规定判断。\n\n## 用 / 不用\n\n用：\n- 要做决策，但对实际情况了解不够\n- 面对陌生的代码库、系统或领域\n- 别人的方案听起来合理，但你不清楚其适用条件\n- 发现自己在用\"应该是\"\"一般来说\"作答\n\n不用：\n- 已经调查过，现在是执行阶段\n- 用户已提供完整上下文和决策依据\n- 答案可以直接跑一下验证，跑比查快\n\n## 操作规程\n\n1. **一句话写出调查目的**：「我要弄清楚的是：……」。没有目的的调查是漫游。\n2. **列调查提纲**（checkbox），覆盖四个面：\n   - 现状：现在是什么样（读源码、配置、数据，不只看文档）\n   - 历史：为什么变成这样（git log、blame、变更记录）\n   - 关联：牵涉哪些约束（接口、依赖、调用方、部署环境）\n   - 多方：有哪些不同说法（文档 vs 代码 vs 运行结果 vs 用户描述）\n3. **亲自接触第一手材料**：直接读、直接跑、直接看日志。二手总结只能作线索，不能作证据。\n4. **边查边记，分三栏**：每条发现标注来源；把\"看到的\"和\"推出来的\"分开。\n5. **输出调查结论**（模板见下）。结论必须先于任何行动方案；不得边查边给方案。\n6. 事实与预期不符时，改判断，不改事实。查不清的，诚实写\"未知\"。\n\n## 输出模板\n\n```\n调查目的：……\n调查范围：读了 …… / 跑了 …… / 问了 ……\n\n已核实的事实（附来源）：\n- ……（来源：文件:行 / 命令输出 / 日志）\n合理推断（说明推理链）：\n- ……（因为 …… 所以 ……）\n未知 / 存疑：\n- ……（需要 …… 才能确认）\n\n调查结论：\n- 现状是：……\n- 关键约束是：……\n- 我原来不知道、现在知道的是：……\n- 基于以上，我的判断是：……（置信度：高 / 中 / 低）\n```\n\n## 纪律\n\n- 禁止在\"未知\"栏非空且关系到结论时下定论：要么补查，要么把不确定性写进结论。\n- 禁止走马观花：只看目录结构和 README 就总结的，不算调查。\n- 调查有预算：先写提纲，按提纲查完即止；发现新的大问题时另开一轮，而不是无限扩张。\n\n## 交接\n\n- 调查揭示多头矛盾、抓不住重点 → `contradiction-analysis`\n- 结论已形成、需要验证 → `practice-cognition`\n- 范围大、可分头查 → 派遣 `investigator` 子 agent 并行调查，主线只汇总三栏\n\n> 原著依据：[original-texts.md](original-texts.md)\n"
+    },
+    {
+      "slug": "mass-line",
+      "name": "mass-line",
+      "dir": "skills/mass-line",
+      "path": "skills/mass-line/SKILL.md",
+      "desc": "群众路线：从持有真实情况的多方（用户、使用者、代码库、日志、运行结果）收集分散意见，系统化为方案，再带回去对齐与检验，循环改进。当多方意见分歧、需要汇总零散反馈、方案要拿回给真实使用者确认、或你发觉自己在闭门造车时触发；信息源单一且完整、处于执行阶段时不触发。 English: Mass line. Collect scattered input from everyone who holds ground truth (users, operators, codebase, logs, runtime results), synthesize it into a coherent plan, take it back for alignment and validation, and iterate. Trigger when inputs conflict, feedback must be consolidated, a plan needs sign-off from real users, or you sense you are designing in isolation; skip when there is a single complete source and the work is pure execution.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HughYau/qiushi-skill.git",
+        "copy": "cp -r skills/mass-line ~/.claude/skills/mass-line",
+        "raw": "https://raw.githubusercontent.com/HughYau/qiushi-skill/5ace7173b2d71fa7848c56a29f74b39d611c6cb3/skills/mass-line/SKILL.md",
+        "saveAs": "~/.claude/skills/mass-line/SKILL.md",
+        "marketplace": "/plugin marketplace add HughYau/qiushi-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:5dfb491713134d0148a26a33e1fd6ddf2ee789ec4bcd3400b4925208b218b165",
+      "bytes": 3780,
+      "wordCount": 140,
+      "repoLicense": "MIT",
+      "commit": "5ace7173b2d71fa7848c56a29f74b39d611c6cb3",
+      "branch": "main",
+      "body": "---\nname: mass-line\ndescription: |\n  群众路线：从持有真实情况的多方（用户、使用者、代码库、日志、运行结果）收集分散意见，系统化为方案，再带回去对齐与检验，循环改进。当多方意见分歧、需要汇总零散反馈、方案要拿回给真实使用者确认、或你发觉自己在闭门造车时触发；信息源单一且完整、处于执行阶段时不触发。\n  English: Mass line. Collect scattered input from everyone who holds ground truth (users, operators, codebase, logs, runtime results), synthesize it into a coherent plan, take it back for alignment and validation, and iterate. Trigger when inputs conflict, feedback must be consolidated, a plan needs sign-off from real users, or you sense you are designing in isolation; skip when there is a single complete source and the work is pure execution.\n---\n\n# 群众路线\n\n> \"从群众中来，到群众中去。\" —— 《关于领导方法的若干问题》\n\n与 `investigation-first` 的分工：调查研究是\"我去弄清事实\"；群众路线是\"把整理后的方案带回给持有真实情况的人和系统检验\"，重点在**多方分歧的处理**和**返回验证**。\n\n## AI 语境下的\"群众\"\n\n| 原义 | 映射 |\n|---|---|\n| 群众的实际经验 | 代码库既有模式、注释、惯例 |\n| 基层第一手信息 | git history、测试用例、错误日志 |\n| 群众对方案的反馈 | 运行结果、测试失败、用户的真实使用反馈 |\n| 多方意见综合 | 文档 + 代码 + 运行结果 + 用户描述的交叉验证 |\n\n不做命令主义（只听指令不看实际），也不做尾巴主义（谁声音大听谁的，不加专业判断）。\n\n## 用 / 不用\n\n用：\n- 需要收集多方需求或反馈并整合\n- 反馈互相矛盾，要判断听谁的、为什么\n- 方案做好了，需要带回给使用者确认再执行\n- 方案效果不佳，要回到使用者那里重新收集\n\n不用：\n- 信息源单一且已足够精确（\"改第 3 行变量名\"）\n- 已完成多源收集，处于执行阶段\n\n## 操作规程\n\n1. **列信息源**：本次的\"群众\"是谁？至少两个独立来源，否则只是单方转述。\n2. **收集，先不筛**：逐条记录，标来源。矛盾的意见不删，它们往往指向真问题。\n3. **集中**：归类，找出一致处（可信事实）、分歧处、缺口。分歧按原因分：视角不同 / 信息不同 / 利益不同。系统化不是投票。\n4. **返回**：把整理后的判断带回去。向用户说明\"综合各方后我的判断是 ……，与你原始描述有出入的是 ……\"；只在不同读法会导致实质不同的工作时才提问。\n5. **检验**：方案执行后看结果是否与判断一致；不一致时说明哪个信息源误导了判断。\n6. **再来一轮**，直到没有新的重要分歧或用户确认。\n\n先在一个具体点上深入实施取得经验，再推广：一般号召与个别指导相结合。\n\n## 输出模板\n\n```\n信息源：[1] …… [2] …… [3] ……\n一致处：……\n分歧处：[A 说 …… / B 说 ……]，原因：视角 / 信息 / 利益\n信息缺口：……（需进一步确认）\n\n综合各方后，我的判断是：……\n依据：[源 1] + [源 2] 共同指向 ……\n与用户原始描述有出入的地方：……\n验证方式：……\n```\n\n## 纪律\n\n- 少于两个独立来源，不得宣称\"综合各方\"。\n- 禁止把多数意见直接当结论；少数但来自一线的深度意见要单独评估。\n- 返回环节不是走过场：分歧未处理就执行，属于命令主义。\n\n## 交接\n\n- 分歧本质是矛盾 → `contradiction-analysis`\n- 判断形成后进入验证 → `practice-cognition`\n\n> 原著依据：[original-texts.md](original-texts.md)\n",
+      "bodyMd": "# 群众路线\n\n> \"从群众中来，到群众中去。\" —— 《关于领导方法的若干问题》\n\n与 `investigation-first` 的分工：调查研究是\"我去弄清事实\"；群众路线是\"把整理后的方案带回给持有真实情况的人和系统检验\"，重点在**多方分歧的处理**和**返回验证**。\n\n## AI 语境下的\"群众\"\n\n| 原义 | 映射 |\n|---|---|\n| 群众的实际经验 | 代码库既有模式、注释、惯例 |\n| 基层第一手信息 | git history、测试用例、错误日志 |\n| 群众对方案的反馈 | 运行结果、测试失败、用户的真实使用反馈 |\n| 多方意见综合 | 文档 + 代码 + 运行结果 + 用户描述的交叉验证 |\n\n不做命令主义（只听指令不看实际），也不做尾巴主义（谁声音大听谁的，不加专业判断）。\n\n## 用 / 不用\n\n用：\n- 需要收集多方需求或反馈并整合\n- 反馈互相矛盾，要判断听谁的、为什么\n- 方案做好了，需要带回给使用者确认再执行\n- 方案效果不佳，要回到使用者那里重新收集\n\n不用：\n- 信息源单一且已足够精确（\"改第 3 行变量名\"）\n- 已完成多源收集，处于执行阶段\n\n## 操作规程\n\n1. **列信息源**：本次的\"群众\"是谁？至少两个独立来源，否则只是单方转述。\n2. **收集，先不筛**：逐条记录，标来源。矛盾的意见不删，它们往往指向真问题。\n3. **集中**：归类，找出一致处（可信事实）、分歧处、缺口。分歧按原因分：视角不同 / 信息不同 / 利益不同。系统化不是投票。\n4. **返回**：把整理后的判断带回去。向用户说明\"综合各方后我的判断是 ……，与你原始描述有出入的是 ……\"；只在不同读法会导致实质不同的工作时才提问。\n5. **检验**：方案执行后看结果是否与判断一致；不一致时说明哪个信息源误导了判断。\n6. **再来一轮**，直到没有新的重要分歧或用户确认。\n\n先在一个具体点上深入实施取得经验，再推广：一般号召与个别指导相结合。\n\n## 输出模板\n\n```\n信息源：[1] …… [2] …… [3] ……\n一致处：……\n分歧处：[A 说 …… / B 说 ……]，原因：视角 / 信息 / 利益\n信息缺口：……（需进一步确认）\n\n综合各方后，我的判断是：……\n依据：[源 1] + [源 2] 共同指向 ……\n与用户原始描述有出入的地方：……\n验证方式：……\n```\n\n## 纪律\n\n- 少于两个独立来源，不得宣称\"综合各方\"。\n- 禁止把多数意见直接当结论；少数但来自一线的深度意见要单独评估。\n- 返回环节不是走过场：分歧未处理就执行，属于命令主义。\n\n## 交接\n\n- 分歧本质是矛盾 → `contradiction-analysis`\n- 判断形成后进入验证 → `practice-cognition`\n\n> 原著依据：[original-texts.md](original-texts.md)\n"
+    },
+    {
+      "slug": "overall-planning",
+      "name": "overall-planning",
+      "dir": "skills/overall-planning",
+      "path": "skills/overall-planning/SKILL.md",
+      "desc": "统筹兼顾：当多个目标、指标或利益方相互制约、优化一项会伤害另一项时，识别全部辩证关系对，检查片面性，为每对关系定出当前阶段的侧重与底线，评估系统性影响，并设失衡预警。触发信号包括 trade-off、目标冲突、速度 vs 质量、短期 vs 长期、\"顾此失彼\"；只有单一目标、用户已定取舍、或属硬性二选一时不触发。 English: Overall planning. When several goals, metrics, or stakeholders constrain each other and optimizing one harms another, map every dialectical pair, check for one-sidedness, set the current emphasis and floor for each pair, assess system-wide effects, and define imbalance alarms. Triggers include trade-offs, goal conflicts, speed vs quality, short vs long term; skip for single-goal work, decisions the user already made, or hard either/or constraints.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HughYau/qiushi-skill.git",
+        "copy": "cp -r skills/overall-planning ~/.claude/skills/overall-planning",
+        "raw": "https://raw.githubusercontent.com/HughYau/qiushi-skill/5ace7173b2d71fa7848c56a29f74b39d611c6cb3/skills/overall-planning/SKILL.md",
+        "saveAs": "~/.claude/skills/overall-planning/SKILL.md",
+        "marketplace": "/plugin marketplace add HughYau/qiushi-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:32eef00f4d05b26a092d5c5095c75c79d6097190bbb0138236f4858bd7f069ed",
+      "bytes": 3132,
+      "wordCount": 121,
+      "repoLicense": "MIT",
+      "commit": "5ace7173b2d71fa7848c56a29f74b39d611c6cb3",
+      "branch": "main",
+      "body": "---\nname: overall-planning\ndescription: |\n  统筹兼顾：当多个目标、指标或利益方相互制约、优化一项会伤害另一项时，识别全部辩证关系对，检查片面性，为每对关系定出当前阶段的侧重与底线，评估系统性影响，并设失衡预警。触发信号包括 trade-off、目标冲突、速度 vs 质量、短期 vs 长期、\"顾此失彼\"；只有单一目标、用户已定取舍、或属硬性二选一时不触发。\n  English: Overall planning. When several goals, metrics, or stakeholders constrain each other and optimizing one harms another, map every dialectical pair, check for one-sidedness, set the current emphasis and floor for each pair, assess system-wide effects, and define imbalance alarms. Triggers include trade-offs, goal conflicts, speed vs quality, short vs long term; skip for single-goal work, decisions the user already made, or hard either/or constraints.\n---\n\n# 统筹兼顾\n\n> \"把国内外一切积极因素调动起来。\" —— 《论十大关系》\n\n平衡不是\"各方都少一点\"的和稀泥，而是让各方面都发挥作用的配置；平衡点随条件变化而动。\n\n## 用 / 不用\n\n用：\n- 多个相互制约的目标要权衡\n- 优化一个维度时损害了另一个\n- 多个利益相关方要协调\n- 发现自己正片面追求某一目标\n\n不用：\n- 只有一个目标维度\n- 用户已明确取舍方向\n- 大方向已定、只需集中推进 → `concentrate-forces`\n- 硬性二选一，没有动态平衡空间 → `contradiction-analysis` 定性后取舍\n\n## 操作规程\n\n1. **列辩证关系对**：本任务中真正存在的对立面（速度↔质量、深度↔广度、短期↔长期、简单↔灵活、探索↔稳定、集中↔分散……），按实际识别，不照搬模板。\n2. **片面性检查**：当前方案是否完全忽略了某一方？是刻意取舍（可接受，写明）还是无意忽略（要纠正）？\n3. **定当前阶段的平衡点**：每对关系一个侧重方向 + 另一方的底线。\n4. **系统影响检查**：加强 A 会对其他关系对造成什么？连锁调整。\n5. **学他人教训**：类似场景里因片面追求而失败的案例是什么？借鉴不照搬。\n6. **设失衡预警**：出现什么信号说明失衡，需要重新平衡。\n\n## 输出模板\n\n```\n辩证关系：\n1. [A] ↔ [B]：目前偏向 [A / B / 均衡]，程度 [轻微 / 明显 / 严重]，属 [刻意取舍 / 无意忽略]\n2. ……\n\n平衡方案：\n[A] vs [B]：当前阶段优先 [A]，但 [B] 不低于 ……；原因 ……\n\n系统影响：加强 [A] → 对 [C]↔[D]：加剧 / 缓解 / 无影响，需 ……\n失衡预警：若出现 ……，说明 [A]↔[B] 失衡，重新调用本 skill\n```\n\n## 纪律\n\n- 禁止固定折中：平衡点必须与当前阶段条件挂钩。\n- 禁止调整一处不看全局。\n- 只写真实存在的关系对；凑数的关系对是形式主义。\n\n## 交接\n\n- 识别关系对本身就是矛盾分析 → `contradiction-analysis`\n- 大方向定了 → `concentrate-forces` 执行\n\n> 原著依据：[original-texts.md](original-texts.md)\n",
+      "bodyMd": "# 统筹兼顾\n\n> \"把国内外一切积极因素调动起来。\" —— 《论十大关系》\n\n平衡不是\"各方都少一点\"的和稀泥，而是让各方面都发挥作用的配置；平衡点随条件变化而动。\n\n## 用 / 不用\n\n用：\n- 多个相互制约的目标要权衡\n- 优化一个维度时损害了另一个\n- 多个利益相关方要协调\n- 发现自己正片面追求某一目标\n\n不用：\n- 只有一个目标维度\n- 用户已明确取舍方向\n- 大方向已定、只需集中推进 → `concentrate-forces`\n- 硬性二选一，没有动态平衡空间 → `contradiction-analysis` 定性后取舍\n\n## 操作规程\n\n1. **列辩证关系对**：本任务中真正存在的对立面（速度↔质量、深度↔广度、短期↔长期、简单↔灵活、探索↔稳定、集中↔分散……），按实际识别，不照搬模板。\n2. **片面性检查**：当前方案是否完全忽略了某一方？是刻意取舍（可接受，写明）还是无意忽略（要纠正）？\n3. **定当前阶段的平衡点**：每对关系一个侧重方向 + 另一方的底线。\n4. **系统影响检查**：加强 A 会对其他关系对造成什么？连锁调整。\n5. **学他人教训**：类似场景里因片面追求而失败的案例是什么？借鉴不照搬。\n6. **设失衡预警**：出现什么信号说明失衡，需要重新平衡。\n\n## 输出模板\n\n```\n辩证关系：\n1. [A] ↔ [B]：目前偏向 [A / B / 均衡]，程度 [轻微 / 明显 / 严重]，属 [刻意取舍 / 无意忽略]\n2. ……\n\n平衡方案：\n[A] vs [B]：当前阶段优先 [A]，但 [B] 不低于 ……；原因 ……\n\n系统影响：加强 [A] → 对 [C]↔[D]：加剧 / 缓解 / 无影响，需 ……\n失衡预警：若出现 ……，说明 [A]↔[B] 失衡，重新调用本 skill\n```\n\n## 纪律\n\n- 禁止固定折中：平衡点必须与当前阶段条件挂钩。\n- 禁止调整一处不看全局。\n- 只写真实存在的关系对；凑数的关系对是形式主义。\n\n## 交接\n\n- 识别关系对本身就是矛盾分析 → `contradiction-analysis`\n- 大方向定了 → `concentrate-forces` 执行\n\n> 原著依据：[original-texts.md](original-texts.md)\n"
+    },
+    {
+      "slug": "practice-cognition",
+      "name": "practice-cognition",
+      "dir": "skills/practice-cognition",
+      "path": "skills/practice-cognition/SKILL.md",
+      "desc": "实践认识论：把方案、假说或判断放回实践中检验，按「实践 → 认识 → 再实践」螺旋迭代，并在开始前写明循环终止条件。当你提出了假说要验证、一次尝试失败要复盘再来、发现自己只想不做或只做不想时触发；一次性输出、答案可直接查阅、还没形成假说（先调查）时不触发。 English: Practice-cognition loop. Test a hypothesis or plan in practice, learn from the result, and iterate in a rising spiral with an explicit stop condition. Trigger when a plan needs validation, an attempt failed and must be retried, or you notice thinking without doing (or doing without thinking); skip for one-shot outputs, lookup questions, or before any hypothesis exists.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HughYau/qiushi-skill.git",
+        "copy": "cp -r skills/practice-cognition ~/.claude/skills/practice-cognition",
+        "raw": "https://raw.githubusercontent.com/HughYau/qiushi-skill/5ace7173b2d71fa7848c56a29f74b39d611c6cb3/skills/practice-cognition/SKILL.md",
+        "saveAs": "~/.claude/skills/practice-cognition/SKILL.md",
+        "marketplace": "/plugin marketplace add HughYau/qiushi-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:514a9c24ddad610761ee2f3906f8646030e9f0892f8cc16658726596686f3544",
+      "bytes": 3390,
+      "wordCount": 119,
+      "repoLicense": "MIT",
+      "commit": "5ace7173b2d71fa7848c56a29f74b39d611c6cb3",
+      "branch": "main",
+      "body": "---\nname: practice-cognition\ndescription: |\n  实践认识论：把方案、假说或判断放回实践中检验，按「实践 → 认识 → 再实践」螺旋迭代，并在开始前写明循环终止条件。当你提出了假说要验证、一次尝试失败要复盘再来、发现自己只想不做或只做不想时触发；一次性输出、答案可直接查阅、还没形成假说（先调查）时不触发。\n  English: Practice-cognition loop. Test a hypothesis or plan in practice, learn from the result, and iterate in a rising spiral with an explicit stop condition. Trigger when a plan needs validation, an attempt failed and must be retried, or you notice thinking without doing (or doing without thinking); skip for one-shot outputs, lookup questions, or before any hypothesis exists.\n---\n\n# 实践认识论\n\n> \"实践、认识、再实践、再认识，这种形式，循环往复以至无穷，而实践和认识之每一循环的内容，都比较地进到了高一级的程度。这就是辩证唯物论的全部认识论，这就是辩证唯物论的知行统一观。\" —— 《实践论》\n\n## 用 / 不用\n\n用：\n- 提出了方案或假说，需要验证其正确性\n- 上一轮尝试失败，需要总结后进入下一轮\n- 只在\"想\"没有在\"做\"（教条主义），或只在\"做\"没有在\"想\"（经验主义）\n- 需要判定方案是否可行，却没有实践证据\n\n不用：\n- 一次性输出（写封邮件），无需迭代\n- 答案可以直接查阅（文档、API 参考）\n- 还没有假说 → 先 `investigation-first`\n\n## 操作规程\n\n进入时先声明所处阶段，并写出终止条件；每轮按四步走。\n\n**0. 终止条件（开始前必须写）**：「当 [具体可观测条件] 时，本轮循环完成；最多 [N] 轮，超过则停下向用户汇报。」\n\n1. **感性认识**：直接接触对象。读代码、跑程序、看输出，记录具体事实，不急于下结论。\n2. **理性认识**：从材料中提炼规律，写成可证伪的假说：「我的假说是：……。如果成立，应能观察到 ……；如果不成立，会看到 ……。」\n3. **实践验证**：执行验证动作（运行、测试、对比），如实记录观察结果 vs 预期。\n4. **评估与升华**：\n   - 成立 → 写「本轮学到：……」，进入更高一轮或终止\n   - 不成立 → 认识有误，修正假说回到第 1 步；不解释成偶然\n   - 部分成立 → 说清哪部分成立、哪部分要修\n\n## 输出模板\n\n```\n我目前处于：感性认识 / 理性认识 / 实践验证 / 总结升华\n终止条件：当 …… 时完成；最多 N 轮\n\n假说：……\n预期：成立则 ……；不成立则 ……\n验证动作：……\n观察结果：……\n判定：成立 / 不成立 / 部分成立\n本轮学到：……；下一轮将：……\n```\n\n## 纪律\n\n- 禁止把\"感觉对\"\"理论上应该对\"当作验证通过。\n- 禁止未验证就实现假说的下游内容。\n- 禁止因喜欢某方案把失败解释成偶然，也禁止因一次碰壁否定全部经验。\n- 不写终止条件不得开始循环。\n\n## 交接\n\n- 每轮结束的总结就是自我批评；整体完成后 → `criticism-self-criticism`\n- 验证中暴露出多头矛盾 → `contradiction-analysis`\n- 需要从真实使用者获取反馈 → `mass-line`\n\n> 原著依据：[original-texts.md](original-texts.md)\n",
+      "bodyMd": "# 实践认识论\n\n> \"实践、认识、再实践、再认识，这种形式，循环往复以至无穷，而实践和认识之每一循环的内容，都比较地进到了高一级的程度。这就是辩证唯物论的全部认识论，这就是辩证唯物论的知行统一观。\" —— 《实践论》\n\n## 用 / 不用\n\n用：\n- 提出了方案或假说，需要验证其正确性\n- 上一轮尝试失败，需要总结后进入下一轮\n- 只在\"想\"没有在\"做\"（教条主义），或只在\"做\"没有在\"想\"（经验主义）\n- 需要判定方案是否可行，却没有实践证据\n\n不用：\n- 一次性输出（写封邮件），无需迭代\n- 答案可以直接查阅（文档、API 参考）\n- 还没有假说 → 先 `investigation-first`\n\n## 操作规程\n\n进入时先声明所处阶段，并写出终止条件；每轮按四步走。\n\n**0. 终止条件（开始前必须写）**：「当 [具体可观测条件] 时，本轮循环完成；最多 [N] 轮，超过则停下向用户汇报。」\n\n1. **感性认识**：直接接触对象。读代码、跑程序、看输出，记录具体事实，不急于下结论。\n2. **理性认识**：从材料中提炼规律，写成可证伪的假说：「我的假说是：……。如果成立，应能观察到 ……；如果不成立，会看到 ……。」\n3. **实践验证**：执行验证动作（运行、测试、对比），如实记录观察结果 vs 预期。\n4. **评估与升华**：\n   - 成立 → 写「本轮学到：……」，进入更高一轮或终止\n   - 不成立 → 认识有误，修正假说回到第 1 步；不解释成偶然\n   - 部分成立 → 说清哪部分成立、哪部分要修\n\n## 输出模板\n\n```\n我目前处于：感性认识 / 理性认识 / 实践验证 / 总结升华\n终止条件：当 …… 时完成；最多 N 轮\n\n假说：……\n预期：成立则 ……；不成立则 ……\n验证动作：……\n观察结果：……\n判定：成立 / 不成立 / 部分成立\n本轮学到：……；下一轮将：……\n```\n\n## 纪律\n\n- 禁止把\"感觉对\"\"理论上应该对\"当作验证通过。\n- 禁止未验证就实现假说的下游内容。\n- 禁止因喜欢某方案把失败解释成偶然，也禁止因一次碰壁否定全部经验。\n- 不写终止条件不得开始循环。\n\n## 交接\n\n- 每轮结束的总结就是自我批评；整体完成后 → `criticism-self-criticism`\n- 验证中暴露出多头矛盾 → `contradiction-analysis`\n- 需要从真实使用者获取反馈 → `mass-line`\n\n> 原著依据：[original-texts.md](original-texts.md)\n"
+    },
+    {
+      "slug": "protracted-strategy",
+      "name": "protracted-strategy",
+      "dir": "skills/protracted-strategy",
+      "path": "skills/protracted-strategy/SKILL.md",
+      "desc": "持久战略：面对长期、复杂、短期不可能速胜的任务，客观评估态势，划分战略防御 / 相持 / 反攻三阶段，判定当前所处阶段，设置阶段转换条件，并在困难阶段仍给出局部进攻点。当任务跨多个会话或多轮迭代、资源暂时不足、或出现\"想放弃\"与\"一把梭\"两种情绪时触发；任务能在当前会话完成时不触发。 English: Protracted strategy. For long-horizon work that cannot be won quickly, assess the situation objectively, divide the effort into defense / stalemate / counter-offensive stages, name the current stage and its exit condition, and always identify a local offensive even while accumulating. Trigger when work spans many sessions or iterations, resources are temporarily short, or you notice either defeatism or a rush to finish; skip when the task fits in the current session.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HughYau/qiushi-skill.git",
+        "copy": "cp -r skills/protracted-strategy ~/.claude/skills/protracted-strategy",
+        "raw": "https://raw.githubusercontent.com/HughYau/qiushi-skill/5ace7173b2d71fa7848c56a29f74b39d611c6cb3/skills/protracted-strategy/SKILL.md",
+        "saveAs": "~/.claude/skills/protracted-strategy/SKILL.md",
+        "marketplace": "/plugin marketplace add HughYau/qiushi-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:5d029cf04994a0add8a50ac068417756bbccf42eebfa377aade046dd869d3136",
+      "bytes": 3355,
+      "wordCount": 102,
+      "repoLicense": "MIT",
+      "commit": "5ace7173b2d71fa7848c56a29f74b39d611c6cb3",
+      "branch": "main",
+      "body": "---\nname: protracted-strategy\ndescription: |\n  持久战略：面对长期、复杂、短期不可能速胜的任务，客观评估态势，划分战略防御 / 相持 / 反攻三阶段，判定当前所处阶段，设置阶段转换条件，并在困难阶段仍给出局部进攻点。当任务跨多个会话或多轮迭代、资源暂时不足、或出现\"想放弃\"与\"一把梭\"两种情绪时触发；任务能在当前会话完成时不触发。\n  English: Protracted strategy. For long-horizon work that cannot be won quickly, assess the situation objectively, divide the effort into defense / stalemate / counter-offensive stages, name the current stage and its exit condition, and always identify a local offensive even while accumulating. Trigger when work spans many sessions or iterations, resources are temporarily short, or you notice either defeatism or a rush to finish; skip when the task fits in the current session.\n---\n\n# 持久战略\n\n> \"在战略上我们要藐视一切敌人，在战术上我们要重视一切敌人。也就是说在整体上我们一定要藐视它，在一个一个的具体问题上我们一定要重视它。\"\n\n既不速胜论（\"加把劲一次做完\"），也不悲观论（\"这超出了能力范围\"）。\n\n## 用 / 不用\n\n用：\n- 任务明显需要多轮、多会话才能完成\n- 当前处于劣势：信息不够、基础设施不全、能力暂时不足\n- 推进中遇到瓶颈，想放弃或想蛮干\n- 别人催促速成，但你判断不可能\n\n不用：\n- 任务可以在当前会话内完成\n- 解法已清晰，只缺执行 → `concentrate-forces`\n- 处于某阶段的具体执行中，不需要重估战略\n\n## 操作规程\n\n1. **客观评估**：我方（资源、已有成果、弱点）与任务（规模、障碍、有利条件）。不夸大困难，也不低估。\n2. **判定阶段**（只能选一个，指标见 [phase-assessment-guide.md](phase-assessment-guide.md)）：\n   - 战略防御：探索期，先站稳、积累认识（多用 `investigation-first`、`spark-prairie-fire`）\n   - 战略相持：有基础但未突破，最难也最关键（积小胜为大胜，每个点上 `concentrate-forces`）\n   - 战略反攻：条件成熟，全面推进\n3. **写本阶段唯一核心任务**和禁止事项（防速胜 / 防悲观）。\n4. **给出局部进攻点**：防御和相持期也必须有一个现在就能集中力量拿下的小目标。\n5. **设阶段转换条件与检查点**：「当 [里程碑] 达成时转入 [下一阶段]；完成 [里程碑] 后重新评估。」\n\n## 输出模板\n\n```\n当前阶段：战略防御 / 相持 / 反攻\n判断依据：……\n我方优势：……  我方劣势：……  关键障碍：……\n本阶段核心任务（1 条）：……\n本阶段禁止事项：……\n局部进攻点（现在就做）：……\n转入下一阶段的条件：当 …… 时\n检查点：完成 …… 后重新评估\n```\n\n## 纪律\n\n- 禁止在相持期消极等待；禁止因一两次小胜就宣布反攻。\n- 阶段转化是渐进的，多个指标同时满足才算。\n- 必要时战略退却保存实力，不蛮干。\n\n## 交接\n\n- 每阶段内的具体攻坚 → `concentrate-forces`\n- 防御期建根据地 → `spark-prairie-fire`\n- 阶段检查点 → `criticism-self-criticism`\n\n> 原著依据：[original-texts.md](original-texts.md)\n",
+      "bodyMd": "# 持久战略\n\n> \"在战略上我们要藐视一切敌人，在战术上我们要重视一切敌人。也就是说在整体上我们一定要藐视它，在一个一个的具体问题上我们一定要重视它。\"\n\n既不速胜论（\"加把劲一次做完\"），也不悲观论（\"这超出了能力范围\"）。\n\n## 用 / 不用\n\n用：\n- 任务明显需要多轮、多会话才能完成\n- 当前处于劣势：信息不够、基础设施不全、能力暂时不足\n- 推进中遇到瓶颈，想放弃或想蛮干\n- 别人催促速成，但你判断不可能\n\n不用：\n- 任务可以在当前会话内完成\n- 解法已清晰，只缺执行 → `concentrate-forces`\n- 处于某阶段的具体执行中，不需要重估战略\n\n## 操作规程\n\n1. **客观评估**：我方（资源、已有成果、弱点）与任务（规模、障碍、有利条件）。不夸大困难，也不低估。\n2. **判定阶段**（只能选一个，指标见 [phase-assessment-guide.md](phase-assessment-guide.md)）：\n   - 战略防御：探索期，先站稳、积累认识（多用 `investigation-first`、`spark-prairie-fire`）\n   - 战略相持：有基础但未突破，最难也最关键（积小胜为大胜，每个点上 `concentrate-forces`）\n   - 战略反攻：条件成熟，全面推进\n3. **写本阶段唯一核心任务**和禁止事项（防速胜 / 防悲观）。\n4. **给出局部进攻点**：防御和相持期也必须有一个现在就能集中力量拿下的小目标。\n5. **设阶段转换条件与检查点**：「当 [里程碑] 达成时转入 [下一阶段]；完成 [里程碑] 后重新评估。」\n\n## 输出模板\n\n```\n当前阶段：战略防御 / 相持 / 反攻\n判断依据：……\n我方优势：……  我方劣势：……  关键障碍：……\n本阶段核心任务（1 条）：……\n本阶段禁止事项：……\n局部进攻点（现在就做）：……\n转入下一阶段的条件：当 …… 时\n检查点：完成 …… 后重新评估\n```\n\n## 纪律\n\n- 禁止在相持期消极等待；禁止因一两次小胜就宣布反攻。\n- 阶段转化是渐进的，多个指标同时满足才算。\n- 必要时战略退却保存实力，不蛮干。\n\n## 交接\n\n- 每阶段内的具体攻坚 → `concentrate-forces`\n- 防御期建根据地 → `spark-prairie-fire`\n- 阶段检查点 → `criticism-self-criticism`\n\n> 原著依据：[original-texts.md](original-texts.md)\n"
+    },
+    {
+      "slug": "spark-prairie-fire",
+      "name": "spark-prairie-fire",
+      "dir": "skills/spark-prairie-fire",
+      "path": "skills/spark-prairie-fire/SKILL.md",
+      "desc": "星火燎原：从零起步、资源极少时，先评估客观条件，选定一个能站稳、能复用、能扩展的\"根据地\"（最小切入点），扎根后再逐步扩张，拒绝四处出击的流寇主义。当启动新项目、做 MVP / pilot、面对宏大目标不知从何下手、或做了很多零散事却没有积累时触发；项目已有稳固基础、只是修改现有系统时不触发。 English: Spark a prairie fire. When starting from almost nothing, assess the conditions, choose one base area (a minimal foothold that can hold, be reused, and expand), dig in, then grow step by step instead of scattering effort. Trigger for new projects, MVPs, pilots, daunting goals with no obvious first step, or busy work that accumulates nothing; skip when a solid base already exists or the task modifies an existing system.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HughYau/qiushi-skill.git",
+        "copy": "cp -r skills/spark-prairie-fire ~/.claude/skills/spark-prairie-fire",
+        "raw": "https://raw.githubusercontent.com/HughYau/qiushi-skill/5ace7173b2d71fa7848c56a29f74b39d611c6cb3/skills/spark-prairie-fire/SKILL.md",
+        "saveAs": "~/.claude/skills/spark-prairie-fire/SKILL.md",
+        "marketplace": "/plugin marketplace add HughYau/qiushi-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:6869432d9174b6acc4a53ad6eef83ce2b35d59e715f115b29523efd4de99c0a3",
+      "bytes": 3249,
+      "wordCount": 121,
+      "repoLicense": "MIT",
+      "commit": "5ace7173b2d71fa7848c56a29f74b39d611c6cb3",
+      "branch": "main",
+      "body": "---\nname: spark-prairie-fire\ndescription: |\n  星火燎原：从零起步、资源极少时，先评估客观条件，选定一个能站稳、能复用、能扩展的\"根据地\"（最小切入点），扎根后再逐步扩张，拒绝四处出击的流寇主义。当启动新项目、做 MVP / pilot、面对宏大目标不知从何下手、或做了很多零散事却没有积累时触发；项目已有稳固基础、只是修改现有系统时不触发。\n  English: Spark a prairie fire. When starting from almost nothing, assess the conditions, choose one base area (a minimal foothold that can hold, be reused, and expand), dig in, then grow step by step instead of scattering effort. Trigger for new projects, MVPs, pilots, daunting goals with no obvious first step, or busy work that accumulates nothing; skip when a solid base already exists or the task modifies an existing system.\n---\n\n# 星火燎原\n\n> \"现在虽只一点小小的力量，但是它的发展会是很快的。\" —— 《星星之火，可以燎原》\n\n小不等于没前途；关键是建根据地，不做流寇。\n\n## 用 / 不用\n\n用：\n- 从零开始一个新项目、新领域、新能力\n- 资源极度有限，大目标看起来不可能\n- 正在做很多零散的事但没有积累\n- 需要用最小投入验证一个想法\n\n不用：\n- 已有稳固基础，处于扩展阶段\n- 用户已明确切入点，只需执行\n- 修改现有系统：现有代码就是根据地\n\n## 操作规程\n\n1. **评估客观条件**：需求是否真实存在（有没有干柴）？环境是否允许发展？方向对不对？有没有哪怕很小的可依托基础？条件不足 → 先 `investigation-first` 或调整方向，不急于动手。\n2. **选根据地**：一个具体切入点，满足四要素：核心功能可靠、可复用、有明确扩展路径、经验证稳固。选你最有优势、最能站稳的地方。\n3. **扎根**：在这一点做深，产出可复用的基础设施与认识。\n4. **流寇主义检查**（每次扩展前必须通过）：\n   - [ ] 上一个切入点已验证稳固？\n   - [ ] 这次扩展是从根据地自然延伸，不是跳跃？\n   - [ ] 新增内容可复用，不是一次性的？\n5. **三步路线图**：只规划三步，每步有成功标志，前一步稳固后才走下一步。\n\n## 输出模板\n\n```\n条件评估：需求真实 [是 / 否 / 不确定]，依据 ……；可依托基础 ……；主要障碍 ……\n结论：具备发展条件 / 条件不足，需先 ……\n\n根据地：……\n- 我在这里的优势：……\n- 能站稳的证据：……\n- 向外扩展的路径：……\n\n路线图：\n第 1 步：…… → 成功标志：……\n第 2 步：…… → 成功标志：……（第 1 步稳固后）\n第 3 步：…… → 成功标志：……（第 2 步稳固后）\n```\n\n## 纪律\n\n- 禁止根据地未稳就扩张；禁止不断换方向浅尝辄止。\n- 既反悲观（\"这点资源做不了什么\"），也反冒险（\"先干起来再说，到处出击\"）。\n\n## 交接\n\n- 根据地上集中力量 → `concentrate-forces`\n- 每步扩展的验证 → `practice-cognition`\n- 纳入长期阶段框架 → `protracted-strategy`\n\n> 原著依据：[original-texts.md](original-texts.md)\n",
+      "bodyMd": "# 星火燎原\n\n> \"现在虽只一点小小的力量，但是它的发展会是很快的。\" —— 《星星之火，可以燎原》\n\n小不等于没前途；关键是建根据地，不做流寇。\n\n## 用 / 不用\n\n用：\n- 从零开始一个新项目、新领域、新能力\n- 资源极度有限，大目标看起来不可能\n- 正在做很多零散的事但没有积累\n- 需要用最小投入验证一个想法\n\n不用：\n- 已有稳固基础，处于扩展阶段\n- 用户已明确切入点，只需执行\n- 修改现有系统：现有代码就是根据地\n\n## 操作规程\n\n1. **评估客观条件**：需求是否真实存在（有没有干柴）？环境是否允许发展？方向对不对？有没有哪怕很小的可依托基础？条件不足 → 先 `investigation-first` 或调整方向，不急于动手。\n2. **选根据地**：一个具体切入点，满足四要素：核心功能可靠、可复用、有明确扩展路径、经验证稳固。选你最有优势、最能站稳的地方。\n3. **扎根**：在这一点做深，产出可复用的基础设施与认识。\n4. **流寇主义检查**（每次扩展前必须通过）：\n   - [ ] 上一个切入点已验证稳固？\n   - [ ] 这次扩展是从根据地自然延伸，不是跳跃？\n   - [ ] 新增内容可复用，不是一次性的？\n5. **三步路线图**：只规划三步，每步有成功标志，前一步稳固后才走下一步。\n\n## 输出模板\n\n```\n条件评估：需求真实 [是 / 否 / 不确定]，依据 ……；可依托基础 ……；主要障碍 ……\n结论：具备发展条件 / 条件不足，需先 ……\n\n根据地：……\n- 我在这里的优势：……\n- 能站稳的证据：……\n- 向外扩展的路径：……\n\n路线图：\n第 1 步：…… → 成功标志：……\n第 2 步：…… → 成功标志：……（第 1 步稳固后）\n第 3 步：…… → 成功标志：……（第 2 步稳固后）\n```\n\n## 纪律\n\n- 禁止根据地未稳就扩张；禁止不断换方向浅尝辄止。\n- 既反悲观（\"这点资源做不了什么\"），也反冒险（\"先干起来再说，到处出击\"）。\n\n## 交接\n\n- 根据地上集中力量 → `concentrate-forces`\n- 每步扩展的验证 → `practice-cognition`\n- 纳入长期阶段框架 → `protracted-strategy`\n\n> 原著依据：[original-texts.md](original-texts.md)\n"
+    },
+    {
+      "slug": "workflows",
+      "name": "workflows",
+      "dir": "skills/workflows",
+      "path": "skills/workflows/SKILL.md",
+      "desc": "工作流组合：当一个任务明显需要多件思想武器接力时，提供四种标准组合模式（新项目启动、复杂问题攻坚、方案迭代优化、阶段复盘），定义调用顺序、每步交接物和终止条件。触发信号包括从零启动、疑难攻坚、迭代优化、阶段复盘；单一 skill 就够用时不触发。 English: Workflow patterns. When a task clearly needs several skills in sequence, pick one of four standard patterns (project kickoff, hard-problem assault, iterative improvement, stage retrospective) that fix the order, the handoff artifact between steps, and the stop condition. Skip when a single skill suffices.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HughYau/qiushi-skill.git",
+        "copy": "cp -r skills/workflows ~/.claude/skills/workflows",
+        "raw": "https://raw.githubusercontent.com/HughYau/qiushi-skill/5ace7173b2d71fa7848c56a29f74b39d611c6cb3/skills/workflows/SKILL.md",
+        "saveAs": "~/.claude/skills/workflows/SKILL.md",
+        "marketplace": "/plugin marketplace add HughYau/qiushi-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:f66152355c32b8b273d2ca66e5681cb023370b859b756a5b022e3042ba6ef81d",
+      "bytes": 3798,
+      "wordCount": 292,
+      "repoLicense": "MIT",
+      "commit": "5ace7173b2d71fa7848c56a29f74b39d611c6cb3",
+      "branch": "main",
+      "body": "---\nname: workflows\ndescription: |\n  工作流组合：当一个任务明显需要多件思想武器接力时，提供四种标准组合模式（新项目启动、复杂问题攻坚、方案迭代优化、阶段复盘），定义调用顺序、每步交接物和终止条件。触发信号包括从零启动、疑难攻坚、迭代优化、阶段复盘；单一 skill 就够用时不触发。\n  English: Workflow patterns. When a task clearly needs several skills in sequence, pick one of four standard patterns (project kickoff, hard-problem assault, iterative improvement, stage retrospective) that fix the order, the handoff artifact between steps, and the stop condition. Skip when a single skill suffices.\n---\n\n# 工作流组合\n\n> \"政策和策略是党的生命，各级领导同志务必充分注意，万万不可粗心大意。\"\n\n方法论的威力在于以正确顺序组合。下面四条是**模式，不是流水线**：不需要的步骤可以跳过，但每一步的交接物必须写出来，下一步必须引用它。\n\n## 选择\n\n| 情况 | 模式 |\n|---|---|\n| 全新项目或领域，目标已知路径未知 | 1 启动 |\n| 已知的疑难问题，根因或路径不清 | 2 攻坚 |\n| 已有方案，效果不理想 | 3 迭代 |\n| 阶段性节点，要复盘并重定方向 | 4 复盘 |\n| 都不符 | 回到 `arming-thought` 路由表单独调用 |\n\n## 模式 1：新项目启动\n\n`investigation-first` → `contradiction-analysis` → `spark-prairie-fire` → `protracted-strategy`\n\n| 步 | 交接物 | 终止条件 |\n|---|---|---|\n| 调查 | 调查结论：现状 / 约束 / 未知 / 可依托基础 | 能回答\"现在是什么情况\" |\n| 矛盾 | 主要矛盾 + 最值得突破的切入点 | 有一个明确切入点 |\n| 星火 | 根据地 + 三步路线图 | 路线从当前能力出发 |\n| 持久 | 当前阶段 + 转换条件 | 有阶段定位 |\n\n## 模式 2：复杂问题攻坚\n\n`investigation-first` → `contradiction-analysis` → `concentrate-forces` → `practice-cognition`（循环）→ `criticism-self-criticism`\n\n| 步 | 交接物 | 终止条件 |\n|---|---|---|\n| 调查 | 现象 / 出现条件 / 已排除原因 / 未查方向 | 能精确描述问题，而非\"好像是 X\" |\n| 矛盾 | 主要矛盾 + 可证伪假说 + 验证方式 | 有可验证假说 |\n| 集中 | 🎯 主攻 = 验证该假说；暂缓其他 | 假说被证实或证伪 |\n| 实践 | 判定 + 本轮学到；证伪则回到矛盾 | 问题彻底解决，能说清原因与解法 |\n| 批评 | 工作审视报告 | 报告完成 |\n\n## 模式 3：方案迭代优化\n\n`mass-line` → `contradiction-analysis` → `practice-cognition` → `criticism-self-criticism` → `mass-line`（下一轮）\n\n| 步 | 交接物 | 终止条件 |\n|---|---|---|\n| 群众 | ≥ 2 个来源的反馈、分歧、共同指向 | 至少两个独立来源 |\n| 矛盾 | 本轮主要矛盾 + 改进假说 | 假说可验证 |\n| 实践 | 改进结果 vs 指标 | 开始前写明的指标达到 |\n| 批评 | 审视报告 | 报告完成 |\n\n整体终止：反馈显示无新的重要问题，或用户确认。\n\n## 模式 4：阶段复盘\n\n`criticism-self-criticism` → `contradiction-analysis` → `protracted-strategy`（或 `overall-planning`）\n\n| 步 | 交接物 | 终止条件 |\n|---|---|---|\n| 批评 | 审视报告：完成情况 / 问题 / 根因 | 报告完成 |\n| 矛盾 | 下一阶段的主要矛盾 | 主要矛盾唯一 |\n| 持久 / 统筹 | 新阶段定位与核心任务，或重新平衡的方案 | 有下一阶段核心任务 |\n\n## 中断处理\n\n- 信息不足 → 插入一次 `investigation-first`\n- 假说被证伪 → 回到 `contradiction-analysis`\n- 冒出更重要的矛盾 → `overall-planning` 评估是否调整整个模式\n- 循环超出开始前声明的轮数 → 停下，向用户汇报现状\n",
+      "bodyMd": "# 工作流组合\n\n> \"政策和策略是党的生命，各级领导同志务必充分注意，万万不可粗心大意。\"\n\n方法论的威力在于以正确顺序组合。下面四条是**模式，不是流水线**：不需要的步骤可以跳过，但每一步的交接物必须写出来，下一步必须引用它。\n\n## 选择\n\n| 情况 | 模式 |\n|---|---|\n| 全新项目或领域，目标已知路径未知 | 1 启动 |\n| 已知的疑难问题，根因或路径不清 | 2 攻坚 |\n| 已有方案，效果不理想 | 3 迭代 |\n| 阶段性节点，要复盘并重定方向 | 4 复盘 |\n| 都不符 | 回到 `arming-thought` 路由表单独调用 |\n\n## 模式 1：新项目启动\n\n`investigation-first` → `contradiction-analysis` → `spark-prairie-fire` → `protracted-strategy`\n\n| 步 | 交接物 | 终止条件 |\n|---|---|---|\n| 调查 | 调查结论：现状 / 约束 / 未知 / 可依托基础 | 能回答\"现在是什么情况\" |\n| 矛盾 | 主要矛盾 + 最值得突破的切入点 | 有一个明确切入点 |\n| 星火 | 根据地 + 三步路线图 | 路线从当前能力出发 |\n| 持久 | 当前阶段 + 转换条件 | 有阶段定位 |\n\n## 模式 2：复杂问题攻坚\n\n`investigation-first` → `contradiction-analysis` → `concentrate-forces` → `practice-cognition`（循环）→ `criticism-self-criticism`\n\n| 步 | 交接物 | 终止条件 |\n|---|---|---|\n| 调查 | 现象 / 出现条件 / 已排除原因 / 未查方向 | 能精确描述问题，而非\"好像是 X\" |\n| 矛盾 | 主要矛盾 + 可证伪假说 + 验证方式 | 有可验证假说 |\n| 集中 | 🎯 主攻 = 验证该假说；暂缓其他 | 假说被证实或证伪 |\n| 实践 | 判定 + 本轮学到；证伪则回到矛盾 | 问题彻底解决，能说清原因与解法 |\n| 批评 | 工作审视报告 | 报告完成 |\n\n## 模式 3：方案迭代优化\n\n`mass-line` → `contradiction-analysis` → `practice-cognition` → `criticism-self-criticism` → `mass-line`（下一轮）\n\n| 步 | 交接物 | 终止条件 |\n|---|---|---|\n| 群众 | ≥ 2 个来源的反馈、分歧、共同指向 | 至少两个独立来源 |\n| 矛盾 | 本轮主要矛盾 + 改进假说 | 假说可验证 |\n| 实践 | 改进结果 vs 指标 | 开始前写明的指标达到 |\n| 批评 | 审视报告 | 报告完成 |\n\n整体终止：反馈显示无新的重要问题，或用户确认。\n\n## 模式 4：阶段复盘\n\n`criticism-self-criticism` → `contradiction-analysis` → `protracted-strategy`（或 `overall-planning`）\n\n| 步 | 交接物 | 终止条件 |\n|---|---|---|\n| 批评 | 审视报告：完成情况 / 问题 / 根因 | 报告完成 |\n| 矛盾 | 下一阶段的主要矛盾 | 主要矛盾唯一 |\n| 持久 / 统筹 | 新阶段定位与核心任务，或重新平衡的方案 | 有下一阶段核心任务 |\n\n## 中断处理\n\n- 信息不足 → 插入一次 `investigation-first`\n- 假说被证伪 → 回到 `contradiction-analysis`\n- 冒出更重要的矛盾 → `overall-planning` 评估是否调整整个模式\n- 循环超出开始前声明的轮数 → 停下，向用户汇报现状\n"
+    }
+  ]
+}

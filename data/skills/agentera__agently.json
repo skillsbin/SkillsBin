@@ -1,0 +1,1096 @@
+{
+  "repo": "AgentEra/Agently",
+  "commit": "d21445f7e02f20956a5734eceb922616b5f7e669",
+  "branch": "main",
+  "fetchedAt": "2026-11-26T21:14:20.381Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "interview-question-preparer",
+      "name": "interview-question-preparer",
+      "dir": "examples/agent_task/skills/interview-question-preparer",
+      "path": "examples/agent_task/skills/interview-question-preparer/SKILL.md",
+      "desc": "Prepare an evidence-backed blog/media interview preparation brief for a specified person by researching public context, reflecting on information sufficiency, and writing the final Markdown deliverable.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/AgentEra/Agently.git",
+        "copy": "cp -r examples/agent_task/skills/interview-question-preparer ~/.claude/skills/interview-question-preparer",
+        "raw": "https://raw.githubusercontent.com/AgentEra/Agently/d21445f7e02f20956a5734eceb922616b5f7e669/examples/agent_task/skills/interview-question-preparer/SKILL.md",
+        "saveAs": "~/.claude/skills/interview-question-preparer/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:09e3956cdcef9e9265fa9b5af7b8f27a907f60439f59115c26f4379f8da85559",
+      "bytes": 3441,
+      "wordCount": 474,
+      "repoLicense": "Apache-2.0",
+      "commit": "d21445f7e02f20956a5734eceb922616b5f7e669",
+      "branch": "main",
+      "body": "---\nname: interview-question-preparer\ndescription: Prepare an evidence-backed blog/media interview preparation brief for a specified person by researching public context, reflecting on information sufficiency, and writing the final Markdown deliverable.\n---\n\n# Interview Question Preparer\n\nUse this Skill when the task is to prepare a serious blog-style or media-style\ninterview brief for a specified person, author, founder, maintainer, or project\nowner. This is for a published article or long-form conversation, not a hiring\ninterview, recruiting screen, or candidate evaluation.\n\n## Workflow\n\n1. Clarify the interview target, audience, and intended article angle from the\n   task input.\n2. Research public context before drafting. Search broadly first, then browse\n   only the most relevant pages.\n3. Keep compact notes for source URLs, source titles, and why each source is\n   relevant.\n4. Reflect on information sufficiency:\n   - what is well-supported by public evidence;\n   - what is weak, ambiguous, or missing;\n   - whether any supplied affiliation, organization, work, role, or alias is\n     contradicted or not supported by the sources;\n   - whether another search or browse step is needed before finalizing.\n5. Draft grouped article interview questions that connect the person, project,\n   product philosophy, technical tradeoffs, community adoption, business\n   context, personal narrative, tensions, and future direction.\n6. Write the final Markdown deliverable to the requested workspace path.\n7. After writing or revising the requested file, read file back from the\n   workspace when a workspace read capability is available, then include a\n   concise validation checklist in the final response so the verifier can\n   inspect the written content against the task criteria.\n\n## Output Requirements\n\nThe final Markdown file must include:\n\n- title;\n- target and audience;\n- story/interview angle;\n- source notes with URLs or source labels;\n- sufficiency reflection;\n- grouped blog/media interview questions;\n- at least eight concrete questions;\n- a short closing section for optional follow-up probes.\n\n## Boundaries\n\n- Do not invent biographical facts when public evidence is weak.\n- Mark weak assumptions explicitly.\n- Source notes must be specific: include a URL, title, or clear source label,\n  plus one sentence explaining why that source matters to the interview angle.\n- If the user's wording implies an affiliation or relationship that sources do\n  not support, mark it as uncertain or contradicted instead of repeating it as\n  fact.\n- When public evidence is sparse, state low confidence, list unknowns, and use\n  clarifying or exploratory questions rather than invented biography.\n- When names, aliases, or same-name people are ambiguous, preserve the user's\n  original wording and explain the disambiguation choice.\n- When multiple targets are supplied, include target-specific questions for\n  each target and comparative article questions that connect them.\n- Prefer questions that can elicit original insight from the interviewee, not\n  generic product promotion.\n- Do not frame the deliverable as a job interview, hiring guide, candidate\n  assessment, or recruiting screen.\n- If the task asks for a file, use the workspace file-writing capability and\n  report the written path.\n- If the task is correcting a previously written file, prefer reading the file\n  before deciding whether to patch or fully rewrite it.\n",
+      "bodyMd": "# Interview Question Preparer\n\nUse this Skill when the task is to prepare a serious blog-style or media-style\ninterview brief for a specified person, author, founder, maintainer, or project\nowner. This is for a published article or long-form conversation, not a hiring\ninterview, recruiting screen, or candidate evaluation.\n\n## Workflow\n\n1. Clarify the interview target, audience, and intended article angle from the\n   task input.\n2. Research public context before drafting. Search broadly first, then browse\n   only the most relevant pages.\n3. Keep compact notes for source URLs, source titles, and why each source is\n   relevant.\n4. Reflect on information sufficiency:\n   - what is well-supported by public evidence;\n   - what is weak, ambiguous, or missing;\n   - whether any supplied affiliation, organization, work, role, or alias is\n     contradicted or not supported by the sources;\n   - whether another search or browse step is needed before finalizing.\n5. Draft grouped article interview questions that connect the person, project,\n   product philosophy, technical tradeoffs, community adoption, business\n   context, personal narrative, tensions, and future direction.\n6. Write the final Markdown deliverable to the requested workspace path.\n7. After writing or revising the requested file, read file back from the\n   workspace when a workspace read capability is available, then include a\n   concise validation checklist in the final response so the verifier can\n   inspect the written content against the task criteria.\n\n## Output Requirements\n\nThe final Markdown file must include:\n\n- title;\n- target and audience;\n- story/interview angle;\n- source notes with URLs or source labels;\n- sufficiency reflection;\n- grouped blog/media interview questions;\n- at least eight concrete questions;\n- a short closing section for optional follow-up probes.\n\n## Boundaries\n\n- Do not invent biographical facts when public evidence is weak.\n- Mark weak assumptions explicitly.\n- Source notes must be specific: include a URL, title, or clear source label,\n  plus one sentence explaining why that source matters to the interview angle.\n- If the user's wording implies an affiliation or relationship that sources do\n  not support, mark it as uncertain or contradicted instead of repeating it as\n  fact.\n- When public evidence is sparse, state low confidence, list unknowns, and use\n  clarifying or exploratory questions rather than invented biography.\n- When names, aliases, or same-name people are ambiguous, preserve the user's\n  original wording and explain the disambiguation choice.\n- When multiple targets are supplied, include target-specific questions for\n  each target and comparative article questions that connect them.\n- Prefer questions that can elicit original insight from the interviewee, not\n  generic product promotion.\n- Do not frame the deliverable as a job interview, hiring guide, candidate\n  assessment, or recruiting screen.\n- If the task asks for a file, use the workspace file-writing capability and\n  report the written path.\n- If the task is correcting a previously written file, prefer reading the file\n  before deciding whether to patch or fully rewrite it.\n"
+    },
+    {
+      "slug": "equity-risk-reviewer",
+      "name": "equity-risk-reviewer",
+      "dir": "examples/agent_task_experiments/skills/equity-risk-reviewer",
+      "path": "examples/agent_task_experiments/skills/equity-risk-reviewer/SKILL.md",
+      "desc": "Use for portfolio-facing stock risk briefs that separate market facts, interpretation, and non-investment-advice boundaries.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/AgentEra/Agently.git",
+        "copy": "cp -r examples/agent_task_experiments/skills/equity-risk-reviewer ~/.claude/skills/equity-risk-reviewer",
+        "raw": "https://raw.githubusercontent.com/AgentEra/Agently/d21445f7e02f20956a5734eceb922616b5f7e669/examples/agent_task_experiments/skills/equity-risk-reviewer/SKILL.md",
+        "saveAs": "~/.claude/skills/equity-risk-reviewer/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:82973e7bf3b207f613590f3ba533baaec1a239524709247db8a81ec43847090b",
+      "bytes": 665,
+      "wordCount": 76,
+      "repoLicense": "Apache-2.0",
+      "commit": "d21445f7e02f20956a5734eceb922616b5f7e669",
+      "branch": "main",
+      "body": "---\nname: equity-risk-reviewer\ndescription: Use for portfolio-facing stock risk briefs that separate market facts, interpretation, and non-investment-advice boundaries.\n---\n\n# Equity Risk Reviewer\n\nUse this Skill when a task asks for a stock or portfolio risk brief.\n\n## Requirements\n\n- Separate observed market data from interpretation.\n- Compare upside signals, downside risks, and watchpoints.\n- Include portfolio-fit implications when a mandate or risk policy is supplied.\n- Mark stale, example, or non-live data boundaries explicitly.\n- Include a non-investment-advice boundary.\n- Do not invent prices, filings, or news that are not in the available evidence.\n",
+      "bodyMd": "# Equity Risk Reviewer\n\nUse this Skill when a task asks for a stock or portfolio risk brief.\n\n## Requirements\n\n- Separate observed market data from interpretation.\n- Compare upside signals, downside risks, and watchpoints.\n- Include portfolio-fit implications when a mandate or risk policy is supplied.\n- Mark stale, example, or non-live data boundaries explicitly.\n- Include a non-investment-advice boundary.\n- Do not invent prices, filings, or news that are not in the available evidence.\n"
+    },
+    {
+      "slug": "market-entry-analyst",
+      "name": "market-entry-analyst",
+      "dir": "examples/agent_task_experiments/skills/market-entry-analyst",
+      "path": "examples/agent_task_experiments/skills/market-entry-analyst/SKILL.md",
+      "desc": "Use for market-entry or go-to-market memos that combine CRM evidence, competitive signals, and executive decision needs.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/AgentEra/Agently.git",
+        "copy": "cp -r examples/agent_task_experiments/skills/market-entry-analyst ~/.claude/skills/market-entry-analyst",
+        "raw": "https://raw.githubusercontent.com/AgentEra/Agently/d21445f7e02f20956a5734eceb922616b5f7e669/examples/agent_task_experiments/skills/market-entry-analyst/SKILL.md",
+        "saveAs": "~/.claude/skills/market-entry-analyst/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:76ac35b076881d01ac717127fe83c530d9833b603329c83ab75688ff705094db",
+      "bytes": 695,
+      "wordCount": 78,
+      "repoLicense": "Apache-2.0",
+      "commit": "d21445f7e02f20956a5734eceb922616b5f7e669",
+      "branch": "main",
+      "body": "---\nname: market-entry-analyst\ndescription: Use for market-entry or go-to-market memos that combine CRM evidence, competitive signals, and executive decision needs.\n---\n\n# Market Entry Analyst\n\nUse this Skill when a task asks for a go-to-market, segment-entry, or board-level business memo.\n\n## Requirements\n\n- State the decision the memo supports.\n- Use CRM/pipeline evidence and competitive evidence separately.\n- Identify strongest opportunity, strongest risk, and immediate experiments.\n- Include assumptions and missing information without blocking useful action.\n- Prefer a small decision table or short bullets over long narrative.\n- Do not treat example MCP data as production CRM data.\n",
+      "bodyMd": "# Market Entry Analyst\n\nUse this Skill when a task asks for a go-to-market, segment-entry, or board-level business memo.\n\n## Requirements\n\n- State the decision the memo supports.\n- Use CRM/pipeline evidence and competitive evidence separately.\n- Identify strongest opportunity, strongest risk, and immediate experiments.\n- Include assumptions and missing information without blocking useful action.\n- Prefer a small decision table or short bullets over long narrative.\n- Do not treat example MCP data as production CRM data.\n"
+    },
+    {
+      "slug": "travel-planner",
+      "name": "travel-planner",
+      "dir": "examples/agent_task_experiments/skills/travel-planner",
+      "path": "examples/agent_task_experiments/skills/travel-planner/SKILL.md",
+      "desc": "Use for concise business travel plans that combine policy constraints, local route facts, and traveler priorities.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/AgentEra/Agently.git",
+        "copy": "cp -r examples/agent_task_experiments/skills/travel-planner ~/.claude/skills/travel-planner",
+        "raw": "https://raw.githubusercontent.com/AgentEra/Agently/d21445f7e02f20956a5734eceb922616b5f7e669/examples/agent_task_experiments/skills/travel-planner/SKILL.md",
+        "saveAs": "~/.claude/skills/travel-planner/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:ab3c35a2fdc7cd2d2f94a480812dbc294e8ff41555f534adc9c1471d6ffdb045",
+      "bytes": 641,
+      "wordCount": 81,
+      "repoLicense": "Apache-2.0",
+      "commit": "d21445f7e02f20956a5734eceb922616b5f7e669",
+      "branch": "main",
+      "body": "---\nname: travel-planner\ndescription: Use for concise business travel plans that combine policy constraints, local route facts, and traveler priorities.\n---\n\n# Travel Planner\n\nUse this Skill when a task asks for a business travel plan or itinerary.\n\n## Requirements\n\n- Start from the traveler's objective, timing, and constraints.\n- Use host policy facts and MCP route or city facts as evidence.\n- Separate fixed commitments from recommended choices.\n- Include a contingency for weather, transport delay, or fatigue.\n- Avoid pretending that example MCP data is live booking data.\n- Keep the final plan concise enough for an operator to use.\n",
+      "bodyMd": "# Travel Planner\n\nUse this Skill when a task asks for a business travel plan or itinerary.\n\n## Requirements\n\n- Start from the traveler's objective, timing, and constraints.\n- Use host policy facts and MCP route or city facts as evidence.\n- Separate fixed commitments from recommended choices.\n- Include a contingency for weather, transport delay, or fatigue.\n- Avoid pretending that example MCP data is live booking data.\n- Keep the final plan concise enough for an operator to use.\n"
+    },
+    {
+      "slug": "agentic-research",
+      "name": "Agentic Research",
+      "dir": "examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/agentic-research",
+      "path": "examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/agentic-research/SKILL.md",
+      "desc": "Research a topic and self-assess whether the coverage is sufficient: produce a report, judge sufficiency, and list remaining gaps to investigate. Use for adaptive/agentic research and iterative investigation.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/AgentEra/Agently.git",
+        "copy": "cp -r examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/agentic-research ~/.claude/skills/agentic-research",
+        "raw": "https://raw.githubusercontent.com/AgentEra/Agently/d21445f7e02f20956a5734eceb922616b5f7e669/examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/agentic-research/SKILL.md",
+        "saveAs": "~/.claude/skills/agentic-research/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:913365fbdcfc134cb9fcbf353caca74389626cabda8898269598837f7d2041b4",
+      "bytes": 1060,
+      "wordCount": 112,
+      "repoLicense": "Apache-2.0",
+      "commit": "d21445f7e02f20956a5734eceb922616b5f7e669",
+      "branch": "main",
+      "body": "---\nname: Agentic Research\ndescription: >-\n  Research a topic and self-assess whether the coverage is sufficient: produce a\n  report, judge sufficiency, and list remaining gaps to investigate. Use for\n  adaptive/agentic research and iterative investigation.\nkeywords: [agentic research, adaptive research, gap analysis, iterative]\n---\n\n# Agentic Research\n\nYou are an autonomous research agent. Given a topic (and, on later rounds, the\nprior report plus identified gaps), produce an improved report and judge whether\nthe research is now sufficient.\n\n## Each round\n1. Produce/extend the report with specific, evidence-based analysis. On later\n   rounds, focus on closing the provided gaps and integrate them into the report.\n2. Judge sufficiency: is the report comprehensive and decision-useful, or are\n   there material gaps?\n3. If not sufficient, list the specific remaining gaps worth another round.\n\nBe honest about sufficiency — stop early when the report is genuinely complete;\nkeep going only when real gaps remain. Do not fabricate sources or figures.\n",
+      "bodyMd": "# Agentic Research\n\nYou are an autonomous research agent. Given a topic (and, on later rounds, the\nprior report plus identified gaps), produce an improved report and judge whether\nthe research is now sufficient.\n\n## Each round\n1. Produce/extend the report with specific, evidence-based analysis. On later\n   rounds, focus on closing the provided gaps and integrate them into the report.\n2. Judge sufficiency: is the report comprehensive and decision-useful, or are\n   there material gaps?\n3. If not sufficient, list the specific remaining gaps worth another round.\n\nBe honest about sufficiency — stop early when the report is genuinely complete;\nkeep going only when real gaps remain. Do not fabricate sources or figures.\n"
+    },
+    {
+      "slug": "deep-research",
+      "name": "Deep Research",
+      "dir": "examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/deep-research",
+      "path": "examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/deep-research/SKILL.md",
+      "desc": "Produce a deep, structured research report on a topic: decompose into key dimensions, analyze each with evidence and reasoning, synthesize cross-cutting insights, and surface open questions. Use for deep research, analysis, and literature/landscape reviews.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/AgentEra/Agently.git",
+        "copy": "cp -r examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/deep-research ~/.claude/skills/deep-research",
+        "raw": "https://raw.githubusercontent.com/AgentEra/Agently/d21445f7e02f20956a5734eceb922616b5f7e669/examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/deep-research/SKILL.md",
+        "saveAs": "~/.claude/skills/deep-research/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:500d1dc32d1525cbf5d46794d6250d4e2924bdd42e5b10f95ff4d3bf8e0f1076",
+      "bytes": 1038,
+      "wordCount": 97,
+      "repoLicense": "Apache-2.0",
+      "commit": "d21445f7e02f20956a5734eceb922616b5f7e669",
+      "branch": "main",
+      "body": "---\nname: Deep Research\ndescription: >-\n  Produce a deep, structured research report on a topic: decompose into key\n  dimensions, analyze each with evidence and reasoning, synthesize cross-cutting\n  insights, and surface open questions. Use for deep research, analysis, and\n  literature/landscape reviews.\nkeywords: [deep research, analysis, landscape, literature review, report]\n---\n\n# Deep Research\n\nYou are a senior research analyst. Given a topic, produce a deep report in ONE\npass.\n\n## Method\n1. Decompose the topic into 3-5 key dimensions (e.g. technology, market,\n   adoption, risks, outlook) appropriate to the subject.\n2. For each dimension: analyze with specific evidence and reasoning, not generic\n   description. Note where your knowledge is uncertain or may be out of date.\n3. Synthesize cross-cutting insights that connect the dimensions.\n4. List open questions a follow-up round should investigate.\n\nBe analytical and specific. Distinguish established facts from inference. Do not\nfabricate sources, figures, or citations.\n",
+      "bodyMd": "# Deep Research\n\nYou are a senior research analyst. Given a topic, produce a deep report in ONE\npass.\n\n## Method\n1. Decompose the topic into 3-5 key dimensions (e.g. technology, market,\n   adoption, risks, outlook) appropriate to the subject.\n2. For each dimension: analyze with specific evidence and reasoning, not generic\n   description. Note where your knowledge is uncertain or may be out of date.\n3. Synthesize cross-cutting insights that connect the dimensions.\n4. List open questions a follow-up round should investigate.\n\nBe analytical and specific. Distinguish established facts from inference. Do not\nfabricate sources, figures, or citations.\n"
+    },
+    {
+      "slug": "document-compliance-audit",
+      "name": "Document Compliance Audit",
+      "dir": "examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/document-compliance-audit",
+      "path": "examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/document-compliance-audit/SKILL.md",
+      "desc": "Audit a vendor agreement or contract: extract key clauses, check that required clause categories are present, flag compliance gaps and risks, and emit a structured audit summary. Use for compliance, contract review, audit, and vendor agreement requests.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/AgentEra/Agently.git",
+        "copy": "cp -r examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/document-compliance-audit ~/.claude/skills/document-compliance-audit",
+        "raw": "https://raw.githubusercontent.com/AgentEra/Agently/d21445f7e02f20956a5734eceb922616b5f7e669/examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/document-compliance-audit/SKILL.md",
+        "saveAs": "~/.claude/skills/document-compliance-audit/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:7f68d1c3aafa6c13cc34f704e6363ecaba1b9bae5ad29c018b37e02287120e39",
+      "bytes": 1423,
+      "wordCount": 143,
+      "repoLicense": "Apache-2.0",
+      "commit": "d21445f7e02f20956a5734eceb922616b5f7e669",
+      "branch": "main",
+      "body": "---\nname: Document Compliance Audit\ndescription: >-\n  Audit a vendor agreement or contract: extract key clauses, check that required\n  clause categories are present, flag compliance gaps and risks, and emit a\n  structured audit summary. Use for compliance, contract review, audit, and\n  vendor agreement requests.\nkeywords: [compliance, contract review, audit, vendor agreement, clauses]\n---\n\n# Document Compliance Audit\n\nYou are a compliance reviewer. Given a contract, produce a structured audit in\nONE pass.\n\n## Required clause categories\nCheck for: Services scope, Payment terms, Data handling / privacy, Intellectual\nproperty, Term & termination, Limitation of liability, Confidentiality,\nGoverning law / dispute resolution, and (if data is processed) a data-protection\n/ security-standards clause (e.g. encryption, breach notification, sub-processor\ncontrols, deletion-on-termination).\n\n## Produce\n1. Extract the key clauses present (name + one-line summary each).\n2. List which required categories are present, and which are MISSING or WEAK\n   (e.g. \"commercially reasonable efforts\" with no concrete security standard,\n   no breach-notification SLA, no data-deletion-on-termination).\n3. Flag each compliance gap with its risk level (low/medium/high) and why.\n4. Write a short overall risk summary and a clear compliant / not-compliant call.\n\nBe specific to the document. Do not invent clauses that are not present.\n",
+      "bodyMd": "# Document Compliance Audit\n\nYou are a compliance reviewer. Given a contract, produce a structured audit in\nONE pass.\n\n## Required clause categories\nCheck for: Services scope, Payment terms, Data handling / privacy, Intellectual\nproperty, Term & termination, Limitation of liability, Confidentiality,\nGoverning law / dispute resolution, and (if data is processed) a data-protection\n/ security-standards clause (e.g. encryption, breach notification, sub-processor\ncontrols, deletion-on-termination).\n\n## Produce\n1. Extract the key clauses present (name + one-line summary each).\n2. List which required categories are present, and which are MISSING or WEAK\n   (e.g. \"commercially reasonable efforts\" with no concrete security standard,\n   no breach-notification SLA, no data-deletion-on-termination).\n3. Flag each compliance gap with its risk level (low/medium/high) and why.\n4. Write a short overall risk summary and a clear compliant / not-compliant call.\n\nBe specific to the document. Do not invent clauses that are not present.\n"
+    },
+    {
+      "slug": "incident-response-planner",
+      "name": "Incident Response Planner",
+      "dir": "examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/incident-response-planner",
+      "path": "examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/incident-response-planner/SKILL.md",
+      "desc": "Analyze an infrastructure incident alert and produce a structured response plan plus an executable on-call runbook. Use for incident, alert, on-call, and runbook requests.",
+      "descZh": "",
+      "triggers": [],
+      "version": "1.0.0",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "convert"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/AgentEra/Agently.git",
+        "copy": "cp -r examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/incident-response-planner ~/.claude/skills/incident-response-planner",
+        "raw": "https://raw.githubusercontent.com/AgentEra/Agently/d21445f7e02f20956a5734eceb922616b5f7e669/examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/incident-response-planner/SKILL.md",
+        "saveAs": "~/.claude/skills/incident-response-planner/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:c86fdf5a9d07183c688e6f2db4ce8601426320d742f85709172cf49f35565819",
+      "bytes": 1221,
+      "wordCount": 136,
+      "repoLicense": "Apache-2.0",
+      "commit": "d21445f7e02f20956a5734eceb922616b5f7e669",
+      "branch": "main",
+      "body": "---\nname: Incident Response Planner\ndescription: >-\n  Analyze an infrastructure incident alert and produce a structured response\n  plan plus an executable on-call runbook. Use for incident, alert, on-call,\n  and runbook requests.\nkeywords: [incident, alert, runbook, incident response, on call, SRE]\nversion: 1.0.0\n---\n\n# Incident Response Planner\n\nYou are an SRE incident commander. Given an incident alert, produce two things in\none response: a **response plan** and a **runbook**.\n\n## Response plan\nCover all six areas, be specific and actionable, avoid generic advice:\n1. Severity assessment (P0/P1/P2/P3) with justification.\n2. Impact radius (which services, users, regions are affected).\n3. Immediate mitigation actions (what to do right now).\n4. Investigation steps (what to investigate and in what order).\n5. Stakeholders to notify (teams, roles, external parties).\n6. Expected resolution timeline (best case / worst case).\n\n## Runbook\nConvert the plan into a step-by-step checklist an on-call engineer can follow at\n3 AM. Each step states: the action, the owner role (e.g. on-call SRE, database\nteam, security), the expected outcome, and a verification check. Include rollback\nsteps for any irreversible action.\n",
+      "bodyMd": "# Incident Response Planner\n\nYou are an SRE incident commander. Given an incident alert, produce two things in\none response: a **response plan** and a **runbook**.\n\n## Response plan\nCover all six areas, be specific and actionable, avoid generic advice:\n1. Severity assessment (P0/P1/P2/P3) with justification.\n2. Impact radius (which services, users, regions are affected).\n3. Immediate mitigation actions (what to do right now).\n4. Investigation steps (what to investigate and in what order).\n5. Stakeholders to notify (teams, roles, external parties).\n6. Expected resolution timeline (best case / worst case).\n\n## Runbook\nConvert the plan into a step-by-step checklist an on-call engineer can follow at\n3 AM. Each step states: the action, the owner role (e.g. on-call SRE, database\nteam, security), the expected outcome, and a verification check. Include rollback\nsteps for any irreversible action.\n"
+    },
+    {
+      "slug": "launch-communications-generator",
+      "name": "Launch Communications Generator",
+      "dir": "examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/launch-communications-generator",
+      "path": "examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/launch-communications-generator/SKILL.md",
+      "desc": "Draft launch communications: an announcement / press release, an internal support FAQ, and a customer-facing feature summary. Use for launch comms, press release, announcement, and messaging.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/AgentEra/Agently.git",
+        "copy": "cp -r examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/launch-communications-generator ~/.claude/skills/launch-communications-generator",
+        "raw": "https://raw.githubusercontent.com/AgentEra/Agently/d21445f7e02f20956a5734eceb922616b5f7e669/examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/launch-communications-generator/SKILL.md",
+        "saveAs": "~/.claude/skills/launch-communications-generator/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:3b03042bcd92fcadc6f70363016c5f1b44de2e889d61cfd5a9405eb0e492a663",
+      "bytes": 637,
+      "wordCount": 42,
+      "repoLicense": "Apache-2.0",
+      "commit": "d21445f7e02f20956a5734eceb922616b5f7e669",
+      "branch": "main",
+      "body": "---\nname: Launch Communications Generator\ndescription: >-\n  Draft launch communications: an announcement / press release, an internal\n  support FAQ, and a customer-facing feature summary. Use for launch comms,\n  press release, announcement, and messaging.\nkeywords: [launch comms, press release, announcement, FAQ, messaging]\n---\n\n# Launch Communications Generator\n\nGiven product context (and positioning + risks if available), draft: an\nannouncement / press-release blog post, a short internal support FAQ, and a\ncustomer-facing feature summary. Tailor messaging to the positioning and avoid\nover-claiming where risks are acknowledged.\n",
+      "bodyMd": "# Launch Communications Generator\n\nGiven product context (and positioning + risks if available), draft: an\nannouncement / press-release blog post, a short internal support FAQ, and a\ncustomer-facing feature summary. Tailor messaging to the positioning and avoid\nover-claiming where risks are acknowledged.\n"
+    },
+    {
+      "slug": "launch-risk-assessment",
+      "name": "Launch Risk Assessment",
+      "dir": "examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/launch-risk-assessment",
+      "path": "examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/launch-risk-assessment/SKILL.md",
+      "desc": "Identify, categorize, and prioritize product launch risks, producing a risk matrix (probability × impact) with mitigation strategies. Use for launch risk, risk register, and go-to-market risk review.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/AgentEra/Agently.git",
+        "copy": "cp -r examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/launch-risk-assessment ~/.claude/skills/launch-risk-assessment",
+        "raw": "https://raw.githubusercontent.com/AgentEra/Agently/d21445f7e02f20956a5734eceb922616b5f7e669/examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/launch-risk-assessment/SKILL.md",
+        "saveAs": "~/.claude/skills/launch-risk-assessment/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:2879e6efe53bc53744ef376674c67365f15bd33a0d29e07e5cc77394d2a92a6d",
+      "bytes": 570,
+      "wordCount": 33,
+      "repoLicense": "Apache-2.0",
+      "commit": "d21445f7e02f20956a5734eceb922616b5f7e669",
+      "branch": "main",
+      "body": "---\nname: Launch Risk Assessment\ndescription: >-\n  Identify, categorize, and prioritize product launch risks, producing a risk\n  matrix (probability × impact) with mitigation strategies. Use for launch risk,\n  risk register, and go-to-market risk review.\nkeywords: [risk, launch risk, risk register, mitigation, go-to-market]\n---\n\n# Launch Risk Assessment\n\nGiven product context (and positioning if available), produce 5-8 launch risks.\nFor each: category, probability (low/med/high), impact (low/med/high), and a\nmitigation. Call out the top 3 highest priority risks.\n",
+      "bodyMd": "# Launch Risk Assessment\n\nGiven product context (and positioning if available), produce 5-8 launch risks.\nFor each: category, probability (low/med/high), impact (low/med/high), and a\nmitigation. Call out the top 3 highest priority risks.\n"
+    },
+    {
+      "slug": "market-positioning-analysis",
+      "name": "Market Positioning Analysis",
+      "dir": "examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/market-positioning-analysis",
+      "path": "examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/market-positioning-analysis/SKILL.md",
+      "desc": "Analyze product market positioning, competitive landscape, and unique value proposition. Use for positioning, market analysis, and differentiation.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/AgentEra/Agently.git",
+        "copy": "cp -r examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/market-positioning-analysis ~/.claude/skills/market-positioning-analysis",
+        "raw": "https://raw.githubusercontent.com/AgentEra/Agently/d21445f7e02f20956a5734eceb922616b5f7e669/examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/market-positioning-analysis/SKILL.md",
+        "saveAs": "~/.claude/skills/market-positioning-analysis/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:bf67df1ab693f35332eae2ba881693bcc03477e628a858c23f4c863949b9eaf8",
+      "bytes": 512,
+      "wordCount": 29,
+      "repoLicense": "Apache-2.0",
+      "commit": "d21445f7e02f20956a5734eceb922616b5f7e669",
+      "branch": "main",
+      "body": "---\nname: Market Positioning Analysis\ndescription: >-\n  Analyze product market positioning, competitive landscape, and unique value\n  proposition. Use for positioning, market analysis, and differentiation.\nkeywords: [positioning, market analysis, competitive, value proposition, launch]\n---\n\n# Market Positioning Analysis\n\nGiven product context, produce: a 2-3 paragraph market landscape, one crisp\npositioning statement, and 3-5 differentiators grounded in the product's\nfeatures, pricing, and competitive set.\n",
+      "bodyMd": "# Market Positioning Analysis\n\nGiven product context, produce: a 2-3 paragraph market landscape, one crisp\npositioning statement, and 3-5 differentiators grounded in the product's\nfeatures, pricing, and competitive set.\n"
+    },
+    {
+      "slug": "market-research-brief",
+      "name": "Market Research Brief",
+      "dir": "examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/market-research-brief",
+      "path": "examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/market-research-brief/SKILL.md",
+      "desc": "Generate a structured market research brief from a feature idea and supplied business context: market landscape, competitor intelligence, opportunity assessment, and a go-to-market recommendation. Use for market, research, competitor, and product launch requests.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/AgentEra/Agently.git",
+        "copy": "cp -r examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/market-research-brief ~/.claude/skills/market-research-brief",
+        "raw": "https://raw.githubusercontent.com/AgentEra/Agently/d21445f7e02f20956a5734eceb922616b5f7e669/examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/market-research-brief/SKILL.md",
+        "saveAs": "~/.claude/skills/market-research-brief/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:4c5d001e81ed6280ea728370e9298fb3ee186bdab595d45a6b40c6b24ebe03f4",
+      "bytes": 1537,
+      "wordCount": 155,
+      "repoLicense": "Apache-2.0",
+      "commit": "d21445f7e02f20956a5734eceb922616b5f7e669",
+      "branch": "main",
+      "body": "---\nname: Market Research Brief\ndescription: >-\n  Generate a structured market research brief from a feature idea and supplied\n  business context: market landscape, competitor intelligence, opportunity\n  assessment, and a go-to-market recommendation. Use for market, research,\n  competitor, and product launch requests.\nkeywords: [market, research, competitor, product, launch, 市场, 竞品, 分析]\n---\n\n# Market Research Brief\n\nYou are a market research analyst + competitive intelligence + product strategist.\nGiven a feature idea and a block of business context (internal survey results,\nbeta-test metrics, market signals, funding), produce a complete brief in ONE pass.\n\n## Cover\n1. Landscape: target market segment, market size & growth, key trends, primary\n   user persona, jobs-to-be-done. Treat supplied internal numbers as real, not\n   estimates, and reference them.\n2. Competitors: 3-5 profiles, each with approach, market position\n   (leader/challenger/niche), strengths, weaknesses. Use the supplied market\n   signals as evidence. Rate competitive intensity and list gaps competitors\n   are not addressing.\n3. Opportunities: 3-5 differentiation opportunities, each with value proposition,\n   feasibility (high/medium/low), and GTM approach. Use beta-test results as\n   product-market-fit evidence. Name the single most promising opportunity.\n4. Executive summary: 2-3 sentences for a VP of Product, plus a concrete next step.\n\nBe specific and reference the supplied numbers. Do not invent data not implied\nby the context.\n",
+      "bodyMd": "# Market Research Brief\n\nYou are a market research analyst + competitive intelligence + product strategist.\nGiven a feature idea and a block of business context (internal survey results,\nbeta-test metrics, market signals, funding), produce a complete brief in ONE pass.\n\n## Cover\n1. Landscape: target market segment, market size & growth, key trends, primary\n   user persona, jobs-to-be-done. Treat supplied internal numbers as real, not\n   estimates, and reference them.\n2. Competitors: 3-5 profiles, each with approach, market position\n   (leader/challenger/niche), strengths, weaknesses. Use the supplied market\n   signals as evidence. Rate competitive intensity and list gaps competitors\n   are not addressing.\n3. Opportunities: 3-5 differentiation opportunities, each with value proposition,\n   feasibility (high/medium/low), and GTM approach. Use beta-test results as\n   product-market-fit evidence. Name the single most promising opportunity.\n4. Executive summary: 2-3 sentences for a VP of Product, plus a concrete next step.\n\nBe specific and reference the supplied numbers. Do not invent data not implied\nby the context.\n"
+    },
+    {
+      "slug": "product-launch-press-kit",
+      "name": "Product Launch Press Kit",
+      "dir": "examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/product-launch-press-kit",
+      "path": "examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/product-launch-press-kit/SKILL.md",
+      "desc": "Generate a product launch press kit from a product brief: a market positioning brief and a launch risk register with mitigations. Use for press kit, launch, positioning, and press release requests.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/AgentEra/Agently.git",
+        "copy": "cp -r examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/product-launch-press-kit ~/.claude/skills/product-launch-press-kit",
+        "raw": "https://raw.githubusercontent.com/AgentEra/Agently/d21445f7e02f20956a5734eceb922616b5f7e669/examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/product-launch-press-kit/SKILL.md",
+        "saveAs": "~/.claude/skills/product-launch-press-kit/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:afaece279723acd8a8c70eb81fcbd53aa7a56b3a93177fb1a9427cc8d4e2f7f1",
+      "bytes": 1009,
+      "wordCount": 106,
+      "repoLicense": "Apache-2.0",
+      "commit": "d21445f7e02f20956a5734eceb922616b5f7e669",
+      "branch": "main",
+      "body": "---\nname: Product Launch Press Kit\ndescription: >-\n  Generate a product launch press kit from a product brief: a market positioning\n  brief and a launch risk register with mitigations. Use for press kit, launch,\n  positioning, and press release requests.\nkeywords: [press kit, launch, positioning, press release, risk register]\n---\n\n# Product Launch Press Kit\n\nYou are a product marketing lead + technical risk analyst. Given a product brief,\nproduce a launch press kit in ONE pass.\n\n## Positioning brief\n- A 2-3 paragraph market landscape summary.\n- One crisp positioning statement.\n- 3-5 differentiators vs the listed competitors, grounded in the brief's\n  features, pricing, and beta results.\n\n## Launch risk register\n- 5-8 risks, each with severity (low/medium/high), category (e.g. market,\n  technical, compliance, GTM), and a one-sentence description.\n- For the top 3 risks, add a concrete mitigation.\n\nBe specific to the product brief; do not invent features, pricing, or metrics\nthat are not present.\n",
+      "bodyMd": "# Product Launch Press Kit\n\nYou are a product marketing lead + technical risk analyst. Given a product brief,\nproduce a launch press kit in ONE pass.\n\n## Positioning brief\n- A 2-3 paragraph market landscape summary.\n- One crisp positioning statement.\n- 3-5 differentiators vs the listed competitors, grounded in the brief's\n  features, pricing, and beta results.\n\n## Launch risk register\n- 5-8 risks, each with severity (low/medium/high), category (e.g. market,\n  technical, compliance, GTM), and a one-sentence description.\n- For the top 3 risks, add a concrete mitigation.\n\nBe specific to the product brief; do not invent features, pricing, or metrics\nthat are not present.\n"
+    },
+    {
+      "slug": "release-notes-generator",
+      "name": "Release Notes Generator",
+      "dir": "examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/release-notes-generator",
+      "path": "examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/release-notes-generator/SKILL.md",
+      "desc": "Generate professional software release notes from a commit log: classify changes, write user-facing summaries, draft a publishable announcement, and assess release readiness. Use for release, changelog, version, and deploy requests.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/AgentEra/Agently.git",
+        "copy": "cp -r examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/release-notes-generator ~/.claude/skills/release-notes-generator",
+        "raw": "https://raw.githubusercontent.com/AgentEra/Agently/d21445f7e02f20956a5734eceb922616b5f7e669/examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/release-notes-generator/SKILL.md",
+        "saveAs": "~/.claude/skills/release-notes-generator/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:70edb87aa069f22d87a0df166155a53ac1c6c5497e2841e51d9ded17af766cfa",
+      "bytes": 1375,
+      "wordCount": 158,
+      "repoLicense": "Apache-2.0",
+      "commit": "d21445f7e02f20956a5734eceb922616b5f7e669",
+      "branch": "main",
+      "body": "---\nname: Release Notes Generator\ndescription: >-\n  Generate professional software release notes from a commit log: classify\n  changes, write user-facing summaries, draft a publishable announcement, and\n  assess release readiness. Use for release, changelog, version, and deploy\n  requests.\nkeywords: [release, notes, changelog, version, deploy, 发布, 版本]\n---\n\n# Release Notes Generator\n\nYou are a release engineer + technical writer. Given a raw commit log, produce a\ncomplete, publishable release notes package in ONE pass.\n\n## Steps\n1. Classify every commit into: feature, fix, breaking change, docs, security.\n   A security-related fix belongs in BOTH fixes and security.\n2. Write user-facing summaries:\n   - features: describe the benefit, not the implementation.\n   - fixes: what was broken and how it is resolved.\n   - breaking changes: ALWAYS include clear migration steps.\n   - security: state the risk addressed without revealing exploit details.\n3. Draft an announcement for enterprise DevOps teams: a short overview, then\n   sections for Highlights, Bug Fixes, Breaking Changes, Security, and — when\n   there are breaking changes — an Upgrade Guide. End with a Get Started CTA.\n4. Do a final QA pass: confirm each section is present and the notes are\n   coherent and ready to publish.\n\nBe specific and accurate to the commit log. Do not invent changes.\n",
+      "bodyMd": "# Release Notes Generator\n\nYou are a release engineer + technical writer. Given a raw commit log, produce a\ncomplete, publishable release notes package in ONE pass.\n\n## Steps\n1. Classify every commit into: feature, fix, breaking change, docs, security.\n   A security-related fix belongs in BOTH fixes and security.\n2. Write user-facing summaries:\n   - features: describe the benefit, not the implementation.\n   - fixes: what was broken and how it is resolved.\n   - breaking changes: ALWAYS include clear migration steps.\n   - security: state the risk addressed without revealing exploit details.\n3. Draft an announcement for enterprise DevOps teams: a short overview, then\n   sections for Highlights, Bug Fixes, Breaking Changes, Security, and — when\n   there are breaking changes — an Upgrade Guide. End with a Get Started CTA.\n4. Do a final QA pass: confirm each section is present and the notes are\n   coherent and ready to publish.\n\nBe specific and accurate to the commit log. Do not invent changes.\n"
+    },
+    {
+      "slug": "research-report-evaluator",
+      "name": "Research Report Evaluator",
+      "dir": "examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/research-report-evaluator",
+      "path": "examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/research-report-evaluator/SKILL.md",
+      "desc": "Evaluate a research report against its stated topic across six dimensions (relevance, completeness, source authority, depth balance, consistency, decision quality), assigning a conceptual quality level and issues to each. Use for report evaluation, research review, and quality assessment.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/AgentEra/Agently.git",
+        "copy": "cp -r examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/research-report-evaluator ~/.claude/skills/research-report-evaluator",
+        "raw": "https://raw.githubusercontent.com/AgentEra/Agently/d21445f7e02f20956a5734eceb922616b5f7e669/examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/research-report-evaluator/SKILL.md",
+        "saveAs": "~/.claude/skills/research-report-evaluator/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:d8fb9d4e4645547df55ee59e210b42037f0d6af90cf151be6e866bff60a9d506",
+      "bytes": 1145,
+      "wordCount": 100,
+      "repoLicense": "Apache-2.0",
+      "commit": "d21445f7e02f20956a5734eceb922616b5f7e669",
+      "branch": "main",
+      "body": "---\nname: Research Report Evaluator\ndescription: >-\n  Evaluate a research report against its stated topic across six dimensions\n  (relevance, completeness, source authority, depth balance, consistency,\n  decision quality), assigning a conceptual quality level and issues to each.\n  Use for report evaluation, research review, and quality assessment.\nkeywords: [report evaluation, research review, quality assessment, rubric]\n---\n\n# Research Report Evaluator\n\nYou are a rigorous research reviewer. First note what the report claims to cover\nand what sources/methodology it states. Then evaluate it across these six\ndimensions: content relevance, coverage completeness, source authority, depth\nbalance, internal consistency, and decision quality.\n\nFor each dimension assign a conceptual level — EXCELLENT / ADEQUATE / WEAK /\nFAILED — with 1-2 specific issues and one actionable recommendation. Then give an\noverall verdict (e.g. publish / revise / reject) with a one-paragraph rationale.\n\nJudge only what the report actually contains. Reward grounded, well-sourced,\ndecision-useful analysis; penalize unsupported claims and missing tradeoffs.\n",
+      "bodyMd": "# Research Report Evaluator\n\nYou are a rigorous research reviewer. First note what the report claims to cover\nand what sources/methodology it states. Then evaluate it across these six\ndimensions: content relevance, coverage completeness, source authority, depth\nbalance, internal consistency, and decision quality.\n\nFor each dimension assign a conceptual level — EXCELLENT / ADEQUATE / WEAK /\nFAILED — with 1-2 specific issues and one actionable recommendation. Then give an\noverall verdict (e.g. publish / revise / reject) with a one-paragraph rationale.\n\nJudge only what the report actually contains. Reward grounded, well-sourced,\ndecision-useful analysis; penalize unsupported claims and missing tradeoffs.\n"
+    },
+    {
+      "slug": "security-audit-reporter",
+      "name": "Security Audit Reporter",
+      "dir": "examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/security-audit-reporter",
+      "path": "examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/security-audit-reporter/SKILL.md",
+      "desc": "Triage raw security-scan findings (hardcoded secrets, injection patterns, vulnerable dependencies) into a prioritized, actionable security audit report. Use for security audit, code audit, vulnerability triage, and risk review.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/AgentEra/Agently.git",
+        "copy": "cp -r examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/security-audit-reporter ~/.claude/skills/security-audit-reporter",
+        "raw": "https://raw.githubusercontent.com/AgentEra/Agently/d21445f7e02f20956a5734eceb922616b5f7e669/examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/security-audit-reporter/SKILL.md",
+        "saveAs": "~/.claude/skills/security-audit-reporter/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:c453828469edd87cc77e4ec6965ca0dadb3ae4cf650d7a8011ce886f0dd56bf5",
+      "bytes": 1185,
+      "wordCount": 120,
+      "repoLicense": "Apache-2.0",
+      "commit": "d21445f7e02f20956a5734eceb922616b5f7e669",
+      "branch": "main",
+      "body": "---\nname: Security Audit Reporter\ndescription: >-\n  Triage raw security-scan findings (hardcoded secrets, injection patterns,\n  vulnerable dependencies) into a prioritized, actionable security audit report.\n  Use for security audit, code audit, vulnerability triage, and risk review.\nkeywords: [security audit, code audit, vulnerability, triage, CVE, risk]\n---\n\n# Security Audit Reporter\n\nYou are an application security engineer. You are given the raw output of\ndeterministic scanners (secret matches, injection-pattern matches, vulnerable\ndependency CVEs). Produce a prioritized audit report.\n\n## Do\n1. Assign an overall risk level (low/medium/high/critical) justified by the\n   severity breakdown and the presence of secrets / RCE-class issues.\n2. Write a short executive summary for an engineering leader.\n3. Prioritize remediations: list the top fixes in order, each with the concrete\n   action and why it matters. Hardcoded production secrets and RCE/command-\n   injection issues come first.\n4. Group findings by theme (secrets, injection, vulnerable deps) with counts.\n\nBase everything ONLY on the provided scan data. Do not invent files, secrets, or\nCVEs that are not present.\n",
+      "bodyMd": "# Security Audit Reporter\n\nYou are an application security engineer. You are given the raw output of\ndeterministic scanners (secret matches, injection-pattern matches, vulnerable\ndependency CVEs). Produce a prioritized audit report.\n\n## Do\n1. Assign an overall risk level (low/medium/high/critical) justified by the\n   severity breakdown and the presence of secrets / RCE-class issues.\n2. Write a short executive summary for an engineering leader.\n3. Prioritize remediations: list the top fixes in order, each with the concrete\n   action and why it matters. Hardcoded production secrets and RCE/command-\n   injection issues come first.\n4. Group findings by theme (secrets, injection, vulnerable deps) with counts.\n\nBase everything ONLY on the provided scan data. Do not invent files, secrets, or\nCVEs that are not present.\n"
+    },
+    {
+      "slug": "self-reflective-research",
+      "name": "Self-Reflective Research",
+      "dir": "examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/self-reflective-research",
+      "path": "examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/self-reflective-research/SKILL.md",
+      "desc": "Draft a research report, then critique and improve it: assess weaknesses, decide whether revision is warranted, and produce an improved version. Use for self-reflective research, draft critique, and iterative report improvement.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/AgentEra/Agently.git",
+        "copy": "cp -r examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/self-reflective-research ~/.claude/skills/self-reflective-research",
+        "raw": "https://raw.githubusercontent.com/AgentEra/Agently/d21445f7e02f20956a5734eceb922616b5f7e669/examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/self-reflective-research/SKILL.md",
+        "saveAs": "~/.claude/skills/self-reflective-research/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:8fdb8a80b34e0273b31b085e5ac7fac0d810313b3bb4401f3bc9a564da71bc12",
+      "bytes": 1052,
+      "wordCount": 107,
+      "repoLicense": "Apache-2.0",
+      "commit": "d21445f7e02f20956a5734eceb922616b5f7e669",
+      "branch": "main",
+      "body": "---\nname: Self-Reflective Research\ndescription: >-\n  Draft a research report, then critique and improve it: assess weaknesses,\n  decide whether revision is warranted, and produce an improved version. Use for\n  self-reflective research, draft critique, and iterative report improvement.\nkeywords: [self-reflective, research, critique, revision, improvement]\n---\n\n# Self-Reflective Research\n\nYou are a researcher who critiques and improves your own work.\n\n## When given only a topic\nDraft a strong first report (evidence-based, specific), then critique it\nhonestly and decide whether a revision is warranted.\n\n## When given a prior draft + your critique\nProduce an improved report that directly addresses the critique. Then re-assess:\nis further revision warranted, or is the report now strong?\n\nAlways return: the (possibly improved) report, a concise critique of the current\nversion, and a judgement of whether another revision round is warranted. Stop\nwhen revisions would no longer materially improve the report. Do not fabricate\nsources or figures.\n",
+      "bodyMd": "# Self-Reflective Research\n\nYou are a researcher who critiques and improves your own work.\n\n## When given only a topic\nDraft a strong first report (evidence-based, specific), then critique it\nhonestly and decide whether a revision is warranted.\n\n## When given a prior draft + your critique\nProduce an improved report that directly addresses the critique. Then re-assess:\nis further revision warranted, or is the report now strong?\n\nAlways return: the (possibly improved) report, a concise critique of the current\nversion, and a judgement of whether another revision round is warranted. Stop\nwhen revisions would no longer materially improve the report. Do not fabricate\nsources or figures.\n"
+    },
+    {
+      "slug": "smart-code-review",
+      "name": "Smart Code Review",
+      "dir": "examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/smart-code-review",
+      "path": "examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/smart-code-review/SKILL.md",
+      "desc": "Review a PR diff: triage its severity, then produce a depth-appropriate review with structured findings, fix suggestions, and a merge decision. Use for code review, review PR, and severity triage requests.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/AgentEra/Agently.git",
+        "copy": "cp -r examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/smart-code-review ~/.claude/skills/smart-code-review",
+        "raw": "https://raw.githubusercontent.com/AgentEra/Agently/d21445f7e02f20956a5734eceb922616b5f7e669/examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/smart-code-review/SKILL.md",
+        "saveAs": "~/.claude/skills/smart-code-review/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:788677870126fefe76e2c52d72fd235854a2fa18bcba7eb35efbdf501a558c45",
+      "bytes": 1301,
+      "wordCount": 158,
+      "repoLicense": "Apache-2.0",
+      "commit": "d21445f7e02f20956a5734eceb922616b5f7e669",
+      "branch": "main",
+      "body": "---\nname: Smart Code Review\ndescription: >-\n  Review a PR diff: triage its severity, then produce a depth-appropriate review\n  with structured findings, fix suggestions, and a merge decision. Use for code\n  review, review PR, and severity triage requests.\nkeywords: [code review, review pr, severity triage, smart review, diff]\n---\n\n# Smart Code Review\n\nYou are a senior code reviewer. Given a PR diff, do this in ONE pass:\n\n## 1. Triage severity\nClassify as low / medium / high / critical:\n- low: cosmetic, typos, comments, formatting only.\n- medium: logic changes in a single function or module.\n- high: API signature changes, schema migrations, auth/permission changes.\n- critical: security-sensitive changes, payment/PII handling, auth bypass risk.\n\n## 2. Scale review depth to severity\n- low: a quick sanity check.\n- medium: review logic and edge cases.\n- high: review API/contract impact, data integrity, and backward compatibility.\n- critical: rigorous security review — call out every risk, with exploit\n  reasoning and a required fix for each.\n\n## 3. Produce findings\nFor each finding: file/location, severity, what is wrong, and a concrete fix.\nThen give an overall merge decision: approve, or block with the must-fix items.\n\nBe specific to the diff. Do not invent code that is not shown.\n",
+      "bodyMd": "# Smart Code Review\n\nYou are a senior code reviewer. Given a PR diff, do this in ONE pass:\n\n## 1. Triage severity\nClassify as low / medium / high / critical:\n- low: cosmetic, typos, comments, formatting only.\n- medium: logic changes in a single function or module.\n- high: API signature changes, schema migrations, auth/permission changes.\n- critical: security-sensitive changes, payment/PII handling, auth bypass risk.\n\n## 2. Scale review depth to severity\n- low: a quick sanity check.\n- medium: review logic and edge cases.\n- high: review API/contract impact, data integrity, and backward compatibility.\n- critical: rigorous security review — call out every risk, with exploit\n  reasoning and a required fix for each.\n\n## 3. Produce findings\nFor each finding: file/location, severity, what is wrong, and a concrete fix.\nThen give an overall merge decision: approve, or block with the must-fix items.\n\nBe specific to the diff. Do not invent code that is not shown.\n"
+    },
+    {
+      "slug": "web-research-report",
+      "name": "Web Research Report",
+      "dir": "examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/web-research-report",
+      "path": "examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/web-research-report/SKILL.md",
+      "desc": "Synthesize fetched web sources into a structured research report on a topic: key findings, themes, tradeoffs, and a recommendation, with citations. Use for web research, literature review, and report writing.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/AgentEra/Agently.git",
+        "copy": "cp -r examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/web-research-report ~/.claude/skills/web-research-report",
+        "raw": "https://raw.githubusercontent.com/AgentEra/Agently/d21445f7e02f20956a5734eceb922616b5f7e669/examples/archived/pre-4.1.3.8-skills-orchestration/agent_auto_orchestration/skills/web-research-report/SKILL.md",
+        "saveAs": "~/.claude/skills/web-research-report/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:4b873e6013a781d39de1d2d1788bafd91f7a5b1ac7557d99f6d00ed6950f37a4",
+      "bytes": 938,
+      "wordCount": 106,
+      "repoLicense": "Apache-2.0",
+      "commit": "d21445f7e02f20956a5734eceb922616b5f7e669",
+      "branch": "main",
+      "body": "---\nname: Web Research Report\ndescription: >-\n  Synthesize fetched web sources into a structured research report on a topic:\n  key findings, themes, tradeoffs, and a recommendation, with citations. Use for\n  web research, literature review, and report writing.\nkeywords: [web research, report, synthesis, sources, citations]\n---\n\n# Web Research Report\n\nYou are a research analyst. You are given a topic and a set of fetched web\nsources (title, url, extracted content). Synthesize them into a structured\nreport.\n\n## Produce\n1. An executive summary (3-5 sentences).\n2. Key findings as themed sections, each citing the source url(s) it draws on.\n3. Tradeoffs / disagreements between sources, if any.\n4. A short recommendation or \"what to do next\".\n5. A sources list (title + url).\n\nGround every claim in the provided sources. If a source could not be fetched\nlive, rely on its snippet and say the evidence is limited. Do not invent sources.\n",
+      "bodyMd": "# Web Research Report\n\nYou are a research analyst. You are given a topic and a set of fetched web\nsources (title, url, extracted content). Synthesize them into a structured\nreport.\n\n## Produce\n1. An executive summary (3-5 sentences).\n2. Key findings as themed sections, each citing the source url(s) it draws on.\n3. Tradeoffs / disagreements between sources, if any.\n4. A short recommendation or \"what to do next\".\n5. A sources list (title + url).\n\nGround every claim in the provided sources. If a source could not be fetched\nlive, rely on its snippet and say the evidence is limited. Do not invent sources.\n"
+    },
+    {
+      "slug": "pinned-release-checklist",
+      "name": "pinned-release-checklist",
+      "dir": "examples/release_pinned_usage/skills/pinned-release-checklist",
+      "path": "examples/release_pinned_usage/skills/pinned-release-checklist/SKILL.md",
+      "desc": "Minimal guidance-only Skill used by release-pinned compatibility examples.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/AgentEra/Agently.git",
+        "copy": "cp -r examples/release_pinned_usage/skills/pinned-release-checklist ~/.claude/skills/pinned-release-checklist",
+        "raw": "https://raw.githubusercontent.com/AgentEra/Agently/d21445f7e02f20956a5734eceb922616b5f7e669/examples/release_pinned_usage/skills/pinned-release-checklist/SKILL.md",
+        "saveAs": "~/.claude/skills/pinned-release-checklist/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:847498933808b974b644e4a69913e5b7be0fa636494fbc138c49238b517994ab",
+      "bytes": 521,
+      "wordCount": 54,
+      "repoLicense": "Apache-2.0",
+      "commit": "d21445f7e02f20956a5734eceb922616b5f7e669",
+      "branch": "main",
+      "body": "---\nname: pinned-release-checklist\ndescription: Minimal guidance-only Skill used by release-pinned compatibility examples.\n---\n\n# Pinned Release Checklist\n\nUse this Skill when a release check needs a deterministic guidance-only Skill\nthat can be installed, inspected, and explicitly selected without a model call.\n\nThe Skill intentionally has no scripts, MCP servers, or side-effect\ncapabilities. It exists to prove SkillLibrary-backed installation and exact\nrevision binding through AgentExecution's current Skill APIs.\n",
+      "bodyMd": "# Pinned Release Checklist\n\nUse this Skill when a release check needs a deterministic guidance-only Skill\nthat can be installed, inspected, and explicitly selected without a model call.\n\nThe Skill intentionally has no scripts, MCP servers, or side-effect\ncapabilities. It exists to prove SkillLibrary-backed installation and exact\nrevision binding through AgentExecution's current Skill APIs.\n"
+    },
+    {
+      "slug": "pinned-script-candidate",
+      "name": "pinned-script-candidate",
+      "dir": "examples/release_pinned_usage/skills/pinned-script-candidate",
+      "path": "examples/release_pinned_usage/skills/pinned-script-candidate/SKILL.md",
+      "desc": "Minimal Skill with an inert script resource for release boundary checks.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/AgentEra/Agently.git",
+        "copy": "cp -r examples/release_pinned_usage/skills/pinned-script-candidate ~/.claude/skills/pinned-script-candidate",
+        "raw": "https://raw.githubusercontent.com/AgentEra/Agently/d21445f7e02f20956a5734eceb922616b5f7e669/examples/release_pinned_usage/skills/pinned-script-candidate/SKILL.md",
+        "saveAs": "~/.claude/skills/pinned-script-candidate/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:b433f5a183e575aad6ce1db5f771c42aa02a0f1ad971c1047852fffeaf1c4693",
+      "bytes": 359,
+      "wordCount": 35,
+      "repoLicense": "Apache-2.0",
+      "commit": "d21445f7e02f20956a5734eceb922616b5f7e669",
+      "branch": "main",
+      "body": "---\nname: pinned-script-candidate\ndescription: Minimal Skill with an inert script resource for release boundary checks.\n---\n\n# Pinned Script Candidate\n\nUse this Skill only to inspect the packaged verification script as a revisioned\nresource. Installing or selecting this Skill does not authorize or execute the\nscript; explicit host binding remains required.\n",
+      "bodyMd": "# Pinned Script Candidate\n\nUse this Skill only to inspect the packaged verification script as a revisioned\nresource. Installing or selecting this Skill does not authorize or execute the\nscript; explicit host binding remains required.\n"
+    },
+    {
+      "slug": "architecture-diagram",
+      "name": "architecture-diagram",
+      "dir": "examples/skills_executor/skills/architecture-diagram",
+      "path": "examples/skills_executor/skills/architecture-diagram/SKILL.md",
+      "desc": "Create a professional, dark-themed software/system architecture diagram as a single self-contained HTML file with inline SVG. Use when asked to visualize system components, layers, services, or how parts of a codebase fit together.",
+      "descZh": "",
+      "triggers": [
+        "layers",
+        "services"
+      ],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/AgentEra/Agently.git",
+        "copy": "cp -r examples/skills_executor/skills/architecture-diagram ~/.claude/skills/architecture-diagram",
+        "raw": "https://raw.githubusercontent.com/AgentEra/Agently/d21445f7e02f20956a5734eceb922616b5f7e669/examples/skills_executor/skills/architecture-diagram/SKILL.md",
+        "saveAs": "~/.claude/skills/architecture-diagram/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:c99afdcb13524cf86307341d7e7314022baad667d99e6e4b08281a62b631bb0e",
+      "bytes": 1924,
+      "wordCount": 225,
+      "repoLicense": "Apache-2.0",
+      "commit": "d21445f7e02f20956a5734eceb922616b5f7e669",
+      "branch": "main",
+      "body": "---\nname: architecture-diagram\ndescription: >-\n  Create a professional, dark-themed software/system architecture diagram as a\n  single self-contained HTML file with inline SVG. Use when asked to visualize\n  system components, layers, services, or how parts of a codebase fit together.\nkeywords: [architecture diagram, system design, svg, html, components, layers]\n---\n\n# Architecture Diagram\n\nProduce ONE self-contained HTML document (embedded CSS + inline SVG, no\nJavaScript, no external images; Google Fonts link is allowed). It must render\ncorrectly when opened directly in a browser.\n\n## Visual design system\n- Background `#020617` with a subtle 40px grid pattern.\n- Font: JetBrains Mono (monospace) via Google Fonts.\n- Component boxes: rounded rects (`rx=\"6\"`), 1.5px stroke, semi-transparent\n  fills. Colour components by role:\n  - facade / developer surface: fill `rgba(8,51,68,0.4)`, stroke `#22d3ee`\n  - core contracts: fill `rgba(6,78,59,0.4)`, stroke `#34d399`\n  - plugins / providers: fill `rgba(120,53,15,0.3)`, stroke `#fbbf24`\n  - execution environment / capabilities: fill `rgba(76,29,149,0.4)`, stroke `#a78bfa`\n  - observation / event bus: fill `rgba(251,146,60,0.3)`, stroke `#fb923c`\n  - external / generic: fill `rgba(30,41,59,0.5)`, stroke `#94a3b8`\n- Component name at 11px white bold; sublabel at 8-9px `#94a3b8`.\n- Arrows via an SVG `marker` arrowhead; draw connecting arrows before boxes so\n  they sit behind them.\n\n## Layout rules\n- Lay the system out as labelled horizontal bands stacked top-to-bottom, one band\n  per architectural layer, with each layer's components inside its band.\n- Keep ≥40px vertical gaps between stacked rows; never overlap boxes.\n- Add a short header (title + subtitle) and a small legend mapping each colour to\n  a layer. Place the legend outside every band.\n\n## Output\nReturn the complete HTML document as a single string. Do not include commentary\noutside the HTML.\n",
+      "bodyMd": "# Architecture Diagram\n\nProduce ONE self-contained HTML document (embedded CSS + inline SVG, no\nJavaScript, no external images; Google Fonts link is allowed). It must render\ncorrectly when opened directly in a browser.\n\n## Visual design system\n- Background `#020617` with a subtle 40px grid pattern.\n- Font: JetBrains Mono (monospace) via Google Fonts.\n- Component boxes: rounded rects (`rx=\"6\"`), 1.5px stroke, semi-transparent\n  fills. Colour components by role:\n  - facade / developer surface: fill `rgba(8,51,68,0.4)`, stroke `#22d3ee`\n  - core contracts: fill `rgba(6,78,59,0.4)`, stroke `#34d399`\n  - plugins / providers: fill `rgba(120,53,15,0.3)`, stroke `#fbbf24`\n  - execution environment / capabilities: fill `rgba(76,29,149,0.4)`, stroke `#a78bfa`\n  - observation / event bus: fill `rgba(251,146,60,0.3)`, stroke `#fb923c`\n  - external / generic: fill `rgba(30,41,59,0.5)`, stroke `#94a3b8`\n- Component name at 11px white bold; sublabel at 8-9px `#94a3b8`.\n- Arrows via an SVG `marker` arrowhead; draw connecting arrows before boxes so\n  they sit behind them.\n\n## Layout rules\n- Lay the system out as labelled horizontal bands stacked top-to-bottom, one band\n  per architectural layer, with each layer's components inside its band.\n- Keep ≥40px vertical gaps between stacked rows; never overlap boxes.\n- Add a short header (title + subtitle) and a small legend mapping each colour to\n  a layer. Place the legend outside every band.\n\n## Output\nReturn the complete HTML document as a single string. Do not include commentary\noutside the HTML.\n"
+    },
+    {
+      "slug": "conditional-resource-guide",
+      "name": "conditional-resource-guide",
+      "dir": "examples/skills_executor/skills/conditional-resource-guide",
+      "path": "examples/skills_executor/skills/conditional-resource-guide/SKILL.md",
+      "desc": "Choose supporting materials for release preparation and incident analysis.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/AgentEra/Agently.git",
+        "copy": "cp -r examples/skills_executor/skills/conditional-resource-guide ~/.claude/skills/conditional-resource-guide",
+        "raw": "https://raw.githubusercontent.com/AgentEra/Agently/d21445f7e02f20956a5734eceb922616b5f7e669/examples/skills_executor/skills/conditional-resource-guide/SKILL.md",
+        "saveAs": "~/.claude/skills/conditional-resource-guide/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:5c19beceab25f4acc156d321d78d3b0324514c3f056f2018e311a27e5ae4838b",
+      "bytes": 498,
+      "wordCount": 48,
+      "repoLicense": "Apache-2.0",
+      "commit": "d21445f7e02f20956a5734eceb922616b5f7e669",
+      "branch": "main",
+      "body": "---\nname: conditional-resource-guide\ndescription: Choose supporting materials for release preparation and incident analysis.\n---\n\n# Supporting materials\n\nFor a release handoff, read `references/primary.md` before drafting the handoff.\nFor an incident investigation, read `references/secondary.md` instead.\nAn initial outline needs neither reference; defer detailed reading until the corresponding work begins.\nThe references support different phases, not a requirement to read both for every task.\n",
+      "bodyMd": "# Supporting materials\n\nFor a release handoff, read `references/primary.md` before drafting the handoff.\nFor an incident investigation, read `references/secondary.md` instead.\nAn initial outline needs neither reference; defer detailed reading until the corresponding work begins.\nThe references support different phases, not a requirement to read both for every task.\n"
+    },
+    {
+      "slug": "ok-status-skill",
+      "name": "OK Status Skill",
+      "dir": "examples/skills_executor/skills/ok-status-skill",
+      "path": "examples/skills_executor/skills/ok-status-skill/SKILL.md",
+      "desc": "Return a structured OK status for model-pool validation.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/AgentEra/Agently.git",
+        "copy": "cp -r examples/skills_executor/skills/ok-status-skill ~/.claude/skills/ok-status-skill",
+        "raw": "https://raw.githubusercontent.com/AgentEra/Agently/d21445f7e02f20956a5734eceb922616b5f7e669/examples/skills_executor/skills/ok-status-skill/SKILL.md",
+        "saveAs": "~/.claude/skills/ok-status-skill/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:1b40bd896a612af67b57945ad553f9b8e2f78a2ef9d2c78b8afb7bb04623fc18",
+      "bytes": 168,
+      "wordCount": 12,
+      "repoLicense": "Apache-2.0",
+      "commit": "d21445f7e02f20956a5734eceb922616b5f7e669",
+      "branch": "main",
+      "body": "---\nname: OK Status Skill\ndescription: Return a structured OK status for model-pool validation.\n---\n\n# OK Status Skill\n\nReturn status `ok` and no other semantic value.\n",
+      "bodyMd": "# OK Status Skill\n\nReturn status `ok` and no other semantic value.\n"
+    },
+    {
+      "slug": "release-checklist",
+      "name": "Release Checklist",
+      "dir": "examples/skills_executor/skills/release-checklist",
+      "path": "examples/skills_executor/skills/release-checklist/SKILL.md",
+      "desc": "Check release readiness and record a release note. Use for release and rollback requests.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/AgentEra/Agently.git",
+        "copy": "cp -r examples/skills_executor/skills/release-checklist ~/.claude/skills/release-checklist",
+        "raw": "https://raw.githubusercontent.com/AgentEra/Agently/d21445f7e02f20956a5734eceb922616b5f7e669/examples/skills_executor/skills/release-checklist/SKILL.md",
+        "saveAs": "~/.claude/skills/release-checklist/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:33cecb46ccfbebc89c260f6e3e42dad47b1b44f1a7bb32b83c888e41e49ab7a1",
+      "bytes": 381,
+      "wordCount": 27,
+      "repoLicense": "Apache-2.0",
+      "commit": "d21445f7e02f20956a5734eceb922616b5f7e669",
+      "branch": "main",
+      "body": "---\nname: Release Checklist\ndescription: Check release readiness and record a release note. Use for release and rollback requests.\nkeywords: [release, rollback, checklist]\n---\n\n# Release Checklist\n\nGiven a release request, confirm readiness: changelog present, migrations\nreviewed, rollback plan defined, on-call notified. Then write a concise release\nnote summarizing what ships.\n",
+      "bodyMd": "# Release Checklist\n\nGiven a release request, confirm readiness: changelog present, migrations\nreviewed, rollback plan defined, on-call notified. Then write a concise release\nnote summarizing what ships.\n"
+    },
+    {
+      "slug": "release-readiness-reviewer",
+      "name": "Release Readiness Reviewer",
+      "dir": "examples/skills_executor/skills/release-readiness-reviewer",
+      "path": "examples/skills_executor/skills/release-readiness-reviewer/SKILL.md",
+      "desc": "Reviews a release candidate and produces a go/no-go readiness decision.",
+      "descZh": "",
+      "triggers": [],
+      "version": "1.0.0",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "go"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/AgentEra/Agently.git",
+        "copy": "cp -r examples/skills_executor/skills/release-readiness-reviewer ~/.claude/skills/release-readiness-reviewer",
+        "raw": "https://raw.githubusercontent.com/AgentEra/Agently/d21445f7e02f20956a5734eceb922616b5f7e669/examples/skills_executor/skills/release-readiness-reviewer/SKILL.md",
+        "saveAs": "~/.claude/skills/release-readiness-reviewer/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:1b7d39e57f4f0dfd361255cd425d69f0896f141734facecc7d7f8f2e6b07dd15",
+      "bytes": 454,
+      "wordCount": 36,
+      "repoLicense": "Apache-2.0",
+      "commit": "d21445f7e02f20956a5734eceb922616b5f7e669",
+      "branch": "main",
+      "body": "---\nname: Release Readiness Reviewer\ndescription: Reviews a release candidate and produces a go/no-go readiness decision.\nkeywords: [release, readiness, review, go-no-go]\nversion: \"1.0.0\"\n---\n\n# Release Readiness Reviewer\n\nYou are a pragmatic release manager. Review release scope, missing safeguards,\nrollback risk, testing confidence, and customer impact. Be concrete and concise;\nprefer specifics from the provided change context over generic advice.\n",
+      "bodyMd": "# Release Readiness Reviewer\n\nYou are a pragmatic release manager. Review release scope, missing safeguards,\nrollback risk, testing confidence, and customer impact. Be concrete and concise;\nprefer specifics from the provided change context over generic advice.\n"
+    },
+    {
+      "slug": "script-release-probe",
+      "name": "script-release-probe",
+      "dir": "examples/skills_executor/skills/script-release-probe",
+      "path": "examples/skills_executor/skills/script-release-probe/SKILL.md",
+      "desc": "Run an isolated release-component probe and report only its observed evidence.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/AgentEra/Agently.git",
+        "copy": "cp -r examples/skills_executor/skills/script-release-probe ~/.claude/skills/script-release-probe",
+        "raw": "https://raw.githubusercontent.com/AgentEra/Agently/d21445f7e02f20956a5734eceb922616b5f7e669/examples/skills_executor/skills/script-release-probe/SKILL.md",
+        "saveAs": "~/.claude/skills/script-release-probe/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:5da5a491435c2f5debddb7699dec647c708908b8714b28efe2bf309e37743103",
+      "bytes": 491,
+      "wordCount": 50,
+      "repoLicense": "Apache-2.0",
+      "commit": "d21445f7e02f20956a5734eceb922616b5f7e669",
+      "branch": "main",
+      "body": "---\nname: script-release-probe\ndescription: Run an isolated release-component probe and report only its observed evidence.\n---\n\n# Release probe\n\nUse `scripts/release_probe.py` through the available Skill script execution\nAction. Pass `--release` and `--component` arguments from the task. The script\nprints one JSON object containing the supplied values, a fresh hexadecimal\n`probe_token`, and `status: success`.\n\nDo not invent the token or claim success without a successful Action result.\n",
+      "bodyMd": "# Release probe\n\nUse `scripts/release_probe.py` through the available Skill script execution\nAction. Pass `--release` and `--component` arguments from the task. The script\nprints one JSON object containing the supplied values, a fresh hexadecimal\n`probe_token`, and `status: success`.\n\nDo not invent the token or claim success without a successful Action result.\n"
+    }
+  ]
+}

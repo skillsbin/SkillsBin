@@ -1,0 +1,516 @@
+{
+  "repo": "HolmesGPT/holmesgpt",
+  "commit": "0e55d511caaa71e2a9096b6c4d309c7b22a0f348",
+  "branch": "master",
+  "fetchedAt": "2026-11-26T21:12:39.730Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "benchmark-judge",
+      "name": "benchmark-judge",
+      "dir": ".claude/skills/benchmark-judge",
+      "path": ".claude/skills/benchmark-judge/SKILL.md",
+      "desc": "This skill should be used when the user asks to \"benchmark the judge\", \"compare LLM judges\", \"pick a new classifier model\", \"replace the eval judge\", or wants to know how accurate, fast and cheap a candidate CLASSIFIER_MODEL is on real eval outputs.",
+      "descZh": "",
+      "triggers": [],
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": true,
+        "network": true,
+        "bins": [
+          "python",
+          "go",
+          "poetry"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HolmesGPT/holmesgpt.git",
+        "copy": "cp -r .claude/skills/benchmark-judge ~/.claude/skills/benchmark-judge",
+        "raw": "https://raw.githubusercontent.com/HolmesGPT/holmesgpt/0e55d511caaa71e2a9096b6c4d309c7b22a0f348/.claude/skills/benchmark-judge/SKILL.md",
+        "saveAs": "~/.claude/skills/benchmark-judge/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:155c55c720e49ccf11e315b312bdaa37e737a026d0e0dcb0e45e1a53b7db88c5",
+      "bytes": 2694,
+      "wordCount": 323,
+      "repoLicense": "Apache-2.0",
+      "commit": "0e55d511caaa71e2a9096b6c4d309c7b22a0f348",
+      "branch": "master",
+      "body": "---\nname: benchmark-judge\ndescription: This skill should be used when the user asks to \"benchmark the judge\", \"compare LLM judges\", \"pick a new classifier model\", \"replace the eval judge\", or wants to know how accurate, fast and cheap a candidate CLASSIFIER_MODEL is on real eval outputs.\nversion: 0.1.0\n---\n\n# Benchmarking LLM Judges\n\nGoal: pick the eval judge (`CLASSIFIER_MODEL`) that is most correct, then fastest and cheapest. Every judge, including the current `gpt-4.1`, can be wrong, so ground truth comes from consensus plus your own adjudication, never from one judge.\n\n## Step 1: Replay a benchmark's judge prompts\n\nPick the latest benchmark with the most iterations from `docs/development/evaluations/history/` (its Braintrust links name the `ci-benchmark-<run_id>` experiment).\n\n```bash\n# Judges are model_list names, e.g. the CI secret MODEL_LIST_YAML\nexport MODEL_LIST_FILE_LOCATION=/path/to/model_list.yaml\npoetry run python .claude/skills/benchmark-judge/benchmark_judge.py <run_id> \\\n  --judges haiku-5.5-medium,gpt-6.1-sol-medium,deepseek-v4-pro,opus-5.5-medium\n```\n\nThe script sends each candidate the exact prompt the CI judge received (stored on the `scorer` span in Braintrust), and records the CI verdict as `gpt-4.1-ci`. Results go to `/tmp/benchmark-judge/<run_id>/<judge>.jsonl`; reruns only replay missing or failed prompts. Requires `BRAINTRUST_API_KEY`.\n\n## Step 2: Build the ground truth\n\nA case where every judge agrees is taken as truth; the rest are written to `disputed.json`.\n\n- **Disputed cases**: read each `prompt` (EXPECTED ELEMENTS and OUTPUT) and decide A (all elements present) or B yourself, following the prompt's rules. Do not side with the majority or with `gpt-4.1-ci`; the judges' `reasons` are hints, not evidence.\n- **Unanimous cases**: also review every unanimous B and a random sample of 20 unanimous A, since all judges can share a mistake.\n\nWrite every verdict to a labels file, `{\"<case id>\": \"A\" | \"B\"}`, with the case ids from `disputed.json` / `cases.json`.\n\n## Step 3: Report\n\n```bash\npoetry run python .claude/skills/benchmark-judge/benchmark_judge.py <run_id> --labels labels.json\n```\n\nPresent the accuracy, cost and latency tables (same shape as the benchmark reports) and recommend a judge: lowest FP + FN first (a false pass hides a real regression, so weigh FP above FN), then p95 latency and total cost. Quote one disputed case each judge got wrong to show the failure mode.\n\nTo switch judges, set `CLASSIFIER_MODEL` (`vars.CLASSIFIER_MODEL` in `.github/workflows/eval-regression.yaml`). The classifier calls the OpenAI SDK directly, so the new judge needs an OpenAI-compatible endpoint (see `tests/llm/utils/classifiers.py`).\n",
+      "bodyMd": "# Benchmarking LLM Judges\n\nGoal: pick the eval judge (`CLASSIFIER_MODEL`) that is most correct, then fastest and cheapest. Every judge, including the current `gpt-4.1`, can be wrong, so ground truth comes from consensus plus your own adjudication, never from one judge.\n\n## Step 1: Replay a benchmark's judge prompts\n\nPick the latest benchmark with the most iterations from `docs/development/evaluations/history/` (its Braintrust links name the `ci-benchmark-<run_id>` experiment).\n\n```bash\n# Judges are model_list names, e.g. the CI secret MODEL_LIST_YAML\nexport MODEL_LIST_FILE_LOCATION=/path/to/model_list.yaml\npoetry run python .claude/skills/benchmark-judge/benchmark_judge.py <run_id> \\\n  --judges haiku-5.5-medium,gpt-6.1-sol-medium,deepseek-v4-pro,opus-5.5-medium\n```\n\nThe script sends each candidate the exact prompt the CI judge received (stored on the `scorer` span in Braintrust), and records the CI verdict as `gpt-4.1-ci`. Results go to `/tmp/benchmark-judge/<run_id>/<judge>.jsonl`; reruns only replay missing or failed prompts. Requires `BRAINTRUST_API_KEY`.\n\n## Step 2: Build the ground truth\n\nA case where every judge agrees is taken as truth; the rest are written to `disputed.json`.\n\n- **Disputed cases**: read each `prompt` (EXPECTED ELEMENTS and OUTPUT) and decide A (all elements present) or B yourself, following the prompt's rules. Do not side with the majority or with `gpt-4.1-ci`; the judges' `reasons` are hints, not evidence.\n- **Unanimous cases**: also review every unanimous B and a random sample of 20 unanimous A, since all judges can share a mistake.\n\nWrite every verdict to a labels file, `{\"<case id>\": \"A\" | \"B\"}`, with the case ids from `disputed.json` / `cases.json`.\n\n## Step 3: Report\n\n```bash\npoetry run python .claude/skills/benchmark-judge/benchmark_judge.py <run_id> --labels labels.json\n```\n\nPresent the accuracy, cost and latency tables (same shape as the benchmark reports) and recommend a judge: lowest FP + FN first (a false pass hides a real regression, so weigh FP above FN), then p95 latency and total cost. Quote one disputed case each judge got wrong to show the failure mode.\n\nTo switch judges, set `CLASSIFIER_MODEL` (`vars.CLASSIFIER_MODEL` in `.github/workflows/eval-regression.yaml`). The classifier calls the OpenAI SDK directly, so the new judge needs an OpenAI-compatible endpoint (see `tests/llm/utils/classifiers.py`).\n"
+    },
+    {
+      "slug": "create-eval",
+      "name": "create-eval",
+      "dir": ".claude/skills/create-eval",
+      "path": ".claude/skills/create-eval/SKILL.md",
+      "desc": "This skill should be used when the user asks to \"create an eval\", \"write an eval test\", \"add a new eval\", \"create a test case\", \"write a test for Holmes\", or discusses LLM evaluation tests, eval fixtures, or test_case.yaml files for the HolmesGPT project.",
+      "descZh": "",
+      "triggers": [],
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "git",
+          "kubectl",
+          "poetry"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HolmesGPT/holmesgpt.git",
+        "copy": "cp -r .claude/skills/create-eval ~/.claude/skills/create-eval",
+        "raw": "https://raw.githubusercontent.com/HolmesGPT/holmesgpt/0e55d511caaa71e2a9096b6c4d309c7b22a0f348/.claude/skills/create-eval/SKILL.md",
+        "saveAs": "~/.claude/skills/create-eval/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:1cf55f35abecbc9f0acf1370af15ae46633732c24b8cce69405fb9c44f0e1d0a",
+      "bytes": 6609,
+      "wordCount": 857,
+      "repoLicense": "Apache-2.0",
+      "commit": "0e55d511caaa71e2a9096b6c4d309c7b22a0f348",
+      "branch": "master",
+      "body": "---\nname: create-eval\ndescription: This skill should be used when the user asks to \"create an eval\", \"write an eval test\", \"add a new eval\", \"create a test case\", \"write a test for Holmes\", or discusses LLM evaluation tests, eval fixtures, or test_case.yaml files for the HolmesGPT project.\nversion: 0.1.0\n---\n\n# Creating HolmesGPT Eval Tests\n\nThis skill provides the complete workflow for creating LLM evaluation tests in the HolmesGPT project. Eval tests validate that Holmes can correctly answer questions by querying real infrastructure and services.\n\n## Test Structure\n\nEach eval lives in its own directory under `tests/llm/fixtures/test_ask_holmes/`:\n\n```\ntests/llm/fixtures/test_ask_holmes/<NNN>_<descriptive_name>/\n├── test_case.yaml          # Required: test definition\n├── toolsets.yaml            # Optional: enable specific toolsets\n├── manifest.yaml            # Optional: Kubernetes manifests\n├── generate_*.py            # Optional: data generation scripts\n└── other supporting files\n```\n\nNaming convention: `<3-digit-number>_<snake_case_description>` (e.g., `212_large_configmap_needle`).\n\n## Creation Workflow\n\n### Step 1: Choose Test Number and Namespace\n\nCheck existing tests to find the next available number:\n\n```bash\nls tests/llm/fixtures/test_ask_holmes/ | sort -n | tail -5\n```\n\nThe namespace must be `app-<testid>` (e.g., `app-212`). All pod and resource names must be unique across all tests.\n\n### Step 2: Validate Tags\n\nOnly use tags that exist in `pyproject.toml` markers section. **Using invalid tags causes test collection failures.** Read `pyproject.toml` and check the `[tool.pytest.ini_options]` markers list before assigning tags. Ask the user before adding any new tag.\n\n### Step 3: Write test_case.yaml\n\nCore fields:\n\n```yaml\nuser_prompt: \"Specific question for Holmes to answer\"\n\nexpected_output:\n  - \"Criterion 1: Must report exact value X\"\n  - \"Criterion 2: Must include specific identifier Y\"\n\ntags:\n  - kubernetes\n  - question-answer\n  - hard\n\nbefore_test: |\n  set -e\n  # Setup infrastructure...\n\nafter_test: |\n  kubectl delete namespace app-NNN --ignore-not-found\n```\n\nFor the complete field reference and all available options, consult **`references/test-case-format.md`**.\n\n### Step 4: Write toolsets.yaml (if needed)\n\nWhen the test requires specific toolsets (Prometheus, Grafana, Elasticsearch, etc.):\n\n```yaml\ntoolsets:\n  kubernetes/core:\n    enabled: true\n  prometheus/metrics:\n    enabled: true\n    config:\n      prometheus_url: http://localhost:10033\n```\n\nWhen a `toolsets.yaml` exists, **only explicitly enabled toolsets are available** to the LLM. All others are disabled.\n\n### Step 5: Write Setup Scripts\n\nThe `before_test` script runs from the test's directory via `/bin/bash`. Key rules:\n\n- Always start with `set -e` to fail on any error\n- Use `kubectl create namespace app-NNN --dry-run=client -o yaml | kubectl apply -f -` for idempotent namespace creation\n- Use `exit 1` when verification fails to fail the test early\n- Clean up temp files at the end of before_test\n\n**Verification focus: verify the needle, not the haystack.** The only verification that matters is that Holmes can discover the answer. Run the same kind of query Holmes would run and check that the expected value (the \"smoking gun\") is present. Do NOT exhaustively verify every piece of infrastructure — if the needle is queryable, the environment is working. Keep setup scripts short and readable.\n\n```bash\n# GOOD - verify the needle is discoverable (one targeted check)\nkubectl get configmap platform-config -n app-212 \\\n  -o jsonpath='{.data.platform-config\\.yaml}' | grep -q '7k3m9x'\n\n# BAD - verifying everything (pod health, service endpoints, API responses, readiness...)\n# This bloats the script without adding value\n```\n\nFor retry loop patterns and other infrastructure details, consult **`references/infrastructure-patterns.md`**.\n\n### Step 6: Design Anti-Hallucination Measures\n\nEvery eval must be designed so the LLM cannot pass by guessing. This is the most critical aspect of eval design.\n\nKey principles:\n- Embed unique random identifiers that cannot be guessed (e.g., `7k3m9x`)\n- Test for specific values discoverable only by querying\n- Use neutral resource names that don't hint at the problem\n- Write prompts that test discovery ability, not domain knowledge\n\nFor detailed anti-hallucination patterns and examples, consult **`references/anti-hallucination.md`**.\n\n## Mandatory Testing Workflow\n\n**Always run evals before submitting when possible.** Follow this sequence:\n\n### Phase 1: Verify Collection\n\n```bash\npoetry run pytest -k \"test_name\" --collect-only -q --no-cov\n```\n\nConfirm the test appears in the output. If not, check for tag or YAML errors.\n\n### Phase 2: Run Setup Only\n\n```bash\npoetry run pytest -k \"test_name\" --only-setup --no-cov\n```\n\nVerify setup completes without errors. Check that infrastructure is ready.\n\n### Phase 3: Run Full Test\n\n```bash\npoetry run pytest -k \"test_name\" --no-cov --skip-setup\n```\n\nUse `--skip-setup` to reuse the infrastructure from Phase 2. Verify the test passes.\n\n### Phase 4: Verify Cleanup\n\n```bash\nkubectl get namespace app-NNN\n```\n\nShould return NotFound after the test completes (unless `--skip-cleanup` was used).\n\n## Key Rules\n\n1. **Namespace isolation**: Every test uses `app-<testid>` namespace\n2. **Unique resource names**: Never reuse pod/service names across tests\n3. **No `:latest` tags**: Always use specific container image versions\n4. **Secrets for scripts**: Use Kubernetes Secrets for scripts, not ConfigMaps or inline\n5. **No hints in names**: Avoid `broken-pod`, `crashloop-app` — use neutral names\n6. **Sign commits**: Always use `git commit -s` for DCO compliance\n\n## Quick Reference: Common Patterns\n\n| Pattern | Example |\n|---------|---------|\n| Simple K8s test | Deploy pod, ask about status |\n| Log analysis | Generate logs via script, ask Holmes to analyze |\n| Metrics query | Deploy Prometheus + exporters, query metrics |\n| Large data needle | Create large ConfigMap/resource, find specific value |\n| Cloud service | Test against Elasticsearch/external API via env vars |\n\n## Additional Resources\n\n### Reference Files\n\nFor detailed documentation, consult:\n- **`references/test-case-format.md`** — Complete test_case.yaml field reference with all options\n- **`references/anti-hallucination.md`** — Anti-cheat testing patterns and prompt design\n- **`references/infrastructure-patterns.md`** — Setup scripts, retry loops, port forwards, shared infra\n- **`references/running-evals.md`** — CLI flags, environment variables, model comparison, debugging",
+      "bodyMd": "# Creating HolmesGPT Eval Tests\n\nThis skill provides the complete workflow for creating LLM evaluation tests in the HolmesGPT project. Eval tests validate that Holmes can correctly answer questions by querying real infrastructure and services.\n\n## Test Structure\n\nEach eval lives in its own directory under `tests/llm/fixtures/test_ask_holmes/`:\n\n```\ntests/llm/fixtures/test_ask_holmes/<NNN>_<descriptive_name>/\n├── test_case.yaml          # Required: test definition\n├── toolsets.yaml            # Optional: enable specific toolsets\n├── manifest.yaml            # Optional: Kubernetes manifests\n├── generate_*.py            # Optional: data generation scripts\n└── other supporting files\n```\n\nNaming convention: `<3-digit-number>_<snake_case_description>` (e.g., `212_large_configmap_needle`).\n\n## Creation Workflow\n\n### Step 1: Choose Test Number and Namespace\n\nCheck existing tests to find the next available number:\n\n```bash\nls tests/llm/fixtures/test_ask_holmes/ | sort -n | tail -5\n```\n\nThe namespace must be `app-<testid>` (e.g., `app-212`). All pod and resource names must be unique across all tests.\n\n### Step 2: Validate Tags\n\nOnly use tags that exist in `pyproject.toml` markers section. **Using invalid tags causes test collection failures.** Read `pyproject.toml` and check the `[tool.pytest.ini_options]` markers list before assigning tags. Ask the user before adding any new tag.\n\n### Step 3: Write test_case.yaml\n\nCore fields:\n\n```yaml\nuser_prompt: \"Specific question for Holmes to answer\"\n\nexpected_output:\n  - \"Criterion 1: Must report exact value X\"\n  - \"Criterion 2: Must include specific identifier Y\"\n\ntags:\n  - kubernetes\n  - question-answer\n  - hard\n\nbefore_test: |\n  set -e\n  # Setup infrastructure...\n\nafter_test: |\n  kubectl delete namespace app-NNN --ignore-not-found\n```\n\nFor the complete field reference and all available options, consult **`references/test-case-format.md`**.\n\n### Step 4: Write toolsets.yaml (if needed)\n\nWhen the test requires specific toolsets (Prometheus, Grafana, Elasticsearch, etc.):\n\n```yaml\ntoolsets:\n  kubernetes/core:\n    enabled: true\n  prometheus/metrics:\n    enabled: true\n    config:\n      prometheus_url: http://localhost:10033\n```\n\nWhen a `toolsets.yaml` exists, **only explicitly enabled toolsets are available** to the LLM. All others are disabled.\n\n### Step 5: Write Setup Scripts\n\nThe `before_test` script runs from the test's directory via `/bin/bash`. Key rules:\n\n- Always start with `set -e` to fail on any error\n- Use `kubectl create namespace app-NNN --dry-run=client -o yaml | kubectl apply -f -` for idempotent namespace creation\n- Use `exit 1` when verification fails to fail the test early\n- Clean up temp files at the end of before_test\n\n**Verification focus: verify the needle, not the haystack.** The only verification that matters is that Holmes can discover the answer. Run the same kind of query Holmes would run and check that the expected value (the \"smoking gun\") is present. Do NOT exhaustively verify every piece of infrastructure — if the needle is queryable, the environment is working. Keep setup scripts short and readable.\n\n```bash\n# GOOD - verify the needle is discoverable (one targeted check)\nkubectl get configmap platform-config -n app-212 \\\n  -o jsonpath='{.data.platform-config\\.yaml}' | grep -q '7k3m9x'\n\n# BAD - verifying everything (pod health, service endpoints, API responses, readiness...)\n# This bloats the script without adding value\n```\n\nFor retry loop patterns and other infrastructure details, consult **`references/infrastructure-patterns.md`**.\n\n### Step 6: Design Anti-Hallucination Measures\n\nEvery eval must be designed so the LLM cannot pass by guessing. This is the most critical aspect of eval design.\n\nKey principles:\n- Embed unique random identifiers that cannot be guessed (e.g., `7k3m9x`)\n- Test for specific values discoverable only by querying\n- Use neutral resource names that don't hint at the problem\n- Write prompts that test discovery ability, not domain knowledge\n\nFor detailed anti-hallucination patterns and examples, consult **`references/anti-hallucination.md`**.\n\n## Mandatory Testing Workflow\n\n**Always run evals before submitting when possible.** Follow this sequence:\n\n### Phase 1: Verify Collection\n\n```bash\npoetry run pytest -k \"test_name\" --collect-only -q --no-cov\n```\n\nConfirm the test appears in the output. If not, check for tag or YAML errors.\n\n### Phase 2: Run Setup Only\n\n```bash\npoetry run pytest -k \"test_name\" --only-setup --no-cov\n```\n\nVerify setup completes without errors. Check that infrastructure is ready.\n\n### Phase 3: Run Full Test\n\n```bash\npoetry run pytest -k \"test_name\" --no-cov --skip-setup\n```\n\nUse `--skip-setup` to reuse the infrastructure from Phase 2. Verify the test passes.\n\n### Phase 4: Verify Cleanup\n\n```bash\nkubectl get namespace app-NNN\n```\n\nShould return NotFound after the test completes (unless `--skip-cleanup` was used).\n\n## Key Rules\n\n1. **Namespace isolation**: Every test uses `app-<testid>` namespace\n2. **Unique resource names**: Never reuse pod/service names across tests\n3. **No `:latest` tags**: Always use specific container image versions\n4. **Secrets for scripts**: Use Kubernetes Secrets for scripts, not ConfigMaps or inline\n5. **No hints in names**: Avoid `broken-pod`, `crashloop-app` — use neutral names\n6. **Sign commits**: Always use `git commit -s` for DCO compliance\n\n## Quick Reference: Common Patterns\n\n| Pattern | Example |\n|---------|---------|\n| Simple K8s test | Deploy pod, ask about status |\n| Log analysis | Generate logs via script, ask Holmes to analyze |\n| Metrics query | Deploy Prometheus + exporters, query metrics |\n| Large data needle | Create large ConfigMap/resource, find specific value |\n| Cloud service | Test against Elasticsearch/external API via env vars |\n\n## Additional Resources\n\n### Reference Files\n\nFor detailed documentation, consult:\n- **`references/test-case-format.md`** — Complete test_case.yaml field reference with all options\n- **`references/anti-hallucination.md`** — Anti-cheat testing patterns and prompt design\n- **`references/infrastructure-patterns.md`** — Setup scripts, retry loops, port forwards, shared infra\n- **`references/running-evals.md`** — CLI flags, environment variables, model comparison, debugging"
+    },
+    {
+      "slug": "patch-cve",
+      "name": "patch-cve",
+      "dir": ".claude/skills/patch-cve",
+      "path": ".claude/skills/patch-cve/SKILL.md",
+      "desc": "Use this skill when the user asks to \"patch a CVE\", \"fix a CVE\", \"handle a CVE\", \"check a CVE\", or discusses Docker image vulnerabilities, docker scout findings, or Go/dependency CVE remediation in the Dockerfile.",
+      "descZh": "",
+      "triggers": [
+        "fix a CVE",
+        "handle a CVE",
+        "check a CVE",
+        "discusses D"
+      ],
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "git",
+          "python",
+          "python3",
+          "pip",
+          "docker",
+          "curl",
+          "go",
+          "helm"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HolmesGPT/holmesgpt.git",
+        "copy": "cp -r .claude/skills/patch-cve ~/.claude/skills/patch-cve",
+        "raw": "https://raw.githubusercontent.com/HolmesGPT/holmesgpt/0e55d511caaa71e2a9096b6c4d309c7b22a0f348/.claude/skills/patch-cve/SKILL.md",
+        "saveAs": "~/.claude/skills/patch-cve/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:e58572d7cef95711c81cf7d1042de39111810a521bae4979fb5981fa2d4dc75d",
+      "bytes": 6648,
+      "wordCount": 957,
+      "repoLicense": "Apache-2.0",
+      "commit": "0e55d511caaa71e2a9096b6c4d309c7b22a0f348",
+      "branch": "master",
+      "body": "---\nname: patch-cve\ndescription: Use this skill when the user asks to \"patch a CVE\", \"fix a CVE\", \"handle a CVE\", \"check a CVE\", or discusses Docker image vulnerabilities, docker scout findings, or Go/dependency CVE remediation in the Dockerfile.\nversion: 0.1.0\n---\n\n# Patching CVEs in the Docker Image\n\nThis skill provides the workflow for patching CVEs found in the HolmesGPT Docker image. It covers identifying the source, checking if upstream fixes exist, applying patches, and validating the fix.\n\n## Workflow Overview\n\n```\n1. Identify  →  2. Check upstream  →  3. Apply fix  →  4. Build  →  5. Validate  →  6. Cleanup\n```\n\n## Step 1: Identify the CVE Source\n\nRun `docker scout cves` on the current image to understand which package/binary introduces the CVE:\n\n```bash\ndocker scout cves <image> 2>&1 | grep -B20 -A5 \"CVE-XXXX-XXXXX\"\n```\n\nKey info to extract:\n- **Affected package**: e.g., `stdlib 1.25.5` (Go standard library), a system package, or a Python dependency\n- **Affected range**: e.g., `>=1.25.0-0, <1.25.7`\n- **Fixed version**: e.g., `1.25.7`\n- **Which binary**: identify which binary in the image pulls in the vulnerable dependency\n\n## Step 2: Check if Upstream Fixes Exist\n\nBefore rebuilding from source, always check if a newer release of the affected tool already includes the fix.\n\n### For Go-based tools (ArgoCD, Helm, etc.)\n\n1. **Check the latest release version**:\n   ```bash\n   curl -s https://api.github.com/repos/<org>/<repo>/releases/latest | python3 -c \"import sys,json; print(json.load(sys.stdin)['tag_name'])\"\n   ```\n\n2. **Check Go version in that release** — download the binary and inspect:\n   ```bash\n   # For tools that show version info with Go version\n   ./<tool> version\n   ```\n   Or check `go.mod` in the release tag:\n   ```bash\n   curl -s https://raw.githubusercontent.com/<org>/<repo>/<tag>/go.mod | head -5\n   ```\n   > **Important**: `go.mod` shows the minimum Go version, but the binary may be compiled with a newer Go toolchain. Always prefer checking the actual binary's version output.\n\n3. **Check upstream PRs/issues** for the CVE — it may be merged to `master` but not yet in a release branch. Search:\n   ```\n   https://github.com/<org>/<repo>/pulls?q=CVE-XXXX-XXXXX\n   ```\n\n### For system packages (apt)\n\nCheck if a newer version is available:\n```bash\napt-get update && apt-cache policy <package>\n```\n\n### For Python dependencies\n\nCheck if a newer version fixes the CVE:\n```bash\npip index versions <package>\n```\n\n## Step 3: Apply the Fix\n\nChoose the appropriate strategy based on findings:\n\n### Strategy A: Upgrade to a fixed upstream release (preferred)\n\nIf a newer release includes the fix, simply update the version in the Dockerfile:\n```dockerfile\nARG TOOL_VERSION=vX.Y.Z  # Updated from vX.Y.W to fix CVE-XXXX-XXXXX\n```\n\n### Strategy B: Rebuild from source with patched compiler/dependency\n\nIf upstream hasn't released a fix yet, rebuild the tool from source. For Go CVEs:\n\n```dockerfile\nFROM golang:<fixed-version> AS go-builder\nRUN git clone --depth 1 --branch <version> <repo> /build/<tool>\nWORKDIR /build/<tool>\nRUN CGO_ENABLED=0 go build -o /go/bin/<tool> <build-path>\n```\n\nOr use the pre-built binary approach (see Strategy C).\n\n### Strategy C: Pre-build binaries locally (fastest Docker builds)\n\nFor tools that are slow to compile, build locally for both architectures and commit to the repo:\n\n1. Create a build script in `scripts/` (see `scripts/build_go_binaries.sh` for reference)\n2. Build for both `linux/amd64` and `linux/arm64` using cross-compilation:\n   ```bash\n   CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o bin/<tool>/amd64/<tool> <build-path>\n   CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o bin/<tool>/arm64/<tool> <build-path>\n   ```\n3. Use `ARG TARGETARCH` in Dockerfile to select the right binary:\n   ```dockerfile\n   ARG TARGETARCH\n   COPY bin/<tool>/${TARGETARCH}/<tool> /usr/local/bin/<tool>\n   ```\n4. Consider using Git LFS for large binaries (~200MB+)\n\n### Strategy D: Pin system package version\n\nFor apt packages:\n```dockerfile\nRUN apt-get install -y <package>=<fixed-version>\n```\n\n## Step 4: Build the Docker Image\n\nBuild for the target platform:\n\n```bash\ndocker build --platform linux/amd64 -t holmes-cve-test:latest .\n```\n\n> **Note**: For a quick validation, building for a single platform is sufficient. Multi-platform builds (`linux/amd64,linux/arm64`) can be done after the fix is confirmed.\n\n## Step 5: Validate the Fix\n\nThis is the most critical step. **Never skip validation.**\n\n### 5a: Check the specific CVE is gone\n\n```bash\ndocker scout cves holmes-cve-test:latest 2>&1 | grep -A5 \"CVE-XXXX-XXXXX\"\n```\n\n- **If no output** → CVE is fixed\n- **If still present** → the fix didn't work, go back to Step 2\n\n### 5b: Run a full scan and review remaining CVEs\n\n```bash\ndocker scout cves holmes-cve-test:latest 2>&1 | grep -E \"✗ (CRITICAL|HIGH)\"\n```\n\nCheck if the fix introduced any new vulnerabilities or if there are other CVEs that should be addressed.\n\n### 5c: Verify the tool still works\n\n```bash\ndocker run --rm holmes-cve-test:latest <tool> version\ndocker run --rm holmes-cve-test:latest <tool> --help\n```\n\n## Step 6: Document and Clean Up\n\n1. **Add comments in the Dockerfile** explaining the CVE patch and when it can be reverted:\n   ```dockerfile\n   # Rebuilt with Go 1.25.7 to fix CVE-2025-68121.\n   # Revert when <tool> releases a version built with Go >= 1.25.7.\n   ```\n\n2. **Remove temporary workarounds** when upstream releases a fix. Keep track of what needs reverting.\n\n3. **Clean up test images**:\n   ```bash\n   docker rmi holmes-cve-test:latest\n   ```\n\n## Common Patterns\n\n### Go stdlib CVEs\n\nThese are the most common. A CVE in Go's standard library affects every Go binary in the image. Steps:\n1. Identify all Go binaries in the image and their Go versions\n2. Check if newer releases of each tool use a fixed Go version\n3. Only rebuild the ones that still use a vulnerable Go version\n\n### Multi-binary images\n\nWhen the image contains multiple Go binaries (e.g., ArgoCD + Helm), each may use a different Go version. Check and fix each independently — don't assume fixing one fixes all.\n\n## Checklist\n\n- [ ] Identified which binary/package introduces the CVE\n- [ ] Checked latest upstream releases for a fix\n- [ ] Checked upstream PRs/issues for pending fixes\n- [ ] Applied the fix (upgrade or rebuild)\n- [ ] Built the Docker image successfully\n- [ ] Ran `docker scout cves` and confirmed the CVE is gone\n- [ ] Verified the patched tool still works (`--help`, `version`)\n- [ ] Added Dockerfile comments explaining the patch and revert conditions\n- [ ] Confirmed both architectures are supported (amd64 + arm64)\n",
+      "bodyMd": "# Patching CVEs in the Docker Image\n\nThis skill provides the workflow for patching CVEs found in the HolmesGPT Docker image. It covers identifying the source, checking if upstream fixes exist, applying patches, and validating the fix.\n\n## Workflow Overview\n\n```\n1. Identify  →  2. Check upstream  →  3. Apply fix  →  4. Build  →  5. Validate  →  6. Cleanup\n```\n\n## Step 1: Identify the CVE Source\n\nRun `docker scout cves` on the current image to understand which package/binary introduces the CVE:\n\n```bash\ndocker scout cves <image> 2>&1 | grep -B20 -A5 \"CVE-XXXX-XXXXX\"\n```\n\nKey info to extract:\n- **Affected package**: e.g., `stdlib 1.25.5` (Go standard library), a system package, or a Python dependency\n- **Affected range**: e.g., `>=1.25.0-0, <1.25.7`\n- **Fixed version**: e.g., `1.25.7`\n- **Which binary**: identify which binary in the image pulls in the vulnerable dependency\n\n## Step 2: Check if Upstream Fixes Exist\n\nBefore rebuilding from source, always check if a newer release of the affected tool already includes the fix.\n\n### For Go-based tools (ArgoCD, Helm, etc.)\n\n1. **Check the latest release version**:\n   ```bash\n   curl -s https://api.github.com/repos/<org>/<repo>/releases/latest | python3 -c \"import sys,json; print(json.load(sys.stdin)['tag_name'])\"\n   ```\n\n2. **Check Go version in that release** — download the binary and inspect:\n   ```bash\n   # For tools that show version info with Go version\n   ./<tool> version\n   ```\n   Or check `go.mod` in the release tag:\n   ```bash\n   curl -s https://raw.githubusercontent.com/<org>/<repo>/<tag>/go.mod | head -5\n   ```\n   > **Important**: `go.mod` shows the minimum Go version, but the binary may be compiled with a newer Go toolchain. Always prefer checking the actual binary's version output.\n\n3. **Check upstream PRs/issues** for the CVE — it may be merged to `master` but not yet in a release branch. Search:\n   ```\n   https://github.com/<org>/<repo>/pulls?q=CVE-XXXX-XXXXX\n   ```\n\n### For system packages (apt)\n\nCheck if a newer version is available:\n```bash\napt-get update && apt-cache policy <package>\n```\n\n### For Python dependencies\n\nCheck if a newer version fixes the CVE:\n```bash\npip index versions <package>\n```\n\n## Step 3: Apply the Fix\n\nChoose the appropriate strategy based on findings:\n\n### Strategy A: Upgrade to a fixed upstream release (preferred)\n\nIf a newer release includes the fix, simply update the version in the Dockerfile:\n```dockerfile\nARG TOOL_VERSION=vX.Y.Z  # Updated from vX.Y.W to fix CVE-XXXX-XXXXX\n```\n\n### Strategy B: Rebuild from source with patched compiler/dependency\n\nIf upstream hasn't released a fix yet, rebuild the tool from source. For Go CVEs:\n\n```dockerfile\nFROM golang:<fixed-version> AS go-builder\nRUN git clone --depth 1 --branch <version> <repo> /build/<tool>\nWORKDIR /build/<tool>\nRUN CGO_ENABLED=0 go build -o /go/bin/<tool> <build-path>\n```\n\nOr use the pre-built binary approach (see Strategy C).\n\n### Strategy C: Pre-build binaries locally (fastest Docker builds)\n\nFor tools that are slow to compile, build locally for both architectures and commit to the repo:\n\n1. Create a build script in `scripts/` (see `scripts/build_go_binaries.sh` for reference)\n2. Build for both `linux/amd64` and `linux/arm64` using cross-compilation:\n   ```bash\n   CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o bin/<tool>/amd64/<tool> <build-path>\n   CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o bin/<tool>/arm64/<tool> <build-path>\n   ```\n3. Use `ARG TARGETARCH` in Dockerfile to select the right binary:\n   ```dockerfile\n   ARG TARGETARCH\n   COPY bin/<tool>/${TARGETARCH}/<tool> /usr/local/bin/<tool>\n   ```\n4. Consider using Git LFS for large binaries (~200MB+)\n\n### Strategy D: Pin system package version\n\nFor apt packages:\n```dockerfile\nRUN apt-get install -y <package>=<fixed-version>\n```\n\n## Step 4: Build the Docker Image\n\nBuild for the target platform:\n\n```bash\ndocker build --platform linux/amd64 -t holmes-cve-test:latest .\n```\n\n> **Note**: For a quick validation, building for a single platform is sufficient. Multi-platform builds (`linux/amd64,linux/arm64`) can be done after the fix is confirmed.\n\n## Step 5: Validate the Fix\n\nThis is the most critical step. **Never skip validation.**\n\n### 5a: Check the specific CVE is gone\n\n```bash\ndocker scout cves holmes-cve-test:latest 2>&1 | grep -A5 \"CVE-XXXX-XXXXX\"\n```\n\n- **If no output** → CVE is fixed\n- **If still present** → the fix didn't work, go back to Step 2\n\n### 5b: Run a full scan and review remaining CVEs\n\n```bash\ndocker scout cves holmes-cve-test:latest 2>&1 | grep -E \"✗ (CRITICAL|HIGH)\"\n```\n\nCheck if the fix introduced any new vulnerabilities or if there are other CVEs that should be addressed.\n\n### 5c: Verify the tool still works\n\n```bash\ndocker run --rm holmes-cve-test:latest <tool> version\ndocker run --rm holmes-cve-test:latest <tool> --help\n```\n\n## Step 6: Document and Clean Up\n\n1. **Add comments in the Dockerfile** explaining the CVE patch and when it can be reverted:\n   ```dockerfile\n   # Rebuilt with Go 1.25.7 to fix CVE-2025-68121.\n   # Revert when <tool> releases a version built with Go >= 1.25.7.\n   ```\n\n2. **Remove temporary workarounds** when upstream releases a fix. Keep track of what needs reverting.\n\n3. **Clean up test images**:\n   ```bash\n   docker rmi holmes-cve-test:latest\n   ```\n\n## Common Patterns\n\n### Go stdlib CVEs\n\nThese are the most common. A CVE in Go's standard library affects every Go binary in the image. Steps:\n1. Identify all Go binaries in the image and their Go versions\n2. Check if newer releases of each tool use a fixed Go version\n3. Only rebuild the ones that still use a vulnerable Go version\n\n### Multi-binary images\n\nWhen the image contains multiple Go binaries (e.g., ArgoCD + Helm), each may use a different Go version. Check and fix each independently — don't assume fixing one fixes all.\n\n## Checklist\n\n- [ ] Identified which binary/package introduces the CVE\n- [ ] Checked latest upstream releases for a fix\n- [ ] Checked upstream PRs/issues for pending fixes\n- [ ] Applied the fix (upgrade or rebuild)\n- [ ] Built the Docker image successfully\n- [ ] Ran `docker scout cves` and confirmed the CVE is gone\n- [ ] Verified the patched tool still works (`--help`, `version`)\n- [ ] Added Dockerfile comments explaining the patch and revert conditions\n- [ ] Confirmed both architectures are supported (amd64 + arm64)\n"
+    },
+    {
+      "slug": "review-eval-run",
+      "name": "review-eval-run",
+      "dir": ".claude/skills/review-eval-run",
+      "path": ".claude/skills/review-eval-run/SKILL.md",
+      "desc": "This skill should be used when the user asks to \"review an eval run\", \"check a benchmark run\", \"investigate eval results\", \"are these failures real\", or shares a GitHub Actions eval/benchmark run URL or Braintrust experiment and wants to know whether failures are model failures or bad evals.",
+      "descZh": "",
+      "triggers": [],
+      "version": "0.1.0",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": true,
+        "network": true,
+        "bins": [
+          "git",
+          "python",
+          "gh",
+          "poetry"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HolmesGPT/holmesgpt.git",
+        "copy": "cp -r .claude/skills/review-eval-run ~/.claude/skills/review-eval-run",
+        "raw": "https://raw.githubusercontent.com/HolmesGPT/holmesgpt/0e55d511caaa71e2a9096b6c4d309c7b22a0f348/.claude/skills/review-eval-run/SKILL.md",
+        "saveAs": "~/.claude/skills/review-eval-run/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:b4011a9bb35bb7d5b1047d17273fab79c53fa9a5212728db6bbbe657d0555bf3",
+      "bytes": 7824,
+      "wordCount": 1021,
+      "repoLicense": "Apache-2.0",
+      "commit": "0e55d511caaa71e2a9096b6c4d309c7b22a0f348",
+      "branch": "master",
+      "body": "---\nname: review-eval-run\ndescription: This skill should be used when the user asks to \"review an eval run\", \"check a benchmark run\", \"investigate eval results\", \"are these failures real\", or shares a GitHub Actions eval/benchmark run URL or Braintrust experiment and wants to know whether failures are model failures or bad evals.\nversion: 0.1.0\n---\n\n# Reviewing an Eval Run\n\nGoal: separate real model failures from broken evals, harness bugs and judge mistakes before anyone trusts the numbers.\n\n## Step 1: Get the inputs and run the checks\n\nThe run's pytest report (`eval_results.json`, in the `eval-results-<run_id>` artifact) is the source of truth for pass/fail, answers, the judge's rationale (`judge_rationale`), provider errors and skill-check failures. Braintrust (experiment `ci-benchmark-<run_id>`) only adds trace links and tool spans: it drops rows, and the script warns which runs it is missing.\n\n```bash\n# A run id downloads the artifact (cached under $TMPDIR/review-eval-run/<run_id>/);\n# a path to eval_results.json works too.\npoetry run python .claude/skills/review-eval-run/review_eval_run.py <run_id> \\\n  --baseline <previous_run_id | eval_results.json | committed report .md> \\\n  --exclude-tests 101_loki_historical_logs_pod_deleted,... \\\n  --model <newest-model> [--min-cache 50] [--braintrust <events.json | experiment>] [--no-braintrust]\n```\n\n- **Artifact by hand**: `gh api repos/HolmesGPT/holmesgpt/actions/runs/<run_id>/artifacts` for the id, then `gh api repos/HolmesGPT/holmesgpt/actions/artifacts/<id>/zip > results.zip`. Artifacts expire; a committed report then works as the baseline (`docs/development/evaluations/history/results_*.md`, or `git show <commit>:docs/development/evaluations/fast-benchmark-results.md`) but carries only status and cost per run.\n- **Full job log**: `gh run view <run_id> --json jobs` for the job id, then `gh api repos/HolmesGPT/holmesgpt/actions/jobs/<job_id>/logs > job.log`. The GitHub MCP `get_job_logs` returns only the last 5,000 lines.\n- **Network**: `api.braintrust.dev` (with `BRAINTRUST_API_KEY`; logging eval runs also needs `www.braintrust.dev`, where the SDK logs in), and the blob host GitHub redirects artifact and log downloads to, `productionresultssa<N>.blob.core.windows.net`. `N` differs per run (`sa2`, `sa6`, `sa11` seen), so allow the wildcard; a 403 \"Forbidden\" from `gh api .../zip` means that shard is blocked.\n- If the run is still in progress, check `gh run view <id> --json status,jobs` first.\n\nThe script output is a guideline, not a verdict: it only catches known patterns. Always also open the failing traces in Braintrust, read the rendered prompts and tool outputs, and look for anything the script doesn't check.\n\n## Step 2: Act on each section\n\n**Pass rate and cost**: per model, raw (passed / all runs) and clean (passed / executed runs, without the `--exclude-tests` eval bugs), next to the baseline. Cost is the sum of per-test cost, as in the markdown report; `COST SPIKE` means more than 1.5× the baseline. Models new to this run show `no baseline`. Compare clean rates: raw rates move with provider outages.\n\n**Regressions vs baseline**: tests a model passed in every baseline run and now fails at least once. Read each before calling it a model regression; fixture changes between the two runs show up here too.\n\n**Never-executed runs**: ⚠️ provider errors, ⏱️ timeouts/rate limits, setup failures, skips and crashes before the model answered. They say nothing about the model; report them apart and leave them out of success rates.\n\n**Skill-check failures**: runs failed by the deterministic skill-suggestion check (`fail_reason`), with the judge's own verdict and the suggested skill titles. A `correct` judge verdict means the answer was right and only the suggestion was wrong — report these apart from wrong answers, and decide whether the suggested skill was genuinely bad or the eval's `memories_generated: false` is too strict. Reports from before ROB-1715 show `not recorded`: the check overwrote the judge's score.\n\n**Suspect tests**: each pattern almost always means an eval problem, not a model problem. Only executed runs count.\n\n- `fails for N/M models that ran it` (one iteration per test) — at least half the models fail it. Check the fixture data and whether outputs actually contain the expected answer.\n- `fails for every model` — check the harness/feature flags the test depends on (e.g. `enable_todo` vs `DISABLED_BY_DEFAULT` in `holmes/core/prompt.py`).\n- `passes only on first iteration` — shared setup state decays between iterations (iterations run ~35 min apart on the same cluster). Compare tool outputs of iteration 1 vs 2: if the same query returns data then `None`, the fixture is broken (e.g. Loki flushing idle streams).\n- `no model passes every iteration` — read the failing outputs; flaky setup or an over-strict `expected_output`.\n\n**Prompt caching**: every model should be at or above `--min-cache` (default 50%). `LOW` means the prompt prefix is changing between calls (e.g. timestamps or per-call data early in the system prompt); `NOT REPORTED` means the provider/litellm returns no `cached_tokens` — say so, don't call it a caching bug.\n\n**Tool errors**: high rates usually mean a broken toolset config or port-forward in the fixture; the most frequent error is printed (repeated `Refusing to run this tool call` means the model is looping on one call).\n\n**Failures for `--model`**: for every failure, compare OUTPUT against EXPECTED and the tool calls, then classify:\n\n- **Eval/harness bug** — the data the model needed wasn't there, or a required tool/prompt was missing.\n- **Judge false negative** — the output contains the expected answer but was scored 0.\n- **Real model failure** — the data was available in tool output and the model missed or misread it.\n\nQuote the specific tool output or line of the answer that proves each verdict.\n\n## Step 3: Report\n\nEnd with one table: `Test | Verdict (eval bug / judge false negative / real failure) | Evidence`, plus success rates recomputed without the eval-bug tests.\n\n## Other things worth checking\n\n- Latency regressions against the previous benchmark: `compare_with_benchmark` in `tests/llm/utils/braintrust_history.py`.\n- Runs that hit `max_steps` or timed out (long duration, no final answer).\n- Rendered `system_prompt` in the eval metadata missing a component the test expects.\n\n## Running evals locally\n\nCI builds the model list from the `MODEL_LIST_YAML` secret, which can't be read outside Actions. Locally, write your own and point `MODEL_LIST_FILE_LOCATION` at it. Each top-level key is the model name passed in `MODEL` (comma-separated) and its value is litellm parameters; `{{ env.X }}` is filled from the environment:\n\n```yaml\nsonnet-5.5-medium:\n  model: bedrock/global.anthropic.claude-sonnet-5-5\n  aws_access_key_id: '{{ env.EVALS_AWS_ACCESS_KEY_ID }}'\n  aws_secret_access_key: '{{ env.EVALS_AWS_SECRET_ACCESS_KEY }}'\n  aws_region_name: us-east-1\n  reasoning_effort: medium\nkimi-k3:\n  model: openrouter/moonshotai/kimi-k3\n  api_key: '{{ env.EVALS_OPENROUTER_API_KEY }}'\n```\n\nBy convention the credentials live in `EVALS_`-prefixed variables so they don't collide with the provider SDKs' own: `EVALS_AWS_ACCESS_KEY_ID` / `EVALS_AWS_SECRET_ACCESS_KEY` (Bedrock Claude models), `EVALS_AZURE_SWEDEN_API_KEY` (Azure gpt-6.1-sol, also the judge), `EVALS_OPENAI_API_KEY`, `EVALS_GEMINI_API_KEY` and `EVALS_OPENROUTER_API_KEY` (deepseek, kimi, glm, qwen). Keep only the benchmark models (`DEFAULT_BENCHMARK_MODELS` in `.github/workflows/eval-benchmarks.yaml`) plus the judge (set `CLASSIFIER_MODEL` to its name), and allow each provider's host: `bedrock-runtime.<region>.amazonaws.com`, `*.cognitiveservices.azure.com`, `api.openai.com`, `generativelanguage.googleapis.com`, `openrouter.ai`.\n",
+      "bodyMd": "# Reviewing an Eval Run\n\nGoal: separate real model failures from broken evals, harness bugs and judge mistakes before anyone trusts the numbers.\n\n## Step 1: Get the inputs and run the checks\n\nThe run's pytest report (`eval_results.json`, in the `eval-results-<run_id>` artifact) is the source of truth for pass/fail, answers, the judge's rationale (`judge_rationale`), provider errors and skill-check failures. Braintrust (experiment `ci-benchmark-<run_id>`) only adds trace links and tool spans: it drops rows, and the script warns which runs it is missing.\n\n```bash\n# A run id downloads the artifact (cached under $TMPDIR/review-eval-run/<run_id>/);\n# a path to eval_results.json works too.\npoetry run python .claude/skills/review-eval-run/review_eval_run.py <run_id> \\\n  --baseline <previous_run_id | eval_results.json | committed report .md> \\\n  --exclude-tests 101_loki_historical_logs_pod_deleted,... \\\n  --model <newest-model> [--min-cache 50] [--braintrust <events.json | experiment>] [--no-braintrust]\n```\n\n- **Artifact by hand**: `gh api repos/HolmesGPT/holmesgpt/actions/runs/<run_id>/artifacts` for the id, then `gh api repos/HolmesGPT/holmesgpt/actions/artifacts/<id>/zip > results.zip`. Artifacts expire; a committed report then works as the baseline (`docs/development/evaluations/history/results_*.md`, or `git show <commit>:docs/development/evaluations/fast-benchmark-results.md`) but carries only status and cost per run.\n- **Full job log**: `gh run view <run_id> --json jobs` for the job id, then `gh api repos/HolmesGPT/holmesgpt/actions/jobs/<job_id>/logs > job.log`. The GitHub MCP `get_job_logs` returns only the last 5,000 lines.\n- **Network**: `api.braintrust.dev` (with `BRAINTRUST_API_KEY`; logging eval runs also needs `www.braintrust.dev`, where the SDK logs in), and the blob host GitHub redirects artifact and log downloads to, `productionresultssa<N>.blob.core.windows.net`. `N` differs per run (`sa2`, `sa6`, `sa11` seen), so allow the wildcard; a 403 \"Forbidden\" from `gh api .../zip` means that shard is blocked.\n- If the run is still in progress, check `gh run view <id> --json status,jobs` first.\n\nThe script output is a guideline, not a verdict: it only catches known patterns. Always also open the failing traces in Braintrust, read the rendered prompts and tool outputs, and look for anything the script doesn't check.\n\n## Step 2: Act on each section\n\n**Pass rate and cost**: per model, raw (passed / all runs) and clean (passed / executed runs, without the `--exclude-tests` eval bugs), next to the baseline. Cost is the sum of per-test cost, as in the markdown report; `COST SPIKE` means more than 1.5× the baseline. Models new to this run show `no baseline`. Compare clean rates: raw rates move with provider outages.\n\n**Regressions vs baseline**: tests a model passed in every baseline run and now fails at least once. Read each before calling it a model regression; fixture changes between the two runs show up here too.\n\n**Never-executed runs**: ⚠️ provider errors, ⏱️ timeouts/rate limits, setup failures, skips and crashes before the model answered. They say nothing about the model; report them apart and leave them out of success rates.\n\n**Skill-check failures**: runs failed by the deterministic skill-suggestion check (`fail_reason`), with the judge's own verdict and the suggested skill titles. A `correct` judge verdict means the answer was right and only the suggestion was wrong — report these apart from wrong answers, and decide whether the suggested skill was genuinely bad or the eval's `memories_generated: false` is too strict. Reports from before ROB-1715 show `not recorded`: the check overwrote the judge's score.\n\n**Suspect tests**: each pattern almost always means an eval problem, not a model problem. Only executed runs count.\n\n- `fails for N/M models that ran it` (one iteration per test) — at least half the models fail it. Check the fixture data and whether outputs actually contain the expected answer.\n- `fails for every model` — check the harness/feature flags the test depends on (e.g. `enable_todo` vs `DISABLED_BY_DEFAULT` in `holmes/core/prompt.py`).\n- `passes only on first iteration` — shared setup state decays between iterations (iterations run ~35 min apart on the same cluster). Compare tool outputs of iteration 1 vs 2: if the same query returns data then `None`, the fixture is broken (e.g. Loki flushing idle streams).\n- `no model passes every iteration` — read the failing outputs; flaky setup or an over-strict `expected_output`.\n\n**Prompt caching**: every model should be at or above `--min-cache` (default 50%). `LOW` means the prompt prefix is changing between calls (e.g. timestamps or per-call data early in the system prompt); `NOT REPORTED` means the provider/litellm returns no `cached_tokens` — say so, don't call it a caching bug.\n\n**Tool errors**: high rates usually mean a broken toolset config or port-forward in the fixture; the most frequent error is printed (repeated `Refusing to run this tool call` means the model is looping on one call).\n\n**Failures for `--model`**: for every failure, compare OUTPUT against EXPECTED and the tool calls, then classify:\n\n- **Eval/harness bug** — the data the model needed wasn't there, or a required tool/prompt was missing.\n- **Judge false negative** — the output contains the expected answer but was scored 0.\n- **Real model failure** — the data was available in tool output and the model missed or misread it.\n\nQuote the specific tool output or line of the answer that proves each verdict.\n\n## Step 3: Report\n\nEnd with one table: `Test | Verdict (eval bug / judge false negative / real failure) | Evidence`, plus success rates recomputed without the eval-bug tests.\n\n## Other things worth checking\n\n- Latency regressions against the previous benchmark: `compare_with_benchmark` in `tests/llm/utils/braintrust_history.py`.\n- Runs that hit `max_steps` or timed out (long duration, no final answer).\n- Rendered `system_prompt` in the eval metadata missing a component the test expects.\n\n## Running evals locally\n\nCI builds the model list from the `MODEL_LIST_YAML` secret, which can't be read outside Actions. Locally, write your own and point `MODEL_LIST_FILE_LOCATION` at it. Each top-level key is the model name passed in `MODEL` (comma-separated) and its value is litellm parameters; `{{ env.X }}` is filled from the environment:\n\n```yaml\nsonnet-5.5-medium:\n  model: bedrock/global.anthropic.claude-sonnet-5-5\n  aws_access_key_id: '{{ env.EVALS_AWS_ACCESS_KEY_ID }}'\n  aws_secret_access_key: '{{ env.EVALS_AWS_SECRET_ACCESS_KEY }}'\n  aws_region_name: us-east-1\n  reasoning_effort: medium\nkimi-k3:\n  model: openrouter/moonshotai/kimi-k3\n  api_key: '{{ env.EVALS_OPENROUTER_API_KEY }}'\n```\n\nBy convention the credentials live in `EVALS_`-prefixed variables so they don't collide with the provider SDKs' own: `EVALS_AWS_ACCESS_KEY_ID` / `EVALS_AWS_SECRET_ACCESS_KEY` (Bedrock Claude models), `EVALS_AZURE_SWEDEN_API_KEY` (Azure gpt-6.1-sol, also the judge), `EVALS_OPENAI_API_KEY`, `EVALS_GEMINI_API_KEY` and `EVALS_OPENROUTER_API_KEY` (deepseek, kimi, glm, qwen). Keep only the benchmark models (`DEFAULT_BENCHMARK_MODELS` in `.github/workflows/eval-benchmarks.yaml`) plus the judge (set `CLASSIFIER_MODEL` to its name), and allow each provider's host: `bedrock-runtime.<region>.amazonaws.com`, `*.cognitiveservices.azure.com`, `api.openai.com`, `generativelanguage.googleapis.com`, `openrouter.ai`.\n"
+    },
+    {
+      "slug": "postgres-performance",
+      "name": "postgres-performance",
+      "dir": "tests/llm/fixtures/test_ask_holmes/104b_postgres_missing_index_pgstat/postgres-performance",
+      "path": "tests/llm/fixtures/test_ask_holmes/104b_postgres_missing_index_pgstat/postgres-performance/SKILL.md",
+      "desc": "Guide for investigating slow PostgreSQL queries",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "kubectl",
+          "psql"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HolmesGPT/holmesgpt.git",
+        "copy": "cp -r tests/llm/fixtures/test_ask_holmes/104b_postgres_missing_index_pgstat/postgres-performance ~/.claude/skills/postgres-performance",
+        "raw": "https://raw.githubusercontent.com/HolmesGPT/holmesgpt/0e55d511caaa71e2a9096b6c4d309c7b22a0f348/tests/llm/fixtures/test_ask_holmes/104b_postgres_missing_index_pgstat/postgres-performance/SKILL.md",
+        "saveAs": "~/.claude/skills/postgres-performance/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:b2e902032ef793cc09d37c22d380a7800aff05fb3e181827a5cf8fef06263968",
+      "bytes": 1029,
+      "wordCount": 132,
+      "repoLicense": "Apache-2.0",
+      "commit": "0e55d511caaa71e2a9096b6c4d309c7b22a0f348",
+      "branch": "master",
+      "body": "---\nname: postgres-performance\ndescription: \"Guide for investigating slow PostgreSQL queries\"\n---\n# PostgreSQL Performance Investigation\n\n## How to investigate slow PostgreSQL queries\n\n### 1. Connect to PostgreSQL database\n```bash\nkubectl run temp-psql --image=postgres:15-alpine --rm -it --restart=Never --namespace=namespace-104b --env=\"PGPASSWORD=postgres123\" -- psql -h postgres -U postgres -d userdb\n```\n\n### 2. Check for slow queries using pg_stat_statements\n```sql\nSELECT query, mean_exec_time, calls\nFROM pg_stat_statements\nWHERE query NOT LIKE '%pg_stat_statements%'\nORDER BY mean_exec_time DESC\nLIMIT 10;\n```\n\n### 3. For any slow query, run EXPLAIN ANALYZE\n```sql\nEXPLAIN ANALYZE SELECT * FROM users WHERE email = 'user1@example.com';\n```\n\n### 4. Check table structure for missing indexes\n```sql\n\\d users\n```\n\n### 5. Look for Sequential Scans in EXPLAIN output\nIf you see \"Seq Scan\" on a large table, it indicates a missing index.\n\n### 6. Create index if needed\n```sql\nCREATE INDEX idx_users_email ON users(email);\n```\n",
+      "bodyMd": "# PostgreSQL Performance Investigation\n\n## How to investigate slow PostgreSQL queries\n\n### 1. Connect to PostgreSQL database\n```bash\nkubectl run temp-psql --image=postgres:15-alpine --rm -it --restart=Never --namespace=namespace-104b --env=\"PGPASSWORD=postgres123\" -- psql -h postgres -U postgres -d userdb\n```\n\n### 2. Check for slow queries using pg_stat_statements\n```sql\nSELECT query, mean_exec_time, calls\nFROM pg_stat_statements\nWHERE query NOT LIKE '%pg_stat_statements%'\nORDER BY mean_exec_time DESC\nLIMIT 10;\n```\n\n### 3. For any slow query, run EXPLAIN ANALYZE\n```sql\nEXPLAIN ANALYZE SELECT * FROM users WHERE email = 'user1@example.com';\n```\n\n### 4. Check table structure for missing indexes\n```sql\n\\d users\n```\n\n### 5. Look for Sequential Scans in EXPLAIN output\nIf you see \"Seq Scan\" on a large table, it indicates a missing index.\n\n### 6. Create index if needed\n```sql\nCREATE INDEX idx_users_email ON users(email);\n```\n"
+    },
+    {
+      "slug": "bad-skill",
+      "name": "app-279-error-log-querying",
+      "dir": "tests/llm/fixtures/test_ask_holmes/279_bad_skill_resilience/bad_skill",
+      "path": "tests/llm/fixtures/test_ask_holmes/279_bad_skill_resilience/bad_skill/SKILL.md",
+      "desc": "Any Elasticsearch error-log query against app-279-logs-* — these indices use ``lvl`` (keyword) for log severity, not ``severity`` or ``level``.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HolmesGPT/holmesgpt.git",
+        "copy": "cp -r tests/llm/fixtures/test_ask_holmes/279_bad_skill_resilience/bad_skill ~/.claude/skills/bad-skill",
+        "raw": "https://raw.githubusercontent.com/HolmesGPT/holmesgpt/0e55d511caaa71e2a9096b6c4d309c7b22a0f348/tests/llm/fixtures/test_ask_holmes/279_bad_skill_resilience/bad_skill/SKILL.md",
+        "saveAs": "~/.claude/skills/bad-skill/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:549f7d312195bd6dd561b76682d1f9a28fbff0604daee458f9bba3cf7bfd7cda",
+      "bytes": 1043,
+      "wordCount": 139,
+      "repoLicense": "Apache-2.0",
+      "commit": "0e55d511caaa71e2a9096b6c4d309c7b22a0f348",
+      "branch": "master",
+      "body": "---\nname: app-279-error-log-querying\ndescription: 'Any Elasticsearch error-log query against app-279-logs-* — these indices use ``lvl`` (keyword) for log severity, not ``severity`` or ``level``.'\n---\n\n## When to use\n\nAny Elasticsearch ERROR / WARN / INFO count or filter query against the\n`app-279-logs-*` indices in this cluster.\n\n## Failed call shape (avoid)\n\n```json\nGET app-279-logs-*/_search\n{ \"query\": { \"term\": { \"level\": \"ERROR\" } } }\n```\n\nReturns zero hits because the field is named `lvl`, not `level`.\n\n## Working call shape\n\n```json\nGET app-279-logs-*/_search\n{ \"query\": { \"term\": { \"lvl\": \"ERR\" } } }\n```\n\nThis index normalizes severity to the short codes `ERR`, `WRN`, `INF`,\n`DBG` — full words like `\"ERROR\"` will also miss even with the right\nfield name.\n\n## Why this is env-specific\n\nThis team's logging library uses a custom schema with shortened field\nname (`lvl`) and three-letter severity codes (`ERR`, `WRN`, `INF`,\n`DBG`) — not documented in any public ES schema and a fresh LLM would\ndefault to `level: \"ERROR\"`.\n",
+      "bodyMd": "## When to use\n\nAny Elasticsearch ERROR / WARN / INFO count or filter query against the\n`app-279-logs-*` indices in this cluster.\n\n## Failed call shape (avoid)\n\n```json\nGET app-279-logs-*/_search\n{ \"query\": { \"term\": { \"level\": \"ERROR\" } } }\n```\n\nReturns zero hits because the field is named `lvl`, not `level`.\n\n## Working call shape\n\n```json\nGET app-279-logs-*/_search\n{ \"query\": { \"term\": { \"lvl\": \"ERR\" } } }\n```\n\nThis index normalizes severity to the short codes `ERR`, `WRN`, `INF`,\n`DBG` — full words like `\"ERROR\"` will also miss even with the right\nfield name.\n\n## Why this is env-specific\n\nThis team's logging library uses a custom schema with shortened field\nname (`lvl`) and three-letter severity codes (`ERR`, `WRN`, `INF`,\n`DBG`) — not documented in any public ES schema and a fresh LLM would\ndefault to `level: \"ERROR\"`.\n"
+    },
+    {
+      "slug": "lambda-performance-troubleshooting",
+      "name": "lambda-performance-troubleshooting",
+      "dir": "tests/llm/fixtures/test_ask_holmes/89_skill_missing_cloudwatch/lambda-performance-troubleshooting",
+      "path": "tests/llm/fixtures/test_ask_holmes/89_skill_missing_cloudwatch/lambda-performance-troubleshooting/SKILL.md",
+      "desc": "AWS Lambda High Latency Troubleshooting",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "aws"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HolmesGPT/holmesgpt.git",
+        "copy": "cp -r tests/llm/fixtures/test_ask_holmes/89_skill_missing_cloudwatch/lambda-performance-troubleshooting ~/.claude/skills/lambda-performance-troubleshooting",
+        "raw": "https://raw.githubusercontent.com/HolmesGPT/holmesgpt/0e55d511caaa71e2a9096b6c4d309c7b22a0f348/tests/llm/fixtures/test_ask_holmes/89_skill_missing_cloudwatch/lambda-performance-troubleshooting/SKILL.md",
+        "saveAs": "~/.claude/skills/lambda-performance-troubleshooting/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:4e469e828028623968a60c7bd191e87a33140ba8b1c04640e5395405a5a1dd0d",
+      "bytes": 1936,
+      "wordCount": 205,
+      "repoLicense": "Apache-2.0",
+      "commit": "0e55d511caaa71e2a9096b6c4d309c7b22a0f348",
+      "branch": "master",
+      "body": "---\nname: lambda-performance-troubleshooting\ndescription: \"AWS Lambda High Latency Troubleshooting\"\n---\n# AWS Lambda High Latency Troubleshooting\n\n## Overview\nThis runbook helps diagnose and resolve AWS Lambda function performance issues including high latency, timeouts, and cold starts.\n\n## Steps\n\n### Step 1: Query Performance Metrics\nUse CloudWatch to check Lambda function latency over time:\n```\naws cloudwatch get-metric-statistics --namespace <lambda-namespace> \\\n  --metric-name Duration --dimensions Name=FunctionName,Value=<function-name> \\\n  --statistics Average,Maximum --start-time <start-time> \\\n  --end-time <end-time> --period 300\n```\n\n### Step 2: Check Function Logs\nLook for errors or slow operations in CloudWatch Logs:\n```bash\naws logs filter-log-events --log-group-name <lambda-log-group>/<function-name> \\\n  --filter-pattern \"[ERROR] OR [WARN] OR timeout\" --limit 100\n```\n\n### Step 3: Analyze Cold Start Patterns\nQuery CloudWatch for cold start frequency:\n```\naws cloudwatch get-metric-statistics --namespace <lambda-namespace> \\\n  --metric-name InitDuration --dimensions Name=FunctionName,Value=<function-name> \\\n  --statistics Average,Count --start-time <start-time> \\\n  --end-time <end-time> --period 300\n```\n\n### Step 4: Check Concurrent Executions\nVerify Lambda isn't hitting concurrency limits:\n```\naws cloudwatch get-metric-statistics --namespace <lambda-namespace> \\\n  --metric-name ConcurrentExecutions --dimensions Name=FunctionName,Value=<function-name> \\\n  --statistics Maximum --start-time <start-time> \\\n  --end-time <end-time> --period 60\n```\n\n### Step 5: Review Memory Utilization\nCheck if function needs more memory allocation:\n```bash\naws logs insights start-query --log-group-name <lambda-log-group>/<function-name> \\\n  --start-time <epoch-start> --end-time <epoch-end> \\\n  --query-string \"fields @timestamp, @message | filter @type = 'REPORT' | stats max(@maxMemoryUsed), avg(@memorySize)\"\n```\n",
+      "bodyMd": "# AWS Lambda High Latency Troubleshooting\n\n## Overview\nThis runbook helps diagnose and resolve AWS Lambda function performance issues including high latency, timeouts, and cold starts.\n\n## Steps\n\n### Step 1: Query Performance Metrics\nUse CloudWatch to check Lambda function latency over time:\n```\naws cloudwatch get-metric-statistics --namespace <lambda-namespace> \\\n  --metric-name Duration --dimensions Name=FunctionName,Value=<function-name> \\\n  --statistics Average,Maximum --start-time <start-time> \\\n  --end-time <end-time> --period 300\n```\n\n### Step 2: Check Function Logs\nLook for errors or slow operations in CloudWatch Logs:\n```bash\naws logs filter-log-events --log-group-name <lambda-log-group>/<function-name> \\\n  --filter-pattern \"[ERROR] OR [WARN] OR timeout\" --limit 100\n```\n\n### Step 3: Analyze Cold Start Patterns\nQuery CloudWatch for cold start frequency:\n```\naws cloudwatch get-metric-statistics --namespace <lambda-namespace> \\\n  --metric-name InitDuration --dimensions Name=FunctionName,Value=<function-name> \\\n  --statistics Average,Count --start-time <start-time> \\\n  --end-time <end-time> --period 300\n```\n\n### Step 4: Check Concurrent Executions\nVerify Lambda isn't hitting concurrency limits:\n```\naws cloudwatch get-metric-statistics --namespace <lambda-namespace> \\\n  --metric-name ConcurrentExecutions --dimensions Name=FunctionName,Value=<function-name> \\\n  --statistics Maximum --start-time <start-time> \\\n  --end-time <end-time> --period 60\n```\n\n### Step 5: Review Memory Utilization\nCheck if function needs more memory allocation:\n```bash\naws logs insights start-query --log-group-name <lambda-log-group>/<function-name> \\\n  --start-time <epoch-start> --end-time <epoch-end> \\\n  --query-string \"fields @timestamp, @message | filter @type = 'REPORT' | stats max(@maxMemoryUsed), avg(@memorySize)\"\n```\n"
+    },
+    {
+      "slug": "application-gateway-troubleshooting",
+      "name": "application-gateway-troubleshooting",
+      "dir": "tests/llm/fixtures/test_ask_holmes/90_skill_basic_selection/application-gateway-troubleshooting",
+      "path": "tests/llm/fixtures/test_ask_holmes/90_skill_basic_selection/application-gateway-troubleshooting/SKILL.md",
+      "desc": "Troubleshooting Application Gateway Problems",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "kubectl"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HolmesGPT/holmesgpt.git",
+        "copy": "cp -r tests/llm/fixtures/test_ask_holmes/90_skill_basic_selection/application-gateway-troubleshooting ~/.claude/skills/application-gateway-troubleshooting",
+        "raw": "https://raw.githubusercontent.com/HolmesGPT/holmesgpt/0e55d511caaa71e2a9096b6c4d309c7b22a0f348/tests/llm/fixtures/test_ask_holmes/90_skill_basic_selection/application-gateway-troubleshooting/SKILL.md",
+        "saveAs": "~/.claude/skills/application-gateway-troubleshooting/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:a675cab0d514b02182feba03536f1f804e5d0788e9c2713d5e3362d70d58c505",
+      "bytes": 1461,
+      "wordCount": 195,
+      "repoLicense": "Apache-2.0",
+      "commit": "0e55d511caaa71e2a9096b6c4d309c7b22a0f348",
+      "branch": "master",
+      "body": "---\nname: application-gateway-troubleshooting\ndescription: \"Troubleshooting Application Gateway Problems\"\n---\n# Application Gateway Troubleshooting\n\n## Overview\nThis runbook helps troubleshoot common Application Gateway issues including 502 Bad Gateway errors.\n\n## Prerequisites\n- kubectl access to the cluster\n- Ability to view pod logs\n\n## Troubleshooting Steps\n\n### Step 1: Find the Application Gateway Pod Status\nUse kubectl to check if the Application Gateway pod is running:\n```bash\nkubectl get pods -n <namespace> | grep application-gateway\n```\n\n### Step 2: Check Application Gateway error Logs\nReview the Application Gateway error logs for any issues:\n```bash\nkubectl logs <application-gateway-pod> -n <namespace> --tail=100 | grep -i error\n```\n\n### Step 3: Verify Upstream Services\nCheck if the upstream services that Application Gateway proxies to are healthy:\n```bash\nkubectl get pods -n <application-gateway-pod> -l app=upstream-service\n```\n\n### Step 4: Check Application Gateway Configuration\nVerify the Application Gateway configuration is valid:\n```bash\nkubectl exec <application-gateway-pod> -n <namespace> -- appg -t\n```\n\n### Step 5: Review Service Endpoints\nEnsure the Application Gateway has healthy endpoints:\n```bash\nkubectl get endpoints -n <namespace>\n```\n\n## Resolution Steps\nBased on findings:\n- If upstream is down: Restart upstream services\n- If config invalid: Fix configuration and reload\n- If no endpoints: Check service selectors\n",
+      "bodyMd": "# Application Gateway Troubleshooting\n\n## Overview\nThis runbook helps troubleshoot common Application Gateway issues including 502 Bad Gateway errors.\n\n## Prerequisites\n- kubectl access to the cluster\n- Ability to view pod logs\n\n## Troubleshooting Steps\n\n### Step 1: Find the Application Gateway Pod Status\nUse kubectl to check if the Application Gateway pod is running:\n```bash\nkubectl get pods -n <namespace> | grep application-gateway\n```\n\n### Step 2: Check Application Gateway error Logs\nReview the Application Gateway error logs for any issues:\n```bash\nkubectl logs <application-gateway-pod> -n <namespace> --tail=100 | grep -i error\n```\n\n### Step 3: Verify Upstream Services\nCheck if the upstream services that Application Gateway proxies to are healthy:\n```bash\nkubectl get pods -n <application-gateway-pod> -l app=upstream-service\n```\n\n### Step 4: Check Application Gateway Configuration\nVerify the Application Gateway configuration is valid:\n```bash\nkubectl exec <application-gateway-pod> -n <namespace> -- appg -t\n```\n\n### Step 5: Review Service Endpoints\nEnsure the Application Gateway has healthy endpoints:\n```bash\nkubectl get endpoints -n <namespace>\n```\n\n## Resolution Steps\nBased on findings:\n- If upstream is down: Restart upstream services\n- If config invalid: Fix configuration and reload\n- If no endpoints: Check service selectors\n"
+    },
+    {
+      "slug": "database-troubleshooting",
+      "name": "database-troubleshooting",
+      "dir": "tests/llm/fixtures/test_ask_holmes/94_skill_transparency/database-troubleshooting",
+      "path": "tests/llm/fixtures/test_ask_holmes/94_skill_transparency/database-troubleshooting/SKILL.md",
+      "desc": "Database Connection Troubleshooting",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "kubectl",
+          "psql",
+          "mysql"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HolmesGPT/holmesgpt.git",
+        "copy": "cp -r tests/llm/fixtures/test_ask_holmes/94_skill_transparency/database-troubleshooting ~/.claude/skills/database-troubleshooting",
+        "raw": "https://raw.githubusercontent.com/HolmesGPT/holmesgpt/0e55d511caaa71e2a9096b6c4d309c7b22a0f348/tests/llm/fixtures/test_ask_holmes/94_skill_transparency/database-troubleshooting/SKILL.md",
+        "saveAs": "~/.claude/skills/database-troubleshooting/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:557d5bf0ba4039660096dfb2856efe937aa5cf2d3735fbe6ca7154da34895eea",
+      "bytes": 2012,
+      "wordCount": 265,
+      "repoLicense": "Apache-2.0",
+      "commit": "0e55d511caaa71e2a9096b6c4d309c7b22a0f348",
+      "branch": "master",
+      "body": "---\nname: database-troubleshooting\ndescription: \"Database Connection Troubleshooting\"\n---\n# Database Connection Troubleshooting\n\n## Overview\nThis runbook helps diagnose database connection timeout issues in Kubernetes applications.\n\n## Investigation Steps\n\n### 1. Check Application Status\nVerify the application pods are running and review recent events:\n```bash\nkubectl get pods -n {namespace} -l app={app_name}\nkubectl describe pod -n {namespace} -l app={app_name}\n```\n\n### 2. Review Application Logs\nLook for connection errors and timeout patterns:\n```bash\nkubectl logs -n {namespace} -l app={app_name} --tail=50 | grep -E \"(timeout|connection|ERROR)\"\n```\n\n### 3. Verify Database Service\nCheck if the database service exists and has endpoints:\n```bash\nkubectl get svc -n {namespace} | grep -E \"(postgres|mysql|database)\"\nkubectl get endpoints -n {namespace} | grep -E \"(postgres|mysql|database)\"\n```\n\n### 4. Test Network Connectivity\nTest connectivity from application pod to database:\n```bash\nkubectl exec -n {namespace} $(kubectl get pod -n {namespace} -l app={app_name} -o jsonpath=\"{.items[0].metadata.name}\") -- nc -zv {db_host} {db_port}\n```\n\n### 5. Check Database Health\nConnect to database and check its status:\n```bash\n# For PostgreSQL\nkubectl exec -n {namespace} {db_pod} -- psql -U postgres -c \"SELECT 1\"\n\n# Check active connections\nkubectl exec -n {namespace} {db_pod} -- psql -U postgres -c \"SELECT count(*) FROM pg_stat_activity\"\n```\n\n### 6. Review Connection Pool Configuration\nCheck application's database connection pool settings:\n```bash\nkubectl get deployment -n {namespace} {app_name} -o yaml | grep -A10 \"env:\"\n```\n\n## Common Issues\n\n1. **No Database Endpoints**: Database service has no backing pods\n2. **Connection Pool Exhaustion**: All connections in use, increase pool size\n3. **Network Policy**: Check if NetworkPolicies block database access\n4. **DNS Resolution**: Verify database hostname resolves correctly\n5. **Database Overload**: Too many connections, database not responding\n",
+      "bodyMd": "# Database Connection Troubleshooting\n\n## Overview\nThis runbook helps diagnose database connection timeout issues in Kubernetes applications.\n\n## Investigation Steps\n\n### 1. Check Application Status\nVerify the application pods are running and review recent events:\n```bash\nkubectl get pods -n {namespace} -l app={app_name}\nkubectl describe pod -n {namespace} -l app={app_name}\n```\n\n### 2. Review Application Logs\nLook for connection errors and timeout patterns:\n```bash\nkubectl logs -n {namespace} -l app={app_name} --tail=50 | grep -E \"(timeout|connection|ERROR)\"\n```\n\n### 3. Verify Database Service\nCheck if the database service exists and has endpoints:\n```bash\nkubectl get svc -n {namespace} | grep -E \"(postgres|mysql|database)\"\nkubectl get endpoints -n {namespace} | grep -E \"(postgres|mysql|database)\"\n```\n\n### 4. Test Network Connectivity\nTest connectivity from application pod to database:\n```bash\nkubectl exec -n {namespace} $(kubectl get pod -n {namespace} -l app={app_name} -o jsonpath=\"{.items[0].metadata.name}\") -- nc -zv {db_host} {db_port}\n```\n\n### 5. Check Database Health\nConnect to database and check its status:\n```bash\n# For PostgreSQL\nkubectl exec -n {namespace} {db_pod} -- psql -U postgres -c \"SELECT 1\"\n\n# Check active connections\nkubectl exec -n {namespace} {db_pod} -- psql -U postgres -c \"SELECT count(*) FROM pg_stat_activity\"\n```\n\n### 6. Review Connection Pool Configuration\nCheck application's database connection pool settings:\n```bash\nkubectl get deployment -n {namespace} {app_name} -o yaml | grep -A10 \"env:\"\n```\n\n## Common Issues\n\n1. **No Database Endpoints**: Database service has no backing pods\n2. **Connection Pool Exhaustion**: All connections in use, increase pool size\n3. **Network Policy**: Check if NetworkPolicies block database access\n4. **DNS Resolution**: Verify database hostname resolves correctly\n5. **Database Overload**: Too many connections, database not responding\n"
+    },
+    {
+      "slug": "python-memory-troubleshooting",
+      "name": "python-memory-troubleshooting",
+      "dir": "tests/llm/fixtures/test_ask_holmes/95_skill_memory_leak_detection/python-memory-troubleshooting",
+      "path": "tests/llm/fixtures/test_ask_holmes/95_skill_memory_leak_detection/python-memory-troubleshooting/SKILL.md",
+      "desc": "Python Application Memory Troubleshooting",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "python",
+          "kubectl",
+          "curl"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HolmesGPT/holmesgpt.git",
+        "copy": "cp -r tests/llm/fixtures/test_ask_holmes/95_skill_memory_leak_detection/python-memory-troubleshooting ~/.claude/skills/python-memory-troubleshooting",
+        "raw": "https://raw.githubusercontent.com/HolmesGPT/holmesgpt/0e55d511caaa71e2a9096b6c4d309c7b22a0f348/tests/llm/fixtures/test_ask_holmes/95_skill_memory_leak_detection/python-memory-troubleshooting/SKILL.md",
+        "saveAs": "~/.claude/skills/python-memory-troubleshooting/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:d7a9603a5cb90c043d3926281cbddb4a532b18188e8f784f985de0335fe629e9",
+      "bytes": 4405,
+      "wordCount": 595,
+      "repoLicense": "Apache-2.0",
+      "commit": "0e55d511caaa71e2a9096b6c4d309c7b22a0f348",
+      "branch": "master",
+      "body": "---\nname: python-memory-troubleshooting\ndescription: \"Python Application Memory Troubleshooting\"\n---\n# Python Application Memory Troubleshooting\n\n## Overview\nThis runbook helps diagnose memory issues in Python applications running in Kubernetes.\n\n## Investigation Steps\n\n### 1. Check Application Status\nCheck if the application pods are running and review recent events:\n```bash\nkubectl get pods -n {namespace} -l app={app_name}\nkubectl describe pod -n {namespace} -l app={app_name}\nkubectl top pod -n {namespace} -l app={app_name}\n```\n\n### 2. Review Application Logs\nLook for memory errors, GC warnings, or memory-related messages:\n```bash\nkubectl logs -n {namespace} -l app={app_name} --tail=100 | grep -E \"(memory|Memory|ERROR|WARNING|GC|Cache|processed)\"\n```\n\nPay attention to:\n- Processing patterns and batch sizes\n- Cache growth indicators\n- Memory allocation patterns\n\n### 3. Analyze Application Code Patterns\nLook for common memory leak patterns in logs:\n```bash\n# Check for growing collections or caches\nkubectl logs -n {namespace} -l app={app_name} | grep -E \"size:|count:|total:|cache\"\n\n# Look for processing patterns\nkubectl logs -n {namespace} -l app={app_name} | grep -E \"Processing|processed|Batch\"\n```\n\nCommon memory leak indicators:\n- Continuously growing collections (lists, dicts)\n- Caches without eviction policies\n- Circular references preventing garbage collection\n\n### 4. Identify Memory Growth Patterns\nAnalyze how memory usage correlates with application activity:\n```bash\n# Monitor memory growth over time\nkubectl top pod -n {namespace} -l app={app_name} --use-protocol-buffers\n\n# Correlate with processing activity\nkubectl logs -n {namespace} -l app={app_name} --tail=50\n```\n\n### 5. Monitor Memory Metrics\nCheck memory usage patterns over time:\n```bash\n# Get current memory usage\nkubectl top pod -n {namespace} -l app={app_name}\n\n# Review resource limits\nkubectl describe pod -n {namespace} -l app={app_name} | grep -A3 \"Limits:\"\n```\n\n## Python-Specific Memory Profiling\n\n### Using Built-in Tools\nIf the application has profiling endpoints or debug mode:\n```bash\n# Check if app exposes memory profiling endpoints\nkubectl exec -n {namespace} {pod_name} -- curl localhost:8000/debug/memory 2>/dev/null || echo \"No debug endpoint\"\n\n# If the app uses Flask/Django debug toolbar\nkubectl port-forward -n {namespace} {pod_name} 8000:8000\n# Then visit http://localhost:8000/debug\n```\n\n### Memory Profiling with py-spy (if available in container)\n```bash\n# Check if py-spy is installed\nkubectl exec -n {namespace} {pod_name} -- which py-spy\n\n# If available, profile the running process\nkubectl exec -n {namespace} {pod_name} -- py-spy dump --pid 1\n```\n\n### Using tracemalloc (if enabled in code)\nLook for tracemalloc output in logs:\n```bash\nkubectl logs -n {namespace} -l app={app_name} | grep -E \"tracemalloc|Top.*memory blocks\"\n```\n\n### Memory Usage Patterns\nCheck for memory allocation patterns in logs:\n```bash\n# Look for object creation patterns\nkubectl logs -n {namespace} -l app={app_name} | grep -E \"Created|Allocated|New.*object\"\n\n# Check garbage collection activity\nkubectl logs -n {namespace} -l app={app_name} | grep -E \"gc\\.|GC|garbage\"\n```\n\n## Common Python Memory Leak Patterns\n\n1. **Unbounded Collections**: Lists/dicts that grow without limits\n   - Solution: Implement size limits or use collections.deque with maxlen\n   - Profile: Look for growing collection sizes in logs\n\n2. **Cache Without Eviction**: Caching data without removing old entries\n   - Solution: Use functools.lru_cache or implement TTL-based eviction\n   - Profile: Monitor cache size metrics in logs\n\n3. **Keeping References to Large Objects**: Storing processed data unnecessarily\n   - Solution: Process and discard, use generators for streaming\n   - Profile: Check for accumulating processed items\n\n4. **Global State Accumulation**: Module-level variables that accumulate data\n   - Solution: Encapsulate in classes with proper cleanup\n   - Profile: Look for module-level collections in stack traces\n\n5. **Circular References**: Objects referencing each other preventing GC\n   - Solution: Use weakref for one direction of the reference\n   - Profile: Check for objects with high reference counts\n\n6. **Large Object Allocation**: Creating unnecessarily large objects\n   - Solution: Process data in chunks, use numpy arrays for numerical data\n   - Profile: Look for large allocation warnings or patterns\n",
+      "bodyMd": "# Python Application Memory Troubleshooting\n\n## Overview\nThis runbook helps diagnose memory issues in Python applications running in Kubernetes.\n\n## Investigation Steps\n\n### 1. Check Application Status\nCheck if the application pods are running and review recent events:\n```bash\nkubectl get pods -n {namespace} -l app={app_name}\nkubectl describe pod -n {namespace} -l app={app_name}\nkubectl top pod -n {namespace} -l app={app_name}\n```\n\n### 2. Review Application Logs\nLook for memory errors, GC warnings, or memory-related messages:\n```bash\nkubectl logs -n {namespace} -l app={app_name} --tail=100 | grep -E \"(memory|Memory|ERROR|WARNING|GC|Cache|processed)\"\n```\n\nPay attention to:\n- Processing patterns and batch sizes\n- Cache growth indicators\n- Memory allocation patterns\n\n### 3. Analyze Application Code Patterns\nLook for common memory leak patterns in logs:\n```bash\n# Check for growing collections or caches\nkubectl logs -n {namespace} -l app={app_name} | grep -E \"size:|count:|total:|cache\"\n\n# Look for processing patterns\nkubectl logs -n {namespace} -l app={app_name} | grep -E \"Processing|processed|Batch\"\n```\n\nCommon memory leak indicators:\n- Continuously growing collections (lists, dicts)\n- Caches without eviction policies\n- Circular references preventing garbage collection\n\n### 4. Identify Memory Growth Patterns\nAnalyze how memory usage correlates with application activity:\n```bash\n# Monitor memory growth over time\nkubectl top pod -n {namespace} -l app={app_name} --use-protocol-buffers\n\n# Correlate with processing activity\nkubectl logs -n {namespace} -l app={app_name} --tail=50\n```\n\n### 5. Monitor Memory Metrics\nCheck memory usage patterns over time:\n```bash\n# Get current memory usage\nkubectl top pod -n {namespace} -l app={app_name}\n\n# Review resource limits\nkubectl describe pod -n {namespace} -l app={app_name} | grep -A3 \"Limits:\"\n```\n\n## Python-Specific Memory Profiling\n\n### Using Built-in Tools\nIf the application has profiling endpoints or debug mode:\n```bash\n# Check if app exposes memory profiling endpoints\nkubectl exec -n {namespace} {pod_name} -- curl localhost:8000/debug/memory 2>/dev/null || echo \"No debug endpoint\"\n\n# If the app uses Flask/Django debug toolbar\nkubectl port-forward -n {namespace} {pod_name} 8000:8000\n# Then visit http://localhost:8000/debug\n```\n\n### Memory Profiling with py-spy (if available in container)\n```bash\n# Check if py-spy is installed\nkubectl exec -n {namespace} {pod_name} -- which py-spy\n\n# If available, profile the running process\nkubectl exec -n {namespace} {pod_name} -- py-spy dump --pid 1\n```\n\n### Using tracemalloc (if enabled in code)\nLook for tracemalloc output in logs:\n```bash\nkubectl logs -n {namespace} -l app={app_name} | grep -E \"tracemalloc|Top.*memory blocks\"\n```\n\n### Memory Usage Patterns\nCheck for memory allocation patterns in logs:\n```bash\n# Look for object creation patterns\nkubectl logs -n {namespace} -l app={app_name} | grep -E \"Created|Allocated|New.*object\"\n\n# Check garbage collection activity\nkubectl logs -n {namespace} -l app={app_name} | grep -E \"gc\\.|GC|garbage\"\n```\n\n## Common Python Memory Leak Patterns\n\n1. **Unbounded Collections**: Lists/dicts that grow without limits\n   - Solution: Implement size limits or use collections.deque with maxlen\n   - Profile: Look for growing collection sizes in logs\n\n2. **Cache Without Eviction**: Caching data without removing old entries\n   - Solution: Use functools.lru_cache or implement TTL-based eviction\n   - Profile: Monitor cache size metrics in logs\n\n3. **Keeping References to Large Objects**: Storing processed data unnecessarily\n   - Solution: Process and discard, use generators for streaming\n   - Profile: Check for accumulating processed items\n\n4. **Global State Accumulation**: Module-level variables that accumulate data\n   - Solution: Encapsulate in classes with proper cleanup\n   - Profile: Look for module-level collections in stack traces\n\n5. **Circular References**: Objects referencing each other preventing GC\n   - Solution: Use weakref for one direction of the reference\n   - Profile: Check for objects with high reference counts\n\n6. **Large Object Allocation**: Creating unnecessarily large objects\n   - Solution: Process data in chunks, use numpy arrays for numerical data\n   - Profile: Look for large allocation warnings or patterns\n"
+    },
+    {
+      "slug": "service-troubleshooting",
+      "name": "service-troubleshooting",
+      "dir": "tests/llm/fixtures/test_ask_holmes/96_no_matching_skill/service-troubleshooting",
+      "path": "tests/llm/fixtures/test_ask_holmes/96_no_matching_skill/service-troubleshooting/SKILL.md",
+      "desc": "Service Connectivity Issues",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "gemini",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "kubectl",
+          "wget"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/HolmesGPT/holmesgpt.git",
+        "copy": "cp -r tests/llm/fixtures/test_ask_holmes/96_no_matching_skill/service-troubleshooting ~/.claude/skills/service-troubleshooting",
+        "raw": "https://raw.githubusercontent.com/HolmesGPT/holmesgpt/0e55d511caaa71e2a9096b6c4d309c7b22a0f348/tests/llm/fixtures/test_ask_holmes/96_no_matching_skill/service-troubleshooting/SKILL.md",
+        "saveAs": "~/.claude/skills/service-troubleshooting/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:d371c40e75b42f2cb4b69b1edc5040640994f3a0c82ddffd308767b4fd702f57",
+      "bytes": 802,
+      "wordCount": 100,
+      "repoLicense": "Apache-2.0",
+      "commit": "0e55d511caaa71e2a9096b6c4d309c7b22a0f348",
+      "branch": "master",
+      "body": "---\nname: service-troubleshooting\ndescription: \"Service Connectivity Issues\"\n---\n# Service Connectivity Issues\n\n## Overview\nTroubleshooting Kubernetes service connectivity problems.\n\n## Investigation Steps\n\n### 1. Service Configuration\n```bash\nkubectl get svc {service_name} -n {namespace} -o yaml\nkubectl get endpoints {service_name} -n {namespace}\n```\n\n### 2. Backend Pods\n```bash\nkubectl get pods -n {namespace} -l {selector}\n```\n\n### 3. Test Connectivity\n```bash\nkubectl run -it --rm debug --image=busybox --restart=Never -- wget -O- {service_name}:{port}\n```\n\n### 4. Network Policies\n```bash\nkubectl get networkpolicies -n {namespace}\n```\n\n## Common Service Issues\n- No endpoints (no matching pods)\n- Selector mismatch\n- Wrong target port\n- Network policy blocking\n- Service type misconfiguration\n",
+      "bodyMd": "# Service Connectivity Issues\n\n## Overview\nTroubleshooting Kubernetes service connectivity problems.\n\n## Investigation Steps\n\n### 1. Service Configuration\n```bash\nkubectl get svc {service_name} -n {namespace} -o yaml\nkubectl get endpoints {service_name} -n {namespace}\n```\n\n### 2. Backend Pods\n```bash\nkubectl get pods -n {namespace} -l {selector}\n```\n\n### 3. Test Connectivity\n```bash\nkubectl run -it --rm debug --image=busybox --restart=Never -- wget -O- {service_name}:{port}\n```\n\n### 4. Network Policies\n```bash\nkubectl get networkpolicies -n {namespace}\n```\n\n## Common Service Issues\n- No endpoints (no matching pods)\n- Selector mismatch\n- Wrong target port\n- Network policy blocking\n- Service type misconfiguration\n"
+    }
+  ]
+}

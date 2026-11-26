@@ -1,0 +1,307 @@
+{
+  "repo": "FireRedTeam/FireRed-OpenStoryline",
+  "commit": "c9e945215586f45c12a61c1951ee9a8e9c43a027",
+  "branch": "main",
+  "fetchedAt": "2026-11-26T21:13:01.480Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "openstoryline-install",
+      "name": "openstoryline-install",
+      "dir": ".claude/skills/openstoryline-install",
+      "path": ".claude/skills/openstoryline-install/SKILL.md",
+      "desc": "Install, configure, and start FireRed-OpenStoryline from source on a local machine. Use when a user asks to set up OpenStoryline, troubleshoot installation, download required resources, fill config.toml API keys, or launch the MCP and web services, as well as Chinese requests like “安装 OpenStoryline”, “配置 OpenStoryline”, “启动 OpenStoryline”, “把 OpenStoryline 跑起来”, “修复 OpenStoryline 安装问题”, or “排查 OpenStoryline 启动失败”.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": true,
+        "network": false,
+        "bins": [
+          "git",
+          "python",
+          "pip",
+          "docker",
+          "wget",
+          "ffmpeg",
+          "sqlite3",
+          "conda"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/FireRedTeam/FireRed-OpenStoryline.git",
+        "copy": "cp -r .claude/skills/openstoryline-install ~/.claude/skills/openstoryline-install",
+        "raw": "https://raw.githubusercontent.com/FireRedTeam/FireRed-OpenStoryline/c9e945215586f45c12a61c1951ee9a8e9c43a027/.claude/skills/openstoryline-install/SKILL.md",
+        "saveAs": "~/.claude/skills/openstoryline-install/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:38aa7e901e4160c69e8cfeb12b0bbd70ead059ebe3dfd1f45d4ffc7db7464ab7",
+      "bytes": 6134,
+      "wordCount": 746,
+      "repoLicense": "Apache-2.0",
+      "commit": "c9e945215586f45c12a61c1951ee9a8e9c43a027",
+      "branch": "main",
+      "body": "---\nname: openstoryline-install\ndescription: Install, configure, and start FireRed-OpenStoryline from source on a local machine. Use when a user asks to set up OpenStoryline, troubleshoot installation, download required resources, fill config.toml API keys, or launch the MCP and web services, as well as Chinese requests like “安装 OpenStoryline”, “配置 OpenStoryline”, “启动 OpenStoryline”, “把 OpenStoryline 跑起来”, “修复 OpenStoryline 安装问题”, or “排查 OpenStoryline 启动失败”.\n---\n\n# OpenStoryline Install\n\nUse this skill when the task is to install or repair a local source checkout of FireRed-OpenStoryline.\n\nKeep the workflow deterministic:\n\n1. Confirm the repo path and read the current README.md and config.toml.\n2. Detect local prerequisites before changing anything.\n3. Prefer a local `venv` install unless the user explicitly asks for Docker or `conda`.\n4. Download resources only after Python dependencies succeed.\n5. Validate imports and config loading before claiming success.\n6. This skill assumes macOS, Linux, or WSL with a POSIX shell.\n\n## What This Skill Covers\n\n- Clone the GitHub repo if needed\n- Create a Python environment\n- Install Python dependencies\n- Download `.storyline` models and `resource/` assets\n- Fill `config.toml` model settings\n- Start MCP and web servers\n- Explain common installation/documentation gaps\n\n## Preconditions\n\nCheck these first:\n\n- `git`\n- Python `>= 3.11`\n- `ffmpeg`\n- `wget`\n- `unzip`\n\nOptional:\n\n- `docker`\n- `conda`\n\nIf `ffmpeg`, `wget`, or `unzip` are missing, install them through the OS package manager before continuing.\n\nExamples:\n\n- macOS with Homebrew:\n  ```bash\n  brew install ffmpeg wget unzip\n  ```\n\n- Debian/Ubuntu:\n  ```bash\n  sudo apt-get update\n  sudo apt-get install -y ffmpeg wget unzip\n  ```\n\nIf no supported package manager or permission is available, stop and report the missing system dependency clearly.\n\n## Interpreter selection\n\nFirst prefer any interpreter that already exists and passes version checks:\n\n1. A system Python `>= 3.11`\n2. An already available conda Python `>= 3.11`\n3. An already available pyenv Python `>= 3.11`, but only if basic stdlib modules work\n\nValidate candidate interpreters before using them:\n\n```bash\n/path/to/python -c \"import ssl, sqlite3, venv; print('stdlib_ok')\"\n```\n\nIf no supported interpreter already exists, peferr conda fallback:\n\n```bash\nconda create -y -n openstoryline-py311 python=3.11\nconda run -n openstoryline-py311 python --version\nconda run -n openstoryline-py311 python -m venv .venv\n```\n\nAfter a supported interpreter is found, always create a repo-local .venv and continue using .venv/bin/python for install, config validation, and service startup.\n\nDo not duplicate the rest of the workflow for pyenv or conda unless the user explicitly asks to stay inside a conda environment.\n\n## Preferred Install Path\n\nFrom the repo root:\n\n```bash\n/path/to/python -m venv .venv\n.venv/bin/python -m pip install --upgrade pip\n.venv/bin/python -m pip install -r requirements.txt\nbash download.sh\n```\n\nNotes:\n\n- `download.sh` pulls both model weights and a large resource archive. It can take a long time and may resume after network drops.\n- The resource download is required for a full local run, not just the Python package install.\n\n## Configuration\n\nBefore starting the app, update config.toml.\n\nYou can use scripts/update_config.py.\n\nAt minimum, fill:\n\n```bash\n.venv/bin/python scripts/update_config.py --config ./config.toml --set llm.model=REPLACE_WITH_REAL_MODEL\n.venv/bin/python scripts/update_config.py --config ./config.toml --set llm.base_url=REPLACE_WITH_REAL_URL\n.venv/bin/python scripts/update_config.py --config ./config.toml --set llm.api_key=sk-REPLACE_WITH_REAL_KEY\n\n.venv/bin/python scripts/update_config.py --config ./config.toml --set vlm.model=REPLACE_WITH_REAL_MODEL\n.venv/bin/python scripts/update_config.py --config ./config.toml --set vlm.base_url=REPLACE_WITH_REAL_URL\n.venv/bin/python scripts/update_config.py --config ./config.toml --set vlm.api_key=sk-REPLACE_WITH_REAL_KEY\n```\n\nOptional but common:\n\n- `search_media.pexels_api_key` for searching media\n- TTS provider keys under `generate_voiceover.providers.*` (choose one provider)\n\n\n## Verification\n\nRun these checks before saying installation is complete:\n\n```bash\n.venv/bin/pip check\nPYTHONPATH=src .venv/bin/python -c \"from open_storyline.config import load_settings; load_settings('config.toml'); print('config_ok')\"\n```\n\nAlso confirm key resources exist:\n\n```bash\ntest -f .storyline/models/transnetv2-pytorch-weights.pth\ntest -d resource/bgms\n```\n\n## Start Services\n\nThere are two common paths. These are long-running processes. Do not wait for them to exit normally. Treat successful startup log lines or confirmed listening ports as success, and keep the services running in separate shells/sessions as needed.\n\nManual start:\n\n```bash\nPYTHONPATH=src .venv/bin/python -m open_storyline.mcp.server\n```\n\nIn a second shell:\n\n```bash\nPYTHONPATH=src .venv/bin/python -m uvicorn agent_fastapi:app --host 127.0.0.1 --port 8005\n```\n\n## Expected Outputs\n\nAfter a successful install:\n\n- `.venv/` exists\n- MCP listens on the configured local port (commonly `127.0.0.1:8001`)\n- Web listens on the configured web port (commonly `127.0.0.1:8005`, though `run.sh` defaults may differ)\n\n## Common Problems\n\n### `download.sh` is slow or interrupted\n\nSymptom:\n\n- Large downloads stall or reconnect\n\nFix:\n\n- Let `wget` continue; it supports resume behavior here\n- Verify extracted outputs instead of trusting the progress meter\n\n### Web/MCP server fails to bind\n\nSymptom:\n\n- `operation not permitted` while binding `127.0.0.1` or `0.0.0.0`\n\nFix:\n\n- In agent sandboxes, request permission to open local listening ports\n- Prefer `127.0.0.1` over `0.0.0.0` unless external access is required\n\n## Response Pattern\n\nWhen reporting status to the user, separate:\n\n- what is installed\n- what is still downloading\n- what config is still missing\n- what address the service is listening on\n\nDo not say \"installation complete\" if only the Python packages are installed but the resource bundle is still missing.",
+      "bodyMd": "# OpenStoryline Install\n\nUse this skill when the task is to install or repair a local source checkout of FireRed-OpenStoryline.\n\nKeep the workflow deterministic:\n\n1. Confirm the repo path and read the current README.md and config.toml.\n2. Detect local prerequisites before changing anything.\n3. Prefer a local `venv` install unless the user explicitly asks for Docker or `conda`.\n4. Download resources only after Python dependencies succeed.\n5. Validate imports and config loading before claiming success.\n6. This skill assumes macOS, Linux, or WSL with a POSIX shell.\n\n## What This Skill Covers\n\n- Clone the GitHub repo if needed\n- Create a Python environment\n- Install Python dependencies\n- Download `.storyline` models and `resource/` assets\n- Fill `config.toml` model settings\n- Start MCP and web servers\n- Explain common installation/documentation gaps\n\n## Preconditions\n\nCheck these first:\n\n- `git`\n- Python `>= 3.11`\n- `ffmpeg`\n- `wget`\n- `unzip`\n\nOptional:\n\n- `docker`\n- `conda`\n\nIf `ffmpeg`, `wget`, or `unzip` are missing, install them through the OS package manager before continuing.\n\nExamples:\n\n- macOS with Homebrew:\n  ```bash\n  brew install ffmpeg wget unzip\n  ```\n\n- Debian/Ubuntu:\n  ```bash\n  sudo apt-get update\n  sudo apt-get install -y ffmpeg wget unzip\n  ```\n\nIf no supported package manager or permission is available, stop and report the missing system dependency clearly.\n\n## Interpreter selection\n\nFirst prefer any interpreter that already exists and passes version checks:\n\n1. A system Python `>= 3.11`\n2. An already available conda Python `>= 3.11`\n3. An already available pyenv Python `>= 3.11`, but only if basic stdlib modules work\n\nValidate candidate interpreters before using them:\n\n```bash\n/path/to/python -c \"import ssl, sqlite3, venv; print('stdlib_ok')\"\n```\n\nIf no supported interpreter already exists, peferr conda fallback:\n\n```bash\nconda create -y -n openstoryline-py311 python=3.11\nconda run -n openstoryline-py311 python --version\nconda run -n openstoryline-py311 python -m venv .venv\n```\n\nAfter a supported interpreter is found, always create a repo-local .venv and continue using .venv/bin/python for install, config validation, and service startup.\n\nDo not duplicate the rest of the workflow for pyenv or conda unless the user explicitly asks to stay inside a conda environment.\n\n## Preferred Install Path\n\nFrom the repo root:\n\n```bash\n/path/to/python -m venv .venv\n.venv/bin/python -m pip install --upgrade pip\n.venv/bin/python -m pip install -r requirements.txt\nbash download.sh\n```\n\nNotes:\n\n- `download.sh` pulls both model weights and a large resource archive. It can take a long time and may resume after network drops.\n- The resource download is required for a full local run, not just the Python package install.\n\n## Configuration\n\nBefore starting the app, update config.toml.\n\nYou can use scripts/update_config.py.\n\nAt minimum, fill:\n\n```bash\n.venv/bin/python scripts/update_config.py --config ./config.toml --set llm.model=REPLACE_WITH_REAL_MODEL\n.venv/bin/python scripts/update_config.py --config ./config.toml --set llm.base_url=REPLACE_WITH_REAL_URL\n.venv/bin/python scripts/update_config.py --config ./config.toml --set llm.api_key=sk-REPLACE_WITH_REAL_KEY\n\n.venv/bin/python scripts/update_config.py --config ./config.toml --set vlm.model=REPLACE_WITH_REAL_MODEL\n.venv/bin/python scripts/update_config.py --config ./config.toml --set vlm.base_url=REPLACE_WITH_REAL_URL\n.venv/bin/python scripts/update_config.py --config ./config.toml --set vlm.api_key=sk-REPLACE_WITH_REAL_KEY\n```\n\nOptional but common:\n\n- `search_media.pexels_api_key` for searching media\n- TTS provider keys under `generate_voiceover.providers.*` (choose one provider)\n\n\n## Verification\n\nRun these checks before saying installation is complete:\n\n```bash\n.venv/bin/pip check\nPYTHONPATH=src .venv/bin/python -c \"from open_storyline.config import load_settings; load_settings('config.toml'); print('config_ok')\"\n```\n\nAlso confirm key resources exist:\n\n```bash\ntest -f .storyline/models/transnetv2-pytorch-weights.pth\ntest -d resource/bgms\n```\n\n## Start Services\n\nThere are two common paths. These are long-running processes. Do not wait for them to exit normally. Treat successful startup log lines or confirmed listening ports as success, and keep the services running in separate shells/sessions as needed.\n\nManual start:\n\n```bash\nPYTHONPATH=src .venv/bin/python -m open_storyline.mcp.server\n```\n\nIn a second shell:\n\n```bash\nPYTHONPATH=src .venv/bin/python -m uvicorn agent_fastapi:app --host 127.0.0.1 --port 8005\n```\n\n## Expected Outputs\n\nAfter a successful install:\n\n- `.venv/` exists\n- MCP listens on the configured local port (commonly `127.0.0.1:8001`)\n- Web listens on the configured web port (commonly `127.0.0.1:8005`, though `run.sh` defaults may differ)\n\n## Common Problems\n\n### `download.sh` is slow or interrupted\n\nSymptom:\n\n- Large downloads stall or reconnect\n\nFix:\n\n- Let `wget` continue; it supports resume behavior here\n- Verify extracted outputs instead of trusting the progress meter\n\n### Web/MCP server fails to bind\n\nSymptom:\n\n- `operation not permitted` while binding `127.0.0.1` or `0.0.0.0`\n\nFix:\n\n- In agent sandboxes, request permission to open local listening ports\n- Prefer `127.0.0.1` over `0.0.0.0` unless external access is required\n\n## Response Pattern\n\nWhen reporting status to the user, separate:\n\n- what is installed\n- what is still downloading\n- what config is still missing\n- what address the service is listening on\n\nDo not say \"installation complete\" if only the Python packages are installed but the resource bundle is still missing."
+    },
+    {
+      "slug": "openstoryline-use",
+      "name": "openstoryline-use",
+      "dir": ".claude/skills/openstoryline-use",
+      "path": ".claude/skills/openstoryline-use/SKILL.md",
+      "desc": "Use this skill when OpenStoryline is already installed and the user wants to start the local MCP/Web services, create or continue a session, send editing instructions, perform multi-turn re-editing, and verify rendered video outputs, as well as Chinese requests like “启动 OpenStoryline”, “把 OpenStoryline 跑起来”, “用 OpenStoryline 剪视频”.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": true,
+        "network": true,
+        "bins": [
+          "python",
+          "python3",
+          "pip",
+          "curl",
+          "conda"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/FireRedTeam/FireRed-OpenStoryline.git",
+        "copy": "cp -r .claude/skills/openstoryline-use ~/.claude/skills/openstoryline-use",
+        "raw": "https://raw.githubusercontent.com/FireRedTeam/FireRed-OpenStoryline/c9e945215586f45c12a61c1951ee9a8e9c43a027/.claude/skills/openstoryline-use/SKILL.md",
+        "saveAs": "~/.claude/skills/openstoryline-use/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:039576d90fae1baf735767a88ec1135dc38a5e6ccad8dbde84c2d6abc86b71ef",
+      "bytes": 13324,
+      "wordCount": 855,
+      "repoLicense": "Apache-2.0",
+      "commit": "c9e945215586f45c12a61c1951ee9a8e9c43a027",
+      "branch": "main",
+      "body": "---\nname: openstoryline-use\ndescription: Use this skill when OpenStoryline is already installed and the user wants to start the local MCP/Web services, create or continue a session, send editing instructions, perform multi-turn re-editing, and verify rendered video outputs, as well as Chinese requests like “启动 OpenStoryline”, “把 OpenStoryline 跑起来”, “用 OpenStoryline 剪视频”.\n---\n\n# OpenStoryline Usage Skill\n\n你负责在“已安装完成”的前提下，执行 OpenStoryline 的实际剪辑流程。\nOpenStoryline 是一个剪辑 Agent，用户可使用自己的素材，通过自然语言对话的方式剪辑视频。内置素材搜索、内容理解、生成字幕、文字转语音等功能，用户可以多次提出具体的剪辑/修改意见。\n\n目标是：使用已有脚本，稳定地完成一次从启动服务到产出视频的闭环；并且支持在同一个 `session_id` 上继续对话、二次编辑、重新生成新视频。\n\n## Scope\n\n此技能只处理“使用与剪辑”：\n\n1. 检查并修改 `config.toml` 的必要字段。\n2. 启动 MCP server。\n3. 启动 `uvicorn agent_fastapi:app`。\n4. 创建 session 并发送剪辑请求。\n5. 等待并验证输出视频产物。\n6. 在同一个 `session_id` 上继续对话，执行二次编辑。\n7. 验证二次编辑后是否生成了新的 `output_*.mp4`。\n\n不处理完整安装流程（依赖安装、模型下载、资源下载等），那是安装技能的范围。如果在启动时遇到问题，怀疑是安装问题，再去查看安装Skill openstoryline-install\n\n## Core Rules\n\n1. 默认只监听 `127.0.0.1`，不要主动暴露到局域网。\n2. 优先复用现有脚本，不要重复造轮子：\n   - 修改配置脚本：位于代码仓库`scripts/update_config.py`\n   - Web 服务桥接脚本位于当前 skill 目录下的 `scripts/bridge_openstoryline.py`。请先定位当前 skill 目录，再拼接`scripts/bridge_openstoryline.py`  \n3. 长驻服务（MCP / Web）必须按“长驻进程”方式启动，并持续观察日志；不要把启动命令当成一次性探测命令。\n4. **不要**在启动命令后面追加这些包装：\n   - `| head`\n   - `| tail`\n   - `grep`\n   - `timeout`\n   - `sleep`\n   - `pkill`\n   - 以及其它会截断日志、提前退出、强行杀进程的包装\n5. 询问用户需要剪辑哪些素材及其路径。\n6. 第一轮创建 session 后返回的 `session_id` 必须保存；后续继续对话、二次编辑都依赖它。\n7. 如果服务端提示“上一条消息尚未完成，请稍后再发送”，不要新建 session；优先等待，必要时只终止卡住的本地 bridge 进程，然后继续复用原 `session_id` 重试。\n8. 不要在任务执行中途主动终止 MCP / Web 服务，除非用户明确要求停止，或者服务本身已经确认失活。\n9. 每次完成任务后，都要向用户明确返回：\n    - `session_id`\n    - 最终视频 `.mp4` 的完整路径\n    - 如有二次编辑，还要说明是否生成了新的输出文件\n10. 下面的示例命令都使用`source .venv/bin/activate`作为示例，你需要根据用户实际使用的环境，替换成正确的命令（例如`conda activate `）。\n11. 遇到端口被占用的情况，优先换一个端口。\n\n## OpenClaw Execution Strategy (Important)\n\n如果你是OpenClaw，一定注意以下关键点：\n\n### 长驻服务怎么跑\n对于以下两类命令：\n\n- `PYTHONPATH=src python -m open_storyline.mcp.server`\n- `uvicorn agent_fastapi:app --host 127.0.0.1 --port 8005`\n\n必须按“长驻进程”处理：\n\n1. 用 `exec` 启动，并开启 PTY（如果工具支持 `pty: true`，就开启）。\n2. 启动后不要立刻判失败，MCP Server启动需要几分钟的时间。\n3. 用 `process poll` / `process log` 持续观察返回的内容，一定不要急着杀掉进程。\n4. 看到成功日志再继续下一步。\n\n### 一次性命令怎么跑\n以下命令适合普通一次性 `exec`：\n\n- 修改 `config.toml`\n- 创建 session\n- 在现有 `session_id` 上继续对话\n- 查找 `.mp4`\n- 查看文件大小\n\n### 观察哪个日志最有用\n实测中，**Web 服务日志** 最适合看剪辑进度。  \n常见正常流程节点包括：\n\n- `filter_clips`\n- `group_clips`\n- `generate_script`\n- `generate_voiceover`\n- `render_video`\n\n如果 bridge 脚本还在等待，不代表系统没在工作；可能只是服务端还在处理。\n\n## Standard Workflow (OpenClaw)\n\n### 0) 确认仓库根目录\n\n后续命令中的 `<repo-root>` 指向 OpenStoryline 仓库根目录，例如：\n\n```bash\n/Users/yourname/Desktop/code/Openstoryline/FireRed-Openstoryline\n```\n\n所有命令都默认在这个目录下执行，并先激活环境。\n\n---\n\n### 1) 进入项目根目录并配置\n\n#### 必填配置\n在开始剪辑前，以下 6 个字段必须有值，否则模型调用会失败。你必须先向用户询问这些字段的具体值，然后用脚本进行修改：\n\n- `[llm].model`\n- `[llm].base_url`\n- `[llm].api_key`\n- `[vlm].model`\n- `[vlm].base_url`\n- `[vlm].api_key`\n\n直接可用命令（在仓库根目录执行，以.venv为例）：\n\n```bash\ncd <repo-root> && source .venv/bin/activate && python scripts/update_config.py --config ./config.toml --set llm.model=REPLACE_WITH_REAL_MODEL\ncd <repo-root> && source .venv/bin/activate && python scripts/update_config.py --config ./config.toml --set llm.base_url=REPLACE_WITH_REAL_URL\ncd <repo-root> && source .venv/bin/activate && python scripts/update_config.py --config ./config.toml --set llm.api_key=sk-REPLACE_WITH_REAL_KEY\n\ncd <repo-root> && source .venv/bin/activate && python scripts/update_config.py --config ./config.toml --set vlm.model=REPLACE_WITH_REAL_MODEL\ncd <repo-root> && source .venv/bin/activate && python scripts/update_config.py --config ./config.toml --set vlm.base_url=REPLACE_WITH_REAL_URL\ncd <repo-root> && source .venv/bin/activate && python scripts/update_config.py --config ./config.toml --set vlm.api_key=sk-REPLACE_WITH_REAL_KEY\n```\n\n#### 选填配置\n以下是常见可选项，按需设置：\n\n##### 1. MCP 端口（端口冲突时）\n```bash\ncd <repo-root> && source .venv/bin/activate && python scripts/update_config.py --config ./config.toml --set local_mcp_server.port=8002\n```\n\n##### 2. 素材检索（Pexels）\n```bash\ncd <repo-root> && source .venv/bin/activate && python scripts/update_config.py --config ./config.toml --set search_media.pexels_api_key=REPLACE_WITH_PEXELS_KEY\n```\n\n##### 3. TTS（如果需要配音）\n在以下 3 家中选一家填写即可：\n\n```bash\n# minimax\ncd <repo-root> && source .venv/bin/activate && python scripts/update_config.py --config ./config.toml --set generate_voiceover.providers.minimax.base_url=https://api.minimax.chat/v1/t2a_v2\ncd <repo-root> && source .venv/bin/activate && python scripts/update_config.py --config ./config.toml --set generate_voiceover.providers.minimax.api_key=REPLACE_WITH_MINIMAX_KEY\n\n# bytedance\ncd <repo-root> && source .venv/bin/activate && python scripts/update_config.py --config ./config.toml --set generate_voiceover.providers.bytedance.uid=REPLACE_UID\ncd <repo-root> && source .venv/bin/activate && python scripts/update_config.py --config ./config.toml --set generate_voiceover.providers.bytedance.appid=REPLACE_APPID\ncd <repo-root> && source .venv/bin/activate && python scripts/update_config.py --config ./config.toml --set generate_voiceover.providers.bytedance.access_token=REPLACE_ACCESS_TOKEN\n\n# 302\ncd <repo-root> && source .venv/bin/activate && python scripts/update_config.py --config ./config.toml --set generate_voiceover.providers.302.base_url=https://REPLACE_BASE_URL\ncd <repo-root> && source .venv/bin/activate && python scripts/update_config.py --config ./config.toml --set generate_voiceover.providers.302.api_key=REPLACE_API_KEY\n```\n\n---\n\n### 2) 启动 MCP Server\n\n注意 MCP Server 的启动可能需要几分钟，务必耐心等待，不要急着 kill 掉进程。\nmacOS/Linux:\n```bash\ncd <repo-root> && source .venv/bin/activate && PYTHONPATH=src python -m open_storyline.mcp.server\n```\n\nWindows:\n```powershell\ncd <repo-root>\n. .venv\\Scripts\\Activate.ps1\n$env:PYTHONPATH=\"src\"\npython -m open_storyline.mcp.server\n```\n\n看到类似以下日志，视为成功：\n\n```text\nUvicorn running on http://127.0.0.1:8001\n```\n\n---\n\n### 3) 启动 Web 服务（uvicorn）\n\nmacOS/Linux:\n```bash\ncd <repo-root> && source .venv/bin/activate && uvicorn agent_fastapi:app --host 127.0.0.1 --port 8005\n```\n\n出现以下日志即成功：\n\n```text\nINFO:     Started server process [PID]\nINFO:     Waiting for application startup.\nINFO:     Application startup complete.\nINFO:     Uvicorn running on http://127.0.0.1:8005 (Press CTRL+C to quit)\n```\n\n---\n\n### 4) 创建剪辑会话\n\n注意把地址替换为上一步启动 Web 服务时的真实地址。\n```bash\ncurl -s -X POST \"http://127.0.0.1:8005/api/sessions\"\n```\n这一步会创建一个剪辑会话，拿到一个`session_id`，**非常重要**！只要 Web 服务还活着，你就可以拿着这个`session_id`进行上传素材、多轮对话，务必保留。\n\n### 5) 上传素材\n\n#### 方案1：\n```bash\ncurl -s -X POST \"http://127.0.0.1:8005/api/sessions/{session_id}/media\" -F \"files=@/absolute/path/input.mp4\"\n```\n\n#### 方案2：对于大文件，建议直接走本地copy\n```bash\ncp path/to/source.mp4 <repo-root>/outputs/{session_id}/media\n```\n\n### 6) 开始剪辑对话（自动创建 session）\n\n使用 Skill 自带 bridge 脚本.\n  - skills-root: 当前 skill 所在目录。\n  - session-id: 填写上一步拿到的 `session_id`\n  - base-url 填写 Web 服务的 url\n  - prompt 用户的剪辑需求\n  - lang 用户使用的语言类型，目前仅支持 zh / en，设置一次即可。\n\n```bash\ncd <repo-root> && source .venv/bin/activate && python <skills-root>/scripts/bridge_openstoryline.py \\\n  --session-id <session_id> \\\n  --base-url http://127.0.0.1:8005 \\\n  --prompt \"剪一个小红书风格视频\" \\\n  --lang \"zh\"\n```\n\n---\n\n### 7) 等待并观察剪辑进度\n\n有时剪辑Agent会先询问剪辑需求；有时会直接开始剪辑，剪辑可能需要几分钟，尤其是带文案、配音、渲染时。\n\n#### 正确做法\n1. 持续 `poll` 当前 bridge 脚本对应的进程会话。\n2. 同时查看 Web 服务日志。剪辑 Agent 会实时更新自己的进度。\n3. 只要 Web 服务日志仍在推进，就继续等待，不要随便重启服务。\n\n#### 实战经验\n如果 bridge 命令还没返回，但 Web 服务日志里已经在跑节点，这通常说明服务端仍在正常工作，不要误判为失败。\n\n---\n\n### 8) 第二轮：在同一个 session 上继续聊天\n\n根据助手回复，继续向它发出剪辑要求。例如，助手制定了一个剪辑计划，请求确认。那么：\n\n```bash\ncd <repo-root> && source .venv/bin/activate && python <skills-root>/scripts/bridge_openstoryline.py \\\n  --base-url http://127.0.0.1:8005 \\\n  --session-id <上一步session_id> \\\n  --prompt \"开始剪辑\"\n```\n\n或者需要调整：\n\n```bash\ncd <repo-root> && source .venv/bin/activate && python <skills-root>/scripts/bridge_openstoryline.py \\\n  --base-url http://127.0.0.1:8005 \\\n  --session-id <上一步session_id> \\\n  --prompt \"使用欢快的BGM\"\n```\n\n---\n\n### 9) 检查首轮产物\n\n一般来说，剪辑agent的输出会直接写出剪辑产物的路径。\n如果没有，优先检查：\n\n```bash\ncd <repo-root> && find .storyline/.server_cache/<session_id> -name \"output_*.mp4\" 2>/dev/null\n```\n\n#### 判定标准\n有 `output_*.mp4` 即认为剪辑成功。\n\n### 10) 发送视频\n\n将生成的视频发送给用户观看，询问用户反馈。\n\n#### OpenClaw + 飞书 APP 场景视频发送指南\n\n如果你是 OpenClaw 且用户使用手机飞书 APP，使用如下专属指南。要求：\n- Python 3.6+\n- 已安装 `requests`\n  ```bash\n  python3 -m pip install requests\n  ```\n- OpenClaw 已配置飞书渠道\n\n运行脚本示例如下，此脚本会自动从 ~/.openclaw/openclaw.json 读取飞书凭证。\nreceive-id 的选择\n- oc_xxx -> chat_id：发到群聊或当前单聊会话，优先推荐\n- ou_xxx -> open_id：发给指定用户 \n- on_xxx -> user_id：仅当明确拿到的是 user_id 时再使用\n```bash\ncd <repo-root> && source .venv/bin/activate && python <skills-root>/scripts/feishu_file_sender.py --help\ncd <repo-root> && source .venv/bin/activate && python <skills-root>/scripts/feishu_file_sender.py --file /absolute/path/to/video.mp4 --receive-id-type chat_id --receive-id oc_xxx\n```\n\n### 11) 二次编辑\n\n在已经生成视频的情况下，如果用户对视频内容不满意，**可以复用同一个 `session_id` 继续修改视频**，并生成新的 `output_*.mp4`。\n\n#### 示例：修改文案风格\n\n```bash\ncd <repo-root> && source .venv/bin/activate && python <skills-root>/scripts/bridge_openstoryline.py \\\n  --base-url http://127.0.0.1:8005 \\\n  --session-id <session_id> \\\n  --prompt \"帮我把文案换成更欢乐、更有活力的风格\"\n```\n\n- 同一个 `session_id` 下，系统会重新跑相应节点,然后重新渲染.\n- 同一个 `session_id` 下会出现新的 `render_video_*` 目录。\n- 新目录里会生成新的 `output_*.mp4`。\n\n---\n\n## Security Note\n\n只有当用户明确要求手机 / LAN 访问时，才改为 `--host 0.0.0.0`。  \n同时提醒：仅在可信网络使用，避免开放到公共网络。",
+      "bodyMd": "# OpenStoryline Usage Skill\n\n你负责在“已安装完成”的前提下，执行 OpenStoryline 的实际剪辑流程。\nOpenStoryline 是一个剪辑 Agent，用户可使用自己的素材，通过自然语言对话的方式剪辑视频。内置素材搜索、内容理解、生成字幕、文字转语音等功能，用户可以多次提出具体的剪辑/修改意见。\n\n目标是：使用已有脚本，稳定地完成一次从启动服务到产出视频的闭环；并且支持在同一个 `session_id` 上继续对话、二次编辑、重新生成新视频。\n\n## Scope\n\n此技能只处理“使用与剪辑”：\n\n1. 检查并修改 `config.toml` 的必要字段。\n2. 启动 MCP server。\n3. 启动 `uvicorn agent_fastapi:app`。\n4. 创建 session 并发送剪辑请求。\n5. 等待并验证输出视频产物。\n6. 在同一个 `session_id` 上继续对话，执行二次编辑。\n7. 验证二次编辑后是否生成了新的 `output_*.mp4`。\n\n不处理完整安装流程（依赖安装、模型下载、资源下载等），那是安装技能的范围。如果在启动时遇到问题，怀疑是安装问题，再去查看安装Skill openstoryline-install\n\n## Core Rules\n\n1. 默认只监听 `127.0.0.1`，不要主动暴露到局域网。\n2. 优先复用现有脚本，不要重复造轮子：\n   - 修改配置脚本：位于代码仓库`scripts/update_config.py`\n   - Web 服务桥接脚本位于当前 skill 目录下的 `scripts/bridge_openstoryline.py`。请先定位当前 skill 目录，再拼接`scripts/bridge_openstoryline.py`  \n3. 长驻服务（MCP / Web）必须按“长驻进程”方式启动，并持续观察日志；不要把启动命令当成一次性探测命令。\n4. **不要**在启动命令后面追加这些包装：\n   - `| head`\n   - `| tail`\n   - `grep`\n   - `timeout`\n   - `sleep`\n   - `pkill`\n   - 以及其它会截断日志、提前退出、强行杀进程的包装\n5. 询问用户需要剪辑哪些素材及其路径。\n6. 第一轮创建 session 后返回的 `session_id` 必须保存；后续继续对话、二次编辑都依赖它。\n7. 如果服务端提示“上一条消息尚未完成，请稍后再发送”，不要新建 session；优先等待，必要时只终止卡住的本地 bridge 进程，然后继续复用原 `session_id` 重试。\n8. 不要在任务执行中途主动终止 MCP / Web 服务，除非用户明确要求停止，或者服务本身已经确认失活。\n9. 每次完成任务后，都要向用户明确返回：\n    - `session_id`\n    - 最终视频 `.mp4` 的完整路径\n    - 如有二次编辑，还要说明是否生成了新的输出文件\n10. 下面的示例命令都使用`source .venv/bin/activate`作为示例，你需要根据用户实际使用的环境，替换成正确的命令（例如`conda activate `）。\n11. 遇到端口被占用的情况，优先换一个端口。\n\n## OpenClaw Execution Strategy (Important)\n\n如果你是OpenClaw，一定注意以下关键点：\n\n### 长驻服务怎么跑\n对于以下两类命令：\n\n- `PYTHONPATH=src python -m open_storyline.mcp.server`\n- `uvicorn agent_fastapi:app --host 127.0.0.1 --port 8005`\n\n必须按“长驻进程”处理：\n\n1. 用 `exec` 启动，并开启 PTY（如果工具支持 `pty: true`，就开启）。\n2. 启动后不要立刻判失败，MCP Server启动需要几分钟的时间。\n3. 用 `process poll` / `process log` 持续观察返回的内容，一定不要急着杀掉进程。\n4. 看到成功日志再继续下一步。\n\n### 一次性命令怎么跑\n以下命令适合普通一次性 `exec`：\n\n- 修改 `config.toml`\n- 创建 session\n- 在现有 `session_id` 上继续对话\n- 查找 `.mp4`\n- 查看文件大小\n\n### 观察哪个日志最有用\n实测中，**Web 服务日志** 最适合看剪辑进度。  \n常见正常流程节点包括：\n\n- `filter_clips`\n- `group_clips`\n- `generate_script`\n- `generate_voiceover`\n- `render_video`\n\n如果 bridge 脚本还在等待，不代表系统没在工作；可能只是服务端还在处理。\n\n## Standard Workflow (OpenClaw)\n\n### 0) 确认仓库根目录\n\n后续命令中的 `<repo-root>` 指向 OpenStoryline 仓库根目录，例如：\n\n```bash\n/Users/yourname/Desktop/code/Openstoryline/FireRed-Openstoryline\n```\n\n所有命令都默认在这个目录下执行，并先激活环境。\n\n---\n\n### 1) 进入项目根目录并配置\n\n#### 必填配置\n在开始剪辑前，以下 6 个字段必须有值，否则模型调用会失败。你必须先向用户询问这些字段的具体值，然后用脚本进行修改：\n\n- `[llm].model`\n- `[llm].base_url`\n- `[llm].api_key`\n- `[vlm].model`\n- `[vlm].base_url`\n- `[vlm].api_key`\n\n直接可用命令（在仓库根目录执行，以.venv为例）：\n\n```bash\ncd <repo-root> && source .venv/bin/activate && python scripts/update_config.py --config ./config.toml --set llm.model=REPLACE_WITH_REAL_MODEL\ncd <repo-root> && source .venv/bin/activate && python scripts/update_config.py --config ./config.toml --set llm.base_url=REPLACE_WITH_REAL_URL\ncd <repo-root> && source .venv/bin/activate && python scripts/update_config.py --config ./config.toml --set llm.api_key=sk-REPLACE_WITH_REAL_KEY\n\ncd <repo-root> && source .venv/bin/activate && python scripts/update_config.py --config ./config.toml --set vlm.model=REPLACE_WITH_REAL_MODEL\ncd <repo-root> && source .venv/bin/activate && python scripts/update_config.py --config ./config.toml --set vlm.base_url=REPLACE_WITH_REAL_URL\ncd <repo-root> && source .venv/bin/activate && python scripts/update_config.py --config ./config.toml --set vlm.api_key=sk-REPLACE_WITH_REAL_KEY\n```\n\n#### 选填配置\n以下是常见可选项，按需设置：\n\n##### 1. MCP 端口（端口冲突时）\n```bash\ncd <repo-root> && source .venv/bin/activate && python scripts/update_config.py --config ./config.toml --set local_mcp_server.port=8002\n```\n\n##### 2. 素材检索（Pexels）\n```bash\ncd <repo-root> && source .venv/bin/activate && python scripts/update_config.py --config ./config.toml --set search_media.pexels_api_key=REPLACE_WITH_PEXELS_KEY\n```\n\n##### 3. TTS（如果需要配音）\n在以下 3 家中选一家填写即可：\n\n```bash\n# minimax\ncd <repo-root> && source .venv/bin/activate && python scripts/update_config.py --config ./config.toml --set generate_voiceover.providers.minimax.base_url=https://api.minimax.chat/v1/t2a_v2\ncd <repo-root> && source .venv/bin/activate && python scripts/update_config.py --config ./config.toml --set generate_voiceover.providers.minimax.api_key=REPLACE_WITH_MINIMAX_KEY\n\n# bytedance\ncd <repo-root> && source .venv/bin/activate && python scripts/update_config.py --config ./config.toml --set generate_voiceover.providers.bytedance.uid=REPLACE_UID\ncd <repo-root> && source .venv/bin/activate && python scripts/update_config.py --config ./config.toml --set generate_voiceover.providers.bytedance.appid=REPLACE_APPID\ncd <repo-root> && source .venv/bin/activate && python scripts/update_config.py --config ./config.toml --set generate_voiceover.providers.bytedance.access_token=REPLACE_ACCESS_TOKEN\n\n# 302\ncd <repo-root> && source .venv/bin/activate && python scripts/update_config.py --config ./config.toml --set generate_voiceover.providers.302.base_url=https://REPLACE_BASE_URL\ncd <repo-root> && source .venv/bin/activate && python scripts/update_config.py --config ./config.toml --set generate_voiceover.providers.302.api_key=REPLACE_API_KEY\n```\n\n---\n\n### 2) 启动 MCP Server\n\n注意 MCP Server 的启动可能需要几分钟，务必耐心等待，不要急着 kill 掉进程。\nmacOS/Linux:\n```bash\ncd <repo-root> && source .venv/bin/activate && PYTHONPATH=src python -m open_storyline.mcp.server\n```\n\nWindows:\n```powershell\ncd <repo-root>\n. .venv\\Scripts\\Activate.ps1\n$env:PYTHONPATH=\"src\"\npython -m open_storyline.mcp.server\n```\n\n看到类似以下日志，视为成功：\n\n```text\nUvicorn running on http://127.0.0.1:8001\n```\n\n---\n\n### 3) 启动 Web 服务（uvicorn）\n\nmacOS/Linux:\n```bash\ncd <repo-root> && source .venv/bin/activate && uvicorn agent_fastapi:app --host 127.0.0.1 --port 8005\n```\n\n出现以下日志即成功：\n\n```text\nINFO:     Started server process [PID]\nINFO:     Waiting for application startup.\nINFO:     Application startup complete.\nINFO:     Uvicorn running on http://127.0.0.1:8005 (Press CTRL+C to quit)\n```\n\n---\n\n### 4) 创建剪辑会话\n\n注意把地址替换为上一步启动 Web 服务时的真实地址。\n```bash\ncurl -s -X POST \"http://127.0.0.1:8005/api/sessions\"\n```\n这一步会创建一个剪辑会话，拿到一个`session_id`，**非常重要**！只要 Web 服务还活着，你就可以拿着这个`session_id`进行上传素材、多轮对话，务必保留。\n\n### 5) 上传素材\n\n#### 方案1：\n```bash\ncurl -s -X POST \"http://127.0.0.1:8005/api/sessions/{session_id}/media\" -F \"files=@/absolute/path/input.mp4\"\n```\n\n#### 方案2：对于大文件，建议直接走本地copy\n```bash\ncp path/to/source.mp4 <repo-root>/outputs/{session_id}/media\n```\n\n### 6) 开始剪辑对话（自动创建 session）\n\n使用 Skill 自带 bridge 脚本.\n  - skills-root: 当前 skill 所在目录。\n  - session-id: 填写上一步拿到的 `session_id`\n  - base-url 填写 Web 服务的 url\n  - prompt 用户的剪辑需求\n  - lang 用户使用的语言类型，目前仅支持 zh / en，设置一次即可。\n\n```bash\ncd <repo-root> && source .venv/bin/activate && python <skills-root>/scripts/bridge_openstoryline.py \\\n  --session-id <session_id> \\\n  --base-url http://127.0.0.1:8005 \\\n  --prompt \"剪一个小红书风格视频\" \\\n  --lang \"zh\"\n```\n\n---\n\n### 7) 等待并观察剪辑进度\n\n有时剪辑Agent会先询问剪辑需求；有时会直接开始剪辑，剪辑可能需要几分钟，尤其是带文案、配音、渲染时。\n\n#### 正确做法\n1. 持续 `poll` 当前 bridge 脚本对应的进程会话。\n2. 同时查看 Web 服务日志。剪辑 Agent 会实时更新自己的进度。\n3. 只要 Web 服务日志仍在推进，就继续等待，不要随便重启服务。\n\n#### 实战经验\n如果 bridge 命令还没返回，但 Web 服务日志里已经在跑节点，这通常说明服务端仍在正常工作，不要误判为失败。\n\n---\n\n### 8) 第二轮：在同一个 session 上继续聊天\n\n根据助手回复，继续向它发出剪辑要求。例如，助手制定了一个剪辑计划，请求确认。那么：\n\n```bash\ncd <repo-root> && source .venv/bin/activate && python <skills-root>/scripts/bridge_openstoryline.py \\\n  --base-url http://127.0.0.1:8005 \\\n  --session-id <上一步session_id> \\\n  --prompt \"开始剪辑\"\n```\n\n或者需要调整：\n\n```bash\ncd <repo-root> && source .venv/bin/activate && python <skills-root>/scripts/bridge_openstoryline.py \\\n  --base-url http://127.0.0.1:8005 \\\n  --session-id <上一步session_id> \\\n  --prompt \"使用欢快的BGM\"\n```\n\n---\n\n### 9) 检查首轮产物\n\n一般来说，剪辑agent的输出会直接写出剪辑产物的路径。\n如果没有，优先检查：\n\n```bash\ncd <repo-root> && find .storyline/.server_cache/<session_id> -name \"output_*.mp4\" 2>/dev/null\n```\n\n#### 判定标准\n有 `output_*.mp4` 即认为剪辑成功。\n\n### 10) 发送视频\n\n将生成的视频发送给用户观看，询问用户反馈。\n\n#### OpenClaw + 飞书 APP 场景视频发送指南\n\n如果你是 OpenClaw 且用户使用手机飞书 APP，使用如下专属指南。要求：\n- Python 3.6+\n- 已安装 `requests`\n  ```bash\n  python3 -m pip install requests\n  ```\n- OpenClaw 已配置飞书渠道\n\n运行脚本示例如下，此脚本会自动从 ~/.openclaw/openclaw.json 读取飞书凭证。\nreceive-id 的选择\n- oc_xxx -> chat_id：发到群聊或当前单聊会话，优先推荐\n- ou_xxx -> open_id：发给指定用户 \n- on_xxx -> user_id：仅当明确拿到的是 user_id 时再使用\n```bash\ncd <repo-root> && source .venv/bin/activate && python <skills-root>/scripts/feishu_file_sender.py --help\ncd <repo-root> && source .venv/bin/activate && python <skills-root>/scripts/feishu_file_sender.py --file /absolute/path/to/video.mp4 --receive-id-type chat_id --receive-id oc_xxx\n```\n\n### 11) 二次编辑\n\n在已经生成视频的情况下，如果用户对视频内容不满意，**可以复用同一个 `session_id` 继续修改视频**，并生成新的 `output_*.mp4`。\n\n#### 示例：修改文案风格\n\n```bash\ncd <repo-root> && source .venv/bin/activate && python <skills-root>/scripts/bridge_openstoryline.py \\\n  --base-url http://127.0.0.1:8005 \\\n  --session-id <session_id> \\\n  --prompt \"帮我把文案换成更欢乐、更有活力的风格\"\n```\n\n- 同一个 `session_id` 下，系统会重新跑相应节点,然后重新渲染.\n- 同一个 `session_id` 下会出现新的 `render_video_*` 目录。\n- 新目录里会生成新的 `output_*.mp4`。\n\n---\n\n## Security Note\n\n只有当用户明确要求手机 / LAN 访问时，才改为 `--host 0.0.0.0`。  \n同时提醒：仅在可信网络使用，避免开放到公共网络。"
+    },
+    {
+      "slug": "ai-transition-editing-skill",
+      "name": "ai_transition_editing_skill",
+      "dir": ".storyline/skills/ai_transition_editing_skill",
+      "path": ".storyline/skills/ai_transition_editing_skill/SKILL.md",
+      "desc": "【WORKFLOW SKILL】使用 AI 生成的转场将用户素材串联起来。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/FireRedTeam/FireRed-OpenStoryline.git",
+        "copy": "cp -r .storyline/skills/ai_transition_editing_skill ~/.claude/skills/ai-transition-editing-skill",
+        "raw": "https://raw.githubusercontent.com/FireRedTeam/FireRed-OpenStoryline/c9e945215586f45c12a61c1951ee9a8e9c43a027/.storyline/skills/ai_transition_editing_skill/SKILL.md",
+        "saveAs": "~/.claude/skills/ai-transition-editing-skill/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:5ca8d86e7e31b826ac3fd98b546ab7ee85952b145f5c2776859af5b0a6ca6746",
+      "bytes": 2188,
+      "wordCount": 72,
+      "repoLicense": "Apache-2.0",
+      "commit": "c9e945215586f45c12a61c1951ee9a8e9c43a027",
+      "branch": "main",
+      "body": "---\nname: ai_transition_editing_skill\ndescription: 【WORKFLOW SKILL】使用 AI 生成的转场将用户素材串联起来。\n---\n\n## 角色定义 (Role)\n你是一个专业的剪辑师，擅长利用现有工具和 Skills 完成剪辑任务。\n\n## 注意事项\n- AI 转场剪辑目前不支持字幕、配音\n\n## 基本流程\nAI 转场剪辑流程如下，这里每一步都对应一个或多个工具或 Skills 供你使用：\n- 搜索素材 \"search_media\"（可跳过）。如果你发现用户并没有上传素材，可以提示用户你可以上网搜索素材。搜索素材后需要运行load_media工具才可以真正加载到素材。\n- 素材加载 \"load_media\"（固定）。用于获取输入素材的路径、长宽等基础信息。\n- 镜头切分 \"split_shots\"（可跳过）。将素材按镜头切分成片段。\n- 内容理解 \"understand_clips\"（可跳过）。 为每个片段(clips)生成一段描述（captions）\n- 镜头筛选 \"filter_clips\"（可跳过）。根据用户要求，筛选出符合要求的片段(clips)\n- 片段分组 \"group_clips\"（可跳过，但应默认运行）。根据用户要求，对片段进行排序和分组。注意在 `user_request` 参数中强调：“组织成适合插入 AI 转场的片段顺序”。\n- 提醒用户：系统将要为所有 x 个片段生成 x - 1 段 AI 转场，目前只支持一次性生成全部转场。AI 转场的资源消耗通常显著高于常规文案或配音流程，请确认是否继续？其中 x 是镜头筛选后的**片段数**，不是分组数量。如果没有进行镜头筛选，则取镜头切分的数量。如果镜头切分也没有进行，则取素材数量。\n- AI 转场生成 \"generate_ai_transition\"（可跳过，但在 AI 转场剪辑流程中应默认运行）。\n- 背景音乐选取 \"select_bgm\"（可跳过）。选择合适的背景音乐。\n- 组织时间线 \"plan_timeline_ai_transition\" 或 \"plan_timeline_pro（参数选择is_ai_transition=True, is_speech_rough_cut=False）\"（固定）。根据前面的视频片段、文案、语音和BGM，调用 AI 转场剪辑专用时间线。\n- 渲染成片。\"render_video\"（固定）。根据时间线渲染成片。",
+      "bodyMd": "## 角色定义 (Role)\n你是一个专业的剪辑师，擅长利用现有工具和 Skills 完成剪辑任务。\n\n## 注意事项\n- AI 转场剪辑目前不支持字幕、配音\n\n## 基本流程\nAI 转场剪辑流程如下，这里每一步都对应一个或多个工具或 Skills 供你使用：\n- 搜索素材 \"search_media\"（可跳过）。如果你发现用户并没有上传素材，可以提示用户你可以上网搜索素材。搜索素材后需要运行load_media工具才可以真正加载到素材。\n- 素材加载 \"load_media\"（固定）。用于获取输入素材的路径、长宽等基础信息。\n- 镜头切分 \"split_shots\"（可跳过）。将素材按镜头切分成片段。\n- 内容理解 \"understand_clips\"（可跳过）。 为每个片段(clips)生成一段描述（captions）\n- 镜头筛选 \"filter_clips\"（可跳过）。根据用户要求，筛选出符合要求的片段(clips)\n- 片段分组 \"group_clips\"（可跳过，但应默认运行）。根据用户要求，对片段进行排序和分组。注意在 `user_request` 参数中强调：“组织成适合插入 AI 转场的片段顺序”。\n- 提醒用户：系统将要为所有 x 个片段生成 x - 1 段 AI 转场，目前只支持一次性生成全部转场。AI 转场的资源消耗通常显著高于常规文案或配音流程，请确认是否继续？其中 x 是镜头筛选后的**片段数**，不是分组数量。如果没有进行镜头筛选，则取镜头切分的数量。如果镜头切分也没有进行，则取素材数量。\n- AI 转场生成 \"generate_ai_transition\"（可跳过，但在 AI 转场剪辑流程中应默认运行）。\n- 背景音乐选取 \"select_bgm\"（可跳过）。选择合适的背景音乐。\n- 组织时间线 \"plan_timeline_ai_transition\" 或 \"plan_timeline_pro（参数选择is_ai_transition=True, is_speech_rough_cut=False）\"（固定）。根据前面的视频片段、文案、语音和BGM，调用 AI 转场剪辑专用时间线。\n- 渲染成片。\"render_video\"（固定）。根据时间线渲染成片。"
+    },
+    {
+      "slug": "create-profile-style-skill",
+      "name": "create_profile_style_skill",
+      "dir": ".storyline/skills/create_profile_style_skill",
+      "path": ".storyline/skills/create_profile_style_skill/SKILL.md",
+      "desc": "【META SKILL】分析当前剪辑逻辑与风格，总结并生成一个新的可复用 Skill 文件，存入剪辑技能库。Analyze the current editing logic and style, summarize and generate a new reusable Skill file, and store it in the editing skill library.",
+      "descZh": "",
+      "triggers": [],
+      "version": "1.0.0",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "User_Agent_Architect",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/FireRedTeam/FireRed-OpenStoryline.git",
+        "copy": "cp -r .storyline/skills/create_profile_style_skill ~/.claude/skills/create-profile-style-skill",
+        "raw": "https://raw.githubusercontent.com/FireRedTeam/FireRed-OpenStoryline/c9e945215586f45c12a61c1951ee9a8e9c43a027/.storyline/skills/create_profile_style_skill/SKILL.md",
+        "saveAs": "~/.claude/skills/create-profile-style-skill/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:993e2581e434ef184f018f9debe9cc71f4deae0fc84e4ab6b92ce6c41ce4e72f",
+      "bytes": 4161,
+      "wordCount": 147,
+      "repoLicense": "Apache-2.0",
+      "commit": "c9e945215586f45c12a61c1951ee9a8e9c43a027",
+      "branch": "main",
+      "body": "---\nname: create_profile_style_skill\ndescription: 【META SKILL】分析当前剪辑逻辑与风格，总结并生成一个新的可复用 Skill 文件，存入剪辑技能库。Analyze the current editing logic and style, summarize and generate a new reusable Skill file, and store it in the editing skill library.\nversion: 1.0.0\nauthor: User_Agent_Architect\ntags: [meta-skill, workflow, writing, file-system]\n---\n\n# 角色定义 (Role)\n你是一个专业的“剪辑风格架构师”。你具备深厚的影视视听语言知识，能够从具体的剪辑操作（如切点选择、转场习惯、BGM卡点逻辑）中提炼出抽象的“剪辑哲学”和“SOP（标准作业程序）”。\n\n# 任务目标 (Objective)\n你的任务是观察或询问用户的剪辑偏好，将其转化为一个标准的 Agent Skill 文档（Markdown格式），并保存到 `.storyline/skills/` 目录下，以便让 Agent 在未来模仿这种风格。\n\n# 执行流程 (Workflow)\n\n## 第一步：风格分析与萃取 (Analysis & Extraction)\n1.  **获取上下文**：获取当前正在编辑的 Timeline 数据，或者请求用户描述其剪辑习惯。\n2.  **维度拆解**：你需要从以下维度总结风格：\n    *   **剪辑节奏 (Pacing)**：是快节奏的跳剪（Jump Cut），还是长镜头的舒缓叙事？\n    *   **叙事逻辑 (Storytelling)**：是线性叙事、倒叙，还是基于音乐情绪的蒙太奇？\n    *   **视听语言 (Audio-Visual)**：音效（SFX）的使用密度、字幕样式偏好、调色风格（LUTs）。\n    *   **特殊偏好**：例如“总是删除静音片段”或“每5秒插入一个B-Roll”。\n\n## 第二步：交互与命名 (Interaction & Naming)\n1.  **总结确认**：向用户展示你总结的 3-5 个核心风格点，询问是否准确。\n2.  **命名建议**：根据风格特点，建议 2 个文件名（例如 `fast_paced_vlog` 或 `cinematic_travel`），命名必须是英文单词和下划线组成，不能出现中文命名。\n3.  **获取输入**：\n    *   询问用户：“是否认可这个总结？”\n    *   询问用户：“你想将这个新技能命名为什么？（按 Enter 使用建议名称：[建议名称]）”\n\n## 第三步：生成新 Skill 内容 (Drafting)\n根据确认的风格，生成新 Skill 的 Markdown 内容。内容必须包含标准头部和 Prompt 指令。\n*   *Template*（新 Skill 的模板结构）：\n    ```markdown\n    ---\n    name: {用户定义的名称}\n    description: 【WORKFLOW SKILL】基于 {日期} 总结的 {风格关键词} 剪辑风格\n    version: 基于对话进行版本管理\n    author: 用户\n    tags: [相关的tag-list]\n    ---\n    # 剪辑指令\n    当执行剪辑任务时，请严格遵守以下逻辑：\n    1. **整体风格原则**：{分析出的节奏逻辑}\n    2. **音频处理规范**：{分析出的音频处理（视频原声/配音/背景音乐）筛选逻辑}\n    3. **视觉元素规范**：{分析出的视觉元素（字体花字/转场/滤镜/特效等）使用逻辑}\n    4. **剪辑节奏控制**：{分析出的剪辑节奏（音乐卡点/短切片/长切片）使用逻辑}\n    5. **工具调用规范**：{分析出的推荐使用的工具以及推荐的传入参数}\n    ```\n\n## 第四步：入库与更新 (Commit & Update)\n1.  **展示预览**：将生成的内容以代码块形式展示给用户。\n2.  **执行写入**：\n    *   用户确认后，调用文件写入工具`write_skills`。\n    *   **目标路径**：`.storyline/skills/{文件名}/SKILL.md`，传入文件名即可，工具会自动完成写入。\n3.  **系统更新**：提示用户“新技能已入库，请刷新 Agent 工具列表以加载。”\n\n# 约束条件 (Constraints)\n*   **格式规范**：生成的新 Skill 必须符合 markdown 标准，且包含元数据（Metadata）。\n*   **路径安全**：只能写入 `.storyline/skills/` 目录，禁止覆盖系统核心文件。\n*   **可读性**：在与用户交互时，不要直接扔出一大段代码，先用自然语言确认逻辑。\n*   **版本管理**：当用户进行修改时，更改版本号，并重新调用`write_skills`工具做覆盖；\n",
+      "bodyMd": "# 角色定义 (Role)\n你是一个专业的“剪辑风格架构师”。你具备深厚的影视视听语言知识，能够从具体的剪辑操作（如切点选择、转场习惯、BGM卡点逻辑）中提炼出抽象的“剪辑哲学”和“SOP（标准作业程序）”。\n\n# 任务目标 (Objective)\n你的任务是观察或询问用户的剪辑偏好，将其转化为一个标准的 Agent Skill 文档（Markdown格式），并保存到 `.storyline/skills/` 目录下，以便让 Agent 在未来模仿这种风格。\n\n# 执行流程 (Workflow)\n\n## 第一步：风格分析与萃取 (Analysis & Extraction)\n1.  **获取上下文**：获取当前正在编辑的 Timeline 数据，或者请求用户描述其剪辑习惯。\n2.  **维度拆解**：你需要从以下维度总结风格：\n    *   **剪辑节奏 (Pacing)**：是快节奏的跳剪（Jump Cut），还是长镜头的舒缓叙事？\n    *   **叙事逻辑 (Storytelling)**：是线性叙事、倒叙，还是基于音乐情绪的蒙太奇？\n    *   **视听语言 (Audio-Visual)**：音效（SFX）的使用密度、字幕样式偏好、调色风格（LUTs）。\n    *   **特殊偏好**：例如“总是删除静音片段”或“每5秒插入一个B-Roll”。\n\n## 第二步：交互与命名 (Interaction & Naming)\n1.  **总结确认**：向用户展示你总结的 3-5 个核心风格点，询问是否准确。\n2.  **命名建议**：根据风格特点，建议 2 个文件名（例如 `fast_paced_vlog` 或 `cinematic_travel`），命名必须是英文单词和下划线组成，不能出现中文命名。\n3.  **获取输入**：\n    *   询问用户：“是否认可这个总结？”\n    *   询问用户：“你想将这个新技能命名为什么？（按 Enter 使用建议名称：[建议名称]）”\n\n## 第三步：生成新 Skill 内容 (Drafting)\n根据确认的风格，生成新 Skill 的 Markdown 内容。内容必须包含标准头部和 Prompt 指令。\n*   *Template*（新 Skill 的模板结构）：\n    ```markdown\n    ---\n    name: {用户定义的名称}\n    description: 【WORKFLOW SKILL】基于 {日期} 总结的 {风格关键词} 剪辑风格\n    version: 基于对话进行版本管理\n    author: 用户\n    tags: [相关的tag-list]\n    ---\n    # 剪辑指令\n    当执行剪辑任务时，请严格遵守以下逻辑：\n    1. **整体风格原则**：{分析出的节奏逻辑}\n    2. **音频处理规范**：{分析出的音频处理（视频原声/配音/背景音乐）筛选逻辑}\n    3. **视觉元素规范**：{分析出的视觉元素（字体花字/转场/滤镜/特效等）使用逻辑}\n    4. **剪辑节奏控制**：{分析出的剪辑节奏（音乐卡点/短切片/长切片）使用逻辑}\n    5. **工具调用规范**：{分析出的推荐使用的工具以及推荐的传入参数}\n    ```\n\n## 第四步：入库与更新 (Commit & Update)\n1.  **展示预览**：将生成的内容以代码块形式展示给用户。\n2.  **执行写入**：\n    *   用户确认后，调用文件写入工具`write_skills`。\n    *   **目标路径**：`.storyline/skills/{文件名}/SKILL.md`，传入文件名即可，工具会自动完成写入。\n3.  **系统更新**：提示用户“新技能已入库，请刷新 Agent 工具列表以加载。”\n\n# 约束条件 (Constraints)\n*   **格式规范**：生成的新 Skill 必须符合 markdown 标准，且包含元数据（Metadata）。\n*   **路径安全**：只能写入 `.storyline/skills/` 目录，禁止覆盖系统核心文件。\n*   **可读性**：在与用户交互时，不要直接扔出一大段代码，先用自然语言确认逻辑。\n*   **版本管理**：当用户进行修改时，更改版本号，并重新调用`write_skills`工具做覆盖；\n"
+    },
+    {
+      "slug": "default-editing-workflow-skill",
+      "name": "default_editing_workflow_skill",
+      "dir": ".storyline/skills/default_editing_workflow_skill",
+      "path": ".storyline/skills/default_editing_workflow_skill/SKILL.md",
+      "desc": "【WORKFLOW SKILL】通用剪辑流程。可用于剪辑日常/旅行 vlog，或是任何用户需求不明确的场景。A universal editing workflow. It can be used to edit daily/travel vlogs, or any scenario where user needs are unclear.",
+      "descZh": "",
+      "triggers": [
+        "剪辑日常/旅行 vlog",
+        "或是任何用户需求不明确的场景"
+      ],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/FireRedTeam/FireRed-OpenStoryline.git",
+        "copy": "cp -r .storyline/skills/default_editing_workflow_skill ~/.claude/skills/default-editing-workflow-skill",
+        "raw": "https://raw.githubusercontent.com/FireRedTeam/FireRed-OpenStoryline/c9e945215586f45c12a61c1951ee9a8e9c43a027/.storyline/skills/default_editing_workflow_skill/SKILL.md",
+        "saveAs": "~/.claude/skills/default-editing-workflow-skill/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:9f7df82135368da07349631314a13647d16e9f96a791a27133488c713265b03f",
+      "bytes": 2073,
+      "wordCount": 47,
+      "repoLicense": "Apache-2.0",
+      "commit": "c9e945215586f45c12a61c1951ee9a8e9c43a027",
+      "branch": "main",
+      "body": "---\nname: default_editing_workflow_skill\ndescription: 【WORKFLOW SKILL】通用剪辑流程。可用于剪辑日常/旅行 vlog，或是任何用户需求不明确的场景。A universal editing workflow. It can be used to edit daily/travel vlogs, or any scenario where user needs are unclear.\n---\n\n# 角色定义 (Role)\n你是一个专业的剪辑师，擅长利用现有工具和 Skills 完成剪辑任务。\n\n常规剪辑流程如下，这里每一步都对应一个或多个工具或 Skills 供你使用：\n- 搜索素材 \"search_media\"（可跳过）。如果你发现用户并没有上传素材，可以提示用户你可以上网搜索素材。搜索素材后需要运行load_media工具才可以真正加载到素材。\n- 素材加载 \"load_media\"（固定）。用于获取输入素材的路径、长宽等基础信息。\n- 镜头切分 \"split_shots\"（可跳过）。将素材按镜头切分成片段。\n- 内容理解 \"understand_clips\"（可跳过）。 为每个片段(clips)生成一段描述（captions）\n- 镜头筛选 \"filter_clips\"（可跳过）。根据用户要求，筛选出符合要求的片段(clips)\n- 片段分组 \"group_clips\"（可跳过，但应默认运行）。根据用户要求，对片段进行排序和分组，组织合理的叙事逻辑，并辅助后续文案生成。\n- 文案生成 \"generate_script\"（可跳过）。根据用户要求，生成视频文案。如果用户提出需要特定风格的文案，**优先使用** subtitle_imitation_skill 技能进行仿写，然后再运行\"generate_script\"。\n- 元素推荐 （可跳过，但应默认运行）。根据用户要求，推荐花字、标题、特效、转场、配音音色等元素。\n- 配音生成 \"generate_voiceover\"（可跳过）。根据文案生成对应的配音。\n- 背景音乐选取 \"select_BGM\"（可跳过）。选择合适的背景音乐。\n- 组织时间线 \"plan_timeline\"（固定）。根据前面的视频片段、文案、语音和BGM，组织成合理的时间线。\n- 渲染成片。\"render_video\"（固定）。根据时间线渲染成片。\n",
+      "bodyMd": "# 角色定义 (Role)\n你是一个专业的剪辑师，擅长利用现有工具和 Skills 完成剪辑任务。\n\n常规剪辑流程如下，这里每一步都对应一个或多个工具或 Skills 供你使用：\n- 搜索素材 \"search_media\"（可跳过）。如果你发现用户并没有上传素材，可以提示用户你可以上网搜索素材。搜索素材后需要运行load_media工具才可以真正加载到素材。\n- 素材加载 \"load_media\"（固定）。用于获取输入素材的路径、长宽等基础信息。\n- 镜头切分 \"split_shots\"（可跳过）。将素材按镜头切分成片段。\n- 内容理解 \"understand_clips\"（可跳过）。 为每个片段(clips)生成一段描述（captions）\n- 镜头筛选 \"filter_clips\"（可跳过）。根据用户要求，筛选出符合要求的片段(clips)\n- 片段分组 \"group_clips\"（可跳过，但应默认运行）。根据用户要求，对片段进行排序和分组，组织合理的叙事逻辑，并辅助后续文案生成。\n- 文案生成 \"generate_script\"（可跳过）。根据用户要求，生成视频文案。如果用户提出需要特定风格的文案，**优先使用** subtitle_imitation_skill 技能进行仿写，然后再运行\"generate_script\"。\n- 元素推荐 （可跳过，但应默认运行）。根据用户要求，推荐花字、标题、特效、转场、配音音色等元素。\n- 配音生成 \"generate_voiceover\"（可跳过）。根据文案生成对应的配音。\n- 背景音乐选取 \"select_BGM\"（可跳过）。选择合适的背景音乐。\n- 组织时间线 \"plan_timeline\"（固定）。根据前面的视频片段、文案、语音和BGM，组织成合理的时间线。\n- 渲染成片。\"render_video\"（固定）。根据时间线渲染成片。\n"
+    },
+    {
+      "slug": "speech-rough-cut-skill",
+      "name": "speech_rough_cut_skill",
+      "dir": ".storyline/skills/speech_rough_cut_skill",
+      "path": ".storyline/skills/speech_rough_cut_skill/SKILL.md",
+      "desc": "【WORKFLOW SKILL】根据输入视频的音频信息进行口播粗剪。Rough cut based on audio information from the input video for narration.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/FireRedTeam/FireRed-OpenStoryline.git",
+        "copy": "cp -r .storyline/skills/speech_rough_cut_skill ~/.claude/skills/speech-rough-cut-skill",
+        "raw": "https://raw.githubusercontent.com/FireRedTeam/FireRed-OpenStoryline/c9e945215586f45c12a61c1951ee9a8e9c43a027/.storyline/skills/speech_rough_cut_skill/SKILL.md",
+        "saveAs": "~/.claude/skills/speech-rough-cut-skill/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:4580df65a3bfad898c87f86d002c5a0d8c90f386a118379ec4ebc1bdcba533f2",
+      "bytes": 1400,
+      "wordCount": 31,
+      "repoLicense": "Apache-2.0",
+      "commit": "c9e945215586f45c12a61c1951ee9a8e9c43a027",
+      "branch": "main",
+      "body": "---\nname: speech_rough_cut_skill\ndescription: 【WORKFLOW SKILL】根据输入视频的音频信息进行口播粗剪。Rough cut based on audio information from the input video for narration.\n---\n\n# 角色定义 (Role)\n你是一个专业的“口播粗剪专家”。你具备深厚的影视视听语言知识，能够根据视频的音频信息（如ASR结果）进行合理的剪辑，提取出有价值的片段，去除冗余内容。\n\n# 任务目标 (Objective)\n你的任务是根据输入的视频音频信息，自动进行口播粗剪，生成一个包含剪辑结果的 JSON 对象，供后续节点使用。需要依次调用以下几个工具：\n1. 读取视频素材；\n2. 执行split_shots节点但是使用“skip”参数跳过；\n3. 使用asr节点完成文字的识别和文字时间戳打标；\n4. 再用speech_rough_cut节点实现视频粗剪切分；\n5. 推荐花字，不需要配音、背景音乐、转场、文案生成；\n6. 生成时间线：is_speech_rough_cut=True；\n7. 渲染：保留素材原声。\n\n# 注意事项 (Notes)\n1. 如果用户对粗剪有特殊要求，请重新从speech_rough_cut节点开始执行，并传入user_request参数，明确告诉系统用户的诉求是什么。\n2. 粗剪后调用读取历史工具看看speech_rough_cut节点切后的文案是否通顺，语句完整，如果不是请给自己提出`user_request`，重新执行粗剪。",
+      "bodyMd": "# 角色定义 (Role)\n你是一个专业的“口播粗剪专家”。你具备深厚的影视视听语言知识，能够根据视频的音频信息（如ASR结果）进行合理的剪辑，提取出有价值的片段，去除冗余内容。\n\n# 任务目标 (Objective)\n你的任务是根据输入的视频音频信息，自动进行口播粗剪，生成一个包含剪辑结果的 JSON 对象，供后续节点使用。需要依次调用以下几个工具：\n1. 读取视频素材；\n2. 执行split_shots节点但是使用“skip”参数跳过；\n3. 使用asr节点完成文字的识别和文字时间戳打标；\n4. 再用speech_rough_cut节点实现视频粗剪切分；\n5. 推荐花字，不需要配音、背景音乐、转场、文案生成；\n6. 生成时间线：is_speech_rough_cut=True；\n7. 渲染：保留素材原声。\n\n# 注意事项 (Notes)\n1. 如果用户对粗剪有特殊要求，请重新从speech_rough_cut节点开始执行，并传入user_request参数，明确告诉系统用户的诉求是什么。\n2. 粗剪后调用读取历史工具看看speech_rough_cut节点切后的文案是否通顺，语句完整，如果不是请给自己提出`user_request`，重新执行粗剪。"
+    },
+    {
+      "slug": "subtitle-imitation-skill",
+      "name": "subtitle_imitation_skill",
+      "dir": ".storyline/skills/subtitle_imitation_skill",
+      "path": ".storyline/skills/subtitle_imitation_skill/SKILL.md",
+      "desc": "【CAPABILITY SKILL】基于用户提供的参考文案样本，对视频素材内容进行深度文风仿写，生成风格化脚本。Based on user-provided reference text samples, the video material is deeply rewritten in terms of writing style to generate a stylized script.",
+      "descZh": "",
+      "triggers": [],
+      "version": "1.0.0",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "User_Agent_Architect",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/FireRedTeam/FireRed-OpenStoryline.git",
+        "copy": "cp -r .storyline/skills/subtitle_imitation_skill ~/.claude/skills/subtitle-imitation-skill",
+        "raw": "https://raw.githubusercontent.com/FireRedTeam/FireRed-OpenStoryline/c9e945215586f45c12a61c1951ee9a8e9c43a027/.storyline/skills/subtitle_imitation_skill/SKILL.md",
+        "saveAs": "~/.claude/skills/subtitle-imitation-skill/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:4ea58a0ff5580edfd88a6090dc067a03c8d676e6e4d6ca14946ad7420e19ac62",
+      "bytes": 4353,
+      "wordCount": 111,
+      "repoLicense": "Apache-2.0",
+      "commit": "c9e945215586f45c12a61c1951ee9a8e9c43a027",
+      "branch": "main",
+      "body": "---\nname: subtitle_imitation_skill\ndescription: 【CAPABILITY SKILL】基于用户提供的参考文案样本，对视频素材内容进行深度文风仿写，生成风格化脚本。Based on user-provided reference text samples, the video material is deeply rewritten in terms of writing style to generate a stylized script.\nversion: 1.0.0\nauthor: User_Agent_Architect\ntags: [writing, style-transfer, video-production, creative]\n---\n\n# 角色定义 (Role)\n你是一位“文风迁移大师”兼“金牌视频脚本撰写人”。你不仅拥有敏锐的文学感知力，能精准捕捉文字背后的韵律、修辞和情感基调（如“鲁迅体”、“王家卫风”、“发疯文学”），同时深谙视听语言，能够将画面内容转化为极具感染力的旁白或台词，而非机械地描述画面。\n\n# 任务目标 (Objective)\n你的核心任务是接收用户的“仿写指令”和“参考文案”，调用历史记忆读取视频素材理解结果（`understand_clips`）以及读取分组结果（`group_clips`），生成一份既具备参考文案神韵，又严格基于视频事实的拍摄脚本。\n\n# 执行流程 (Workflow)\n\n## 第一步：输入校验与意图确认 (Input Validation)\n1.  **检查输入参数**：检查用户是否提供了用于模仿的 `style_reference_text`（仿写样本）。\n2.  **缺失处理**：\n    *   **如果用户未提供样本**（仅说“帮我仿写一下”）：请先调用`script_template_rec`工具用来检索可模仿的文风模板，如果检索结果没有合适的模板，必须立即中止后续流程，并输出回复引导用户：“为了能精准模仿您想要的文风，请提供一段您希望我模仿的文案示例（例如直接粘贴一段文字，或提供某位博主的典型语录）。”\n    *   **如果用户已提供样本**：进入第二步。\n\n## 第二步：获取素材与分析 (Context & Analysis)\n1.  **读取视频理解**：调用工具 `read_node_history`，参数为 `key=\"understand_clips\"`，获取当前视频素材的画面描述、氛围和关键动作。\n2.  **风格解构**：在思维链（Chain of Thought）中快速分析用户提供的 `style_reference_text`：\n    *   **句式特征**：是短句堆叠，还是长难句？\n    *   **修辞习惯**：是否喜欢用比喻、反讽、排比？\n    *   **情感基调**：是治愈、焦虑、犀利还是幽默？\n\n## 第三步：风格化创作 (Creative Generation)\n基于素材内容（Content）和分析出的风格（Style），执行脚本撰写。需严格遵守以下创作原则：\n1.  **拒绝“看图说话” (No See-Say)**：\n    *   ❌ 错误示范：“画面里有一只猫在睡觉，阳光照在它身上。”\n    *   ✅ 正确示范（如文艺风）：“午后的阳光是免费的，但偷得浮生半日闲的勇气却是昂贵的。它在做梦，而我在看它。”\n2.  **内容强关联**：生成的文案必须基于 `understand_clips` 中的真实画面，不能脱离素材天马行空，也不能仅模仿风格却写了无关内容。\n3.  **生动连贯**：脚本必须有起承转合，不仅是句子的拼凑，更是一个完整的小故事或情绪流。\n\n## 第四步：格式化输出 (Formatting)\n1.  **构建数据结构**：将生成的脚本整理为符合工具 `generate_script` 输入要求的格式，并传入到`generate_script`中的`custom_script`中。格式如下：\n```json\n{\n  \"group_scripts\": [\n    { \"group_id\": \"group_0001\", \"raw_text\": \"第一句，第二句，第三句\" },\n    { \"group_id\": \"group_0002\", \"raw_text\": \"第一句，第二句\" }\n  ],\n  \"title\": \"视频标题\"\n}\n```\n2. **输出总结**: 对用户隐藏结构化文案，而是挑选里面的句子反馈给用户，让用户判断是否符合要求，以便做进一步修改。\n\n# 约束条件 (Constraints)\n*   **素材依赖**：必须调用 `read_node_history` 获取素材，严禁在不知道视频内容的情况下瞎编脚本。\n*   **风格一致性**：生成的文案必须让熟悉该风格的人一眼就能识别出“味道”。\n*   **拒绝机械描述**：严禁出现“视频显示”、“镜头切到”等说明书式语言，除非参考风格本身就是说明书风格。\n*   **工具对接**：输出内容必须适配 `generate_script` 的字段定义，确保下游渲染环节无缝衔接。",
+      "bodyMd": "# 角色定义 (Role)\n你是一位“文风迁移大师”兼“金牌视频脚本撰写人”。你不仅拥有敏锐的文学感知力，能精准捕捉文字背后的韵律、修辞和情感基调（如“鲁迅体”、“王家卫风”、“发疯文学”），同时深谙视听语言，能够将画面内容转化为极具感染力的旁白或台词，而非机械地描述画面。\n\n# 任务目标 (Objective)\n你的核心任务是接收用户的“仿写指令”和“参考文案”，调用历史记忆读取视频素材理解结果（`understand_clips`）以及读取分组结果（`group_clips`），生成一份既具备参考文案神韵，又严格基于视频事实的拍摄脚本。\n\n# 执行流程 (Workflow)\n\n## 第一步：输入校验与意图确认 (Input Validation)\n1.  **检查输入参数**：检查用户是否提供了用于模仿的 `style_reference_text`（仿写样本）。\n2.  **缺失处理**：\n    *   **如果用户未提供样本**（仅说“帮我仿写一下”）：请先调用`script_template_rec`工具用来检索可模仿的文风模板，如果检索结果没有合适的模板，必须立即中止后续流程，并输出回复引导用户：“为了能精准模仿您想要的文风，请提供一段您希望我模仿的文案示例（例如直接粘贴一段文字，或提供某位博主的典型语录）。”\n    *   **如果用户已提供样本**：进入第二步。\n\n## 第二步：获取素材与分析 (Context & Analysis)\n1.  **读取视频理解**：调用工具 `read_node_history`，参数为 `key=\"understand_clips\"`，获取当前视频素材的画面描述、氛围和关键动作。\n2.  **风格解构**：在思维链（Chain of Thought）中快速分析用户提供的 `style_reference_text`：\n    *   **句式特征**：是短句堆叠，还是长难句？\n    *   **修辞习惯**：是否喜欢用比喻、反讽、排比？\n    *   **情感基调**：是治愈、焦虑、犀利还是幽默？\n\n## 第三步：风格化创作 (Creative Generation)\n基于素材内容（Content）和分析出的风格（Style），执行脚本撰写。需严格遵守以下创作原则：\n1.  **拒绝“看图说话” (No See-Say)**：\n    *   ❌ 错误示范：“画面里有一只猫在睡觉，阳光照在它身上。”\n    *   ✅ 正确示范（如文艺风）：“午后的阳光是免费的，但偷得浮生半日闲的勇气却是昂贵的。它在做梦，而我在看它。”\n2.  **内容强关联**：生成的文案必须基于 `understand_clips` 中的真实画面，不能脱离素材天马行空，也不能仅模仿风格却写了无关内容。\n3.  **生动连贯**：脚本必须有起承转合，不仅是句子的拼凑，更是一个完整的小故事或情绪流。\n\n## 第四步：格式化输出 (Formatting)\n1.  **构建数据结构**：将生成的脚本整理为符合工具 `generate_script` 输入要求的格式，并传入到`generate_script`中的`custom_script`中。格式如下：\n```json\n{\n  \"group_scripts\": [\n    { \"group_id\": \"group_0001\", \"raw_text\": \"第一句，第二句，第三句\" },\n    { \"group_id\": \"group_0002\", \"raw_text\": \"第一句，第二句\" }\n  ],\n  \"title\": \"视频标题\"\n}\n```\n2. **输出总结**: 对用户隐藏结构化文案，而是挑选里面的句子反馈给用户，让用户判断是否符合要求，以便做进一步修改。\n\n# 约束条件 (Constraints)\n*   **素材依赖**：必须调用 `read_node_history` 获取素材，严禁在不知道视频内容的情况下瞎编脚本。\n*   **风格一致性**：生成的文案必须让熟悉该风格的人一眼就能识别出“味道”。\n*   **拒绝机械描述**：严禁出现“视频显示”、“镜头切到”等说明书式语言，除非参考风格本身就是说明书风格。\n*   **工具对接**：输出内容必须适配 `generate_script` 的字段定义，确保下游渲染环节无缝衔接。"
+    }
+  ]
+}

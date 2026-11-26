@@ -1,0 +1,489 @@
+{
+  "repo": "Jakeschincariol/linkedin-agent-skill",
+  "commit": "add2c23882fe79180737d242ff80a5da205eda6a",
+  "branch": "main",
+  "fetchedAt": "2026-11-26T21:12:44.844Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "li-audit",
+      "name": "li-audit",
+      "dir": "skills/li-audit",
+      "path": "skills/li-audit/SKILL.md",
+      "desc": "Post-mortem on what the user has already published - which posts actually worked, why, and what to stop doing. Use when the user pastes their LinkedIn analytics or past posts and asks \"what's working\", \"why did this flop\", \"read my analytics\", \"audit my content\", or wants to know what to double down on.",
+      "descZh": "",
+      "triggers": [
+        "why did"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Jakeschincariol/linkedin-agent-skill.git",
+        "copy": "cp -r skills/li-audit ~/.claude/skills/li-audit",
+        "raw": "https://raw.githubusercontent.com/Jakeschincariol/linkedin-agent-skill/add2c23882fe79180737d242ff80a5da205eda6a/skills/li-audit/SKILL.md",
+        "saveAs": "~/.claude/skills/li-audit/SKILL.md",
+        "marketplace": "/plugin marketplace add Jakeschincariol/linkedin-agent-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:bdb5b12c699ca5d512b785f7168f8e494e020a1ff1195aaa9a58cd5b193c1bf2",
+      "bytes": 3417,
+      "wordCount": 546,
+      "repoLicense": "MIT",
+      "commit": "add2c23882fe79180737d242ff80a5da205eda6a",
+      "branch": "main",
+      "body": "---\nname: li-audit\ndescription: >-\n  Post-mortem on what the user has already published - which posts actually\n  worked, why, and what to stop doing. Use when the user pastes their LinkedIn\n  analytics or past posts and asks \"what's working\", \"why did this flop\", \"read\n  my analytics\", \"audit my content\", or wants to know what to double down on.\n---\n\n# li-audit\n\nThe only honest source of what works for an account is that account. Every\nrule in every LinkedIn guide, including the ones in this pack, is a prior. The\nuser's own last 30 posts are the evidence.\n\n## Input\n\nAsk for whichever the user has:\n\n- The post analytics export (LinkedIn: Analytics -> Content -> Export). CSV.\n- Or a screenshot per post with impressions, reactions, comments, reposts.\n- Or just the posts and their reaction counts, which is enough for a first\n  pass.\n\nAlso read `~/.claude/linkedin/log.md` if it exists, since it records which\nhook formula each post used.\n\n## What to actually measure\n\nRaw impressions are the least useful number on the page, because they are\nmostly a function of how many people already follow the user. Compute these\ninstead, and show the working:\n\n| metric | how | what it tells you |\n| --- | --- | --- |\n| **Engagement rate** | (reactions + comments + reposts) / impressions | whether the post earned its reach |\n| **Comment ratio** | comments / reactions | whether it started something or just got a nod |\n| **Reach multiple** | impressions / follower count | whether it travelled past the existing audience |\n| **Save/send rate** | if available | the strongest single predictor of future reach |\n\nRank by engagement rate and reach multiple, not impressions. A post with 900\nimpressions and 40 comments beat the one with 12,000 impressions and 6.\n\n## Then find the pattern\n\nWith the top 5 and bottom 5 side by side, look for what actually separates\nthem, and be willing to conclude something the user will not like:\n\n- Hook formula. Which numbers from `hooks.json` are in the top 5?\n- Format. Text, document, image, video.\n- Length.\n- Theme.\n- Day and time - check this **last**, and only if the other four show nothing.\n  It is almost never the cause, and it is where people want it to be.\n- First-hour comments. Posts the user replied to inside an hour versus not.\n\nState the finding as a claim with the evidence attached, and say how confident\nit is. With 30 posts you can see a pattern; with 6 you cannot, and you should\nsay that instead of inventing one.\n\n## Output\n\n```\nAUDIT  ·  31 posts  ·  Jun 12 - Sep 5\n\nTOP 5 BY ENGAGEMENT RATE\n  8.1%  #3  Mistake      \"$18,000 is what no contract cost me\"      1,940 imp\n  6.4%  #20 Walk-Away    \"I fired my highest-paying client\"         2,210 imp\n  ...\n\nBOTTOM 5\n  0.4%  #5  List         \"7 tools every founder needs\"             11,400 imp\n  ...\n\nWHAT THE DATA SAYS\n1. Posts where you were the one who looked bad: mean 6.2% vs 1.1% for\n   everything else. n=6. This is your strongest signal and it is not close.\n2. Tool listicles get impressions and nothing else. High reach, no comments,\n   no leads. Three of your bottom five.\n3. Day of week shows nothing. Your Tuesday mean and your Friday mean are\n   inside the noise. Stop optimising it.\n\nSTOP: listicles about tools.\nDO MORE: the ones with a cost you paid, and a number.\n```\n\nThen hand the conclusions to `/li-plan` so next week's plan is built on the\nuser's own evidence rather than on defaults.\n",
+      "bodyMd": "# li-audit\n\nThe only honest source of what works for an account is that account. Every\nrule in every LinkedIn guide, including the ones in this pack, is a prior. The\nuser's own last 30 posts are the evidence.\n\n## Input\n\nAsk for whichever the user has:\n\n- The post analytics export (LinkedIn: Analytics -> Content -> Export). CSV.\n- Or a screenshot per post with impressions, reactions, comments, reposts.\n- Or just the posts and their reaction counts, which is enough for a first\n  pass.\n\nAlso read `~/.claude/linkedin/log.md` if it exists, since it records which\nhook formula each post used.\n\n## What to actually measure\n\nRaw impressions are the least useful number on the page, because they are\nmostly a function of how many people already follow the user. Compute these\ninstead, and show the working:\n\n| metric | how | what it tells you |\n| --- | --- | --- |\n| **Engagement rate** | (reactions + comments + reposts) / impressions | whether the post earned its reach |\n| **Comment ratio** | comments / reactions | whether it started something or just got a nod |\n| **Reach multiple** | impressions / follower count | whether it travelled past the existing audience |\n| **Save/send rate** | if available | the strongest single predictor of future reach |\n\nRank by engagement rate and reach multiple, not impressions. A post with 900\nimpressions and 40 comments beat the one with 12,000 impressions and 6.\n\n## Then find the pattern\n\nWith the top 5 and bottom 5 side by side, look for what actually separates\nthem, and be willing to conclude something the user will not like:\n\n- Hook formula. Which numbers from `hooks.json` are in the top 5?\n- Format. Text, document, image, video.\n- Length.\n- Theme.\n- Day and time - check this **last**, and only if the other four show nothing.\n  It is almost never the cause, and it is where people want it to be.\n- First-hour comments. Posts the user replied to inside an hour versus not.\n\nState the finding as a claim with the evidence attached, and say how confident\nit is. With 30 posts you can see a pattern; with 6 you cannot, and you should\nsay that instead of inventing one.\n\n## Output\n\n```\nAUDIT  ·  31 posts  ·  Jun 12 - Sep 5\n\nTOP 5 BY ENGAGEMENT RATE\n  8.1%  #3  Mistake      \"$18,000 is what no contract cost me\"      1,940 imp\n  6.4%  #20 Walk-Away    \"I fired my highest-paying client\"         2,210 imp\n  ...\n\nBOTTOM 5\n  0.4%  #5  List         \"7 tools every founder needs\"             11,400 imp\n  ...\n\nWHAT THE DATA SAYS\n1. Posts where you were the one who looked bad: mean 6.2% vs 1.1% for\n   everything else. n=6. This is your strongest signal and it is not close.\n2. Tool listicles get impressions and nothing else. High reach, no comments,\n   no leads. Three of your bottom five.\n3. Day of week shows nothing. Your Tuesday mean and your Friday mean are\n   inside the noise. Stop optimising it.\n\nSTOP: listicles about tools.\nDO MORE: the ones with a cost you paid, and a number.\n```\n\nThen hand the conclusions to `/li-plan` so next week's plan is built on the\nuser's own evidence rather than on defaults.\n"
+    },
+    {
+      "slug": "li-carousel",
+      "name": "li-carousel",
+      "dir": "skills/li-carousel",
+      "path": "skills/li-carousel/SKILL.md",
+      "desc": "Build a LinkedIn document post (carousel) - slide-by-slide copy, the cover that earns the swipe, and the PDF to upload. Use when the user says \"carousel\", \"document post\", \"slides for LinkedIn\", \"turn this into a carousel\", or has a list-shaped idea that would die as a text post.",
+      "descZh": "",
+      "triggers": [
+        "the user says \"carousel",
+        "document post",
+        "slides for LinkedIn",
+        "turn this into a carous"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Jakeschincariol/linkedin-agent-skill.git",
+        "copy": "cp -r skills/li-carousel ~/.claude/skills/li-carousel",
+        "raw": "https://raw.githubusercontent.com/Jakeschincariol/linkedin-agent-skill/add2c23882fe79180737d242ff80a5da205eda6a/skills/li-carousel/SKILL.md",
+        "saveAs": "~/.claude/skills/li-carousel/SKILL.md",
+        "marketplace": "/plugin marketplace add Jakeschincariol/linkedin-agent-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:fa1a8801e661ed83e55eb5c44e0810a773b490eac930bd3200d783d4bbd23094",
+      "bytes": 2860,
+      "wordCount": 447,
+      "repoLicense": "MIT",
+      "commit": "add2c23882fe79180737d242ff80a5da205eda6a",
+      "branch": "main",
+      "body": "---\nname: li-carousel\ndescription: >-\n  Build a LinkedIn document post (carousel) - slide-by-slide copy, the cover\n  that earns the swipe, and the PDF to upload. Use when the user says\n  \"carousel\", \"document post\", \"slides for LinkedIn\", \"turn this into a\n  carousel\", or has a list-shaped idea that would die as a text post.\n---\n\n# li-carousel\n\nDocument posts are the highest-dwell format on LinkedIn, because a swipe is\ncounted and a scroll is not. The format rewards one idea broken into steps.\nIt punishes a text post cut into pieces.\n\n## When to use it instead of a text post\n\nUse a carousel when the idea has **sequence** - steps, a countdown, a\nbefore/after progression, a framework with parts. Use a text post when the\nidea is one claim. Splitting one claim across eight slides is the most common\nway carousels fail, and if that is what the user has, say so and hand them to\n`/li-post`.\n\n## Structure\n\n8-12 slides. Under 8 is a text post. Over 12 and the completion rate falls off\na cliff.\n\n```\n1        COVER      the hook, 6 words or fewer, plus one line of promise\n2        THE STAKE  why this matters, in one sentence\n3-N      ONE IDEA PER SLIDE. A headline of 3-7 words, and at most 25 words\n                    under it. If a slide needs a paragraph, it is two slides.\nN+1      RECAP      the whole thing as a list, so the screenshot is useful\nLAST     CTA        one action. Follow, comment a keyword, or the link. One.\n```\n\n## Slide copy rules\n\n- **Slide 1 is 80% of the result.** Six words. Big. The rest of the deck\n  cannot save a cover nobody swipes.\n- **Number every slide** (3/10). Completion goes up when people can see the\n  end.\n- **No slide is a paragraph.** If you cannot say it in 25 words, split it.\n- **The recap slide is the one people screenshot.** Make it standalone.\n- **The user's handle on every slide**, small, bottom corner. Screenshots\n  travel without you.\n\n## Making the PDF\n\nLinkedIn wants a PDF, 1080x1350 (4:5) for maximum feed real estate, under\n100MB, under 300 pages. Build it as HTML and print to PDF:\n\n```bash\n# one page per slide, 1080x1350, no margins\n# then: Chrome headless --print-to-pdf, or any HTML-to-PDF you already use\n```\n\nWrite the HTML with one `<section>` per slide, `width:1080px; height:1350px;\npage-break-after:always`, a single accent colour, and type no smaller than\n28px - people read these on a phone at thumbnail size. If the user has a brand\nskill or design system in this project, use it and do not invent a palette.\n\n## Output\n\nThe slide-by-slide copy first, as a numbered list the user can read in ten\nseconds. Then the accompanying **post text** - a carousel still needs 2-3\nlines above it, which is the actual hook in the feed. Run both through\n`/li-human`. Then build the PDF only if the user approves the copy.\n\nNothing is uploaded to LinkedIn. The user posts the PDF themselves.\n",
+      "bodyMd": "# li-carousel\n\nDocument posts are the highest-dwell format on LinkedIn, because a swipe is\ncounted and a scroll is not. The format rewards one idea broken into steps.\nIt punishes a text post cut into pieces.\n\n## When to use it instead of a text post\n\nUse a carousel when the idea has **sequence** - steps, a countdown, a\nbefore/after progression, a framework with parts. Use a text post when the\nidea is one claim. Splitting one claim across eight slides is the most common\nway carousels fail, and if that is what the user has, say so and hand them to\n`/li-post`.\n\n## Structure\n\n8-12 slides. Under 8 is a text post. Over 12 and the completion rate falls off\na cliff.\n\n```\n1        COVER      the hook, 6 words or fewer, plus one line of promise\n2        THE STAKE  why this matters, in one sentence\n3-N      ONE IDEA PER SLIDE. A headline of 3-7 words, and at most 25 words\n                    under it. If a slide needs a paragraph, it is two slides.\nN+1      RECAP      the whole thing as a list, so the screenshot is useful\nLAST     CTA        one action. Follow, comment a keyword, or the link. One.\n```\n\n## Slide copy rules\n\n- **Slide 1 is 80% of the result.** Six words. Big. The rest of the deck\n  cannot save a cover nobody swipes.\n- **Number every slide** (3/10). Completion goes up when people can see the\n  end.\n- **No slide is a paragraph.** If you cannot say it in 25 words, split it.\n- **The recap slide is the one people screenshot.** Make it standalone.\n- **The user's handle on every slide**, small, bottom corner. Screenshots\n  travel without you.\n\n## Making the PDF\n\nLinkedIn wants a PDF, 1080x1350 (4:5) for maximum feed real estate, under\n100MB, under 300 pages. Build it as HTML and print to PDF:\n\n```bash\n# one page per slide, 1080x1350, no margins\n# then: Chrome headless --print-to-pdf, or any HTML-to-PDF you already use\n```\n\nWrite the HTML with one `<section>` per slide, `width:1080px; height:1350px;\npage-break-after:always`, a single accent colour, and type no smaller than\n28px - people read these on a phone at thumbnail size. If the user has a brand\nskill or design system in this project, use it and do not invent a palette.\n\n## Output\n\nThe slide-by-slide copy first, as a numbered list the user can read in ten\nseconds. Then the accompanying **post text** - a carousel still needs 2-3\nlines above it, which is the actual hook in the feed. Run both through\n`/li-human`. Then build the PDF only if the user approves the copy.\n\nNothing is uploaded to LinkedIn. The user posts the PDF themselves.\n"
+    },
+    {
+      "slug": "li-comment",
+      "name": "li-comment",
+      "dir": "skills/li-comment",
+      "path": "skills/li-comment/SKILL.md",
+      "desc": "Write comments on other people's LinkedIn posts that read as a person with an opinion, not a bot. Use when the user pastes a post and wants a comment, says \"comment on this\", \"engage with this\", \"what do I say here\", or wants a batch of comments for their engagement round.",
+      "descZh": "",
+      "triggers": [
+        "says \"comment on this",
+        "engage with this"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Jakeschincariol/linkedin-agent-skill.git",
+        "copy": "cp -r skills/li-comment ~/.claude/skills/li-comment",
+        "raw": "https://raw.githubusercontent.com/Jakeschincariol/linkedin-agent-skill/add2c23882fe79180737d242ff80a5da205eda6a/skills/li-comment/SKILL.md",
+        "saveAs": "~/.claude/skills/li-comment/SKILL.md",
+        "marketplace": "/plugin marketplace add Jakeschincariol/linkedin-agent-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:05bfb1fb28976d6ee5d50b31ec7c8d7fc13fba9db71257dc1dad2a0ffd21e071",
+      "bytes": 4160,
+      "wordCount": 730,
+      "repoLicense": "MIT",
+      "commit": "add2c23882fe79180737d242ff80a5da205eda6a",
+      "branch": "main",
+      "body": "---\nname: li-comment\ndescription: >-\n  Write comments on other people's LinkedIn posts that read as a person with an\n  opinion, not a bot. Use when the user pastes a post and wants a comment, says\n  \"comment on this\", \"engage with this\", \"what do I say here\", or wants a batch\n  of comments for their engagement round.\n---\n\n# li-comment\n\nCommenting is the highest-leverage thing on LinkedIn and the easiest to do\nbadly. A comment on a post with 400 reactions gets seen by more people than\nmost of your own posts. A generic one gets seen by nobody and costs you\ncredibility with the author.\n\n## Input\n\nThe user pastes the post text (and the author's name and role if they have\nit). If they paste a screenshot, read it. If they give you a URL you cannot\nopen, ask them to paste the text - do not guess what the post said, and do not\nuse browser automation to scrape the feed.\n\n## The nine comment types\n\nPick by what the post actually is. Never default to type 1.\n\n| # | type | when | shape |\n| --- | --- | --- | --- |\n| 1 | **Add a datum** | post makes a claim you can support with a number | \"We saw the same thing: 40% of our...\" |\n| 2 | **Add the missing case** | post is right but incomplete | \"This holds until {condition}. Then...\" |\n| 3 | **Respectful disagree** | you genuinely think it is wrong | name the agreement first, then the fork |\n| 4 | **Extend one line** | one sentence in the post is the good one | quote it, then build on it |\n| 5 | **Ask the real question** | post skipped the hard part | one question, specific, no \"curious to hear\" |\n| 6 | **The receipt** | you have done the thing they described | what happened, in two sentences |\n| 7 | **The correction** | there is a factual error | be right, be brief, be kind, be sure |\n| 8 | **The reframe** | the post has the right facts and the wrong frame | \"Another way to read this:\" |\n| 9 | **The one-liner** | the post needs nothing, you want presence | under 12 words, must be funny or true |\n\n## Rules\n\n- **2 to 4 sentences.** Longer reads as a hijack. Shorter reads as filler.\n- **Never open with \"Great post\"**, \"Love this\", \"So true\", \"Couldn't agree\n  more\", \"This resonates\", or the author's first name followed by an\n  exclamation mark. All six are invisible.\n- **No emoji openers.** No 🔥 or 👏 as a first character.\n- **Never restate the post.** The author knows what they wrote and so does\n  everyone reading.\n- **One idea.** A comment with two points reads as a blog attempt.\n- **Say the specific thing.** If the comment could sit under any post on the\n  topic, it is not a comment, it is noise.\n- **Disagreement is allowed and works**, but the agreement has to come first\n  and be real.\n\n## Output\n\nGive **two options of different types**, labelled, plus a one-line reason for\nthe one you would post. Run both through `/li-human` first - a comment with an\nem dash in it is more obviously machine-written than a post, because comments\nare short and people read them closely.\n\n```\nCOMMENT OPTIONS  (on @author's post about hiring)\n\n[6 · Receipt]\nWe tried the no-resume version of this for 3 hires last year. Two were the\nbest hires we made. The third was a disaster, and the difference was whether\nthey had done the actual job before, not how they interviewed.\n\n[3 · Respectful disagree]\nAgree on the signal problem. But the fix that worked for us was not removing\nthe resume, it was giving every candidate the same 90-minute paid task. Same\noutcome, far less argument internally.\n\nPost the first. It is your own data and it concedes a failure, which is the\npart people reply to.\n```\n\n## Batch mode\n\nIf the user wants an engagement round, ask for the 5-10 posts as pasted text\nin one message, return one comment each in a single block, and keep a running\nnote of who they have already commented on this week in\n`~/.claude/linkedin/log.md`. Commenting on the same three people every day is\nvisible and it looks like what it is.\n\n## Never\n\nDo not auto-post. Do not use a browser tool to publish comments on the user's\nbehalf. Automated posting and scraping both violate LinkedIn's User Agreement\nand put the account at risk. This skill writes the comment. The user posts it.\n",
+      "bodyMd": "# li-comment\n\nCommenting is the highest-leverage thing on LinkedIn and the easiest to do\nbadly. A comment on a post with 400 reactions gets seen by more people than\nmost of your own posts. A generic one gets seen by nobody and costs you\ncredibility with the author.\n\n## Input\n\nThe user pastes the post text (and the author's name and role if they have\nit). If they paste a screenshot, read it. If they give you a URL you cannot\nopen, ask them to paste the text - do not guess what the post said, and do not\nuse browser automation to scrape the feed.\n\n## The nine comment types\n\nPick by what the post actually is. Never default to type 1.\n\n| # | type | when | shape |\n| --- | --- | --- | --- |\n| 1 | **Add a datum** | post makes a claim you can support with a number | \"We saw the same thing: 40% of our...\" |\n| 2 | **Add the missing case** | post is right but incomplete | \"This holds until {condition}. Then...\" |\n| 3 | **Respectful disagree** | you genuinely think it is wrong | name the agreement first, then the fork |\n| 4 | **Extend one line** | one sentence in the post is the good one | quote it, then build on it |\n| 5 | **Ask the real question** | post skipped the hard part | one question, specific, no \"curious to hear\" |\n| 6 | **The receipt** | you have done the thing they described | what happened, in two sentences |\n| 7 | **The correction** | there is a factual error | be right, be brief, be kind, be sure |\n| 8 | **The reframe** | the post has the right facts and the wrong frame | \"Another way to read this:\" |\n| 9 | **The one-liner** | the post needs nothing, you want presence | under 12 words, must be funny or true |\n\n## Rules\n\n- **2 to 4 sentences.** Longer reads as a hijack. Shorter reads as filler.\n- **Never open with \"Great post\"**, \"Love this\", \"So true\", \"Couldn't agree\n  more\", \"This resonates\", or the author's first name followed by an\n  exclamation mark. All six are invisible.\n- **No emoji openers.** No 🔥 or 👏 as a first character.\n- **Never restate the post.** The author knows what they wrote and so does\n  everyone reading.\n- **One idea.** A comment with two points reads as a blog attempt.\n- **Say the specific thing.** If the comment could sit under any post on the\n  topic, it is not a comment, it is noise.\n- **Disagreement is allowed and works**, but the agreement has to come first\n  and be real.\n\n## Output\n\nGive **two options of different types**, labelled, plus a one-line reason for\nthe one you would post. Run both through `/li-human` first - a comment with an\nem dash in it is more obviously machine-written than a post, because comments\nare short and people read them closely.\n\n```\nCOMMENT OPTIONS  (on @author's post about hiring)\n\n[6 · Receipt]\nWe tried the no-resume version of this for 3 hires last year. Two were the\nbest hires we made. The third was a disaster, and the difference was whether\nthey had done the actual job before, not how they interviewed.\n\n[3 · Respectful disagree]\nAgree on the signal problem. But the fix that worked for us was not removing\nthe resume, it was giving every candidate the same 90-minute paid task. Same\noutcome, far less argument internally.\n\nPost the first. It is your own data and it concedes a failure, which is the\npart people reply to.\n```\n\n## Batch mode\n\nIf the user wants an engagement round, ask for the 5-10 posts as pasted text\nin one message, return one comment each in a single block, and keep a running\nnote of who they have already commented on this week in\n`~/.claude/linkedin/log.md`. Commenting on the same three people every day is\nvisible and it looks like what it is.\n\n## Never\n\nDo not auto-post. Do not use a browser tool to publish comments on the user's\nbehalf. Automated posting and scraping both violate LinkedIn's User Agreement\nand put the account at risk. This skill writes the comment. The user posts it.\n"
+    },
+    {
+      "slug": "li-dm",
+      "name": "li-dm",
+      "dir": "skills/li-dm",
+      "path": "skills/li-dm/SKILL.md",
+      "desc": "Write connection notes and DM follow-ups that get replies - the 200-character invite, the first message, and the two follow-ups. Use when the user says \"write a connection request\", \"DM this person\", \"outreach message\", \"how do I follow up\", or is reaching out to someone specific on LinkedIn.",
+      "descZh": "",
+      "triggers": [
+        "DM this person",
+        "outreach message",
+        "how do"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "go",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Jakeschincariol/linkedin-agent-skill.git",
+        "copy": "cp -r skills/li-dm ~/.claude/skills/li-dm",
+        "raw": "https://raw.githubusercontent.com/Jakeschincariol/linkedin-agent-skill/add2c23882fe79180737d242ff80a5da205eda6a/skills/li-dm/SKILL.md",
+        "saveAs": "~/.claude/skills/li-dm/SKILL.md",
+        "marketplace": "/plugin marketplace add Jakeschincariol/linkedin-agent-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:14b0ee4cffedc2d3eb1d9f8dd6d6cce7bc04c95e221ea1e68809fb5aad525747",
+      "bytes": 3117,
+      "wordCount": 484,
+      "repoLicense": "MIT",
+      "commit": "add2c23882fe79180737d242ff80a5da205eda6a",
+      "branch": "main",
+      "body": "---\nname: li-dm\ndescription: >-\n  Write connection notes and DM follow-ups that get replies - the 200-character\n  invite, the first message, and the two follow-ups. Use when the user says\n  \"write a connection request\", \"DM this person\", \"outreach message\", \"how do I\n  follow up\", or is reaching out to someone specific on LinkedIn.\n---\n\n# li-dm\n\nThe invite note is 200 characters. The first DM decides whether there is a\nsecond one. Neither is a pitch.\n\n## Before writing, get the specifics\n\nAsk for, in one batched question:\n\n1. **Who** - name, role, company.\n2. **The hook** - the actual reason to reach out now. A post they wrote, a\n   thing their company shipped, a mutual connection, a talk they gave. Not\n   \"they fit my ICP\".\n3. **What the user wants** - a conversation, a referral, a job, a sale. Be\n   honest internally, even if the message does not lead with it.\n\nIf there is no specific reason to message this person today, say so. A message\nwith no reason is what everyone else sends, and it is why their reply rate is\n2%.\n\n## The invite note (200 characters)\n\n```\n{one specific reference to them} + {one line of who you are} + {no ask}\n```\n\nThe note asks for nothing. It exists to make the accept obvious. Under 200\ncharacters including spaces - count them and show the count.\n\n```\nSaw your post on killing the discovery call - we did the same thing in March\nand it worked. I run ops at a 12-person studio. Would like to follow along.\n                                                                    [187/200]\n```\n\n## The first message, after they accept\n\nWait a day. Then:\n\n- **Two to four sentences.** A screen of text is a delete.\n- **Reference the specific thing** from the note - continuity is the whole\n  reason the note was specific.\n- **Give something before asking.** A number, a template, a name, an answer.\n- **One ask, and make it small.** \"Worth a 15-minute call?\" beats \"let me walk\n  you through our platform\".\n- **No calendar link in message one.** It reads as a funnel, because it is.\n\n## Follow-ups\n\nTwo. That is the number.\n\n- **+4 days** - add something new. Never \"just bumping this\" or \"following up\n  on my last message\". If you have nothing new, you have no follow-up.\n- **+10 days** - the close-the-loop message. Say you will stop, and mean it.\n  This one gets a surprising share of the total replies, because it removes\n  the pressure.\n\nThen stop. A third follow-up converts nobody and costs the relationship.\n\n## Never\n\n- Never send an automated connection or message sequence. Automated outreach\n  tools violate LinkedIn's User Agreement and get accounts restricted.\n- Never fabricate a mutual connection, a shared school, or having read\n  something the user has not read.\n- Never write the message that opens \"I hope this message finds you well\".\n- Never send more than 20 invites a day. Beyond that, LinkedIn throttles the\n  account, and a throttled account is a dead one.\n\n## Output\n\nThe invite note with its character count, the first message, and both\nfollow-ups with the day they go out. All humanized through `/li-human`. The\nuser sends every one of them by hand.\n",
+      "bodyMd": "# li-dm\n\nThe invite note is 200 characters. The first DM decides whether there is a\nsecond one. Neither is a pitch.\n\n## Before writing, get the specifics\n\nAsk for, in one batched question:\n\n1. **Who** - name, role, company.\n2. **The hook** - the actual reason to reach out now. A post they wrote, a\n   thing their company shipped, a mutual connection, a talk they gave. Not\n   \"they fit my ICP\".\n3. **What the user wants** - a conversation, a referral, a job, a sale. Be\n   honest internally, even if the message does not lead with it.\n\nIf there is no specific reason to message this person today, say so. A message\nwith no reason is what everyone else sends, and it is why their reply rate is\n2%.\n\n## The invite note (200 characters)\n\n```\n{one specific reference to them} + {one line of who you are} + {no ask}\n```\n\nThe note asks for nothing. It exists to make the accept obvious. Under 200\ncharacters including spaces - count them and show the count.\n\n```\nSaw your post on killing the discovery call - we did the same thing in March\nand it worked. I run ops at a 12-person studio. Would like to follow along.\n                                                                    [187/200]\n```\n\n## The first message, after they accept\n\nWait a day. Then:\n\n- **Two to four sentences.** A screen of text is a delete.\n- **Reference the specific thing** from the note - continuity is the whole\n  reason the note was specific.\n- **Give something before asking.** A number, a template, a name, an answer.\n- **One ask, and make it small.** \"Worth a 15-minute call?\" beats \"let me walk\n  you through our platform\".\n- **No calendar link in message one.** It reads as a funnel, because it is.\n\n## Follow-ups\n\nTwo. That is the number.\n\n- **+4 days** - add something new. Never \"just bumping this\" or \"following up\n  on my last message\". If you have nothing new, you have no follow-up.\n- **+10 days** - the close-the-loop message. Say you will stop, and mean it.\n  This one gets a surprising share of the total replies, because it removes\n  the pressure.\n\nThen stop. A third follow-up converts nobody and costs the relationship.\n\n## Never\n\n- Never send an automated connection or message sequence. Automated outreach\n  tools violate LinkedIn's User Agreement and get accounts restricted.\n- Never fabricate a mutual connection, a shared school, or having read\n  something the user has not read.\n- Never write the message that opens \"I hope this message finds you well\".\n- Never send more than 20 invites a day. Beyond that, LinkedIn throttles the\n  account, and a throttled account is a dead one.\n\n## Output\n\nThe invite note with its character count, the first message, and both\nfollow-ups with the day they go out. All humanized through `/li-human`. The\nuser sends every one of them by hand.\n"
+    },
+    {
+      "slug": "li-human",
+      "name": "li-human",
+      "dir": "skills/li-human",
+      "path": "skills/li-human/SKILL.md",
+      "desc": "Strip the machine fingerprint out of any draft - em dashes, AI slop words, invisible watermark characters - and score it against a five-check detection panel before it goes out. Use whenever text needs to sound human, when the user says humanize, \"does this sound like AI\", \"remove the em dashes\", \"de-slop this\", \"will this get flagged\", or before any LinkedIn post, comment, reply or DM is shown to the user.",
+      "descZh": "",
+      "triggers": [
+        "does this sound like AI"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python3",
+          "go",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Jakeschincariol/linkedin-agent-skill.git",
+        "copy": "cp -r skills/li-human ~/.claude/skills/li-human",
+        "raw": "https://raw.githubusercontent.com/Jakeschincariol/linkedin-agent-skill/add2c23882fe79180737d242ff80a5da205eda6a/skills/li-human/SKILL.md",
+        "saveAs": "~/.claude/skills/li-human/SKILL.md",
+        "marketplace": "/plugin marketplace add Jakeschincariol/linkedin-agent-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:2ebda9ff1b63f0d567cd8e30b6fc1465e05c46e166809ea0569cba3591d73d90",
+      "bytes": 4522,
+      "wordCount": 671,
+      "repoLicense": "MIT",
+      "commit": "add2c23882fe79180737d242ff80a5da205eda6a",
+      "branch": "main",
+      "body": "---\nname: li-human\ndescription: >-\n  Strip the machine fingerprint out of any draft - em dashes, AI slop words,\n  invisible watermark characters - and score it against a five-check detection\n  panel before it goes out. Use whenever text needs to sound human, when the\n  user says humanize, \"does this sound like AI\", \"remove the em dashes\", \"de-slop\n  this\", \"will this get flagged\", or before any LinkedIn post, comment, reply\n  or DM is shown to the user.\n---\n\n# li-human\n\nTwo tools live in this folder and they both actually run. Use them. Do not\neyeball this.\n\n```bash\npython3 humanize.py draft.txt --report        # clean it, show what changed\npython3 detect.py draft.txt                    # score it, five checks\npython3 detect.py before.txt after.txt         # prove the delta\n```\n\nBoth read `slop.json`, which is the lexicon: 100+ stock words and phrases with\nplain-English replacements, 17 invisible character classes, 11 typographic\nsubstitutions, and 11 structural tells. It is meant to be edited. If the user\nhas a word they always use that the lexicon strips, remove it from the file.\n\n## What gets fixed automatically\n\n**1. Invisible characters.** Zero-width spaces and joiners, word joiners,\nsoft hyphens, byte-order marks, Unicode tag characters, non-breaking and\nnarrow spaces. A keyboard does not produce these. They survive copy-paste,\nthey are invisible in every editor, and they are the single most mechanical\nthing in generated text. `humanize.py` deletes every one, including any\nremaining Unicode format character it does not have a name for.\n\n**2. Typography.** Em dash to comma, en dash to hyphen, curly quotes to\nstraight, ellipsis to three dots, bullet character to hyphen. The em dash pass\nis the one that matters: it collapses ` — ` to `, ` and then cleans up the\ndouble punctuation that leaves behind.\n\n**3. The slop lexicon.** delve, leverage, robust, seamless, crucial, tapestry,\ntestament to, moreover, \"in today's fast-paced world\", \"let that sink in\" and\nthe rest, each swapped for a plain word, with capitalisation preserved and\nURLs left untouched.\n\n## What does NOT get fixed automatically\n\nStructural tells get **flagged, not rewritten**, because changing the shape of\na sentence needs judgement:\n\n- \"It's not just X, it's Y\" and \"not only X but also Y\"\n- Rule-of-three triads\n- Rhetorical one-word question lines: \"The result?\"\n- Rocket, fire, bulb, sparkle and dart emoji\n- Hashtag walls\n- Reflex engagement bait: \"Thoughts?\", \"Agree?\", \"Who else?\"\n- Uniform sentence length and uniform bullet length\n\nThat list is your job. Rewrite each flagged line by hand, keeping the meaning,\nthen re-run `detect.py`. This is the part that moves the score from REVIEW to\nPASS, and it is the part a script cannot do.\n\n## The five checks\n\n`detect.py` scores five signals 0-100, higher is more human:\n\n| check | what it measures | machine looks like |\n| --- | --- | --- |\n| BURSTINESS | sentence-length variation | every sentence the same length |\n| SPECIFICITY | numbers, names, concrete markers per 100 words | abstract nouns, no figures |\n| SLOP DENSITY | lexicon hits per 100 words | stock vocabulary |\n| FINGERPRINT | invisible chars, em dashes, curly quotes per 1k chars | typographically perfect |\n| VOICE | contractions, person, structural tells | no contractions, staged reveals |\n\nThe verdict weights the mean at 60% and the **weakest single check** at 40%,\nbecause a detector only needs one signal to fire. PASS needs an overall of 70+\nwith no check below 55.\n\n## Say this honestly\n\nThese are five local heuristics modelled on the signals public detectors key\non. They run entirely on the user's machine and nothing is uploaded. They are\n**not** GPTZero, Originality, Copyleaks, Winston or Turnitin, they do not call\nthose APIs, and they cannot promise those verdicts. Fixing what they measure\ndoes tend to move those numbers, because they are measuring the same\nunderlying things. That is the claim. Do not make a bigger one on the user's\nbehalf, and do not tell a user their text is undetectable.\n\n## Order of operations\n\n1. `humanize.py draft.txt -o clean.txt --report`\n2. Read the structural flags. Rewrite those lines yourself.\n3. `detect.py draft.txt clean.txt` to show the before and after.\n4. If the verdict is not PASS, fix the weakest check named in the output and\n   go again. Two rounds is normal. Five means the draft was written by\n   formula, and the fix is a different draft, not more passes.\n5. Show the user the cleaned text and the score. Never the score alone.\n",
+      "bodyMd": "# li-human\n\nTwo tools live in this folder and they both actually run. Use them. Do not\neyeball this.\n\n```bash\npython3 humanize.py draft.txt --report        # clean it, show what changed\npython3 detect.py draft.txt                    # score it, five checks\npython3 detect.py before.txt after.txt         # prove the delta\n```\n\nBoth read `slop.json`, which is the lexicon: 100+ stock words and phrases with\nplain-English replacements, 17 invisible character classes, 11 typographic\nsubstitutions, and 11 structural tells. It is meant to be edited. If the user\nhas a word they always use that the lexicon strips, remove it from the file.\n\n## What gets fixed automatically\n\n**1. Invisible characters.** Zero-width spaces and joiners, word joiners,\nsoft hyphens, byte-order marks, Unicode tag characters, non-breaking and\nnarrow spaces. A keyboard does not produce these. They survive copy-paste,\nthey are invisible in every editor, and they are the single most mechanical\nthing in generated text. `humanize.py` deletes every one, including any\nremaining Unicode format character it does not have a name for.\n\n**2. Typography.** Em dash to comma, en dash to hyphen, curly quotes to\nstraight, ellipsis to three dots, bullet character to hyphen. The em dash pass\nis the one that matters: it collapses ` — ` to `, ` and then cleans up the\ndouble punctuation that leaves behind.\n\n**3. The slop lexicon.** delve, leverage, robust, seamless, crucial, tapestry,\ntestament to, moreover, \"in today's fast-paced world\", \"let that sink in\" and\nthe rest, each swapped for a plain word, with capitalisation preserved and\nURLs left untouched.\n\n## What does NOT get fixed automatically\n\nStructural tells get **flagged, not rewritten**, because changing the shape of\na sentence needs judgement:\n\n- \"It's not just X, it's Y\" and \"not only X but also Y\"\n- Rule-of-three triads\n- Rhetorical one-word question lines: \"The result?\"\n- Rocket, fire, bulb, sparkle and dart emoji\n- Hashtag walls\n- Reflex engagement bait: \"Thoughts?\", \"Agree?\", \"Who else?\"\n- Uniform sentence length and uniform bullet length\n\nThat list is your job. Rewrite each flagged line by hand, keeping the meaning,\nthen re-run `detect.py`. This is the part that moves the score from REVIEW to\nPASS, and it is the part a script cannot do.\n\n## The five checks\n\n`detect.py` scores five signals 0-100, higher is more human:\n\n| check | what it measures | machine looks like |\n| --- | --- | --- |\n| BURSTINESS | sentence-length variation | every sentence the same length |\n| SPECIFICITY | numbers, names, concrete markers per 100 words | abstract nouns, no figures |\n| SLOP DENSITY | lexicon hits per 100 words | stock vocabulary |\n| FINGERPRINT | invisible chars, em dashes, curly quotes per 1k chars | typographically perfect |\n| VOICE | contractions, person, structural tells | no contractions, staged reveals |\n\nThe verdict weights the mean at 60% and the **weakest single check** at 40%,\nbecause a detector only needs one signal to fire. PASS needs an overall of 70+\nwith no check below 55.\n\n## Say this honestly\n\nThese are five local heuristics modelled on the signals public detectors key\non. They run entirely on the user's machine and nothing is uploaded. They are\n**not** GPTZero, Originality, Copyleaks, Winston or Turnitin, they do not call\nthose APIs, and they cannot promise those verdicts. Fixing what they measure\ndoes tend to move those numbers, because they are measuring the same\nunderlying things. That is the claim. Do not make a bigger one on the user's\nbehalf, and do not tell a user their text is undetectable.\n\n## Order of operations\n\n1. `humanize.py draft.txt -o clean.txt --report`\n2. Read the structural flags. Rewrite those lines yourself.\n3. `detect.py draft.txt clean.txt` to show the before and after.\n4. If the verdict is not PASS, fix the weakest check named in the output and\n   go again. Two rounds is normal. Five means the draft was written by\n   formula, and the fix is a different draft, not more passes.\n5. Show the user the cleaned text and the score. Never the score alone.\n"
+    },
+    {
+      "slug": "li-inbox",
+      "name": "li-inbox",
+      "dir": "skills/li-inbox",
+      "path": "skills/li-inbox/SKILL.md",
+      "desc": "Triage the LinkedIn inbox - sort connection requests and DMs into leads, recruiters, peers and spam, and draft the replies worth sending. Use when the user says \"my inbox is a mess\", \"triage my DMs\", \"should I reply to this\", pastes a batch of LinkedIn messages, or is drowning in connection requests.",
+      "descZh": "",
+      "triggers": [
+        "triage my DMs",
+        "should I reply to this",
+        "pastes a ba"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Jakeschincariol/linkedin-agent-skill.git",
+        "copy": "cp -r skills/li-inbox ~/.claude/skills/li-inbox",
+        "raw": "https://raw.githubusercontent.com/Jakeschincariol/linkedin-agent-skill/add2c23882fe79180737d242ff80a5da205eda6a/skills/li-inbox/SKILL.md",
+        "saveAs": "~/.claude/skills/li-inbox/SKILL.md",
+        "marketplace": "/plugin marketplace add Jakeschincariol/linkedin-agent-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:816c1088fdac6a58295b9868267031b210eb57fd325bf837226fb764bce94c77",
+      "bytes": 2892,
+      "wordCount": 482,
+      "repoLicense": "MIT",
+      "commit": "add2c23882fe79180737d242ff80a5da205eda6a",
+      "branch": "main",
+      "body": "---\nname: li-inbox\ndescription: >-\n  Triage the LinkedIn inbox - sort connection requests and DMs into leads,\n  recruiters, peers and spam, and draft the replies worth sending. Use when the\n  user says \"my inbox is a mess\", \"triage my DMs\", \"should I reply to this\",\n  pastes a batch of LinkedIn messages, or is drowning in connection requests.\n---\n\n# li-inbox\n\nMost LinkedIn inboxes are 80% noise, and the cost of that noise is that the\n20% goes unanswered for a week. This skill separates them, then writes only\nwhat is worth writing.\n\n## Input\n\nThe user pastes the messages. Screenshots are fine. Do not log into their\naccount or read their inbox with a browser tool.\n\n## Sort into five\n\n| bucket | signal | action |\n| --- | --- | --- |\n| **LEAD** | describes a problem the user solves, or asks about working together | reply today, full answer |\n| **RECRUITER** | a role, a company, a salary band | reply if the role is real, one line if not |\n| **PEER** | someone in the same field with something to say | reply this week, keep it human |\n| **ASK** | wants advice, time, an intro, a favour | reply if it is cheap and specific, decline cleanly if not |\n| **SPAM** | agency pitch, lead-gen sequence, crypto, \"quick question\" with no question | archive, no reply |\n\nPrint the counts first. Seeing \"3 leads, 2 recruiters, 41 spam\" is most of the\nvalue.\n\n## Detecting a sequence\n\nAutomated outreach has a shape: an invite note with no specifics, a message\nthat arrives within minutes of the accept, \"quick question\", \"I noticed you're\nin {industry}\", a calendar link in message one, then a bump exactly four days\nlater. When you see it, mark it SPAM and say which tell gave it away. The user\ndoes not owe a reply to a script.\n\n## Replies\n\n- **LEAD** - answer the actual question in the message, in full, for free. If\n  it is a fit, the offer is one sentence at the end. If it is not, say so and\n  point them somewhere useful. Both outcomes are good.\n- **RECRUITER** - if the role is genuinely interesting, ask the three things\n  the message left out: comp band, level, and whether it is in-office. If it\n  is not, one line: not looking, happy to refer, and mean the refer.\n- **ASK** - if it costs under ten minutes and is specific, do it. If it is\n  \"can I pick your brain\", decline in one warm sentence and give them the one\n  answer you would have given on the call. That is the polite version and it\n  is also the more useful one.\n- **DECLINES** are short, warm and final. No \"let's revisit in Q3\" if there is\n  no Q3.\n\n## Output\n\nGrouped by bucket, counts first, drafts only for the buckets that get replies,\neach one humanized. Then the gate: the user sends them.\n\n```\nINBOX  ·  52 items  ·  3 LEAD, 2 RECRUITER, 4 PEER, 2 ASK, 41 SPAM\n\nSPAM  (41) - archive. 38 are the same sequence: no-specifics invite,\n\"quick question\" within 4 minutes of accept, calendar link in message one.\n```\n",
+      "bodyMd": "# li-inbox\n\nMost LinkedIn inboxes are 80% noise, and the cost of that noise is that the\n20% goes unanswered for a week. This skill separates them, then writes only\nwhat is worth writing.\n\n## Input\n\nThe user pastes the messages. Screenshots are fine. Do not log into their\naccount or read their inbox with a browser tool.\n\n## Sort into five\n\n| bucket | signal | action |\n| --- | --- | --- |\n| **LEAD** | describes a problem the user solves, or asks about working together | reply today, full answer |\n| **RECRUITER** | a role, a company, a salary band | reply if the role is real, one line if not |\n| **PEER** | someone in the same field with something to say | reply this week, keep it human |\n| **ASK** | wants advice, time, an intro, a favour | reply if it is cheap and specific, decline cleanly if not |\n| **SPAM** | agency pitch, lead-gen sequence, crypto, \"quick question\" with no question | archive, no reply |\n\nPrint the counts first. Seeing \"3 leads, 2 recruiters, 41 spam\" is most of the\nvalue.\n\n## Detecting a sequence\n\nAutomated outreach has a shape: an invite note with no specifics, a message\nthat arrives within minutes of the accept, \"quick question\", \"I noticed you're\nin {industry}\", a calendar link in message one, then a bump exactly four days\nlater. When you see it, mark it SPAM and say which tell gave it away. The user\ndoes not owe a reply to a script.\n\n## Replies\n\n- **LEAD** - answer the actual question in the message, in full, for free. If\n  it is a fit, the offer is one sentence at the end. If it is not, say so and\n  point them somewhere useful. Both outcomes are good.\n- **RECRUITER** - if the role is genuinely interesting, ask the three things\n  the message left out: comp band, level, and whether it is in-office. If it\n  is not, one line: not looking, happy to refer, and mean the refer.\n- **ASK** - if it costs under ten minutes and is specific, do it. If it is\n  \"can I pick your brain\", decline in one warm sentence and give them the one\n  answer you would have given on the call. That is the polite version and it\n  is also the more useful one.\n- **DECLINES** are short, warm and final. No \"let's revisit in Q3\" if there is\n  no Q3.\n\n## Output\n\nGrouped by bucket, counts first, drafts only for the buckets that get replies,\neach one humanized. Then the gate: the user sends them.\n\n```\nINBOX  ·  52 items  ·  3 LEAD, 2 RECRUITER, 4 PEER, 2 ASK, 41 SPAM\n\nSPAM  (41) - archive. 38 are the same sequence: no-specifics invite,\n\"quick question\" within 4 minutes of accept, calendar link in message one.\n```\n"
+    },
+    {
+      "slug": "li-plan",
+      "name": "li-plan",
+      "dir": "skills/li-plan",
+      "path": "skills/li-plan/SKILL.md",
+      "desc": "Build the week on LinkedIn - what to post, when to post it, and who to engage with. Use when the user says \"plan my week\", \"what should I post\", \"content calendar\", \"I have nothing to post about\", or wants a posting schedule and an engagement list.",
+      "descZh": "",
+      "triggers": [
+        "what should I post",
+        "content calendar",
+        "I have nothing to"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Jakeschincariol/linkedin-agent-skill.git",
+        "copy": "cp -r skills/li-plan ~/.claude/skills/li-plan",
+        "raw": "https://raw.githubusercontent.com/Jakeschincariol/linkedin-agent-skill/add2c23882fe79180737d242ff80a5da205eda6a/skills/li-plan/SKILL.md",
+        "saveAs": "~/.claude/skills/li-plan/SKILL.md",
+        "marketplace": "/plugin marketplace add Jakeschincariol/linkedin-agent-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:5799665246d1c47ab6b37840bd4f4f94700f24ff54ae4d3a1fbaf49b1cd71f9b",
+      "bytes": 3617,
+      "wordCount": 623,
+      "repoLicense": "MIT",
+      "commit": "add2c23882fe79180737d242ff80a5da205eda6a",
+      "branch": "main",
+      "body": "---\nname: li-plan\ndescription: >-\n  Build the week on LinkedIn - what to post, when to post it, and who to engage\n  with. Use when the user says \"plan my week\", \"what should I post\", \"content\n  calendar\", \"I have nothing to post about\", or wants a posting schedule and an\n  engagement list.\n---\n\n# li-plan\n\nThe control room. Everything else in this pack executes; this decides what\ngets executed. Run it once a week, on the same day.\n\n## Input\n\nIf `~/.claude/linkedin/voice.md` and `log.md` exist, read them - the plan\nshould not repeat a theme from the last fortnight. If they do not exist, ask\nfor four things and write them down:\n\n1. What the user sells, and to whom.\n2. The three or four themes they want to be known for.\n3. What actually happened this week - a client call, a number, a mistake, a\n   thing they built, an argument they had. This is where posts come from.\n4. Ten to twenty people or companies worth being visible to.\n\n## What to post\n\nFour posts a week beats seven. Consistency is a floor, not a target, and the\nfifth post of a week is almost always the weak one that drags the average.\n\nMix across the week, never two of the same type back to back:\n\n| type | share | job |\n| --- | --- | --- |\n| **Proof** | 1 per week | something that happened, with a number |\n| **Opinion** | 1 per week | a position that could lose you followers |\n| **Teach** | 1 per week | one thing the reader can do today |\n| **Story** | 1 per fortnight | a scene with dialogue and a cost |\n| **Offer** | 1 per fortnight | what you sell, said plainly, no apology |\n\nFor each slot give: the theme, the specific angle drawn from what actually\nhappened this week, and the hook formula number from `li-post/hooks.json` that\nfits it. Not a topic - an angle. \"AI\" is not a plan. \"The proposal we lost\nbecause our AI draft had an em dash in it\" is a post.\n\n## When to post\n\nPost when the user's audience is at a desk. For a B2B audience in one\ntimezone, Tuesday to Thursday, 7:30-9:30am local, is the working default, with\nMonday afternoon and Friday morning as the second tier. Weekends are for\npersonal-story posts or nothing.\n\nBut state this plainly: **the day and hour matter far less than whether the\nfirst line is good.** If the user is optimising posting times before their\nhooks work, they are polishing the wrong thing, and you should say so.\n\nAnchor the times to their audience's timezone, not the user's, if those\ndiffer.\n\n## Who to engage with\n\nBuild a list of 10, split three ways:\n\n- **5 reach** - people with an audience the user wants, whose posts they can\n  genuinely add to. Comment before they have 20 comments or nobody sees it.\n- **3 peers** - same level, same field. This is the group that reciprocates.\n- **2 buyers** - people who could actually buy. Comment on their posts for\n  weeks before any DM, and never pitch in a comment.\n\n20 minutes a day, before posting, not after. Comments on other people's posts\nare what makes the user's own post land.\n\n## Output\n\n```\nWEEK OF SEP 8\n\nMON  engage only  (20 min, list below)\nTUE  8:15am  PROOF    #17 Time Anchor   - the 5hr -> 20min proposal rebuild\nWED  engage only\nTHU  8:00am  OPINION  #1  Contrarian    - why we killed the discovery call\nFRI  8:30am  TEACH    #21 Direct Value  - the 4-line reopen email, given away\nSAT  -\nSUN  4:00pm  STORY    #9  Cold Open     - the \"going with someone cheaper\" email\n\nENGAGE  (5 reach / 3 peers / 2 buyers)\n  ...\n\nSay \"write Tuesday\" and I will draft it.\n```\n\nWrite the plan to `~/.claude/linkedin/plan.md` so the other skills can read it.\nNothing is scheduled or posted anywhere - this is a plan, and the user runs it.\n",
+      "bodyMd": "# li-plan\n\nThe control room. Everything else in this pack executes; this decides what\ngets executed. Run it once a week, on the same day.\n\n## Input\n\nIf `~/.claude/linkedin/voice.md` and `log.md` exist, read them - the plan\nshould not repeat a theme from the last fortnight. If they do not exist, ask\nfor four things and write them down:\n\n1. What the user sells, and to whom.\n2. The three or four themes they want to be known for.\n3. What actually happened this week - a client call, a number, a mistake, a\n   thing they built, an argument they had. This is where posts come from.\n4. Ten to twenty people or companies worth being visible to.\n\n## What to post\n\nFour posts a week beats seven. Consistency is a floor, not a target, and the\nfifth post of a week is almost always the weak one that drags the average.\n\nMix across the week, never two of the same type back to back:\n\n| type | share | job |\n| --- | --- | --- |\n| **Proof** | 1 per week | something that happened, with a number |\n| **Opinion** | 1 per week | a position that could lose you followers |\n| **Teach** | 1 per week | one thing the reader can do today |\n| **Story** | 1 per fortnight | a scene with dialogue and a cost |\n| **Offer** | 1 per fortnight | what you sell, said plainly, no apology |\n\nFor each slot give: the theme, the specific angle drawn from what actually\nhappened this week, and the hook formula number from `li-post/hooks.json` that\nfits it. Not a topic - an angle. \"AI\" is not a plan. \"The proposal we lost\nbecause our AI draft had an em dash in it\" is a post.\n\n## When to post\n\nPost when the user's audience is at a desk. For a B2B audience in one\ntimezone, Tuesday to Thursday, 7:30-9:30am local, is the working default, with\nMonday afternoon and Friday morning as the second tier. Weekends are for\npersonal-story posts or nothing.\n\nBut state this plainly: **the day and hour matter far less than whether the\nfirst line is good.** If the user is optimising posting times before their\nhooks work, they are polishing the wrong thing, and you should say so.\n\nAnchor the times to their audience's timezone, not the user's, if those\ndiffer.\n\n## Who to engage with\n\nBuild a list of 10, split three ways:\n\n- **5 reach** - people with an audience the user wants, whose posts they can\n  genuinely add to. Comment before they have 20 comments or nobody sees it.\n- **3 peers** - same level, same field. This is the group that reciprocates.\n- **2 buyers** - people who could actually buy. Comment on their posts for\n  weeks before any DM, and never pitch in a comment.\n\n20 minutes a day, before posting, not after. Comments on other people's posts\nare what makes the user's own post land.\n\n## Output\n\n```\nWEEK OF SEP 8\n\nMON  engage only  (20 min, list below)\nTUE  8:15am  PROOF    #17 Time Anchor   - the 5hr -> 20min proposal rebuild\nWED  engage only\nTHU  8:00am  OPINION  #1  Contrarian    - why we killed the discovery call\nFRI  8:30am  TEACH    #21 Direct Value  - the 4-line reopen email, given away\nSAT  -\nSUN  4:00pm  STORY    #9  Cold Open     - the \"going with someone cheaper\" email\n\nENGAGE  (5 reach / 3 peers / 2 buyers)\n  ...\n\nSay \"write Tuesday\" and I will draft it.\n```\n\nWrite the plan to `~/.claude/linkedin/plan.md` so the other skills can read it.\nNothing is scheduled or posted anywhere - this is a plan, and the user runs it.\n"
+    },
+    {
+      "slug": "li-post",
+      "name": "li-post",
+      "dir": "skills/li-post",
+      "path": "skills/li-post/SKILL.md",
+      "desc": "Write a LinkedIn post from a raw idea using 21 proven hook formulas, in the user's own voice, humanized so it does not read as AI. Use whenever the user wants a LinkedIn post, a hook, a draft for the feed, \"post about X\", \"turn this into a LinkedIn post\", or asks for hook options. Produces three hook options, one full draft, and a copy-ready block that is never published without an explicit yes.",
+      "descZh": "",
+      "triggers": [
+        "a hook",
+        "a draft for the feed",
+        "post about X",
+        "turn t"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Jakeschincariol/linkedin-agent-skill.git",
+        "copy": "cp -r skills/li-post ~/.claude/skills/li-post",
+        "raw": "https://raw.githubusercontent.com/Jakeschincariol/linkedin-agent-skill/add2c23882fe79180737d242ff80a5da205eda6a/skills/li-post/SKILL.md",
+        "saveAs": "~/.claude/skills/li-post/SKILL.md",
+        "marketplace": "/plugin marketplace add Jakeschincariol/linkedin-agent-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:acfc8eadc47fee812f2dbaf8c97a93c313661d46963291bcbf8f154b065abee0",
+      "bytes": 4336,
+      "wordCount": 686,
+      "repoLicense": "MIT",
+      "commit": "add2c23882fe79180737d242ff80a5da205eda6a",
+      "branch": "main",
+      "body": "---\nname: li-post\ndescription: >-\n  Write a LinkedIn post from a raw idea using 21 proven hook formulas, in the\n  user's own voice, humanized so it does not read as AI. Use whenever the user\n  wants a LinkedIn post, a hook, a draft for the feed, \"post about X\", \"turn\n  this into a LinkedIn post\", or asks for hook options. Produces three hook\n  options, one full draft, and a copy-ready block that is never published\n  without an explicit yes.\n---\n\n# li-post\n\nTurns one raw idea into a LinkedIn post that sounds like the person who\nposted it.\n\n## Before you write\n\n1. Read `~/.claude/linkedin/voice.md` if it exists. That file is the user's\n   voice profile: how they talk, what they never say, who they are talking to.\n   If it does not exist, ask for **three of their own past posts**, infer the\n   voice from those, and write the file. Do not skip this and do not invent a\n   voice. A post in the wrong voice is worse than no post.\n2. Read `hooks.json` in this folder. All 21 formulas, with templates, filled\n   examples, what each is for, and how each one usually gets ruined.\n3. If the idea is thin - \"post about AI\" - do not pad it. Ask one batched\n   question: what happened, to whom, and what did it cost or return. A post\n   needs one specific true thing. Get it before writing.\n\n## The shape\n\nLinkedIn rewards dwell time, saves and comments, in that order. So:\n\n```\nLine 1     the hook. Alone. It has to survive truncation at ~140 chars mobile.\nLine 2     the payoff of line 1, not setup for line 3.\nBody       short paragraphs, 1-3 lines each, blank line between every one.\n           No wall. The white space is the format.\nThe turn   one line that reframes what came before.\nClose      one specific question, or one instruction. Never both.\n```\n\nLength: 900-1,300 characters is the working range for a text post. Under 400\nreads as a thought, not a post. Over 2,000 needs to earn every line, and the\n\"see more\" tap has to be paid for by line 2.\n\n## The loop\n\n**1. Pick three hooks, not one.** Run the idea through `hooks.json` and choose\nthe three formulas that genuinely fit it. Different formulas, not three\nvariations of one. Show them as three numbered lines and say which you would\nship and why, in one sentence.\n\n**2. Draft the full post** on the strongest hook.\n\n**3. Humanize it.** Run the draft through `/li-human` before showing it. Every\npost from this skill ships humanized. That is not an optional extra step, it\nis the reason the draft is worth reading.\n\n**4. Print the block.** Copy-ready, in a fenced block, exactly as it should be\npasted. Then, underneath:\n\n```\nPOST READY\nhook:      #17 Time Anchor\nlength:    1,140 characters\nhumanizer: 6 artefacts stripped, human score 84 PASS\npost at:   Tuesday 8:15am ET (from your plan)\n\nReply \"yes\" to log it, or tell me what to change.\n```\n\n**5. Never publish.** This skill produces text. The user posts it. On \"yes\",\nappend the post to `~/.claude/linkedin/log.md` with the date, the hook used\nand the first line, so `/li-audit` has a history to work from later.\n\n## Rules that make the difference\n\n- **One idea per post.** If the draft has two, you have two posts. Say so.\n- **Numbers over adjectives.** \"$4,200\" beats \"a lot\". If the user has not\n  given you a number, ask for one rather than writing around the hole.\n- **No engagement bait.** \"Thoughts?\" and \"Agree?\" are dead. The closing\n  question has to be one only this post could ask.\n- **Three hashtags maximum**, at the bottom, and only if they are real\n  categories someone follows.\n- **No links in the post body.** LinkedIn suppresses posts with outbound\n  links. Put the link in the first comment and say so in the receipt.\n- **Never fabricate.** No invented metrics, clients, revenue figures or\n  outcomes under the user's name, even as a placeholder. If a number is\n  needed and unknown, leave `{{your number}}` in the draft and flag it.\n\n## Example\n\n```\n/li-post we built an internal tool that cut proposal time from 5 hours to 20 min\n```\n\n```\nHOOKS\n1. #17 Time Anchor    Writing a proposal used to take me 5 hours. It now takes 20 minutes.\n2. #12 Comparison     A $12,000 proposal writer vs a weekend and a template. The weekend won.\n3. #3  Mistake        For two years I charged clients for hours I was wasting on formatting.\n\nShipping #17: the ratio is believable and the number is yours.\n```\n",
+      "bodyMd": "# li-post\n\nTurns one raw idea into a LinkedIn post that sounds like the person who\nposted it.\n\n## Before you write\n\n1. Read `~/.claude/linkedin/voice.md` if it exists. That file is the user's\n   voice profile: how they talk, what they never say, who they are talking to.\n   If it does not exist, ask for **three of their own past posts**, infer the\n   voice from those, and write the file. Do not skip this and do not invent a\n   voice. A post in the wrong voice is worse than no post.\n2. Read `hooks.json` in this folder. All 21 formulas, with templates, filled\n   examples, what each is for, and how each one usually gets ruined.\n3. If the idea is thin - \"post about AI\" - do not pad it. Ask one batched\n   question: what happened, to whom, and what did it cost or return. A post\n   needs one specific true thing. Get it before writing.\n\n## The shape\n\nLinkedIn rewards dwell time, saves and comments, in that order. So:\n\n```\nLine 1     the hook. Alone. It has to survive truncation at ~140 chars mobile.\nLine 2     the payoff of line 1, not setup for line 3.\nBody       short paragraphs, 1-3 lines each, blank line between every one.\n           No wall. The white space is the format.\nThe turn   one line that reframes what came before.\nClose      one specific question, or one instruction. Never both.\n```\n\nLength: 900-1,300 characters is the working range for a text post. Under 400\nreads as a thought, not a post. Over 2,000 needs to earn every line, and the\n\"see more\" tap has to be paid for by line 2.\n\n## The loop\n\n**1. Pick three hooks, not one.** Run the idea through `hooks.json` and choose\nthe three formulas that genuinely fit it. Different formulas, not three\nvariations of one. Show them as three numbered lines and say which you would\nship and why, in one sentence.\n\n**2. Draft the full post** on the strongest hook.\n\n**3. Humanize it.** Run the draft through `/li-human` before showing it. Every\npost from this skill ships humanized. That is not an optional extra step, it\nis the reason the draft is worth reading.\n\n**4. Print the block.** Copy-ready, in a fenced block, exactly as it should be\npasted. Then, underneath:\n\n```\nPOST READY\nhook:      #17 Time Anchor\nlength:    1,140 characters\nhumanizer: 6 artefacts stripped, human score 84 PASS\npost at:   Tuesday 8:15am ET (from your plan)\n\nReply \"yes\" to log it, or tell me what to change.\n```\n\n**5. Never publish.** This skill produces text. The user posts it. On \"yes\",\nappend the post to `~/.claude/linkedin/log.md` with the date, the hook used\nand the first line, so `/li-audit` has a history to work from later.\n\n## Rules that make the difference\n\n- **One idea per post.** If the draft has two, you have two posts. Say so.\n- **Numbers over adjectives.** \"$4,200\" beats \"a lot\". If the user has not\n  given you a number, ask for one rather than writing around the hole.\n- **No engagement bait.** \"Thoughts?\" and \"Agree?\" are dead. The closing\n  question has to be one only this post could ask.\n- **Three hashtags maximum**, at the bottom, and only if they are real\n  categories someone follows.\n- **No links in the post body.** LinkedIn suppresses posts with outbound\n  links. Put the link in the first comment and say so in the receipt.\n- **Never fabricate.** No invented metrics, clients, revenue figures or\n  outcomes under the user's name, even as a placeholder. If a number is\n  needed and unknown, leave `{{your number}}` in the draft and flag it.\n\n## Example\n\n```\n/li-post we built an internal tool that cut proposal time from 5 hours to 20 min\n```\n\n```\nHOOKS\n1. #17 Time Anchor    Writing a proposal used to take me 5 hours. It now takes 20 minutes.\n2. #12 Comparison     A $12,000 proposal writer vs a weekend and a template. The weekend won.\n3. #3  Mistake        For two years I charged clients for hours I was wasting on formatting.\n\nShipping #17: the ratio is believable and the number is yours.\n```\n"
+    },
+    {
+      "slug": "li-profile",
+      "name": "li-profile",
+      "dir": "skills/li-profile",
+      "path": "skills/li-profile/SKILL.md",
+      "desc": "Score a LinkedIn profile out of 100 against a 12-part rubric and rewrite the parts that lose points - headline, about, experience, featured, banner. Use when the user says \"optimize my profile\", \"score my LinkedIn\", \"rewrite my headline\", \"fix my about section\", or pastes their profile and asks how it reads.",
+      "descZh": "",
+      "triggers": [
+        "score my LinkedIn",
+        "rewrite my headline",
+        "fix my a"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Jakeschincariol/linkedin-agent-skill.git",
+        "copy": "cp -r skills/li-profile ~/.claude/skills/li-profile",
+        "raw": "https://raw.githubusercontent.com/Jakeschincariol/linkedin-agent-skill/add2c23882fe79180737d242ff80a5da205eda6a/skills/li-profile/SKILL.md",
+        "saveAs": "~/.claude/skills/li-profile/SKILL.md",
+        "marketplace": "/plugin marketplace add Jakeschincariol/linkedin-agent-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:4f0ebdcf8a3ef035d70aae89838ff916fc8a33a4a12b333e58bb2bc41727d11e",
+      "bytes": 3271,
+      "wordCount": 504,
+      "repoLicense": "MIT",
+      "commit": "add2c23882fe79180737d242ff80a5da205eda6a",
+      "branch": "main",
+      "body": "---\nname: li-profile\ndescription: >-\n  Score a LinkedIn profile out of 100 against a 12-part rubric and rewrite the\n  parts that lose points - headline, about, experience, featured, banner. Use\n  when the user says \"optimize my profile\", \"score my LinkedIn\", \"rewrite my\n  headline\", \"fix my about section\", or pastes their profile and asks how it\n  reads.\n---\n\n# li-profile\n\nA profile is not a resume. A resume answers \"what have you done\". A profile\nanswers \"should I message this person\", and it answers it in about four\nseconds, from the headline and the first two lines of the about.\n\n## Input\n\nAsk the user to paste: headline, about section, current role and the last two\nexperience entries, plus whether they have a banner and featured section. A\nscreenshot of the top card is enough for the first pass. Do not log into\nLinkedIn on their behalf.\n\n## Score it\n\nRead `rubric.json` in this folder. Twelve items, 100 points, each with what\nfull marks looks like. Score every item, show the table, and give the total.\nBe honest - most profiles land in the 30s and 40s on the first pass, and a\ngenerous score is useless.\n\n```\nPROFILE SCORE  41/100\n\n  headline            3/12   job title only, no outcome, no audience\n  about first 2 lines 2/10   opens with \"passionate about\"\n  about body          4/10   history, not offer\n  featured            0/8    empty\n  banner              0/6    default blue\n  ...\n```\n\n## Then rewrite, in this order\n\nFix in descending order of points lost. Do not rewrite everything at once -\nthe user has to actually paste each of these in.\n\n**1. Headline (220 characters).** The formula that works:\n`{what you do for whom} | {proof} | {how to start}`. Not your job title. Not\n\"Helping X do Y\" as the first three words, which every second profile now\nopens with. Give three options.\n\n**2. About, first two lines.** Everything after line 2 is behind \"see more\" on\nmobile, so those two lines are the whole about section for most readers. They\nmust state who you help and what changes. No \"passionate\", no \"results-driven\",\nno third-person bio, no opening with your own name.\n\n**3. About body.** Written to one reader, in the second person. Structure:\nthe problem they have, what you do about it, one piece of proof with a number,\nwhat to do next. Under 1,400 characters even though the limit is 2,600.\n\n**4. Featured.** Three items: the best post, the proof asset, the way to\ncontact. An empty featured section is eight points and the only place on the\nprofile you fully control.\n\n**5. Experience.** Each role gets one line of scope and two to three bullets\nthat are outcomes with numbers, not duties. Cut anything older than ten years\nto a single line.\n\n**6. Banner.** One sentence of positioning and one way to reach you. The\ndefault blue gradient is the clearest signal on the page that nobody is home.\n\n## Output\n\nScore table, then the rewrites as copy-ready blocks in fix-first order, each\none already run through `/li-human`. Re-score at the end and show the delta\nhonestly - if the rewrite gets to 88 and not 98, say 88, and say what the\nremaining points need (usually recommendations, a real banner and posting\nhistory, none of which a rewrite can create).\n\nNothing is saved to LinkedIn by this skill. The user pastes each section in.\n",
+      "bodyMd": "# li-profile\n\nA profile is not a resume. A resume answers \"what have you done\". A profile\nanswers \"should I message this person\", and it answers it in about four\nseconds, from the headline and the first two lines of the about.\n\n## Input\n\nAsk the user to paste: headline, about section, current role and the last two\nexperience entries, plus whether they have a banner and featured section. A\nscreenshot of the top card is enough for the first pass. Do not log into\nLinkedIn on their behalf.\n\n## Score it\n\nRead `rubric.json` in this folder. Twelve items, 100 points, each with what\nfull marks looks like. Score every item, show the table, and give the total.\nBe honest - most profiles land in the 30s and 40s on the first pass, and a\ngenerous score is useless.\n\n```\nPROFILE SCORE  41/100\n\n  headline            3/12   job title only, no outcome, no audience\n  about first 2 lines 2/10   opens with \"passionate about\"\n  about body          4/10   history, not offer\n  featured            0/8    empty\n  banner              0/6    default blue\n  ...\n```\n\n## Then rewrite, in this order\n\nFix in descending order of points lost. Do not rewrite everything at once -\nthe user has to actually paste each of these in.\n\n**1. Headline (220 characters).** The formula that works:\n`{what you do for whom} | {proof} | {how to start}`. Not your job title. Not\n\"Helping X do Y\" as the first three words, which every second profile now\nopens with. Give three options.\n\n**2. About, first two lines.** Everything after line 2 is behind \"see more\" on\nmobile, so those two lines are the whole about section for most readers. They\nmust state who you help and what changes. No \"passionate\", no \"results-driven\",\nno third-person bio, no opening with your own name.\n\n**3. About body.** Written to one reader, in the second person. Structure:\nthe problem they have, what you do about it, one piece of proof with a number,\nwhat to do next. Under 1,400 characters even though the limit is 2,600.\n\n**4. Featured.** Three items: the best post, the proof asset, the way to\ncontact. An empty featured section is eight points and the only place on the\nprofile you fully control.\n\n**5. Experience.** Each role gets one line of scope and two to three bullets\nthat are outcomes with numbers, not duties. Cut anything older than ten years\nto a single line.\n\n**6. Banner.** One sentence of positioning and one way to reach you. The\ndefault blue gradient is the clearest signal on the page that nobody is home.\n\n## Output\n\nScore table, then the rewrites as copy-ready blocks in fix-first order, each\none already run through `/li-human`. Re-score at the end and show the delta\nhonestly - if the rewrite gets to 88 and not 98, say 88, and say what the\nremaining points need (usually recommendations, a real banner and posting\nhistory, none of which a rewrite can create).\n\nNothing is saved to LinkedIn by this skill. The user pastes each section in.\n"
+    },
+    {
+      "slug": "li-reply",
+      "name": "li-reply",
+      "dir": "skills/li-reply",
+      "path": "skills/li-reply/SKILL.md",
+      "desc": "Handle the replies under the user's own LinkedIn posts - draft answers to every comment, sorted by which ones are worth answering. Use when the user pastes the comments on their post, says \"reply to these\", \"handle my comments\", \"someone said X on my post\", or is dealing with a critic or a lead in the comments.",
+      "descZh": "",
+      "triggers": [
+        "says \"reply to these",
+        "handle my comments"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Jakeschincariol/linkedin-agent-skill.git",
+        "copy": "cp -r skills/li-reply ~/.claude/skills/li-reply",
+        "raw": "https://raw.githubusercontent.com/Jakeschincariol/linkedin-agent-skill/add2c23882fe79180737d242ff80a5da205eda6a/skills/li-reply/SKILL.md",
+        "saveAs": "~/.claude/skills/li-reply/SKILL.md",
+        "marketplace": "/plugin marketplace add Jakeschincariol/linkedin-agent-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:26f95e55f384ca2ec1b692d3f95d08d33796fea404db8740387aca15b1248751",
+      "bytes": 3016,
+      "wordCount": 512,
+      "repoLicense": "MIT",
+      "commit": "add2c23882fe79180737d242ff80a5da205eda6a",
+      "branch": "main",
+      "body": "---\nname: li-reply\ndescription: >-\n  Handle the replies under the user's own LinkedIn posts - draft answers to\n  every comment, sorted by which ones are worth answering. Use when the user\n  pastes the comments on their post, says \"reply to these\", \"handle my\n  comments\", \"someone said X on my post\", or is dealing with a critic or a\n  lead in the comments.\n---\n\n# li-reply\n\nThe reply thread under your own post is where reach is actually decided. Every\nreply is a second engagement event on the post, and the first hour of replies\ndoes most of the work. But the value is not equal across comments, so this\nskill sorts before it writes.\n\n## Input\n\nThe user pastes the comments, ideally with names and roles. Screenshots are\nfine. Do not scrape the thread with a browser tool.\n\n## Triage first\n\nSort every comment into one of five buckets and say the count out loud:\n\n| bucket | what it is | what it gets |\n| --- | --- | --- |\n| **LEAD** | someone describing the problem you solve | a real answer + a soft open door |\n| **SUBSTANCE** | adds data, disagrees, extends | the longest reply on the thread |\n| **PEER** | a name worth being seen next to | a reply that gives them something |\n| **SUPPORT** | \"great post\", 🔥, a tag | a like, and a 3-8 word reply at most |\n| **NOISE** | pitch, spam, bad faith | nothing, or one line and out |\n\nThen write in that order, and stop writing when the value stops.\n\n## How to reply\n\n- **Answer the actual question.** If someone asks how, tell them how, in the\n  reply. Do not send them to a DM to hear the answer they could have had.\n- **Use their name once**, at the start, and never with an exclamation mark.\n- **Match their length.** A two-line comment does not get a six-line reply.\n- **To a critic:** concede the true part first, in their words, then hold the\n  line on the part you believe. Never delete, never get defensive, never reply\n  twice on the same thread.\n- **To a lead:** answer fully in public. The open door is one sentence at the\n  end, and it is an offer of help, not a pitch. Public value is what makes the\n  next person DM you.\n- **To a pitch in your comments:** ignore it. Replying gives it reach.\n\n## Output\n\nOne block, grouped by bucket, each reply copy-ready and already humanized:\n\n```\nREPLIES  ·  17 comments  ·  1 LEAD, 3 SUBSTANCE, 4 PEER, 8 SUPPORT, 1 NOISE\n\nLEAD\n@Sarah Chen - \"we have the same problem with proposals\"\n> The part that fixed it for us was pulling the pricing table out of the doc\n> entirely and sending it as its own page. Cut a whole review round. Happy to\n> send you the template if it is useful.\n\nSUBSTANCE\n@Marcus Webb - disagrees on cadence\n> Fair, and 4x a week only worked because I had 8 months of posts behind it.\n> From a standing start I would do what you said.\n\nSUPPORT  (like these, reply to the first three)\n@... \"This is great\" -> Thanks Dan.\n...\n\nNOISE  (1)\nSkipped: an agency pitch. Replying gives it reach.\n```\n\nThen the gate: **nothing is posted until the user says yes.** They paste the\nreplies themselves.\n",
+      "bodyMd": "# li-reply\n\nThe reply thread under your own post is where reach is actually decided. Every\nreply is a second engagement event on the post, and the first hour of replies\ndoes most of the work. But the value is not equal across comments, so this\nskill sorts before it writes.\n\n## Input\n\nThe user pastes the comments, ideally with names and roles. Screenshots are\nfine. Do not scrape the thread with a browser tool.\n\n## Triage first\n\nSort every comment into one of five buckets and say the count out loud:\n\n| bucket | what it is | what it gets |\n| --- | --- | --- |\n| **LEAD** | someone describing the problem you solve | a real answer + a soft open door |\n| **SUBSTANCE** | adds data, disagrees, extends | the longest reply on the thread |\n| **PEER** | a name worth being seen next to | a reply that gives them something |\n| **SUPPORT** | \"great post\", 🔥, a tag | a like, and a 3-8 word reply at most |\n| **NOISE** | pitch, spam, bad faith | nothing, or one line and out |\n\nThen write in that order, and stop writing when the value stops.\n\n## How to reply\n\n- **Answer the actual question.** If someone asks how, tell them how, in the\n  reply. Do not send them to a DM to hear the answer they could have had.\n- **Use their name once**, at the start, and never with an exclamation mark.\n- **Match their length.** A two-line comment does not get a six-line reply.\n- **To a critic:** concede the true part first, in their words, then hold the\n  line on the part you believe. Never delete, never get defensive, never reply\n  twice on the same thread.\n- **To a lead:** answer fully in public. The open door is one sentence at the\n  end, and it is an offer of help, not a pitch. Public value is what makes the\n  next person DM you.\n- **To a pitch in your comments:** ignore it. Replying gives it reach.\n\n## Output\n\nOne block, grouped by bucket, each reply copy-ready and already humanized:\n\n```\nREPLIES  ·  17 comments  ·  1 LEAD, 3 SUBSTANCE, 4 PEER, 8 SUPPORT, 1 NOISE\n\nLEAD\n@Sarah Chen - \"we have the same problem with proposals\"\n> The part that fixed it for us was pulling the pricing table out of the doc\n> entirely and sending it as its own page. Cut a whole review round. Happy to\n> send you the template if it is useful.\n\nSUBSTANCE\n@Marcus Webb - disagrees on cadence\n> Fair, and 4x a week only worked because I had 8 months of posts behind it.\n> From a standing start I would do what you said.\n\nSUPPORT  (like these, reply to the first three)\n@... \"This is great\" -> Thanks Dan.\n...\n\nNOISE  (1)\nSkipped: an agency pitch. Replying gives it reach.\n```\n\nThen the gate: **nothing is posted until the user says yes.** They paste the\nreplies themselves.\n"
+    },
+    {
+      "slug": "li-repurpose",
+      "name": "li-repurpose",
+      "dir": "skills/li-repurpose",
+      "path": "skills/li-repurpose/SKILL.md",
+      "desc": "Turn one long asset - a YouTube video, podcast, newsletter, blog post, transcript or client call - into a week of LinkedIn posts. Use when the user says \"repurpose this\", \"turn this into posts\", \"I have a video/newsletter/ transcript\", or pastes a long piece of content and wants it on LinkedIn.",
+      "descZh": "",
+      "triggers": [
+        "turn this into posts"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "go"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Jakeschincariol/linkedin-agent-skill.git",
+        "copy": "cp -r skills/li-repurpose ~/.claude/skills/li-repurpose",
+        "raw": "https://raw.githubusercontent.com/Jakeschincariol/linkedin-agent-skill/add2c23882fe79180737d242ff80a5da205eda6a/skills/li-repurpose/SKILL.md",
+        "saveAs": "~/.claude/skills/li-repurpose/SKILL.md",
+        "marketplace": "/plugin marketplace add Jakeschincariol/linkedin-agent-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:9524d3958f153d8be3d679a372c8cb5065e30653ed2a7bf4596e921b2baa39df",
+      "bytes": 2720,
+      "wordCount": 439,
+      "repoLicense": "MIT",
+      "commit": "add2c23882fe79180737d242ff80a5da205eda6a",
+      "branch": "main",
+      "body": "---\nname: li-repurpose\ndescription: >-\n  Turn one long asset - a YouTube video, podcast, newsletter, blog post,\n  transcript or client call - into a week of LinkedIn posts. Use when the user\n  says \"repurpose this\", \"turn this into posts\", \"I have a video/newsletter/\n  transcript\", or pastes a long piece of content and wants it on LinkedIn.\n---\n\n# li-repurpose\n\nOne good long asset contains four to six posts. Most people extract one and\nthrow the rest away.\n\n## Input\n\nA transcript, an article, a newsletter, a script, a call summary. If the user\ngives a YouTube URL and there is a transcript tool available in the session,\nuse it; otherwise ask them to paste the text. Read the whole thing before\nextracting anything.\n\n## Extract, do not summarise\n\nA summary of a video is not a post. Nobody wants the summary. Go through the\nasset and pull out the things that stand alone:\n\n| pull | what it is |\n| --- | --- |\n| **Claims** | every sentence that would start an argument |\n| **Numbers** | every figure, cost, duration, percentage |\n| **Stories** | every moment with a person, a scene and a cost |\n| **Mechanisms** | every \"the way this works is...\" explanation |\n| **Mistakes** | every admission of something that went wrong |\n| **Lines** | every sentence that is already quotable as-is |\n\nList what you found, with counts, before writing anything. If the asset yields\nfewer than four items, it is thin, and four posts squeezed out of it will be\nthin too. Say that.\n\n## Then build the week\n\nEach extract becomes one post, and each post has to stand completely on its\nown - the reader has not seen the video and never will. Never write \"as I\nmentioned in my latest video\". The post is the thing.\n\nAssign a hook formula from `li-post/hooks.json` to each, and vary them: five\nposts from one source with the same hook shape reads as a content mill.\n\nOrder them across the week so the strongest claim goes first, the story goes\nmidweek, and the mechanism post goes last, when people who liked the earlier\nones are watching for it.\n\n## Output\n\n```\nSOURCE: \"Why we killed discovery calls\" (18 min, 3,400 words)\n\nFOUND  4 claims, 6 numbers, 2 stories, 3 mechanisms, 1 mistake, 5 quotable lines\n\nWEEK\nTUE  #1  Contrarian    Discovery calls are a tax you pay for a bad website\nWED  #17 Time Anchor   We got 6 hours a week back by deleting one calendar link\nTHU  #9  Cold Open     \"Can we just hop on a quick call?\"\nFRI  #21 Direct Value  The 4-question form that replaced the call. Steal it.\n\nSay \"write Tuesday\" and I will draft it.\n```\n\nThen draft on request, one at a time, each through `/li-post` and `/li-human`.\nDo not dump four finished posts at once - they will all sound the same, and\nthe user will edit none of them.\n",
+      "bodyMd": "# li-repurpose\n\nOne good long asset contains four to six posts. Most people extract one and\nthrow the rest away.\n\n## Input\n\nA transcript, an article, a newsletter, a script, a call summary. If the user\ngives a YouTube URL and there is a transcript tool available in the session,\nuse it; otherwise ask them to paste the text. Read the whole thing before\nextracting anything.\n\n## Extract, do not summarise\n\nA summary of a video is not a post. Nobody wants the summary. Go through the\nasset and pull out the things that stand alone:\n\n| pull | what it is |\n| --- | --- |\n| **Claims** | every sentence that would start an argument |\n| **Numbers** | every figure, cost, duration, percentage |\n| **Stories** | every moment with a person, a scene and a cost |\n| **Mechanisms** | every \"the way this works is...\" explanation |\n| **Mistakes** | every admission of something that went wrong |\n| **Lines** | every sentence that is already quotable as-is |\n\nList what you found, with counts, before writing anything. If the asset yields\nfewer than four items, it is thin, and four posts squeezed out of it will be\nthin too. Say that.\n\n## Then build the week\n\nEach extract becomes one post, and each post has to stand completely on its\nown - the reader has not seen the video and never will. Never write \"as I\nmentioned in my latest video\". The post is the thing.\n\nAssign a hook formula from `li-post/hooks.json` to each, and vary them: five\nposts from one source with the same hook shape reads as a content mill.\n\nOrder them across the week so the strongest claim goes first, the story goes\nmidweek, and the mechanism post goes last, when people who liked the earlier\nones are watching for it.\n\n## Output\n\n```\nSOURCE: \"Why we killed discovery calls\" (18 min, 3,400 words)\n\nFOUND  4 claims, 6 numbers, 2 stories, 3 mechanisms, 1 mistake, 5 quotable lines\n\nWEEK\nTUE  #1  Contrarian    Discovery calls are a tax you pay for a bad website\nWED  #17 Time Anchor   We got 6 hours a week back by deleting one calendar link\nTHU  #9  Cold Open     \"Can we just hop on a quick call?\"\nFRI  #21 Direct Value  The 4-question form that replaced the call. Steal it.\n\nSay \"write Tuesday\" and I will draft it.\n```\n\nThen draft on request, one at a time, each through `/li-post` and `/li-human`.\nDo not dump four finished posts at once - they will all sound the same, and\nthe user will edit none of them.\n"
+    }
+  ]
+}

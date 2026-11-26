@@ -1,0 +1,403 @@
+{
+  "repo": "Weizhena/Deep-Research-skills",
+  "commit": "6ce38f60e3f8b22502c29873f96503a4e0c5addb",
+  "branch": "master",
+  "fetchedAt": "2026-11-26T21:13:35.643Z",
+  "parseFail": 1,
+  "skills": [
+    {
+      "slug": "research-add-fields",
+      "name": "research-add-fields",
+      "dir": "skills/research-en/research-add-fields",
+      "path": "skills/research-en/research-add-fields/SKILL.md",
+      "desc": "Add field definitions to existing research outline.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Bash, Read, Write, Glob, WebSearch, Task, AskUserQuestion"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Weizhena/Deep-Research-skills.git",
+        "copy": "cp -r skills/research-en/research-add-fields ~/.claude/skills/research-add-fields",
+        "raw": "https://raw.githubusercontent.com/Weizhena/Deep-Research-skills/6ce38f60e3f8b22502c29873f96503a4e0c5addb/skills/research-en/research-add-fields/SKILL.md",
+        "saveAs": "~/.claude/skills/research-add-fields/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:9cc30dad3a44b032fa97e5e6c93402a20ebbe29cc84da5c57cef85eeabffc57d",
+      "bytes": 952,
+      "wordCount": 112,
+      "repoLicense": "MIT",
+      "commit": "6ce38f60e3f8b22502c29873f96503a4e0c5addb",
+      "branch": "master",
+      "body": "---\nname: research-add-fields\nuser-invocable: true\ndescription: Add field definitions to existing research outline.\nallowed-tools: Bash, Read, Write, Glob, WebSearch, Task, AskUserQuestion\n---\n\n# Research Add Fields - Supplement Research Fields\n\n## Trigger\n`/research-add-fields`\n\n## Workflow\n\n### Step 1: Auto-locate Fields File\nFind `*/fields.yaml` file in current working directory, auto-read existing fields definitions.\n\n### Step 2: Get Supplement Source\nAsk user to choose:\n- **A. User direct input**: User provides field names and descriptions\n- **B. Web Search**: Launch agent to search common fields in this domain\n\n### Step 3: Display and Confirm\n- Display suggested new fields list\n- User confirms which fields to add\n- User specifies field category and detail_level\n\n### Step 4: Save Update\nAppend confirmed fields to fields.yaml, save file.\n\n## Output\nUpdated `{topic}/fields.yaml` file (in-place modification, requires user confirmation)\n",
+      "bodyMd": "# Research Add Fields - Supplement Research Fields\n\n## Trigger\n`/research-add-fields`\n\n## Workflow\n\n### Step 1: Auto-locate Fields File\nFind `*/fields.yaml` file in current working directory, auto-read existing fields definitions.\n\n### Step 2: Get Supplement Source\nAsk user to choose:\n- **A. User direct input**: User provides field names and descriptions\n- **B. Web Search**: Launch agent to search common fields in this domain\n\n### Step 3: Display and Confirm\n- Display suggested new fields list\n- User confirms which fields to add\n- User specifies field category and detail_level\n\n### Step 4: Save Update\nAppend confirmed fields to fields.yaml, save file.\n\n## Output\nUpdated `{topic}/fields.yaml` file (in-place modification, requires user confirmation)\n"
+    },
+    {
+      "slug": "research-add-items",
+      "name": "research-add-items",
+      "dir": "skills/research-en/research-add-items",
+      "path": "skills/research-en/research-add-items/SKILL.md",
+      "desc": "Add items (research objects) to existing research outline.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Bash, Read, Write, Glob, WebSearch, Task, AskUserQuestion"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Weizhena/Deep-Research-skills.git",
+        "copy": "cp -r skills/research-en/research-add-items ~/.claude/skills/research-add-items",
+        "raw": "https://raw.githubusercontent.com/Weizhena/Deep-Research-skills/6ce38f60e3f8b22502c29873f96503a4e0c5addb/skills/research-en/research-add-items/SKILL.md",
+        "saveAs": "~/.claude/skills/research-add-items/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:33f5cac1109639517e7344d6d3e550e884463a76f4b1182435feb72e935c12ec",
+      "bytes": 815,
+      "wordCount": 92,
+      "repoLicense": "MIT",
+      "commit": "6ce38f60e3f8b22502c29873f96503a4e0c5addb",
+      "branch": "master",
+      "body": "---\nname: research-add-items\nuser-invocable: true\ndescription: Add items (research objects) to existing research outline.\nallowed-tools: Bash, Read, Write, Glob, WebSearch, Task, AskUserQuestion\n---\n\n# Research Add Items - Supplement Research Objects\n\n## Trigger\n`/research-add-items`\n\n## Workflow\n\n### Step 1: Auto-locate Outline\nFind `*/outline.yaml` file in current working directory, auto-read.\n\n### Step 2: Get Supplement Sources in Parallel\nSimultaneously:\n- **A. Ask user**: What items to supplement? Any specific names?\n- **B. Ask if Web Search needed**: Launch agent to search for more items?\n\n### Step 3: Merge and Update\n- Append new items to outline.yaml\n- Display to user for confirmation\n- Avoid duplicates\n- Save updated outline\n\n## Output\nUpdated `{topic}/outline.yaml` file (in-place modification)\n",
+      "bodyMd": "# Research Add Items - Supplement Research Objects\n\n## Trigger\n`/research-add-items`\n\n## Workflow\n\n### Step 1: Auto-locate Outline\nFind `*/outline.yaml` file in current working directory, auto-read.\n\n### Step 2: Get Supplement Sources in Parallel\nSimultaneously:\n- **A. Ask user**: What items to supplement? Any specific names?\n- **B. Ask if Web Search needed**: Launch agent to search for more items?\n\n### Step 3: Merge and Update\n- Append new items to outline.yaml\n- Display to user for confirmation\n- Avoid duplicates\n- Save updated outline\n\n## Output\nUpdated `{topic}/outline.yaml` file (in-place modification)\n"
+    },
+    {
+      "slug": "research-deep",
+      "name": "research-deep",
+      "dir": "skills/research-en/research-deep",
+      "path": "skills/research-en/research-deep/SKILL.md",
+      "desc": "Read research outline, launch independent agent for each item for deep research. Disable task output.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Bash, Read, Write, Glob, WebSearch, Task"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Weizhena/Deep-Research-skills.git",
+        "copy": "cp -r skills/research-en/research-deep ~/.claude/skills/research-deep",
+        "raw": "https://raw.githubusercontent.com/Weizhena/Deep-Research-skills/6ce38f60e3f8b22502c29873f96503a4e0c5addb/skills/research-en/research-deep/SKILL.md",
+        "saveAs": "~/.claude/skills/research-deep/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:3e92af0db9b230c3a57bd9d0c86023ce6c43d34a86a9bcdea56f3c7bafb0e374",
+      "bytes": 3397,
+      "wordCount": 423,
+      "repoLicense": "MIT",
+      "commit": "6ce38f60e3f8b22502c29873f96503a4e0c5addb",
+      "branch": "master",
+      "body": "---\nname: research-deep\nuser-invocable: true\ndescription: Read research outline, launch independent agent for each item for deep research. Disable task output.\nallowed-tools: Bash, Read, Write, Glob, WebSearch, Task\n---\n\n# Research Deep - Deep Research\n\n## Trigger\n`/research-deep`\n\n## Workflow\n\n### Step 1: Auto-locate Outline\nFind `*/outline.yaml` file in current working directory, read items list, execution config (including items_per_agent).\n\n### Step 2: Resume Check\n- Check completed JSON files in output_dir\n- Skip completed items\n\n### Step 3: Batch Execution\n- Batch by batch_size (need user approval before next batch)\n- Each agent handles items_per_agent items\n- Launch web-search-agent (background parallel, disable task output)\n\n**Parameter Retrieval**:\n- `{topic}`: topic field from outline.yaml\n- `{item_name}`: item's name field\n- `{item_related_info}`: item's complete yaml content (name + category + description etc.)\n- `{output_dir}`: execution.output_dir from outline.yaml (default: ./results)\n- `{fields_path}`: absolute path to {topic}/fields.yaml\n- `{output_path}`: absolute path to {output_dir}/{item_name_slug}.json (slugify item_name: replace spaces with _, remove special chars)\n\n**Hard Constraint**: The following prompt must be strictly reproduced, only replacing variables in {xxx}, do not modify structure or wording.\n\n**Prompt Template**:\n```python\nprompt = f\"\"\"## Task\nResearch {item_related_info}, output structured JSON to {output_path}\n\n## Field Definitions\nRead {fields_path} to get all field definitions\n\n## Output Requirements\n1. Output JSON according to fields defined in fields.yaml\n2. Mark uncertain field values with [uncertain]\n3. Add uncertain array at the end of JSON, listing all uncertain field names\n4. All field values must be in English\n\n## Output Path\n{output_path}\n\n## Validation\nAfter completing JSON output, run validation script to ensure complete field coverage:\npython ~/.claude/skills/research/validate_json.py -f {fields_path} -j {output_path}\nTask is complete only after validation passes.\n\"\"\"\n```\n\n**One-shot Example** (assuming researching GitHub Copilot):\n```\n## Task\nResearch name: GitHub Copilot\ncategory: International Product\ndescription: Developed by Microsoft/GitHub, first mainstream AI coding assistant, ~40% market share, output structured JSON to {project_dir}/results/GitHub_Copilot.json\n\n## Field Definitions\nRead {project_dir}/fields.yaml to get all field definitions\n\n## Output Requirements\n1. Output JSON according to fields defined in fields.yaml\n2. Mark uncertain field values with [uncertain]\n3. Add uncertain array at the end of JSON, listing all uncertain field names\n4. All field values must be in English\n\n## Output Path\n{project_dir}/results/GitHub_Copilot.json\n\n## Validation\nAfter completing JSON output, run validation script to ensure complete field coverage:\npython ~/.claude/skills/research/validate_json.py -f {project_dir}/fields.yaml -j {project_dir}/results/GitHub_Copilot.json\nTask is complete only after validation passes.\n```\n\n### Step 4: Wait and Monitor\n- Wait for current batch to complete\n- Launch next batch\n- Display progress\n\n### Step 5: Summary Report\nAfter all complete, output:\n- Completion count\n- Failed/uncertain marked items\n- Output directory\n\n## Agent Config\n- Background execution: Yes\n- Task Output: Disabled (agent has explicit output file when complete)\n- Resume support: Yes\n",
+      "bodyMd": "# Research Deep - Deep Research\n\n## Trigger\n`/research-deep`\n\n## Workflow\n\n### Step 1: Auto-locate Outline\nFind `*/outline.yaml` file in current working directory, read items list, execution config (including items_per_agent).\n\n### Step 2: Resume Check\n- Check completed JSON files in output_dir\n- Skip completed items\n\n### Step 3: Batch Execution\n- Batch by batch_size (need user approval before next batch)\n- Each agent handles items_per_agent items\n- Launch web-search-agent (background parallel, disable task output)\n\n**Parameter Retrieval**:\n- `{topic}`: topic field from outline.yaml\n- `{item_name}`: item's name field\n- `{item_related_info}`: item's complete yaml content (name + category + description etc.)\n- `{output_dir}`: execution.output_dir from outline.yaml (default: ./results)\n- `{fields_path}`: absolute path to {topic}/fields.yaml\n- `{output_path}`: absolute path to {output_dir}/{item_name_slug}.json (slugify item_name: replace spaces with _, remove special chars)\n\n**Hard Constraint**: The following prompt must be strictly reproduced, only replacing variables in {xxx}, do not modify structure or wording.\n\n**Prompt Template**:\n```python\nprompt = f\"\"\"## Task\nResearch {item_related_info}, output structured JSON to {output_path}\n\n## Field Definitions\nRead {fields_path} to get all field definitions\n\n## Output Requirements\n1. Output JSON according to fields defined in fields.yaml\n2. Mark uncertain field values with [uncertain]\n3. Add uncertain array at the end of JSON, listing all uncertain field names\n4. All field values must be in English\n\n## Output Path\n{output_path}\n\n## Validation\nAfter completing JSON output, run validation script to ensure complete field coverage:\npython ~/.claude/skills/research/validate_json.py -f {fields_path} -j {output_path}\nTask is complete only after validation passes.\n\"\"\"\n```\n\n**One-shot Example** (assuming researching GitHub Copilot):\n```\n## Task\nResearch name: GitHub Copilot\ncategory: International Product\ndescription: Developed by Microsoft/GitHub, first mainstream AI coding assistant, ~40% market share, output structured JSON to {project_dir}/results/GitHub_Copilot.json\n\n## Field Definitions\nRead {project_dir}/fields.yaml to get all field definitions\n\n## Output Requirements\n1. Output JSON according to fields defined in fields.yaml\n2. Mark uncertain field values with [uncertain]\n3. Add uncertain array at the end of JSON, listing all uncertain field names\n4. All field values must be in English\n\n## Output Path\n{project_dir}/results/GitHub_Copilot.json\n\n## Validation\nAfter completing JSON output, run validation script to ensure complete field coverage:\npython ~/.claude/skills/research/validate_json.py -f {project_dir}/fields.yaml -j {project_dir}/results/GitHub_Copilot.json\nTask is complete only after validation passes.\n```\n\n### Step 4: Wait and Monitor\n- Wait for current batch to complete\n- Launch next batch\n- Display progress\n\n### Step 5: Summary Report\nAfter all complete, output:\n- Completion count\n- Failed/uncertain marked items\n- Output directory\n\n## Agent Config\n- Background execution: Yes\n- Task Output: Disabled (agent has explicit output file when complete)\n- Resume support: Yes\n"
+    },
+    {
+      "slug": "research-report",
+      "name": "research-report",
+      "dir": "skills/research-en/research-report",
+      "path": "skills/research-en/research-report/SKILL.md",
+      "desc": "Summarize deep research results into markdown report, cover all fields, skip uncertain values.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Read, Write, Glob, Bash, AskUserQuestion"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Weizhena/Deep-Research-skills.git",
+        "copy": "cp -r skills/research-en/research-report ~/.claude/skills/research-report",
+        "raw": "https://raw.githubusercontent.com/Weizhena/Deep-Research-skills/6ce38f60e3f8b22502c29873f96503a4e0c5addb/skills/research-en/research-report/SKILL.md",
+        "saveAs": "~/.claude/skills/research-report/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:f61d0aecb89aaccf27fc4705e1f711c0dc03313309425a2935e0569dc2820c50",
+      "bytes": 3850,
+      "wordCount": 480,
+      "repoLicense": "MIT",
+      "commit": "6ce38f60e3f8b22502c29873f96503a4e0c5addb",
+      "branch": "master",
+      "body": "---\nname: research-report\nuser-invocable: true\ndescription: Summarize deep research results into markdown report, cover all fields, skip uncertain values.\nallowed-tools: Read, Write, Glob, Bash, AskUserQuestion\n---\n\n# Research Report - Summary Report\n\n## Trigger\n`/research-report`\n\n## Workflow\n\n### Step 1: Locate Results Directory\nFind `*/outline.yaml` in current working directory, read topic and output_dir config.\n\n### Step 2: Scan Optional Summary Fields\nRead all JSON results, extract fields suitable for TOC display (numeric, short metrics), e.g.:\n- github_stars\n- google_scholar_cites\n- swe_bench_score\n- user_scale\n- valuation\n- release_date\n\nUse AskUserQuestion to ask user:\n- Which fields to display in TOC besides item name?\n- Provide dynamic options list (based on actual fields in JSON)\n\n### Step 3: Generate Python Conversion Script\nGenerate `generate_report.py` in `{topic}/` directory, script requirements:\n- Read all JSON from output_dir\n- Read fields.yaml to get field structure\n- Cover all field values from each JSON\n- Skip fields with values containing [uncertain]\n- Skip fields listed in uncertain array\n- Generate markdown report format: Table of contents (with anchor links + user-selected summary fields) + Detailed content (by field category)\n- Save to `{topic}/report.md`\n\n**TOC Format Requirements**:\n- Must include every item\n- Each item displays: number, name (anchor link), user-selected summary fields\n- Example: `1. [GitHub Copilot](#github-copilot) - Stars: 10k | Score: 85%`\n\n#### Script Technical Requirements (Must Follow)\n\n**1. JSON Structure Compatibility**\nSupport two JSON structures:\n- Flat structure: Fields directly at top level `{\"name\": \"xxx\", \"release_date\": \"xxx\"}`\n- Nested structure: Fields in category sub-dict `{\"basic_info\": {\"name\": \"xxx\"}, \"technical_features\": {...}}`\n\nField lookup order: Top level -> category mapping key -> Traverse all nested dicts\n\n**2. Category Multi-language Mapping**\nfields.yaml category names and JSON keys can be any combination (CN-CN, CN-EN, EN-CN, EN-EN). Must establish bidirectional mapping:\n```python\nCATEGORY_MAPPING = {\n    \"Basic Info\": [\"basic_info\", \"Basic Info\"],\n    \"Technical Features\": [\"technical_features\", \"technical_characteristics\", \"Technical Features\"],\n    \"Performance Metrics\": [\"performance_metrics\", \"performance\", \"Performance Metrics\"],\n    \"Milestone Significance\": [\"milestone_significance\", \"milestones\", \"Milestone Significance\"],\n    \"Business Info\": [\"business_info\", \"commercial_info\", \"Business Info\"],\n    \"Competition & Ecosystem\": [\"competition_ecosystem\", \"competition\", \"Competition & Ecosystem\"],\n    \"History\": [\"history\", \"History\"],\n    \"Market Positioning\": [\"market_positioning\", \"market\", \"Market Positioning\"],\n}\n```\n\n**3. Complex Value Formatting**\n- list of dicts (e.g., key_events, funding_history): Format each dict as one line, separate kv with ` | `\n- Normal list: Short lists joined with comma, long lists displayed with line breaks\n- Nested dict: Recursive formatting, display with semicolon or line breaks\n- Long text strings (over 100 chars): Add line breaks `<br>` or use blockquote format for readability\n\n**4. Extra Fields Collection**\nCollect fields that exist in JSON but not defined in fields.yaml, put in \"Other Info\" category. Note to filter:\n- Internal fields: `_source_file`, `uncertain`\n- Nested structure top-level keys: `basic_info`, `technical_features` etc.\n- `uncertain` array: Display each field name on separate line, don't compress into one line\n\n**5. Uncertain Value Skipping**\nSkip conditions:\n- Field value contains `[uncertain]` string\n- Field name is in `uncertain` array\n- Field value is None or empty string\n\n### Step 4: Execute Script\nRun `python {topic}/generate_report.py`\n\n## Output\n- `{topic}/generate_report.py` - Conversion script\n- `{topic}/report.md` - Summary report\n",
+      "bodyMd": "# Research Report - Summary Report\n\n## Trigger\n`/research-report`\n\n## Workflow\n\n### Step 1: Locate Results Directory\nFind `*/outline.yaml` in current working directory, read topic and output_dir config.\n\n### Step 2: Scan Optional Summary Fields\nRead all JSON results, extract fields suitable for TOC display (numeric, short metrics), e.g.:\n- github_stars\n- google_scholar_cites\n- swe_bench_score\n- user_scale\n- valuation\n- release_date\n\nUse AskUserQuestion to ask user:\n- Which fields to display in TOC besides item name?\n- Provide dynamic options list (based on actual fields in JSON)\n\n### Step 3: Generate Python Conversion Script\nGenerate `generate_report.py` in `{topic}/` directory, script requirements:\n- Read all JSON from output_dir\n- Read fields.yaml to get field structure\n- Cover all field values from each JSON\n- Skip fields with values containing [uncertain]\n- Skip fields listed in uncertain array\n- Generate markdown report format: Table of contents (with anchor links + user-selected summary fields) + Detailed content (by field category)\n- Save to `{topic}/report.md`\n\n**TOC Format Requirements**:\n- Must include every item\n- Each item displays: number, name (anchor link), user-selected summary fields\n- Example: `1. [GitHub Copilot](#github-copilot) - Stars: 10k | Score: 85%`\n\n#### Script Technical Requirements (Must Follow)\n\n**1. JSON Structure Compatibility**\nSupport two JSON structures:\n- Flat structure: Fields directly at top level `{\"name\": \"xxx\", \"release_date\": \"xxx\"}`\n- Nested structure: Fields in category sub-dict `{\"basic_info\": {\"name\": \"xxx\"}, \"technical_features\": {...}}`\n\nField lookup order: Top level -> category mapping key -> Traverse all nested dicts\n\n**2. Category Multi-language Mapping**\nfields.yaml category names and JSON keys can be any combination (CN-CN, CN-EN, EN-CN, EN-EN). Must establish bidirectional mapping:\n```python\nCATEGORY_MAPPING = {\n    \"Basic Info\": [\"basic_info\", \"Basic Info\"],\n    \"Technical Features\": [\"technical_features\", \"technical_characteristics\", \"Technical Features\"],\n    \"Performance Metrics\": [\"performance_metrics\", \"performance\", \"Performance Metrics\"],\n    \"Milestone Significance\": [\"milestone_significance\", \"milestones\", \"Milestone Significance\"],\n    \"Business Info\": [\"business_info\", \"commercial_info\", \"Business Info\"],\n    \"Competition & Ecosystem\": [\"competition_ecosystem\", \"competition\", \"Competition & Ecosystem\"],\n    \"History\": [\"history\", \"History\"],\n    \"Market Positioning\": [\"market_positioning\", \"market\", \"Market Positioning\"],\n}\n```\n\n**3. Complex Value Formatting**\n- list of dicts (e.g., key_events, funding_history): Format each dict as one line, separate kv with ` | `\n- Normal list: Short lists joined with comma, long lists displayed with line breaks\n- Nested dict: Recursive formatting, display with semicolon or line breaks\n- Long text strings (over 100 chars): Add line breaks `<br>` or use blockquote format for readability\n\n**4. Extra Fields Collection**\nCollect fields that exist in JSON but not defined in fields.yaml, put in \"Other Info\" category. Note to filter:\n- Internal fields: `_source_file`, `uncertain`\n- Nested structure top-level keys: `basic_info`, `technical_features` etc.\n- `uncertain` array: Display each field name on separate line, don't compress into one line\n\n**5. Uncertain Value Skipping**\nSkip conditions:\n- Field value contains `[uncertain]` string\n- Field name is in `uncertain` array\n- Field value is None or empty string\n\n### Step 4: Execute Script\nRun `python {topic}/generate_report.py`\n\n## Output\n- `{topic}/generate_report.py` - Conversion script\n- `{topic}/report.md` - Summary report\n"
+    },
+    {
+      "slug": "research",
+      "name": "research",
+      "dir": "skills/research-en/research",
+      "path": "skills/research-en/research/SKILL.md",
+      "desc": "Conduct preliminary research on a topic and generate research outline. For academic research, benchmark research, technology selection, etc.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Read, Write, Glob, WebSearch, Task, AskUserQuestion"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Weizhena/Deep-Research-skills.git",
+        "copy": "cp -r skills/research-en/research ~/.claude/skills/research",
+        "raw": "https://raw.githubusercontent.com/Weizhena/Deep-Research-skills/6ce38f60e3f8b22502c29873f96503a4e0c5addb/skills/research-en/research/SKILL.md",
+        "saveAs": "~/.claude/skills/research/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:1781a0788da0d95a910ce125d4542f1e3cc844934f533ef82444fac1c3b0e563",
+      "bytes": 4348,
+      "wordCount": 562,
+      "repoLicense": "MIT",
+      "commit": "6ce38f60e3f8b22502c29873f96503a4e0c5addb",
+      "branch": "master",
+      "body": "---\nname: research\nuser-invocable: true\nallowed-tools: Read, Write, Glob, WebSearch, Task, AskUserQuestion\ndescription: Conduct preliminary research on a topic and generate research outline. For academic research, benchmark research, technology selection, etc.\n---\n\n# Research Skill - Preliminary Research\n\n## Trigger\n`/research <topic>`\n\n## Workflow\n\n### Step 1: Generate Initial Framework from Model Knowledge\nBased on topic, use model's existing knowledge to generate:\n- Main research objects/items list in this domain\n- Suggested research field framework\n\nOutput {step1_output}, use AskUserQuestion to confirm:\n- Need to add/remove items?\n- Does field framework meet requirements?\n\n### Step 2: Web Search Supplement\nUse AskUserQuestion to ask for time range (e.g., last 6 months, since 2024, unlimited).\n\n**Parameter Retrieval**:\n- `{topic}`: User input research topic\n- `{YYYY-MM-DD}`: Current date\n- `{step1_output}`: Complete output from Step 1\n- `{time_range}`: User specified time range\n\n**Hard Constraint**: The following prompt must be strictly reproduced, only replacing variables in {xxx}, do not modify structure or wording.\n\nLaunch 1 web-search-agent (background), **Prompt Template**:\n```python\nprompt = f\"\"\"## Task\nResearch topic: {topic}\nCurrent date: {YYYY-MM-DD}\n\nBased on the following initial framework, supplement latest items and recommended research fields.\n\n## Existing Framework\n{step1_output}\n\n## Goals\n1. Verify if existing items are missing important objects\n2. Supplement items based on missing objects\n3. Continue searching for {topic} related items within {time_range} and supplement\n4. Supplement new fields\n\n## Output Requirements\nReturn structured results directly (do not write files):\n\n### Supplementary Items\n- item_name: Brief explanation (why it should be added)\n...\n\n### Recommended Supplementary Fields\n- field_name: Field description (why this dimension is needed)\n...\n\n### Sources\n- [Source1](url1)\n- [Source2](url2)\n\"\"\"\n```\n\n**One-shot Example** (assuming researching AI Coding History):\n```\n## Task\nResearch topic: AI Coding History\nCurrent date: 2025-12-30\n\nBased on the following initial framework, supplement latest items and recommended research fields.\n\n## Existing Framework\n### Items List\n1. GitHub Copilot: Developed by Microsoft/GitHub, first mainstream AI coding assistant\n2. Cursor: AI-first IDE, based on VSCode\n...\n\n### Field Framework\n- Basic Info: name, release_date, company\n- Technical Features: underlying_model, context_window\n...\n\n## Goals\n1. Verify if existing items are missing important objects\n2. Supplement items based on missing objects\n3. Continue searching for AI Coding History related items within since 2024 and supplement\n4. Supplement new fields\n\n## Output Requirements\nReturn structured results directly (do not write files):\n\n### Supplementary Items\n- item_name: Brief explanation (why it should be added)\n...\n\n### Recommended Supplementary Fields\n- field_name: Field description (why this dimension is needed)\n...\n\n### Sources\n- [Source1](url1)\n- [Source2](url2)\n```\n\n### Step 3: Ask User for Existing Fields\nUse AskUserQuestion to ask if user has existing field definition file, if so read and merge.\n\n### Step 4: Generate Outline (Separate Files)\nMerge {step1_output}, {step2_output} and user's existing fields, generate two files:\n\n**outline.yaml** (items + config):\n- topic: Research topic\n- items: Research objects list\n- execution:\n  - batch_size: Number of parallel agents (confirm with AskUserQuestion)\n  - items_per_agent: Items per agent (confirm with AskUserQuestion)\n  - output_dir: Results output directory (default: ./results)\n\n**fields.yaml** (field definitions):\n- Field categories and definitions\n- Each field's name, description, detail_level\n- detail_level hierarchy: brief -> moderate -> detailed\n- uncertain: Uncertain fields list (reserved field, auto-filled in deep phase)\n\n### Step 5: Output and Confirm\n- Create directory: `./{topic_slug}/`\n- Save: `outline.yaml` and `fields.yaml`\n- Show to user for confirmation\n\n## Output Path\n```\n{current_working_directory}/{topic_slug}/\n  ├── outline.yaml    # items list + execution config\n  └── fields.yaml     # field definitions\n```\n\n## Follow-up Commands\n- `/research-add-items` - Supplement items\n- `/research-add-fields` - Supplement fields\n- `/research-deep` - Start deep research\n",
+      "bodyMd": "# Research Skill - Preliminary Research\n\n## Trigger\n`/research <topic>`\n\n## Workflow\n\n### Step 1: Generate Initial Framework from Model Knowledge\nBased on topic, use model's existing knowledge to generate:\n- Main research objects/items list in this domain\n- Suggested research field framework\n\nOutput {step1_output}, use AskUserQuestion to confirm:\n- Need to add/remove items?\n- Does field framework meet requirements?\n\n### Step 2: Web Search Supplement\nUse AskUserQuestion to ask for time range (e.g., last 6 months, since 2024, unlimited).\n\n**Parameter Retrieval**:\n- `{topic}`: User input research topic\n- `{YYYY-MM-DD}`: Current date\n- `{step1_output}`: Complete output from Step 1\n- `{time_range}`: User specified time range\n\n**Hard Constraint**: The following prompt must be strictly reproduced, only replacing variables in {xxx}, do not modify structure or wording.\n\nLaunch 1 web-search-agent (background), **Prompt Template**:\n```python\nprompt = f\"\"\"## Task\nResearch topic: {topic}\nCurrent date: {YYYY-MM-DD}\n\nBased on the following initial framework, supplement latest items and recommended research fields.\n\n## Existing Framework\n{step1_output}\n\n## Goals\n1. Verify if existing items are missing important objects\n2. Supplement items based on missing objects\n3. Continue searching for {topic} related items within {time_range} and supplement\n4. Supplement new fields\n\n## Output Requirements\nReturn structured results directly (do not write files):\n\n### Supplementary Items\n- item_name: Brief explanation (why it should be added)\n...\n\n### Recommended Supplementary Fields\n- field_name: Field description (why this dimension is needed)\n...\n\n### Sources\n- [Source1](url1)\n- [Source2](url2)\n\"\"\"\n```\n\n**One-shot Example** (assuming researching AI Coding History):\n```\n## Task\nResearch topic: AI Coding History\nCurrent date: 2025-12-30\n\nBased on the following initial framework, supplement latest items and recommended research fields.\n\n## Existing Framework\n### Items List\n1. GitHub Copilot: Developed by Microsoft/GitHub, first mainstream AI coding assistant\n2. Cursor: AI-first IDE, based on VSCode\n...\n\n### Field Framework\n- Basic Info: name, release_date, company\n- Technical Features: underlying_model, context_window\n...\n\n## Goals\n1. Verify if existing items are missing important objects\n2. Supplement items based on missing objects\n3. Continue searching for AI Coding History related items within since 2024 and supplement\n4. Supplement new fields\n\n## Output Requirements\nReturn structured results directly (do not write files):\n\n### Supplementary Items\n- item_name: Brief explanation (why it should be added)\n...\n\n### Recommended Supplementary Fields\n- field_name: Field description (why this dimension is needed)\n...\n\n### Sources\n- [Source1](url1)\n- [Source2](url2)\n```\n\n### Step 3: Ask User for Existing Fields\nUse AskUserQuestion to ask if user has existing field definition file, if so read and merge.\n\n### Step 4: Generate Outline (Separate Files)\nMerge {step1_output}, {step2_output} and user's existing fields, generate two files:\n\n**outline.yaml** (items + config):\n- topic: Research topic\n- items: Research objects list\n- execution:\n  - batch_size: Number of parallel agents (confirm with AskUserQuestion)\n  - items_per_agent: Items per agent (confirm with AskUserQuestion)\n  - output_dir: Results output directory (default: ./results)\n\n**fields.yaml** (field definitions):\n- Field categories and definitions\n- Each field's name, description, detail_level\n- detail_level hierarchy: brief -> moderate -> detailed\n- uncertain: Uncertain fields list (reserved field, auto-filled in deep phase)\n\n### Step 5: Output and Confirm\n- Create directory: `./{topic_slug}/`\n- Save: `outline.yaml` and `fields.yaml`\n- Show to user for confirmation\n\n## Output Path\n```\n{current_working_directory}/{topic_slug}/\n  ├── outline.yaml    # items list + execution config\n  └── fields.yaml     # field definitions\n```\n\n## Follow-up Commands\n- `/research-add-items` - Supplement items\n- `/research-add-fields` - Supplement fields\n- `/research-deep` - Start deep research\n"
+    },
+    {
+      "slug": "research-add-items-2",
+      "name": "research-add-items",
+      "dir": "skills/research-zh/research-add-items",
+      "path": "skills/research-zh/research-add-items/SKILL.md",
+      "desc": "向现有调研outline补充items（调研对象）。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Bash, Read, Write, Glob, WebSearch, Task, AskUserQuestion"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Weizhena/Deep-Research-skills.git",
+        "copy": "cp -r skills/research-zh/research-add-items ~/.claude/skills/research-add-items-2",
+        "raw": "https://raw.githubusercontent.com/Weizhena/Deep-Research-skills/6ce38f60e3f8b22502c29873f96503a4e0c5addb/skills/research-zh/research-add-items/SKILL.md",
+        "saveAs": "~/.claude/skills/research-add-items-2/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:088b9c4d94c4a79d9abb0acf9aa49187e190f9a8a21ba012379d9f75d0a034b8",
+      "bytes": 801,
+      "wordCount": 47,
+      "repoLicense": "MIT",
+      "commit": "6ce38f60e3f8b22502c29873f96503a4e0c5addb",
+      "branch": "master",
+      "body": "---\nname: research-add-items\nuser-invocable: true\ndescription: 向现有调研outline补充items（调研对象）。\nallowed-tools: Bash, Read, Write, Glob, WebSearch, Task, AskUserQuestion\n---\n\n# Research Add Items - 补充调研对象\n\n## 触发方式\n`/research-add-items`\n\n## 执行流程\n\n### Step 1: 自动定位Outline\n在当前工作目录查找 `*/outline.yaml` 文件，自动读取。\n\n### Step 2: 并行获取补充来源\n同时进行：\n- **A. 询问用户**：需要补充哪些items？有具体名称吗？\n- **B. 询问是否需要Web Search**：是否启动agent搜索更多items？\n\n### Step 3: 合并更新\n- 将新items追加到outline.yaml\n- 展示给用户确认\n- 避免重复\n- 保存更新后的outline\n\n## 输出\n更新后的 `{topic}/outline.yaml` 文件（原地修改）\n",
+      "bodyMd": "# Research Add Items - 补充调研对象\n\n## 触发方式\n`/research-add-items`\n\n## 执行流程\n\n### Step 1: 自动定位Outline\n在当前工作目录查找 `*/outline.yaml` 文件，自动读取。\n\n### Step 2: 并行获取补充来源\n同时进行：\n- **A. 询问用户**：需要补充哪些items？有具体名称吗？\n- **B. 询问是否需要Web Search**：是否启动agent搜索更多items？\n\n### Step 3: 合并更新\n- 将新items追加到outline.yaml\n- 展示给用户确认\n- 避免重复\n- 保存更新后的outline\n\n## 输出\n更新后的 `{topic}/outline.yaml` 文件（原地修改）\n"
+    },
+    {
+      "slug": "research-deep-2",
+      "name": "research-deep",
+      "dir": "skills/research-zh/research-deep",
+      "path": "skills/research-zh/research-deep/SKILL.md",
+      "desc": "读取调研outline，为每个item启动独立agent进行深度调研。禁用task output。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Bash, Read, Write, Glob, WebSearch, Task"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Weizhena/Deep-Research-skills.git",
+        "copy": "cp -r skills/research-zh/research-deep ~/.claude/skills/research-deep-2",
+        "raw": "https://raw.githubusercontent.com/Weizhena/Deep-Research-skills/6ce38f60e3f8b22502c29873f96503a4e0c5addb/skills/research-zh/research-deep/SKILL.md",
+        "saveAs": "~/.claude/skills/research-deep-2/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:cb28e379f797e55592f314d6cc37d1855c18fa34136bf451a3bf2a769f71379a",
+      "bytes": 3270,
+      "wordCount": 175,
+      "repoLicense": "MIT",
+      "commit": "6ce38f60e3f8b22502c29873f96503a4e0c5addb",
+      "branch": "master",
+      "body": "---\nname: research-deep\nuser-invocable: true\ndescription: 读取调研outline，为每个item启动独立agent进行深度调研。禁用task output。\nallowed-tools: Bash, Read, Write, Glob, WebSearch, Task\n---\n\n# Research Deep - 深度调研\n\n## 触发方式\n`/research-deep`\n\n## 执行流程\n\n### Step 1: 自动定位Outline\n在当前工作目录查找 `*/outline.yaml` 文件，读取items列表、execution配置（含items_per_agent）。\n\n### Step 2: 断点续传检查\n- 检查output_dir下已完成的JSON文件\n- 跳过已完成的items\n\n### Step 3: 分批执行\n- 按batch_size分批（完成一批需要得到用户同意才可进行下一批）\n- 每个agent负责items_per_agent个项目\n- 启动web-search-agent（后台并行，禁用task output）\n\n**参数获取**：\n- `{topic}`: outline.yaml中的topic字段\n- `{item_name}`: item的name字段\n- `{item_related_info}`: item的完整yaml内容（name + category + description等）\n- `{output_dir}`: outline.yaml中execution.output_dir（默认./results）\n- `{fields_path}`: {topic}/fields.yaml的绝对路径\n- `{output_path}`: {output_dir}/{item_name_slug}.json的绝对路径（slugify处理item_name：空格替换为_，移除特殊字符）\n\n**硬约束**：以下prompt必须严格复述，仅替换{xxx}中的变量，禁止改写结构或措辞。\n\n**Prompt模板**：\n```python\nprompt = f\"\"\"## 任务\n调研 {item_related_info}，输出结构化JSON到 {output_path}\n\n## 字段定义\n读取 {fields_path} 获取所有字段定义\n\n## 输出要求\n1. 按fields.yaml定义的字段输出JSON\n2. 不确定的字段值标注[不确定]\n3. JSON末尾添加uncertain数组，列出所有不确定的字段名\n4. 所有字段值必须使用中文输出（调研过程可用英文，但最终JSON值为中文）\n\n## 输出路径\n{output_path}\n\n## 验证\n完成JSON输出后，运行验证脚本确保字段完整覆盖：\npython ~/.claude/skills/research/validate_json.py -f {fields_path} -j {output_path}\n验证通过后才算完成任务。\n\"\"\"\n```\n\n**One-shot示例**（假设调研GitHub Copilot）：\n```\n## 任务\n调研 name: GitHub Copilot\ncategory: 国际产品\ndescription: Microsoft/GitHub开发，首个主流AI编程助手，市场份额约40%，输出结构化JSON到 {project_dir}/results/GitHub_Copilot.json\n\n## 字段定义\n读取 {project_dir}/fields.yaml 获取所有字段定义\n\n## 输出要求\n1. 按fields.yaml定义的字段输出JSON\n2. 不确定的字段值标注[不确定]\n3. JSON末尾添加uncertain数组，列出所有不确定的字段名\n4. 所有字段值必须使用中文输出（调研过程可用英文，但最终JSON值为中文）\n\n## 输出路径\n{project_dir}/results/GitHub_Copilot.json\n\n## 验证\n完成JSON输出后，运行验证脚本确保字段完整覆盖：\npython ~/.claude/skills/research/validate_json.py -f {project_dir}/fields.yaml -j {project_dir}/results/GitHub_Copilot.json\n验证通过后才算完成任务。\n```\n\n### Step 4: 等待与监控\n- 等待当前批次完成\n- 启动下一批\n- 显示进度\n\n### Step 5: 汇总报告\n全部完成后输出：\n- 完成数量\n- 失败/不确定标记的items\n- 输出目录\n\n## Agent配置\n- 后台执行: 是\n- Task Output: 禁用（agent完成时有明确输出文件）\n- 断点续传: 是\n",
+      "bodyMd": "# Research Deep - 深度调研\n\n## 触发方式\n`/research-deep`\n\n## 执行流程\n\n### Step 1: 自动定位Outline\n在当前工作目录查找 `*/outline.yaml` 文件，读取items列表、execution配置（含items_per_agent）。\n\n### Step 2: 断点续传检查\n- 检查output_dir下已完成的JSON文件\n- 跳过已完成的items\n\n### Step 3: 分批执行\n- 按batch_size分批（完成一批需要得到用户同意才可进行下一批）\n- 每个agent负责items_per_agent个项目\n- 启动web-search-agent（后台并行，禁用task output）\n\n**参数获取**：\n- `{topic}`: outline.yaml中的topic字段\n- `{item_name}`: item的name字段\n- `{item_related_info}`: item的完整yaml内容（name + category + description等）\n- `{output_dir}`: outline.yaml中execution.output_dir（默认./results）\n- `{fields_path}`: {topic}/fields.yaml的绝对路径\n- `{output_path}`: {output_dir}/{item_name_slug}.json的绝对路径（slugify处理item_name：空格替换为_，移除特殊字符）\n\n**硬约束**：以下prompt必须严格复述，仅替换{xxx}中的变量，禁止改写结构或措辞。\n\n**Prompt模板**：\n```python\nprompt = f\"\"\"## 任务\n调研 {item_related_info}，输出结构化JSON到 {output_path}\n\n## 字段定义\n读取 {fields_path} 获取所有字段定义\n\n## 输出要求\n1. 按fields.yaml定义的字段输出JSON\n2. 不确定的字段值标注[不确定]\n3. JSON末尾添加uncertain数组，列出所有不确定的字段名\n4. 所有字段值必须使用中文输出（调研过程可用英文，但最终JSON值为中文）\n\n## 输出路径\n{output_path}\n\n## 验证\n完成JSON输出后，运行验证脚本确保字段完整覆盖：\npython ~/.claude/skills/research/validate_json.py -f {fields_path} -j {output_path}\n验证通过后才算完成任务。\n\"\"\"\n```\n\n**One-shot示例**（假设调研GitHub Copilot）：\n```\n## 任务\n调研 name: GitHub Copilot\ncategory: 国际产品\ndescription: Microsoft/GitHub开发，首个主流AI编程助手，市场份额约40%，输出结构化JSON到 {project_dir}/results/GitHub_Copilot.json\n\n## 字段定义\n读取 {project_dir}/fields.yaml 获取所有字段定义\n\n## 输出要求\n1. 按fields.yaml定义的字段输出JSON\n2. 不确定的字段值标注[不确定]\n3. JSON末尾添加uncertain数组，列出所有不确定的字段名\n4. 所有字段值必须使用中文输出（调研过程可用英文，但最终JSON值为中文）\n\n## 输出路径\n{project_dir}/results/GitHub_Copilot.json\n\n## 验证\n完成JSON输出后，运行验证脚本确保字段完整覆盖：\npython ~/.claude/skills/research/validate_json.py -f {project_dir}/fields.yaml -j {project_dir}/results/GitHub_Copilot.json\n验证通过后才算完成任务。\n```\n\n### Step 4: 等待与监控\n- 等待当前批次完成\n- 启动下一批\n- 显示进度\n\n### Step 5: 汇总报告\n全部完成后输出：\n- 完成数量\n- 失败/不确定标记的items\n- 输出目录\n\n## Agent配置\n- 后台执行: 是\n- Task Output: 禁用（agent完成时有明确输出文件）\n- 断点续传: 是\n"
+    },
+    {
+      "slug": "research-report-2",
+      "name": "research-report",
+      "dir": "skills/research-zh/research-report",
+      "path": "skills/research-zh/research-report/SKILL.md",
+      "desc": "将deep调研结果汇总为markdown报告，覆盖所有字段，跳过不确定值。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Read, Write, Glob, Bash, AskUserQuestion"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Weizhena/Deep-Research-skills.git",
+        "copy": "cp -r skills/research-zh/research-report ~/.claude/skills/research-report-2",
+        "raw": "https://raw.githubusercontent.com/Weizhena/Deep-Research-skills/6ce38f60e3f8b22502c29873f96503a4e0c5addb/skills/research-zh/research-report/SKILL.md",
+        "saveAs": "~/.claude/skills/research-report-2/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:40862d8db6670107e959c7a87deb20cf1d163b5440d9fc59afcef5c0003db3be",
+      "bytes": 3607,
+      "wordCount": 191,
+      "repoLicense": "MIT",
+      "commit": "6ce38f60e3f8b22502c29873f96503a4e0c5addb",
+      "branch": "master",
+      "body": "---\nname: research-report\nuser-invocable: true\ndescription: 将deep调研结果汇总为markdown报告，覆盖所有字段，跳过不确定值。\nallowed-tools: Read, Write, Glob, Bash, AskUserQuestion\n---\n\n# Research Report - 汇总报告\n\n## 触发方式\n`/research-report`\n\n## 执行流程\n\n### Step 1: 定位结果目录\n在当前工作目录查找 `*/outline.yaml`，读取topic和output_dir配置。\n\n### Step 2: 扫描可选摘要字段\n读取所有JSON结果，提取适合在目录中显示的字段（数值型、简短指标），例如：\n- github_stars\n- google_scholar_cites\n- swe_bench_score\n- user_scale\n- valuation\n- release_date\n\n使用AskUserQuestion询问用户：\n- 目录中除了item名称外，还需要显示哪些字段？\n- 提供动态选项列表（基于实际JSON中存在的字段）\n\n### Step 3: 生成Python转换脚本\n在 `{topic}/` 目录下生成 `generate_report.py`，脚本要求：\n- 读取output_dir下所有JSON\n- 读取fields.yaml获取字段结构\n- 覆盖每个JSON的所有字段值\n- 跳过值包含[不确定]的字段\n- 跳过uncertain数组中列出的字段\n- 生成markdown报告格式：目录（带锚点跳转+用户选择的摘要字段）+ 详细内容（按字段分类）\n- 保存到 `{topic}/report.md`\n\n**目录格式要求**：\n- 必须包含每一个item\n- 每个item显示：序号、名称（锚点链接）、用户选择的摘要字段\n- 示例：`1. [GitHub Copilot](#github-copilot) - Stars: 10k | Score: 85%`\n\n#### 脚本技术要点（必须遵循）\n\n**1. JSON结构兼容**\n支持两种JSON结构：\n- 扁平结构：字段直接在顶层 `{\"name\": \"xxx\", \"release_date\": \"xxx\"}`\n- 嵌套结构：字段在category子dict中 `{\"basic_info\": {\"name\": \"xxx\"}, \"technical_features\": {...}}`\n\n字段查找顺序：顶层 -> category映射key -> 遍历所有嵌套dict\n\n**2. Category多语言映射**\nfields.yaml的category名与JSON的key可能是任意组合（中中、中英、英中、英英）。必须建立双向映射：\n```python\nCATEGORY_MAPPING = {\n    \"基本信息\": [\"basic_info\", \"基本信息\"],\n    \"技术特性\": [\"technical_features\", \"technical_characteristics\", \"技术特性\"],\n    \"性能指标\": [\"performance_metrics\", \"performance\", \"性能指标\"],\n    \"里程碑意义\": [\"milestone_significance\", \"milestones\", \"里程碑意义\"],\n    \"商业信息\": [\"business_info\", \"commercial_info\", \"商业信息\"],\n    \"竞争与生态\": [\"competition_ecosystem\", \"competition\", \"竞争与生态\"],\n    \"历史沿革\": [\"history\", \"历史沿革\"],\n    \"市场定位\": [\"market_positioning\", \"market\", \"市场定位\"],\n}\n```\n\n**3. 复杂值格式化**\n- list of dicts（如key_events, funding_history）：每个dict格式化为一行，用` | `分隔kv\n- 普通list：短列表用逗号连接，长列表换行显示\n- 嵌套dict：递归格式化，用分号或换行显示\n- 长文本字符串（超过100字符）：添加换行符`<br>`或使用blockquote格式，提高可读性\n\n**4. 额外字段收集**\n收集JSON中有但fields.yaml中没定义的字段，放入\"其他信息\"分类。注意过滤：\n- 内部字段：`_source_file`, `uncertain`\n- 嵌套结构顶级key：`basic_info`, `technical_features`等\n- `uncertain`数组：需要逐行显示每个字段名，不要压缩成一行\n\n**5. 不确定值跳过**\n跳过条件：\n- 字段值包含`[不确定]`字符串\n- 字段名在`uncertain`数组中\n- 字段值为None或空字符串\n\n### Step 4: 执行脚本\n运行 `python {topic}/generate_report.py`\n\n## 输出\n- `{topic}/generate_report.py` - 转换脚本\n- `{topic}/report.md` - 汇总报告\n",
+      "bodyMd": "# Research Report - 汇总报告\n\n## 触发方式\n`/research-report`\n\n## 执行流程\n\n### Step 1: 定位结果目录\n在当前工作目录查找 `*/outline.yaml`，读取topic和output_dir配置。\n\n### Step 2: 扫描可选摘要字段\n读取所有JSON结果，提取适合在目录中显示的字段（数值型、简短指标），例如：\n- github_stars\n- google_scholar_cites\n- swe_bench_score\n- user_scale\n- valuation\n- release_date\n\n使用AskUserQuestion询问用户：\n- 目录中除了item名称外，还需要显示哪些字段？\n- 提供动态选项列表（基于实际JSON中存在的字段）\n\n### Step 3: 生成Python转换脚本\n在 `{topic}/` 目录下生成 `generate_report.py`，脚本要求：\n- 读取output_dir下所有JSON\n- 读取fields.yaml获取字段结构\n- 覆盖每个JSON的所有字段值\n- 跳过值包含[不确定]的字段\n- 跳过uncertain数组中列出的字段\n- 生成markdown报告格式：目录（带锚点跳转+用户选择的摘要字段）+ 详细内容（按字段分类）\n- 保存到 `{topic}/report.md`\n\n**目录格式要求**：\n- 必须包含每一个item\n- 每个item显示：序号、名称（锚点链接）、用户选择的摘要字段\n- 示例：`1. [GitHub Copilot](#github-copilot) - Stars: 10k | Score: 85%`\n\n#### 脚本技术要点（必须遵循）\n\n**1. JSON结构兼容**\n支持两种JSON结构：\n- 扁平结构：字段直接在顶层 `{\"name\": \"xxx\", \"release_date\": \"xxx\"}`\n- 嵌套结构：字段在category子dict中 `{\"basic_info\": {\"name\": \"xxx\"}, \"technical_features\": {...}}`\n\n字段查找顺序：顶层 -> category映射key -> 遍历所有嵌套dict\n\n**2. Category多语言映射**\nfields.yaml的category名与JSON的key可能是任意组合（中中、中英、英中、英英）。必须建立双向映射：\n```python\nCATEGORY_MAPPING = {\n    \"基本信息\": [\"basic_info\", \"基本信息\"],\n    \"技术特性\": [\"technical_features\", \"technical_characteristics\", \"技术特性\"],\n    \"性能指标\": [\"performance_metrics\", \"performance\", \"性能指标\"],\n    \"里程碑意义\": [\"milestone_significance\", \"milestones\", \"里程碑意义\"],\n    \"商业信息\": [\"business_info\", \"commercial_info\", \"商业信息\"],\n    \"竞争与生态\": [\"competition_ecosystem\", \"competition\", \"竞争与生态\"],\n    \"历史沿革\": [\"history\", \"历史沿革\"],\n    \"市场定位\": [\"market_positioning\", \"market\", \"市场定位\"],\n}\n```\n\n**3. 复杂值格式化**\n- list of dicts（如key_events, funding_history）：每个dict格式化为一行，用` | `分隔kv\n- 普通list：短列表用逗号连接，长列表换行显示\n- 嵌套dict：递归格式化，用分号或换行显示\n- 长文本字符串（超过100字符）：添加换行符`<br>`或使用blockquote格式，提高可读性\n\n**4. 额外字段收集**\n收集JSON中有但fields.yaml中没定义的字段，放入\"其他信息\"分类。注意过滤：\n- 内部字段：`_source_file`, `uncertain`\n- 嵌套结构顶级key：`basic_info`, `technical_features`等\n- `uncertain`数组：需要逐行显示每个字段名，不要压缩成一行\n\n**5. 不确定值跳过**\n跳过条件：\n- 字段值包含`[不确定]`字符串\n- 字段名在`uncertain`数组中\n- 字段值为None或空字符串\n\n### Step 4: 执行脚本\n运行 `python {topic}/generate_report.py`\n\n## 输出\n- `{topic}/generate_report.py` - 转换脚本\n- `{topic}/report.md` - 汇总报告\n"
+    },
+    {
+      "slug": "research-2",
+      "name": "research",
+      "dir": "skills/research-zh/research",
+      "path": "skills/research-zh/research/SKILL.md",
+      "desc": "对目标话题进行初步调研，生成调研outline。用于学术调研、benchmark调研、技术选型等场景。",
+      "descZh": "",
+      "triggers": [
+        "学术调研",
+        "benchmark调研",
+        "技术选型等场景"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Read, Write, Glob, WebSearch, Task, AskUserQuestion"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Weizhena/Deep-Research-skills.git",
+        "copy": "cp -r skills/research-zh/research ~/.claude/skills/research-2",
+        "raw": "https://raw.githubusercontent.com/Weizhena/Deep-Research-skills/6ce38f60e3f8b22502c29873f96503a4e0c5addb/skills/research-zh/research/SKILL.md",
+        "saveAs": "~/.claude/skills/research-2/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:a27578492110b66672bca9140ef46851ba777da141d8c5a9a0272352311ff039",
+      "bytes": 3949,
+      "wordCount": 251,
+      "repoLicense": "MIT",
+      "commit": "6ce38f60e3f8b22502c29873f96503a4e0c5addb",
+      "branch": "master",
+      "body": "---\nname: research\nuser-invocable: true\nallowed-tools: Read, Write, Glob, WebSearch, Task, AskUserQuestion\ndescription: 对目标话题进行初步调研，生成调研outline。用于学术调研、benchmark调研、技术选型等场景。\n---\n\n# Research Skill - 初步调研\n\n## 触发方式\n`/research <topic>`\n\n## 执行流程\n\n### Step 1: 模型内部知识生成初步框架\n基于topic，利用模型已有知识生成：\n- 该领域的主要研究对象/items列表\n- 建议的调研字段框架\n\n输出{step1_output}，使用AskUserQuestion确认：\n- items列表是否需要增减？\n- 字段框架是否满足需求？\n\n### Step 2: Web Search补充\n使用AskUserQuestion询问时间范围（如：最近6个月、2024年至今、不限）。\n\n**参数获取**：\n- `{topic}`: 用户输入的调研话题\n- `{YYYY-MM-DD}`: 当前日期\n- `{step1_output}`: Step 1生成的完整输出内容\n- `{time_range}`: 用户指定的时间范围\n\n**硬约束**：以下prompt必须严格复述，仅替换{xxx}中的变量，禁止改写结构或措辞。\n\n启动1个web-search-agent（后台），**Prompt模板**：\n```python\nprompt = f\"\"\"## 任务\n调研话题: {topic}\n当前日期: {YYYY-MM-DD}\n\n基于以下初步框架，补充最新items和推荐调研字段。\n\n## 已有框架\n{step1_output}\n\n## 目标\n1. 验证已有items是否遗漏重要对象\n2. 根据遗漏对象进行补充items\n3. 继续搜索{topic}相关且{time_range}内的items并补充\n4. 补充新fields\n\n## 输出要求\n直接返回结构化结果（不写文件）：\n\n### 补充Items\n- item_name: 简要说明（为什么应该加入）\n...\n\n### 推荐补充字段\n- field_name: 字段描述（为什么需要这个维度）\n...\n\n### 信息来源\n- [来源1](url1)\n- [来源2](url2)\n\"\"\"\n```\n\n**One-shot示例**（假设调研AI Coding发展史）：\n```\n## 任务\n调研话题: AI Coding 发展史\n当前日期: 2025-12-30\n\n基于以下初步框架，补充最新items和推荐调研字段。\n\n## 已有框架\n### Items列表\n1. GitHub Copilot: Microsoft/GitHub开发，首个主流AI编程助手\n2. Cursor: AI-first IDE，基于VSCode\n...\n\n### 字段框架\n- 基本信息: name, release_date, company\n- 技术特性: underlying_model, context_window\n...\n\n## 目标\n1. 验证已有items是否遗漏重要对象\n2. 根据遗漏对象进行补充items\n3. 继续搜索AI Coding 发展史相关且2024年至今内的items并补充\n4. 补充新fields\n\n## 输出要求\n直接返回结构化结果（不写文件）：\n\n### 补充Items\n- item_name: 简要说明（为什么应该加入）\n...\n\n### 推荐补充字段\n- field_name: 字段描述（为什么需要这个维度）\n...\n\n### 信息来源\n- [来源1](url1)\n- [来源2](url2)\n```\n\n### Step 3: 询问用户已有字段\n使用AskUserQuestion询问用户是否有已定义的字段文件，如有则读取并合并。\n\n### Step 4: 生成Outline（分离文件）\n合并{step1_output}、{step2_output}和用户已有字段，生成两个文件：\n\n**outline.yaml**（items + 配置）：\n- topic: 调研主题\n- items: 调研对象列表\n- execution:\n  - batch_size: 并行agent数量（需AskUserQuestion确认）\n  - items_per_agent: 每个agent调研项目数（需AskUserQuestion确认）\n  - output_dir: 结果输出目录（默认./results）\n\n**fields.yaml**（字段定义）：\n- 字段分类和定义\n- 每个字段的name、description、detail_level\n- detail_level分层：极简 → 简要 → 详细\n- uncertain: 不确定字段列表（保留字段，deep阶段自动填充）\n\n### Step 5: 输出并确认\n- 创建目录: `./{topic_slug}/`\n- 保存: `outline.yaml` 和 `fields.yaml`\n- 展示给用户确认\n\n## 输出路径\n```\n{当前工作目录}/{topic_slug}/\n  ├── outline.yaml    # items列表 + execution配置\n  └── fields.yaml     # 字段定义\n```\n\n## 后续命令\n- `/research-add-items` - 补充items\n- `/research-add-fields` - 补充字段\n- `/research-deep` - 开始深度调研\n",
+      "bodyMd": "# Research Skill - 初步调研\n\n## 触发方式\n`/research <topic>`\n\n## 执行流程\n\n### Step 1: 模型内部知识生成初步框架\n基于topic，利用模型已有知识生成：\n- 该领域的主要研究对象/items列表\n- 建议的调研字段框架\n\n输出{step1_output}，使用AskUserQuestion确认：\n- items列表是否需要增减？\n- 字段框架是否满足需求？\n\n### Step 2: Web Search补充\n使用AskUserQuestion询问时间范围（如：最近6个月、2024年至今、不限）。\n\n**参数获取**：\n- `{topic}`: 用户输入的调研话题\n- `{YYYY-MM-DD}`: 当前日期\n- `{step1_output}`: Step 1生成的完整输出内容\n- `{time_range}`: 用户指定的时间范围\n\n**硬约束**：以下prompt必须严格复述，仅替换{xxx}中的变量，禁止改写结构或措辞。\n\n启动1个web-search-agent（后台），**Prompt模板**：\n```python\nprompt = f\"\"\"## 任务\n调研话题: {topic}\n当前日期: {YYYY-MM-DD}\n\n基于以下初步框架，补充最新items和推荐调研字段。\n\n## 已有框架\n{step1_output}\n\n## 目标\n1. 验证已有items是否遗漏重要对象\n2. 根据遗漏对象进行补充items\n3. 继续搜索{topic}相关且{time_range}内的items并补充\n4. 补充新fields\n\n## 输出要求\n直接返回结构化结果（不写文件）：\n\n### 补充Items\n- item_name: 简要说明（为什么应该加入）\n...\n\n### 推荐补充字段\n- field_name: 字段描述（为什么需要这个维度）\n...\n\n### 信息来源\n- [来源1](url1)\n- [来源2](url2)\n\"\"\"\n```\n\n**One-shot示例**（假设调研AI Coding发展史）：\n```\n## 任务\n调研话题: AI Coding 发展史\n当前日期: 2025-12-30\n\n基于以下初步框架，补充最新items和推荐调研字段。\n\n## 已有框架\n### Items列表\n1. GitHub Copilot: Microsoft/GitHub开发，首个主流AI编程助手\n2. Cursor: AI-first IDE，基于VSCode\n...\n\n### 字段框架\n- 基本信息: name, release_date, company\n- 技术特性: underlying_model, context_window\n...\n\n## 目标\n1. 验证已有items是否遗漏重要对象\n2. 根据遗漏对象进行补充items\n3. 继续搜索AI Coding 发展史相关且2024年至今内的items并补充\n4. 补充新fields\n\n## 输出要求\n直接返回结构化结果（不写文件）：\n\n### 补充Items\n- item_name: 简要说明（为什么应该加入）\n...\n\n### 推荐补充字段\n- field_name: 字段描述（为什么需要这个维度）\n...\n\n### 信息来源\n- [来源1](url1)\n- [来源2](url2)\n```\n\n### Step 3: 询问用户已有字段\n使用AskUserQuestion询问用户是否有已定义的字段文件，如有则读取并合并。\n\n### Step 4: 生成Outline（分离文件）\n合并{step1_output}、{step2_output}和用户已有字段，生成两个文件：\n\n**outline.yaml**（items + 配置）：\n- topic: 调研主题\n- items: 调研对象列表\n- execution:\n  - batch_size: 并行agent数量（需AskUserQuestion确认）\n  - items_per_agent: 每个agent调研项目数（需AskUserQuestion确认）\n  - output_dir: 结果输出目录（默认./results）\n\n**fields.yaml**（字段定义）：\n- 字段分类和定义\n- 每个字段的name、description、detail_level\n- detail_level分层：极简 → 简要 → 详细\n- uncertain: 不确定字段列表（保留字段，deep阶段自动填充）\n\n### Step 5: 输出并确认\n- 创建目录: `./{topic_slug}/`\n- 保存: `outline.yaml` 和 `fields.yaml`\n- 展示给用户确认\n\n## 输出路径\n```\n{当前工作目录}/{topic_slug}/\n  ├── outline.yaml    # items列表 + execution配置\n  └── fields.yaml     # 字段定义\n```\n\n## 后续命令\n- `/research-add-items` - 补充items\n- `/research-add-fields` - 补充字段\n- `/research-deep` - 开始深度调研\n"
+    }
+  ]
+}

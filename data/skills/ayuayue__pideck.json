@@ -1,0 +1,98 @@
+{
+  "repo": "ayuayue/PiDeck",
+  "commit": "803bdf42491f934d200b2d64cb34bd535ea835c9",
+  "branch": "main",
+  "fetchedAt": "2026-11-26T21:14:36.340Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "mcp-setup",
+      "name": "mcp-setup",
+      "dir": "resources/skills/mcp-setup",
+      "path": "resources/skills/mcp-setup/SKILL.md",
+      "desc": "帮用户接入/配置 MCP（Model Context Protocol）服务。当用户说「帮我接 MCP」「连上某个服务的 MCP」「配置 Model Context Protocol」「加个工具服务器」「为什么 MCP 连不上」等时使用。按服务官方文档把配置写进 pi 的 mcp.json，并用 pi mcp list 验证连接，全程不破坏用户已有配置。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": true,
+        "network": true,
+        "bins": [
+          "node",
+          "docker",
+          "npx"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ayuayue/PiDeck.git",
+        "copy": "cp -r resources/skills/mcp-setup ~/.claude/skills/mcp-setup",
+        "raw": "https://raw.githubusercontent.com/ayuayue/PiDeck/803bdf42491f934d200b2d64cb34bd535ea835c9/resources/skills/mcp-setup/SKILL.md",
+        "saveAs": "~/.claude/skills/mcp-setup/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:5e786339e2af6defbcbf7a047e8cee662b88afc25930f46b01e1c1002c102329",
+      "bytes": 4767,
+      "wordCount": 257,
+      "repoLicense": "MIT",
+      "commit": "803bdf42491f934d200b2d64cb34bd535ea835c9",
+      "branch": "main",
+      "body": "---\nname: mcp-setup\ndescription: 帮用户接入/配置 MCP（Model Context Protocol）服务。当用户说「帮我接 MCP」「连上某个服务的 MCP」「配置 Model Context Protocol」「加个工具服务器」「为什么 MCP 连不上」等时使用。按服务官方文档把配置写进 pi 的 mcp.json，并用 pi mcp list 验证连接，全程不破坏用户已有配置。\n---\n\n# MCP 配置助手（mcp-setup）\n\n帮用户把 MCP 服务接进 pi。核心原则：**每一步以服务官方文档为准，只改 mcp.json 里属于该服务的条目，改完必须验证。**\n\n## 工作流总览\n\n1. 弄清用户想接什么服务、拿来做什么；\n2. 查该服务**官方**的 MCP 接入文档（官网 docs / 官方 GitHub README；优先官方源，不用第三方目录的转述）；\n3. 按下方 schema 生成配置，写入 `~/.pi/agent/mcp.json`（全局）或项目 `.pi/mcp.json`（仅当前项目）；\n4. 运行 `pi mcp list` 验证；需要 OAuth 的引导用户去 PiDeck 界面点「登录」；\n5. 向用户汇报：加了什么、写到哪、怎么验证、如何撤销。\n\n## pi 的 mcp.json 结构（唯一权威 schema）\n\n文件是一个 JSON 对象，键 `mcpServers`，值是「服务名 → 定义」映射：\n\n```json\n{\n  \"mcpServers\": {\n    \"linear\": { \"url\": \"https://mcp.linear.app/mcp\" },\n    \"brave-search\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@brave/brave-search-mcp-server\"],\n      \"env\": { \"BRAVE_API_KEY\": \"...\" }\n    }\n  }\n}\n```\n\n每个服务定义二选一传输：\n\n- **远程 HTTP**：`url`（必填，http/https）、`headers`（可选，如 `{\"Authorization\": \"Bearer <key>\"}`）；\n- **本地 stdio**：`command`（必填）、`args`、`env`、`cwd`（可选）。\n\n通用可选：`enabled`（布尔，false 则不连接）、`description`、`timeout`（秒）、`exposure`/`toolExposure`（工具暴露方式，默认不用写）。\n\n**不要手写的字段**：`oauth`（clientId/clientSecret 等七字段）只在服务商明确要求预注册客户端时才写；pi 的 MCP OAuth 默认零配置，动态客户端注册自动完成。`auth.provider` 是复用 pi 模型供应商凭据的高级能力，仅全局配置可用，除非用户明确要求否则不要写。\n\n## 认证形态判定（按官方文档，不猜）\n\n| 服务方文档说 | 写法 |\n|---|---|\n| OAuth / 浏览器登录 / 无需 token | 只写 `url`；连接后 `pi mcp list` 显示 needs-auth，引导用户在 PiDeck「配置 → MCP」对应服务行点「登录」 |\n| API Key / PAT，放请求头 | `headers: {\"Authorization\": \"Bearer <key>\"}`（或文档指定的自定义头名） |\n| API Key 放环境变量 | stdio：`env: {\"<文档规定的变量名>\": \"<key>\"}` |\n| 无认证 | 只写传输字段 |\n| 需要 Docker | `command: \"docker\"`，args 按文档；先确认用户有 Docker |\n\n## 写文件规则（防止破坏用户配置）\n\n1. **先读后写**：读整个 mcp.json，解析 JSON；解析失败立即停手，让用户先在 PiDeck「源文件」页修复，绝不猜着覆盖；\n2. **合并而非覆盖**：只新增/替换本次服务的键，其余条目原样保留；\n3. **保格式**：写回时 2 空格缩进、键序尽量维持原样；\n4. **密钥安全**：密钥值直接写入文件（mcp.json 是明文，这是 pi 的存储方式）；但**不要**把密钥回显到对话或日志里；\n5. 项目级 `.pi/mcp.json` 只放该项目需要的覆盖，同名条目会遮蔽全局定义。\n\n## 验证与收尾\n\n```bash\npi mcp list          # 人读形态：每个服务的连接状态/工具数\npi mcp list --json   # 程序化形态\n```\n\n- `connected`（带工具数）→ 成功；告诉用户工具经 tool_search 可发现，正常对话即可用；\n- `needs-auth` → 指导用户打开 PiDeck「配置 → MCP」，该服务行会出现「登录」按钮（或用 `pi mcp login <服务名>`）；\n- `error` → 读错误信息定位：URL 打错 / 密钥无效 / npx 包名错 / Node 缺失。stdio 服务首次连接会 npx 拉包，稍慢是正常的；\n- 修改的是**正在运行会话**读不到的：新配置从下一个会话/下一轮对话生效。\n\n最后汇报三件事：写入了什么（服务名 + 字段清单，密钥打码）、验证结果、撤销方法（删掉 mcpServers 里对应键）。\n\n## 常见坑\n\n- npx 包名带 `@latest` 的按文档原样保留，不要自作聪明去掉；\n- Windows 下 stdio 服务若失败，优先怀疑路径空格与杀毒软件拦截 npx；\n- 远程 URL 末尾斜杠按官方文档原样写（如 `https://api.githubcopilot.com/mcp/`）；\n- 服务方同时提供「远程托管」和「本地 stdio」两种时，默认选远程托管（免维护、随官方更新）；用户明确要本地/自托管时才选 stdio。\n",
+      "bodyMd": "# MCP 配置助手（mcp-setup）\n\n帮用户把 MCP 服务接进 pi。核心原则：**每一步以服务官方文档为准，只改 mcp.json 里属于该服务的条目，改完必须验证。**\n\n## 工作流总览\n\n1. 弄清用户想接什么服务、拿来做什么；\n2. 查该服务**官方**的 MCP 接入文档（官网 docs / 官方 GitHub README；优先官方源，不用第三方目录的转述）；\n3. 按下方 schema 生成配置，写入 `~/.pi/agent/mcp.json`（全局）或项目 `.pi/mcp.json`（仅当前项目）；\n4. 运行 `pi mcp list` 验证；需要 OAuth 的引导用户去 PiDeck 界面点「登录」；\n5. 向用户汇报：加了什么、写到哪、怎么验证、如何撤销。\n\n## pi 的 mcp.json 结构（唯一权威 schema）\n\n文件是一个 JSON 对象，键 `mcpServers`，值是「服务名 → 定义」映射：\n\n```json\n{\n  \"mcpServers\": {\n    \"linear\": { \"url\": \"https://mcp.linear.app/mcp\" },\n    \"brave-search\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@brave/brave-search-mcp-server\"],\n      \"env\": { \"BRAVE_API_KEY\": \"...\" }\n    }\n  }\n}\n```\n\n每个服务定义二选一传输：\n\n- **远程 HTTP**：`url`（必填，http/https）、`headers`（可选，如 `{\"Authorization\": \"Bearer <key>\"}`）；\n- **本地 stdio**：`command`（必填）、`args`、`env`、`cwd`（可选）。\n\n通用可选：`enabled`（布尔，false 则不连接）、`description`、`timeout`（秒）、`exposure`/`toolExposure`（工具暴露方式，默认不用写）。\n\n**不要手写的字段**：`oauth`（clientId/clientSecret 等七字段）只在服务商明确要求预注册客户端时才写；pi 的 MCP OAuth 默认零配置，动态客户端注册自动完成。`auth.provider` 是复用 pi 模型供应商凭据的高级能力，仅全局配置可用，除非用户明确要求否则不要写。\n\n## 认证形态判定（按官方文档，不猜）\n\n| 服务方文档说 | 写法 |\n|---|---|\n| OAuth / 浏览器登录 / 无需 token | 只写 `url`；连接后 `pi mcp list` 显示 needs-auth，引导用户在 PiDeck「配置 → MCP」对应服务行点「登录」 |\n| API Key / PAT，放请求头 | `headers: {\"Authorization\": \"Bearer <key>\"}`（或文档指定的自定义头名） |\n| API Key 放环境变量 | stdio：`env: {\"<文档规定的变量名>\": \"<key>\"}` |\n| 无认证 | 只写传输字段 |\n| 需要 Docker | `command: \"docker\"`，args 按文档；先确认用户有 Docker |\n\n## 写文件规则（防止破坏用户配置）\n\n1. **先读后写**：读整个 mcp.json，解析 JSON；解析失败立即停手，让用户先在 PiDeck「源文件」页修复，绝不猜着覆盖；\n2. **合并而非覆盖**：只新增/替换本次服务的键，其余条目原样保留；\n3. **保格式**：写回时 2 空格缩进、键序尽量维持原样；\n4. **密钥安全**：密钥值直接写入文件（mcp.json 是明文，这是 pi 的存储方式）；但**不要**把密钥回显到对话或日志里；\n5. 项目级 `.pi/mcp.json` 只放该项目需要的覆盖，同名条目会遮蔽全局定义。\n\n## 验证与收尾\n\n```bash\npi mcp list          # 人读形态：每个服务的连接状态/工具数\npi mcp list --json   # 程序化形态\n```\n\n- `connected`（带工具数）→ 成功；告诉用户工具经 tool_search 可发现，正常对话即可用；\n- `needs-auth` → 指导用户打开 PiDeck「配置 → MCP」，该服务行会出现「登录」按钮（或用 `pi mcp login <服务名>`）；\n- `error` → 读错误信息定位：URL 打错 / 密钥无效 / npx 包名错 / Node 缺失。stdio 服务首次连接会 npx 拉包，稍慢是正常的；\n- 修改的是**正在运行会话**读不到的：新配置从下一个会话/下一轮对话生效。\n\n最后汇报三件事：写入了什么（服务名 + 字段清单，密钥打码）、验证结果、撤销方法（删掉 mcpServers 里对应键）。\n\n## 常见坑\n\n- npx 包名带 `@latest` 的按文档原样保留，不要自作聪明去掉；\n- Windows 下 stdio 服务若失败，优先怀疑路径空格与杀毒软件拦截 npx；\n- 远程 URL 末尾斜杠按官方文档原样写（如 `https://api.githubcopilot.com/mcp/`）；\n- 服务方同时提供「远程托管」和「本地 stdio」两种时，默认选远程托管（免维护、随官方更新）；用户明确要本地/自托管时才选 stdio。\n"
+    },
+    {
+      "slug": "pideck",
+      "name": "pideck",
+      "dir": "resources/skills/pideck",
+      "path": "resources/skills/pideck/SKILL.md",
+      "desc": "PiDeck 桌面端内置能力总入口：生成图片（画图/海报/头像/logo）、排查或扩展供应商用量/余额/额度、诊断 PiDeck 故障（会话起不来、pi 连不上、报错、卡顿）、用 PiDeck 本机 HTTP API 查会话状态、给别的窗口发消息、重启会话。用户提到生图、用量查询、PiDeck 出问题、多窗口/跨会话协作、用脚本或别的 agent 控制 PiDeck 时先读本技能，再按路由表只读对应的那一份参考。Use for PiDeck image generation, usage probe, diagnostics, web API.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "git",
+          "node"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ayuayue/PiDeck.git",
+        "copy": "cp -r resources/skills/pideck ~/.claude/skills/pideck",
+        "raw": "https://raw.githubusercontent.com/ayuayue/PiDeck/803bdf42491f934d200b2d64cb34bd535ea835c9/resources/skills/pideck/SKILL.md",
+        "saveAs": "~/.claude/skills/pideck/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:c810a45e5cb54f3b3385d5c55e6f9fa9fb94aa9911d9d19b8519e36ce765f6b4",
+      "bytes": 3364,
+      "wordCount": 233,
+      "repoLicense": "MIT",
+      "commit": "803bdf42491f934d200b2d64cb34bd535ea835c9",
+      "branch": "main",
+      "body": "---\nname: pideck\ndescription: \"PiDeck 桌面端内置能力总入口：生成图片（画图/海报/头像/logo）、排查或扩展供应商用量/余额/额度、诊断 PiDeck 故障（会话起不来、pi 连不上、报错、卡顿）、用 PiDeck 本机 HTTP API 查会话状态、给别的窗口发消息、重启会话。用户提到生图、用量查询、PiDeck 出问题、多窗口/跨会话协作、用脚本或别的 agent 控制 PiDeck 时先读本技能，再按路由表只读对应的那一份参考。Use for PiDeck image generation, usage probe, diagnostics, web API.\"\n---\n\n# PiDeck 内置能力（类型版路由）\n\n## 0 类型\n\n`Γ ⊢ 动作 : 结果`。Γ = 匹配的那一份 reference + 本机真实状态（令牌、端口、会话 id）。\n**缺 Γ 任一项就不执行**：读不到文件 → 停下说清楚，不凭记忆补内容；拿不到令牌 → 不猜端口。\n\n## 1 路由（一个任务只读一行）\n\n| 任务 | 读这一份 | 该文件的类型 |\n| --- | --- | --- |\n| 生成图片：画图、海报、头像、logo、改图 | `references/image-gen.md` | `配置 → 请求 → 文件路径` |\n| 用量、余额、额度；加用量查询 | `references/usage-probe.md` | `供应商 → 探针 → 数值` |\n| 故障：会话起不来、pi 连不上、报错、卡顿 | `references/pideck-doctor.md` | `症状 → 诊断项 → 判据` |\n| 查会话状态／发消息／等完成／重启／改运行时 | `references/web-api/connect.md` 起 | `端点 → 前置 → 请求类型 → 响应类型 → 错误` |\n\n`references/web-api/` 内部继续分流：`connect.md`（§0–§2 连接与身份）→ `read.md`／`message.md`／`collaboration.md`／`restart.md`／`actions.md`／`boundaries.md`；项目、智能体、模型、用量、DSH 见 `endpoints.md`。\n\n## 2 规则（依赖类型理论：四件缺一不算规则）\n\n一行一个类型。引入是能跑的命令加上它该给你的结果；消去是换第二个入口算一遍，得同一个答案；反例是一个具体输入，喂进去这句话就为假。\n\n| # | 命题 | 引入（命令 → 期望） | 消去（第二入口） | 反例 |\n| --- | --- | --- | --- | --- |\n| S1 | 一个任务只读路由表命中的那一份 | 上表命中 1 行 → `references/<那一份>` 存在 | 读完能说出「为什么别的都不用读」 | 把 `references/web-api/` 整目录读完 |\n| S2 | 读不到文件就停，不凭记忆补 | `test -f references/web-api/connect.md` → `0` | 换 Dev 通道路径再试一次，仍失败才停 | 凭记忆编一个接口形状 |\n| S3 | 文档是 2026-11 实测记录，形状不符以源码为准 | `node scripts/skills/pideck/check-doc.mjs` → `PASS` | 在 `src/main/web/*Routes.ts` 里 grep 该路由 → 命中 | 按文档硬报「接口变了」，不查源码 |\n| S4 | 用户说停用某能力就停 | 人工：用户原话为准 | 把「停用」复述一次让用户确认 | 因为技能里有就照样执行 |\n| S5 | 改文档的唯一真源是仓库 `resources/skills/pideck/` | `git log -1 -- resources/skills/pideck/` → 有提交 | 本机 magpie 副本与该文件 `cmp` 一致 | 直接改本机副本当唯一真源 |\n\n## 3 不适用\n\n- 改 PiDeck 源码、修 pi 本体：读项目自己的 `AGENTS.md` 与 `docs/`。\n- 终端里的 pi（TUI）没有窗口与 HTTP 服务，web-api 那套不适用。\n",
+      "bodyMd": "# PiDeck 内置能力（类型版路由）\n\n## 0 类型\n\n`Γ ⊢ 动作 : 结果`。Γ = 匹配的那一份 reference + 本机真实状态（令牌、端口、会话 id）。\n**缺 Γ 任一项就不执行**：读不到文件 → 停下说清楚，不凭记忆补内容；拿不到令牌 → 不猜端口。\n\n## 1 路由（一个任务只读一行）\n\n| 任务 | 读这一份 | 该文件的类型 |\n| --- | --- | --- |\n| 生成图片：画图、海报、头像、logo、改图 | `references/image-gen.md` | `配置 → 请求 → 文件路径` |\n| 用量、余额、额度；加用量查询 | `references/usage-probe.md` | `供应商 → 探针 → 数值` |\n| 故障：会话起不来、pi 连不上、报错、卡顿 | `references/pideck-doctor.md` | `症状 → 诊断项 → 判据` |\n| 查会话状态／发消息／等完成／重启／改运行时 | `references/web-api/connect.md` 起 | `端点 → 前置 → 请求类型 → 响应类型 → 错误` |\n\n`references/web-api/` 内部继续分流：`connect.md`（§0–§2 连接与身份）→ `read.md`／`message.md`／`collaboration.md`／`restart.md`／`actions.md`／`boundaries.md`；项目、智能体、模型、用量、DSH 见 `endpoints.md`。\n\n## 2 规则（依赖类型理论：四件缺一不算规则）\n\n一行一个类型。引入是能跑的命令加上它该给你的结果；消去是换第二个入口算一遍，得同一个答案；反例是一个具体输入，喂进去这句话就为假。\n\n| # | 命题 | 引入（命令 → 期望） | 消去（第二入口） | 反例 |\n| --- | --- | --- | --- | --- |\n| S1 | 一个任务只读路由表命中的那一份 | 上表命中 1 行 → `references/<那一份>` 存在 | 读完能说出「为什么别的都不用读」 | 把 `references/web-api/` 整目录读完 |\n| S2 | 读不到文件就停，不凭记忆补 | `test -f references/web-api/connect.md` → `0` | 换 Dev 通道路径再试一次，仍失败才停 | 凭记忆编一个接口形状 |\n| S3 | 文档是 2026-11 实测记录，形状不符以源码为准 | `node scripts/skills/pideck/check-doc.mjs` → `PASS` | 在 `src/main/web/*Routes.ts` 里 grep 该路由 → 命中 | 按文档硬报「接口变了」，不查源码 |\n| S4 | 用户说停用某能力就停 | 人工：用户原话为准 | 把「停用」复述一次让用户确认 | 因为技能里有就照样执行 |\n| S5 | 改文档的唯一真源是仓库 `resources/skills/pideck/` | `git log -1 -- resources/skills/pideck/` → 有提交 | 本机 magpie 副本与该文件 `cmp` 一致 | 直接改本机副本当唯一真源 |\n\n## 3 不适用\n\n- 改 PiDeck 源码、修 pi 本体：读项目自己的 `AGENTS.md` 与 `docs/`。\n- 终端里的 pi（TUI）没有窗口与 HTTP 服务，web-api 那套不适用。\n"
+    }
+  ]
+}
