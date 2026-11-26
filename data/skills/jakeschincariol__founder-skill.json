@@ -1,0 +1,503 @@
+{
+  "repo": "Jakeschincariol/founder-skill",
+  "commit": "fd9385b0cfe1b96bebce3898fbd506d73eff5a9d",
+  "branch": "main",
+  "fetchedAt": "2026-11-26T07:17:53.137Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "founder-board",
+      "name": "founder-board",
+      "dir": "skills/founder-board",
+      "path": "skills/founder-board/SKILL.md",
+      "desc": "Your board of directors. Puts a business idea in front of a three-member board, each a sub-agent reading the idea through one published framework: the Offers lens (from Alex Hormozi's $100M Offers), the Monopoly lens (from Peter Thiel's Zero to One) and the Product lens (from Walter Isaacson's biography of Steve Jobs). Each member scores the idea, names the risks that would kill it and votes fund, fund with conditions, or pass. Use when the user says \"test my business idea\", \"would this work\", \"pressure-test this\", \"what would a board say\", \"is this a good business\", or starts the founder pack on a new idea.",
+      "descZh": "",
+      "triggers": [
+        "would this work",
+        "pressure-test this",
+        "what woul"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "go",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Jakeschincariol/founder-skill.git",
+        "copy": "cp -r skills/founder-board ~/.claude/skills/founder-board",
+        "raw": "https://raw.githubusercontent.com/Jakeschincariol/founder-skill/fd9385b0cfe1b96bebce3898fbd506d73eff5a9d/skills/founder-board/SKILL.md",
+        "saveAs": "~/.claude/skills/founder-board/SKILL.md",
+        "marketplace": "/plugin marketplace add Jakeschincariol/founder-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:4e9868404b98ced245322d6c5d05ac6a3672960ecc0453338edc0d674b419a52",
+      "bytes": 4538,
+      "wordCount": 644,
+      "repoLicense": "MIT",
+      "commit": "fd9385b0cfe1b96bebce3898fbd506d73eff5a9d",
+      "branch": "main",
+      "body": "---\nname: founder-board\ndescription: >-\n  Your board of directors. Puts a business idea in front of a three-member board,\n  each a sub-agent reading the idea through one published framework: the Offers\n  lens (from Alex Hormozi's $100M Offers), the Monopoly lens (from Peter Thiel's\n  Zero to One) and the Product lens (from Walter Isaacson's biography of Steve\n  Jobs). Each member scores the idea, names the risks that would kill it and votes\n  fund, fund with conditions, or pass. Use when the user says \"test my business\n  idea\", \"would this work\", \"pressure-test this\", \"what would a board say\", \"is\n  this a good business\", or starts the founder pack on a new idea.\nargument-hint: \"<the business idea, or leave blank to use the conversation>\"\n---\n\n# founder-board\n\nThe first meeting. Before anyone builds a website or signs a lease, three board\nmembers tear the idea apart, each from a different angle, and vote.\n\nWhat the user typed after `/founder-board`: `$ARGUMENTS`. If that is blank, take\nthe idea from the conversation.\n\n## The rule about the three names\n\nThe lenses are summaries of **published frameworks**, nothing more. The board\nmembers are not those people, never speak as them, never quote them, never claim\nthey would endorse anything. Write \"the Offers lens\", never \"Alex Hormozi says\".\nIf the user asks what one of them really thinks, say you can only apply their\npublic frameworks.\n\n## Step 0: the idea file\n\nEverything in the founder pack reads `founder/idea.md` in the user's project. If\nit does not exist, write it now from the conversation:\n\n```markdown\n# <business name, or a working name>\n\n- What it is: one sentence.\n- Who it is for: the target customer, as specific as the user can make it.\n- What it sells, at what price: the core product and its price.\n- Where and how: city or online, how customers find it, how it is delivered.\n- Budget and constraints: money, time, skills, anything already decided.\n```\n\nIf the name, the customer, the product or the price is missing, ask for those (at\nmost three questions in one message), then write the file. Do not invent a\nbudget, a market size or a competitor.\n\n## Step 1: brief the board\n\nWrite `founder/board/brief.md`: the idea file plus anything else the user said\nthat a stranger would need. **Sub-agents cannot see this conversation**, so the\nbrief must stand on its own. Do not add your own opinion of the idea to it.\n\n## Step 2: convene\n\nLaunch three sub-agents in ONE message (Agent tool, `subagent_type:\ngeneral-purpose`, one per member), each told: `Read founder/board/brief.md and\nfounder-board's lenses.md (path below), apply ONLY the <lens> lens, and write\nyour memo to founder/board/<lens>.md.` The lens file is `lenses.md` in this\nskill's folder (`${CLAUDE_SKILL_DIR}/lenses.md`; if that path is not expanded,\nuse the base directory Claude Code printed for this skill).\n\nEach memo, in this shape:\n\n```markdown\n# <Lens> lens\nScore: <1-10> | Vote: FUND / FUND IF / PASS\n## What is strong\n## What would kill it (the top 3, most dangerous first)\n## The questions I would ask the founder\n## If FUND IF: the conditions\n```\n\n## Step 3: the chair's summary\n\nRead the three memos (they are short) and write `founder/board.md`:\n\n1. The vote, e.g. \"2 fund if, 1 pass\", and the average score.\n2. The risks more than one member raised: these go first.\n3. Every condition, merged, as a checklist the rest of the pack can tick off\n   (the CFO, the consumer panel and pricing will test most of them).\n4. One paragraph: the strongest version of this business the board can see.\n   It may differ from what the user pitched; say so plainly.\n\nKeep the members' disagreements. A board that agrees on everything was not doing\nits job.\n\n## Rules\n\n- Score the business, not the founder.\n- No made-up facts. If a lens needs a number nobody has yet (market size, cost of\n  acquiring a customer), name it as an open question and say which skill answers\n  it (`/founder-competitors`, `/founder-consumer`, `/founder-cfo`).\n- A PASS is a result, not a failure. Say it plainly.\n\n## Output\n\n`founder/idea.md`, `founder/board/` (brief and three memos), `founder/board.md`.\nThen say the vote in one line and suggest the next step: `/founder-competitors`\nto see who is already there, or `/founder-consumer` to put it in front of 100\nsimulated buyers.\n\n## Where the pack goes next\n\n```\nboard -> competitors -> consumer -> pricing -> offer -> cfo -> marketing -> brand -> ops -> launch -> plan\n```\n\nEvery skill can also run on its own; each reads whatever is already in `founder/`.\n",
+      "bodyMd": "# founder-board\n\nThe first meeting. Before anyone builds a website or signs a lease, three board\nmembers tear the idea apart, each from a different angle, and vote.\n\nWhat the user typed after `/founder-board`: `$ARGUMENTS`. If that is blank, take\nthe idea from the conversation.\n\n## The rule about the three names\n\nThe lenses are summaries of **published frameworks**, nothing more. The board\nmembers are not those people, never speak as them, never quote them, never claim\nthey would endorse anything. Write \"the Offers lens\", never \"Alex Hormozi says\".\nIf the user asks what one of them really thinks, say you can only apply their\npublic frameworks.\n\n## Step 0: the idea file\n\nEverything in the founder pack reads `founder/idea.md` in the user's project. If\nit does not exist, write it now from the conversation:\n\n```markdown\n# <business name, or a working name>\n\n- What it is: one sentence.\n- Who it is for: the target customer, as specific as the user can make it.\n- What it sells, at what price: the core product and its price.\n- Where and how: city or online, how customers find it, how it is delivered.\n- Budget and constraints: money, time, skills, anything already decided.\n```\n\nIf the name, the customer, the product or the price is missing, ask for those (at\nmost three questions in one message), then write the file. Do not invent a\nbudget, a market size or a competitor.\n\n## Step 1: brief the board\n\nWrite `founder/board/brief.md`: the idea file plus anything else the user said\nthat a stranger would need. **Sub-agents cannot see this conversation**, so the\nbrief must stand on its own. Do not add your own opinion of the idea to it.\n\n## Step 2: convene\n\nLaunch three sub-agents in ONE message (Agent tool, `subagent_type:\ngeneral-purpose`, one per member), each told: `Read founder/board/brief.md and\nfounder-board's lenses.md (path below), apply ONLY the <lens> lens, and write\nyour memo to founder/board/<lens>.md.` The lens file is `lenses.md` in this\nskill's folder (`${CLAUDE_SKILL_DIR}/lenses.md`; if that path is not expanded,\nuse the base directory Claude Code printed for this skill).\n\nEach memo, in this shape:\n\n```markdown\n# <Lens> lens\nScore: <1-10> | Vote: FUND / FUND IF / PASS\n## What is strong\n## What would kill it (the top 3, most dangerous first)\n## The questions I would ask the founder\n## If FUND IF: the conditions\n```\n\n## Step 3: the chair's summary\n\nRead the three memos (they are short) and write `founder/board.md`:\n\n1. The vote, e.g. \"2 fund if, 1 pass\", and the average score.\n2. The risks more than one member raised: these go first.\n3. Every condition, merged, as a checklist the rest of the pack can tick off\n   (the CFO, the consumer panel and pricing will test most of them).\n4. One paragraph: the strongest version of this business the board can see.\n   It may differ from what the user pitched; say so plainly.\n\nKeep the members' disagreements. A board that agrees on everything was not doing\nits job.\n\n## Rules\n\n- Score the business, not the founder.\n- No made-up facts. If a lens needs a number nobody has yet (market size, cost of\n  acquiring a customer), name it as an open question and say which skill answers\n  it (`/founder-competitors`, `/founder-consumer`, `/founder-cfo`).\n- A PASS is a result, not a failure. Say it plainly.\n\n## Output\n\n`founder/idea.md`, `founder/board/` (brief and three memos), `founder/board.md`.\nThen say the vote in one line and suggest the next step: `/founder-competitors`\nto see who is already there, or `/founder-consumer` to put it in front of 100\nsimulated buyers.\n\n## Where the pack goes next\n\n```\nboard -> competitors -> consumer -> pricing -> offer -> cfo -> marketing -> brand -> ops -> launch -> plan\n```\n\nEvery skill can also run on its own; each reads whatever is already in `founder/`.\n"
+    },
+    {
+      "slug": "founder-brand",
+      "name": "founder-brand",
+      "dir": "skills/founder-brand",
+      "path": "skills/founder-brand/SKILL.md",
+      "desc": "Your brand designer. Names the business (with the trademark, domain and handle checks to run before falling in love with a name), writes the voice, a one-line promise and a tagline, and briefs the look: colours, type, logo and the first things a customer sees, so they match the positioning the marketing director chose. Use when the user says \"name my business\", \"brand this\", \"logo\", \"brand identity\", \"what should it look like\", \"tagline\", or \"brand voice\".",
+      "descZh": "",
+      "triggers": [
+        "brand this",
+        "logo",
+        "brand identity",
+        "what should it"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Jakeschincariol/founder-skill.git",
+        "copy": "cp -r skills/founder-brand ~/.claude/skills/founder-brand",
+        "raw": "https://raw.githubusercontent.com/Jakeschincariol/founder-skill/fd9385b0cfe1b96bebce3898fbd506d73eff5a9d/skills/founder-brand/SKILL.md",
+        "saveAs": "~/.claude/skills/founder-brand/SKILL.md",
+        "marketplace": "/plugin marketplace add Jakeschincariol/founder-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:406520c627dec8bb43914a94ac7303ceb8d3ee8b0e998a33b1378161b0068335",
+      "bytes": 3149,
+      "wordCount": 439,
+      "repoLicense": "MIT",
+      "commit": "fd9385b0cfe1b96bebce3898fbd506d73eff5a9d",
+      "branch": "main",
+      "body": "---\nname: founder-brand\ndescription: >-\n  Your brand designer. Names the business (with the trademark, domain and handle\n  checks to run before falling in love with a name), writes the voice, a one-line\n  promise and a tagline, and briefs the look: colours, type, logo and the first\n  things a customer sees, so they match the positioning the marketing director\n  chose. Use when the user says \"name my business\", \"brand this\", \"logo\", \"brand\n  identity\", \"what should it look like\", \"tagline\", or \"brand voice\".\nargument-hint: \"[name ideas, if any]\"\n---\n\n# founder-brand\n\nA brand is the promise a customer remembers. This skill makes it specific to the\npositioning the pack already found, not a mood board of nice colours.\n\n## Step 1: read the brief\n\n`founder/idea.md`, `founder/marketing.md` (the positioning line and the first\naudience), `founder/competitors.md` (names and looks to stay clear of), and the\npanel's reasons buyers buy (`founder/panel/results.md`). If the positioning is\nmissing, ask for it or run `/founder-marketing` first.\n\n## Step 2: name candidates\n\nTen candidates across different styles (descriptive, evocative, invented, the\nfounder's name, a place). For each: what it says, how it sounds out loud, how it\nreads on a sign or an app icon, and the risk. Then shortlist three and run the\nchecks the user must finish themselves:\n\n- **Trademark**: search the official register for each market (USPTO in the US,\n  CIPO in Canada, EUIPO in the EU, UKIPO in the UK) for the name in the same class\n  of goods and services. Give the search links and the classes to check.\n- **Domain**: whether the .com and the local domain are free (check, do not\n  assume); good alternatives if not.\n- **Handles**: Instagram, TikTok, X, YouTube.\n- **Confusion**: no name close to a competitor in `founder/competitors.md`.\n\nSay plainly that you can only run public searches, a trademark lawyer confirms it,\nand nothing is registered until the user registers it.\n\n## Step 3: voice and promise\n\n- The one-line promise (what the customer can count on, every time).\n- A tagline, three options.\n- The voice in three adjectives, each with a do and a don't, and a before/after\n  rewrite of one line from `founder/pitch.md`.\n\n## Step 4: the look, as a brief\n\n- **Colour**: 2 to 3 core colours with hex values and the job of each, plus the\n  contrast check for text on each (WCAG AA at least).\n- **Type**: one display and one text face, free or licensed, with where to get\n  them. No font the user does not have a licence for.\n- **Logo brief**: what it must say, where it must work (a sign, a cup, a 32px app\n  icon), what to avoid. Offer to generate concepts with an image tool if the user\n  has one; mark generated concepts as concepts, not a finished logo.\n- **The first five touchpoints**: the sign or homepage, the packaging, the receipt\n  or confirmation, the first social post, the reply to the first complaint.\n\n## Rules\n\n- Never copy a competitor's name, logo, colours or tagline.\n- No fonts, images or icons the user has no right to use.\n- Not legal advice on trademarks.\n\n## Output\n\n`founder/brand.md`. Next: `/founder-ops` and `/founder-launch`.\n",
+      "bodyMd": "# founder-brand\n\nA brand is the promise a customer remembers. This skill makes it specific to the\npositioning the pack already found, not a mood board of nice colours.\n\n## Step 1: read the brief\n\n`founder/idea.md`, `founder/marketing.md` (the positioning line and the first\naudience), `founder/competitors.md` (names and looks to stay clear of), and the\npanel's reasons buyers buy (`founder/panel/results.md`). If the positioning is\nmissing, ask for it or run `/founder-marketing` first.\n\n## Step 2: name candidates\n\nTen candidates across different styles (descriptive, evocative, invented, the\nfounder's name, a place). For each: what it says, how it sounds out loud, how it\nreads on a sign or an app icon, and the risk. Then shortlist three and run the\nchecks the user must finish themselves:\n\n- **Trademark**: search the official register for each market (USPTO in the US,\n  CIPO in Canada, EUIPO in the EU, UKIPO in the UK) for the name in the same class\n  of goods and services. Give the search links and the classes to check.\n- **Domain**: whether the .com and the local domain are free (check, do not\n  assume); good alternatives if not.\n- **Handles**: Instagram, TikTok, X, YouTube.\n- **Confusion**: no name close to a competitor in `founder/competitors.md`.\n\nSay plainly that you can only run public searches, a trademark lawyer confirms it,\nand nothing is registered until the user registers it.\n\n## Step 3: voice and promise\n\n- The one-line promise (what the customer can count on, every time).\n- A tagline, three options.\n- The voice in three adjectives, each with a do and a don't, and a before/after\n  rewrite of one line from `founder/pitch.md`.\n\n## Step 4: the look, as a brief\n\n- **Colour**: 2 to 3 core colours with hex values and the job of each, plus the\n  contrast check for text on each (WCAG AA at least).\n- **Type**: one display and one text face, free or licensed, with where to get\n  them. No font the user does not have a licence for.\n- **Logo brief**: what it must say, where it must work (a sign, a cup, a 32px app\n  icon), what to avoid. Offer to generate concepts with an image tool if the user\n  has one; mark generated concepts as concepts, not a finished logo.\n- **The first five touchpoints**: the sign or homepage, the packaging, the receipt\n  or confirmation, the first social post, the reply to the first complaint.\n\n## Rules\n\n- Never copy a competitor's name, logo, colours or tagline.\n- No fonts, images or icons the user has no right to use.\n- Not legal advice on trademarks.\n\n## Output\n\n`founder/brand.md`. Next: `/founder-ops` and `/founder-launch`.\n"
+    },
+    {
+      "slug": "founder-cfo",
+      "name": "founder-cfo",
+      "dir": "skills/founder-cfo",
+      "path": "skills/founder-cfo/SKILL.md",
+      "desc": "Your CFO. Builds the unit economics of a business before money is spent: what one unit earns after its direct costs, the real profit margin at the planned volume, the break-even point in units a day, year 1 month by month, the cash needed before it pays for itself, how long the startup spend takes to earn back, and what happens if the price drops, sales come in low or costs rise. Every number traces to an input the user can check. Use when the user says \"find the profit margins\", \"do the numbers\", \"is this profitable\", \"break-even\", \"unit economics\", \"how much do I need to start\", or \"run the CFO\".",
+      "descZh": "",
+      "triggers": [
+        "do the numbers",
+        "is this profitable",
+        "break-ev"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python3"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Jakeschincariol/founder-skill.git",
+        "copy": "cp -r skills/founder-cfo ~/.claude/skills/founder-cfo",
+        "raw": "https://raw.githubusercontent.com/Jakeschincariol/founder-skill/fd9385b0cfe1b96bebce3898fbd506d73eff5a9d/skills/founder-cfo/SKILL.md",
+        "saveAs": "~/.claude/skills/founder-cfo/SKILL.md",
+        "marketplace": "/plugin marketplace add Jakeschincariol/founder-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:38cc75b484758bff0fb333f7703d0658a0969349d10bd664539f7a06e96917ce",
+      "bytes": 4567,
+      "wordCount": 620,
+      "repoLicense": "MIT",
+      "commit": "fd9385b0cfe1b96bebce3898fbd506d73eff5a9d",
+      "branch": "main",
+      "body": "---\nname: founder-cfo\ndescription: >-\n  Your CFO. Builds the unit economics of a business before money is spent: what\n  one unit earns after its direct costs, the real profit margin at the planned\n  volume, the break-even point in units a day, year 1 month by month, the cash\n  needed before it pays for itself, how long the startup spend takes to earn back,\n  and what happens if the price drops, sales come in low or costs rise. Every\n  number traces to an input the user can check. Use when the user says \"find the\n  profit margins\", \"do the numbers\", \"is this profitable\", \"break-even\", \"unit\n  economics\", \"how much do I need to start\", or \"run the CFO\".\nargument-hint: \"[path to numbers.json]\"\n---\n\n# founder-cfo\n\nThe person who asks \"and what does that cost?\" Margins decide whether a good idea\nis a business. This skill finds them, with every number traceable to an input.\n\nTool in this folder:\n\n```bash\npython3 \"${CLAUDE_SKILL_DIR}/unit_economics.py\" founder/numbers.json --out founder/cfo.md\n```\n\n## Step 1: gather the inputs\n\nWrite `founder/numbers.json` (shape: `example.json` in this folder, a walk-in\nmatcha café). It needs:\n\n| field | what goes in it |\n| --- | --- |\n| `unit` | what one sale is: a cup, an order, a client-month, a seat |\n| `price` | price per unit before tax |\n| `variable` | the cost of ONE unit: ingredients, packaging, shipping, card fees, per-sale commissions |\n| `fixed_monthly` | what you pay every month regardless: rent, salaries, software, insurance |\n| `startup` | one-off spend before opening: deposits, build-out, equipment, first inventory, launch ads |\n| `plan_per_day` | the volume once it is up and running |\n| `ramp_per_day` | 12 numbers: realistic volume in each month of year 1 |\n| `capacity_per_day` | the most you can physically sell in a day, if there is a limit |\n\nWhere the numbers come from, in this order:\n\n1. The user's own quotes, invoices, leases and supplier price lists.\n2. Public prices the user can check (a supplier's price list, a landlord's listing,\n   a payment processor's published fees). Write the source next to the number in\n   `founder/cfo-sources.md`.\n3. Your estimate, clearly marked as an estimate, with the reasoning. Never present\n   an estimate as a fact.\n\nAsk the user for anything only they know (rent quoted, wages they will pay). Use the\nprice from `founder/pricing.md` or `founder/pitch.md` if those exist.\n\n**The ramp is where plans lie.** Month 1 is almost never the plan volume. If the\nbuyer panel ran, use its buy rate and first-month purchases to sanity-check the\nramp (`founder/panel/results.md`), and say how you did it.\n\n## Step 2: run it\n\n```bash\npython3 \"${CLAUDE_SKILL_DIR}/unit_economics.py\" founder/numbers.json --out founder/cfo.md\n```\n\nIt writes: the per-unit table and the contribution (what each sale leaves after\nits own costs), fixed costs, the break-even in units a day, the profit margin at\nthe plan volume, year 1 month by month, the year 1 operating profit and the result\nafter the startup spend, the cash needed before it pays for itself, the month the\nstartup money is earned back, and a what-if table (price -10%, volume -20%, unit\ncosts +15%). It flags a price below variable cost, a break-even above capacity, a\nlosing year 1 and a payback beyond 12 months.\n\nWhat-ifs without editing the file:\n\n```bash\npython3 \"${CLAUDE_SKILL_DIR}/unit_economics.py\" founder/numbers.json --price 7.00\npython3 \"${CLAUDE_SKILL_DIR}/unit_economics.py\" founder/numbers.json --volume 0.8\n```\n\n## Step 3: the CFO's note\n\nAdd a short section at the top of `founder/cfo.md`, in plain words:\n\n- **The margin**: the profit margin at plan, and the contribution per unit.\n- **The line to watch**: the one cost or assumption that moves the result most\n  (usually the ramp, rent or the price), with the what-if that proves it.\n- **Cash**: how much money the founder needs before it pays for itself.\n- **Three ways to improve the margin**, each with the number it changes and by how\n  much (run the what-if, do not guess).\n- Whether the board's conditions about money (`founder/board.md`) are met.\n\n## Rules\n\n- Every number in your note comes from the tool's output or an input you can name.\n- Revenue is before tax; say if the user's market adds sales tax on top.\n- Not financial, tax or legal advice. Say once that an accountant should check the\n  structure, payroll costs and tax before money moves.\n\n## Output\n\n`founder/numbers.json`, `founder/cfo.md`, `founder/cfo-sources.md`. Next:\n`/founder-plan` uses these numbers for the verdict; `/founder-pricing` if the\nmargin is thin.\n",
+      "bodyMd": "# founder-cfo\n\nThe person who asks \"and what does that cost?\" Margins decide whether a good idea\nis a business. This skill finds them, with every number traceable to an input.\n\nTool in this folder:\n\n```bash\npython3 \"${CLAUDE_SKILL_DIR}/unit_economics.py\" founder/numbers.json --out founder/cfo.md\n```\n\n## Step 1: gather the inputs\n\nWrite `founder/numbers.json` (shape: `example.json` in this folder, a walk-in\nmatcha café). It needs:\n\n| field | what goes in it |\n| --- | --- |\n| `unit` | what one sale is: a cup, an order, a client-month, a seat |\n| `price` | price per unit before tax |\n| `variable` | the cost of ONE unit: ingredients, packaging, shipping, card fees, per-sale commissions |\n| `fixed_monthly` | what you pay every month regardless: rent, salaries, software, insurance |\n| `startup` | one-off spend before opening: deposits, build-out, equipment, first inventory, launch ads |\n| `plan_per_day` | the volume once it is up and running |\n| `ramp_per_day` | 12 numbers: realistic volume in each month of year 1 |\n| `capacity_per_day` | the most you can physically sell in a day, if there is a limit |\n\nWhere the numbers come from, in this order:\n\n1. The user's own quotes, invoices, leases and supplier price lists.\n2. Public prices the user can check (a supplier's price list, a landlord's listing,\n   a payment processor's published fees). Write the source next to the number in\n   `founder/cfo-sources.md`.\n3. Your estimate, clearly marked as an estimate, with the reasoning. Never present\n   an estimate as a fact.\n\nAsk the user for anything only they know (rent quoted, wages they will pay). Use the\nprice from `founder/pricing.md` or `founder/pitch.md` if those exist.\n\n**The ramp is where plans lie.** Month 1 is almost never the plan volume. If the\nbuyer panel ran, use its buy rate and first-month purchases to sanity-check the\nramp (`founder/panel/results.md`), and say how you did it.\n\n## Step 2: run it\n\n```bash\npython3 \"${CLAUDE_SKILL_DIR}/unit_economics.py\" founder/numbers.json --out founder/cfo.md\n```\n\nIt writes: the per-unit table and the contribution (what each sale leaves after\nits own costs), fixed costs, the break-even in units a day, the profit margin at\nthe plan volume, year 1 month by month, the year 1 operating profit and the result\nafter the startup spend, the cash needed before it pays for itself, the month the\nstartup money is earned back, and a what-if table (price -10%, volume -20%, unit\ncosts +15%). It flags a price below variable cost, a break-even above capacity, a\nlosing year 1 and a payback beyond 12 months.\n\nWhat-ifs without editing the file:\n\n```bash\npython3 \"${CLAUDE_SKILL_DIR}/unit_economics.py\" founder/numbers.json --price 7.00\npython3 \"${CLAUDE_SKILL_DIR}/unit_economics.py\" founder/numbers.json --volume 0.8\n```\n\n## Step 3: the CFO's note\n\nAdd a short section at the top of `founder/cfo.md`, in plain words:\n\n- **The margin**: the profit margin at plan, and the contribution per unit.\n- **The line to watch**: the one cost or assumption that moves the result most\n  (usually the ramp, rent or the price), with the what-if that proves it.\n- **Cash**: how much money the founder needs before it pays for itself.\n- **Three ways to improve the margin**, each with the number it changes and by how\n  much (run the what-if, do not guess).\n- Whether the board's conditions about money (`founder/board.md`) are met.\n\n## Rules\n\n- Every number in your note comes from the tool's output or an input you can name.\n- Revenue is before tax; say if the user's market adds sales tax on top.\n- Not financial, tax or legal advice. Say once that an accountant should check the\n  structure, payroll costs and tax before money moves.\n\n## Output\n\n`founder/numbers.json`, `founder/cfo.md`, `founder/cfo-sources.md`. Next:\n`/founder-plan` uses these numbers for the verdict; `/founder-pricing` if the\nmargin is thin.\n"
+    },
+    {
+      "slug": "founder-competitors",
+      "name": "founder-competitors",
+      "dir": "skills/founder-competitors",
+      "path": "skills/founder-competitors/SKILL.md",
+      "desc": "Maps every competitor and the gap they leave. Finds the direct competitors, indirect ones and the substitutes a buyer would use instead, from public sources only, and records what each sells, at what price, how they position themselves and what their customers complain about in public reviews, every fact with a link. Ends with a positioning map and the gap the new business can own. Use when the user says \"who are my competitors\", \"is this market crowded\", \"what else is out there\", \"competitor analysis\", \"find the gap\", or \"who am I up against\".",
+      "descZh": "",
+      "triggers": [
+        "is this market crowded",
+        "what else is out there"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Jakeschincariol/founder-skill.git",
+        "copy": "cp -r skills/founder-competitors ~/.claude/skills/founder-competitors",
+        "raw": "https://raw.githubusercontent.com/Jakeschincariol/founder-skill/fd9385b0cfe1b96bebce3898fbd506d73eff5a9d/skills/founder-competitors/SKILL.md",
+        "saveAs": "~/.claude/skills/founder-competitors/SKILL.md",
+        "marketplace": "/plugin marketplace add Jakeschincariol/founder-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:cdc71a965b2e66622a11516e58b8b55fc7cf13c9b0c38fc95d2667772a6accec",
+      "bytes": 3373,
+      "wordCount": 447,
+      "repoLicense": "MIT",
+      "commit": "fd9385b0cfe1b96bebce3898fbd506d73eff5a9d",
+      "branch": "main",
+      "body": "---\nname: founder-competitors\ndescription: >-\n  Maps every competitor and the gap they leave. Finds the direct competitors,\n  indirect ones and the substitutes a buyer would use instead, from public\n  sources only, and records what each sells, at what price, how they position\n  themselves and what their customers complain about in public reviews, every fact\n  with a link. Ends with a positioning map and the gap the new business can own.\n  Use when the user says \"who are my competitors\", \"is this market crowded\", \"what\n  else is out there\", \"competitor analysis\", \"find the gap\", or \"who am I up\n  against\".\nargument-hint: \"[city or market]\"\n---\n\n# founder-competitors\n\nEvery buyer already solves this problem somehow. This skill finds out how, what\nthey pay, and what they hate about it, so the new business starts with a gap\ninstead of a guess.\n\n## The rules\n\n- **Public sources only, every fact linked.** Websites, price pages, menus, app\n  store and Google Maps listings, review sites, Reddit, news. If a source cannot be\n  reached, say so. Never invent a competitor, a price, a rating or a review.\n- **Read, do not scrape.** Read pages as a person would. Respect each site's terms.\n- **Quotes are verbatim**, short, with the link. They are research, never\n  testimonials.\n\n## Step 1: who is there\n\nFrom `founder/idea.md` (write it first if missing; see `/founder-board` step 0):\n\n| type | what it means | example for a matcha café |\n| --- | --- | --- |\n| Direct | sells the same thing to the same buyer | other matcha bars within walking distance |\n| Indirect | a different product for the same job | the coffee shops on the same street |\n| Substitute | how buyers solve it without a business | matcha powder at home, canned drinks |\n\nAim for 5 to 10 direct and indirect, plus the main substitutes. For a local\nbusiness, search the map for the exact area; for online, search how a buyer would\n(\"best <thing> for <who>\", \"<thing> alternative\").\n\n## Step 2: the facts\n\nOne row per competitor in `founder/competitors.csv`:\n\n`name,type,url,location_or_channel,price_of_comparable_item,what_it_sells,positioning_line,rating,review_count,source_date`\n\n`positioning_line` is their own headline or tagline, copied. Price is for the item\nclosest to what the new business sells, with what it includes.\n\n## Step 3: what their customers say\n\nFor the top 3 to 5, read their reviews (1 to 3 stars first, then the \"love it,\nbut...\" 4 stars). Note recurring complaints as themes with counts and one or two\nlinked quotes each. Mark a theme thin if it has under three reviews.\n\n## Step 4: the map and the gap\n\nWrite `founder/competitors.md`:\n\n1. The table (from the CSV), sorted by how directly each competes.\n2. Price range: lowest, median, highest for the comparable item.\n3. A positioning map in text: two axes that matter to this buyer (price and\n   convenience, quality and speed...), where each competitor sits.\n4. The complaints, ranked, with links.\n5. **The gap**: what nobody does well that this business could, tied to the\n   evidence. If there is no gap, say so plainly; that is the most useful result\n   this skill can give.\n6. The threat: who could copy the new business fastest, and how.\n\n## Output\n\n`founder/competitors.csv`, `founder/competitors.md`. Next: `/founder-consumer`\nuses the complaints to write real objections; `/founder-pricing` uses the price\nrange.\n",
+      "bodyMd": "# founder-competitors\n\nEvery buyer already solves this problem somehow. This skill finds out how, what\nthey pay, and what they hate about it, so the new business starts with a gap\ninstead of a guess.\n\n## The rules\n\n- **Public sources only, every fact linked.** Websites, price pages, menus, app\n  store and Google Maps listings, review sites, Reddit, news. If a source cannot be\n  reached, say so. Never invent a competitor, a price, a rating or a review.\n- **Read, do not scrape.** Read pages as a person would. Respect each site's terms.\n- **Quotes are verbatim**, short, with the link. They are research, never\n  testimonials.\n\n## Step 1: who is there\n\nFrom `founder/idea.md` (write it first if missing; see `/founder-board` step 0):\n\n| type | what it means | example for a matcha café |\n| --- | --- | --- |\n| Direct | sells the same thing to the same buyer | other matcha bars within walking distance |\n| Indirect | a different product for the same job | the coffee shops on the same street |\n| Substitute | how buyers solve it without a business | matcha powder at home, canned drinks |\n\nAim for 5 to 10 direct and indirect, plus the main substitutes. For a local\nbusiness, search the map for the exact area; for online, search how a buyer would\n(\"best <thing> for <who>\", \"<thing> alternative\").\n\n## Step 2: the facts\n\nOne row per competitor in `founder/competitors.csv`:\n\n`name,type,url,location_or_channel,price_of_comparable_item,what_it_sells,positioning_line,rating,review_count,source_date`\n\n`positioning_line` is their own headline or tagline, copied. Price is for the item\nclosest to what the new business sells, with what it includes.\n\n## Step 3: what their customers say\n\nFor the top 3 to 5, read their reviews (1 to 3 stars first, then the \"love it,\nbut...\" 4 stars). Note recurring complaints as themes with counts and one or two\nlinked quotes each. Mark a theme thin if it has under three reviews.\n\n## Step 4: the map and the gap\n\nWrite `founder/competitors.md`:\n\n1. The table (from the CSV), sorted by how directly each competes.\n2. Price range: lowest, median, highest for the comparable item.\n3. A positioning map in text: two axes that matter to this buyer (price and\n   convenience, quality and speed...), where each competitor sits.\n4. The complaints, ranked, with links.\n5. **The gap**: what nobody does well that this business could, tied to the\n   evidence. If there is no gap, say so plainly; that is the most useful result\n   this skill can give.\n6. The threat: who could copy the new business fastest, and how.\n\n## Output\n\n`founder/competitors.csv`, `founder/competitors.md`. Next: `/founder-consumer`\nuses the complaints to write real objections; `/founder-pricing` uses the price\nrange.\n"
+    },
+    {
+      "slug": "founder-consumer",
+      "name": "founder-consumer",
+      "dir": "skills/founder-consumer",
+      "path": "skills/founder-consumer/SKILL.md",
+      "desc": "The consumer panel. Spins up a swarm of buyer sub-agents (default 100, --quick for 20) trained on the user's target customer, each with a different income, age, buying behaviour and objection, shows every one the same pitch, and runs the business through 100 buyer scenarios to see who buys, who doesn't, and why. Tallies the answers into buy rates by segment, the reasons people pass in their own words, what would flip a no, and price answers for founder-pricing. Use when the user says \"would people buy this\", \"test it on customers\", \"run the consumer panel\", \"simulate buyers\", \"who is my customer\", or \"validate demand\".",
+      "descZh": "",
+      "triggers": [
+        "test it on customers",
+        "run the consumer panel"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python3",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Jakeschincariol/founder-skill.git",
+        "copy": "cp -r skills/founder-consumer ~/.claude/skills/founder-consumer",
+        "raw": "https://raw.githubusercontent.com/Jakeschincariol/founder-skill/fd9385b0cfe1b96bebce3898fbd506d73eff5a9d/skills/founder-consumer/SKILL.md",
+        "saveAs": "~/.claude/skills/founder-consumer/SKILL.md",
+        "marketplace": "/plugin marketplace add Jakeschincariol/founder-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:2f13355139a47ba1079dd7b4a16f719a4dbbf684813bb8193e33bdf85b75e1d0",
+      "bytes": 5767,
+      "wordCount": 823,
+      "repoLicense": "MIT",
+      "commit": "fd9385b0cfe1b96bebce3898fbd506d73eff5a9d",
+      "branch": "main",
+      "body": "---\nname: founder-consumer\ndescription: >-\n  The consumer panel. Spins up a swarm of buyer sub-agents (default 100, --quick\n  for 20) trained on the user's target customer, each with a different income,\n  age, buying behaviour and objection, shows every one the same pitch, and runs\n  the business through 100 buyer scenarios to see who buys, who doesn't, and why.\n  Tallies the answers into buy rates by segment, the reasons people pass in their\n  own words, what would flip a no, and price answers for founder-pricing. Use when\n  the user says \"would people buy this\", \"test it on customers\", \"run the\n  consumer panel\", \"simulate buyers\", \"who is my customer\", or \"validate demand\".\nargument-hint: \"[--n 100 | --quick] [--seed S]\"\n---\n\n# founder-consumer\n\nThe craziest part of the pack. Instead of guessing whether people will buy, you\nask a hundred of them, each one a sub-agent playing a specific buyer drawn from\nyour target customer. You are the moderator. You never answer for a buyer.\n\nWhat the user typed after `/founder-consumer`: `$ARGUMENTS`\n\n## The tool\n\nAll bookkeeping goes through `panel.py` in this skill's folder:\n\n```bash\npython3 \"${CLAUDE_SKILL_DIR}/panel.py\" <command>\n```\n\nBelow, `PANEL` means exactly that. If the path is not expanded, use the base\ndirectory Claude Code printed for this skill. State lives in `founder/panel/`.\n\n## Step 1: the target customer\n\nWrite `founder/customer.json` (shape: `customer.example.json` in this folder):\n\n- `business`, and `target`: who the customer is, in one specific line.\n- `segments`: 2 to 4 groups with a `share` and an `income` range [low, high].\n- `behaviours`: 4 to 8 buying behaviours with a `share` and a `how` line\n  (daily regular, deal hunter, reads every review, loyal to a competitor...).\n- `objections`: the 4 to 8 doubts this kind of buyer really has.\n- `habits` (optional): everyday context lines that make a buyer concrete.\n\nGround it in something real. Use what the user knows about their customers, and\nif `/founder-competitors` ran, the complaints in `founder/competitors.md`. If the\nuser has real customer data (interviews, reviews, survey answers), prefer it to\nyour guesses and say which parts are guesses. Show the user the profile in a few\nlines and let them correct it before you deal: a wrong customer makes the whole\npanel wrong.\n\n## Step 2: the pitch\n\nWrite `founder/pitch.md`: what a buyer would actually see. The product, the price,\nwhere and how to get it, any opening offer. Three to six plain lines, no\nsuperlatives, nothing the business cannot deliver. Every buyer sees exactly this.\n\n## Step 3: deal and run\n\n```bash\nPANEL init --customer founder/customer.json --pitch founder/pitch.md --n 100\nPANEL prompts\n```\n\n`init` deals the persona cards (same seed, same cards; the seed is recorded).\n`prompts` writes one brief per buyer and lists them in waves of 10. For each wave,\nsend ONE message with one Agent tool call per buyer in that wave (the Agent tool\nis called Task in older Claude Code versions):\n\n- `subagent_type`: `general-purpose`\n- `description`: `panel <id>`\n- `prompt`: `Read <brief path> and follow it exactly. It is your whole brief.`\n\nWait for the whole wave before the next one. Claude Code runs about 10 tool calls\nat once by default, so 100 buyers is 10 waves. After the last wave:\n\n```bash\nPANEL check      # lists missing or broken answers\nPANEL prompts    # rewrites briefs for those only; run them once more\nPANEL tally\n```\n\nIf a buyer printed its JSON in its reply instead of writing the file (it happens),\nfile its own reply with `PANEL save <id>` and the reply on stdin; `save` refuses\nanything that is not a valid answer. A buyer that fails twice is left out and\ncounted in the results. Never write an answer for a buyer yourself.\n\nBefore a 100-buyer run, tell the user it is 100 sub-agent calls and suggest\n`--quick` (20 buyers) for a first look. Sub-agents write one file each into\n`founder/panel/answers/`; in the default permission mode that is one approval per\nfile, so suggest accept-edits mode (Shift+Tab) for the run.\n\n## Step 4: read it to the user\n\n`PANEL tally` writes `founder/panel/results.md` and `results.json`. Give the user:\n\n1. The headline: \"40 buy · 60 pass\" and the buy rate.\n2. Who buys and who doesn't: the segment and behaviour rows that differ most.\n3. Why they pass: the top three reasons with one quote each, as written.\n4. What would flip a no: the most repeated answers.\n5. One sentence on what to change before spending money, and which skill does it\n   (pricing, offer, marketing).\n\n## Honest limits, say them once\n\nThese are simulated buyers. They are good at surfacing objections, segments and\nwording you had not thought of, and bad at predicting real conversion: language\nmodels lean agreeable, so treat the buy rate as an upper bound. Confirm the big\ncalls with real people (a waitlist, a pre-sale, a landing page with a price)\nbefore signing anything. Do not present panel quotes as customer testimonials.\n\n## The brief every buyer gets\n\n`panel.py` fills the card into a fixed template (see `BRIEF` in the script): who\nthe buyer is (name, age, segment, income, buying behaviour, a habit, the doubt\nthat comes to mind), the pitch word for word, an instruction not to be agreeable\nand not to invent facts, and the exact JSON to write: buys, purchases in the first\nmonth, a reason code, the reason in their own voice, their main objection, what\nwould change their mind, and four price answers (too cheap, a bargain, getting\nexpensive, too expensive). Never edit a brief for one buyer.\n\n## Output\n\n`founder/customer.json`, `founder/pitch.md`, `founder/panel/` (cards, briefs,\nanswers, results). Next: `/founder-pricing` reads the price answers,\n`/founder-offer` and `/founder-marketing` read the objections.\n",
+      "bodyMd": "# founder-consumer\n\nThe craziest part of the pack. Instead of guessing whether people will buy, you\nask a hundred of them, each one a sub-agent playing a specific buyer drawn from\nyour target customer. You are the moderator. You never answer for a buyer.\n\nWhat the user typed after `/founder-consumer`: `$ARGUMENTS`\n\n## The tool\n\nAll bookkeeping goes through `panel.py` in this skill's folder:\n\n```bash\npython3 \"${CLAUDE_SKILL_DIR}/panel.py\" <command>\n```\n\nBelow, `PANEL` means exactly that. If the path is not expanded, use the base\ndirectory Claude Code printed for this skill. State lives in `founder/panel/`.\n\n## Step 1: the target customer\n\nWrite `founder/customer.json` (shape: `customer.example.json` in this folder):\n\n- `business`, and `target`: who the customer is, in one specific line.\n- `segments`: 2 to 4 groups with a `share` and an `income` range [low, high].\n- `behaviours`: 4 to 8 buying behaviours with a `share` and a `how` line\n  (daily regular, deal hunter, reads every review, loyal to a competitor...).\n- `objections`: the 4 to 8 doubts this kind of buyer really has.\n- `habits` (optional): everyday context lines that make a buyer concrete.\n\nGround it in something real. Use what the user knows about their customers, and\nif `/founder-competitors` ran, the complaints in `founder/competitors.md`. If the\nuser has real customer data (interviews, reviews, survey answers), prefer it to\nyour guesses and say which parts are guesses. Show the user the profile in a few\nlines and let them correct it before you deal: a wrong customer makes the whole\npanel wrong.\n\n## Step 2: the pitch\n\nWrite `founder/pitch.md`: what a buyer would actually see. The product, the price,\nwhere and how to get it, any opening offer. Three to six plain lines, no\nsuperlatives, nothing the business cannot deliver. Every buyer sees exactly this.\n\n## Step 3: deal and run\n\n```bash\nPANEL init --customer founder/customer.json --pitch founder/pitch.md --n 100\nPANEL prompts\n```\n\n`init` deals the persona cards (same seed, same cards; the seed is recorded).\n`prompts` writes one brief per buyer and lists them in waves of 10. For each wave,\nsend ONE message with one Agent tool call per buyer in that wave (the Agent tool\nis called Task in older Claude Code versions):\n\n- `subagent_type`: `general-purpose`\n- `description`: `panel <id>`\n- `prompt`: `Read <brief path> and follow it exactly. It is your whole brief.`\n\nWait for the whole wave before the next one. Claude Code runs about 10 tool calls\nat once by default, so 100 buyers is 10 waves. After the last wave:\n\n```bash\nPANEL check      # lists missing or broken answers\nPANEL prompts    # rewrites briefs for those only; run them once more\nPANEL tally\n```\n\nIf a buyer printed its JSON in its reply instead of writing the file (it happens),\nfile its own reply with `PANEL save <id>` and the reply on stdin; `save` refuses\nanything that is not a valid answer. A buyer that fails twice is left out and\ncounted in the results. Never write an answer for a buyer yourself.\n\nBefore a 100-buyer run, tell the user it is 100 sub-agent calls and suggest\n`--quick` (20 buyers) for a first look. Sub-agents write one file each into\n`founder/panel/answers/`; in the default permission mode that is one approval per\nfile, so suggest accept-edits mode (Shift+Tab) for the run.\n\n## Step 4: read it to the user\n\n`PANEL tally` writes `founder/panel/results.md` and `results.json`. Give the user:\n\n1. The headline: \"40 buy · 60 pass\" and the buy rate.\n2. Who buys and who doesn't: the segment and behaviour rows that differ most.\n3. Why they pass: the top three reasons with one quote each, as written.\n4. What would flip a no: the most repeated answers.\n5. One sentence on what to change before spending money, and which skill does it\n   (pricing, offer, marketing).\n\n## Honest limits, say them once\n\nThese are simulated buyers. They are good at surfacing objections, segments and\nwording you had not thought of, and bad at predicting real conversion: language\nmodels lean agreeable, so treat the buy rate as an upper bound. Confirm the big\ncalls with real people (a waitlist, a pre-sale, a landing page with a price)\nbefore signing anything. Do not present panel quotes as customer testimonials.\n\n## The brief every buyer gets\n\n`panel.py` fills the card into a fixed template (see `BRIEF` in the script): who\nthe buyer is (name, age, segment, income, buying behaviour, a habit, the doubt\nthat comes to mind), the pitch word for word, an instruction not to be agreeable\nand not to invent facts, and the exact JSON to write: buys, purchases in the first\nmonth, a reason code, the reason in their own voice, their main objection, what\nwould change their mind, and four price answers (too cheap, a bargain, getting\nexpensive, too expensive). Never edit a brief for one buyer.\n\n## Output\n\n`founder/customer.json`, `founder/pitch.md`, `founder/panel/` (cards, briefs,\nanswers, results). Next: `/founder-pricing` reads the price answers,\n`/founder-offer` and `/founder-marketing` read the objections.\n"
+    },
+    {
+      "slug": "founder-launch",
+      "name": "founder-launch",
+      "dir": "skills/founder-launch",
+      "path": "skills/founder-launch/SKILL.md",
+      "desc": "Your launch lead. Builds a dated, step-by-step launch plan: a cheap real-world test first (a waitlist, a pre-sale or a pop-up with a real price, so real buyers confirm what the simulated panel said), then the countdown to opening day with owners and deadlines, the launch-day run sheet, and the first 30 days of what to measure and what to change. Use when the user says \"how do I launch\", \"launch plan\", \"when can I open\", \"launch checklist\", \"go live\", or \"soft open\".",
+      "descZh": "",
+      "triggers": [
+        "launch plan",
+        "when can I open",
+        "launch checklist",
+        "go"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "go"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Jakeschincariol/founder-skill.git",
+        "copy": "cp -r skills/founder-launch ~/.claude/skills/founder-launch",
+        "raw": "https://raw.githubusercontent.com/Jakeschincariol/founder-skill/fd9385b0cfe1b96bebce3898fbd506d73eff5a9d/skills/founder-launch/SKILL.md",
+        "saveAs": "~/.claude/skills/founder-launch/SKILL.md",
+        "marketplace": "/plugin marketplace add Jakeschincariol/founder-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:fa44e8ff5eb16a74f22cc58febb19ab0e5c962beab7bb138024eaa48a262b2b6",
+      "bytes": 2844,
+      "wordCount": 398,
+      "repoLicense": "MIT",
+      "commit": "fd9385b0cfe1b96bebce3898fbd506d73eff5a9d",
+      "branch": "main",
+      "body": "---\nname: founder-launch\ndescription: >-\n  Your launch lead. Builds a dated, step-by-step launch plan: a cheap real-world\n  test first (a waitlist, a pre-sale or a pop-up with a real price, so real buyers\n  confirm what the simulated panel said), then the countdown to opening day with\n  owners and deadlines, the launch-day run sheet, and the first 30 days of what to\n  measure and what to change. Use when the user says \"how do I launch\", \"launch\n  plan\", \"when can I open\", \"launch checklist\", \"go live\", or \"soft open\".\nargument-hint: \"[target launch date]\"\n---\n\n# founder-launch\n\nLaunching is a project with a date. This skill turns everything else in the pack\ninto a dated plan, and starts with the cheapest way to find out if real people\nwill pay before the big money goes out.\n\n## Step 1: test before you spend\n\nPick the cheapest real test that fits the business, and run it before signing the\nbig costs in `founder/numbers.json`:\n\n| business | the test |\n| --- | --- |\n| physical shop or café | a pop-up, a market stall or a pre-order list with a price and a date |\n| online product | a landing page with the price and a \"pre-order\" or \"join the waitlist\" button |\n| service or agency | three paid pilot clients at the planned price |\n| subscription | a founding-member offer, paid up front |\n\nWrite the success line before running it (for example: 50 pre-orders in two weeks\nat $6.50), and compare the result with the panel's buy rate. If real buyers fall\nwell short of the panel, trust the real buyers and go back to `/founder-offer` or\n`/founder-pricing`.\n\n## Step 2: the countdown\n\nFrom today to launch day, with real dates (ask for the target date; default to the\nearliest realistic one given lead times in `founder/ops.md`). Weekly blocks, each\ntask with an owner and a deadline:\n\n- Legal and money: registration, bank account, permits from `founder/ops.md`.\n- Build: fit-out or website, suppliers ordered by their lead times.\n- Brand: sign, packaging, profiles from `founder/brand.md`.\n- Marketing: the calendar in `founder/marketing.md` from launch minus 14 days.\n- Team: hiring and training on the SOPs.\n- A soft open or friends-and-family day before the public launch.\n\nMark the critical path: the tasks that move the launch date if they slip.\n\n## Step 3: launch day\n\nAn hour-by-hour run sheet: who is where, what goes out on which channel, the\nopening offer, what to do if something breaks (from the risk register).\n\n## Step 4: the first 30 days\n\nThe weekly numbers to track (from the CFO: units a day against break-even; from\nmarketing: the channel numbers), the level that triggers a change, and a review on\ndays 7, 14 and 30 with the questions to answer.\n\n## Output\n\n`founder/launch.md` with the test, the countdown, the run sheet and the 30-day\nreview. Next: `/founder-plan` compiles everything into the business plan.\n",
+      "bodyMd": "# founder-launch\n\nLaunching is a project with a date. This skill turns everything else in the pack\ninto a dated plan, and starts with the cheapest way to find out if real people\nwill pay before the big money goes out.\n\n## Step 1: test before you spend\n\nPick the cheapest real test that fits the business, and run it before signing the\nbig costs in `founder/numbers.json`:\n\n| business | the test |\n| --- | --- |\n| physical shop or café | a pop-up, a market stall or a pre-order list with a price and a date |\n| online product | a landing page with the price and a \"pre-order\" or \"join the waitlist\" button |\n| service or agency | three paid pilot clients at the planned price |\n| subscription | a founding-member offer, paid up front |\n\nWrite the success line before running it (for example: 50 pre-orders in two weeks\nat $6.50), and compare the result with the panel's buy rate. If real buyers fall\nwell short of the panel, trust the real buyers and go back to `/founder-offer` or\n`/founder-pricing`.\n\n## Step 2: the countdown\n\nFrom today to launch day, with real dates (ask for the target date; default to the\nearliest realistic one given lead times in `founder/ops.md`). Weekly blocks, each\ntask with an owner and a deadline:\n\n- Legal and money: registration, bank account, permits from `founder/ops.md`.\n- Build: fit-out or website, suppliers ordered by their lead times.\n- Brand: sign, packaging, profiles from `founder/brand.md`.\n- Marketing: the calendar in `founder/marketing.md` from launch minus 14 days.\n- Team: hiring and training on the SOPs.\n- A soft open or friends-and-family day before the public launch.\n\nMark the critical path: the tasks that move the launch date if they slip.\n\n## Step 3: launch day\n\nAn hour-by-hour run sheet: who is where, what goes out on which channel, the\nopening offer, what to do if something breaks (from the risk register).\n\n## Step 4: the first 30 days\n\nThe weekly numbers to track (from the CFO: units a day against break-even; from\nmarketing: the channel numbers), the level that triggers a change, and a review on\ndays 7, 14 and 30 with the questions to answer.\n\n## Output\n\n`founder/launch.md` with the test, the countdown, the run sheet and the 30-day\nreview. Next: `/founder-plan` compiles everything into the business plan.\n"
+    },
+    {
+      "slug": "founder-marketing",
+      "name": "founder-marketing",
+      "dir": "skills/founder-marketing",
+      "path": "skills/founder-marketing/SKILL.md",
+      "desc": "Your marketing director. Turns the buyer panel and the competitor map into positioning, the channels the target customer actually uses, a 30-day launch campaign with dated posts and ads, the first ten hooks, a budget split and the numbers to watch. Every message answers an objection real or simulated buyers raised. Use when the user says \"how do I market this\", \"marketing plan\", \"launch campaign\", \"how do I get customers\", \"where do I advertise\", \"write my ads\", or \"positioning\".",
+      "descZh": "",
+      "triggers": [
+        "marketing plan",
+        "launch campaign",
+        "how do I get c"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Jakeschincariol/founder-skill.git",
+        "copy": "cp -r skills/founder-marketing ~/.claude/skills/founder-marketing",
+        "raw": "https://raw.githubusercontent.com/Jakeschincariol/founder-skill/fd9385b0cfe1b96bebce3898fbd506d73eff5a9d/skills/founder-marketing/SKILL.md",
+        "saveAs": "~/.claude/skills/founder-marketing/SKILL.md",
+        "marketplace": "/plugin marketplace add Jakeschincariol/founder-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:eb9d725dce17558fbd67d0a1a91a0e0560472fd4a2c43dba629401a02701931e",
+      "bytes": 3356,
+      "wordCount": 452,
+      "repoLicense": "MIT",
+      "commit": "fd9385b0cfe1b96bebce3898fbd506d73eff5a9d",
+      "branch": "main",
+      "body": "---\nname: founder-marketing\ndescription: >-\n  Your marketing director. Turns the buyer panel and the competitor map into\n  positioning, the channels the target customer actually uses, a 30-day launch\n  campaign with dated posts and ads, the first ten hooks, a budget split and the\n  numbers to watch. Every message answers an objection real or simulated buyers\n  raised. Use when the user says \"how do I market this\", \"marketing plan\", \"launch\n  campaign\", \"how do I get customers\", \"where do I advertise\", \"write my ads\", or\n  \"positioning\".\nargument-hint: \"[budget]\"\n---\n\n# founder-marketing\n\nA business no one hears about does not exist. This skill plans how the first\ncustomers hear about it, using what the rest of the pack already learned instead\nof a generic playbook.\n\n## Step 1: read the evidence\n\n- `founder/panel/results.md`: who buys, who doesn't, and why. The segments with the\n  highest buy rate are the first audience. The top objections are what the\n  marketing must answer.\n- `founder/competitors.md`: how competitors position themselves (so you do not\n  sound like them) and the gap.\n- `founder/offer.md` and `founder/pricing.md`: what is being sold, at what price.\n- `founder/numbers.json`: what a customer is worth, which caps what you can spend to\n  win one.\n\nIf none of these exist, say what is missing and offer to run `/founder-consumer\n--quick` first. Do not invent an audience.\n\n## Step 2: positioning\n\nOne line, then the reasons:\n\n```\nFor <the segment that buys most>, who <their problem in their words>,\n<business> is the <category> that <the gap>, unlike <the nearest alternative>.\n```\n\nGive three versions, recommend one, and say which panel evidence supports it.\n\n## Step 3: channels\n\nList where the first audience actually spends attention, specific to the business\ntype and place: foot traffic and window signage, Google Maps, Instagram and TikTok,\nlocal creators, neighbourhood groups, partnerships with nearby businesses, email,\npaid search, paid social. For each: why it fits this buyer, rough cost, and how you\nwill know it worked. Pick two or three to start; say what you are not doing and why.\n\n## Step 4: the 30-day campaign\n\n`founder/marketing.md` gets a dated calendar from launch minus 14 days to launch\nplus 16: what goes out each day, on which channel, with the message. Include:\n\n- **Ten hooks**, each answering one panel objection or using one buyer reason,\n  written for the format (a 3-second opening line for video, a headline for an ad,\n  a sign in the window).\n- The launch-week offer from `founder/pricing.md` and when it ends.\n- What to post when there is nothing new to say (behind the scenes, the making of).\n\n## Step 5: budget and numbers\n\n- The budget split across the chosen channels.\n- The most you can pay to win a customer: from the CFO's contribution per unit and\n  the panel's purchases per buyer, show the sum.\n- The three numbers to watch weekly and the level that means \"change something\".\n\n## Rules\n\n- No fake reviews, follower counts, testimonials, before/afters or \"as seen on\".\n- Panel quotes are research; never use them as customer quotes in ads.\n- Disclose paid partnerships. Follow the advertising rules for claims in the user's\n  market (health and earnings claims especially). Not legal advice.\n\n## Output\n\n`founder/marketing.md`. Next: `/founder-brand`, then `/founder-launch`.\n",
+      "bodyMd": "# founder-marketing\n\nA business no one hears about does not exist. This skill plans how the first\ncustomers hear about it, using what the rest of the pack already learned instead\nof a generic playbook.\n\n## Step 1: read the evidence\n\n- `founder/panel/results.md`: who buys, who doesn't, and why. The segments with the\n  highest buy rate are the first audience. The top objections are what the\n  marketing must answer.\n- `founder/competitors.md`: how competitors position themselves (so you do not\n  sound like them) and the gap.\n- `founder/offer.md` and `founder/pricing.md`: what is being sold, at what price.\n- `founder/numbers.json`: what a customer is worth, which caps what you can spend to\n  win one.\n\nIf none of these exist, say what is missing and offer to run `/founder-consumer\n--quick` first. Do not invent an audience.\n\n## Step 2: positioning\n\nOne line, then the reasons:\n\n```\nFor <the segment that buys most>, who <their problem in their words>,\n<business> is the <category> that <the gap>, unlike <the nearest alternative>.\n```\n\nGive three versions, recommend one, and say which panel evidence supports it.\n\n## Step 3: channels\n\nList where the first audience actually spends attention, specific to the business\ntype and place: foot traffic and window signage, Google Maps, Instagram and TikTok,\nlocal creators, neighbourhood groups, partnerships with nearby businesses, email,\npaid search, paid social. For each: why it fits this buyer, rough cost, and how you\nwill know it worked. Pick two or three to start; say what you are not doing and why.\n\n## Step 4: the 30-day campaign\n\n`founder/marketing.md` gets a dated calendar from launch minus 14 days to launch\nplus 16: what goes out each day, on which channel, with the message. Include:\n\n- **Ten hooks**, each answering one panel objection or using one buyer reason,\n  written for the format (a 3-second opening line for video, a headline for an ad,\n  a sign in the window).\n- The launch-week offer from `founder/pricing.md` and when it ends.\n- What to post when there is nothing new to say (behind the scenes, the making of).\n\n## Step 5: budget and numbers\n\n- The budget split across the chosen channels.\n- The most you can pay to win a customer: from the CFO's contribution per unit and\n  the panel's purchases per buyer, show the sum.\n- The three numbers to watch weekly and the level that means \"change something\".\n\n## Rules\n\n- No fake reviews, follower counts, testimonials, before/afters or \"as seen on\".\n- Panel quotes are research; never use them as customer quotes in ads.\n- Disclose paid partnerships. Follow the advertising rules for claims in the user's\n  market (health and earnings claims especially). Not legal advice.\n\n## Output\n\n`founder/marketing.md`. Next: `/founder-brand`, then `/founder-launch`.\n"
+    },
+    {
+      "slug": "founder-offer",
+      "name": "founder-offer",
+      "dir": "skills/founder-offer",
+      "path": "skills/founder-offer/SKILL.md",
+      "desc": "Builds an offer too good to refuse. Lists every problem the buyer hits on the way to the result they want, turns each into a solution, trims to what is cheap to deliver and valuable to the buyer, and stacks it with honest bonuses, a guarantee the CFO can afford, real urgency and a clear name. Scores it on the value equation (outcome, likelihood, time, effort) and re-tests it on a quick buyer panel. Use when the user says \"make my offer better\", \"why won't people buy\", \"what should I include\", \"guarantee\", \"bonuses\", \"grand slam offer\", or after the panel shows people passing.",
+      "descZh": "",
+      "triggers": [
+        "why won't people buy",
+        "what should I include",
+        "gu"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Jakeschincariol/founder-skill.git",
+        "copy": "cp -r skills/founder-offer ~/.claude/skills/founder-offer",
+        "raw": "https://raw.githubusercontent.com/Jakeschincariol/founder-skill/fd9385b0cfe1b96bebce3898fbd506d73eff5a9d/skills/founder-offer/SKILL.md",
+        "saveAs": "~/.claude/skills/founder-offer/SKILL.md",
+        "marketplace": "/plugin marketplace add Jakeschincariol/founder-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:55630bf289684ba7ba27e62dfbff177c230bddab1a4d68412d6a1ae899a0b222",
+      "bytes": 3576,
+      "wordCount": 470,
+      "repoLicense": "MIT",
+      "commit": "fd9385b0cfe1b96bebce3898fbd506d73eff5a9d",
+      "branch": "main",
+      "body": "---\nname: founder-offer\ndescription: >-\n  Builds an offer too good to refuse. Lists every problem the buyer hits on the way\n  to the result they want, turns each into a solution, trims to what is cheap to\n  deliver and valuable to the buyer, and stacks it with honest bonuses, a guarantee\n  the CFO can afford, real urgency and a clear name. Scores it on the value\n  equation (outcome, likelihood, time, effort) and re-tests it on a quick buyer\n  panel. Use when the user says \"make my offer better\", \"why won't people buy\",\n  \"what should I include\", \"guarantee\", \"bonuses\", \"grand slam offer\", or after the\n  panel shows people passing.\nargument-hint: \"[what you sell]\"\n---\n\n# founder-offer\n\nMost businesses sell a product. Good ones sell an offer: the product plus\neverything that makes buying it an easy yes. This skill builds that, using the\nOffers lens in `../founder-board/lenses.md` as the method (a summary of the\nframework in Alex Hormozi's *$100M Offers*; never present it as his words).\n\n## Step 1: read what is already known\n\n- `founder/idea.md` and `founder/pitch.md`: what is sold today.\n- `founder/panel/results.md`: why buyers pass, in their words. This is the raw\n  material: every top objection should be answered by something in the offer.\n- `founder/numbers.json`: what each extra costs, so the stack stays profitable.\n- `founder/board.md`: the board's conditions.\n\n## Step 2: the problem list\n\nWrite every obstacle between the buyer and the result they want, in the buyer's\nwords: before buying (doubt, price, effort to switch), during (waiting, learning,\ninconvenience), after (does it last, what if it fails). Aim for 15 to 30. Pull\nfrom the panel objections and the competitor complaints first.\n\n## Step 3: solutions, trimmed and stacked\n\nTurn each problem into a solution (a feature, a service, a guarantee, a format).\nScore each on value to the buyer (1 to 5) and cost to deliver (1 to 5, from the\nCFO's numbers). Keep high value, low cost. Stack what is left into:\n\n- **The core**: the thing itself, described by the outcome, not the ingredients.\n- **Bonuses**: two or three, each killing one specific objection.\n- **The guarantee**: what happens if it does not deliver. Model what it costs at a\n  realistic claim rate with the CFO's tool before promising it.\n- **Urgency and scarcity**: only if they are true (a launch week, a limited first\n  batch). Never fake a countdown or a \"only 3 left\".\n- **The name**: a clear, specific name for the offer, not the company.\n\n## Step 4: score it\n\nOn the value equation, before and after, 1 to 10 each: dream outcome, perceived\nlikelihood of getting it, time to the result, effort and sacrifice. Say which\nelement of the stack moves which score.\n\n## Step 5: re-test it\n\nWrite the new offer into `founder/pitch.md` (keep the old one as\n`founder/pitch-v1.md`) and run `/founder-consumer --quick` with the same seed.\nReport the buy rate before and after and which objections dropped. If nothing\nmoved, say so: the problem may be the market or the price, not the offer.\n\n## Rules\n\n- Every promise must be deliverable and affordable; check costs with the CFO.\n- No fake reviews, testimonials, scarcity, discounts or \"as seen on\".\n- Follow the advertising and consumer-protection rules of the user's market for\n  guarantees and claims (health claims especially). Not legal advice.\n\n## Output\n\n`founder/offer.md` (problem list, the stack, costs, the value-equation scores, the\nre-test result) and the updated `founder/pitch.md`. Next: `/founder-cfo` to re-run\nthe numbers with the stack, then `/founder-marketing`.\n",
+      "bodyMd": "# founder-offer\n\nMost businesses sell a product. Good ones sell an offer: the product plus\neverything that makes buying it an easy yes. This skill builds that, using the\nOffers lens in `../founder-board/lenses.md` as the method (a summary of the\nframework in Alex Hormozi's *$100M Offers*; never present it as his words).\n\n## Step 1: read what is already known\n\n- `founder/idea.md` and `founder/pitch.md`: what is sold today.\n- `founder/panel/results.md`: why buyers pass, in their words. This is the raw\n  material: every top objection should be answered by something in the offer.\n- `founder/numbers.json`: what each extra costs, so the stack stays profitable.\n- `founder/board.md`: the board's conditions.\n\n## Step 2: the problem list\n\nWrite every obstacle between the buyer and the result they want, in the buyer's\nwords: before buying (doubt, price, effort to switch), during (waiting, learning,\ninconvenience), after (does it last, what if it fails). Aim for 15 to 30. Pull\nfrom the panel objections and the competitor complaints first.\n\n## Step 3: solutions, trimmed and stacked\n\nTurn each problem into a solution (a feature, a service, a guarantee, a format).\nScore each on value to the buyer (1 to 5) and cost to deliver (1 to 5, from the\nCFO's numbers). Keep high value, low cost. Stack what is left into:\n\n- **The core**: the thing itself, described by the outcome, not the ingredients.\n- **Bonuses**: two or three, each killing one specific objection.\n- **The guarantee**: what happens if it does not deliver. Model what it costs at a\n  realistic claim rate with the CFO's tool before promising it.\n- **Urgency and scarcity**: only if they are true (a launch week, a limited first\n  batch). Never fake a countdown or a \"only 3 left\".\n- **The name**: a clear, specific name for the offer, not the company.\n\n## Step 4: score it\n\nOn the value equation, before and after, 1 to 10 each: dream outcome, perceived\nlikelihood of getting it, time to the result, effort and sacrifice. Say which\nelement of the stack moves which score.\n\n## Step 5: re-test it\n\nWrite the new offer into `founder/pitch.md` (keep the old one as\n`founder/pitch-v1.md`) and run `/founder-consumer --quick` with the same seed.\nReport the buy rate before and after and which objections dropped. If nothing\nmoved, say so: the problem may be the market or the price, not the offer.\n\n## Rules\n\n- Every promise must be deliverable and affordable; check costs with the CFO.\n- No fake reviews, testimonials, scarcity, discounts or \"as seen on\".\n- Follow the advertising and consumer-protection rules of the user's market for\n  guarantees and claims (health claims especially). Not legal advice.\n\n## Output\n\n`founder/offer.md` (problem list, the stack, costs, the value-equation scores, the\nre-test result) and the updated `founder/pitch.md`. Next: `/founder-cfo` to re-run\nthe numbers with the stack, then `/founder-marketing`.\n"
+    },
+    {
+      "slug": "founder-ops",
+      "name": "founder-ops",
+      "dir": "skills/founder-ops",
+      "path": "skills/founder-ops/SKILL.md",
+      "desc": "Your operations manager. Works out how the business actually runs on day one: suppliers and what they cost, who works when, the step-by-step routines for opening, serving or shipping and closing, the tools to run it, the licences and permits to check, and a risk register with what to do when each thing goes wrong. Feeds real costs back to the CFO. Use when the user says \"how do I run this\", \"operations\", \"suppliers\", \"staffing\", \"SOPs\", \"what do I need to open\", \"permits\", or \"day one\".",
+      "descZh": "",
+      "triggers": [
+        "operations",
+        "suppliers",
+        "staffing",
+        "SOPs",
+        "what do"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "go",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Jakeschincariol/founder-skill.git",
+        "copy": "cp -r skills/founder-ops ~/.claude/skills/founder-ops",
+        "raw": "https://raw.githubusercontent.com/Jakeschincariol/founder-skill/fd9385b0cfe1b96bebce3898fbd506d73eff5a9d/skills/founder-ops/SKILL.md",
+        "saveAs": "~/.claude/skills/founder-ops/SKILL.md",
+        "marketplace": "/plugin marketplace add Jakeschincariol/founder-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:687a444046d60d35ac84414997623ce98a3e60d79404fd6d8e1e38ac3ae3db7b",
+      "bytes": 3035,
+      "wordCount": 417,
+      "repoLicense": "MIT",
+      "commit": "fd9385b0cfe1b96bebce3898fbd506d73eff5a9d",
+      "branch": "main",
+      "body": "---\nname: founder-ops\ndescription: >-\n  Your operations manager. Works out how the business actually runs on day one:\n  suppliers and what they cost, who works when, the step-by-step routines for\n  opening, serving or shipping and closing, the tools to run it, the licences and\n  permits to check, and a risk register with what to do when each thing goes\n  wrong. Feeds real costs back to the CFO. Use when the user says \"how do I run\n  this\", \"operations\", \"suppliers\", \"staffing\", \"SOPs\", \"what do I need to open\",\n  \"permits\", or \"day one\".\nargument-hint: \"[city or country]\"\n---\n\n# founder-ops\n\nA plan that works on paper fails at 7am on a Monday. This skill makes sure the\nfirst day, week and month can actually be run, and that the CFO's numbers include\nwhat running it really costs.\n\n## Step 1: what the business has to do every day\n\nFrom `founder/idea.md`, `founder/offer.md` and `founder/numbers.json`, write the\ndaily cycle as a list of steps from first thing to last (for a café: deliveries,\nprep, open, serve, clean, cash up, order; for an online store: orders in, pick,\npack, ship, returns, support). Mark which steps a customer sees.\n\n## Step 2: suppliers\n\nFor every input in the CFO's variable costs and every piece of equipment: two or\nthree real suppliers the user can contact, their public prices or how to get a\nquote, minimum orders, lead times and payment terms. Link the sources. Where only\na quote will tell, say so and add it to the open questions. If a real price\ndiffers from `founder/numbers.json`, update it and say the CFO should re-run.\n\n## Step 3: people\n\nWho does what, when: a weekly rota for the planned volume and for the slow first\nmonth. The roles, the hours, and the wage assumption (from the user, or a public\nsource for the local minimum and typical pay, linked). Payroll costs beyond wages\nvary by country; flag them for the accountant.\n\n## Step 4: routines (SOPs)\n\nShort, numbered routines for the moments that make or break the business: opening,\nthe core service or fulfilment, handling a complaint, closing, and a weekly\nreorder. Each fits on one page someone could follow on their first day.\n\n## Step 5: tools\n\nThe smallest stack that runs it: payments, point of sale or store, scheduling,\nbookkeeping, inventory. Real products with their published prices, and why each.\n\n## Step 6: licences, permits and insurance\n\nA checklist of what businesses of this type usually need in the user's city or\ncountry (registration, tax numbers, health or food permits, signage permits,\ninsurance), each with the official page to confirm it. Say plainly that rules\ndiffer by place and change, and the user must confirm each with the authority or a\nprofessional. Not legal advice.\n\n## Step 7: risk register\n\nThe ten things most likely to go wrong (a supplier runs out, a key person is sick,\nthe card terminal fails, a bad review, a slow month), each with how likely, how\nbad, and the plan.\n\n## Output\n\n`founder/ops.md`, plus updated `founder/numbers.json` if real costs changed. Next:\n`/founder-launch`.\n",
+      "bodyMd": "# founder-ops\n\nA plan that works on paper fails at 7am on a Monday. This skill makes sure the\nfirst day, week and month can actually be run, and that the CFO's numbers include\nwhat running it really costs.\n\n## Step 1: what the business has to do every day\n\nFrom `founder/idea.md`, `founder/offer.md` and `founder/numbers.json`, write the\ndaily cycle as a list of steps from first thing to last (for a café: deliveries,\nprep, open, serve, clean, cash up, order; for an online store: orders in, pick,\npack, ship, returns, support). Mark which steps a customer sees.\n\n## Step 2: suppliers\n\nFor every input in the CFO's variable costs and every piece of equipment: two or\nthree real suppliers the user can contact, their public prices or how to get a\nquote, minimum orders, lead times and payment terms. Link the sources. Where only\na quote will tell, say so and add it to the open questions. If a real price\ndiffers from `founder/numbers.json`, update it and say the CFO should re-run.\n\n## Step 3: people\n\nWho does what, when: a weekly rota for the planned volume and for the slow first\nmonth. The roles, the hours, and the wage assumption (from the user, or a public\nsource for the local minimum and typical pay, linked). Payroll costs beyond wages\nvary by country; flag them for the accountant.\n\n## Step 4: routines (SOPs)\n\nShort, numbered routines for the moments that make or break the business: opening,\nthe core service or fulfilment, handling a complaint, closing, and a weekly\nreorder. Each fits on one page someone could follow on their first day.\n\n## Step 5: tools\n\nThe smallest stack that runs it: payments, point of sale or store, scheduling,\nbookkeeping, inventory. Real products with their published prices, and why each.\n\n## Step 6: licences, permits and insurance\n\nA checklist of what businesses of this type usually need in the user's city or\ncountry (registration, tax numbers, health or food permits, signage permits,\ninsurance), each with the official page to confirm it. Say plainly that rules\ndiffer by place and change, and the user must confirm each with the authority or a\nprofessional. Not legal advice.\n\n## Step 7: risk register\n\nThe ten things most likely to go wrong (a supplier runs out, a key person is sick,\nthe card terminal fails, a bad review, a slow month), each with how likely, how\nbad, and the plan.\n\n## Output\n\n`founder/ops.md`, plus updated `founder/numbers.json` if real costs changed. Next:\n`/founder-launch`.\n"
+    },
+    {
+      "slug": "founder-plan",
+      "name": "founder-plan",
+      "dir": "skills/founder-plan",
+      "path": "skills/founder-plan/SKILL.md",
+      "desc": "Your business planner. Compiles everything the other founder skills wrote (the board's verdict, the competitors, the buyer panel, pricing, the offer, the CFO's numbers, marketing, brand, operations and the launch plan) into one business plan with a verdict at the top that is computed from the numbers, never written by hand: Profitable, Not yet (with the failing numbers) or Incomplete. Adds an executive summary and a one-page version for a partner, lender or investor. Use when the user says \"write my business plan\", \"put it all together\", \"is it profitable\", \"give me the plan\", or at the end of the founder pack.",
+      "descZh": "",
+      "triggers": [
+        "put it all together",
+        "is it profitable",
+        "give m"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python3"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Jakeschincariol/founder-skill.git",
+        "copy": "cp -r skills/founder-plan ~/.claude/skills/founder-plan",
+        "raw": "https://raw.githubusercontent.com/Jakeschincariol/founder-skill/fd9385b0cfe1b96bebce3898fbd506d73eff5a9d/skills/founder-plan/SKILL.md",
+        "saveAs": "~/.claude/skills/founder-plan/SKILL.md",
+        "marketplace": "/plugin marketplace add Jakeschincariol/founder-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:a1f31d0b0d3186f3628416639d9d3d7e4ba95b39fd956d667eaf7a3d5336abab",
+      "bytes": 3430,
+      "wordCount": 440,
+      "repoLicense": "MIT",
+      "commit": "fd9385b0cfe1b96bebce3898fbd506d73eff5a9d",
+      "branch": "main",
+      "body": "---\nname: founder-plan\ndescription: >-\n  Your business planner. Compiles everything the other founder skills wrote (the\n  board's verdict, the competitors, the buyer panel, pricing, the offer, the CFO's\n  numbers, marketing, brand, operations and the launch plan) into one business\n  plan with a verdict at the top that is computed from the numbers, never written\n  by hand: Profitable, Not yet (with the failing numbers) or Incomplete. Adds an\n  executive summary and a one-page version for a partner, lender or investor. Use\n  when the user says \"write my business plan\", \"put it all together\", \"is it\n  profitable\", \"give me the plan\", or at the end of the founder pack.\nargument-hint: \"[--min-buy-rate 0.25]\"\n---\n\n# founder-plan\n\nThe last step. One document a founder can act on, or hand to a partner or a\nlender, built only from what the pack found.\n\nTool in this folder:\n\n```bash\npython3 \"${CLAUDE_SKILL_DIR}/compile.py\" --dir founder\n```\n\n## Step 1: see what is there\n\n```bash\npython3 \"${CLAUDE_SKILL_DIR}/compile.py\" --dir founder --check\n```\n\nprints the verdict and each check. The checks, all computed:\n\n1. Each unit earns money before fixed costs (`founder/numbers.json`).\n2. Year 1 makes an operating profit.\n3. The break-even fits inside capacity, if a capacity was given.\n4. Enough simulated buyers buy (`founder/panel/results.json`; default bar 25%,\n   change it with `--min-buy-rate` and say why).\n\nIf there are no numbers, the verdict is Incomplete: offer to run `/founder-cfo`.\nList the other missing sections with the skill that fills each. Do not fill a\nmissing section yourself from guesses.\n\n## Step 2: the summary\n\nWrite `founder/summary.md`, half a page, plain words:\n\n- What the business is and who it is for, in two sentences.\n- The verdict and the three numbers behind it (margin, break-even, year 1).\n- What the buyer panel and the board agreed on, and where they disagreed.\n- The biggest risk and what will be done about it.\n- What the founder needs to start (cash from the CFO, the first test from launch).\n- The one thing to do this week.\n\nIf the verdict is Not yet, the summary leads with what has to change and which skill\nchanges it. Never soften a failing check.\n\n## Step 3: compile\n\n```bash\npython3 \"${CLAUDE_SKILL_DIR}/compile.py\" --dir founder\n```\n\nwrites `founder/business-plan.md`: title, the verdict and its checks, the key numbers\ntable, the idea, then every section the pack produced (summary, board, competition,\npanel, pricing, offer, numbers, marketing, brand, operations, launch), and what is\nnot done yet.\n\n## Step 4: the one-pager\n\nWrite `founder/one-pager.md` for someone deciding in two minutes: the problem, the\ncustomer, the offer and price, the numbers table, the evidence (panel result,\ncompetitor gap, any real test), what the money is for, and the ask. Same numbers as\nthe plan, word for word.\n\n## Rules\n\n- The verdict comes from `compile.py`. Never write Profitable by hand, and never\n  round a failing number into a passing one.\n- Say once, clearly: the panel is simulated buyers and the numbers are projections;\n  real customers and real quotes confirm them. Not financial, legal or tax advice.\n- If the user wants a PDF or a deck, offer to export the plan, but keep the\n  markdown as the source of truth.\n\n## Output\n\n`founder/summary.md`, `founder/business-plan.md`, `founder/one-pager.md`. Then give\nthe user the verdict in one line and the one thing to do this week.\n",
+      "bodyMd": "# founder-plan\n\nThe last step. One document a founder can act on, or hand to a partner or a\nlender, built only from what the pack found.\n\nTool in this folder:\n\n```bash\npython3 \"${CLAUDE_SKILL_DIR}/compile.py\" --dir founder\n```\n\n## Step 1: see what is there\n\n```bash\npython3 \"${CLAUDE_SKILL_DIR}/compile.py\" --dir founder --check\n```\n\nprints the verdict and each check. The checks, all computed:\n\n1. Each unit earns money before fixed costs (`founder/numbers.json`).\n2. Year 1 makes an operating profit.\n3. The break-even fits inside capacity, if a capacity was given.\n4. Enough simulated buyers buy (`founder/panel/results.json`; default bar 25%,\n   change it with `--min-buy-rate` and say why).\n\nIf there are no numbers, the verdict is Incomplete: offer to run `/founder-cfo`.\nList the other missing sections with the skill that fills each. Do not fill a\nmissing section yourself from guesses.\n\n## Step 2: the summary\n\nWrite `founder/summary.md`, half a page, plain words:\n\n- What the business is and who it is for, in two sentences.\n- The verdict and the three numbers behind it (margin, break-even, year 1).\n- What the buyer panel and the board agreed on, and where they disagreed.\n- The biggest risk and what will be done about it.\n- What the founder needs to start (cash from the CFO, the first test from launch).\n- The one thing to do this week.\n\nIf the verdict is Not yet, the summary leads with what has to change and which skill\nchanges it. Never soften a failing check.\n\n## Step 3: compile\n\n```bash\npython3 \"${CLAUDE_SKILL_DIR}/compile.py\" --dir founder\n```\n\nwrites `founder/business-plan.md`: title, the verdict and its checks, the key numbers\ntable, the idea, then every section the pack produced (summary, board, competition,\npanel, pricing, offer, numbers, marketing, brand, operations, launch), and what is\nnot done yet.\n\n## Step 4: the one-pager\n\nWrite `founder/one-pager.md` for someone deciding in two minutes: the problem, the\ncustomer, the offer and price, the numbers table, the evidence (panel result,\ncompetitor gap, any real test), what the money is for, and the ask. Same numbers as\nthe plan, word for word.\n\n## Rules\n\n- The verdict comes from `compile.py`. Never write Profitable by hand, and never\n  round a failing number into a passing one.\n- Say once, clearly: the panel is simulated buyers and the numbers are projections;\n  real customers and real quotes confirm them. Not financial, legal or tax advice.\n- If the user wants a PDF or a deck, offer to export the plan, but keep the\n  markdown as the source of truth.\n\n## Output\n\n`founder/summary.md`, `founder/business-plan.md`, `founder/one-pager.md`. Then give\nthe user the verdict in one line and the one thing to do this week.\n"
+    },
+    {
+      "slug": "founder-pricing",
+      "name": "founder-pricing",
+      "dir": "skills/founder-pricing",
+      "path": "skills/founder-pricing/SKILL.md",
+      "desc": "Finds the price buyers will actually pay. Reads the consumer panel's four price answers per buyer into a Van Westendorp price-sensitivity range (too cheap, a bargain, getting expensive, too expensive), sets it against what competitors really charge and against the CFO's margin, and recommends a price, a price ladder (good / better / best) and an opening offer to test. Use when the user says \"how much should I charge\", \"price this\", \"is $X too expensive\", \"pricing strategy\", \"what price\", or after the consumer panel.",
+      "descZh": "",
+      "triggers": [
+        "price this",
+        "is $X too expensive",
+        "pricing st"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python3"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Jakeschincariol/founder-skill.git",
+        "copy": "cp -r skills/founder-pricing ~/.claude/skills/founder-pricing",
+        "raw": "https://raw.githubusercontent.com/Jakeschincariol/founder-skill/fd9385b0cfe1b96bebce3898fbd506d73eff5a9d/skills/founder-pricing/SKILL.md",
+        "saveAs": "~/.claude/skills/founder-pricing/SKILL.md",
+        "marketplace": "/plugin marketplace add Jakeschincariol/founder-skill"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:d3ed84d9141c4117820bd372a44148d9e483259a7cbe24b5849d026d333bd59b",
+      "bytes": 3528,
+      "wordCount": 481,
+      "repoLicense": "MIT",
+      "commit": "fd9385b0cfe1b96bebce3898fbd506d73eff5a9d",
+      "branch": "main",
+      "body": "---\nname: founder-pricing\ndescription: >-\n  Finds the price buyers will actually pay. Reads the consumer panel's four price\n  answers per buyer into a Van Westendorp price-sensitivity range (too cheap, a\n  bargain, getting expensive, too expensive), sets it against what competitors\n  really charge and against the CFO's margin, and recommends a price, a price\n  ladder (good / better / best) and an opening offer to test. Use when the user\n  says \"how much should I charge\", \"price this\", \"is $X too expensive\", \"pricing\n  strategy\", \"what price\", or after the consumer panel.\nargument-hint: \"[current price]\"\n---\n\n# founder-pricing\n\nPrice is the fastest lever on the margin and the one founders guess most. This\nskill sets it from three things you can check: what buyers said, what competitors\ncharge, and what the business needs to earn.\n\nTool in this folder:\n\n```bash\npython3 \"${CLAUDE_SKILL_DIR}/van_westendorp.py\" founder/panel/answers --price 6.50 --out founder/pricing-curve.md\n```\n\n## Step 1: what buyers said\n\nIf `/founder-consumer` ran, every buyer answered four price questions. Run the\ntool on `founder/panel/answers` (or a CSV with the columns `too_cheap, cheap,\nexpensive, too_expensive` from real surveys, which beat simulated answers every\ntime). It reports:\n\n| point | meaning |\n| --- | --- |\n| PMC | below this, too many think it is too cheap to be good |\n| OPP | the price with the least resistance either way |\n| IPP | where as many call it a bargain as call it expensive |\n| PME | above this, too many will not buy at all |\n\nPMC to PME is the acceptable range. If the panel has not run, say so and offer to\nrun `/founder-consumer --quick` first. Do not invent a range.\n\n## Step 2: what competitors charge\n\nFrom `founder/competitors.md` (or look them up now, from their own public price\npages, with links): the price of the nearest substitutes for the same job. Note\nwhat each price includes, so you compare like with like. A matcha latte is\ncompared with other matcha lattes and with the coffee it replaces, not with a tea\nbag.\n\n## Step 3: what the business needs\n\nFrom `founder/numbers.json`: the variable cost per unit and the break-even. Run the\nCFO's tool at two or three candidate prices to see the margin and break-even at\neach:\n\n```bash\npython3 \"${CLAUDE_SKILL_DIR}/../founder-cfo/unit_economics.py\" founder/numbers.json --price 7.00\n```\n\n## Step 4: decide\n\nWrite `founder/pricing.md`:\n\n1. **The price**, and why: where it sits in the acceptable range, against the\n   competitors, and the margin it gives (from the tool, not a guess).\n2. **The ladder**, if the business can have one: a good / better / best (size,\n   bundle, subscription, membership) with a reason to step up each rung.\n3. **The opening offer**: an intro price or bonus for launch that does not train\n   buyers to wait for discounts, with an end date.\n4. **What to test with real buyers**: two prices inside the range and how to test\n   them (two landing pages, a pre-sale at each, A/B on the menu board).\n5. The panel's verbatim price objections (top three), so marketing can answer them.\n\n## Rules\n\n- Price answers from simulated buyers pick what to test. They are not proof.\n- Never price below variable cost to \"buy\" customers without saying so, and how\n  long the CFO says the business can afford it.\n- No fake anchors: no \"was $X\" price that was never charged.\n\n## Output\n\n`founder/pricing-curve.md`, `founder/pricing.md`. If the price changed, update\n`founder/numbers.json` and re-run `/founder-cfo`. Next: `/founder-offer`.\n",
+      "bodyMd": "# founder-pricing\n\nPrice is the fastest lever on the margin and the one founders guess most. This\nskill sets it from three things you can check: what buyers said, what competitors\ncharge, and what the business needs to earn.\n\nTool in this folder:\n\n```bash\npython3 \"${CLAUDE_SKILL_DIR}/van_westendorp.py\" founder/panel/answers --price 6.50 --out founder/pricing-curve.md\n```\n\n## Step 1: what buyers said\n\nIf `/founder-consumer` ran, every buyer answered four price questions. Run the\ntool on `founder/panel/answers` (or a CSV with the columns `too_cheap, cheap,\nexpensive, too_expensive` from real surveys, which beat simulated answers every\ntime). It reports:\n\n| point | meaning |\n| --- | --- |\n| PMC | below this, too many think it is too cheap to be good |\n| OPP | the price with the least resistance either way |\n| IPP | where as many call it a bargain as call it expensive |\n| PME | above this, too many will not buy at all |\n\nPMC to PME is the acceptable range. If the panel has not run, say so and offer to\nrun `/founder-consumer --quick` first. Do not invent a range.\n\n## Step 2: what competitors charge\n\nFrom `founder/competitors.md` (or look them up now, from their own public price\npages, with links): the price of the nearest substitutes for the same job. Note\nwhat each price includes, so you compare like with like. A matcha latte is\ncompared with other matcha lattes and with the coffee it replaces, not with a tea\nbag.\n\n## Step 3: what the business needs\n\nFrom `founder/numbers.json`: the variable cost per unit and the break-even. Run the\nCFO's tool at two or three candidate prices to see the margin and break-even at\neach:\n\n```bash\npython3 \"${CLAUDE_SKILL_DIR}/../founder-cfo/unit_economics.py\" founder/numbers.json --price 7.00\n```\n\n## Step 4: decide\n\nWrite `founder/pricing.md`:\n\n1. **The price**, and why: where it sits in the acceptable range, against the\n   competitors, and the margin it gives (from the tool, not a guess).\n2. **The ladder**, if the business can have one: a good / better / best (size,\n   bundle, subscription, membership) with a reason to step up each rung.\n3. **The opening offer**: an intro price or bonus for launch that does not train\n   buyers to wait for discounts, with an end date.\n4. **What to test with real buyers**: two prices inside the range and how to test\n   them (two landing pages, a pre-sale at each, A/B on the menu board).\n5. The panel's verbatim price objections (top three), so marketing can answer them.\n\n## Rules\n\n- Price answers from simulated buyers pick what to test. They are not proof.\n- Never price below variable cost to \"buy\" customers without saying so, and how\n  long the CFO says the business can afford it.\n- No fake anchors: no \"was $X\" price that was never charged.\n\n## Output\n\n`founder/pricing-curve.md`, `founder/pricing.md`. If the price changed, update\n`founder/numbers.json` and re-run `/founder-cfo`. Next: `/founder-offer`.\n"
+    }
+  ]
+}

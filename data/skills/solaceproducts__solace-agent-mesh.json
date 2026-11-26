@@ -1,0 +1,48 @@
+{
+  "repo": "SolaceProducts/solace-agent-mesh",
+  "commit": "6edcf30e1168f526458b7318f199674a45659e3b",
+  "branch": "main",
+  "fetchedAt": "2026-11-26T07:17:46.605Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "support-playbook",
+      "name": "support-playbook",
+      "dir": "examples/support-triage/agent-mesh-config/skills/support-playbook",
+      "path": "examples/support-triage/agent-mesh-config/skills/support-playbook/SKILL.md",
+      "desc": "The support team's rules for the first reply to a customer, plus its knowledge-base articles. Load it before drafting or reviewing any reply to a customer issue.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/SolaceProducts/solace-agent-mesh.git",
+        "copy": "cp -r examples/support-triage/agent-mesh-config/skills/support-playbook ~/.claude/skills/support-playbook",
+        "raw": "https://raw.githubusercontent.com/SolaceProducts/solace-agent-mesh/6edcf30e1168f526458b7318f199674a45659e3b/examples/support-triage/agent-mesh-config/skills/support-playbook/SKILL.md",
+        "saveAs": "~/.claude/skills/support-playbook/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:d68ff24d3befd7e5c93b9cf113f180d71823ab3f7aca5196ad52a9cacbc4e0d7",
+      "bytes": 2268,
+      "wordCount": 314,
+      "repoLicense": "",
+      "commit": "6edcf30e1168f526458b7318f199674a45659e3b",
+      "branch": "main",
+      "body": "---\n# Copyright Solace Corporation\n# SPDX-License-Identifier: Apache-2.0\nname: support-playbook\ndescription: The support team's rules for the first reply to a customer, plus its knowledge-base articles. Load it before drafting or reviewing any reply to a customer issue.\ntags: [support, customer-replies]\n---\n\n# Support playbook\n\nFollow these rules for every first reply to a customer.\n\n## Before you write\n\n1. Search the knowledge base for the customer's problem with\n   `grep_skill_resources` (try two or three key words from the issue, such as\n   `invoice`, `CSV`, `charge`, `503`, `password`), then read any article that\n   matches with `read_skill_resource`. Articles are under `references/kb/`.\n2. If an article matches, the reply must use it: give its steps or its policy\n   in your own words. If no article matches, do not invent product steps,\n   menus or policies.\n\n## What every reply contains\n\n- One sentence that restates the problem in the customer's own terms.\n- When they will hear from us next, as one sentence such as \"We will get back\n  to you by <deadline>.\" The deadline is our commitment to the customer, never\n  a deadline for the customer. Copy it exactly as you were given it; if you\n  were given none, say the team will follow up shortly. Never work out a\n  deadline yourself, and never promise a fix time or a root cause.\n- The answer, if a knowledge-base article covers it.\n- Every item from the triage's missing information, as a numbered list. Skip\n  this list if there is nothing missing.\n- The sign-off \"The Support Team\". No subject line.\n\n## Rules by category\n\n- **Outage:** apologise once, point to the status page in\n  `references/kb/service-status.md`, and say updates follow there.\n- **Billing:** never ask for a full card number, password or bank details.\n  Follow `references/kb/duplicate-charges.md` for duplicate charges.\n- **Account access:** never ask for a password. Follow\n  `references/kb/password-reset.md`.\n- **How-to:** if an article answers the question, the reply is the answer.\n  Keep it to the steps the article gives.\n\n## Tone\n\nPlain, warm and short: at most 150 words before the numbered list. No\nexclamation marks, no \"we apologise for any inconvenience\", no internal\nteam names, priorities or severity labels.\n",
+      "bodyMd": "# Support playbook\n\nFollow these rules for every first reply to a customer.\n\n## Before you write\n\n1. Search the knowledge base for the customer's problem with\n   `grep_skill_resources` (try two or three key words from the issue, such as\n   `invoice`, `CSV`, `charge`, `503`, `password`), then read any article that\n   matches with `read_skill_resource`. Articles are under `references/kb/`.\n2. If an article matches, the reply must use it: give its steps or its policy\n   in your own words. If no article matches, do not invent product steps,\n   menus or policies.\n\n## What every reply contains\n\n- One sentence that restates the problem in the customer's own terms.\n- When they will hear from us next, as one sentence such as \"We will get back\n  to you by <deadline>.\" The deadline is our commitment to the customer, never\n  a deadline for the customer. Copy it exactly as you were given it; if you\n  were given none, say the team will follow up shortly. Never work out a\n  deadline yourself, and never promise a fix time or a root cause.\n- The answer, if a knowledge-base article covers it.\n- Every item from the triage's missing information, as a numbered list. Skip\n  this list if there is nothing missing.\n- The sign-off \"The Support Team\". No subject line.\n\n## Rules by category\n\n- **Outage:** apologise once, point to the status page in\n  `references/kb/service-status.md`, and say updates follow there.\n- **Billing:** never ask for a full card number, password or bank details.\n  Follow `references/kb/duplicate-charges.md` for duplicate charges.\n- **Account access:** never ask for a password. Follow\n  `references/kb/password-reset.md`.\n- **How-to:** if an article answers the question, the reply is the answer.\n  Keep it to the steps the article gives.\n\n## Tone\n\nPlain, warm and short: at most 150 words before the numbered list. No\nexclamation marks, no \"we apologise for any inconvenience\", no internal\nteam names, priorities or severity labels.\n"
+    }
+  ]
+}

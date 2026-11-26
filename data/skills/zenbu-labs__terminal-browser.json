@@ -1,0 +1,53 @@
+{
+  "repo": "zenbu-labs/terminal-browser",
+  "commit": "690f59f2d98cafc5f36f2c1db4c764a1b5f3aa39",
+  "branch": "main",
+  "fetchedAt": "2026-11-26T07:17:50.978Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "verify",
+      "name": "verify",
+      "dir": ".claude/skills/verify",
+      "path": ".claude/skills/verify/SKILL.md",
+      "desc": "Drive an engine app headlessly in a pty, record a video of the whole verification, and open a summary page (video + timeline + checks) with pixel open.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "node",
+          "python",
+          "npx"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/zenbu-labs/terminal-browser.git",
+        "copy": "cp -r .claude/skills/verify ~/.claude/skills/verify",
+        "raw": "https://raw.githubusercontent.com/zenbu-labs/terminal-browser/690f59f2d98cafc5f36f2c1db4c764a1b5f3aa39/.claude/skills/verify/SKILL.md",
+        "saveAs": "~/.claude/skills/verify/SKILL.md",
+        "marketplace": "/plugin marketplace add zenbu-labs/terminal-browser"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:c300f9c8b032a6173cef76dc03cec158c1290eea49c0c5712a52c024812675ce",
+      "bytes": 4092,
+      "wordCount": 530,
+      "repoLicense": "MIT",
+      "commit": "690f59f2d98cafc5f36f2c1db4c764a1b5f3aa39",
+      "branch": "main",
+      "body": "---\nname: verify\ndescription: Drive an engine app headlessly in a pty, record a video of the whole verification, and open a summary page (video + timeline + checks) with pixel open.\n---\n\nApps here render via the kitty graphics protocol, so they can be verified\nwithout a real terminal. Every verification is **recorded**: the harness in\n`tools/verify-recorder/` captures every frame the app emits, overlays your\ninputs (click ripples, caption bar), encodes a video, and generates a summary\npage. Do not hand-roll one-off pty scripts that only dump PNGs.\n\n## Writing a verification\n\nWrite a driver script (in /tmp is fine) using the checked-in package:\n\n```python\nimport sys\nsys.path.insert(0, \"<repo>/tools/verify-recorder\")\nfrom driver import Driver\nfrom recorder import Recorder\n\nrec = Recorder(\"wheel-pan\", title=\"Wheel pan keeps cursor anchored\")\nd = Driver([\"<repo>/engine/target/debug/typing\"], rec,\n           cols=120, rows=32, xpixel=1200, ypixel=800)\n\nd.pump(3.0)                                  # pump between actions so frames arrive\nrec.check(\"app painted\", d.frame_size is not None, f\"{d.frame_size}\")\nw, h = d.frame_size                          # REAL framebuffer size — always use this\n\nd.text(\"hello\", \"type into editor\")          # every input takes a description\nd.click(w // 2, h // 3, \"select the note\")   # mouse coords are pixels (1016 mode)\nd.wheel(w // 2, h // 2, down=True, n=3, description=\"scroll content\")\nd.pump(1.0)\nrec.check(\"scroll redrew\", len(rec.frames) > 40, f\"{len(rec.frames)} frames\")\nrec.still(\"after-scroll\")                    # named snapshot for the summary page\n\nd.stop(\"ctrl+c\")                             # or \"ctrl+q\" depending on the app\nrec.finish()                                 # composites markers, encodes mp4, writes summary\n```\n\n- `Driver` spawns the argv in a pty (TERM=xterm-kitty, TIOCSWINSZ with pixel\n  dims, answers the `\\x1b[?1016$p` mouse probe), decodes kitty `a=T,f=32,o=z`\n  frames, and feeds them to the recorder. Node apps: spawn\n  `[\"npx\", \"tsx\", \"src/main.tsx\", ...]` with `cwd=` the package dir (tsx\n  resolves tsconfig from cwd; a wrong cwd silently drops jsx config).\n- Input methods: `key(\"enter\"/\"esc\"/\"ctrl+q\"/\"super+shift+z\")`, `text`,\n  `click`, `press`/`drag`/`release` (a drag needs all three — `click` sends\n  press+release together), `move`, `wheel`. Descriptions become the video\n  caption bar and the summary timeline — write what the step is *testing*.\n- `rec.check(name, ok, detail)` for every assertion; `rec.still(name)` to pin\n  the current frame into the summary.\n- Give checks real assertions (frame deltas, decoded pixel colors via\n  `recorder.png_read(rec.frames[-1][\"path\"])`) — the summary shows pass/fail.\n\n## Ending a verification (required)\n\n`rec.finish()` prints the run dir and summary path. **Always end by opening\nthe summary in a split:**\n\n```\npixel open file:///tmp/verify-runs/<name>-<stamp>/summary.html\n```\n\nThat page is the deliverable: what was tested (clickable timeline that seeks\nthe video), the checks table, the stills, and the video of the whole run.\nWatch out for FAIL rows before declaring the verification passed.\n\n## Gotchas\n\n- The engine rounds the window down to the cell grid, so the framebuffer can\n  be narrower than the requested winsize. Take coordinates from\n  `d.frame_size`, never from the requested pixels, or clicks land ~5% off.\n- Keep pumping after quit (`d.stop` does) or the exit is never observed.\n- Escape must be kitty CSI-u (`d.key(\"esc\")` handles it); a bare `\\x1b` makes\n  the app swallow the next escape sequence as literal text.\n- If a press lands on a node without handlers, the engine dispatches the click\n  at the *release* position — a missed drag can silently click something else.\n- Hover state only updates on move events; end interactions with a `move` if\n  the screenshot should show hover styling.\n- Apps taking a file path argv need an ABSOLUTE path (their cwd is the\n  package dir).\n- Run artifacts live in `/tmp/verify-runs/<name>-<stamp>/`: `frames/`,\n  `events.jsonl`, `run.json`, `verification.mp4`, `summary.html`.\n",
+      "bodyMd": "Apps here render via the kitty graphics protocol, so they can be verified\nwithout a real terminal. Every verification is **recorded**: the harness in\n`tools/verify-recorder/` captures every frame the app emits, overlays your\ninputs (click ripples, caption bar), encodes a video, and generates a summary\npage. Do not hand-roll one-off pty scripts that only dump PNGs.\n\n## Writing a verification\n\nWrite a driver script (in /tmp is fine) using the checked-in package:\n\n```python\nimport sys\nsys.path.insert(0, \"<repo>/tools/verify-recorder\")\nfrom driver import Driver\nfrom recorder import Recorder\n\nrec = Recorder(\"wheel-pan\", title=\"Wheel pan keeps cursor anchored\")\nd = Driver([\"<repo>/engine/target/debug/typing\"], rec,\n           cols=120, rows=32, xpixel=1200, ypixel=800)\n\nd.pump(3.0)                                  # pump between actions so frames arrive\nrec.check(\"app painted\", d.frame_size is not None, f\"{d.frame_size}\")\nw, h = d.frame_size                          # REAL framebuffer size — always use this\n\nd.text(\"hello\", \"type into editor\")          # every input takes a description\nd.click(w // 2, h // 3, \"select the note\")   # mouse coords are pixels (1016 mode)\nd.wheel(w // 2, h // 2, down=True, n=3, description=\"scroll content\")\nd.pump(1.0)\nrec.check(\"scroll redrew\", len(rec.frames) > 40, f\"{len(rec.frames)} frames\")\nrec.still(\"after-scroll\")                    # named snapshot for the summary page\n\nd.stop(\"ctrl+c\")                             # or \"ctrl+q\" depending on the app\nrec.finish()                                 # composites markers, encodes mp4, writes summary\n```\n\n- `Driver` spawns the argv in a pty (TERM=xterm-kitty, TIOCSWINSZ with pixel\n  dims, answers the `\\x1b[?1016$p` mouse probe), decodes kitty `a=T,f=32,o=z`\n  frames, and feeds them to the recorder. Node apps: spawn\n  `[\"npx\", \"tsx\", \"src/main.tsx\", ...]` with `cwd=` the package dir (tsx\n  resolves tsconfig from cwd; a wrong cwd silently drops jsx config).\n- Input methods: `key(\"enter\"/\"esc\"/\"ctrl+q\"/\"super+shift+z\")`, `text`,\n  `click`, `press`/`drag`/`release` (a drag needs all three — `click` sends\n  press+release together), `move`, `wheel`. Descriptions become the video\n  caption bar and the summary timeline — write what the step is *testing*.\n- `rec.check(name, ok, detail)` for every assertion; `rec.still(name)` to pin\n  the current frame into the summary.\n- Give checks real assertions (frame deltas, decoded pixel colors via\n  `recorder.png_read(rec.frames[-1][\"path\"])`) — the summary shows pass/fail.\n\n## Ending a verification (required)\n\n`rec.finish()` prints the run dir and summary path. **Always end by opening\nthe summary in a split:**\n\n```\npixel open file:///tmp/verify-runs/<name>-<stamp>/summary.html\n```\n\nThat page is the deliverable: what was tested (clickable timeline that seeks\nthe video), the checks table, the stills, and the video of the whole run.\nWatch out for FAIL rows before declaring the verification passed.\n\n## Gotchas\n\n- The engine rounds the window down to the cell grid, so the framebuffer can\n  be narrower than the requested winsize. Take coordinates from\n  `d.frame_size`, never from the requested pixels, or clicks land ~5% off.\n- Keep pumping after quit (`d.stop` does) or the exit is never observed.\n- Escape must be kitty CSI-u (`d.key(\"esc\")` handles it); a bare `\\x1b` makes\n  the app swallow the next escape sequence as literal text.\n- If a press lands on a node without handlers, the engine dispatches the click\n  at the *release* position — a missed drag can silently click something else.\n- Hover state only updates on move events; end interactions with a `move` if\n  the screenshot should show hover styling.\n- Apps taking a file path argv need an ABSOLUTE path (their cwd is the\n  package dir).\n- Run artifacts live in `/tmp/verify-runs/<name>-<stamp>/`: `frames/`,\n  `events.jsonl`, `run.json`, `verification.mp4`, `summary.html`.\n"
+    }
+  ]
+}
