@@ -1,10 +1,54 @@
 {
   "repo": "yetone/magpie",
-  "commit": "a2d8f3d27492fdc875b350d51f7842d99b5253e1",
+  "commit": "ee3fe2a683422c135cceb97b3667b19c0c856437",
   "branch": "main",
-  "fetchedAt": "2026-11-26T21:06:12.600Z",
+  "fetchedAt": "2026-11-27T20:51:27.376Z",
   "parseFail": 0,
   "skills": [
+    {
+      "slug": "magpie-api",
+      "name": "magpie-api",
+      "dir": "internal/gateway/testdata/magpie-api",
+      "path": "internal/gateway/testdata/magpie-api/SKILL.md",
+      "desc": "Read magpie's (usemagpie.ai) own HTTP API from an agent — what is left of every subscription, coding plan and key balance (GET /v1/magpie/quotas), the models available now (GET /v1/models), and which model a routing group picked for a session and what it fell back from (GET /v1/magpie/route). Use when orchestrating work across models or agents through magpie: choosing a model whose provider still has allowance, listing what can be asked for, or following where a turn went.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": true,
+        "network": true,
+        "bins": [
+          "curl",
+          "go"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/yetone/magpie.git",
+        "copy": "cp -r internal/gateway/testdata/magpie-api ~/.claude/skills/magpie-api",
+        "raw": "https://raw.githubusercontent.com/yetone/magpie/ee3fe2a683422c135cceb97b3667b19c0c856437/internal/gateway/testdata/magpie-api/SKILL.md",
+        "saveAs": "~/.claude/skills/magpie-api/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:fe42cc3eff7b2167d76a963316f63f1477ccbf2257df48be66e08cbce95fb41c",
+      "bytes": 6074,
+      "wordCount": 865,
+      "repoLicense": "MIT",
+      "commit": "ee3fe2a683422c135cceb97b3667b19c0c856437",
+      "branch": "main",
+      "body": "---\nname: magpie-api\ndescription: \"Read magpie's (usemagpie.ai) own HTTP API from an agent — what is left of every subscription, coding plan and key balance (GET /v1/magpie/quotas), the models available now (GET /v1/models), and which model a routing group picked for a session and what it fell back from (GET /v1/magpie/route). Use when orchestrating work across models or agents through magpie: choosing a model whose provider still has allowance, listing what can be asked for, or following where a turn went.\"\n---\n\n# magpie API\n\n[magpie](https://usemagpie.ai) serves every model the user has (subscriptions,\nAPI keys, local models, routing groups) on one local gateway, and tells what\nis left of each. Read these endpoints instead of calling vendors yourself.\n\n## Find the gateway and key\n\n- If magpie wired you, your own requests already go to it: the base URL of\n  the provider magpie added to your config (for Claude Code,\n  `ANTHROPIC_BASE_URL` in your environment). Use it without a trailing `/v1`.\n- Else `magpie status --json` prints its `url`; else try\n  `http://127.0.0.1:3425`. `GET /api/hello` answers `{\"name\":\"magpie\",…}`.\n- Send the key your own requests to magpie carry (for Claude Code,\n  `$ANTHROPIC_AUTH_TOKEN`) as `Authorization: Bearer <key>` (or\n  `x-api-key: <key>`). Never print or store it.\n\nOn this computer any key, or none, is taken. From another computer magpie\nanswers only while it is shared on the local network and the request carries\none of its gateway keys. A key held to a budget, models or accounts is told\nonly what it may use; refused, it gets 403 with `error.code` `gateway_key_held`\n(`GET /v1/magpie/limit` tells such a key its own limit).\n\n```sh\nB=${ANTHROPIC_BASE_URL:-http://127.0.0.1:3425}; B=${B%/v1}\ncurl -s \"$B/v1/magpie/quotas?kept=1\" -H \"Authorization: Bearer $ANTHROPIC_AUTH_TOKEN\"\n```\n\n## GET /v1/magpie/quotas\n\nWhat is left now. It asks the vendors (up to about 12 seconds); `?kept=1`\ngives the last readings without asking anyone, for frequent checks.\n\n- `object`: `list`.\n- `data`: one entry per account, coding plan or key.\n  - `provider`: the models that spend it are those whose `/v1/models` id\n    starts with `<provider>/`.\n  - `name`, `user`, `plan`: the provider's name, the account (email, login\n    or key name) when it has several, and the plan's name.\n  - `kind`: `subscription` (a signed-in account), `plan` (a coding plan\n    bought with a key) or `balance` (a key's money).\n  - `windows`: each usage window.\n    - `name`: \"5 hours\", \"Weekly\"….\n    - `used`, `remaining`: percent, 0 to 100. `remaining` 0 is used up\n      until `resetsAt`.\n    - `resetsAt`: when it starts again (RFC 3339).\n    - `unlimited`: it has no limit.\n    - `display`, `amount`, `limit`, `unit`: the vendor's own count, when it\n      counts one (\"1.2k / 3k\").\n    - `text`: the window is its `display` alone (credits held, a gift to\n      claim); its `used` is no reading.\n    - `balance`: what is left, in `unit`, of a wallet with no total; its\n      `used` is no reading either.\n  - `balance`: what a key or account holds (\"$12.40\", \"1.2K credits\").\n  - `error`: why it couldn't be read. That is unknown, not empty: say so.\n  - `asOf`, `readError`: the reading shown is one kept from `asOf`, since a\n    new one failed (`readError` says why).\n  - `readAt`: when what is shown was read, when known.\n  - `lastServedAt`, `last`: when it last answered through magpie, and\n    `last` on the one that answered most recently.\n\n## GET /v1/models\n\nThe models the user has on now, chat models only unless asked\n(`?kind=image,video,embedding,rerank` or `?kind=all`).\n\n- `data`: one entry per model.\n  - `id`: what to send as `model`: `provider/model`, or a routing group's\n    `group/<name>` or `auto/<model>`, which picks a member and falls back.\n  - `owned_by`: the provider serving it (a routing group's first member's).\n  - `display_name`: its name.\n  - `reasoning`, `reasoning_levels`: whether it reasons, and the efforts it\n    takes (`low`, `high`…).\n  - `context_window`, `max_output_tokens`: tokens, when known.\n\nA key held to some models is listed those alone. Requests go to\n`/v1/chat/completions`, `/v1/responses` or `/v1/messages` on the same base.\n\n## GET /v1/magpie/route\n\nWhere a session's latest turn went: name the session with `?session=<id>`\nor an `X-Magpie-Session: <id>` header. Send the same `X-Magpie-Session`\nheader on your own model requests to give them a session; an agent's own\nsession header (Claude Code's, Codex's…) counts too. It answers before the\nreply's first token. `after=<seq>&wait=<seconds>` waits, up to 60 seconds,\nfor the route to change past that `seq`.\n\n- `session`: the session asked.\n- `seq`: the route's place; pass it as `after` to wait for the next.\n- `route`: `null` before the session has one, else:\n  - `asked`, `asked_effort`: the model and effort as asked.\n  - `group`: the routing group's id, when one was asked.\n  - `model`, `effort`: the member being tried, or that answered, as\n    `provider/model`, and the effort it was sent at.\n  - `served`: the model the reply says answered.\n  - `tries`: each member tried, in order; every one before the last failed\n    and was fallen back from.\n    - `model`, `effort`: that member.\n    - `status`, `fail`: its HTTP status, and why it failed.\n    - `done`: it has finished.\n  - `done`, `status`, `error`: the turn has finished, its status, and why\n    it failed.\n\nA key held to a budget, models or accounts is told only the routes of its\nown requests.\n\n## Choosing where to send work\n\nRead the quotas, leave out what is used up (`remaining` 0 in a window whose\n`resetsAt` hasn't come) or has an `error`, and pick a model in `/v1/models`\nwhose id starts with the `provider` of one with room left, or a routing\ngroup, which falls back by itself. To wait for allowance to come back, run\n`magpie quota wait <provider>` (the magpie-quota skill).\n\n## Don't\n\n- Don't call `/v1/magpie/quotas` without `?kept=1` in a loop: it asks the\n  vendors.\n- Don't send requests just to test a model or an account; they are the\n  user's allowance.\n",
+      "bodyMd": "# magpie API\n\n[magpie](https://usemagpie.ai) serves every model the user has (subscriptions,\nAPI keys, local models, routing groups) on one local gateway, and tells what\nis left of each. Read these endpoints instead of calling vendors yourself.\n\n## Find the gateway and key\n\n- If magpie wired you, your own requests already go to it: the base URL of\n  the provider magpie added to your config (for Claude Code,\n  `ANTHROPIC_BASE_URL` in your environment). Use it without a trailing `/v1`.\n- Else `magpie status --json` prints its `url`; else try\n  `http://127.0.0.1:3425`. `GET /api/hello` answers `{\"name\":\"magpie\",…}`.\n- Send the key your own requests to magpie carry (for Claude Code,\n  `$ANTHROPIC_AUTH_TOKEN`) as `Authorization: Bearer <key>` (or\n  `x-api-key: <key>`). Never print or store it.\n\nOn this computer any key, or none, is taken. From another computer magpie\nanswers only while it is shared on the local network and the request carries\none of its gateway keys. A key held to a budget, models or accounts is told\nonly what it may use; refused, it gets 403 with `error.code` `gateway_key_held`\n(`GET /v1/magpie/limit` tells such a key its own limit).\n\n```sh\nB=${ANTHROPIC_BASE_URL:-http://127.0.0.1:3425}; B=${B%/v1}\ncurl -s \"$B/v1/magpie/quotas?kept=1\" -H \"Authorization: Bearer $ANTHROPIC_AUTH_TOKEN\"\n```\n\n## GET /v1/magpie/quotas\n\nWhat is left now. It asks the vendors (up to about 12 seconds); `?kept=1`\ngives the last readings without asking anyone, for frequent checks.\n\n- `object`: `list`.\n- `data`: one entry per account, coding plan or key.\n  - `provider`: the models that spend it are those whose `/v1/models` id\n    starts with `<provider>/`.\n  - `name`, `user`, `plan`: the provider's name, the account (email, login\n    or key name) when it has several, and the plan's name.\n  - `kind`: `subscription` (a signed-in account), `plan` (a coding plan\n    bought with a key) or `balance` (a key's money).\n  - `windows`: each usage window.\n    - `name`: \"5 hours\", \"Weekly\"….\n    - `used`, `remaining`: percent, 0 to 100. `remaining` 0 is used up\n      until `resetsAt`.\n    - `resetsAt`: when it starts again (RFC 3339).\n    - `unlimited`: it has no limit.\n    - `display`, `amount`, `limit`, `unit`: the vendor's own count, when it\n      counts one (\"1.2k / 3k\").\n    - `text`: the window is its `display` alone (credits held, a gift to\n      claim); its `used` is no reading.\n    - `balance`: what is left, in `unit`, of a wallet with no total; its\n      `used` is no reading either.\n  - `balance`: what a key or account holds (\"$12.40\", \"1.2K credits\").\n  - `error`: why it couldn't be read. That is unknown, not empty: say so.\n  - `asOf`, `readError`: the reading shown is one kept from `asOf`, since a\n    new one failed (`readError` says why).\n  - `readAt`: when what is shown was read, when known.\n  - `lastServedAt`, `last`: when it last answered through magpie, and\n    `last` on the one that answered most recently.\n\n## GET /v1/models\n\nThe models the user has on now, chat models only unless asked\n(`?kind=image,video,embedding,rerank` or `?kind=all`).\n\n- `data`: one entry per model.\n  - `id`: what to send as `model`: `provider/model`, or a routing group's\n    `group/<name>` or `auto/<model>`, which picks a member and falls back.\n  - `owned_by`: the provider serving it (a routing group's first member's).\n  - `display_name`: its name.\n  - `reasoning`, `reasoning_levels`: whether it reasons, and the efforts it\n    takes (`low`, `high`…).\n  - `context_window`, `max_output_tokens`: tokens, when known.\n\nA key held to some models is listed those alone. Requests go to\n`/v1/chat/completions`, `/v1/responses` or `/v1/messages` on the same base.\n\n## GET /v1/magpie/route\n\nWhere a session's latest turn went: name the session with `?session=<id>`\nor an `X-Magpie-Session: <id>` header. Send the same `X-Magpie-Session`\nheader on your own model requests to give them a session; an agent's own\nsession header (Claude Code's, Codex's…) counts too. It answers before the\nreply's first token. `after=<seq>&wait=<seconds>` waits, up to 60 seconds,\nfor the route to change past that `seq`.\n\n- `session`: the session asked.\n- `seq`: the route's place; pass it as `after` to wait for the next.\n- `route`: `null` before the session has one, else:\n  - `asked`, `asked_effort`: the model and effort as asked.\n  - `group`: the routing group's id, when one was asked.\n  - `model`, `effort`: the member being tried, or that answered, as\n    `provider/model`, and the effort it was sent at.\n  - `served`: the model the reply says answered.\n  - `tries`: each member tried, in order; every one before the last failed\n    and was fallen back from.\n    - `model`, `effort`: that member.\n    - `status`, `fail`: its HTTP status, and why it failed.\n    - `done`: it has finished.\n  - `done`, `status`, `error`: the turn has finished, its status, and why\n    it failed.\n\nA key held to a budget, models or accounts is told only the routes of its\nown requests.\n\n## Choosing where to send work\n\nRead the quotas, leave out what is used up (`remaining` 0 in a window whose\n`resetsAt` hasn't come) or has an `error`, and pick a model in `/v1/models`\nwhose id starts with the `provider` of one with room left, or a routing\ngroup, which falls back by itself. To wait for allowance to come back, run\n`magpie quota wait <provider>` (the magpie-quota skill).\n\n## Don't\n\n- Don't call `/v1/magpie/quotas` without `?kept=1` in a loop: it asks the\n  vendors.\n- Don't send requests just to test a model or an account; they are the\n  user's allowance.\n"
+    },
     {
       "slug": "greet-user",
       "name": "greet-user",
@@ -31,7 +75,7 @@
       "install": {
         "clone": "git clone --depth 1 https://github.com/yetone/magpie.git",
         "copy": "cp -r internal/sessions/testdata/droid-skills/skills/greet-user ~/.claude/skills/greet-user",
-        "raw": "https://raw.githubusercontent.com/yetone/magpie/a2d8f3d27492fdc875b350d51f7842d99b5253e1/internal/sessions/testdata/droid-skills/skills/greet-user/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/yetone/magpie/ee3fe2a683422c135cceb97b3667b19c0c856437/internal/sessions/testdata/droid-skills/skills/greet-user/SKILL.md",
         "saveAs": "~/.claude/skills/greet-user/SKILL.md",
         "marketplace": ""
       },
@@ -41,7 +85,7 @@
       "bytes": 145,
       "wordCount": 6,
       "repoLicense": "MIT",
-      "commit": "a2d8f3d27492fdc875b350d51f7842d99b5253e1",
+      "commit": "ee3fe2a683422c135cceb97b3667b19c0c856437",
       "branch": "main",
       "body": "---\nname: greet-user\ndescription: Greets the user warmly. Use when the user asks to be greeted.\n---\nReply with exactly: \"Hello from greet-user!\"\n",
       "bodyMd": "Reply with exactly: \"Hello from greet-user!\"\n"
@@ -72,7 +116,7 @@
       "install": {
         "clone": "git clone --depth 1 https://github.com/yetone/magpie.git",
         "copy": "cp -r internal/sessions/testdata/droid-skills/skills/wave-hand ~/.claude/skills/wave-hand",
-        "raw": "https://raw.githubusercontent.com/yetone/magpie/a2d8f3d27492fdc875b350d51f7842d99b5253e1/internal/sessions/testdata/droid-skills/skills/wave-hand/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/yetone/magpie/ee3fe2a683422c135cceb97b3667b19c0c856437/internal/sessions/testdata/droid-skills/skills/wave-hand/SKILL.md",
         "saveAs": "~/.claude/skills/wave-hand/SKILL.md",
         "marketplace": ""
       },
@@ -82,7 +126,7 @@
       "bytes": 128,
       "wordCount": 4,
       "repoLicense": "MIT",
-      "commit": "a2d8f3d27492fdc875b350d51f7842d99b5253e1",
+      "commit": "ee3fe2a683422c135cceb97b3667b19c0c856437",
       "branch": "main",
       "body": "---\nname: wave-hand\ndescription: Waves a hand at the user. Use when the user asks for a wave.\n---\nReply with exactly: \"*waves*\"\n",
       "bodyMd": "Reply with exactly: \"*waves*\"\n"
@@ -113,7 +157,7 @@
       "install": {
         "clone": "git clone --depth 1 https://github.com/yetone/magpie.git",
         "copy": "cp -r internal/sessions/testdata/grok-tools/skills/greet-user ~/.claude/skills/greet-user-2",
-        "raw": "https://raw.githubusercontent.com/yetone/magpie/a2d8f3d27492fdc875b350d51f7842d99b5253e1/internal/sessions/testdata/grok-tools/skills/greet-user/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/yetone/magpie/ee3fe2a683422c135cceb97b3667b19c0c856437/internal/sessions/testdata/grok-tools/skills/greet-user/SKILL.md",
         "saveAs": "~/.claude/skills/greet-user-2/SKILL.md",
         "marketplace": ""
       },
@@ -123,7 +167,7 @@
       "bytes": 158,
       "wordCount": 10,
       "repoLicense": "MIT",
-      "commit": "a2d8f3d27492fdc875b350d51f7842d99b5253e1",
+      "commit": "ee3fe2a683422c135cceb97b3667b19c0c856437",
       "branch": "main",
       "body": "---\nname: greet-user\ndescription: Use when the user asks to be greeted in the house style.\n---\nGreet the user with exactly: \"Ahoy from the greet-user skill!\"\n",
       "bodyMd": "Greet the user with exactly: \"Ahoy from the greet-user skill!\"\n"

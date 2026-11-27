@@ -1,8 +1,8 @@
 {
   "repo": "kunchenguid/compact-adviser",
-  "commit": "37fa1a665b8933de68c90014312060e862cf121a",
+  "commit": "7fe852aff30c5f6d6b2e4e644db6fa8d0af5d0db",
   "branch": "main",
-  "fetchedAt": "2026-11-26T21:10:06.775Z",
+  "fetchedAt": "2026-11-27T20:55:45.407Z",
   "parseFail": 0,
   "skills": [
     {
@@ -35,7 +35,7 @@
       "install": {
         "clone": "git clone --depth 1 https://github.com/kunchenguid/compact-adviser.git",
         "copy": "cp -r .agents/skills/codex-adapter ~/.claude/skills/codex-adapter",
-        "raw": "https://raw.githubusercontent.com/kunchenguid/compact-adviser/37fa1a665b8933de68c90014312060e862cf121a/.agents/skills/codex-adapter/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/kunchenguid/compact-adviser/7fe852aff30c5f6d6b2e4e644db6fa8d0af5d0db/.agents/skills/codex-adapter/SKILL.md",
         "saveAs": "~/.claude/skills/codex-adapter/SKILL.md",
         "marketplace": "/plugin marketplace add kunchenguid/compact-adviser"
       },
@@ -45,7 +45,7 @@
       "bytes": 1217,
       "wordCount": 158,
       "repoLicense": "MIT",
-      "commit": "37fa1a665b8933de68c90014312060e862cf121a",
+      "commit": "7fe852aff30c5f6d6b2e4e644db6fa8d0af5d0db",
       "branch": "main",
       "body": "---\nname: codex-adapter\ndescription: Use when modifying or testing `packages/codex-plugin` or Codex `/compact` behavior.\nuser-invocable: false\nmetadata:\n  internal: true\n---\n\n- Codex adapter (`packages/codex-plugin`, hint-only: nothing outside a Codex session can run `/compact`). Its sources are TypeScript that plain `node` type-strips, so they must stay erasable - no parameter properties, no enums. Codex rebuilds a hook's PATH from a shell snapshot and may have no `node` on it, so hooks go through `hooks/run.sh`, which is silent when it finds none. Judging is gated to the interactive TUI by the rollout's `originator`. The rollout transcript format is explicitly unstable upstream: `src/rollout.ts` never throws and degrades to the strictest floor. `scripts/validate.mjs` checks the package is loadable exactly as shipped. Snooze/dismiss are a known gap and follow-up: suppressing advice safely needs a reliable current-session identity that Codex gives neither the hook nor the CLI, so the CLI could only mutate the most recently written session record. Windows support is a possible follow-up: this ship is macOS and Linux only because the hooks run through POSIX `sh` and have no `commandWindows` entries.\n",
       "bodyMd": "- Codex adapter (`packages/codex-plugin`, hint-only: nothing outside a Codex session can run `/compact`). Its sources are TypeScript that plain `node` type-strips, so they must stay erasable - no parameter properties, no enums. Codex rebuilds a hook's PATH from a shell snapshot and may have no `node` on it, so hooks go through `hooks/run.sh`, which is silent when it finds none. Judging is gated to the interactive TUI by the rollout's `originator`. The rollout transcript format is explicitly unstable upstream: `src/rollout.ts` never throws and degrades to the strictest floor. `scripts/validate.mjs` checks the package is loadable exactly as shipped. Snooze/dismiss are a known gap and follow-up: suppressing advice safely needs a reliable current-session identity that Codex gives neither the hook nor the CLI, so the CLI could only mutate the most recently written session record. Windows support is a possible follow-up: this ship is macOS and Linux only because the hooks run through POSIX `sh` and have no `commandWindows` entries.\n"
@@ -81,7 +81,7 @@
       "install": {
         "clone": "git clone --depth 1 https://github.com/kunchenguid/compact-adviser.git",
         "copy": "cp -r .agents/skills/judge-evaluation ~/.claude/skills/judge-evaluation",
-        "raw": "https://raw.githubusercontent.com/kunchenguid/compact-adviser/37fa1a665b8933de68c90014312060e862cf121a/.agents/skills/judge-evaluation/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/kunchenguid/compact-adviser/7fe852aff30c5f6d6b2e4e644db6fa8d0af5d0db/.agents/skills/judge-evaluation/SKILL.md",
         "saveAs": "~/.claude/skills/judge-evaluation/SKILL.md",
         "marketplace": "/plugin marketplace add kunchenguid/compact-adviser"
       },
@@ -91,7 +91,7 @@
       "bytes": 747,
       "wordCount": 72,
       "repoLicense": "MIT",
-      "commit": "37fa1a665b8933de68c90014312060e862cf121a",
+      "commit": "7fe852aff30c5f6d6b2e4e644db6fa8d0af5d0db",
       "branch": "main",
       "body": "---\nname: judge-evaluation\ndescription: Use when changing or evaluating judge prompts, scoring thresholds, usage floors, or judgment eval corpora.\nuser-invocable: false\nmetadata:\n  internal: true\n---\n\n- Judge design rule, measured: two one-sentence atomic questions composed in code beat any single question that folds two judgments together (TypeSafe's own guidance). Hill-climb prompt changes with `eval/tools/earn.py` (paired bootstrap) and read the usage-floor ladder with `eval/tools/schedule.py`; a clause stays only if it earns its place.\n- Judgment eval harness: `packages/pi-extension/eval/`. Session transcripts, labels, worksheets, and results stay in gitignored `eval/local/`. See that README for the corpus contract and label rubric.\n",
       "bodyMd": "- Judge design rule, measured: two one-sentence atomic questions composed in code beat any single question that folds two judgments together (TypeSafe's own guidance). Hill-climb prompt changes with `eval/tools/earn.py` (paired bootstrap) and read the usage-floor ladder with `eval/tools/schedule.py`; a clause stays only if it earns its place.\n- Judgment eval harness: `packages/pi-extension/eval/`. Session transcripts, labels, worksheets, and results stay in gitignored `eval/local/`. See that README for the corpus contract and label rubric.\n"
@@ -127,7 +127,7 @@
       "install": {
         "clone": "git clone --depth 1 https://github.com/kunchenguid/compact-adviser.git",
         "copy": "cp -r packages/codex-plugin/skills/compact-adviser ~/.claude/skills/compact-adviser",
-        "raw": "https://raw.githubusercontent.com/kunchenguid/compact-adviser/37fa1a665b8933de68c90014312060e862cf121a/packages/codex-plugin/skills/compact-adviser/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/kunchenguid/compact-adviser/7fe852aff30c5f6d6b2e4e644db6fa8d0af5d0db/packages/codex-plugin/skills/compact-adviser/SKILL.md",
         "saveAs": "~/.claude/skills/compact-adviser/SKILL.md",
         "marketplace": "/plugin marketplace add kunchenguid/compact-adviser"
       },
@@ -137,7 +137,7 @@
       "bytes": 2039,
       "wordCount": 296,
       "repoLicense": "MIT",
-      "commit": "37fa1a665b8933de68c90014312060e862cf121a",
+      "commit": "7fe852aff30c5f6d6b2e4e644db6fa8d0af5d0db",
       "branch": "main",
       "body": "---\nname: compact-adviser\ndescription: Read or change compact-adviser settings for Codex - the mode (hint or off), the minimum context before a checkpoint is judged, the context budget, TypeSafe request logging, and the TypeSafe API key. Use when the user asks about compaction advice, the /compact hint, compact-adviser status, or wants to turn the adviser on or off.\n---\n\n# compact-adviser settings\n\ncompact-adviser watches for a completed checkpoint and prints one hint to run `/compact`.\nIt cannot run `/compact` itself: Codex exposes no way for an outside process to do that, so\nthis host is hint-only and there is no automatic mode. Never claim otherwise.\n\n## How to run it\n\nSettings live in a small CLI inside this plugin. From the directory that holds this\n`SKILL.md`, the CLI is at `../../src/cli.ts`; run it with the absolute path:\n\n```bash\nnode \"<this skill's directory>/../../src/cli.ts\" <command>\n```\n\nmacOS or Linux and Node 22.18 or newer are required, because the CLI is TypeScript that Node strips types from and the hooks run through POSIX `sh`.\n\n## Commands\n\n| Command | Effect |\n| --- | --- |\n| `status` | Mode, minimum, budget, key source, the latest session's cooldown, and the request-log path |\n| `hint` | Advise with a hint at eligible checkpoints (the default) |\n| `off` | Stop advising; Codex's own compaction is unaffected |\n| `threshold <tokens\\|default>` | Save an absolute token minimum |\n| `budget <tokens\\|off>` | Save a context budget (`off` clears it): the hint floor relaxes toward this context size, or toward the model's window if that is smaller |\n| `log <on\\|off>` | Log each TypeSafe request and its outcome to a local jsonl file |\n| `key set` | Prompt for a TypeSafe API key and save it; the value is never printed |\n| `key clear` / `key status` | Remove the saved key, or report which source the key in effect came from |\n\n`key set` reads the key from the terminal, so ask the user to run that one themselves rather\nthan passing a key on a command line. Never print, echo, or repeat a key value.\n",
       "bodyMd": "# compact-adviser settings\n\ncompact-adviser watches for a completed checkpoint and prints one hint to run `/compact`.\nIt cannot run `/compact` itself: Codex exposes no way for an outside process to do that, so\nthis host is hint-only and there is no automatic mode. Never claim otherwise.\n\n## How to run it\n\nSettings live in a small CLI inside this plugin. From the directory that holds this\n`SKILL.md`, the CLI is at `../../src/cli.ts`; run it with the absolute path:\n\n```bash\nnode \"<this skill's directory>/../../src/cli.ts\" <command>\n```\n\nmacOS or Linux and Node 22.18 or newer are required, because the CLI is TypeScript that Node strips types from and the hooks run through POSIX `sh`.\n\n## Commands\n\n| Command | Effect |\n| --- | --- |\n| `status` | Mode, minimum, budget, key source, the latest session's cooldown, and the request-log path |\n| `hint` | Advise with a hint at eligible checkpoints (the default) |\n| `off` | Stop advising; Codex's own compaction is unaffected |\n| `threshold <tokens\\|default>` | Save an absolute token minimum |\n| `budget <tokens\\|off>` | Save a context budget (`off` clears it): the hint floor relaxes toward this context size, or toward the model's window if that is smaller |\n| `log <on\\|off>` | Log each TypeSafe request and its outcome to a local jsonl file |\n| `key set` | Prompt for a TypeSafe API key and save it; the value is never printed |\n| `key clear` / `key status` | Remove the saved key, or report which source the key in effect came from |\n\n`key set` reads the key from the terminal, so ask the user to run that one themselves rather\nthan passing a key on a command line. Never print, echo, or repeat a key value.\n"
