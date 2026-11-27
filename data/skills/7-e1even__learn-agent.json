@@ -1,0 +1,95 @@
+{
+  "repo": "7-e1even/learn-agent",
+  "commit": "86642451c685e2ac8cfd0338438ad6eef27645b4",
+  "branch": "main",
+  "fetchedAt": "2026-11-27T07:11:24.257Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "code-review-checklist",
+      "name": "code-review-checklist",
+      "dir": "notes/s10_prompt_assembly/skills/code-review-checklist",
+      "path": "notes/s10_prompt_assembly/skills/code-review-checklist/SKILL.md",
+      "desc": "审查代码改动（review diff / PR）时使用——按固定清单过正确性、边界、错误处理和测试盲区，避免只看顺眼不顺眼。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "cursor"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/7-e1even/learn-agent.git",
+        "copy": "cp -r notes/s10_prompt_assembly/skills/code-review-checklist ~/.claude/skills/code-review-checklist",
+        "raw": "https://raw.githubusercontent.com/7-e1even/learn-agent/86642451c685e2ac8cfd0338438ad6eef27645b4/notes/s10_prompt_assembly/skills/code-review-checklist/SKILL.md",
+        "saveAs": "~/.claude/skills/code-review-checklist/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:e7cde0a90a23154817d6e34a95ed243f4592f63cd6a6d2c6324f46b314a92277",
+      "bytes": 1705,
+      "wordCount": 41,
+      "repoLicense": "MIT",
+      "commit": "86642451c685e2ac8cfd0338438ad6eef27645b4",
+      "branch": "main",
+      "body": "---\nname: code-review-checklist\ndescription: 审查代码改动（review diff / PR）时使用——按固定清单过正确性、边界、错误处理和测试盲区，避免只看顺眼不顺眼。\n---\n\n# 代码审查清单\n\n审查的第一原则：**先读需求再读 diff**。不知道这次改动想达成什么，就只能审出格式问题。\n\n## 正确性（最高优先级）\n\n- 改动是否真的解决了它声称要解决的问题？构造一个具体输入在脑中跑一遍。\n- 有没有\"顺手\"改了不相关的行为？每一行改动都应该能追溯到本次目标。\n- 并发/重入：这段代码被同时调用两次会怎样？\n\n## 边界\n\n- 空集合、空字符串、null/undefined、0、负数、超长输入——逐个问\"这里会怎样\"。\n- 循环的第一次和最后一次迭代是否和中间行为一致？\n- 时区、编码（UTF-8 BOM、CRLF）、路径分隔符这类\"在我机器上没问题\"的经典来源。\n\n## 错误处理\n\n- 失败路径是吞掉、抛出还是返回错误值？和周围代码的约定一致吗？\n- 报错文案是否包含足够上下文（哪个文件、哪个参数、期望什么）让人照做就能修？\n- 资源（文件句柄、子进程、定时器）在错误路径上是否也被释放？\n\n## 测试盲区\n\n- 新增分支有没有对应测试？没有的话，是\"难测\"还是\"忘了\"？\n- 测试断言的是行为还是实现细节？断实现细节的测试会在无害重构时误报。\n\n## 输出格式\n\n按严重度分组给结论：**必须改**（正确性/安全）→ **建议改**（可维护性）→ **可选**（风格）。\n每条指出具体行号和理由，不说\"感觉不太好\"这种无法执行的话。\n",
+      "bodyMd": "# 代码审查清单\n\n审查的第一原则：**先读需求再读 diff**。不知道这次改动想达成什么，就只能审出格式问题。\n\n## 正确性（最高优先级）\n\n- 改动是否真的解决了它声称要解决的问题？构造一个具体输入在脑中跑一遍。\n- 有没有\"顺手\"改了不相关的行为？每一行改动都应该能追溯到本次目标。\n- 并发/重入：这段代码被同时调用两次会怎样？\n\n## 边界\n\n- 空集合、空字符串、null/undefined、0、负数、超长输入——逐个问\"这里会怎样\"。\n- 循环的第一次和最后一次迭代是否和中间行为一致？\n- 时区、编码（UTF-8 BOM、CRLF）、路径分隔符这类\"在我机器上没问题\"的经典来源。\n\n## 错误处理\n\n- 失败路径是吞掉、抛出还是返回错误值？和周围代码的约定一致吗？\n- 报错文案是否包含足够上下文（哪个文件、哪个参数、期望什么）让人照做就能修？\n- 资源（文件句柄、子进程、定时器）在错误路径上是否也被释放？\n\n## 测试盲区\n\n- 新增分支有没有对应测试？没有的话，是\"难测\"还是\"忘了\"？\n- 测试断言的是行为还是实现细节？断实现细节的测试会在无害重构时误报。\n\n## 输出格式\n\n按严重度分组给结论：**必须改**（正确性/安全）→ **建议改**（可维护性）→ **可选**（风格）。\n每条指出具体行号和理由，不说\"感觉不太好\"这种无法执行的话。\n"
+    },
+    {
+      "slug": "git-commit-convention",
+      "name": "git-commit-convention",
+      "dir": "notes/s10_prompt_assembly/skills/git-commit-convention",
+      "path": "notes/s10_prompt_assembly/skills/git-commit-convention/SKILL.md",
+      "desc": "写 git 提交信息、整理提交历史时使用——Conventional Commits 的格式、类型选择和拆分原则。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "cursor"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/7-e1even/learn-agent.git",
+        "copy": "cp -r notes/s10_prompt_assembly/skills/git-commit-convention ~/.claude/skills/git-commit-convention",
+        "raw": "https://raw.githubusercontent.com/7-e1even/learn-agent/86642451c685e2ac8cfd0338438ad6eef27645b4/notes/s10_prompt_assembly/skills/git-commit-convention/SKILL.md",
+        "saveAs": "~/.claude/skills/git-commit-convention/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:3f9d69f9da8c7443e73925d1e058a9d9a751f5adbe51cc80c472566649a7224f",
+      "bytes": 1469,
+      "wordCount": 109,
+      "repoLicense": "MIT",
+      "commit": "86642451c685e2ac8cfd0338438ad6eef27645b4",
+      "branch": "main",
+      "body": "---\nname: git-commit-convention\ndescription: 写 git 提交信息、整理提交历史时使用——Conventional Commits 的格式、类型选择和拆分原则。\n---\n\n# Git 提交规范\n\n## 格式\n\n```\n<type>(<scope>): <subject>\n\n<body>\n\n<footer>\n```\n\n- `type` 必选，`scope` 可选（改动涉及的模块/目录名），`subject` 必选。\n- subject 用祈使句（\"add\" 不是 \"added\"），不加句号，不超过 50 字符。\n- body 讲**为什么改**，不复述 diff 里能看到的\"改了什么\"。\n- 一次提交只做一件事：重构和功能修改不混在同一个提交里。\n\n## type 怎么选\n\n| type | 用于 |\n|---|---|\n| feat | 新功能（用户可感知的行为变化） |\n| fix | 修 bug（引用 issue 编号写进 footer） |\n| refactor | 不改行为的结构调整 |\n| test | 只增改测试 |\n| docs | 只改文档/注释 |\n| chore | 构建、依赖、CI 等工程杂务 |\n\n拿不准 feat 还是 fix：问\"用户之前的预期是什么\"——之前就该这样但没做到 = fix；之前没有这个预期 = feat。\n\n## footer\n\n- 不兼容变更：以 `BREAKING CHANGE:` 开头，说明迁移方法。\n- 关联 issue：`Closes #123`。\n\n## 提交前自查\n\n1. `git diff --staged` 过一遍：有没有混进无关文件（调试代码、锁文件意外变更）？\n2. 这个提交单独 revert 时，代码库还能编译/测试通过吗？不能 → 拆分方式有问题。\n3. subject 能让三个月后的自己一眼看懂吗？\n",
+      "bodyMd": "# Git 提交规范\n\n## 格式\n\n```\n<type>(<scope>): <subject>\n\n<body>\n\n<footer>\n```\n\n- `type` 必选，`scope` 可选（改动涉及的模块/目录名），`subject` 必选。\n- subject 用祈使句（\"add\" 不是 \"added\"），不加句号，不超过 50 字符。\n- body 讲**为什么改**，不复述 diff 里能看到的\"改了什么\"。\n- 一次提交只做一件事：重构和功能修改不混在同一个提交里。\n\n## type 怎么选\n\n| type | 用于 |\n|---|---|\n| feat | 新功能（用户可感知的行为变化） |\n| fix | 修 bug（引用 issue 编号写进 footer） |\n| refactor | 不改行为的结构调整 |\n| test | 只增改测试 |\n| docs | 只改文档/注释 |\n| chore | 构建、依赖、CI 等工程杂务 |\n\n拿不准 feat 还是 fix：问\"用户之前的预期是什么\"——之前就该这样但没做到 = fix；之前没有这个预期 = feat。\n\n## footer\n\n- 不兼容变更：以 `BREAKING CHANGE:` 开头，说明迁移方法。\n- 关联 issue：`Closes #123`。\n\n## 提交前自查\n\n1. `git diff --staged` 过一遍：有没有混进无关文件（调试代码、锁文件意外变更）？\n2. 这个提交单独 revert 时，代码库还能编译/测试通过吗？不能 → 拆分方式有问题。\n3. subject 能让三个月后的自己一眼看懂吗？\n"
+    }
+  ]
+}

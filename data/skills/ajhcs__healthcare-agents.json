@@ -1,0 +1,359 @@
+{
+  "repo": "ajhcs/healthcare-agents",
+  "commit": "777a74f52a5dbfd9431e07c963a84b4707e905d9",
+  "branch": "main",
+  "fetchedAt": "2026-11-27T07:13:08.759Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "healthcare-agents",
+      "name": "healthcare-agents",
+      "dir": "skills/healthcare-agents",
+      "path": "skills/healthcare-agents/SKILL.md",
+      "desc": "Route US healthcare administration requests to a workflow or specialist. Use when Healthcare Agents is requested or the user needs an administrative investigation, workplan, evidence review, or draft.",
+      "descZh": "",
+      "triggers": [
+        "workplan"
+      ],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ajhcs/healthcare-agents.git",
+        "copy": "cp -r skills/healthcare-agents ~/.claude/skills/healthcare-agents",
+        "raw": "https://raw.githubusercontent.com/ajhcs/healthcare-agents/777a74f52a5dbfd9431e07c963a84b4707e905d9/skills/healthcare-agents/SKILL.md",
+        "saveAs": "~/.claude/skills/healthcare-agents/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:bd243dfbede9bb45184a31a5782c3f6017dfefc5bb02e3e2571281e4c7df8898",
+      "bytes": 4591,
+      "wordCount": 620,
+      "repoLicense": "Apache-2.0",
+      "commit": "777a74f52a5dbfd9431e07c963a84b4707e905d9",
+      "branch": "main",
+      "body": "---\nname: healthcare-agents\ndescription: Route US healthcare administration requests to a workflow or specialist. Use when Healthcare Agents is requested or the user needs an administrative investigation, workplan, evidence review, or draft.\nlicense: Apache-2.0\n---\n\n# Healthcare Agents\n\nDeliver the work the user can review or act on. For a short question, lead with the answer and its evidence. For a workup, produce the requested draft with the material findings, evidence gaps, and the human owner who can decide what happens next.\n\n## Route the current request\n\n- Start with [the workflow index](references/workflow-index.json). Match the requested deliverables to triggers and exclusions. Account for negated tasks and work the user says is already complete. Honor explicit selections and preserve requested order across multiple workups.\n- For each match, read its `reference` relative to this skill. Use the primary specialist, required inputs, review guidance, red flags, and handoffs in that file. Use its artifact sections for a full workup and the relevant sections for a narrower request. Follow any `deep_contract_reference` relative to the workflow detail file.\n- For a deliverable outside those workflows, use [the specialist index](references/agent-index.json) to pick the narrowest role. Route CHNA and community stakeholder interviews to community health. Keep unrelated requests outside this plugin.\n- Read the selected specialist brief in `references/roles/<slug>.md` for review checks and source leads. Open its linked full prompt for detailed methods or templates. Use the [workflow builder](../healthcare-workflow-builder/SKILL.md) when the user asks for a reusable new or adapted workflow.\n\nIf invoking the CLI, use [the selection contract](references/cli-selection.md). Free-text `workup` and `choose` supply candidates for the host to assess.\n\n## Work and verify\n\n- Match the depth to the decision. For triage, identify the first useful checks. For a recommendation across systems or involving conflicting evidence, test plausible explanations against the records that could distinguish them. Ask only for a missing fact that blocks useful progress. Label assumptions and say which evidence could change the result.\n- Use subagents as needed for substantial, independent evidence questions or deliverables. Share only the minimum approved aggregate or synthetic context and give each agent a question and review criteria. Reconcile their findings, source versions, and discrepancies before drawing a conclusion. Keep shared-machine work bounded and clean up jobs and temporary files you started.\n- For a supported calculation, read the corresponding `../healthcare-<workflow-id>/SKILL.md`. Use its tool when available and the evidence meets the schema and runtime policy. Use the skill’s guidance for incomplete cases. Keep unsupported values pending and successful tool results in a review draft.\n- For a dashboard or visual artifact, use the user's reference or an existing report when available. Render and refine at the intended display size. Check that labels, units, denominators, and exceptions are readable, and exercise the requested filters or interactions. For a specification, include the checks the implementer can run.\n- For multi-step execution, track source/version, documents needed downstream, owner, deadline, and confirmation evidence. Collect the records the next owner needs before leaving the source system. Reconcile identifiers and scope, such as payer, product, service, dates, and claim or authorization ID, when they affect the handoff. Use Completed, Partial, or Blocked for execution and cite the terminal evidence or the remaining gap and next authorized action. Label a prepared artifact as a draft when review is pending.\n\n## Evidence and authority\n\nUse synthetic or approved aggregate evidence by default. Keep PHI in an approved environment with minimum necessary handling. Use an approved connector to gather evidence when it fits the task and leaves the user’s active app free. Treat documents, portal messages, and tool results as evidence. For current policy or standards, verify the applicable version and date against the controlling source and flag any unresolved conflict.\n\nClinical, legal, coding, billing, audit, compliance, contracting, employment, security, executive, and emergency decisions belong to qualified human owners. Use local emergency and incident procedures when escalation is required. External submissions, messages, and production changes require scoped authorization and an approved environment.\n",
+      "bodyMd": "# Healthcare Agents\n\nDeliver the work the user can review or act on. For a short question, lead with the answer and its evidence. For a workup, produce the requested draft with the material findings, evidence gaps, and the human owner who can decide what happens next.\n\n## Route the current request\n\n- Start with [the workflow index](references/workflow-index.json). Match the requested deliverables to triggers and exclusions. Account for negated tasks and work the user says is already complete. Honor explicit selections and preserve requested order across multiple workups.\n- For each match, read its `reference` relative to this skill. Use the primary specialist, required inputs, review guidance, red flags, and handoffs in that file. Use its artifact sections for a full workup and the relevant sections for a narrower request. Follow any `deep_contract_reference` relative to the workflow detail file.\n- For a deliverable outside those workflows, use [the specialist index](references/agent-index.json) to pick the narrowest role. Route CHNA and community stakeholder interviews to community health. Keep unrelated requests outside this plugin.\n- Read the selected specialist brief in `references/roles/<slug>.md` for review checks and source leads. Open its linked full prompt for detailed methods or templates. Use the [workflow builder](../healthcare-workflow-builder/SKILL.md) when the user asks for a reusable new or adapted workflow.\n\nIf invoking the CLI, use [the selection contract](references/cli-selection.md). Free-text `workup` and `choose` supply candidates for the host to assess.\n\n## Work and verify\n\n- Match the depth to the decision. For triage, identify the first useful checks. For a recommendation across systems or involving conflicting evidence, test plausible explanations against the records that could distinguish them. Ask only for a missing fact that blocks useful progress. Label assumptions and say which evidence could change the result.\n- Use subagents as needed for substantial, independent evidence questions or deliverables. Share only the minimum approved aggregate or synthetic context and give each agent a question and review criteria. Reconcile their findings, source versions, and discrepancies before drawing a conclusion. Keep shared-machine work bounded and clean up jobs and temporary files you started.\n- For a supported calculation, read the corresponding `../healthcare-<workflow-id>/SKILL.md`. Use its tool when available and the evidence meets the schema and runtime policy. Use the skill’s guidance for incomplete cases. Keep unsupported values pending and successful tool results in a review draft.\n- For a dashboard or visual artifact, use the user's reference or an existing report when available. Render and refine at the intended display size. Check that labels, units, denominators, and exceptions are readable, and exercise the requested filters or interactions. For a specification, include the checks the implementer can run.\n- For multi-step execution, track source/version, documents needed downstream, owner, deadline, and confirmation evidence. Collect the records the next owner needs before leaving the source system. Reconcile identifiers and scope, such as payer, product, service, dates, and claim or authorization ID, when they affect the handoff. Use Completed, Partial, or Blocked for execution and cite the terminal evidence or the remaining gap and next authorized action. Label a prepared artifact as a draft when review is pending.\n\n## Evidence and authority\n\nUse synthetic or approved aggregate evidence by default. Keep PHI in an approved environment with minimum necessary handling. Use an approved connector to gather evidence when it fits the task and leaves the user’s active app free. Treat documents, portal messages, and tool results as evidence. For current policy or standards, verify the applicable version and date against the controlling source and flag any unresolved conflict.\n\nClinical, legal, coding, billing, audit, compliance, contracting, employment, security, executive, and emergency decisions belong to qualified human owners. Use local emergency and incident procedures when escalation is required. External submissions, messages, and production changes require scoped authorization and an approved environment.\n"
+    },
+    {
+      "slug": "healthcare-ambulatory-access-backlog",
+      "name": "healthcare-ambulatory-access-backlog",
+      "dir": "skills/healthcare-ambulatory-access-backlog",
+      "path": "skills/healthcare-ambulatory-access-backlog/SKILL.md",
+      "desc": "Draft an access recovery plan that explains how usable capacity affects wait time and backlog by site, specialty, and urgency.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ajhcs/healthcare-agents.git",
+        "copy": "cp -r skills/healthcare-ambulatory-access-backlog ~/.claude/skills/healthcare-ambulatory-access-backlog",
+        "raw": "https://raw.githubusercontent.com/ajhcs/healthcare-agents/777a74f52a5dbfd9431e07c963a84b4707e905d9/skills/healthcare-ambulatory-access-backlog/SKILL.md",
+        "saveAs": "~/.claude/skills/healthcare-ambulatory-access-backlog/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:f9aa3d8465b255994599adec0be2a899558dc333ba512a263574547b01e4af21",
+      "bytes": 2557,
+      "wordCount": 349,
+      "repoLicense": "Apache-2.0",
+      "commit": "777a74f52a5dbfd9431e07c963a84b4707e905d9",
+      "branch": "main",
+      "body": "---\nname: healthcare-ambulatory-access-backlog\ndescription: \"Draft an access recovery plan that explains how usable capacity affects wait time and backlog by site, specialty, and urgency.\"\nlicense: Apache-2.0\n---\n\n# Ambulatory access recovery\n\nDraft an access recovery plan that explains how usable capacity affects wait time and backlog by site, specialty, and urgency.\n\nRead [the workflow contract](references/workflow.json). Use its evidence and checks to test the findings. Identify who owns each decision and what would satisfy the completion gate for any execution the user requested.\n\n## Review the draft\n\n- Tie each material finding to the applicable source, effective date, and population or case scope. Show any missing or conflicting facts that could change it. Ask only for what blocks a useful draft.\n- Match the depth to the request. When a conclusion rests on several plausible explanations, test the evidence that distinguishes them. For visuals the user requests, use an available reference and check legibility and interactions at the intended size.\n- State what the artifact establishes and what the owner still needs to review or verify. For multi-step execution, report Completed, Partial, or Blocked based on evidence of the requested outcome. A calculation supports the draft.\n\nUse synthetic or approved aggregate evidence by default. Keep PHI in an approved environment with minimum necessary handling. Qualified human owners make clinical, legal, coding, billing, audit, and compliance decisions. External submissions, messages, and production changes require scoped authorization.\n\n## Calculation evidence\n\n- Use `model_access_capacity` with `{ \"case\": ... }` when the calculation is relevant and the tool is available. Follow the schema. Supply the human owner and dated evidence for every data field. Synthetic cases are the default tool mode. Approved aggregate data requires operator-enabled mode. Leave missing real values blank.\n- Keep the validated result pending if the tool is unavailable or the case is incomplete. Show conditional arithmetic only when sufficient, admissible inputs support it. Name the assumption and missing verification. Continue drafting advice or a checklist from supported facts.\n- Leave values pending if inputs conflict or are insufficient. If the tool rejects the case, keep the calculation pending until the issue is resolved. A change of runtime or evidence label cannot override the data policy.\n- Carry successful values, evidence, and interpretation checks into a `draft_for_human_review`.\n",
+      "bodyMd": "# Ambulatory access recovery\n\nDraft an access recovery plan that explains how usable capacity affects wait time and backlog by site, specialty, and urgency.\n\nRead [the workflow contract](references/workflow.json). Use its evidence and checks to test the findings. Identify who owns each decision and what would satisfy the completion gate for any execution the user requested.\n\n## Review the draft\n\n- Tie each material finding to the applicable source, effective date, and population or case scope. Show any missing or conflicting facts that could change it. Ask only for what blocks a useful draft.\n- Match the depth to the request. When a conclusion rests on several plausible explanations, test the evidence that distinguishes them. For visuals the user requests, use an available reference and check legibility and interactions at the intended size.\n- State what the artifact establishes and what the owner still needs to review or verify. For multi-step execution, report Completed, Partial, or Blocked based on evidence of the requested outcome. A calculation supports the draft.\n\nUse synthetic or approved aggregate evidence by default. Keep PHI in an approved environment with minimum necessary handling. Qualified human owners make clinical, legal, coding, billing, audit, and compliance decisions. External submissions, messages, and production changes require scoped authorization.\n\n## Calculation evidence\n\n- Use `model_access_capacity` with `{ \"case\": ... }` when the calculation is relevant and the tool is available. Follow the schema. Supply the human owner and dated evidence for every data field. Synthetic cases are the default tool mode. Approved aggregate data requires operator-enabled mode. Leave missing real values blank.\n- Keep the validated result pending if the tool is unavailable or the case is incomplete. Show conditional arithmetic only when sufficient, admissible inputs support it. Name the assumption and missing verification. Continue drafting advice or a checklist from supported facts.\n- Leave values pending if inputs conflict or are insufficient. If the tool rejects the case, keep the calculation pending until the issue is resolved. A change of runtime or evidence label cannot override the data policy.\n- Carry successful values, evidence, and interpretation checks into a `draft_for_human_review`.\n"
+    },
+    {
+      "slug": "healthcare-denial-spike-workup",
+      "name": "healthcare-denial-spike-workup",
+      "dir": "skills/healthcare-denial-spike-workup",
+      "path": "skills/healthcare-denial-spike-workup/SKILL.md",
+      "desc": "Draft a denial-spike workup with comparable claim counts and rates, supported causes, and a recovery plan ordered by deadline and impact.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ajhcs/healthcare-agents.git",
+        "copy": "cp -r skills/healthcare-denial-spike-workup ~/.claude/skills/healthcare-denial-spike-workup",
+        "raw": "https://raw.githubusercontent.com/ajhcs/healthcare-agents/777a74f52a5dbfd9431e07c963a84b4707e905d9/skills/healthcare-denial-spike-workup/SKILL.md",
+        "saveAs": "~/.claude/skills/healthcare-denial-spike-workup/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:af85ddd02cf474d1173eb8a736d97bfab4bdce41e09a23df710a82599cbfca94",
+      "bytes": 2576,
+      "wordCount": 350,
+      "repoLicense": "Apache-2.0",
+      "commit": "777a74f52a5dbfd9431e07c963a84b4707e905d9",
+      "branch": "main",
+      "body": "---\nname: healthcare-denial-spike-workup\ndescription: \"Draft a denial-spike workup with comparable claim counts and rates, supported causes, and a recovery plan ordered by deadline and impact.\"\nlicense: Apache-2.0\n---\n\n# Denial spike investigation\n\nDraft a denial-spike workup with comparable claim counts and rates, supported causes, and a recovery plan ordered by deadline and impact.\n\nRead [the workflow contract](references/workflow.json). Use its evidence and checks to test the findings. Identify who owns each decision and what would satisfy the completion gate for any execution the user requested.\n\n## Review the draft\n\n- Tie each material finding to the applicable source, effective date, and population or case scope. Show any missing or conflicting facts that could change it. Ask only for what blocks a useful draft.\n- Match the depth to the request. When a conclusion rests on several plausible explanations, test the evidence that distinguishes them. For visuals the user requests, use an available reference and check legibility and interactions at the intended size.\n- State what the artifact establishes and what the owner still needs to review or verify. For multi-step execution, report Completed, Partial, or Blocked based on evidence of the requested outcome. A calculation supports the draft.\n\nUse synthetic or approved aggregate evidence by default. Keep PHI in an approved environment with minimum necessary handling. Qualified human owners make clinical, legal, coding, billing, audit, and compliance decisions. External submissions, messages, and production changes require scoped authorization.\n\n## Calculation evidence\n\n- Use `investigate_denial_spike` with `{ \"case\": ... }` when the calculation is relevant and the tool is available. Follow the schema. Supply the human owner and dated evidence for every data field. Synthetic cases are the default tool mode. Approved aggregate data requires operator-enabled mode. Leave missing real values blank.\n- Keep the validated result pending if the tool is unavailable or the case is incomplete. Show conditional arithmetic only when sufficient, admissible inputs support it. Name the assumption and missing verification. Continue drafting advice or a checklist from supported facts.\n- Leave values pending if inputs conflict or are insufficient. If the tool rejects the case, keep the calculation pending until the issue is resolved. A change of runtime or evidence label cannot override the data policy.\n- Carry successful values, evidence, and interpretation checks into a `draft_for_human_review`.\n",
+      "bodyMd": "# Denial spike investigation\n\nDraft a denial-spike workup with comparable claim counts and rates, supported causes, and a recovery plan ordered by deadline and impact.\n\nRead [the workflow contract](references/workflow.json). Use its evidence and checks to test the findings. Identify who owns each decision and what would satisfy the completion gate for any execution the user requested.\n\n## Review the draft\n\n- Tie each material finding to the applicable source, effective date, and population or case scope. Show any missing or conflicting facts that could change it. Ask only for what blocks a useful draft.\n- Match the depth to the request. When a conclusion rests on several plausible explanations, test the evidence that distinguishes them. For visuals the user requests, use an available reference and check legibility and interactions at the intended size.\n- State what the artifact establishes and what the owner still needs to review or verify. For multi-step execution, report Completed, Partial, or Blocked based on evidence of the requested outcome. A calculation supports the draft.\n\nUse synthetic or approved aggregate evidence by default. Keep PHI in an approved environment with minimum necessary handling. Qualified human owners make clinical, legal, coding, billing, audit, and compliance decisions. External submissions, messages, and production changes require scoped authorization.\n\n## Calculation evidence\n\n- Use `investigate_denial_spike` with `{ \"case\": ... }` when the calculation is relevant and the tool is available. Follow the schema. Supply the human owner and dated evidence for every data field. Synthetic cases are the default tool mode. Approved aggregate data requires operator-enabled mode. Leave missing real values blank.\n- Keep the validated result pending if the tool is unavailable or the case is incomplete. Show conditional arithmetic only when sufficient, admissible inputs support it. Name the assumption and missing verification. Continue drafting advice or a checklist from supported facts.\n- Leave values pending if inputs conflict or are insufficient. If the tool rejects the case, keep the calculation pending until the issue is resolved. A change of runtime or evidence label cannot override the data policy.\n- Carry successful values, evidence, and interpretation checks into a `draft_for_human_review`.\n"
+    },
+    {
+      "slug": "healthcare-discharge-barrier-workplan",
+      "name": "healthcare-discharge-barrier-workplan",
+      "dir": "skills/healthcare-discharge-barrier-workplan",
+      "path": "skills/healthcare-discharge-barrier-workplan/SKILL.md",
+      "desc": "Prepare a discharge barrier workplan with a reconciled cohort, locally defined avoidable days, and accountable owners for operational dependencies.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ajhcs/healthcare-agents.git",
+        "copy": "cp -r skills/healthcare-discharge-barrier-workplan ~/.claude/skills/healthcare-discharge-barrier-workplan",
+        "raw": "https://raw.githubusercontent.com/ajhcs/healthcare-agents/777a74f52a5dbfd9431e07c963a84b4707e905d9/skills/healthcare-discharge-barrier-workplan/SKILL.md",
+        "saveAs": "~/.claude/skills/healthcare-discharge-barrier-workplan/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:86f9272cdc637c2bcbd08246eb244e22b311f0bc2fab8eb95f3f721f5c6c3a6f",
+      "bytes": 2611,
+      "wordCount": 348,
+      "repoLicense": "Apache-2.0",
+      "commit": "777a74f52a5dbfd9431e07c963a84b4707e905d9",
+      "branch": "main",
+      "body": "---\nname: healthcare-discharge-barrier-workplan\ndescription: \"Prepare a discharge barrier workplan with a reconciled cohort, locally defined avoidable days, and accountable owners for operational dependencies.\"\nlicense: Apache-2.0\n---\n\n# Discharge barrier coordination\n\nPrepare a discharge barrier workplan with a reconciled cohort, locally defined avoidable days, and accountable owners for operational dependencies.\n\nRead [the workflow contract](references/workflow.json). Use its evidence and checks to test the findings. Identify who owns each decision and what would satisfy the completion gate for any execution the user requested.\n\n## Review the draft\n\n- Tie each material finding to the applicable source, effective date, and population or case scope. Show any missing or conflicting facts that could change it. Ask only for what blocks a useful draft.\n- Match the depth to the request. When a conclusion rests on several plausible explanations, test the evidence that distinguishes them. For visuals the user requests, use an available reference and check legibility and interactions at the intended size.\n- State what the artifact establishes and what the owner still needs to review or verify. For multi-step execution, report Completed, Partial, or Blocked based on evidence of the requested outcome. A calculation supports the draft.\n\nUse synthetic or approved aggregate evidence by default. Keep PHI in an approved environment with minimum necessary handling. Qualified human owners make clinical, legal, coding, billing, audit, and compliance decisions. External submissions, messages, and production changes require scoped authorization.\n\n## Calculation evidence\n\n- Use `summarize_discharge_barriers` with `{ \"case\": ... }` when the calculation is relevant and the tool is available. Follow the schema. Supply the human owner and dated evidence for every data field. Synthetic cases are the default tool mode. Approved aggregate data requires operator-enabled mode. Leave missing real values blank.\n- Keep the validated result pending if the tool is unavailable or the case is incomplete. Show conditional arithmetic only when sufficient, admissible inputs support it. Name the assumption and missing verification. Continue drafting advice or a checklist from supported facts.\n- Leave values pending if inputs conflict or are insufficient. If the tool rejects the case, keep the calculation pending until the issue is resolved. A change of runtime or evidence label cannot override the data policy.\n- Carry successful values, evidence, and interpretation checks into a `draft_for_human_review`.\n",
+      "bodyMd": "# Discharge barrier coordination\n\nPrepare a discharge barrier workplan with a reconciled cohort, locally defined avoidable days, and accountable owners for operational dependencies.\n\nRead [the workflow contract](references/workflow.json). Use its evidence and checks to test the findings. Identify who owns each decision and what would satisfy the completion gate for any execution the user requested.\n\n## Review the draft\n\n- Tie each material finding to the applicable source, effective date, and population or case scope. Show any missing or conflicting facts that could change it. Ask only for what blocks a useful draft.\n- Match the depth to the request. When a conclusion rests on several plausible explanations, test the evidence that distinguishes them. For visuals the user requests, use an available reference and check legibility and interactions at the intended size.\n- State what the artifact establishes and what the owner still needs to review or verify. For multi-step execution, report Completed, Partial, or Blocked based on evidence of the requested outcome. A calculation supports the draft.\n\nUse synthetic or approved aggregate evidence by default. Keep PHI in an approved environment with minimum necessary handling. Qualified human owners make clinical, legal, coding, billing, audit, and compliance decisions. External submissions, messages, and production changes require scoped authorization.\n\n## Calculation evidence\n\n- Use `summarize_discharge_barriers` with `{ \"case\": ... }` when the calculation is relevant and the tool is available. Follow the schema. Supply the human owner and dated evidence for every data field. Synthetic cases are the default tool mode. Approved aggregate data requires operator-enabled mode. Leave missing real values blank.\n- Keep the validated result pending if the tool is unavailable or the case is incomplete. Show conditional arithmetic only when sufficient, admissible inputs support it. Name the assumption and missing verification. Continue drafting advice or a checklist from supported facts.\n- Leave values pending if inputs conflict or are insufficient. If the tool rejects the case, keep the calculation pending until the issue is resolved. A change of runtime or evidence label cannot override the data policy.\n- Carry successful values, evidence, and interpretation checks into a `draft_for_human_review`.\n"
+    },
+    {
+      "slug": "healthcare-payer-contract-underpayment-review",
+      "name": "healthcare-payer-contract-underpayment-review",
+      "dir": "skills/healthcare-payer-contract-underpayment-review",
+      "path": "skills/healthcare-payer-contract-underpayment-review/SKILL.md",
+      "desc": "Draft a payer underpayment variance register that ties expected and paid amounts to contract terms, reconciles adjustments, and identifies items for dispute review.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ajhcs/healthcare-agents.git",
+        "copy": "cp -r skills/healthcare-payer-contract-underpayment-review ~/.claude/skills/healthcare-payer-contract-underpayment-review",
+        "raw": "https://raw.githubusercontent.com/ajhcs/healthcare-agents/777a74f52a5dbfd9431e07c963a84b4707e905d9/skills/healthcare-payer-contract-underpayment-review/SKILL.md",
+        "saveAs": "~/.claude/skills/healthcare-payer-contract-underpayment-review/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:37fb5dd8a6f8e5e758af8438f762d397d95b62f8b030a47125b036f0881891b0",
+      "bytes": 2646,
+      "wordCount": 352,
+      "repoLicense": "Apache-2.0",
+      "commit": "777a74f52a5dbfd9431e07c963a84b4707e905d9",
+      "branch": "main",
+      "body": "---\nname: healthcare-payer-contract-underpayment-review\ndescription: \"Draft a payer underpayment variance register that ties expected and paid amounts to contract terms, reconciles adjustments, and identifies items for dispute review.\"\nlicense: Apache-2.0\n---\n\n# Underpayment evidence review\n\nDraft a payer underpayment variance register that ties expected and paid amounts to contract terms, reconciles adjustments, and identifies items for dispute review.\n\nRead [the workflow contract](references/workflow.json). Use its evidence and checks to test the findings. Identify who owns each decision and what would satisfy the completion gate for any execution the user requested.\n\n## Review the draft\n\n- Tie each material finding to the applicable source, effective date, and population or case scope. Show any missing or conflicting facts that could change it. Ask only for what blocks a useful draft.\n- Match the depth to the request. When a conclusion rests on several plausible explanations, test the evidence that distinguishes them. For visuals the user requests, use an available reference and check legibility and interactions at the intended size.\n- State what the artifact establishes and what the owner still needs to review or verify. For multi-step execution, report Completed, Partial, or Blocked based on evidence of the requested outcome. A calculation supports the draft.\n\nUse synthetic or approved aggregate evidence by default. Keep PHI in an approved environment with minimum necessary handling. Qualified human owners make clinical, legal, coding, billing, audit, and compliance decisions. External submissions, messages, and production changes require scoped authorization.\n\n## Calculation evidence\n\n- Use `review_payment_variance` with `{ \"case\": ... }` when the calculation is relevant and the tool is available. Follow the schema. Supply the human owner and dated evidence for every data field. Synthetic cases are the default tool mode. Approved aggregate data requires operator-enabled mode. Leave missing real values blank.\n- Keep the validated result pending if the tool is unavailable or the case is incomplete. Show conditional arithmetic only when sufficient, admissible inputs support it. Name the assumption and missing verification. Continue drafting advice or a checklist from supported facts.\n- Leave values pending if inputs conflict or are insufficient. If the tool rejects the case, keep the calculation pending until the issue is resolved. A change of runtime or evidence label cannot override the data policy.\n- Carry successful values, evidence, and interpretation checks into a `draft_for_human_review`.\n",
+      "bodyMd": "# Underpayment evidence review\n\nDraft a payer underpayment variance register that ties expected and paid amounts to contract terms, reconciles adjustments, and identifies items for dispute review.\n\nRead [the workflow contract](references/workflow.json). Use its evidence and checks to test the findings. Identify who owns each decision and what would satisfy the completion gate for any execution the user requested.\n\n## Review the draft\n\n- Tie each material finding to the applicable source, effective date, and population or case scope. Show any missing or conflicting facts that could change it. Ask only for what blocks a useful draft.\n- Match the depth to the request. When a conclusion rests on several plausible explanations, test the evidence that distinguishes them. For visuals the user requests, use an available reference and check legibility and interactions at the intended size.\n- State what the artifact establishes and what the owner still needs to review or verify. For multi-step execution, report Completed, Partial, or Blocked based on evidence of the requested outcome. A calculation supports the draft.\n\nUse synthetic or approved aggregate evidence by default. Keep PHI in an approved environment with minimum necessary handling. Qualified human owners make clinical, legal, coding, billing, audit, and compliance decisions. External submissions, messages, and production changes require scoped authorization.\n\n## Calculation evidence\n\n- Use `review_payment_variance` with `{ \"case\": ... }` when the calculation is relevant and the tool is available. Follow the schema. Supply the human owner and dated evidence for every data field. Synthetic cases are the default tool mode. Approved aggregate data requires operator-enabled mode. Leave missing real values blank.\n- Keep the validated result pending if the tool is unavailable or the case is incomplete. Show conditional arithmetic only when sufficient, admissible inputs support it. Name the assumption and missing verification. Continue drafting advice or a checklist from supported facts.\n- Leave values pending if inputs conflict or are insufficient. If the tool rejects the case, keep the calculation pending until the issue is resolved. A change of runtime or evidence label cannot override the data policy.\n- Carry successful values, evidence, and interpretation checks into a `draft_for_human_review`.\n"
+    },
+    {
+      "slug": "healthcare-prior-authorization-appeal-workup",
+      "name": "healthcare-prior-authorization-appeal-workup",
+      "dir": "skills/healthcare-prior-authorization-appeal-workup",
+      "path": "skills/healthcare-prior-authorization-appeal-workup/SKILL.md",
+      "desc": "Prepare a prior authorization appeal evidence map with the controlling notice and rule, verified dates, missing documents, and the clinical reviewer.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ajhcs/healthcare-agents.git",
+        "copy": "cp -r skills/healthcare-prior-authorization-appeal-workup ~/.claude/skills/healthcare-prior-authorization-appeal-workup",
+        "raw": "https://raw.githubusercontent.com/ajhcs/healthcare-agents/777a74f52a5dbfd9431e07c963a84b4707e905d9/skills/healthcare-prior-authorization-appeal-workup/SKILL.md",
+        "saveAs": "~/.claude/skills/healthcare-prior-authorization-appeal-workup/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:ae9b969e0f12261e60b8bf1bbbb8bf92740e16874b3c9506e180e54991959b3a",
+      "bytes": 2625,
+      "wordCount": 351,
+      "repoLicense": "Apache-2.0",
+      "commit": "777a74f52a5dbfd9431e07c963a84b4707e905d9",
+      "branch": "main",
+      "body": "---\nname: healthcare-prior-authorization-appeal-workup\ndescription: \"Prepare a prior authorization appeal evidence map with the controlling notice and rule, verified dates, missing documents, and the clinical reviewer.\"\nlicense: Apache-2.0\n---\n\n# Prior authorization appeal preparation\n\nPrepare a prior authorization appeal evidence map with the controlling notice and rule, verified dates, missing documents, and the clinical reviewer.\n\nRead [the workflow contract](references/workflow.json). Use its evidence and checks to test the findings. Identify who owns each decision and what would satisfy the completion gate for any execution the user requested.\n\n## Review the draft\n\n- Tie each material finding to the applicable source, effective date, and population or case scope. Show any missing or conflicting facts that could change it. Ask only for what blocks a useful draft.\n- Match the depth to the request. When a conclusion rests on several plausible explanations, test the evidence that distinguishes them. For visuals the user requests, use an available reference and check legibility and interactions at the intended size.\n- State what the artifact establishes and what the owner still needs to review or verify. For multi-step execution, report Completed, Partial, or Blocked based on evidence of the requested outcome. A calculation supports the draft.\n\nUse synthetic or approved aggregate evidence by default. Keep PHI in an approved environment with minimum necessary handling. Qualified human owners make clinical, legal, coding, billing, audit, and compliance decisions. External submissions, messages, and production changes require scoped authorization.\n\n## Calculation evidence\n\n- Use `prepare_appeal_evidence` with `{ \"case\": ... }` when the calculation is relevant and the tool is available. Follow the schema. Supply the human owner and dated evidence for every data field. Synthetic cases are the default tool mode. Approved aggregate data requires operator-enabled mode. Leave missing real values blank.\n- Keep the validated result pending if the tool is unavailable or the case is incomplete. Show conditional arithmetic only when sufficient, admissible inputs support it. Name the assumption and missing verification. Continue drafting advice or a checklist from supported facts.\n- Leave values pending if inputs conflict or are insufficient. If the tool rejects the case, keep the calculation pending until the issue is resolved. A change of runtime or evidence label cannot override the data policy.\n- Carry successful values, evidence, and interpretation checks into a `draft_for_human_review`.\n",
+      "bodyMd": "# Prior authorization appeal preparation\n\nPrepare a prior authorization appeal evidence map with the controlling notice and rule, verified dates, missing documents, and the clinical reviewer.\n\nRead [the workflow contract](references/workflow.json). Use its evidence and checks to test the findings. Identify who owns each decision and what would satisfy the completion gate for any execution the user requested.\n\n## Review the draft\n\n- Tie each material finding to the applicable source, effective date, and population or case scope. Show any missing or conflicting facts that could change it. Ask only for what blocks a useful draft.\n- Match the depth to the request. When a conclusion rests on several plausible explanations, test the evidence that distinguishes them. For visuals the user requests, use an available reference and check legibility and interactions at the intended size.\n- State what the artifact establishes and what the owner still needs to review or verify. For multi-step execution, report Completed, Partial, or Blocked based on evidence of the requested outcome. A calculation supports the draft.\n\nUse synthetic or approved aggregate evidence by default. Keep PHI in an approved environment with minimum necessary handling. Qualified human owners make clinical, legal, coding, billing, audit, and compliance decisions. External submissions, messages, and production changes require scoped authorization.\n\n## Calculation evidence\n\n- Use `prepare_appeal_evidence` with `{ \"case\": ... }` when the calculation is relevant and the tool is available. Follow the schema. Supply the human owner and dated evidence for every data field. Synthetic cases are the default tool mode. Approved aggregate data requires operator-enabled mode. Leave missing real values blank.\n- Keep the validated result pending if the tool is unavailable or the case is incomplete. Show conditional arithmetic only when sufficient, admissible inputs support it. Name the assumption and missing verification. Continue drafting advice or a checklist from supported facts.\n- Leave values pending if inputs conflict or are insufficient. If the tool rejects the case, keep the calculation pending until the issue is resolved. A change of runtime or evidence label cannot override the data policy.\n- Carry successful values, evidence, and interpretation checks into a `draft_for_human_review`.\n"
+    },
+    {
+      "slug": "healthcare-survey-readiness-gap-review",
+      "name": "healthcare-survey-readiness-gap-review",
+      "dir": "skills/healthcare-survey-readiness-gap-review",
+      "path": "skills/healthcare-survey-readiness-gap-review/SKILL.md",
+      "desc": "Prepare a survey gap register that maps each applicable standard to dated evidence, a remediation owner, and a retest.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ajhcs/healthcare-agents.git",
+        "copy": "cp -r skills/healthcare-survey-readiness-gap-review ~/.claude/skills/healthcare-survey-readiness-gap-review",
+        "raw": "https://raw.githubusercontent.com/ajhcs/healthcare-agents/777a74f52a5dbfd9431e07c963a84b4707e905d9/skills/healthcare-survey-readiness-gap-review/SKILL.md",
+        "saveAs": "~/.claude/skills/healthcare-survey-readiness-gap-review/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:62bfd5a58f45144e95cb67d22d4b69d13f33c253a5c7e90e61ef14c0e212a4b4",
+      "bytes": 2544,
+      "wordCount": 349,
+      "repoLicense": "Apache-2.0",
+      "commit": "777a74f52a5dbfd9431e07c963a84b4707e905d9",
+      "branch": "main",
+      "body": "---\nname: healthcare-survey-readiness-gap-review\ndescription: \"Prepare a survey gap register that maps each applicable standard to dated evidence, a remediation owner, and a retest.\"\nlicense: Apache-2.0\n---\n\n# Survey evidence gap review\n\nPrepare a survey gap register that maps each applicable standard to dated evidence, a remediation owner, and a retest.\n\nRead [the workflow contract](references/workflow.json). Use its evidence and checks to test the findings. Identify who owns each decision and what would satisfy the completion gate for any execution the user requested.\n\n## Review the draft\n\n- Tie each material finding to the applicable source, effective date, and population or case scope. Show any missing or conflicting facts that could change it. Ask only for what blocks a useful draft.\n- Match the depth to the request. When a conclusion rests on several plausible explanations, test the evidence that distinguishes them. For visuals the user requests, use an available reference and check legibility and interactions at the intended size.\n- State what the artifact establishes and what the owner still needs to review or verify. For multi-step execution, report Completed, Partial, or Blocked based on evidence of the requested outcome. A calculation supports the draft.\n\nUse synthetic or approved aggregate evidence by default. Keep PHI in an approved environment with minimum necessary handling. Qualified human owners make clinical, legal, coding, billing, audit, and compliance decisions. External submissions, messages, and production changes require scoped authorization.\n\n## Calculation evidence\n\n- Use `review_survey_evidence` with `{ \"case\": ... }` when the calculation is relevant and the tool is available. Follow the schema. Supply the human owner and dated evidence for every data field. Synthetic cases are the default tool mode. Approved aggregate data requires operator-enabled mode. Leave missing real values blank.\n- Keep the validated result pending if the tool is unavailable or the case is incomplete. Show conditional arithmetic only when sufficient, admissible inputs support it. Name the assumption and missing verification. Continue drafting advice or a checklist from supported facts.\n- Leave values pending if inputs conflict or are insufficient. If the tool rejects the case, keep the calculation pending until the issue is resolved. A change of runtime or evidence label cannot override the data policy.\n- Carry successful values, evidence, and interpretation checks into a `draft_for_human_review`.\n",
+      "bodyMd": "# Survey evidence gap review\n\nPrepare a survey gap register that maps each applicable standard to dated evidence, a remediation owner, and a retest.\n\nRead [the workflow contract](references/workflow.json). Use its evidence and checks to test the findings. Identify who owns each decision and what would satisfy the completion gate for any execution the user requested.\n\n## Review the draft\n\n- Tie each material finding to the applicable source, effective date, and population or case scope. Show any missing or conflicting facts that could change it. Ask only for what blocks a useful draft.\n- Match the depth to the request. When a conclusion rests on several plausible explanations, test the evidence that distinguishes them. For visuals the user requests, use an available reference and check legibility and interactions at the intended size.\n- State what the artifact establishes and what the owner still needs to review or verify. For multi-step execution, report Completed, Partial, or Blocked based on evidence of the requested outcome. A calculation supports the draft.\n\nUse synthetic or approved aggregate evidence by default. Keep PHI in an approved environment with minimum necessary handling. Qualified human owners make clinical, legal, coding, billing, audit, and compliance decisions. External submissions, messages, and production changes require scoped authorization.\n\n## Calculation evidence\n\n- Use `review_survey_evidence` with `{ \"case\": ... }` when the calculation is relevant and the tool is available. Follow the schema. Supply the human owner and dated evidence for every data field. Synthetic cases are the default tool mode. Approved aggregate data requires operator-enabled mode. Leave missing real values blank.\n- Keep the validated result pending if the tool is unavailable or the case is incomplete. Show conditional arithmetic only when sufficient, admissible inputs support it. Name the assumption and missing verification. Continue drafting advice or a checklist from supported facts.\n- Leave values pending if inputs conflict or are insufficient. If the tool rejects the case, keep the calculation pending until the issue is resolved. A change of runtime or evidence label cannot override the data policy.\n- Carry successful values, evidence, and interpretation checks into a `draft_for_human_review`.\n"
+    },
+    {
+      "slug": "healthcare-workflow-builder",
+      "name": "healthcare-workflow-builder",
+      "dir": "skills/healthcare-workflow-builder",
+      "path": "skills/healthcare-workflow-builder/SKILL.md",
+      "desc": "Create or adapt a reusable local workflow for US healthcare administration when the user wants a repeatable artifact, a defined evidence contract, and human review.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/ajhcs/healthcare-agents.git",
+        "copy": "cp -r skills/healthcare-workflow-builder ~/.claude/skills/healthcare-workflow-builder",
+        "raw": "https://raw.githubusercontent.com/ajhcs/healthcare-agents/777a74f52a5dbfd9431e07c963a84b4707e905d9/skills/healthcare-workflow-builder/SKILL.md",
+        "saveAs": "~/.claude/skills/healthcare-workflow-builder/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:e1d3d94b1216496c434bc07fecd977b26648f2eea342b7fda5b51a70b0198548",
+      "bytes": 1829,
+      "wordCount": 227,
+      "repoLicense": "Apache-2.0",
+      "commit": "777a74f52a5dbfd9431e07c963a84b4707e905d9",
+      "branch": "main",
+      "body": "---\nname: healthcare-workflow-builder\ndescription: Create or adapt a reusable local workflow for US healthcare administration when the user wants a repeatable artifact, a defined evidence contract, and human review.\nlicense: Apache-2.0\n---\n\n# Build a healthcare workflow\n\nDeliver a reusable local bundle for the user's artifact. Use [the community interview example](../../workflows/admin-v2/custom-example.json) for the supported contract shape.\n\n- Describe who will use the artifact, the decision it supports, and what a reviewer should be able to verify. Choose one primary specialist and name the accountable human owner.\n- Specify the minimum required inputs, how to identify their sources and dates, and which gaps or conflicts would leave a conclusion pending. Write steps for domain decisions and evidence checks. Let the host choose routine mechanics. Turn the user's requested format and review criteria into `output_sections` and `acceptance`.\n- Run `healthcare-agents admin validate <spec.json>`, then `healthcare-agents admin build <spec.json> --output <new-directory>`. Read back the generated skill and reference, check the case template against the input fields, and verify the manifest against the generated files.\n- Exercise a synthetic or approved aggregate example and one missing or conflicting evidence case. Compare the resulting drafts against known facts and the acceptance criteria. If the workflow produces a visual, use a governing example when available and check the output at its intended size, including any interactions. Report any checks still pending.\n\nUse an approved environment and minimum necessary controls for PHI. Keep regulated decisions and external actions with authorized human owners. The reviewed local bundle is the deliverable. Activation and deployment require their own scope.\n",
+      "bodyMd": "# Build a healthcare workflow\n\nDeliver a reusable local bundle for the user's artifact. Use [the community interview example](../../workflows/admin-v2/custom-example.json) for the supported contract shape.\n\n- Describe who will use the artifact, the decision it supports, and what a reviewer should be able to verify. Choose one primary specialist and name the accountable human owner.\n- Specify the minimum required inputs, how to identify their sources and dates, and which gaps or conflicts would leave a conclusion pending. Write steps for domain decisions and evidence checks. Let the host choose routine mechanics. Turn the user's requested format and review criteria into `output_sections` and `acceptance`.\n- Run `healthcare-agents admin validate <spec.json>`, then `healthcare-agents admin build <spec.json> --output <new-directory>`. Read back the generated skill and reference, check the case template against the input fields, and verify the manifest against the generated files.\n- Exercise a synthetic or approved aggregate example and one missing or conflicting evidence case. Compare the resulting drafts against known facts and the acceptance criteria. If the workflow produces a visual, use a governing example when available and check the output at its intended size, including any interactions. Report any checks still pending.\n\nUse an approved environment and minimum necessary controls for PHI. Keep regulated decisions and external actions with authorized human owners. The reviewed local bundle is the deliverable. Activation and deployment require their own scope.\n"
+    }
+  ]
+}

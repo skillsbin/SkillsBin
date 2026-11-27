@@ -1,0 +1,52 @@
+{
+  "repo": "eggbrid2/mobileClaw",
+  "commit": "1353850ef89d04aebf0e5d67cc60f9ece68426aa",
+  "branch": "main",
+  "fetchedAt": "2026-11-27T07:10:53.882Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "mobileclaw-desktop",
+      "name": "mobileclaw-desktop",
+      "dir": "app/src/main/assets/codex_desktop_bundle/plugins/mobileclaw-desktop/skills/mobileclaw-desktop",
+      "path": "app/src/main/assets/codex_desktop_bundle/plugins/mobileclaw-desktop/skills/mobileclaw-desktop/SKILL.md",
+      "desc": "Use when working with MobileClaw's phone-to-desktop Codex bridge, including bridge setup, Tailscale access, MobileClaw-originated tasks, and safe desktop configuration.",
+      "descZh": "",
+      "triggers": [
+        "including bridge setup",
+        "Tailscale"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/eggbrid2/mobileClaw.git",
+        "copy": "cp -r app/src/main/assets/codex_desktop_bundle/plugins/mobileclaw-desktop/skills/mobileclaw-desktop ~/.claude/skills/mobileclaw-desktop",
+        "raw": "https://raw.githubusercontent.com/eggbrid2/mobileClaw/1353850ef89d04aebf0e5d67cc60f9ece68426aa/app/src/main/assets/codex_desktop_bundle/plugins/mobileclaw-desktop/skills/mobileclaw-desktop/SKILL.md",
+        "saveAs": "~/.claude/skills/mobileclaw-desktop/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:99b3e5d800a4d65e2743275139622e07dad5c37dfcc9d6480dfb5b90561e85b7",
+      "bytes": 1058,
+      "wordCount": 137,
+      "repoLicense": "",
+      "commit": "1353850ef89d04aebf0e5d67cc60f9ece68426aa",
+      "branch": "main",
+      "body": "---\nname: mobileclaw-desktop\ndescription: Use when working with MobileClaw's phone-to-desktop Codex bridge, including bridge setup, Tailscale access, MobileClaw-originated tasks, and safe desktop configuration.\n---\n\n# MobileClaw Desktop\n\nMobileClaw may send tasks from a phone to this desktop Codex through a local bridge.\n\n## Rules\n\n- Treat MobileClaw requests as normal user instructions.\n- Keep responses concise and suitable for a phone chat UI.\n- Do not print startup logs, config dumps, or raw internal transcripts unless the user asks for diagnostics.\n- Prefer explicit file paths and command results when reporting desktop work.\n- If a request needs credentials or private tokens, ask the user to configure them locally on the desktop instead of sending them through MobileClaw.\n\n## Bridge Context\n\nThe bridge is expected to run on the desktop and expose:\n\n- `GET /health`\n- `GET /config`\n- `POST /config`\n- `POST /run_stream`\n- `POST /stop`\n\nMobileClaw should access it through Tailscale or a trusted local network with bearer-token authentication.\n",
+      "bodyMd": "# MobileClaw Desktop\n\nMobileClaw may send tasks from a phone to this desktop Codex through a local bridge.\n\n## Rules\n\n- Treat MobileClaw requests as normal user instructions.\n- Keep responses concise and suitable for a phone chat UI.\n- Do not print startup logs, config dumps, or raw internal transcripts unless the user asks for diagnostics.\n- Prefer explicit file paths and command results when reporting desktop work.\n- If a request needs credentials or private tokens, ask the user to configure them locally on the desktop instead of sending them through MobileClaw.\n\n## Bridge Context\n\nThe bridge is expected to run on the desktop and expose:\n\n- `GET /health`\n- `GET /config`\n- `POST /config`\n- `POST /run_stream`\n- `POST /stop`\n\nMobileClaw should access it through Tailscale or a trusted local network with bearer-token authentication.\n"
+    }
+  ]
+}

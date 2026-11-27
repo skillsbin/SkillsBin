@@ -1,0 +1,55 @@
+{
+  "repo": "iBlinkQ/project-cairn",
+  "commit": "850dcd9584f2806d9dc32713770ee1168304b922",
+  "branch": "main",
+  "fetchedAt": "2026-11-27T07:11:38.007Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "project-cairn",
+      "name": "project-cairn",
+      "dir": "",
+      "path": "SKILL.md",
+      "desc": "Standardize how an AI-collaboration project turns work into reusable knowledge. Use when initializing or retrofitting Project Cairn, recording progress, distilling process documents into topic notes, maintaining AGENTS/CLAUDE/cairn docs, auditing project knowledge or a project experience knowledge base, pulling/citing external knowledge, or graduating validated experience (including one-shot graduation without init) into a knowledge base.",
+      "descZh": "",
+      "triggers": [
+        "initializing",
+        "recording progress"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git",
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/iBlinkQ/project-cairn.git",
+        "copy": "",
+        "raw": "https://raw.githubusercontent.com/iBlinkQ/project-cairn/850dcd9584f2806d9dc32713770ee1168304b922/SKILL.md",
+        "saveAs": "~/.claude/skills/project-cairn/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:4bb7197ef2401abddb3184010477ae967507e807e2cb290c83aacf5e4f117f95",
+      "bytes": 3644,
+      "wordCount": 375,
+      "repoLicense": "MIT",
+      "commit": "850dcd9584f2806d9dc32713770ee1168304b922",
+      "branch": "main",
+      "body": "---\nname: project-cairn\ndescription: Standardize how an AI-collaboration project turns work into reusable knowledge. Use when initializing or retrofitting Project Cairn, recording progress, distilling process documents into topic notes, maintaining AGENTS/CLAUDE/cairn docs, auditing project knowledge or a project experience knowledge base, pulling/citing external knowledge, or graduating validated experience (including one-shot graduation without init) into a knowledge base.\n---\n\n# Project Cairn\n\nProject Cairn gives AI-collaboration projects a durable way to keep and reuse what they learn while doing real work. The **Skill** supplies the method, **AGENTS.md** carries always-read project rules, and **`.cairn/config.yaml`** stores machine-readable configuration.\n\nThis Skill is documentation-first: instructions, templates, references, and provider adapters. It has no CLI, MCP server, background hook, chat-end trigger, automatic provider write, or automatic history migration. Routine maintenance happens during normal work because `AGENTS.md` carries the rules. Provider writes require human confirmation.\n\n## Routing\n\nLoad only the reference your task needs:\n\n- `references/init.md` — initialize, retrofit, bootstrap, or set up Project Cairn in a project.\n- `references/consume.md` — pull, cite, reuse, or apply external knowledge from the configured knowledge base.\n- `references/maintenance.md` — record progress, update LOG/ROADMAP, distill conclusions from dialogue or project process documents into topic notes (e.g. \"整理已有经验\"), or apply Cairn rules after work.\n- `references/audit.md` — check project experience (`检查项目经验`; aliases `检查知识文档` / `检查主题文档` / legacy `体检`), or the experience library (`检查经验库`, no init); respect the requested scope and propose changes before writing.\n- `references/upgrade.md` — upgrade an initialized project instance to the current skill spec, or check instance drift.\n- `references/graduation.md` — graduate knowledge, judge readiness, or run one-shot graduation without init (`经验入库` / `直接整理入库`; legacy `毕业` / `一次性毕业`, e.g. “看看这个文件夹里，有哪些经验值得存进知识库”); provider writes also read the selected `references/graduation/<provider>.md`.\n- `references/frontmatter.md` — create or review Cairn topic notes or knowledge-base notes.\n- `references/branch-closure.md` — review, close, abandon, or roll back an exploration branch and salvage its `cairn/` knowledge.\n- `references/zh-glossary.md` — writing project docs in Chinese; fixed English↔Chinese terminology mapping.\n\nFrontmatter describes triggers, not workflow.\n\n## Templates\n\n`assets/templates/` holds `AGENTS.md`, `CLAUDE.md`, `config.yaml`, `user-config.yaml`, `LOG.md`, `ROADMAP.md`, `topic.md`, and `Cited.md`. `init` scaffolds `AGENTS.md`, `CLAUDE.md`, `.cairn/config.yaml`, `cairn/LOG.md`, and optional `cairn/ROADMAP.md`, and can seed `~/.config/cairn/config.yaml` from `user-config.yaml`. `topic.md`, `Cited.md`, and `Reference/` are trigger-created. Templates use `{{PLACEHOLDER}}` tokens; never hardcode a provider or path.\n\n## Boundaries\n\n- No background hook or chat-end trigger is assumed.\n- Day-to-day maintenance happens because `AGENTS.md` is read as project rules.\n- Audit is the safety net for missed records.\n- Graduation is candidate detection plus human confirmation.\n- Historical migration is optional and separate from init.\n- `scripts/*.sh` use bash (macOS/Linux; Windows needs WSL/Git Bash). `scripts/*.py` use Python 3; `notion-graduate-batch.py` also needs PyYAML.\n",
+      "bodyMd": "# Project Cairn\n\nProject Cairn gives AI-collaboration projects a durable way to keep and reuse what they learn while doing real work. The **Skill** supplies the method, **AGENTS.md** carries always-read project rules, and **`.cairn/config.yaml`** stores machine-readable configuration.\n\nThis Skill is documentation-first: instructions, templates, references, and provider adapters. It has no CLI, MCP server, background hook, chat-end trigger, automatic provider write, or automatic history migration. Routine maintenance happens during normal work because `AGENTS.md` carries the rules. Provider writes require human confirmation.\n\n## Routing\n\nLoad only the reference your task needs:\n\n- `references/init.md` — initialize, retrofit, bootstrap, or set up Project Cairn in a project.\n- `references/consume.md` — pull, cite, reuse, or apply external knowledge from the configured knowledge base.\n- `references/maintenance.md` — record progress, update LOG/ROADMAP, distill conclusions from dialogue or project process documents into topic notes (e.g. \"整理已有经验\"), or apply Cairn rules after work.\n- `references/audit.md` — check project experience (`检查项目经验`; aliases `检查知识文档` / `检查主题文档` / legacy `体检`), or the experience library (`检查经验库`, no init); respect the requested scope and propose changes before writing.\n- `references/upgrade.md` — upgrade an initialized project instance to the current skill spec, or check instance drift.\n- `references/graduation.md` — graduate knowledge, judge readiness, or run one-shot graduation without init (`经验入库` / `直接整理入库`; legacy `毕业` / `一次性毕业`, e.g. “看看这个文件夹里，有哪些经验值得存进知识库”); provider writes also read the selected `references/graduation/<provider>.md`.\n- `references/frontmatter.md` — create or review Cairn topic notes or knowledge-base notes.\n- `references/branch-closure.md` — review, close, abandon, or roll back an exploration branch and salvage its `cairn/` knowledge.\n- `references/zh-glossary.md` — writing project docs in Chinese; fixed English↔Chinese terminology mapping.\n\nFrontmatter describes triggers, not workflow.\n\n## Templates\n\n`assets/templates/` holds `AGENTS.md`, `CLAUDE.md`, `config.yaml`, `user-config.yaml`, `LOG.md`, `ROADMAP.md`, `topic.md`, and `Cited.md`. `init` scaffolds `AGENTS.md`, `CLAUDE.md`, `.cairn/config.yaml`, `cairn/LOG.md`, and optional `cairn/ROADMAP.md`, and can seed `~/.config/cairn/config.yaml` from `user-config.yaml`. `topic.md`, `Cited.md`, and `Reference/` are trigger-created. Templates use `{{PLACEHOLDER}}` tokens; never hardcode a provider or path.\n\n## Boundaries\n\n- No background hook or chat-end trigger is assumed.\n- Day-to-day maintenance happens because `AGENTS.md` is read as project rules.\n- Audit is the safety net for missed records.\n- Graduation is candidate detection plus human confirmation.\n- Historical migration is optional and separate from init.\n- `scripts/*.sh` use bash (macOS/Linux; Windows needs WSL/Git Bash). `scripts/*.py` use Python 3; `notion-graduate-batch.py` also needs PyYAML.\n"
+    }
+  ]
+}

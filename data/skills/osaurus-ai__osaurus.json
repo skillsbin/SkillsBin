@@ -1,8 +1,8 @@
 {
   "repo": "osaurus-ai/osaurus",
-  "commit": "352ab3a5548a23bd4684c5e8912cb0dcc3b36626",
+  "commit": "699a0763668792d7cac4425598fd6c2829e50ec6",
   "branch": "main",
-  "fetchedAt": "2026-11-26T07:14:06.087Z",
+  "fetchedAt": "2026-11-27T07:07:10.878Z",
   "parseFail": 0,
   "skills": [
     {
@@ -31,7 +31,7 @@
       "install": {
         "clone": "git clone --depth 1 https://github.com/osaurus-ai/osaurus.git",
         "copy": "cp -r docs/examples/osaurus-bundle-example/skills/triage-ticket ~/.claude/skills/triage-ticket",
-        "raw": "https://raw.githubusercontent.com/osaurus-ai/osaurus/352ab3a5548a23bd4684c5e8912cb0dcc3b36626/docs/examples/osaurus-bundle-example/skills/triage-ticket/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/osaurus-ai/osaurus/699a0763668792d7cac4425598fd6c2829e50ec6/docs/examples/osaurus-bundle-example/skills/triage-ticket/SKILL.md",
         "saveAs": "~/.claude/skills/triage-ticket/SKILL.md",
         "marketplace": ""
       },
@@ -41,7 +41,7 @@
       "bytes": 708,
       "wordCount": 92,
       "repoLicense": "MIT",
-      "commit": "352ab3a5548a23bd4684c5e8912cb0dcc3b36626",
+      "commit": "699a0763668792d7cac4425598fd6c2829e50ec6",
       "branch": "main",
       "body": "---\nname: triage-ticket\ndescription: Triage an Acme support ticket - set priority, area and next step using Acme's priority matrix.\nversion: 1.0.0\nauthor: Acme Example\n---\n\n# Triage a ticket\n\nUse this when the user asks you to triage, prioritize or sort support tickets.\n\n1. Read the ticket and its latest comments.\n2. Pick the priority from `references/priority-matrix.md`. When two rows match, take the higher priority.\n3. Name the product area in one or two words.\n4. Write the next step as one sentence a teammate can act on.\n\nReply with exactly:\n\n```\nPriority: P1|P2|P3|P4\nArea: <area>\nNext step: <one sentence>\nWhy: <one sentence that cites the matrix row>\n```\n\nDo not promise the customer a fix date.\n",
       "bodyMd": "# Triage a ticket\n\nUse this when the user asks you to triage, prioritize or sort support tickets.\n\n1. Read the ticket and its latest comments.\n2. Pick the priority from `references/priority-matrix.md`. When two rows match, take the higher priority.\n3. Name the product area in one or two words.\n4. Write the next step as one sentence a teammate can act on.\n\nReply with exactly:\n\n```\nPriority: P1|P2|P3|P4\nArea: <area>\nNext step: <one sentence>\nWhy: <one sentence that cites the matrix row>\n```\n\nDo not promise the customer a fix date.\n"

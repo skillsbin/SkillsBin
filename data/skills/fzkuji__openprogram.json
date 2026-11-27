@@ -1,0 +1,51 @@
+{
+  "repo": "Fzkuji/OpenProgram",
+  "commit": "4c70f3e11fb754658b053a8600bb5c0714b3a5ba",
+  "branch": "main",
+  "fetchedAt": "2026-11-27T07:10:55.636Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "skill",
+      "name": "scientific-figure-making",
+      "dir": "examples/applications/auto_research/tasks/figures/skill",
+      "path": "examples/applications/auto_research/tasks/figures/skill/SKILL.md",
+      "desc": "Covers publication-ready matplotlib figures for academic papers, slides, and reports—bars, trends, scatter, heatmaps, and multi-panel layouts—with this repository’s house style, print/vector export conventions, and parity with figures4papers demos. Use when the user is finalizing or creating such figures in matplotlib. Do not use for interactive dashboards or web viz (Plotly, Altair, Bokeh), exploratory-only plots without a publication target, dominant 3D or geographic mapping, or Illustrator/Figma-first infographic workflows.",
+      "descZh": "",
+      "triggers": [
+        "the user is finalizing"
+      ],
+      "version": "",
+      "license": "AGPL-3.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/Fzkuji/OpenProgram.git",
+        "copy": "cp -r examples/applications/auto_research/tasks/figures/skill ~/.claude/skills/skill",
+        "raw": "https://raw.githubusercontent.com/Fzkuji/OpenProgram/4c70f3e11fb754658b053a8600bb5c0714b3a5ba/examples/applications/auto_research/tasks/figures/skill/SKILL.md",
+        "saveAs": "~/.claude/skills/skill/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:952300b4d0bd8fbd0c55aaa732a47a0abb8e9707bc80965c8e70221ef13f0292",
+      "bytes": 2242,
+      "wordCount": 205,
+      "repoLicense": "AGPL-3.0",
+      "commit": "4c70f3e11fb754658b053a8600bb5c0714b3a5ba",
+      "branch": "main",
+      "body": "---\nname: scientific-figure-making\ndescription: >-\n  Covers publication-ready matplotlib figures for academic papers, slides, and\n  reports—bars, trends, scatter, heatmaps, and multi-panel layouts—with this\n  repository’s house style, print/vector export conventions, and parity with\n  figures4papers demos. Use when the user is finalizing or creating such figures\n  in matplotlib. Do not use for interactive dashboards or web viz (Plotly, Altair,\n  Bokeh), exploratory-only plots without a publication target, dominant 3D or\n  geographic mapping, or Illustrator/Figma-first infographic workflows.\n---\n\n# Scientific figure making\n\nOpen `references/` only as needed; do not preload every file. Start from the table below, then follow links inside the document you opened (and into `figure_*` code via [references/demos.md](references/demos.md)) instead of loading the full reference set up front.\n\n## When to load this skill\n\n- Matplotlib figures for **papers, slides, or reports** that must match **this repo’s publication look** (fonts, palette, spines, legends, export).\n- Requests involving **grouped bars, trend lines, heatmaps, multi-panel grids**, or **PDF/SVG/high-DPI** output in a scientific-figure context.\n- References to **figures4papers** `figure_*` projects or “same style as the repo figures.”\n\n## When not to load\n\n- **Plotly, Altair, Bokeh**, or other interactive / web-first plotting.\n- **EDA-only** plots where seaborn or pandas is enough until there is a publication target.\n- Primary workflow is **3D, GIS**, or **non-matplotlib** tooling.\n- **Illustrator / Figma–first** layout or infographic (not matplotlib data plots).\n\n## Related files\n\n| File | Open when |\n|------|-----------|\n| [references/tutorials.md](references/tutorials.md) | End-to-end walkthroughs (bar, trends, heatmap) |\n| [references/api.md](references/api.md) | Function signatures, `PALETTE`, validation rules |\n| [references/common-patterns.md](references/common-patterns.md) | Layout patterns, legend panel, print-safe bars |\n| [references/design-theory.md](references/design-theory.md) | Typography, export policy, palette rationale |\n| [references/demos.md](references/demos.md) | Canonical `figure_*` demo links in figures4papers |\n",
+      "bodyMd": "# Scientific figure making\n\nOpen `references/` only as needed; do not preload every file. Start from the table below, then follow links inside the document you opened (and into `figure_*` code via [references/demos.md](references/demos.md)) instead of loading the full reference set up front.\n\n## When to load this skill\n\n- Matplotlib figures for **papers, slides, or reports** that must match **this repo’s publication look** (fonts, palette, spines, legends, export).\n- Requests involving **grouped bars, trend lines, heatmaps, multi-panel grids**, or **PDF/SVG/high-DPI** output in a scientific-figure context.\n- References to **figures4papers** `figure_*` projects or “same style as the repo figures.”\n\n## When not to load\n\n- **Plotly, Altair, Bokeh**, or other interactive / web-first plotting.\n- **EDA-only** plots where seaborn or pandas is enough until there is a publication target.\n- Primary workflow is **3D, GIS**, or **non-matplotlib** tooling.\n- **Illustrator / Figma–first** layout or infographic (not matplotlib data plots).\n\n## Related files\n\n| File | Open when |\n|------|-----------|\n| [references/tutorials.md](references/tutorials.md) | End-to-end walkthroughs (bar, trends, heatmap) |\n| [references/api.md](references/api.md) | Function signatures, `PALETTE`, validation rules |\n| [references/common-patterns.md](references/common-patterns.md) | Layout patterns, legend panel, print-safe bars |\n| [references/design-theory.md](references/design-theory.md) | Typography, export policy, palette rationale |\n| [references/demos.md](references/demos.md) | Canonical `figure_*` demo links in figures4papers |\n"
+    }
+  ]
+}

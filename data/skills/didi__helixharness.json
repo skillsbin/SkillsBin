@@ -1,0 +1,1035 @@
+{
+  "repo": "didi/helixharness",
+  "commit": "5bde4b3865cc30f678d0ca939c0b6ccd1e069557",
+  "branch": "main",
+  "fetchedAt": "2026-11-27T07:10:38.196Z",
+  "parseFail": 3,
+  "skills": [
+    {
+      "slug": "helixharness-case-creator",
+      "name": "helixharness-case-creator",
+      "dir": "helixharness-platform/web_ui/static/plugins/helixharness-case-creator/skills/helixharness-case-creator",
+      "path": "helixharness-platform/web_ui/static/plugins/helixharness-case-creator/skills/helixharness-case-creator/SKILL.md",
+      "desc": "从 Git 历史生成 HelixHarness Platform Scenario v2 REPOSITORY_CASE，执行只读 Preflight 与冲突检查，并在明确授权后发布和确定性校准。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git",
+          "python3"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/didi/helixharness.git",
+        "copy": "cp -r helixharness-platform/web_ui/static/plugins/helixharness-case-creator/skills/helixharness-case-creator ~/.claude/skills/helixharness-case-creator",
+        "raw": "https://raw.githubusercontent.com/didi/helixharness/5bde4b3865cc30f678d0ca939c0b6ccd1e069557/helixharness-platform/web_ui/static/plugins/helixharness-case-creator/skills/helixharness-case-creator/SKILL.md",
+        "saveAs": "~/.claude/skills/helixharness-case-creator/SKILL.md",
+        "marketplace": "/plugin marketplace add didi/helixharness"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:99ad398270b378a4d5d0d23cd62275f2d03990eec07ea59c99b6ed71e5538e62",
+      "bytes": 7750,
+      "wordCount": 369,
+      "repoLicense": "Apache-2.0",
+      "commit": "5bde4b3865cc30f678d0ca939c0b6ccd1e069557",
+      "branch": "main",
+      "body": "---\nname: helixharness-case-creator\ndescription: 从 Git 历史生成 HelixHarness Platform Scenario v2 REPOSITORY_CASE，执行只读 Preflight 与冲突检查，并在明确授权后发布和确定性校准。\n---\n\n# HelixHarness Case Creator\n\n## 目标\n\n从一个或多个真实 Git 历史变更生成与工作流无关、可复现的 Scenario v2 Case。默认只发现、生成到 staging、校验和给出计划；不得默认覆盖 Case、发布、校准或创建评测 Run。\n\n只有 `publication_status=PUBLISHED` 且 `calibration_state=CALIBRATED` 才能报告“Case 可用于正式评测”。Base/Candidate 命令、阶段产物来源和统一评分规则都由 Run 冻结，不写入 Case。\n\n## 必须遵守\n\n1. 读取目标仓库 `AGENTS.md`、平台开发说明和 [case-contract.md](references/case-contract.md)。\n2. 候选必须来自 Git commit；忽略未提交内容、符号链接目标、凭据、`.env` 和缓存。\n3. 默认只在目标 `case-sources-v2` 之外的 staging 生成；不得覆盖现有目录。\n4. 不同内容更新必须得到用户对具体 `case_id` 的明确授权，并说明需要重新校准。\n5. 每个 Case 独立报告；一个失败不得隐式修改其他 Case。\n6. 不伪造 commit、测试结果、SHA256、校准状态或业务事实；证据不足标记 `NEEDS_REVIEW`。\n7. 行为测试优先于源码文本/字段存在检查；F2P 要求 Base 失败、Solution 通过，P2P 要求两侧通过。\n8. 代码改动为 0 行，或只有需求/归档资料变化的候选不得生成 Case。\n9. `CALIBRATED` 只表示当前 Source 的确定性校准通过；只有同一 `source_hash` 的正式 Run 完整闭环，才能报告工作流可闭环。\n10. 不得要求 Candidate 复跑只存在于隐藏 Solution 中的历史测试；强制测试必须在 Base 可见证据中有可枚举身份和命令。\n11. Initial Request 若引用 Base/Solution、F2P/P2P、hidden patch 或 JUnit 计数，必须声明候选可见性边界：这些由平台独立校准，不是 Candidate 的 Review/Verify/Archive 前置证据。\n12. Agent 开始前必需的构建隔离或工具链兼容修复必须显式冻结：单仓使用 `workspace_fixture_patch`，多仓使用 `workspace_path` 下的 Workspace 执行资产；不得藏在工作流后才注入的 hidden patch 中。\n13. 单仓 Case 保持旧 `repository` 契约；只有需求明确跨两个及以上仓库、且每个仓库都有冻结 Commit 证据时，才生成 `MULTI_REPOSITORY`。不得仅凭依赖关系把只读依赖仓库加入多仓 Case。\n\n## 工作流\n\n### 1. 发现与冻结\n\n先运行 `scripts/discover_repositories.py`，按当前归档合同检查 `spec.md`、`tasks.md`、`verify-report.md` 三份文档，再人工选择有可靠历史需求和行为证据的候选。若同一归档需求在多个仓库均有实现变更，先按 feature/需求证据归组，并逐仓确认是 `WRITE` 还是仅 `READ`。用 `git rev-parse --verify <ref>^{commit}`、`git merge-base --is-ancestor` 和真实源码 diff 冻结每个仓库的 Base/Solution 40 位 commit；计算逐仓 binary full-index diff SHA256。\n\n### 2. 生成 Scenario v2 Source\n\n每个 Case 使用稳定 ID `<repository-id>-<feature-slug>`，按 [case-contract.md](references/case-contract.md) 生成：\n\n```text\ninitial-request.md\nclarification-policy.json\nprovenance.json\ngold.json\nhidden-tests.patch\nworkspace-fixture.patch  # 仅在 Agent 前需要构建/工具链基线时\ncase.json\n```\n\n多仓 Case 额外用 `workspace/helixharness.workspace.yaml` 冻结 HelixHarness Workspace 注册表；每个仓库使用独立子目录、独立 Commit 区间和独立 Git 基线。`execution_tests[].working_directory` 明确测试在哪个仓库运行，`source_evidence[].repository_id` 和 `hidden_test_patches[].repository_id` 明确证据及隐藏补丁归属。多仓当前不使用单仓的 `workspace_fixture_patch`；需要的 Workspace 配置放入 `workspace_path` 声明的冻结执行资产。\n\nCase 只保存业务场景、冻结仓库区间、澄清答案和确定性业务校验；不得写入 Profile、工作流命令、阶段产物来源或评分轴。\n\n澄清策略必须冻结可追溯的具体业务事实和边界答案。Review、归档、commit、是否继续等流程选择属于 Run 执行策略，不得伪装成业务事实。空壳、同义复述 initial request、无法定位证据的事实均标记 `NEEDS_REVIEW`。\n\n### 3. Case 质量门禁\n\n按 [portability-and-regression.md](references/portability-and-regression.md) 审计生成结果：\n\n```bash\npython3 <skill-dir>/scripts/audit_case_quality.py \\\n  --case-dir <staged-case> --repository <repository-id>=<source-repo>\n\n# 多仓：每个仓库重复绑定\npython3 <skill-dir>/scripts/audit_case_quality.py \\\n  --case-dir <staged-case> \\\n  --repository <repo-a-id>=<repo-a-checkout> \\\n  --repository <repo-b-id>=<repo-b-checkout>\n```\n\n必须消除所有 `BLOCKER`；`RISK` 必须逐项用冻结契约或重放证据解释。隐藏测试只验证可观察行为，不绑定未冻结的私有字段名、构造器形态、注入方式、注解或等价 accessor 名。P2P 必须独立构建和运行，不得因 F2P 专用源码或 stub 失败。若 Agent 在注入 hidden tests 前就会因 Base 构建基线失败，先用只触及构建/工具配置的 `workspace_fixture_patch` 修复可见基线，再保持 hidden patch 仅包含隐藏断言。\n\n至少重放三种实现：pristine Base（F2P 失败、P2P 通过）、历史 Solution（全部通过）、一个与历史实现结构不同但业务等价的替代实现（全部通过）。无法构造替代实现时标记 `NEEDS_REVIEW`，不得把历史 Solution 的实现细节固化为唯一答案。\n\n### 4. 只读 Preflight 与冲突保护\n\n```bash\npython3 <skill-dir>/scripts/preflight_case.py \\\n  --platform-root <helixharness-platform> --case-dir <staged-case> --repository <repository-id>=<source-repo>\n\npython3 <skill-dir>/scripts/case_guard.py \\\n  --platform-root <helixharness-platform> --case-dir <staged-case> --repository <repository-id>=<source-repo> \\\n  --database <target-evaluation.db> --case-source-root <target-case-sources-v2> \\\n  --repository-registry <target-registry.json>\n```\n\n单仓和多仓统一使用 `--repository <repository-id>=<checkout>`；多仓为每个仓库重复传入一次，ID 必须与 Case 清单一致。\n\nGuard 只读目标 Scenario v2 DB/Source snapshot，返回 `READY_NEW`、`NO_CHANGE`、`UPDATE_REQUIRES_CONFIRMATION` 或阻断状态。只有用户明确允许该 ID 更新后，才能加 `--update-existing` 重查。\n\n### 5. 明确授权后的状态变更\n\n发布前再次检查 source hash、活动 Scenario v2 Run、repository 归属和 publication status。发布不同 hash 会使校准回到待执行；随后用 Scenario v2 确定性校准服务验证 Base/Solution。创建正式评测 Run 是单独授权。\n\n### 6. 正式闭环验证与报告\n\n发布更新、分支或冻结文件变化后必须重新生成 Candidate integrity bundle；不得复用旧摘要。确定性校准成功后，优先用一个低并发正式 Run 做 canary。只有 Run 的 Base/Candidate、工作流、Verify、Review/Archive 和评分均按当前冻结契约结束，才记录“正式闭环已验证”。\n\n逐 Case 输出仓库、commit 区间、staging/目标路径、Preflight、冲突决策、source hash、发布状态、校准状态和下一动作。状态只使用：\n\n```text\nDISCOVERED -> GENERATED -> PREFLIGHT_PASSED -> PUBLISHED -> CALIBRATED\n```\n\n另行报告 `FORMAL_RUN_NOT_CHECKED`、`FORMAL_RUN_FAILED` 或 `FORMAL_RUN_COMPLETED`，不得把它们混入校准状态。\n\n批量任务汇总成功、跳过、需确认、阻断和失败数量，并保留可重跑清单。\n",
+      "bodyMd": "# HelixHarness Case Creator\n\n## 目标\n\n从一个或多个真实 Git 历史变更生成与工作流无关、可复现的 Scenario v2 Case。默认只发现、生成到 staging、校验和给出计划；不得默认覆盖 Case、发布、校准或创建评测 Run。\n\n只有 `publication_status=PUBLISHED` 且 `calibration_state=CALIBRATED` 才能报告“Case 可用于正式评测”。Base/Candidate 命令、阶段产物来源和统一评分规则都由 Run 冻结，不写入 Case。\n\n## 必须遵守\n\n1. 读取目标仓库 `AGENTS.md`、平台开发说明和 [case-contract.md](references/case-contract.md)。\n2. 候选必须来自 Git commit；忽略未提交内容、符号链接目标、凭据、`.env` 和缓存。\n3. 默认只在目标 `case-sources-v2` 之外的 staging 生成；不得覆盖现有目录。\n4. 不同内容更新必须得到用户对具体 `case_id` 的明确授权，并说明需要重新校准。\n5. 每个 Case 独立报告；一个失败不得隐式修改其他 Case。\n6. 不伪造 commit、测试结果、SHA256、校准状态或业务事实；证据不足标记 `NEEDS_REVIEW`。\n7. 行为测试优先于源码文本/字段存在检查；F2P 要求 Base 失败、Solution 通过，P2P 要求两侧通过。\n8. 代码改动为 0 行，或只有需求/归档资料变化的候选不得生成 Case。\n9. `CALIBRATED` 只表示当前 Source 的确定性校准通过；只有同一 `source_hash` 的正式 Run 完整闭环，才能报告工作流可闭环。\n10. 不得要求 Candidate 复跑只存在于隐藏 Solution 中的历史测试；强制测试必须在 Base 可见证据中有可枚举身份和命令。\n11. Initial Request 若引用 Base/Solution、F2P/P2P、hidden patch 或 JUnit 计数，必须声明候选可见性边界：这些由平台独立校准，不是 Candidate 的 Review/Verify/Archive 前置证据。\n12. Agent 开始前必需的构建隔离或工具链兼容修复必须显式冻结：单仓使用 `workspace_fixture_patch`，多仓使用 `workspace_path` 下的 Workspace 执行资产；不得藏在工作流后才注入的 hidden patch 中。\n13. 单仓 Case 保持旧 `repository` 契约；只有需求明确跨两个及以上仓库、且每个仓库都有冻结 Commit 证据时，才生成 `MULTI_REPOSITORY`。不得仅凭依赖关系把只读依赖仓库加入多仓 Case。\n\n## 工作流\n\n### 1. 发现与冻结\n\n先运行 `scripts/discover_repositories.py`，按当前归档合同检查 `spec.md`、`tasks.md`、`verify-report.md` 三份文档，再人工选择有可靠历史需求和行为证据的候选。若同一归档需求在多个仓库均有实现变更，先按 feature/需求证据归组，并逐仓确认是 `WRITE` 还是仅 `READ`。用 `git rev-parse --verify <ref>^{commit}`、`git merge-base --is-ancestor` 和真实源码 diff 冻结每个仓库的 Base/Solution 40 位 commit；计算逐仓 binary full-index diff SHA256。\n\n### 2. 生成 Scenario v2 Source\n\n每个 Case 使用稳定 ID `<repository-id>-<feature-slug>`，按 [case-contract.md](references/case-contract.md) 生成：\n\n```text\ninitial-request.md\nclarification-policy.json\nprovenance.json\ngold.json\nhidden-tests.patch\nworkspace-fixture.patch  # 仅在 Agent 前需要构建/工具链基线时\ncase.json\n```\n\n多仓 Case 额外用 `workspace/helixharness.workspace.yaml` 冻结 HelixHarness Workspace 注册表；每个仓库使用独立子目录、独立 Commit 区间和独立 Git 基线。`execution_tests[].working_directory` 明确测试在哪个仓库运行，`source_evidence[].repository_id` 和 `hidden_test_patches[].repository_id` 明确证据及隐藏补丁归属。多仓当前不使用单仓的 `workspace_fixture_patch`；需要的 Workspace 配置放入 `workspace_path` 声明的冻结执行资产。\n\nCase 只保存业务场景、冻结仓库区间、澄清答案和确定性业务校验；不得写入 Profile、工作流命令、阶段产物来源或评分轴。\n\n澄清策略必须冻结可追溯的具体业务事实和边界答案。Review、归档、commit、是否继续等流程选择属于 Run 执行策略，不得伪装成业务事实。空壳、同义复述 initial request、无法定位证据的事实均标记 `NEEDS_REVIEW`。\n\n### 3. Case 质量门禁\n\n按 [portability-and-regression.md](references/portability-and-regression.md) 审计生成结果：\n\n```bash\npython3 <skill-dir>/scripts/audit_case_quality.py \\\n  --case-dir <staged-case> --repository <repository-id>=<source-repo>\n\n# 多仓：每个仓库重复绑定\npython3 <skill-dir>/scripts/audit_case_quality.py \\\n  --case-dir <staged-case> \\\n  --repository <repo-a-id>=<repo-a-checkout> \\\n  --repository <repo-b-id>=<repo-b-checkout>\n```\n\n必须消除所有 `BLOCKER`；`RISK` 必须逐项用冻结契约或重放证据解释。隐藏测试只验证可观察行为，不绑定未冻结的私有字段名、构造器形态、注入方式、注解或等价 accessor 名。P2P 必须独立构建和运行，不得因 F2P 专用源码或 stub 失败。若 Agent 在注入 hidden tests 前就会因 Base 构建基线失败，先用只触及构建/工具配置的 `workspace_fixture_patch` 修复可见基线，再保持 hidden patch 仅包含隐藏断言。\n\n至少重放三种实现：pristine Base（F2P 失败、P2P 通过）、历史 Solution（全部通过）、一个与历史实现结构不同但业务等价的替代实现（全部通过）。无法构造替代实现时标记 `NEEDS_REVIEW`，不得把历史 Solution 的实现细节固化为唯一答案。\n\n### 4. 只读 Preflight 与冲突保护\n\n```bash\npython3 <skill-dir>/scripts/preflight_case.py \\\n  --platform-root <helixharness-platform> --case-dir <staged-case> --repository <repository-id>=<source-repo>\n\npython3 <skill-dir>/scripts/case_guard.py \\\n  --platform-root <helixharness-platform> --case-dir <staged-case> --repository <repository-id>=<source-repo> \\\n  --database <target-evaluation.db> --case-source-root <target-case-sources-v2> \\\n  --repository-registry <target-registry.json>\n```\n\n单仓和多仓统一使用 `--repository <repository-id>=<checkout>`；多仓为每个仓库重复传入一次，ID 必须与 Case 清单一致。\n\nGuard 只读目标 Scenario v2 DB/Source snapshot，返回 `READY_NEW`、`NO_CHANGE`、`UPDATE_REQUIRES_CONFIRMATION` 或阻断状态。只有用户明确允许该 ID 更新后，才能加 `--update-existing` 重查。\n\n### 5. 明确授权后的状态变更\n\n发布前再次检查 source hash、活动 Scenario v2 Run、repository 归属和 publication status。发布不同 hash 会使校准回到待执行；随后用 Scenario v2 确定性校准服务验证 Base/Solution。创建正式评测 Run 是单独授权。\n\n### 6. 正式闭环验证与报告\n\n发布更新、分支或冻结文件变化后必须重新生成 Candidate integrity bundle；不得复用旧摘要。确定性校准成功后，优先用一个低并发正式 Run 做 canary。只有 Run 的 Base/Candidate、工作流、Verify、Review/Archive 和评分均按当前冻结契约结束，才记录“正式闭环已验证”。\n\n逐 Case 输出仓库、commit 区间、staging/目标路径、Preflight、冲突决策、source hash、发布状态、校准状态和下一动作。状态只使用：\n\n```text\nDISCOVERED -> GENERATED -> PREFLIGHT_PASSED -> PUBLISHED -> CALIBRATED\n```\n\n另行报告 `FORMAL_RUN_NOT_CHECKED`、`FORMAL_RUN_FAILED` 或 `FORMAL_RUN_COMPLETED`，不得把它们混入校准状态。\n\n批量任务汇总成功、跳过、需确认、阻断和失败数量，并保留可重跑清单。\n"
+    },
+    {
+      "slug": "brainstorming",
+      "name": "brainstorming",
+      "dir": "helixharness/hosts/codex/skills/brainstorming",
+      "path": "helixharness/hosts/codex/skills/brainstorming/SKILL.md",
+      "desc": "用户独立调用的方案探索工具。澄清问题与约束，比较可行方案并给出推荐方向，不由研发命令自动触发。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "python3"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/didi/helixharness.git",
+        "copy": "cp -r helixharness/hosts/codex/skills/brainstorming ~/.claude/skills/brainstorming",
+        "raw": "https://raw.githubusercontent.com/didi/helixharness/5bde4b3865cc30f678d0ca939c0b6ccd1e069557/helixharness/hosts/codex/skills/brainstorming/SKILL.md",
+        "saveAs": "~/.claude/skills/brainstorming/SKILL.md",
+        "marketplace": "/plugin marketplace add didi/helixharness"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:4a93a2f293339fd226fe7563a1fd2f3ea55121ba195100cd36bd1a48840482f4",
+      "bytes": 1186,
+      "wordCount": 51,
+      "repoLicense": "Apache-2.0",
+      "commit": "5bde4b3865cc30f678d0ca939c0b6ccd1e069557",
+      "branch": "main",
+      "body": "---\nname: brainstorming\ndescription: \"用户独立调用的方案探索工具。澄清问题与约束，比较可行方案并给出推荐方向，不由研发命令自动触发。\"\n---\n\n# Codex method projection: brainstorming\n\n插件根固定为当前文件的 `../../../..`。任何 Python 调用前，必须先完整读取 `reference/runtime-preflight.md` 并执行当前操作系统的预检入口；原生 Windows 固定使用 `scripts/runtime_preflight.ps1` 的 `check` / `exec`，不得直接调用 `python3`、`python` 或 WindowsApps 别名。然后完整读取 `hosts/codex/host.json`、`reference/host-runtime-protocol.md`、`reference/tool-semantics.md` 和 manifest 绑定的 `resources.runtime`。canonical 正文首次需要 Agent/Task 时，再完整读取 `reference/subagent-runtime-protocol.md` 与 `resources.subagent_protocol`，按 Codex 适配器注入 leaf/afk 边界。然后完整读取并执行唯一 canonical 方法 Skill `skills/brainstorming/SKILL.md`；不得复制、改写或补充其业务语义，也不得扫描 plugin cache。canonical frontmatter 不是 Codex 运行时元数据；Codex 只消费其正文，宿主能力按 Host Context 映射。\n",
+      "bodyMd": "# Codex method projection: brainstorming\n\n插件根固定为当前文件的 `../../../..`。任何 Python 调用前，必须先完整读取 `reference/runtime-preflight.md` 并执行当前操作系统的预检入口；原生 Windows 固定使用 `scripts/runtime_preflight.ps1` 的 `check` / `exec`，不得直接调用 `python3`、`python` 或 WindowsApps 别名。然后完整读取 `hosts/codex/host.json`、`reference/host-runtime-protocol.md`、`reference/tool-semantics.md` 和 manifest 绑定的 `resources.runtime`。canonical 正文首次需要 Agent/Task 时，再完整读取 `reference/subagent-runtime-protocol.md` 与 `resources.subagent_protocol`，按 Codex 适配器注入 leaf/afk 边界。然后完整读取并执行唯一 canonical 方法 Skill `skills/brainstorming/SKILL.md`；不得复制、改写或补充其业务语义，也不得扫描 plugin cache。canonical frontmatter 不是 Codex 运行时元数据；Codex 只消费其正文，宿主能力按 Host Context 映射。\n"
+    },
+    {
+      "slug": "bug-fix",
+      "name": "bug-fix",
+      "dir": "helixharness/hosts/codex/skills/bug-fix",
+      "path": "helixharness/hosts/codex/skills/bug-fix/SKILL.md",
+      "desc": "修订未归档需求并复用原 Apply 基线。",
+      "descZh": "",
+      "triggers": [
+        "/helix:bug-fix"
+      ],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/didi/helixharness.git",
+        "copy": "cp -r helixharness/hosts/codex/skills/bug-fix ~/.claude/skills/bug-fix",
+        "raw": "https://raw.githubusercontent.com/didi/helixharness/5bde4b3865cc30f678d0ca939c0b6ccd1e069557/helixharness/hosts/codex/skills/bug-fix/SKILL.md",
+        "saveAs": "~/.claude/skills/bug-fix/SKILL.md",
+        "marketplace": "/plugin marketplace add didi/helixharness"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:12effbe9fe5ffc2781937e2ef7dbbdb22de8af5e60c68e0af1b4551f5092be91",
+      "bytes": 642,
+      "wordCount": 29,
+      "repoLicense": "Apache-2.0",
+      "commit": "5bde4b3865cc30f678d0ca939c0b6ccd1e069557",
+      "branch": "main",
+      "body": "---\nname: bug-fix\ndescription: \"修订未归档需求并复用原 Apply 基线。\"\ntriggers:\n  - /helix:bug-fix\n---\n\n插件根为当前文件的 `../../../..`。完整读取 `hosts/codex/skill-entry.md`，执行 runtime preflight，然后执行一次（Windows 使用 `.ps1 exec` 或预检回执中的解释器；下方是 POSIX 示例）：\n\n```bash\nsh \"{plugin_root}/scripts/runtime_preflight.sh\" exec \"{plugin_root}/scripts/codex_entry_load.py\" --plugin-root \"{plugin_root}\" --command bug-fix --resource subagent_protocol --resource telemetry_protocol\n```\n\n按协议完整消费 packet，以唯一 `commands/bug-fix.md` 为命令契约。\n",
+      "bodyMd": "插件根为当前文件的 `../../../..`。完整读取 `hosts/codex/skill-entry.md`，执行 runtime preflight，然后执行一次（Windows 使用 `.ps1 exec` 或预检回执中的解释器；下方是 POSIX 示例）：\n\n```bash\nsh \"{plugin_root}/scripts/runtime_preflight.sh\" exec \"{plugin_root}/scripts/codex_entry_load.py\" --plugin-root \"{plugin_root}\" --command bug-fix --resource subagent_protocol --resource telemetry_protocol\n```\n\n按协议完整消费 packet，以唯一 `commands/bug-fix.md` 为命令契约。\n"
+    },
+    {
+      "slug": "code-review",
+      "name": "code-review",
+      "dir": "helixharness/hosts/codex/skills/code-review",
+      "path": "helixharness/hosts/codex/skills/code-review/SKILL.md",
+      "desc": "为 HelixHarness Apply 评审固定比较点之后的代码变化；并行执行 Standards 与 Spec 两个独立评审轴，分轴报告结果，并按 HelixHarness 合同完成修复和复审。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "python3"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/didi/helixharness.git",
+        "copy": "cp -r helixharness/hosts/codex/skills/code-review ~/.claude/skills/code-review",
+        "raw": "https://raw.githubusercontent.com/didi/helixharness/5bde4b3865cc30f678d0ca939c0b6ccd1e069557/helixharness/hosts/codex/skills/code-review/SKILL.md",
+        "saveAs": "~/.claude/skills/code-review/SKILL.md",
+        "marketplace": "/plugin marketplace add didi/helixharness"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:62f68d0561e628990cc57f21aadfa08cc9b6f34283b5ffb48b801986f5a72792",
+      "bytes": 1256,
+      "wordCount": 51,
+      "repoLicense": "Apache-2.0",
+      "commit": "5bde4b3865cc30f678d0ca939c0b6ccd1e069557",
+      "branch": "main",
+      "body": "---\nuser-invocable: false\nname: code-review\ndescription: \"为 HelixHarness Apply 评审固定比较点之后的代码变化；并行执行 Standards 与 Spec 两个独立评审轴，分轴报告结果，并按 HelixHarness 合同完成修复和复审。\"\n---\n\n# Codex method projection: code-review\n\n插件根固定为当前文件的 `../../../..`。任何 Python 调用前，必须先完整读取 `reference/runtime-preflight.md` 并执行当前操作系统的预检入口；原生 Windows 固定使用 `scripts/runtime_preflight.ps1` 的 `check` / `exec`，不得直接调用 `python3`、`python` 或 WindowsApps 别名。然后完整读取 `hosts/codex/host.json`、`reference/host-runtime-protocol.md`、`reference/tool-semantics.md` 和 manifest 绑定的 `resources.runtime`。canonical 正文首次需要 Agent/Task 时，再完整读取 `reference/subagent-runtime-protocol.md` 与 `resources.subagent_protocol`，按 Codex 适配器注入 leaf/afk 边界。然后完整读取并执行唯一 canonical 方法 Skill `skills/code-review/SKILL.md`；不得复制、改写或补充其业务语义，也不得扫描 plugin cache。canonical frontmatter 不是 Codex 运行时元数据；Codex 只消费其正文，宿主能力按 Host Context 映射。\n",
+      "bodyMd": "# Codex method projection: code-review\n\n插件根固定为当前文件的 `../../../..`。任何 Python 调用前，必须先完整读取 `reference/runtime-preflight.md` 并执行当前操作系统的预检入口；原生 Windows 固定使用 `scripts/runtime_preflight.ps1` 的 `check` / `exec`，不得直接调用 `python3`、`python` 或 WindowsApps 别名。然后完整读取 `hosts/codex/host.json`、`reference/host-runtime-protocol.md`、`reference/tool-semantics.md` 和 manifest 绑定的 `resources.runtime`。canonical 正文首次需要 Agent/Task 时，再完整读取 `reference/subagent-runtime-protocol.md` 与 `resources.subagent_protocol`，按 Codex 适配器注入 leaf/afk 边界。然后完整读取并执行唯一 canonical 方法 Skill `skills/code-review/SKILL.md`；不得复制、改写或补充其业务语义，也不得扫描 plugin cache。canonical frontmatter 不是 Codex 运行时元数据；Codex 只消费其正文，宿主能力按 Host Context 映射。\n"
+    },
+    {
+      "slug": "config",
+      "name": "config",
+      "dir": "helixharness/hosts/codex/skills/config",
+      "path": "helixharness/hosts/codex/skills/config/SKILL.md",
+      "desc": "查看或修改 HelixHarness 用户配置：统计授权、作用范围、统计与反馈上报地址。",
+      "descZh": "",
+      "triggers": [
+        "/helix:config"
+      ],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/didi/helixharness.git",
+        "copy": "cp -r helixharness/hosts/codex/skills/config ~/.claude/skills/config",
+        "raw": "https://raw.githubusercontent.com/didi/helixharness/5bde4b3865cc30f678d0ca939c0b6ccd1e069557/helixharness/hosts/codex/skills/config/SKILL.md",
+        "saveAs": "~/.claude/skills/config/SKILL.md",
+        "marketplace": "/plugin marketplace add didi/helixharness"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:91f13da91ab2940d6364c6f6e42be85f17ef77cdd60e65371d5102385ddd567a",
+      "bytes": 634,
+      "wordCount": 25,
+      "repoLicense": "Apache-2.0",
+      "commit": "5bde4b3865cc30f678d0ca939c0b6ccd1e069557",
+      "branch": "main",
+      "body": "---\nname: config\ndescription: \"查看或修改 HelixHarness 用户配置：统计授权、作用范围、统计与反馈上报地址。\"\ntriggers:\n  - /helix:config\n---\n\n插件根为当前文件的 `../../../..`。完整读取 `hosts/codex/skill-entry.md`，执行 runtime preflight，然后执行一次（Windows 使用 `.ps1 exec` 或预检回执中的解释器；下方是 POSIX 示例）：\n\n```bash\nsh \"{plugin_root}/scripts/runtime_preflight.sh\" exec \"{plugin_root}/scripts/codex_entry_load.py\" --plugin-root \"{plugin_root}\" --command config\n```\n\n按协议完整消费 packet，以唯一 `commands/config.md` 为命令契约。\n",
+      "bodyMd": "插件根为当前文件的 `../../../..`。完整读取 `hosts/codex/skill-entry.md`，执行 runtime preflight，然后执行一次（Windows 使用 `.ps1 exec` 或预检回执中的解释器；下方是 POSIX 示例）：\n\n```bash\nsh \"{plugin_root}/scripts/runtime_preflight.sh\" exec \"{plugin_root}/scripts/codex_entry_load.py\" --plugin-root \"{plugin_root}\" --command config\n```\n\n按协议完整消费 packet，以唯一 `commands/config.md` 为命令契约。\n"
+    },
+    {
+      "slug": "d-d2c",
+      "name": "d-d2c",
+      "dir": "helixharness/hosts/codex/skills/d-d2c",
+      "path": "helixharness/hosts/codex/skills/d-d2c/SKILL.md",
+      "desc": "用户提到 d-d2c、设计稿还原、MasterGo、贴图比对、design-to-code、页面开发，或使用 d-d2c --create-page / --update-page / --component 时，按这个 skill 要求执行；支持新建整页、更新已有页、组件/弹层/卡片三种流程入口，后两者分别读取 rules/d-d2c-update-page.md / rules/d-d2c-component.md 作为流程覆盖层",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "python3"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/didi/helixharness.git",
+        "copy": "cp -r helixharness/hosts/codex/skills/d-d2c ~/.claude/skills/d-d2c",
+        "raw": "https://raw.githubusercontent.com/didi/helixharness/5bde4b3865cc30f678d0ca939c0b6ccd1e069557/helixharness/hosts/codex/skills/d-d2c/SKILL.md",
+        "saveAs": "~/.claude/skills/d-d2c/SKILL.md",
+        "marketplace": "/plugin marketplace add didi/helixharness"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:64f4c2fa16460dd123e3b63a57e76b7f59f15798c3afdc87cbe4c2e67610eb06",
+      "bytes": 1414,
+      "wordCount": 51,
+      "repoLicense": "Apache-2.0",
+      "commit": "5bde4b3865cc30f678d0ca939c0b6ccd1e069557",
+      "branch": "main",
+      "body": "---\nuser-invocable: false\nname: d-d2c\ndescription: \"用户提到 d-d2c、设计稿还原、MasterGo、贴图比对、design-to-code、页面开发，或使用 d-d2c --create-page / --update-page / --component 时，按这个 skill 要求执行；支持新建整页、更新已有页、组件/弹层/卡片三种流程入口，后两者分别读取 rules/d-d2c-update-page.md / rules/d-d2c-component.md 作为流程覆盖层\"\n---\n\n# Codex method projection: d-d2c\n\n插件根固定为当前文件的 `../../../..`。任何 Python 调用前，必须先完整读取 `reference/runtime-preflight.md` 并执行当前操作系统的预检入口；原生 Windows 固定使用 `scripts/runtime_preflight.ps1` 的 `check` / `exec`，不得直接调用 `python3`、`python` 或 WindowsApps 别名。然后完整读取 `hosts/codex/host.json`、`reference/host-runtime-protocol.md`、`reference/tool-semantics.md` 和 manifest 绑定的 `resources.runtime`。canonical 正文首次需要 Agent/Task 时，再完整读取 `reference/subagent-runtime-protocol.md` 与 `resources.subagent_protocol`，按 Codex 适配器注入 leaf/afk 边界。然后完整读取并执行唯一 canonical 方法 Skill `skills/d-d2c/SKILL.md`；不得复制、改写或补充其业务语义，也不得扫描 plugin cache。canonical frontmatter 不是 Codex 运行时元数据；Codex 只消费其正文，宿主能力按 Host Context 映射。\n",
+      "bodyMd": "# Codex method projection: d-d2c\n\n插件根固定为当前文件的 `../../../..`。任何 Python 调用前，必须先完整读取 `reference/runtime-preflight.md` 并执行当前操作系统的预检入口；原生 Windows 固定使用 `scripts/runtime_preflight.ps1` 的 `check` / `exec`，不得直接调用 `python3`、`python` 或 WindowsApps 别名。然后完整读取 `hosts/codex/host.json`、`reference/host-runtime-protocol.md`、`reference/tool-semantics.md` 和 manifest 绑定的 `resources.runtime`。canonical 正文首次需要 Agent/Task 时，再完整读取 `reference/subagent-runtime-protocol.md` 与 `resources.subagent_protocol`，按 Codex 适配器注入 leaf/afk 边界。然后完整读取并执行唯一 canonical 方法 Skill `skills/d-d2c/SKILL.md`；不得复制、改写或补充其业务语义，也不得扫描 plugin cache。canonical frontmatter 不是 Codex 运行时元数据；Codex 只消费其正文，宿主能力按 Host Context 映射。\n"
+    },
+    {
+      "slug": "d2c-fidelity-evaluator",
+      "name": "d2c-fidelity-evaluator",
+      "dir": "helixharness/hosts/codex/skills/d2c-fidelity-evaluator",
+      "path": "helixharness/hosts/codex/skills/d2c-fidelity-evaluator/SKILL.md",
+      "desc": "Evaluate design-to-code fidelity for a generated page by comparing design inputs and implementation outputs. Use when the user provides or references a design screenshot, design DSL, source code, rendered page screenshot, and optionally a transparent design-over-render overlay image, and wants a restoration/fidelity percentage plus an actionable report that can drive the next D2C optimization pass.",
+      "descZh": "",
+      "triggers": [
+        "the user provides",
+        "design DSL",
+        "source code",
+        "rendered pag"
+      ],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "python3"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/didi/helixharness.git",
+        "copy": "cp -r helixharness/hosts/codex/skills/d2c-fidelity-evaluator ~/.claude/skills/d2c-fidelity-evaluator",
+        "raw": "https://raw.githubusercontent.com/didi/helixharness/5bde4b3865cc30f678d0ca939c0b6ccd1e069557/helixharness/hosts/codex/skills/d2c-fidelity-evaluator/SKILL.md",
+        "saveAs": "~/.claude/skills/d2c-fidelity-evaluator/SKILL.md",
+        "marketplace": "/plugin marketplace add didi/helixharness"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:1f4ba00a631890a2839de5f65a0c8debbf44253e70d1359441c6109e1f520be3",
+      "bytes": 1495,
+      "wordCount": 51,
+      "repoLicense": "Apache-2.0",
+      "commit": "5bde4b3865cc30f678d0ca939c0b6ccd1e069557",
+      "branch": "main",
+      "body": "---\nuser-invocable: false\nname: d2c-fidelity-evaluator\ndescription: \"Evaluate design-to-code fidelity for a generated page by comparing design inputs and implementation outputs. Use when the user provides or references a design screenshot, design DSL, source code, rendered page screenshot, and optionally a transparent design-over-render overlay image, and wants a restoration/fidelity percentage plus an actionable report that can drive the next D2C optimization pass.\"\n---\n\n# Codex method projection: d2c-fidelity-evaluator\n\n插件根固定为当前文件的 `../../../..`。任何 Python 调用前，必须先完整读取 `reference/runtime-preflight.md` 并执行当前操作系统的预检入口；原生 Windows 固定使用 `scripts/runtime_preflight.ps1` 的 `check` / `exec`，不得直接调用 `python3`、`python` 或 WindowsApps 别名。然后完整读取 `hosts/codex/host.json`、`reference/host-runtime-protocol.md`、`reference/tool-semantics.md` 和 manifest 绑定的 `resources.runtime`。canonical 正文首次需要 Agent/Task 时，再完整读取 `reference/subagent-runtime-protocol.md` 与 `resources.subagent_protocol`，按 Codex 适配器注入 leaf/afk 边界。然后完整读取并执行唯一 canonical 方法 Skill `skills/d2c-fidelity-evaluator/SKILL.md`；不得复制、改写或补充其业务语义，也不得扫描 plugin cache。canonical frontmatter 不是 Codex 运行时元数据；Codex 只消费其正文，宿主能力按 Host Context 映射。\n",
+      "bodyMd": "# Codex method projection: d2c-fidelity-evaluator\n\n插件根固定为当前文件的 `../../../..`。任何 Python 调用前，必须先完整读取 `reference/runtime-preflight.md` 并执行当前操作系统的预检入口；原生 Windows 固定使用 `scripts/runtime_preflight.ps1` 的 `check` / `exec`，不得直接调用 `python3`、`python` 或 WindowsApps 别名。然后完整读取 `hosts/codex/host.json`、`reference/host-runtime-protocol.md`、`reference/tool-semantics.md` 和 manifest 绑定的 `resources.runtime`。canonical 正文首次需要 Agent/Task 时，再完整读取 `reference/subagent-runtime-protocol.md` 与 `resources.subagent_protocol`，按 Codex 适配器注入 leaf/afk 边界。然后完整读取并执行唯一 canonical 方法 Skill `skills/d2c-fidelity-evaluator/SKILL.md`；不得复制、改写或补充其业务语义，也不得扫描 plugin cache。canonical frontmatter 不是 Codex 运行时元数据；Codex 只消费其正文，宿主能力按 Host Context 映射。\n"
+    },
+    {
+      "slug": "feedback",
+      "name": "feedback",
+      "dir": "helixharness/hosts/codex/skills/feedback",
+      "path": "helixharness/hosts/codex/skills/feedback/SKILL.md",
+      "desc": "HelixHarness 使用问题反馈通道。当用户在 /helix:* 命令与工作流中遇到问题并表现出困扰时主动使用：命令反复失败或报错无法推进、生成的文档/字段/结构与用户预期不符、流程在某一步卡住不动、用户对 HelixHarness 表达不满困惑或抱怨、放弃工作流改用手工方式，或明确要求提交反馈。此时向用户建议提交反馈，发送前必须经用户确认。不触发：用户业务代码的问题、与 HelixHarness 无关的报错、一般使用咨询、模型已自行修复的故障。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "python3"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/didi/helixharness.git",
+        "copy": "cp -r helixharness/hosts/codex/skills/feedback ~/.claude/skills/feedback",
+        "raw": "https://raw.githubusercontent.com/didi/helixharness/5bde4b3865cc30f678d0ca939c0b6ccd1e069557/helixharness/hosts/codex/skills/feedback/SKILL.md",
+        "saveAs": "~/.claude/skills/feedback/SKILL.md",
+        "marketplace": "/plugin marketplace add didi/helixharness"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:f5ecd58859df653096b05a71a8a4999ec501d3245d769c934bfe4ed9a3b327e6",
+      "bytes": 1608,
+      "wordCount": 51,
+      "repoLicense": "Apache-2.0",
+      "commit": "5bde4b3865cc30f678d0ca939c0b6ccd1e069557",
+      "branch": "main",
+      "body": "---\nname: feedback\ndescription: \"HelixHarness 使用问题反馈通道。当用户在 /helix:* 命令与工作流中遇到问题并表现出困扰时主动使用：命令反复失败或报错无法推进、生成的文档/字段/结构与用户预期不符、流程在某一步卡住不动、用户对 HelixHarness 表达不满困惑或抱怨、放弃工作流改用手工方式，或明确要求提交反馈。此时向用户建议提交反馈，发送前必须经用户确认。不触发：用户业务代码的问题、与 HelixHarness 无关的报错、一般使用咨询、模型已自行修复的故障。\"\n---\n\n# Codex method projection: feedback\n\n插件根固定为当前文件的 `../../../..`。任何 Python 调用前，必须先完整读取 `reference/runtime-preflight.md` 并执行当前操作系统的预检入口；原生 Windows 固定使用 `scripts/runtime_preflight.ps1` 的 `check` / `exec`，不得直接调用 `python3`、`python` 或 WindowsApps 别名。然后完整读取 `hosts/codex/host.json`、`reference/host-runtime-protocol.md`、`reference/tool-semantics.md` 和 manifest 绑定的 `resources.runtime`。canonical 正文首次需要 Agent/Task 时，再完整读取 `reference/subagent-runtime-protocol.md` 与 `resources.subagent_protocol`，按 Codex 适配器注入 leaf/afk 边界。然后完整读取并执行唯一 canonical 方法 Skill `skills/feedback/SKILL.md`；不得复制、改写或补充其业务语义，也不得扫描 plugin cache。canonical frontmatter 不是 Codex 运行时元数据；Codex 只消费其正文，宿主能力按 Host Context 映射。\n",
+      "bodyMd": "# Codex method projection: feedback\n\n插件根固定为当前文件的 `../../../..`。任何 Python 调用前，必须先完整读取 `reference/runtime-preflight.md` 并执行当前操作系统的预检入口；原生 Windows 固定使用 `scripts/runtime_preflight.ps1` 的 `check` / `exec`，不得直接调用 `python3`、`python` 或 WindowsApps 别名。然后完整读取 `hosts/codex/host.json`、`reference/host-runtime-protocol.md`、`reference/tool-semantics.md` 和 manifest 绑定的 `resources.runtime`。canonical 正文首次需要 Agent/Task 时，再完整读取 `reference/subagent-runtime-protocol.md` 与 `resources.subagent_protocol`，按 Codex 适配器注入 leaf/afk 边界。然后完整读取并执行唯一 canonical 方法 Skill `skills/feedback/SKILL.md`；不得复制、改写或补充其业务语义，也不得扫描 plugin cache。canonical frontmatter 不是 Codex 运行时元数据；Codex 只消费其正文，宿主能力按 Host Context 映射。\n"
+    },
+    {
+      "slug": "git-diff-impact",
+      "name": "git-diff-impact",
+      "dir": "helixharness/hosts/codex/skills/git-diff-impact",
+      "path": "helixharness/hosts/codex/skills/git-diff-impact/SKILL.md",
+      "desc": "分析指定 Git 改动的调用链、业务影响和兼容性风险，生成影响报告。用户主动要求影响分析时单独使用，无需 HelixHarness feature。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git",
+          "python",
+          "python3"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/didi/helixharness.git",
+        "copy": "cp -r helixharness/hosts/codex/skills/git-diff-impact ~/.claude/skills/git-diff-impact",
+        "raw": "https://raw.githubusercontent.com/didi/helixharness/5bde4b3865cc30f678d0ca939c0b6ccd1e069557/helixharness/hosts/codex/skills/git-diff-impact/SKILL.md",
+        "saveAs": "~/.claude/skills/git-diff-impact/SKILL.md",
+        "marketplace": "/plugin marketplace add didi/helixharness"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:82e5a114ee7164ebf2d406a1202d28d91c4e54724299066a028a05e024b9a81d",
+      "bytes": 1221,
+      "wordCount": 51,
+      "repoLicense": "Apache-2.0",
+      "commit": "5bde4b3865cc30f678d0ca939c0b6ccd1e069557",
+      "branch": "main",
+      "body": "---\nname: git-diff-impact\ndescription: \"分析指定 Git 改动的调用链、业务影响和兼容性风险，生成影响报告。用户主动要求影响分析时单独使用，无需 HelixHarness feature。\"\n---\n\n# Codex method projection: git-diff-impact\n\n插件根固定为当前文件的 `../../../..`。任何 Python 调用前，必须先完整读取 `reference/runtime-preflight.md` 并执行当前操作系统的预检入口；原生 Windows 固定使用 `scripts/runtime_preflight.ps1` 的 `check` / `exec`，不得直接调用 `python3`、`python` 或 WindowsApps 别名。然后完整读取 `hosts/codex/host.json`、`reference/host-runtime-protocol.md`、`reference/tool-semantics.md` 和 manifest 绑定的 `resources.runtime`。canonical 正文首次需要 Agent/Task 时，再完整读取 `reference/subagent-runtime-protocol.md` 与 `resources.subagent_protocol`，按 Codex 适配器注入 leaf/afk 边界。然后完整读取并执行唯一 canonical 方法 Skill `skills/git-diff-impact/SKILL.md`；不得复制、改写或补充其业务语义，也不得扫描 plugin cache。canonical frontmatter 不是 Codex 运行时元数据；Codex 只消费其正文，宿主能力按 Host Context 映射。\n",
+      "bodyMd": "# Codex method projection: git-diff-impact\n\n插件根固定为当前文件的 `../../../..`。任何 Python 调用前，必须先完整读取 `reference/runtime-preflight.md` 并执行当前操作系统的预检入口；原生 Windows 固定使用 `scripts/runtime_preflight.ps1` 的 `check` / `exec`，不得直接调用 `python3`、`python` 或 WindowsApps 别名。然后完整读取 `hosts/codex/host.json`、`reference/host-runtime-protocol.md`、`reference/tool-semantics.md` 和 manifest 绑定的 `resources.runtime`。canonical 正文首次需要 Agent/Task 时，再完整读取 `reference/subagent-runtime-protocol.md` 与 `resources.subagent_protocol`，按 Codex 适配器注入 leaf/afk 边界。然后完整读取并执行唯一 canonical 方法 Skill `skills/git-diff-impact/SKILL.md`；不得复制、改写或补充其业务语义，也不得扫描 plugin cache。canonical frontmatter 不是 Codex 运行时元数据；Codex 只消费其正文，宿主能力按 Host Context 映射。\n"
+    },
+    {
+      "slug": "init",
+      "name": "init",
+      "dir": "helixharness/hosts/codex/skills/init",
+      "path": "helixharness/hosts/codex/skills/init/SKILL.md",
+      "desc": "HelixHarness 初始化入口。默认初始化单服务仓库；传入 --workspace 时初始化多仓 workspace，并生成 workspace registry 与服务关系基线。",
+      "descZh": "",
+      "triggers": [
+        "/helix:init"
+      ],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/didi/helixharness.git",
+        "copy": "cp -r helixharness/hosts/codex/skills/init ~/.claude/skills/init",
+        "raw": "https://raw.githubusercontent.com/didi/helixharness/5bde4b3865cc30f678d0ca939c0b6ccd1e069557/helixharness/hosts/codex/skills/init/SKILL.md",
+        "saveAs": "~/.claude/skills/init/SKILL.md",
+        "marketplace": "/plugin marketplace add didi/helixharness"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:28df09f9bfc06b52cbba03145d0fb0b003189acc88cee24a064797e0775cdc6a",
+      "bytes": 799,
+      "wordCount": 33,
+      "repoLicense": "Apache-2.0",
+      "commit": "5bde4b3865cc30f678d0ca939c0b6ccd1e069557",
+      "branch": "main",
+      "body": "---\nname: init\ndescription: \"HelixHarness 初始化入口。默认初始化单服务仓库；传入 --workspace 时初始化多仓 workspace，并生成 workspace registry 与服务关系基线。\"\ntriggers:\n  - /helix:init\n---\n\n插件根为当前文件的 `../../../..`。完整读取 `hosts/codex/skill-entry.md`，执行 runtime preflight，然后执行一次（Windows 使用 `.ps1 exec` 或预检回执中的解释器；下方是 POSIX 示例）：\n\n```bash\nsh \"{plugin_root}/scripts/runtime_preflight.sh\" exec \"{plugin_root}/scripts/codex_entry_load.py\" --plugin-root \"{plugin_root}\" --command init --resource subagent_protocol --resource telemetry_protocol --resource project_config --resource project_hooks\n```\n\n按协议完整消费 packet，以唯一 `commands/init.md` 为命令契约。\n",
+      "bodyMd": "插件根为当前文件的 `../../../..`。完整读取 `hosts/codex/skill-entry.md`，执行 runtime preflight，然后执行一次（Windows 使用 `.ps1 exec` 或预检回执中的解释器；下方是 POSIX 示例）：\n\n```bash\nsh \"{plugin_root}/scripts/runtime_preflight.sh\" exec \"{plugin_root}/scripts/codex_entry_load.py\" --plugin-root \"{plugin_root}\" --command init --resource subagent_protocol --resource telemetry_protocol --resource project_config --resource project_hooks\n```\n\n按协议完整消费 packet，以唯一 `commands/init.md` 为命令契约。\n"
+    },
+    {
+      "slug": "propose",
+      "name": "propose",
+      "dir": "helixharness/hosts/codex/skills/propose",
+      "path": "helixharness/hosts/codex/skills/propose/SKILL.md",
+      "desc": "收敛需求并生成 Spec/Tasks；--loop 自动串联至 Archive。",
+      "descZh": "",
+      "triggers": [
+        "/helix:propose"
+      ],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/didi/helixharness.git",
+        "copy": "cp -r helixharness/hosts/codex/skills/propose ~/.claude/skills/propose",
+        "raw": "https://raw.githubusercontent.com/didi/helixharness/5bde4b3865cc30f678d0ca939c0b6ccd1e069557/helixharness/hosts/codex/skills/propose/SKILL.md",
+        "saveAs": "~/.claude/skills/propose/SKILL.md",
+        "marketplace": "/plugin marketplace add didi/helixharness"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:40cfd07fb14d461081d0c7d9d583cd745f5ac829f7fe66bd6c0729428b68975e",
+      "bytes": 661,
+      "wordCount": 29,
+      "repoLicense": "Apache-2.0",
+      "commit": "5bde4b3865cc30f678d0ca939c0b6ccd1e069557",
+      "branch": "main",
+      "body": "---\nname: propose\ndescription: \"收敛需求并生成 Spec/Tasks；--loop 自动串联至 Archive。\"\ntriggers:\n  - /helix:propose\n---\n\n插件根为当前文件的 `../../../..`。完整读取 `hosts/codex/skill-entry.md`，执行 runtime preflight，然后执行一次（Windows 使用 `.ps1 exec` 或预检回执中的解释器；下方是 POSIX 示例）：\n\n```bash\nsh \"{plugin_root}/scripts/runtime_preflight.sh\" exec \"{plugin_root}/scripts/codex_entry_load.py\" --plugin-root \"{plugin_root}\" --command propose --resource subagent_protocol --resource telemetry_protocol\n```\n\n按协议完整消费 packet，以唯一 `commands/propose.md` 为命令契约。\n",
+      "bodyMd": "插件根为当前文件的 `../../../..`。完整读取 `hosts/codex/skill-entry.md`，执行 runtime preflight，然后执行一次（Windows 使用 `.ps1 exec` 或预检回执中的解释器；下方是 POSIX 示例）：\n\n```bash\nsh \"{plugin_root}/scripts/runtime_preflight.sh\" exec \"{plugin_root}/scripts/codex_entry_load.py\" --plugin-root \"{plugin_root}\" --command propose --resource subagent_protocol --resource telemetry_protocol\n```\n\n按协议完整消费 packet，以唯一 `commands/propose.md` 为命令契约。\n"
+    },
+    {
+      "slug": "status",
+      "name": "status",
+      "dir": "helixharness/hosts/codex/skills/status",
+      "path": "helixharness/hosts/codex/skills/status/SKILL.md",
+      "desc": "只读查看需求阶段、任务进度、阻塞原因和下一步命令。",
+      "descZh": "",
+      "triggers": [
+        "/helix:status"
+      ],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/didi/helixharness.git",
+        "copy": "cp -r helixharness/hosts/codex/skills/status ~/.claude/skills/status",
+        "raw": "https://raw.githubusercontent.com/didi/helixharness/5bde4b3865cc30f678d0ca939c0b6ccd1e069557/helixharness/hosts/codex/skills/status/SKILL.md",
+        "saveAs": "~/.claude/skills/status/SKILL.md",
+        "marketplace": "/plugin marketplace add didi/helixharness"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:81295073941fab77f73a922c6d46c3fdd03e036bd9915fcb7a3b08c17d1ead12",
+      "bytes": 605,
+      "wordCount": 25,
+      "repoLicense": "Apache-2.0",
+      "commit": "5bde4b3865cc30f678d0ca939c0b6ccd1e069557",
+      "branch": "main",
+      "body": "---\nname: status\ndescription: \"只读查看需求阶段、任务进度、阻塞原因和下一步命令。\"\ntriggers:\n  - /helix:status\n---\n\n插件根为当前文件的 `../../../..`。完整读取 `hosts/codex/skill-entry.md`，执行 runtime preflight，然后执行一次（Windows 使用 `.ps1 exec` 或预检回执中的解释器；下方是 POSIX 示例）：\n\n```bash\nsh \"{plugin_root}/scripts/runtime_preflight.sh\" exec \"{plugin_root}/scripts/codex_entry_load.py\" --plugin-root \"{plugin_root}\" --command status\n```\n\n按协议完整消费 packet，以唯一 `commands/status.md` 为命令契约。\n",
+      "bodyMd": "插件根为当前文件的 `../../../..`。完整读取 `hosts/codex/skill-entry.md`，执行 runtime preflight，然后执行一次（Windows 使用 `.ps1 exec` 或预检回执中的解释器；下方是 POSIX 示例）：\n\n```bash\nsh \"{plugin_root}/scripts/runtime_preflight.sh\" exec \"{plugin_root}/scripts/codex_entry_load.py\" --plugin-root \"{plugin_root}\" --command status\n```\n\n按协议完整消费 packet，以唯一 `commands/status.md` 为命令契约。\n"
+    },
+    {
+      "slug": "systematic-debugging",
+      "name": "systematic-debugging",
+      "dir": "helixharness/hosts/codex/skills/systematic-debugging",
+      "path": "helixharness/hosts/codex/skills/systematic-debugging/SKILL.md",
+      "desc": "用户独立调用的调试工具。复现异常、缩小范围、验证假设并定位根因，按用户授权修复和验证，不由研发命令自动触发。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "python3"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/didi/helixharness.git",
+        "copy": "cp -r helixharness/hosts/codex/skills/systematic-debugging ~/.claude/skills/systematic-debugging",
+        "raw": "https://raw.githubusercontent.com/didi/helixharness/5bde4b3865cc30f678d0ca939c0b6ccd1e069557/helixharness/hosts/codex/skills/systematic-debugging/SKILL.md",
+        "saveAs": "~/.claude/skills/systematic-debugging/SKILL.md",
+        "marketplace": "/plugin marketplace add didi/helixharness"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:8be86a0f5d90cbc29d85ce6c09e5ae1ffe390d92173ef7f73a3ff9c2a2c78b2e",
+      "bytes": 1228,
+      "wordCount": 51,
+      "repoLicense": "Apache-2.0",
+      "commit": "5bde4b3865cc30f678d0ca939c0b6ccd1e069557",
+      "branch": "main",
+      "body": "---\nname: systematic-debugging\ndescription: \"用户独立调用的调试工具。复现异常、缩小范围、验证假设并定位根因，按用户授权修复和验证，不由研发命令自动触发。\"\n---\n\n# Codex method projection: systematic-debugging\n\n插件根固定为当前文件的 `../../../..`。任何 Python 调用前，必须先完整读取 `reference/runtime-preflight.md` 并执行当前操作系统的预检入口；原生 Windows 固定使用 `scripts/runtime_preflight.ps1` 的 `check` / `exec`，不得直接调用 `python3`、`python` 或 WindowsApps 别名。然后完整读取 `hosts/codex/host.json`、`reference/host-runtime-protocol.md`、`reference/tool-semantics.md` 和 manifest 绑定的 `resources.runtime`。canonical 正文首次需要 Agent/Task 时，再完整读取 `reference/subagent-runtime-protocol.md` 与 `resources.subagent_protocol`，按 Codex 适配器注入 leaf/afk 边界。然后完整读取并执行唯一 canonical 方法 Skill `skills/systematic-debugging/SKILL.md`；不得复制、改写或补充其业务语义，也不得扫描 plugin cache。canonical frontmatter 不是 Codex 运行时元数据；Codex 只消费其正文，宿主能力按 Host Context 映射。\n",
+      "bodyMd": "# Codex method projection: systematic-debugging\n\n插件根固定为当前文件的 `../../../..`。任何 Python 调用前，必须先完整读取 `reference/runtime-preflight.md` 并执行当前操作系统的预检入口；原生 Windows 固定使用 `scripts/runtime_preflight.ps1` 的 `check` / `exec`，不得直接调用 `python3`、`python` 或 WindowsApps 别名。然后完整读取 `hosts/codex/host.json`、`reference/host-runtime-protocol.md`、`reference/tool-semantics.md` 和 manifest 绑定的 `resources.runtime`。canonical 正文首次需要 Agent/Task 时，再完整读取 `reference/subagent-runtime-protocol.md` 与 `resources.subagent_protocol`，按 Codex 适配器注入 leaf/afk 边界。然后完整读取并执行唯一 canonical 方法 Skill `skills/systematic-debugging/SKILL.md`；不得复制、改写或补充其业务语义，也不得扫描 plugin cache。canonical frontmatter 不是 Codex 运行时元数据；Codex 只消费其正文，宿主能力按 Host Context 映射。\n"
+    },
+    {
+      "slug": "tdd",
+      "name": "tdd",
+      "dir": "helixharness/hosts/codex/skills/tdd",
+      "path": "helixharness/hosts/codex/skills/tdd/SKILL.md",
+      "desc": "为 HelixHarness feature 或 Bug Fix 的可观察行为改动执行测试驱动开发；在 Spec 已确认的公共测试 seam 上按红灯 → 绿灯的垂直切片实现，并生成可长期保留、对重构稳定的测试。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "python3"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/didi/helixharness.git",
+        "copy": "cp -r helixharness/hosts/codex/skills/tdd ~/.claude/skills/tdd",
+        "raw": "https://raw.githubusercontent.com/didi/helixharness/5bde4b3865cc30f678d0ca939c0b6ccd1e069557/helixharness/hosts/codex/skills/tdd/SKILL.md",
+        "saveAs": "~/.claude/skills/tdd/SKILL.md",
+        "marketplace": "/plugin marketplace add didi/helixharness"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:829e14b6a66812521b9ea961932a6696c60c474ce24f67ab2b59baede24f44c4",
+      "bytes": 1265,
+      "wordCount": 51,
+      "repoLicense": "Apache-2.0",
+      "commit": "5bde4b3865cc30f678d0ca939c0b6ccd1e069557",
+      "branch": "main",
+      "body": "---\nuser-invocable: false\nname: tdd\ndescription: \"为 HelixHarness feature 或 Bug Fix 的可观察行为改动执行测试驱动开发；在 Spec 已确认的公共测试 seam 上按红灯 → 绿灯的垂直切片实现，并生成可长期保留、对重构稳定的测试。\"\n---\n\n# Codex method projection: tdd\n\n插件根固定为当前文件的 `../../../..`。任何 Python 调用前，必须先完整读取 `reference/runtime-preflight.md` 并执行当前操作系统的预检入口；原生 Windows 固定使用 `scripts/runtime_preflight.ps1` 的 `check` / `exec`，不得直接调用 `python3`、`python` 或 WindowsApps 别名。然后完整读取 `hosts/codex/host.json`、`reference/host-runtime-protocol.md`、`reference/tool-semantics.md` 和 manifest 绑定的 `resources.runtime`。canonical 正文首次需要 Agent/Task 时，再完整读取 `reference/subagent-runtime-protocol.md` 与 `resources.subagent_protocol`，按 Codex 适配器注入 leaf/afk 边界。然后完整读取并执行唯一 canonical 方法 Skill `skills/tdd/SKILL.md`；不得复制、改写或补充其业务语义，也不得扫描 plugin cache。canonical frontmatter 不是 Codex 运行时元数据；Codex 只消费其正文，宿主能力按 Host Context 映射。\n",
+      "bodyMd": "# Codex method projection: tdd\n\n插件根固定为当前文件的 `../../../..`。任何 Python 调用前，必须先完整读取 `reference/runtime-preflight.md` 并执行当前操作系统的预检入口；原生 Windows 固定使用 `scripts/runtime_preflight.ps1` 的 `check` / `exec`，不得直接调用 `python3`、`python` 或 WindowsApps 别名。然后完整读取 `hosts/codex/host.json`、`reference/host-runtime-protocol.md`、`reference/tool-semantics.md` 和 manifest 绑定的 `resources.runtime`。canonical 正文首次需要 Agent/Task 时，再完整读取 `reference/subagent-runtime-protocol.md` 与 `resources.subagent_protocol`，按 Codex 适配器注入 leaf/afk 边界。然后完整读取并执行唯一 canonical 方法 Skill `skills/tdd/SKILL.md`；不得复制、改写或补充其业务语义，也不得扫描 plugin cache。canonical frontmatter 不是 Codex 运行时元数据；Codex 只消费其正文，宿主能力按 Host Context 映射。\n"
+    },
+    {
+      "slug": "update",
+      "name": "update",
+      "dir": "helixharness/hosts/codex/skills/update",
+      "path": "helixharness/hosts/codex/skills/update/SKILL.md",
+      "desc": "检查并升级 HelixHarness plugin。通过 Host Kit 识别安装版本、展示更新内容，并在用户授权后执行当前宿主的更新适配器。",
+      "descZh": "",
+      "triggers": [
+        "/helix:update"
+      ],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/didi/helixharness.git",
+        "copy": "cp -r helixharness/hosts/codex/skills/update ~/.claude/skills/update",
+        "raw": "https://raw.githubusercontent.com/didi/helixharness/5bde4b3865cc30f678d0ca939c0b6ccd1e069557/helixharness/hosts/codex/skills/update/SKILL.md",
+        "saveAs": "~/.claude/skills/update/SKILL.md",
+        "marketplace": "/plugin marketplace add didi/helixharness"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:2fbf6e0efc2fddd90357f66ea22d30f814a1eb8ab01fce860b0a057a3dfb1aea",
+      "bytes": 745,
+      "wordCount": 29,
+      "repoLicense": "Apache-2.0",
+      "commit": "5bde4b3865cc30f678d0ca939c0b6ccd1e069557",
+      "branch": "main",
+      "body": "---\nname: update\ndescription: \"检查并升级 HelixHarness plugin。通过 Host Kit 识别安装版本、展示更新内容，并在用户授权后执行当前宿主的更新适配器。\"\ntriggers:\n  - /helix:update\n---\n\n插件根为当前文件的 `../../../..`。完整读取 `hosts/codex/skill-entry.md`，执行 runtime preflight，然后执行一次（Windows 使用 `.ps1 exec` 或预检回执中的解释器；下方是 POSIX 示例）：\n\n```bash\nsh \"{plugin_root}/scripts/runtime_preflight.sh\" exec \"{plugin_root}/scripts/codex_entry_load.py\" --plugin-root \"{plugin_root}\" --command update --resource subagent_protocol --resource telemetry_protocol\n```\n\n按协议完整消费 packet，以唯一 `commands/update.md` 为命令契约。\n",
+      "bodyMd": "插件根为当前文件的 `../../../..`。完整读取 `hosts/codex/skill-entry.md`，执行 runtime preflight，然后执行一次（Windows 使用 `.ps1 exec` 或预检回执中的解释器；下方是 POSIX 示例）：\n\n```bash\nsh \"{plugin_root}/scripts/runtime_preflight.sh\" exec \"{plugin_root}/scripts/codex_entry_load.py\" --plugin-root \"{plugin_root}\" --command update --resource subagent_protocol --resource telemetry_protocol\n```\n\n按协议完整消费 packet，以唯一 `commands/update.md` 为命令契约。\n"
+    },
+    {
+      "slug": "ut",
+      "name": "ut",
+      "dir": "helixharness/hosts/codex/skills/ut",
+      "path": "helixharness/hosts/codex/skills/ut/SKILL.md",
+      "desc": "单元测试生成与维护命令。基于知识库和活跃需求，逐层扫描代码并生成/维护单测，运行验证并检查逻辑缺陷，确保覆盖率达标。",
+      "descZh": "",
+      "triggers": [
+        "/helix:ut"
+      ],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/didi/helixharness.git",
+        "copy": "cp -r helixharness/hosts/codex/skills/ut ~/.claude/skills/ut",
+        "raw": "https://raw.githubusercontent.com/didi/helixharness/5bde4b3865cc30f678d0ca939c0b6ccd1e069557/helixharness/hosts/codex/skills/ut/SKILL.md",
+        "saveAs": "~/.claude/skills/ut/SKILL.md",
+        "marketplace": "/plugin marketplace add didi/helixharness"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:e2a7103278fd41c15a7af560256b4569bcb648f3e8da71b09de39e08acb6b1e5",
+      "bytes": 759,
+      "wordCount": 31,
+      "repoLicense": "Apache-2.0",
+      "commit": "5bde4b3865cc30f678d0ca939c0b6ccd1e069557",
+      "branch": "main",
+      "body": "---\nname: ut\ndescription: \"单元测试生成与维护命令。基于知识库和活跃需求，逐层扫描代码并生成/维护单测，运行验证并检查逻辑缺陷，确保覆盖率达标。\"\ntriggers:\n  - /helix:ut\n---\n\n插件根为当前文件的 `../../../..`。完整读取 `hosts/codex/skill-entry.md`，执行 runtime preflight，然后执行一次（Windows 使用 `.ps1 exec` 或预检回执中的解释器；下方是 POSIX 示例）：\n\n```bash\nsh \"{plugin_root}/scripts/runtime_preflight.sh\" exec \"{plugin_root}/scripts/codex_entry_load.py\" --plugin-root \"{plugin_root}\" --command ut --resource subagent_protocol --resource telemetry_protocol --resource ut\n```\n\n按协议完整消费 packet，以唯一 `commands/ut.md` 为命令契约。\n",
+      "bodyMd": "插件根为当前文件的 `../../../..`。完整读取 `hosts/codex/skill-entry.md`，执行 runtime preflight，然后执行一次（Windows 使用 `.ps1 exec` 或预检回执中的解释器；下方是 POSIX 示例）：\n\n```bash\nsh \"{plugin_root}/scripts/runtime_preflight.sh\" exec \"{plugin_root}/scripts/codex_entry_load.py\" --plugin-root \"{plugin_root}\" --command ut --resource subagent_protocol --resource telemetry_protocol --resource ut\n```\n\n按协议完整消费 packet，以唯一 `commands/ut.md` 为命令契约。\n"
+    },
+    {
+      "slug": "brainstorming-2",
+      "name": "brainstorming",
+      "dir": "helixharness/skills/brainstorming",
+      "path": "helixharness/skills/brainstorming/SKILL.md",
+      "desc": "用户独立调用的方案探索工具。澄清问题与约束，比较可行方案并给出推荐方向，不由研发命令自动触发。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/didi/helixharness.git",
+        "copy": "cp -r helixharness/skills/brainstorming ~/.claude/skills/brainstorming-2",
+        "raw": "https://raw.githubusercontent.com/didi/helixharness/5bde4b3865cc30f678d0ca939c0b6ccd1e069557/helixharness/skills/brainstorming/SKILL.md",
+        "saveAs": "~/.claude/skills/brainstorming-2/SKILL.md",
+        "marketplace": "/plugin marketplace add didi/helixharness"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:e6ddc18d055330250bfc739cd9c8cbb9ad90803f3ecf58e0e548b91f086231f9",
+      "bytes": 2142,
+      "wordCount": 141,
+      "repoLicense": "Apache-2.0",
+      "commit": "5bde4b3865cc30f678d0ca939c0b6ccd1e069557",
+      "branch": "main",
+      "body": "---\nname: brainstorming\ndescription: 用户独立调用的方案探索工具。澄清问题与约束，比较可行方案并给出推荐方向，不由研发命令自动触发。\ndisable-model-invocation: true\n---\n\n# 方案头脑风暴\n\n用户明确要求使用本 Skill 时，独立开展方案探索。无需先执行 Init、创建需求、开启统计或启动平台；不创建 feature、Spec/Tasks 或 eval-log，不启动研发命令。\n\n适合触发的场景：\n\n- requirements are still fuzzy\n- more than one design is plausible\n- the user asks for options, tradeoffs, or recommendations\n- a risky change needs alternatives before execution\n\n如果执行已经明确开始，就不要再用它，除非你确实需要重新打开方案空间。\n\n## 目标\n\n先扩展选项空间，再收敛到一个站得住脚的推荐路径。\n\n## 工作流\n\n1. 定义这次要做的决策。\n   写清楚：\n   - the problem to solve\n   - hard constraints\n   - what would make an option unacceptable\n\n2. 生成 2-4 个真实可实施的选项。\n   每个选项都必须能落地，不要只是口号。\n\n3. 从实务维度比较方案。\n   优先比较：\n   - complexity\n   - delivery speed\n   - risk of regression\n   - migration cost\n   - operability\n   - fit with existing architecture\n\n4. 暴露未知项。\n   明确指出哪些事情必须在执行前确认。\n\n5. 给出一个推荐方案。\n   解释为什么它是“当前最适合”的，而不是抽象上最优。\n\n## 独立使用边界\n\n- 由用户独立调用，不作为研发命令的内部步骤\n- 输出要简洁，并且面向决策\n- 如果代码库上下文重要，先读相关文件，再提方案\n- 方向确认后交付讨论摘要，由用户决定是否将其作为后续需求的输入；本 Skill 不自动进入计划或实现流程\n\n## 输出格式\n\n- Problem:\n- Constraints:\n- Option A:\n- Option B:\n- Option C: (optional)\n- Recommendation:\n- Open questions:\n\n## 约束\n\n- 如果明显只有一条路，不要硬凑很多选项\n- 不要默认推荐重写\n- 不要用模糊语言掩盖关键 tradeoff\n- 一旦方向清楚，就停止 brainstorm，进入下一步\n",
+      "bodyMd": "# 方案头脑风暴\n\n用户明确要求使用本 Skill 时，独立开展方案探索。无需先执行 Init、创建需求、开启统计或启动平台；不创建 feature、Spec/Tasks 或 eval-log，不启动研发命令。\n\n适合触发的场景：\n\n- requirements are still fuzzy\n- more than one design is plausible\n- the user asks for options, tradeoffs, or recommendations\n- a risky change needs alternatives before execution\n\n如果执行已经明确开始，就不要再用它，除非你确实需要重新打开方案空间。\n\n## 目标\n\n先扩展选项空间，再收敛到一个站得住脚的推荐路径。\n\n## 工作流\n\n1. 定义这次要做的决策。\n   写清楚：\n   - the problem to solve\n   - hard constraints\n   - what would make an option unacceptable\n\n2. 生成 2-4 个真实可实施的选项。\n   每个选项都必须能落地，不要只是口号。\n\n3. 从实务维度比较方案。\n   优先比较：\n   - complexity\n   - delivery speed\n   - risk of regression\n   - migration cost\n   - operability\n   - fit with existing architecture\n\n4. 暴露未知项。\n   明确指出哪些事情必须在执行前确认。\n\n5. 给出一个推荐方案。\n   解释为什么它是“当前最适合”的，而不是抽象上最优。\n\n## 独立使用边界\n\n- 由用户独立调用，不作为研发命令的内部步骤\n- 输出要简洁，并且面向决策\n- 如果代码库上下文重要，先读相关文件，再提方案\n- 方向确认后交付讨论摘要，由用户决定是否将其作为后续需求的输入；本 Skill 不自动进入计划或实现流程\n\n## 输出格式\n\n- Problem:\n- Constraints:\n- Option A:\n- Option B:\n- Option C: (optional)\n- Recommendation:\n- Open questions:\n\n## 约束\n\n- 如果明显只有一条路，不要硬凑很多选项\n- 不要默认推荐重写\n- 不要用模糊语言掩盖关键 tradeoff\n- 一旦方向清楚，就停止 brainstorm，进入下一步\n"
+    },
+    {
+      "slug": "code-review-2",
+      "name": "code-review",
+      "dir": "helixharness/skills/code-review",
+      "path": "helixharness/skills/code-review/SKILL.md",
+      "desc": "为 HelixHarness Apply 评审固定比较点之后的代码变化；并行执行 Standards 与 Spec 两个独立评审轴，分轴报告结果，并按 HelixHarness 合同完成修复和复审。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/didi/helixharness.git",
+        "copy": "cp -r helixharness/skills/code-review ~/.claude/skills/code-review-2",
+        "raw": "https://raw.githubusercontent.com/didi/helixharness/5bde4b3865cc30f678d0ca939c0b6ccd1e069557/helixharness/skills/code-review/SKILL.md",
+        "saveAs": "~/.claude/skills/code-review-2/SKILL.md",
+        "marketplace": "/plugin marketplace add didi/helixharness"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:2e4c1ac2ad08b666c99c8802754a59745bef0cbdd0656c82d15fa941e03bedaf",
+      "bytes": 13473,
+      "wordCount": 614,
+      "repoLicense": "Apache-2.0",
+      "commit": "5bde4b3865cc30f678d0ca939c0b6ccd1e069557",
+      "branch": "main",
+      "body": "---\nuser-invocable: false\nname: code-review\ndescription: 为 HelixHarness Apply 评审固定比较点之后的代码变化；并行执行 Standards 与 Spec 两个独立评审轴，分轴报告结果，并按 HelixHarness 合同完成修复和复审。\n---\n\n# HelixHarness Code Review\n\n评审 `<fixed-point>` 与 `HEAD` 之间的代码变化，并保持两个独立评审轴：\n\n- **Standards**：代码是否遵守仓库已经记录的工程规范？\n- **Spec**：代码是否忠实实现当前需求 Spec？\n\n两个轴使用并行、上下文隔离的只读 sub-agent，最后并排展示结果，不合并或跨轴重排 finding。\n\n## 流程\n\n### 1. 固定比较点和评审范围\n\n先执行 `workflow.py ... review-scope --feature \"{feature}\"`，取得 `review_head`、\n`apply_baseline_head`、`empty_tree`、`changed_paths`、`excluded_preexisting_paths` 和 `review_scope_sha256`。\n执行前工作区基线缺失、范围重叠或脚本拒绝当前状态时，直接返回脚本的 `DECISION_NEEDED` 或 blocker，\n不自行重建范围。只从 `changed_paths` 构造 staged、unstaged 和本任务新增 untracked 文件的 working-tree delta；\n`excluded_preexisting_paths` 只记录排除事实，不附带内容。\n\n- `apply_baseline_head=empty_tree` 时，使用回执中的空树作为 `<fixed-point>`。若 `review_head=empty_tree`，\n  当前没有已提交差异或 commit list，不调用依赖 commit 的 `git log` / `git merge-base`。\n  若 Review 前已有首次提交，使用 `git diff <fixed-point> <review_head>`（两个参数），从差异中排除\n  `excluded_preexisting_paths`、本需求的 spec/tasks/evidence、私有状态和统计目录，\n  使用 `git log <review_head> --oneline` 记录当前历史。保留真实 `review_head`，不创建或猜测提交。\n- 其他情况仅评审当前未提交增量时，自动使用回执中的 `review_head` 作为 `<fixed-point>`。只有需要纳入\n  `HEAD` 之前的已提交改动，或任务变化只存在于提交历史中时，才请用户指定 commit、branch 或 tag。\n  解析为完整 commit ID，再用 `git diff <fixed-point>...<review_head>` 和\n  `git log <fixed-point>..<review_head> --oneline` 收集已提交证据。\n\n冻结同一份 Review Bundle，供两个 Reviewer 使用：\n\n- 当前预绑定 Host Context：准确的 `plugin_root`、`canonical_host_id` 与当前 Host Kit 路径；\n- 完整 fixed-point 和 `review_head`（有提交时是 commit ID，无首次提交时是空树 ID）；\n- committed diff、commit list 和 working-tree delta；\n- `review_scope_sha256`、`changed_paths` 与 `excluded_preexisting_paths`；\n- 当前 HelixHarness `spec.md`；\n- Standards 来源文件列表。\n\nReview Bundle 合计没有代码变化时默认停止。唯一例外是经 Workspace 合同验证的只读 RepoJob：\n\n- 父 Coordinator 提供的当前 `workspace-plan --command apply` 必须包含本 job，且 `mode=read`、\n  repo key、ownership_root 和 Single workflow 与当前仓完全一致；不能仅凭聊天声明或 Spec 中的\n  “只读”文字启用例外。缺少受控 Workspace root / RepoJob 时停止，不扫描目录猜测来源。\n- 同一 Workspace 的 `workspace-validate --stage apply` 必须通过，其 `spec_receipt_sha256` 与\n  本仓 Spec 的 `workspace_contract_sha256` 一致；把实际命令输出、原始 RepoJob 与父概要设计附入 Bundle。\n- 本次真实的只读检查命令、结果及业务文件相对 Apply 基线未变的证据必须附入 Bundle。\n  `changed_paths=[]` 不能替代契约检查，也不能用旧报告或其他仓的成功声称本仓已验证。\n\n满足这些条件时仍执行下面的两个独立原生评审，不豁免或预填 APPROVE：Standards 轴核查写域、\n业务文件不变性及验证是否符合仓库规范；Spec 轴逐条核查本仓只读契约验收是否有真实证据。\n两轴明确记录这是 Workspace `read` job 的契约验收、没有业务代码改动，不虚构 diff 或行为实现。\n普通 Single Apply 和 `mode=write` RepoJob 的空代码变化仍停止。所有原有收据、Review Scope\n及 Archive 门禁保持有效。评审期间不写工作区；`review-scope` 生成的 `review-state.json`\n留给 Archive 复核范围。\n\n### 2. 定位 Spec\n\nSpec 固定为当前 feature 的 `docs/specs/active/{feature}/spec.md`。文件缺失、不可读或与当前 HelixHarness feature 不一致时停止，不使用聊天摘要代替。\n\n#### 评审时的 Evidence 边界\n\nApply 在双轴 Review 完成后生成本轮 `verify-report.md`。恢复 Apply 或执行 Bug Fix 时，已有报告可能仍是上轮 Evidence，只供诊断；不得要求它提前包含尚未完成的本轮评审结论，也不得仅因旧报告尚未刷新就阻断当前代码 Review。旧报告不能作为本轮已验证或已获 APPROVE 的证明；本轮实际缺失的测试、错误行为或虚构证据仍须报告。\n\n涉及收据一致性时，由父流程把当前 `\"{plugin_root}/scripts/workflow.py\" validate-tasks` 返回的 Spec/Tasks 规范化收据及对应阶段校验结果附入 Bundle；Reviewer 需要复核时只调用同一准确脚本路径。不得用 `sha256sum`、`shasum` 或自行对整份 Markdown 求哈希替代：文件字节摘要与合同收据不是同一口径，状态推进本身不代表合同变更。向两个 Reviewer 的 prompt 都传递这一边界。Host Context 或校验结果缺失时向父流程报告缺失输入，不扫描用户目录、临时目录或 plugin cache 寻找另一个脚本/版本。\n\n本轮 Evidence 的生成、修订与当前收据绑定仍由 Apply 在 Review 后完成，并通过 `archive-preflight`；不得复用无效的旧 APPROVE、修改收据算法或跳过最终证据门禁。\n\n### 3. 定位 Standards\n\n使用 HelixHarness Apply 已确定的仓库入口、当前 Spec 命中的 `docs/harness/` 叶子、`docs/hooks/cr-checklist.md`（若存在）及其他已加载工程规范。仓库明确规范优先于下面的代码异味基线；跳过工具已经确定性检查的内容。\n\nStandards 轴始终附带 Fowler 代码异味基线。每一项都只是需要结合上下文判断的启发式建议，不是仓库硬规则：\n\n- **Mysterious Name**：名称不能揭示用途时重命名；无法诚实命名通常说明设计仍含混。\n- **Duplicated Code**：相同逻辑形状出现在多个 hunk 或文件时，提取共享实现。\n- **Feature Envy**：逻辑主要操作另一对象的数据时，把行为移到数据所有者附近。\n- **Data Clumps**：同一组字段或参数反复同行时，形成一个明确类型。\n- **Primitive Obsession**：原始字符串或数值承载领域概念时，使用小型领域类型。\n- **Repeated Switches**：相同类型分支在多处重复时，收敛为一个映射或多态实现。\n- **Shotgun Surgery**：一个逻辑变化要求分散修改许多位置时，收拢共同变化点。\n- **Divergent Change**：一个模块因多个无关原因变化时，按职责拆分。\n- **Speculative Generality**：当前 Spec 不需要的抽象、参数或 hook 应删除或内联。\n- **Message Chains**：调用者依赖长导航链时，把导航隐藏在稳定接口后。\n- **Middle Man**：只做转发的中间层应删除，让调用者直接访问真实能力。\n- **Refused Bequest**：子类忽略大部分继承合同时，改用组合。\n\n#### 测试代码分流\n\n测试代码仍属于 `changed_paths` 和完整 Review Bundle；不得排除测试文件，也不得只审生产代码。Standards Reviewer 先区分生产代码与测试代码，再对测试代码执行下面的测试代码噪音过滤：\n\n- 优先检查测试有效性：错误或缺失的断言、会造成假通过的 mock/fixture、绕过真实行为的测试机制、flaky 风险、共享可变状态、执行顺序依赖，以及仓库明确测试规范违反。证据充分且无需用户决策时，finding disposition 和 Standards 轴 verdict 都必须是 `MUST_FIX`；需要新的产品行为、测试策略或不可逆决策时才使用 `DECISION_NEEDED`。这类 correctness 或硬规范问题不得输出 `ADVISORY`、不得降级成纯风格建议。\n- 只有存在具体、显著维护风险时才生成测试代码 `ADVISORY`，例如大段复杂 fixture 在多个测试文件复制且已经可能漂移、测试严重绑定私有实现导致正常重构大面积破坏，或测试数据构造复杂到掩盖被验证行为。finding 必须写出具体风险，不能只说“可以抽取”。\n- 普通测试字面量、输入值与预期值分别写出的相同值、单个测试类内的简短重复，以及少量 Given/When/Then setup 不生成 `ADVISORY`；不得仅以 **Primitive Obsession** 或 **Duplicated Code** 名义报告这些内容。\n- 为保持 test oracle 独立，不得因为消除重复而共享同一个常量，也不得建议让预期断言引用输入 fixture 或被测生产代码的常量。没有测试有效性、硬规范或显著维护风险时，完全省略该 test-only finding。\n\n### 4. 并行执行两个评审轴\n\n`Standards Reviewer` 与 `Spec Reviewer` 是写入两个 sub-agent prompt 的评审角色，不是固定的 agent type。必须使用当前运行环境原生可用的 sub-agent 能力并行创建两个独立实例；不得把 Reviewer 角色名臆造为专用 agent type。不得仅因某个专用 type 不存在就判定并行独立评审不可用或返回 `BLOCKED:lite_review_parallel_unavailable`。\n\n同时启动两个上下文隔离、只读的 sub-agent，并向它们提供同一份冻结 Review Bundle。不得由 Implementer 角色扮演 Reviewer，也不得顺序复用同一上下文。运行环境无法完成并行独立评审时返回 `BLOCKED:lite_review_parallel_unavailable`。\n\n向 Standards sub-agent 提供完整代码变化、commit list、Standards 来源和代码异味基线，要求它按文件或 hunk 报告：\n\n1. 违反仓库明确规范的位置，并引用规范文件和规则；\n2. 发现的代码异味，注明它是 judgement call 并引用代码 hunk；\n3. 仓库规范与异味基线冲突时，以仓库规范为准；\n4. 先区分生产代码与测试代码，对测试代码执行上述测试代码噪音过滤；\n5. 跳过工具已经执行的检查。\n\n向 Spec sub-agent 提供相同代码变化、commit list 和完整 Spec，要求它报告：\n\n1. Spec 要求但缺失或只部分实现的行为；\n2. Spec 未要求的行为或 scope creep；\n3. 看似实现但实现机制错误的要求；\n4. Spec 的 Testing Decisions 声明 `视觉还原验收: 是` 时检查 d2c 证据链是否兑现：hard violation = 0、叠图存在、豁免记录真实；声明了但缺证据按 MUST_FIX 报告，未声明的项目不审视觉还原。\n\n每条 finding 都引用具体代码证据；Spec finding 同时引用对应 Spec 内容。两个报告都保持简洁，中文控制在约 800 字以内。\n\n### 5. 分轴汇总\n\n分别在 `Standards` 与 `Spec` 标题下原样或轻度清理两个报告。不得合并或跨轴重排 finding，也不得生成跨轴统一严重度。\n\n最后输出一行分轴摘要：`Standards: <finding 数与最严重项>; Spec: <finding 数与最严重项>`。不得选出跨轴单一赢家。\n\n### 6. HelixHarness 结果流转\n\nfinding disposition 只有 `ADVISORY`、`MUST_FIX`、`DECISION_NEEDED`；轴 verdict 只有 `APPROVE`、`MUST_FIX`、`DECISION_NEEDED`。`ADVISORY` 是 finding disposition，不是轴 verdict；它表示有具体证据和可选改进动作，但不影响当前 Spec 正确交付。Fowler 代码异味继续作为 Standards 报告中的非阻断 judgement call；Spec 轴的非阻断 Out of Scope 说明在确有可选改进时也归为 Advisory。Standards 使用稳定 ID `STD-A01...`，Spec 使用 `SPEC-A01...`，每条都给出证据、不阻断原因和可选动作。只含 Advisory 的轴仍为 `APPROVE`。`BLOCKED` 只表示 Apply 无法继续执行，不是 Reviewer verdict。\n\n- `MUST_FIX`：Implementer 定向修复，运行覆盖测试和仓库完整测试套件，再以同一 fixed point 冻结新 Review Bundle 并重新执行完整双轴 Review。修复可能引入新问题，不得只复审原 finding；不设置固定 Review 轮次上限，并累计 `must_fix_rounds`。\n- `BLOCKED:lite_review_no_progress`：同一阻断 finding 以相同轴、规则或 Spec 要求、代码路径和失败机制重复出现，且最新代码和验证没有改善时停止。不得只因轮次较多而阻断。\n- `DECISION_NEEDED`：停止并交回 HelixHarness Apply，不在旧 Review Bundle 上继续。\n- 两轴都没有 Must Fix 或 Decision Needed 时整体 `APPROVE`。\n\nReviewer 不得把 correctness、Spec 明确要求、当前任务引入的实际 scope creep、安全问题或仓库硬规范违反降级为 Advisory；这些必须按证据归为 `MUST_FIX` 或 `DECISION_NEEDED`。\n\n输出 fixed-point、Review HEAD、`review_scope_sha256`、两个分轴报告、稳定 Advisory ID 和 verdict，交回 HelixHarness Apply 生成 Evidence。Reviewer 不修改代码、不生成 Evidence、不询问用户，也不自行启动修复循环。\n\n## 为什么分成两个轴\n\n一个变化可能通过其中一个轴，却在另一个轴失败：\n\n- 完全遵守工程规范，但实现了错误需求：Standards 通过，Spec 失败。\n- 完整实现需求，但违反仓库规范：Spec 通过，Standards 失败。\n\n分开报告可以避免一个轴的问题掩盖另一个轴。\n",
+      "bodyMd": "# HelixHarness Code Review\n\n评审 `<fixed-point>` 与 `HEAD` 之间的代码变化，并保持两个独立评审轴：\n\n- **Standards**：代码是否遵守仓库已经记录的工程规范？\n- **Spec**：代码是否忠实实现当前需求 Spec？\n\n两个轴使用并行、上下文隔离的只读 sub-agent，最后并排展示结果，不合并或跨轴重排 finding。\n\n## 流程\n\n### 1. 固定比较点和评审范围\n\n先执行 `workflow.py ... review-scope --feature \"{feature}\"`，取得 `review_head`、\n`apply_baseline_head`、`empty_tree`、`changed_paths`、`excluded_preexisting_paths` 和 `review_scope_sha256`。\n执行前工作区基线缺失、范围重叠或脚本拒绝当前状态时，直接返回脚本的 `DECISION_NEEDED` 或 blocker，\n不自行重建范围。只从 `changed_paths` 构造 staged、unstaged 和本任务新增 untracked 文件的 working-tree delta；\n`excluded_preexisting_paths` 只记录排除事实，不附带内容。\n\n- `apply_baseline_head=empty_tree` 时，使用回执中的空树作为 `<fixed-point>`。若 `review_head=empty_tree`，\n  当前没有已提交差异或 commit list，不调用依赖 commit 的 `git log` / `git merge-base`。\n  若 Review 前已有首次提交，使用 `git diff <fixed-point> <review_head>`（两个参数），从差异中排除\n  `excluded_preexisting_paths`、本需求的 spec/tasks/evidence、私有状态和统计目录，\n  使用 `git log <review_head> --oneline` 记录当前历史。保留真实 `review_head`，不创建或猜测提交。\n- 其他情况仅评审当前未提交增量时，自动使用回执中的 `review_head` 作为 `<fixed-point>`。只有需要纳入\n  `HEAD` 之前的已提交改动，或任务变化只存在于提交历史中时，才请用户指定 commit、branch 或 tag。\n  解析为完整 commit ID，再用 `git diff <fixed-point>...<review_head>` 和\n  `git log <fixed-point>..<review_head> --oneline` 收集已提交证据。\n\n冻结同一份 Review Bundle，供两个 Reviewer 使用：\n\n- 当前预绑定 Host Context：准确的 `plugin_root`、`canonical_host_id` 与当前 Host Kit 路径；\n- 完整 fixed-point 和 `review_head`（有提交时是 commit ID，无首次提交时是空树 ID）；\n- committed diff、commit list 和 working-tree delta；\n- `review_scope_sha256`、`changed_paths` 与 `excluded_preexisting_paths`；\n- 当前 HelixHarness `spec.md`；\n- Standards 来源文件列表。\n\nReview Bundle 合计没有代码变化时默认停止。唯一例外是经 Workspace 合同验证的只读 RepoJob：\n\n- 父 Coordinator 提供的当前 `workspace-plan --command apply` 必须包含本 job，且 `mode=read`、\n  repo key、ownership_root 和 Single workflow 与当前仓完全一致；不能仅凭聊天声明或 Spec 中的\n  “只读”文字启用例外。缺少受控 Workspace root / RepoJob 时停止，不扫描目录猜测来源。\n- 同一 Workspace 的 `workspace-validate --stage apply` 必须通过，其 `spec_receipt_sha256` 与\n  本仓 Spec 的 `workspace_contract_sha256` 一致；把实际命令输出、原始 RepoJob 与父概要设计附入 Bundle。\n- 本次真实的只读检查命令、结果及业务文件相对 Apply 基线未变的证据必须附入 Bundle。\n  `changed_paths=[]` 不能替代契约检查，也不能用旧报告或其他仓的成功声称本仓已验证。\n\n满足这些条件时仍执行下面的两个独立原生评审，不豁免或预填 APPROVE：Standards 轴核查写域、\n业务文件不变性及验证是否符合仓库规范；Spec 轴逐条核查本仓只读契约验收是否有真实证据。\n两轴明确记录这是 Workspace `read` job 的契约验收、没有业务代码改动，不虚构 diff 或行为实现。\n普通 Single Apply 和 `mode=write` RepoJob 的空代码变化仍停止。所有原有收据、Review Scope\n及 Archive 门禁保持有效。评审期间不写工作区；`review-scope` 生成的 `review-state.json`\n留给 Archive 复核范围。\n\n### 2. 定位 Spec\n\nSpec 固定为当前 feature 的 `docs/specs/active/{feature}/spec.md`。文件缺失、不可读或与当前 HelixHarness feature 不一致时停止，不使用聊天摘要代替。\n\n#### 评审时的 Evidence 边界\n\nApply 在双轴 Review 完成后生成本轮 `verify-report.md`。恢复 Apply 或执行 Bug Fix 时，已有报告可能仍是上轮 Evidence，只供诊断；不得要求它提前包含尚未完成的本轮评审结论，也不得仅因旧报告尚未刷新就阻断当前代码 Review。旧报告不能作为本轮已验证或已获 APPROVE 的证明；本轮实际缺失的测试、错误行为或虚构证据仍须报告。\n\n涉及收据一致性时，由父流程把当前 `\"{plugin_root}/scripts/workflow.py\" validate-tasks` 返回的 Spec/Tasks 规范化收据及对应阶段校验结果附入 Bundle；Reviewer 需要复核时只调用同一准确脚本路径。不得用 `sha256sum`、`shasum` 或自行对整份 Markdown 求哈希替代：文件字节摘要与合同收据不是同一口径，状态推进本身不代表合同变更。向两个 Reviewer 的 prompt 都传递这一边界。Host Context 或校验结果缺失时向父流程报告缺失输入，不扫描用户目录、临时目录或 plugin cache 寻找另一个脚本/版本。\n\n本轮 Evidence 的生成、修订与当前收据绑定仍由 Apply 在 Review 后完成，并通过 `archive-preflight`；不得复用无效的旧 APPROVE、修改收据算法或跳过最终证据门禁。\n\n### 3. 定位 Standards\n\n使用 HelixHarness Apply 已确定的仓库入口、当前 Spec 命中的 `docs/harness/` 叶子、`docs/hooks/cr-checklist.md`（若存在）及其他已加载工程规范。仓库明确规范优先于下面的代码异味基线；跳过工具已经确定性检查的内容。\n\nStandards 轴始终附带 Fowler 代码异味基线。每一项都只是需要结合上下文判断的启发式建议，不是仓库硬规则：\n\n- **Mysterious Name**：名称不能揭示用途时重命名；无法诚实命名通常说明设计仍含混。\n- **Duplicated Code**：相同逻辑形状出现在多个 hunk 或文件时，提取共享实现。\n- **Feature Envy**：逻辑主要操作另一对象的数据时，把行为移到数据所有者附近。\n- **Data Clumps**：同一组字段或参数反复同行时，形成一个明确类型。\n- **Primitive Obsession**：原始字符串或数值承载领域概念时，使用小型领域类型。\n- **Repeated Switches**：相同类型分支在多处重复时，收敛为一个映射或多态实现。\n- **Shotgun Surgery**：一个逻辑变化要求分散修改许多位置时，收拢共同变化点。\n- **Divergent Change**：一个模块因多个无关原因变化时，按职责拆分。\n- **Speculative Generality**：当前 Spec 不需要的抽象、参数或 hook 应删除或内联。\n- **Message Chains**：调用者依赖长导航链时，把导航隐藏在稳定接口后。\n- **Middle Man**：只做转发的中间层应删除，让调用者直接访问真实能力。\n- **Refused Bequest**：子类忽略大部分继承合同时，改用组合。\n\n#### 测试代码分流\n\n测试代码仍属于 `changed_paths` 和完整 Review Bundle；不得排除测试文件，也不得只审生产代码。Standards Reviewer 先区分生产代码与测试代码，再对测试代码执行下面的测试代码噪音过滤：\n\n- 优先检查测试有效性：错误或缺失的断言、会造成假通过的 mock/fixture、绕过真实行为的测试机制、flaky 风险、共享可变状态、执行顺序依赖，以及仓库明确测试规范违反。证据充分且无需用户决策时，finding disposition 和 Standards 轴 verdict 都必须是 `MUST_FIX`；需要新的产品行为、测试策略或不可逆决策时才使用 `DECISION_NEEDED`。这类 correctness 或硬规范问题不得输出 `ADVISORY`、不得降级成纯风格建议。\n- 只有存在具体、显著维护风险时才生成测试代码 `ADVISORY`，例如大段复杂 fixture 在多个测试文件复制且已经可能漂移、测试严重绑定私有实现导致正常重构大面积破坏，或测试数据构造复杂到掩盖被验证行为。finding 必须写出具体风险，不能只说“可以抽取”。\n- 普通测试字面量、输入值与预期值分别写出的相同值、单个测试类内的简短重复，以及少量 Given/When/Then setup 不生成 `ADVISORY`；不得仅以 **Primitive Obsession** 或 **Duplicated Code** 名义报告这些内容。\n- 为保持 test oracle 独立，不得因为消除重复而共享同一个常量，也不得建议让预期断言引用输入 fixture 或被测生产代码的常量。没有测试有效性、硬规范或显著维护风险时，完全省略该 test-only finding。\n\n### 4. 并行执行两个评审轴\n\n`Standards Reviewer` 与 `Spec Reviewer` 是写入两个 sub-agent prompt 的评审角色，不是固定的 agent type。必须使用当前运行环境原生可用的 sub-agent 能力并行创建两个独立实例；不得把 Reviewer 角色名臆造为专用 agent type。不得仅因某个专用 type 不存在就判定并行独立评审不可用或返回 `BLOCKED:lite_review_parallel_unavailable`。\n\n同时启动两个上下文隔离、只读的 sub-agent，并向它们提供同一份冻结 Review Bundle。不得由 Implementer 角色扮演 Reviewer，也不得顺序复用同一上下文。运行环境无法完成并行独立评审时返回 `BLOCKED:lite_review_parallel_unavailable`。\n\n向 Standards sub-agent 提供完整代码变化、commit list、Standards 来源和代码异味基线，要求它按文件或 hunk 报告：\n\n1. 违反仓库明确规范的位置，并引用规范文件和规则；\n2. 发现的代码异味，注明它是 judgement call 并引用代码 hunk；\n3. 仓库规范与异味基线冲突时，以仓库规范为准；\n4. 先区分生产代码与测试代码，对测试代码执行上述测试代码噪音过滤；\n5. 跳过工具已经执行的检查。\n\n向 Spec sub-agent 提供相同代码变化、commit list 和完整 Spec，要求它报告：\n\n1. Spec 要求但缺失或只部分实现的行为；\n2. Spec 未要求的行为或 scope creep；\n3. 看似实现但实现机制错误的要求；\n4. Spec 的 Testing Decisions 声明 `视觉还原验收: 是` 时检查 d2c 证据链是否兑现：hard violation = 0、叠图存在、豁免记录真实；声明了但缺证据按 MUST_FIX 报告，未声明的项目不审视觉还原。\n\n每条 finding 都引用具体代码证据；Spec finding 同时引用对应 Spec 内容。两个报告都保持简洁，中文控制在约 800 字以内。\n\n### 5. 分轴汇总\n\n分别在 `Standards` 与 `Spec` 标题下原样或轻度清理两个报告。不得合并或跨轴重排 finding，也不得生成跨轴统一严重度。\n\n最后输出一行分轴摘要：`Standards: <finding 数与最严重项>; Spec: <finding 数与最严重项>`。不得选出跨轴单一赢家。\n\n### 6. HelixHarness 结果流转\n\nfinding disposition 只有 `ADVISORY`、`MUST_FIX`、`DECISION_NEEDED`；轴 verdict 只有 `APPROVE`、`MUST_FIX`、`DECISION_NEEDED`。`ADVISORY` 是 finding disposition，不是轴 verdict；它表示有具体证据和可选改进动作，但不影响当前 Spec 正确交付。Fowler 代码异味继续作为 Standards 报告中的非阻断 judgement call；Spec 轴的非阻断 Out of Scope 说明在确有可选改进时也归为 Advisory。Standards 使用稳定 ID `STD-A01...`，Spec 使用 `SPEC-A01...`，每条都给出证据、不阻断原因和可选动作。只含 Advisory 的轴仍为 `APPROVE`。`BLOCKED` 只表示 Apply 无法继续执行，不是 Reviewer verdict。\n\n- `MUST_FIX`：Implementer 定向修复，运行覆盖测试和仓库完整测试套件，再以同一 fixed point 冻结新 Review Bundle 并重新执行完整双轴 Review。修复可能引入新问题，不得只复审原 finding；不设置固定 Review 轮次上限，并累计 `must_fix_rounds`。\n- `BLOCKED:lite_review_no_progress`：同一阻断 finding 以相同轴、规则或 Spec 要求、代码路径和失败机制重复出现，且最新代码和验证没有改善时停止。不得只因轮次较多而阻断。\n- `DECISION_NEEDED`：停止并交回 HelixHarness Apply，不在旧 Review Bundle 上继续。\n- 两轴都没有 Must Fix 或 Decision Needed 时整体 `APPROVE`。\n\nReviewer 不得把 correctness、Spec 明确要求、当前任务引入的实际 scope creep、安全问题或仓库硬规范违反降级为 Advisory；这些必须按证据归为 `MUST_FIX` 或 `DECISION_NEEDED`。\n\n输出 fixed-point、Review HEAD、`review_scope_sha256`、两个分轴报告、稳定 Advisory ID 和 verdict，交回 HelixHarness Apply 生成 Evidence。Reviewer 不修改代码、不生成 Evidence、不询问用户，也不自行启动修复循环。\n\n## 为什么分成两个轴\n\n一个变化可能通过其中一个轴，却在另一个轴失败：\n\n- 完全遵守工程规范，但实现了错误需求：Standards 通过，Spec 失败。\n- 完整实现需求，但违反仓库规范：Spec 通过，Standards 失败。\n\n分开报告可以避免一个轴的问题掩盖另一个轴。\n"
+    },
+    {
+      "slug": "d-d2c-2",
+      "name": "d-d2c",
+      "dir": "helixharness/skills/d-d2c",
+      "path": "helixharness/skills/d-d2c/SKILL.md",
+      "desc": "用户提到 d-d2c、设计稿还原、MasterGo、贴图比对、design-to-code、页面开发，或使用 d-d2c --create-page / --update-page / --component 时，按这个 skill 要求执行；支持新建整页、更新已有页、组件/弹层/卡片三种流程入口，后两者分别读取 rules/d-d2c-update-page.md / rules/d-d2c-component.md 作为流程覆盖层",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "node",
+          "curl"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/didi/helixharness.git",
+        "copy": "cp -r helixharness/skills/d-d2c ~/.claude/skills/d-d2c-2",
+        "raw": "https://raw.githubusercontent.com/didi/helixharness/5bde4b3865cc30f678d0ca939c0b6ccd1e069557/helixharness/skills/d-d2c/SKILL.md",
+        "saveAs": "~/.claude/skills/d-d2c-2/SKILL.md",
+        "marketplace": "/plugin marketplace add didi/helixharness"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:41c3481cfe4c96f9d80fe0a229c649225b8124b3933c7a199e9db26a724b56a1",
+      "bytes": 17699,
+      "wordCount": 1015,
+      "repoLicense": "Apache-2.0",
+      "commit": "5bde4b3865cc30f678d0ca939c0b6ccd1e069557",
+      "branch": "main",
+      "body": "---\nuser-invocable: false\nname: d-d2c\ndescription: 用户提到 d-d2c、设计稿还原、MasterGo、贴图比对、design-to-code、页面开发，或使用 d-d2c --create-page / --update-page / --component 时，按这个 skill 要求执行；支持新建整页、更新已有页、组件/弹层/卡片三种流程入口，后两者分别读取 rules/d-d2c-update-page.md / rules/d-d2c-component.md 作为流程覆盖层\nhooks:\n  PreToolUse:\n    - matcher: \"AskUserQuestion\"\n      hooks:\n        - type: command\n          shell: bash\n          command: >-\n            sh -c 'node \"${CLAUDE_PLUGIN_ROOT}/hosts/claude-code/d2c_hook_entry.cjs\" PreToolUse && exit 0;\n            printf \"%s\\n\" \"{\\\"hookSpecificOutput\\\":{\\\"hookEventName\\\":\\\"PreToolUse\\\",\\\"permissionDecision\\\":\\\"deny\\\",\\\"permissionDecisionReason\\\":\\\"d-d2c bound guard could not start; repair the current plugin installation.\\\"}}\"'\n          statusMessage: Checking d-d2c user interaction boundary...\n  Stop:\n    - hooks:\n        - type: command\n          shell: bash\n          command: >-\n            sh -c 'node \"${CLAUDE_PLUGIN_ROOT}/hosts/claude-code/d2c_hook_entry.cjs\" Stop && exit 0;\n            printf \"%s\\n\" \"{\\\"decision\\\":\\\"block\\\",\\\"reason\\\":\\\"d-d2c bound guard could not start; repair the current plugin installation.\\\"}\"'\n          statusMessage: Checking d-d2c workflow completeness...\n---\n\n\n## 工作流概览\n\n```mermaid\nflowchart TD\n    A[初始化<br/>d-d2c --init --scope] --> B[拉 DSL<br/>fetch-mastergo-dsl]\n    B --> C[写代码<br/>generate.md + materials.md]\n    C --> D{迭代循环}\n    D --> E[截图<br/>capture-page]\n    E --> F[几何对比<br/>geometry-check]\n    F --> G[垂直布局<br/>vertical-check]\n    G --> H[渲染检查<br/>render-check]\n    H --> I[叠图<br/>diff-overlay]\n    I --> J{满意?}\n    J -->|否| C\n    J -->|是| K[评测<br/>fidelity-report]\n    K --> L[完成]\n\n    A -.-> M[存量项目? → brownfield.md]\n    D -.-> N[快速迭代? → --overlay-only]\n```\n\n> **规则文件索引：** [generate](rules/d-d2c-generate.md) · [materials](rules/d-d2c-materials.md) · [design-crop](rules/d-d2c-design-crop.md) · [preview](rules/d-d2c-preview.md) · [component](rules/d-d2c-component.md) · [update-page](rules/d-d2c-update-page.md) · [brownfield](rules/d-d2c-brownfield.md)\n\n# d-d2c 工作流\n\nd-d2c 用于按 **MasterGo 设计页链接拉取 DSL**，再基于 **`Layer.md`（布局树）+ `dom.md`（DOM/CSS）+ `styles.md`（样式规格表）** + 设计稿实现页面还原。\n\n\n## 鉴权页面 / 需要登录态\n\n### 注入 Session（cookie + localStorage）\n\n`--session-state` 接受 JSON 字符串，在 Puppeteer 导航前注入：\n\n```bash\n# 注入 cookie\nnode d2c-capture-page.cjs --url http://localhost:8080/demo-page \\\n  --session-state '{\"cookies\":[{\"name\":\"token\",\"value\":\"abc123\",\"domain\":\"localhost\"}]}'\n\n# 注入 localStorage\nnode d2c-capture-page.cjs --url http://localhost:8080/demo-page \\\n  --session-state '{\"localStorage\":{\"role\":\"agent\",\"stage\":\"4\"}}'\n```\n\n也可通过环境变量 `D2C_SESSION_STATE` 传入。\n\nJSON 结构：\n- `cookies`: `[{name, value, domain?, path?}]` — 通过 `page.setCookie()` 注入\n- `localStorage`: `{key: value}` — 通过 `evaluateOnNewDocument` 注入\n- `origin`: 可选，指定 localStorage 绑定的 origin\n\n### 注入 Mock 数据\n\n使用 `--mock` 注入 JSON 到 `window.__MOCK__`，或 `--mock-script` 执行自定义 JS：\n\n```bash\n# 注入 JSON\nnode d2c-capture-page.cjs --url http://localhost:8080/demo-page \\\n  --mock '{\"userInfo\":{\"id\":1,\"name\":\"test\"}}'\n\n# 执行 mock 脚本\nnode d2c-capture-page.cjs --url http://localhost:8080/demo-page \\\n  --mock-script ./mock.js\n```\n\nMock 通过 `page.evaluateOnNewDocument` 在 `page.goto` **之前**注入，抢在所有页面脚本执行前生效。对\"挂载即 fetch\"的 Vue App，API 拦截、全局 Promise 覆写等 mock 策略在首屏请求发出前已就位。\n\n#### 🔍 Agent 主动检测 & 自动 Mock（⛔ 截图后必须执行）\n\n**每轮截图完成后，Agent 必须检查目标组件是否渲染了真实业务数据。不满足时自动生成并注入 mock 数据，无需用户介入。**\n\n**检测标准（截图后立即判断）：**\n\n| 信号 | 判断 | 动作 |\n|------|------|------|\n| 目标组件 DOM 存在但内容为空（骨架屏/加载中/占位符） | 数据未到位 | 进入 mock 生成流程 |\n| 目标组件 `v-if`/`v-show` 条件不满足，整个组件不渲染 | 依赖数据缺失 | 进入 mock 生成流程 |\n| 列表为空、文案显示默认值/空字符串 | API 未返回数据 | 进入 mock 生成流程 |\n| 页面重定向到登录/错误页 | 鉴权问题，非数据问题 | 走 session-state / CDP 路径 |\n\n**Mock 生成流程（Agent 自动执行，不询问用户）：**\n\n1. **读取组件源码**：分析目标 `.vue` 的 `<script>` 部分，识别：\n   - `props` 定义（需要父组件传入的数据结构）\n   - `computed` 中从 props/store 派生的字段\n   - `v-if`/`v-for` 的驱动条件\n   - API 调用（axios/fetch/request 等）及返回数据结构\n\n2. **向上追溯数据源**：props 是父组件传的 → 读父组件 → 追溯到最终数据源：\n   - API 响应（看接口返回的字段）\n   - Store state（Vuex/Pinia/Redux）\n   - 路由参数\n\n3. **生成 mock 脚本**（写入 `d-d2c/temp/<page>/mock.js`，不残留到业务 diff）：\n   ```js\n   // 策略 A（优先）：在页面挂载前拦截数据源\n   // 覆盖 window.fetch / XMLHttpRequest，对匹配 URL 返回 mock 数据\n   const MOCK_DATA = { /* 根据组件依赖构造的完整数据 */ }\n   const origFetch = window.fetch\n   window.fetch = function(url, ...args) {\n     if (url.includes('/api/xxx')) {\n       return Promise.resolve(new Response(JSON.stringify(MOCK_DATA)))\n     }\n     return origFetch.call(this, url, ...args)\n   }\n\n   // 策略 B（备选）：如果项目有全局 store，直接注入\n   // 在 app 挂载后通过 __vue_app__ 或 store instance 注入\n   ```\n\n4. **重新截图**：带上 `--mock-script d-d2c/temp/<page>/mock.js`。\n\n5. **验证 mock 完整性（⛔ 硬门禁，必须逐条执行，不可仅凭\"组件挂载\"判定通过）：**\n\n   > 核心原则：**\"组件 DOM 存在\" ≠ \"组件渲染完整\"**。必须检查组件内部的条件块是否全部渲染。\n\n   **5a. 对照 template 列出条件块：**\n   重新读取目标组件的 `<template>`，提取所有 `v-if` / `v-show` / `v-for` 控制的子树，记录每个条件块的驱动表达式和预期内容。例如：\n   ```\n   v-if=\"hasUserInfo\"      → .user-detail（姓名+联系方式）\n   v-if=\"cardConfig\"       → 整卡\n   v-for=\"item in list\"    → .list-item × N\n   ```\n\n   **5b. 在浏览器中逐条检查（用 `page.evaluate`）：**\n   | 检查项 | 方法 | 通过标准 |\n   |--------|------|---------|\n   | `v-if` 块 | `document.querySelector(选择器)` | 元素存在 |\n   | `v-for` 列表 | `document.querySelectorAll(选择器).length` | `> 0` |\n   | 关键文本 | `.textContent.trim()` | 非空、非占位符（如\"加载中…\"/\"—\"/空字符串） |\n   | 条件块全部通过 | 对比模板 vs 实际 DOM | 100% 命中 |\n\n   **5c. 不符时继续迭代：**\n   - 任一条件块未渲染 → 回到步骤 1，重新分析该块的数据依赖\n   - 特别关注：数据在 store/API 中存在但 computed 返回 `undefined` → 可能是数据归一化（normalize）函数改了字段路径，或 prop 初始为空对象导致的 Vue 响应式边界情况 → 调整 mock 数据结构，把字段放到 normalize 函数实际读取的位置\n   - 修改 mock 脚本 → 重新截图 → 重新验证，**直到所有条件块通过或已达 3 轮上限**\n\n   **5d. 截图后 geometry/render check 正常执行。** 条件块补齐后 DSL 节点匹配率应明显提升。\n\n**⚠️ 关键约束：**\n- mock 脚本写入 `d-d2c/temp/` 目录，cleanup 时一并清除，禁止残留到业务源码\n- 不要为了 mock 去修改业务代码（路由守卫、bootstrap、Vue 组件等）\n- 如果项目已有现成的 mock 机制（如 MSW/vite-plugin-mock），优先用项目自带方案\n- mock 数据的字段和类型必须与组件源码中的实际使用一致\n\n### 连接已有浏览器（CDP endpoint）\n\n如果 Chrome 已打开并登录，通过 CDP 协议连接：\n\n```bash\n# 1. 启动 Chrome 时开启远程调试\n/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome \\\n  --remote-debugging-port=9222\n\n# 2. 获取 WebSocket endpoint；直接读取返回的 JSON 并提取 webSocketDebuggerUrl，\n#    不依赖额外 JSON CLI\ncurl -fsS http://127.0.0.1:9222/json/version\n\n# 3. 传入各脚本\nnode d2c-capture-page.cjs --cdp-endpoint \"ws://127.0.0.1:9222/devtools/browser/...\"\n```\n\n`--cdp-endpoint` 在 capture / geometry / vertical / render 四个脚本中均支持。连接已有浏览器可绕过鉴权，适用于无法自动化登录的场景。\n\n## 完整执行契约\n\n用户调用 `d-d2c --create-page`、`d-d2c --update-page` 或 `d-d2c --component`，即授权执行包含本地 dev server、浏览器物料、联合闸和 fidelity 在内的完整 workflow。阶段 0/1/2/3 的完成都不是任务终点，禁止询问用户是否继续。\n\nClaude Code 会通过 skill-scoped `Stop` Hook 读取 checkpoint 状态，并通过 `PreToolUse:AskUserQuestion` Hook 拦截非法中途提问：只允许在阶段 6 完成、browser handoff 等用户操作、阶段 4 等交互式效果决策、用户取消或有证据的外部输入阻塞时结束当前 turn；其它状态会由确定性脚本拒绝提前停止或询问。`--bare` / `--safe-mode` 会禁用 Claude hooks，不属于可保证完整性的直接执行环境。\n\n## 用户输入\n1. MasterGo 设计页链接（含 `file` / `layer_id` 等参数，或可解析到 fileId/layerId 的 `/goto/` 链接）。\n2. 设计图原图（用于对照还原）。\n3. 业务线（可选）：使用 `业务线<name>` 格式，`<name>` 为配置中已声明的转发业务标识。用户未提供时不走转发。\n\n命令参考（均可附 `+ [Image #1]` 传设计原图用于贴图比对，也可附 `业务线<name>`）：\n\n1. `d-d2c --create-page <MasterGo 设计页链接> 业务线<name>`：新建整页。默认入口，沿用当前整页还原与自检流程。\n2. `d-d2c --update-page <页面 vue 的相对路径> <MasterGo 设计页链接> 业务线<name>`：更新已有页面或其中一块内容。额外读取 `rules/d-d2c-update-page.md`。\n3. `d-d2c --component <组件层 MasterGo 设计链接> 业务线<name>`：开发组件、弹层、卡片等子树。额外读取 `rules/d-d2c-component.md`。\n\n未显式传子命令时，先按用户意图判定：\n\n| 信号 | 流程 |\n| --- | --- |\n| 新建页面、整页、完整画板 | page / create，走当前默认整页流程 |\n| 更新已有页、在某个 Vue 页面里改一块、已有页面新增区块 | page / update，先读 `rules/d-d2c-update-page.md` |\n| 组件、弹层、卡片、独立模块、组件级 MasterGo 选层 | component，先读 `rules/d-d2c-component.md` |\n| 判定不明确 | 先向用户确认是新建整页、更新已有页，还是组件级任务 |\n\n组件模式和已有页模式只是**流程覆盖层**：除对应规则文件列出的差异外，仍遵循当前分支既有的 DSL/filter、代码还原、物料生成、geometry/vertical/render 自检、phase2 联合前置闸和 fidelity 评测流程；不得因为切换模式而改写通用还原逻辑。\n\n### DSL 前置依赖（geometry / render / overlay 强制检查）\n\ngeometry-check、render-check、diff-overlay 强依赖 DSL 数据。**在执行这些检查前，必须先确认 DSL 文件已拉取：**\n\n1. 检查目标目录下是否存在 `dsl_full.json` / `dsl_layout_marked.json` / `dom.md` / `styles.md`\n2. 若缺失 → 自动拉取 DSL：\n   - **优先：使用 MasterGo MCP** 直接拉取 DSL 数据（`mcp__mastergo-magic-mcp__mcp__getDsl` 或 `getDesignSections`）\n   - **Fallback：** 调用 `fetch-mastergo-dsl.cjs --mg-url '<MasterGo链接>' --out d2c/temp/<page>/dsl_full.json`\n3. DSL 就绪后，再执行 geometry / render / overlay\n\n**禁止在 DSL 缺失时跳过 geometry check 或报\"需要配置 token\"。** 这是 d2c 工作流内部的职责，应由 d2c 自动处理，不应向外部暴露。\n\n## DSL 与设计图\n\n### 业务线与转发端点（可选，自建）\n\n默认不连接任何转发端点。本 skill 的默认取数路径是「本机令牌直连 MasterGo」或「经 mastergo-magic-mcp 拉取」；只有当你自建了一个持有 MasterGo 凭证的转发服务、并希望在多人之间共享该凭证时，才需要本节内容。该服务的接口契约不在本文档定义范围，由自建方自行对齐。\n\n业务线为可选输入，统一使用 `业务线<name>` 格式。可用值由 `config/transponder-routes.json` 的 `businessLines` 声明，`aliases` 可配置别名到规范值的映射（未配置别名时按原值透传）。转发地址由同文件的 `transponderUrl` 指定，也可用环境变量 `HELIXHARNESS_FRONTEND_ASSET_URL` 覆盖；配置文件路径可用 `HELIXHARNESS_FRONTEND_ROUTES_FILE` 覆盖。\n\n- 用户显式指定业务线时，拉取命令必须附加 `--business-line <name>`。脚本先尝试本地 token 直连，无 token 或直连失败才走转发。\n- 用户未指定业务线时，禁止自动补任何默认值，也不得启用转发。\n- 转发地址只能从 Skill 内的配置读取，不要要求用户提供或覆盖转发地址。\n- `--no-transponder` 可显式关闭转发。\n\n```bash\nnode $HELIXHARNESS_PLUGIN/skills/d-d2c/scripts/fetch-mastergo-dsl.cjs \\\n  --business-line '<name>' \\\n  --mg-url '<MasterGo链接>' \\\n  --out d-d2c/temp/<page-dir>/dsl_full.json\n```\n\nMasterGo **设计页链接** + 导出原图 `d-d2c/temp/<page-dir>/image-source.png`。从 MasterGo 当前设计文件的分享或复制链接入口获取链接，并确认链接指向目标页面或节点（**DSL 正文须脚本/MCP 落盘，禁止在对话里编造**）。\n\n\n**拉取 DSL → filter → 写 Vue** 的命令、必读产物、D2C 复杂矢量、省 token 与图标约束，一律以 **`rules/d-d2c-generate.md`** 为准（`alwaysApply`），本文件不重复展开。\n\n**宿主布局与叠图**：`filter-dsl` 会用原始 DSL 自动判定 `immersive-overlay` / `stacked-host`。前者删除原生控件但保留顶部 H5 空间，后者才按宿主底边平移/裁切；`--design-crop-top` 必须使用栅格 `designCropTopRaster`。详见 **`rules/d-d2c-design-crop.md`**。\n\n## 易混参数\n\n### `--scope`\n\n本 skill 有**两个同名但不同义**的 `--scope`，取值形态和生效范围都不一样，不要混用：\n\n| 使用场景 | 取值 | 含义 |\n| --- | --- | --- |\n| 初始化 / 存量接入，限定本次扫描范围（`d-d2c --init --scope …`） | **业务目录路径**，如 `client/views/<your-module>` | 只在该目录内扫描并生成映射文档。这是约定参数（见 `rules/d-d2c-mapping-code-sort.md`），不由脚本解析 |\n| geometry / vertical / render / design-opacity / diff-overlay 等检查脚本 | **DSL `layoutMark`**，多个用逗号分隔 | 量化比对只针对该 DSL 子树。这些是脚本的真实参数，取值来自 `dsl_layout_marked.json` |\n\n判断口诀：**值以 `/` 开头或指向目录 → 扫描范围；值是 layoutMark → 检查范围。**\n\n## 执行入口\n\n- **新建整页（默认 / `--create-page`）**：先读 `rules/d-d2c-preview.md`，再按 `$HELIXHARNESS_PLUGIN/skills/d-d2c/rules/d-d2c-workflow-self-check.md` 串行执行全流程，并按 `d-d2c-generate.md` 的既有规则落页面和路由。\n- **更新已有页（`--update-page <页面 vue 的相对路径>`）**：只读 `rules/d-d2c-update-page.md` 作为模式覆盖层，不读取 `rules/d-d2c-preview.md`；目标写入指定 Vue，复用已有路由，真实页不可达时进入 browser handoff，最终验收按真实整页。\n- **组件/弹层/卡片（`--component`）**：先读 `rules/d-d2c-component.md` 与 `rules/d-d2c-preview.md`，再执行同一套自检流程；产物目录使用 `d-d2c/temp/component/<name>/`，不新增对外业务路由。\n- **复杂度分流**：`filter-dsl` 自动产出 `complexity-plan.json`；`verdict=complex` 的页面禁止整页一把梭，按 `rules/d-d2c-complex-split.md` 拆解为组件串行小闭环后再拼装。\n- 完整自检评测流程强依赖 `d2c-fidelity-evaluator`；初始化阶段完整读取本插件已捆绑的 `skills/d2c-fidelity-evaluator/SKILL.md`，资源缺失则停止流程并提示修复插件安装。\n\n阶段 1 必须先用 `d2c-runtime-health-check.cjs` 证明真实项目构建链编译成功且 SPA 已挂载；HTTP 200/端口存活不算证据，源码修改会让旧证据失效。编译、runtime、`Cannot GET` 或空 SPA 都由 executor 自动修复，禁止询问用户或进入 browser handoff。\n\n已有页只有在运行健康的真实路由重试后仍被业务 flow 重定向时，才按 `d-d2c-update-page.md` 创建 `browser-handoff.json`：交互环境启动托管可见 Chrome 并请用户进入目标页；headless/loop 环境输出 `EXECUTOR_BLOCKED reason=user-browser-handoff-required page-dir=<page-dir>`，由外层恢复同一 run。用户页通过验证后，截图与三项 DOM 检查必须复用同一 CDP tab。\n\n其他规则与脚本均从技能目录内的 `$HELIXHARNESS_PLUGIN/skills/d-d2c/` 读取（路径以 `rules/`、`scripts/` 下实际文件为准）。\n\n> 结构化运行日志（`d2c-run.jsonl` / `d2c-run-summary.json`）仅服务于外层 d2c-eval-loop 的归因，受环境变量 `D2C_EVAL_LOOP` 门禁，**默认关闭**；正常使用 d-d2c 不会产生这些日志文件。\n",
+      "bodyMd": "## 工作流概览\n\n```mermaid\nflowchart TD\n    A[初始化<br/>d-d2c --init --scope] --> B[拉 DSL<br/>fetch-mastergo-dsl]\n    B --> C[写代码<br/>generate.md + materials.md]\n    C --> D{迭代循环}\n    D --> E[截图<br/>capture-page]\n    E --> F[几何对比<br/>geometry-check]\n    F --> G[垂直布局<br/>vertical-check]\n    G --> H[渲染检查<br/>render-check]\n    H --> I[叠图<br/>diff-overlay]\n    I --> J{满意?}\n    J -->|否| C\n    J -->|是| K[评测<br/>fidelity-report]\n    K --> L[完成]\n\n    A -.-> M[存量项目? → brownfield.md]\n    D -.-> N[快速迭代? → --overlay-only]\n```\n\n> **规则文件索引：** [generate](rules/d-d2c-generate.md) · [materials](rules/d-d2c-materials.md) · [design-crop](rules/d-d2c-design-crop.md) · [preview](rules/d-d2c-preview.md) · [component](rules/d-d2c-component.md) · [update-page](rules/d-d2c-update-page.md) · [brownfield](rules/d-d2c-brownfield.md)\n\n# d-d2c 工作流\n\nd-d2c 用于按 **MasterGo 设计页链接拉取 DSL**，再基于 **`Layer.md`（布局树）+ `dom.md`（DOM/CSS）+ `styles.md`（样式规格表）** + 设计稿实现页面还原。\n\n\n## 鉴权页面 / 需要登录态\n\n### 注入 Session（cookie + localStorage）\n\n`--session-state` 接受 JSON 字符串，在 Puppeteer 导航前注入：\n\n```bash\n# 注入 cookie\nnode d2c-capture-page.cjs --url http://localhost:8080/demo-page \\\n  --session-state '{\"cookies\":[{\"name\":\"token\",\"value\":\"abc123\",\"domain\":\"localhost\"}]}'\n\n# 注入 localStorage\nnode d2c-capture-page.cjs --url http://localhost:8080/demo-page \\\n  --session-state '{\"localStorage\":{\"role\":\"agent\",\"stage\":\"4\"}}'\n```\n\n也可通过环境变量 `D2C_SESSION_STATE` 传入。\n\nJSON 结构：\n- `cookies`: `[{name, value, domain?, path?}]` — 通过 `page.setCookie()` 注入\n- `localStorage`: `{key: value}` — 通过 `evaluateOnNewDocument` 注入\n- `origin`: 可选，指定 localStorage 绑定的 origin\n\n### 注入 Mock 数据\n\n使用 `--mock` 注入 JSON 到 `window.__MOCK__`，或 `--mock-script` 执行自定义 JS：\n\n```bash\n# 注入 JSON\nnode d2c-capture-page.cjs --url http://localhost:8080/demo-page \\\n  --mock '{\"userInfo\":{\"id\":1,\"name\":\"test\"}}'\n\n# 执行 mock 脚本\nnode d2c-capture-page.cjs --url http://localhost:8080/demo-page \\\n  --mock-script ./mock.js\n```\n\nMock 通过 `page.evaluateOnNewDocument` 在 `page.goto` **之前**注入，抢在所有页面脚本执行前生效。对\"挂载即 fetch\"的 Vue App，API 拦截、全局 Promise 覆写等 mock 策略在首屏请求发出前已就位。\n\n#### 🔍 Agent 主动检测 & 自动 Mock（⛔ 截图后必须执行）\n\n**每轮截图完成后，Agent 必须检查目标组件是否渲染了真实业务数据。不满足时自动生成并注入 mock 数据，无需用户介入。**\n\n**检测标准（截图后立即判断）：**\n\n| 信号 | 判断 | 动作 |\n|------|------|------|\n| 目标组件 DOM 存在但内容为空（骨架屏/加载中/占位符） | 数据未到位 | 进入 mock 生成流程 |\n| 目标组件 `v-if`/`v-show` 条件不满足，整个组件不渲染 | 依赖数据缺失 | 进入 mock 生成流程 |\n| 列表为空、文案显示默认值/空字符串 | API 未返回数据 | 进入 mock 生成流程 |\n| 页面重定向到登录/错误页 | 鉴权问题，非数据问题 | 走 session-state / CDP 路径 |\n\n**Mock 生成流程（Agent 自动执行，不询问用户）：**\n\n1. **读取组件源码**：分析目标 `.vue` 的 `<script>` 部分，识别：\n   - `props` 定义（需要父组件传入的数据结构）\n   - `computed` 中从 props/store 派生的字段\n   - `v-if`/`v-for` 的驱动条件\n   - API 调用（axios/fetch/request 等）及返回数据结构\n\n2. **向上追溯数据源**：props 是父组件传的 → 读父组件 → 追溯到最终数据源：\n   - API 响应（看接口返回的字段）\n   - Store state（Vuex/Pinia/Redux）\n   - 路由参数\n\n3. **生成 mock 脚本**（写入 `d-d2c/temp/<page>/mock.js`，不残留到业务 diff）：\n   ```js\n   // 策略 A（优先）：在页面挂载前拦截数据源\n   // 覆盖 window.fetch / XMLHttpRequest，对匹配 URL 返回 mock 数据\n   const MOCK_DATA = { /* 根据组件依赖构造的完整数据 */ }\n   const origFetch = window.fetch\n   window.fetch = function(url, ...args) {\n     if (url.includes('/api/xxx')) {\n       return Promise.resolve(new Response(JSON.stringify(MOCK_DATA)))\n     }\n     return origFetch.call(this, url, ...args)\n   }\n\n   // 策略 B（备选）：如果项目有全局 store，直接注入\n   // 在 app 挂载后通过 __vue_app__ 或 store instance 注入\n   ```\n\n4. **重新截图**：带上 `--mock-script d-d2c/temp/<page>/mock.js`。\n\n5. **验证 mock 完整性（⛔ 硬门禁，必须逐条执行，不可仅凭\"组件挂载\"判定通过）：**\n\n   > 核心原则：**\"组件 DOM 存在\" ≠ \"组件渲染完整\"**。必须检查组件内部的条件块是否全部渲染。\n\n   **5a. 对照 template 列出条件块：**\n   重新读取目标组件的 `<template>`，提取所有 `v-if` / `v-show` / `v-for` 控制的子树，记录每个条件块的驱动表达式和预期内容。例如：\n   ```\n   v-if=\"hasUserInfo\"      → .user-detail（姓名+联系方式）\n   v-if=\"cardConfig\"       → 整卡\n   v-for=\"item in list\"    → .list-item × N\n   ```\n\n   **5b. 在浏览器中逐条检查（用 `page.evaluate`）：**\n   | 检查项 | 方法 | 通过标准 |\n   |--------|------|---------|\n   | `v-if` 块 | `document.querySelector(选择器)` | 元素存在 |\n   | `v-for` 列表 | `document.querySelectorAll(选择器).length` | `> 0` |\n   | 关键文本 | `.textContent.trim()` | 非空、非占位符（如\"加载中…\"/\"—\"/空字符串） |\n   | 条件块全部通过 | 对比模板 vs 实际 DOM | 100% 命中 |\n\n   **5c. 不符时继续迭代：**\n   - 任一条件块未渲染 → 回到步骤 1，重新分析该块的数据依赖\n   - 特别关注：数据在 store/API 中存在但 computed 返回 `undefined` → 可能是数据归一化（normalize）函数改了字段路径，或 prop 初始为空对象导致的 Vue 响应式边界情况 → 调整 mock 数据结构，把字段放到 normalize 函数实际读取的位置\n   - 修改 mock 脚本 → 重新截图 → 重新验证，**直到所有条件块通过或已达 3 轮上限**\n\n   **5d. 截图后 geometry/render check 正常执行。** 条件块补齐后 DSL 节点匹配率应明显提升。\n\n**⚠️ 关键约束：**\n- mock 脚本写入 `d-d2c/temp/` 目录，cleanup 时一并清除，禁止残留到业务源码\n- 不要为了 mock 去修改业务代码（路由守卫、bootstrap、Vue 组件等）\n- 如果项目已有现成的 mock 机制（如 MSW/vite-plugin-mock），优先用项目自带方案\n- mock 数据的字段和类型必须与组件源码中的实际使用一致\n\n### 连接已有浏览器（CDP endpoint）\n\n如果 Chrome 已打开并登录，通过 CDP 协议连接：\n\n```bash\n# 1. 启动 Chrome 时开启远程调试\n/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome \\\n  --remote-debugging-port=9222\n\n# 2. 获取 WebSocket endpoint；直接读取返回的 JSON 并提取 webSocketDebuggerUrl，\n#    不依赖额外 JSON CLI\ncurl -fsS http://127.0.0.1:9222/json/version\n\n# 3. 传入各脚本\nnode d2c-capture-page.cjs --cdp-endpoint \"ws://127.0.0.1:9222/devtools/browser/...\"\n```\n\n`--cdp-endpoint` 在 capture / geometry / vertical / render 四个脚本中均支持。连接已有浏览器可绕过鉴权，适用于无法自动化登录的场景。\n\n## 完整执行契约\n\n用户调用 `d-d2c --create-page`、`d-d2c --update-page` 或 `d-d2c --component`，即授权执行包含本地 dev server、浏览器物料、联合闸和 fidelity 在内的完整 workflow。阶段 0/1/2/3 的完成都不是任务终点，禁止询问用户是否继续。\n\nClaude Code 会通过 skill-scoped `Stop` Hook 读取 checkpoint 状态，并通过 `PreToolUse:AskUserQuestion` Hook 拦截非法中途提问：只允许在阶段 6 完成、browser handoff 等用户操作、阶段 4 等交互式效果决策、用户取消或有证据的外部输入阻塞时结束当前 turn；其它状态会由确定性脚本拒绝提前停止或询问。`--bare` / `--safe-mode` 会禁用 Claude hooks，不属于可保证完整性的直接执行环境。\n\n## 用户输入\n1. MasterGo 设计页链接（含 `file` / `layer_id` 等参数，或可解析到 fileId/layerId 的 `/goto/` 链接）。\n2. 设计图原图（用于对照还原）。\n3. 业务线（可选）：使用 `业务线<name>` 格式，`<name>` 为配置中已声明的转发业务标识。用户未提供时不走转发。\n\n命令参考（均可附 `+ [Image #1]` 传设计原图用于贴图比对，也可附 `业务线<name>`）：\n\n1. `d-d2c --create-page <MasterGo 设计页链接> 业务线<name>`：新建整页。默认入口，沿用当前整页还原与自检流程。\n2. `d-d2c --update-page <页面 vue 的相对路径> <MasterGo 设计页链接> 业务线<name>`：更新已有页面或其中一块内容。额外读取 `rules/d-d2c-update-page.md`。\n3. `d-d2c --component <组件层 MasterGo 设计链接> 业务线<name>`：开发组件、弹层、卡片等子树。额外读取 `rules/d-d2c-component.md`。\n\n未显式传子命令时，先按用户意图判定：\n\n| 信号 | 流程 |\n| --- | --- |\n| 新建页面、整页、完整画板 | page / create，走当前默认整页流程 |\n| 更新已有页、在某个 Vue 页面里改一块、已有页面新增区块 | page / update，先读 `rules/d-d2c-update-page.md` |\n| 组件、弹层、卡片、独立模块、组件级 MasterGo 选层 | component，先读 `rules/d-d2c-component.md` |\n| 判定不明确 | 先向用户确认是新建整页、更新已有页，还是组件级任务 |\n\n组件模式和已有页模式只是**流程覆盖层**：除对应规则文件列出的差异外，仍遵循当前分支既有的 DSL/filter、代码还原、物料生成、geometry/vertical/render 自检、phase2 联合前置闸和 fidelity 评测流程；不得因为切换模式而改写通用还原逻辑。\n\n### DSL 前置依赖（geometry / render / overlay 强制检查）\n\ngeometry-check、render-check、diff-overlay 强依赖 DSL 数据。**在执行这些检查前，必须先确认 DSL 文件已拉取：**\n\n1. 检查目标目录下是否存在 `dsl_full.json` / `dsl_layout_marked.json` / `dom.md` / `styles.md`\n2. 若缺失 → 自动拉取 DSL：\n   - **优先：使用 MasterGo MCP** 直接拉取 DSL 数据（`mcp__mastergo-magic-mcp__mcp__getDsl` 或 `getDesignSections`）\n   - **Fallback：** 调用 `fetch-mastergo-dsl.cjs --mg-url '<MasterGo链接>' --out d2c/temp/<page>/dsl_full.json`\n3. DSL 就绪后，再执行 geometry / render / overlay\n\n**禁止在 DSL 缺失时跳过 geometry check 或报\"需要配置 token\"。** 这是 d2c 工作流内部的职责，应由 d2c 自动处理，不应向外部暴露。\n\n## DSL 与设计图\n\n### 业务线与转发端点（可选，自建）\n\n默认不连接任何转发端点。本 skill 的默认取数路径是「本机令牌直连 MasterGo」或「经 mastergo-magic-mcp 拉取」；只有当你自建了一个持有 MasterGo 凭证的转发服务、并希望在多人之间共享该凭证时，才需要本节内容。该服务的接口契约不在本文档定义范围，由自建方自行对齐。\n\n业务线为可选输入，统一使用 `业务线<name>` 格式。可用值由 `config/transponder-routes.json` 的 `businessLines` 声明，`aliases` 可配置别名到规范值的映射（未配置别名时按原值透传）。转发地址由同文件的 `transponderUrl` 指定，也可用环境变量 `HELIXHARNESS_FRONTEND_ASSET_URL` 覆盖；配置文件路径可用 `HELIXHARNESS_FRONTEND_ROUTES_FILE` 覆盖。\n\n- 用户显式指定业务线时，拉取命令必须附加 `--business-line <name>`。脚本先尝试本地 token 直连，无 token 或直连失败才走转发。\n- 用户未指定业务线时，禁止自动补任何默认值，也不得启用转发。\n- 转发地址只能从 Skill 内的配置读取，不要要求用户提供或覆盖转发地址。\n- `--no-transponder` 可显式关闭转发。\n\n```bash\nnode $HELIXHARNESS_PLUGIN/skills/d-d2c/scripts/fetch-mastergo-dsl.cjs \\\n  --business-line '<name>' \\\n  --mg-url '<MasterGo链接>' \\\n  --out d-d2c/temp/<page-dir>/dsl_full.json\n```\n\nMasterGo **设计页链接** + 导出原图 `d-d2c/temp/<page-dir>/image-source.png`。从 MasterGo 当前设计文件的分享或复制链接入口获取链接，并确认链接指向目标页面或节点（**DSL 正文须脚本/MCP 落盘，禁止在对话里编造**）。\n\n\n**拉取 DSL → filter → 写 Vue** 的命令、必读产物、D2C 复杂矢量、省 token 与图标约束，一律以 **`rules/d-d2c-generate.md`** 为准（`alwaysApply`），本文件不重复展开。\n\n**宿主布局与叠图**：`filter-dsl` 会用原始 DSL 自动判定 `immersive-overlay` / `stacked-host`。前者删除原生控件但保留顶部 H5 空间，后者才按宿主底边平移/裁切；`--design-crop-top` 必须使用栅格 `designCropTopRaster`。详见 **`rules/d-d2c-design-crop.md`**。\n\n## 易混参数\n\n### `--scope`\n\n本 skill 有**两个同名但不同义**的 `--scope`，取值形态和生效范围都不一样，不要混用：\n\n| 使用场景 | 取值 | 含义 |\n| --- | --- | --- |\n| 初始化 / 存量接入，限定本次扫描范围（`d-d2c --init --scope …`） | **业务目录路径**，如 `client/views/<your-module>` | 只在该目录内扫描并生成映射文档。这是约定参数（见 `rules/d-d2c-mapping-code-sort.md`），不由脚本解析 |\n| geometry / vertical / render / design-opacity / diff-overlay 等检查脚本 | **DSL `layoutMark`**，多个用逗号分隔 | 量化比对只针对该 DSL 子树。这些是脚本的真实参数，取值来自 `dsl_layout_marked.json` |\n\n判断口诀：**值以 `/` 开头或指向目录 → 扫描范围；值是 layoutMark → 检查范围。**\n\n## 执行入口\n\n- **新建整页（默认 / `--create-page`）**：先读 `rules/d-d2c-preview.md`，再按 `$HELIXHARNESS_PLUGIN/skills/d-d2c/rules/d-d2c-workflow-self-check.md` 串行执行全流程，并按 `d-d2c-generate.md` 的既有规则落页面和路由。\n- **更新已有页（`--update-page <页面 vue 的相对路径>`）**：只读 `rules/d-d2c-update-page.md` 作为模式覆盖层，不读取 `rules/d-d2c-preview.md`；目标写入指定 Vue，复用已有路由，真实页不可达时进入 browser handoff，最终验收按真实整页。\n- **组件/弹层/卡片（`--component`）**：先读 `rules/d-d2c-component.md` 与 `rules/d-d2c-preview.md`，再执行同一套自检流程；产物目录使用 `d-d2c/temp/component/<name>/`，不新增对外业务路由。\n- **复杂度分流**：`filter-dsl` 自动产出 `complexity-plan.json`；`verdict=complex` 的页面禁止整页一把梭，按 `rules/d-d2c-complex-split.md` 拆解为组件串行小闭环后再拼装。\n- 完整自检评测流程强依赖 `d2c-fidelity-evaluator`；初始化阶段完整读取本插件已捆绑的 `skills/d2c-fidelity-evaluator/SKILL.md`，资源缺失则停止流程并提示修复插件安装。\n\n阶段 1 必须先用 `d2c-runtime-health-check.cjs` 证明真实项目构建链编译成功且 SPA 已挂载；HTTP 200/端口存活不算证据，源码修改会让旧证据失效。编译、runtime、`Cannot GET` 或空 SPA 都由 executor 自动修复，禁止询问用户或进入 browser handoff。\n\n已有页只有在运行健康的真实路由重试后仍被业务 flow 重定向时，才按 `d-d2c-update-page.md` 创建 `browser-handoff.json`：交互环境启动托管可见 Chrome 并请用户进入目标页；headless/loop 环境输出 `EXECUTOR_BLOCKED reason=user-browser-handoff-required page-dir=<page-dir>`，由外层恢复同一 run。用户页通过验证后，截图与三项 DOM 检查必须复用同一 CDP tab。\n\n其他规则与脚本均从技能目录内的 `$HELIXHARNESS_PLUGIN/skills/d-d2c/` 读取（路径以 `rules/`、`scripts/` 下实际文件为准）。\n\n> 结构化运行日志（`d2c-run.jsonl` / `d2c-run-summary.json`）仅服务于外层 d2c-eval-loop 的归因，受环境变量 `D2C_EVAL_LOOP` 门禁，**默认关闭**；正常使用 d-d2c 不会产生这些日志文件。\n"
+    },
+    {
+      "slug": "d2c-fidelity-evaluator-2",
+      "name": "d2c-fidelity-evaluator",
+      "dir": "helixharness/skills/d2c-fidelity-evaluator",
+      "path": "helixharness/skills/d2c-fidelity-evaluator/SKILL.md",
+      "desc": "Evaluate design-to-code fidelity for a generated page by comparing design inputs and implementation outputs. Use when the user provides or references a design screenshot, design DSL, source code, rendered page screenshot, and optionally a transparent design-over-render overlay image, and wants a restoration/fidelity percentage plus an actionable report that can drive the next D2C optimization pass.",
+      "descZh": "",
+      "triggers": [
+        "the user provides",
+        "design DSL",
+        "source code",
+        "rendered pag"
+      ],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "node"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/didi/helixharness.git",
+        "copy": "cp -r helixharness/skills/d2c-fidelity-evaluator ~/.claude/skills/d2c-fidelity-evaluator-2",
+        "raw": "https://raw.githubusercontent.com/didi/helixharness/5bde4b3865cc30f678d0ca939c0b6ccd1e069557/helixharness/skills/d2c-fidelity-evaluator/SKILL.md",
+        "saveAs": "~/.claude/skills/d2c-fidelity-evaluator-2/SKILL.md",
+        "marketplace": "/plugin marketplace add didi/helixharness"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:49e42a7207d441929668f1b4a4b1497cb310095bd1cad1523b17bdc9a76fce3a",
+      "bytes": 7653,
+      "wordCount": 1044,
+      "repoLicense": "Apache-2.0",
+      "commit": "5bde4b3865cc30f678d0ca939c0b6ccd1e069557",
+      "branch": "main",
+      "body": "---\nuser-invocable: false\nname: d2c-fidelity-evaluator\ndescription: Evaluate design-to-code fidelity for a generated page by comparing design inputs and implementation outputs. Use when the user provides or references a design screenshot, design DSL, source code, rendered page screenshot, and optionally a transparent design-over-render overlay image, and wants a restoration/fidelity percentage plus an actionable report that can drive the next D2C optimization pass.\n---\n\n# D2C Fidelity Evaluator\n\n## Purpose\n\nScore how faithfully a code-generated page restores its design source, then produce an optimization-oriented report that another D2C skill can use to improve the implementation in the next pass.\n\nThis skill evaluates visible output fidelity. Source code is used to locate likely causes and suggest implementation changes; source quality is not scored unless it creates visible design mismatch.\n\n## Inputs\n\nExpect these inputs from the user or surrounding task context:\n\n- Design screenshot: the original design image.\n- Design DSL: structured design data for the same page or frame.\n- Implementation source: code files, snippets, or repo paths for the generated page.\n- Rendered screenshot: screenshot of the implementation result.\n- Overlay screenshot: optional but preferred; a transparent design-over-render overlay image.\n\nIf the overlay is available, use it primarily to diagnose layout, size, edge, and alignment drift. Do not use the overlay as the main evidence for color or typography, because the colors are blended.\n\nFor v1, assume the screenshots are comparable and the page has rendered successfully. Do not perform viewport, DPR, asset-loading, or blank-page comparability checks unless the user explicitly asks for that.\n\n## Host Chrome Boundary\n\nApp, WebView, and mini-program container chrome is not part of the page fidelity target. Do not score system status bars, WebView title bars, mini-program capsule controls, native back controls, or bottom gesture bars as implementation omissions or extra elements.\n\nIf the design screenshot includes host chrome but the rendered screenshot represents only the H5/business page, evaluate the business page content boundary. When the surrounding workflow provides `design_crop_top`, treat that top crop as the intended material alignment and do not deduct for the removed host chrome.\n\nIf the overlay appears vertically shifted because host chrome was not cropped from the design side, report this as a material alignment issue before assigning implementation deductions. In that case, avoid turning the whole-page offset caused by host chrome into code optimization advice such as adding fake status bars or drawing mini-program capsules.\n\n## DSL-Only Mode\n\nWhen no design screenshot (`image-source.png`) is available, the evaluator operates in **dsl-only** mode:\n\n- **Activation:** Set `D2C_FIDELITY_MODE=dsl-only` or pass `--mode dsl-only`\n- **What changes:**\n  - Pixel-level overlay comparison is **skipped**\n  - Scoring based on geometry-diff.json (40%) + render-diff.json (40%) + vertical-diff.json (20%)\n  - Report marked with \"基于 DSL 评测（无设计原图）\"\n- **What stays:** All DSL-based checks (text, font, spacing, color, layout) still run\n\n## Workflow\n\n1. Inventory the provided inputs and identify the design frame/page being evaluated.\n2. Read the design DSL enough to understand the intended element hierarchy, text, bounds, style tokens, and key node IDs.\n3. Inspect the design screenshot, rendered screenshot, and overlay screenshot if present.\n4. Compare the implementation against the design across the four scoring dimensions in `references/scoring-rubric.md`.\n5. Calculate the overall fidelity score as a weighted average.\n6. Produce a report using `references/report-schema.md`.\n7. Write the complete Markdown report to the target workspace root's `d2c/temp/d2c-fidelity-evaluator-report/` folder. Create the folder if needed.\n8. Sort findings by optimization value, not by visual narration order. The highest-priority items should be the ones most likely to raise the next score.\n\n## Report File\n\nEvery evaluation must create a new Markdown report file on disk.\n\nDetermine the target workspace root as follows:\n\n1. If the user provides a code file path inside a project, use that project's repository root when it can be detected.\n2. Otherwise use the current working directory for the evaluation task.\n\nSave reports under:\n\n```text\n<target-workspace-root>/d2c/temp/d2c-fidelity-evaluator-report/\n```\n\nUse this filename pattern:\n\n```text\nd2c-fidelity-evaluator-r{round}.md\n```\n\nRound selection:\n\n- If the user provides an explicit round number, use it.\n- Otherwise, if a screenshot or branch/file name contains a clear round marker such as `r6`, use that number.\n- Otherwise, inspect existing `d2c/temp/d2c-fidelity-evaluator-report/d2c-fidelity-evaluator-r*.md` files and use the next integer round.\n- Never overwrite an existing report. If the selected round file already exists, append `-run-{n}` before `.md`, where `n` is the next available integer.\n\nThe chat response should include the report path and a concise score summary. The full Markdown report file should include both the human-readable report and the JSON report block.\n\n## Scoring Dimensions\n\nUse these weights:\n\n- Layout structure: 40%\n- Visual style: 25%\n- Content and assets: 15%\n- Perceptual similarity: 20%\n\nOverall score:\n\n```text\noverallScore =\n  layoutStructure * 0.40 +\n  visualStyle * 0.25 +\n  contentAssets * 0.15 +\n  perceptualSimilarity * 0.20\n```\n\nScores are percentages from 0 to 100. Round the final score to the nearest whole number unless precise measurements justify one decimal place.\n\n## Report Requirements\n\nThe report must be useful as input to a subsequent D2C optimization skill. Avoid generic comments such as \"spacing is off\" or \"style differs\". Each important finding must include:\n\n- The affected target element or region.\n- The scoring dimension.\n- Severity and deduction.\n- Expected design behavior.\n- Actual rendered behavior.\n- Evidence from screenshot, overlay, or DSL.\n- A concrete suggested change.\n- Acceptance criteria for the next evaluation.\n- DSL node ID or code hints when they can be inferred.\n- Expected gain, estimating how many overall score points could be recovered.\n\nPrefer fewer high-signal findings over a long list of vague observations. Findings should be actionable, localizable, and re-checkable.\n\n## Output\n\nReturn both:\n\n1. A concise Markdown report for humans.\n2. A valid JSON report following `references/report-schema.md` for downstream automation.\n3. The filesystem path of the generated Markdown report.\n\nThe Markdown should summarize the score, dimension breakdown, top optimization plan, and key findings. The JSON should preserve the detailed structure for machine consumption.\n\nWhen the user or surrounding workflow is Chinese, write the human-readable Markdown report in Chinese. Keep JSON field names in English for automation, but prefer Chinese for descriptive JSON string values such as `summary`, `notes`, `action`, `rationale`, `evidence`, `suggestedChange`, and `acceptanceCriteria`.\n\n## Boundaries\n\n- Do not include a separate comparability check in v1.\n- Do not score code architecture, framework choice, naming, or maintainability unless it visibly affects fidelity.\n- Do not overclaim exact pixel values unless they were measured. Use \"about\", \"roughly\", or ranges when estimating visually.\n- If DSL and screenshots disagree, treat screenshots as the visual truth and use the DSL as structural evidence.\n- If a suggested fix is uncertain, label it as a likely code hint rather than a confirmed cause.\n",
+      "bodyMd": "# D2C Fidelity Evaluator\n\n## Purpose\n\nScore how faithfully a code-generated page restores its design source, then produce an optimization-oriented report that another D2C skill can use to improve the implementation in the next pass.\n\nThis skill evaluates visible output fidelity. Source code is used to locate likely causes and suggest implementation changes; source quality is not scored unless it creates visible design mismatch.\n\n## Inputs\n\nExpect these inputs from the user or surrounding task context:\n\n- Design screenshot: the original design image.\n- Design DSL: structured design data for the same page or frame.\n- Implementation source: code files, snippets, or repo paths for the generated page.\n- Rendered screenshot: screenshot of the implementation result.\n- Overlay screenshot: optional but preferred; a transparent design-over-render overlay image.\n\nIf the overlay is available, use it primarily to diagnose layout, size, edge, and alignment drift. Do not use the overlay as the main evidence for color or typography, because the colors are blended.\n\nFor v1, assume the screenshots are comparable and the page has rendered successfully. Do not perform viewport, DPR, asset-loading, or blank-page comparability checks unless the user explicitly asks for that.\n\n## Host Chrome Boundary\n\nApp, WebView, and mini-program container chrome is not part of the page fidelity target. Do not score system status bars, WebView title bars, mini-program capsule controls, native back controls, or bottom gesture bars as implementation omissions or extra elements.\n\nIf the design screenshot includes host chrome but the rendered screenshot represents only the H5/business page, evaluate the business page content boundary. When the surrounding workflow provides `design_crop_top`, treat that top crop as the intended material alignment and do not deduct for the removed host chrome.\n\nIf the overlay appears vertically shifted because host chrome was not cropped from the design side, report this as a material alignment issue before assigning implementation deductions. In that case, avoid turning the whole-page offset caused by host chrome into code optimization advice such as adding fake status bars or drawing mini-program capsules.\n\n## DSL-Only Mode\n\nWhen no design screenshot (`image-source.png`) is available, the evaluator operates in **dsl-only** mode:\n\n- **Activation:** Set `D2C_FIDELITY_MODE=dsl-only` or pass `--mode dsl-only`\n- **What changes:**\n  - Pixel-level overlay comparison is **skipped**\n  - Scoring based on geometry-diff.json (40%) + render-diff.json (40%) + vertical-diff.json (20%)\n  - Report marked with \"基于 DSL 评测（无设计原图）\"\n- **What stays:** All DSL-based checks (text, font, spacing, color, layout) still run\n\n## Workflow\n\n1. Inventory the provided inputs and identify the design frame/page being evaluated.\n2. Read the design DSL enough to understand the intended element hierarchy, text, bounds, style tokens, and key node IDs.\n3. Inspect the design screenshot, rendered screenshot, and overlay screenshot if present.\n4. Compare the implementation against the design across the four scoring dimensions in `references/scoring-rubric.md`.\n5. Calculate the overall fidelity score as a weighted average.\n6. Produce a report using `references/report-schema.md`.\n7. Write the complete Markdown report to the target workspace root's `d2c/temp/d2c-fidelity-evaluator-report/` folder. Create the folder if needed.\n8. Sort findings by optimization value, not by visual narration order. The highest-priority items should be the ones most likely to raise the next score.\n\n## Report File\n\nEvery evaluation must create a new Markdown report file on disk.\n\nDetermine the target workspace root as follows:\n\n1. If the user provides a code file path inside a project, use that project's repository root when it can be detected.\n2. Otherwise use the current working directory for the evaluation task.\n\nSave reports under:\n\n```text\n<target-workspace-root>/d2c/temp/d2c-fidelity-evaluator-report/\n```\n\nUse this filename pattern:\n\n```text\nd2c-fidelity-evaluator-r{round}.md\n```\n\nRound selection:\n\n- If the user provides an explicit round number, use it.\n- Otherwise, if a screenshot or branch/file name contains a clear round marker such as `r6`, use that number.\n- Otherwise, inspect existing `d2c/temp/d2c-fidelity-evaluator-report/d2c-fidelity-evaluator-r*.md` files and use the next integer round.\n- Never overwrite an existing report. If the selected round file already exists, append `-run-{n}` before `.md`, where `n` is the next available integer.\n\nThe chat response should include the report path and a concise score summary. The full Markdown report file should include both the human-readable report and the JSON report block.\n\n## Scoring Dimensions\n\nUse these weights:\n\n- Layout structure: 40%\n- Visual style: 25%\n- Content and assets: 15%\n- Perceptual similarity: 20%\n\nOverall score:\n\n```text\noverallScore =\n  layoutStructure * 0.40 +\n  visualStyle * 0.25 +\n  contentAssets * 0.15 +\n  perceptualSimilarity * 0.20\n```\n\nScores are percentages from 0 to 100. Round the final score to the nearest whole number unless precise measurements justify one decimal place.\n\n## Report Requirements\n\nThe report must be useful as input to a subsequent D2C optimization skill. Avoid generic comments such as \"spacing is off\" or \"style differs\". Each important finding must include:\n\n- The affected target element or region.\n- The scoring dimension.\n- Severity and deduction.\n- Expected design behavior.\n- Actual rendered behavior.\n- Evidence from screenshot, overlay, or DSL.\n- A concrete suggested change.\n- Acceptance criteria for the next evaluation.\n- DSL node ID or code hints when they can be inferred.\n- Expected gain, estimating how many overall score points could be recovered.\n\nPrefer fewer high-signal findings over a long list of vague observations. Findings should be actionable, localizable, and re-checkable.\n\n## Output\n\nReturn both:\n\n1. A concise Markdown report for humans.\n2. A valid JSON report following `references/report-schema.md` for downstream automation.\n3. The filesystem path of the generated Markdown report.\n\nThe Markdown should summarize the score, dimension breakdown, top optimization plan, and key findings. The JSON should preserve the detailed structure for machine consumption.\n\nWhen the user or surrounding workflow is Chinese, write the human-readable Markdown report in Chinese. Keep JSON field names in English for automation, but prefer Chinese for descriptive JSON string values such as `summary`, `notes`, `action`, `rationale`, `evidence`, `suggestedChange`, and `acceptanceCriteria`.\n\n## Boundaries\n\n- Do not include a separate comparability check in v1.\n- Do not score code architecture, framework choice, naming, or maintainability unless it visibly affects fidelity.\n- Do not overclaim exact pixel values unless they were measured. Use \"about\", \"roughly\", or ranges when estimating visually.\n- If DSL and screenshots disagree, treat screenshots as the visual truth and use the DSL as structural evidence.\n- If a suggested fix is uncertain, label it as a likely code hint rather than a confirmed cause.\n"
+    },
+    {
+      "slug": "feedback-2",
+      "name": "feedback",
+      "dir": "helixharness/skills/feedback",
+      "path": "helixharness/skills/feedback/SKILL.md",
+      "desc": "HelixHarness 使用问题反馈通道。当用户在 /helix:* 命令与工作流中遇到问题并表现出困扰时主动使用：命令反复失败或报错无法推进、生成的文档/字段/结构与用户预期不符、流程在某一步卡住不动、用户对 HelixHarness 表达不满困惑或抱怨、放弃工作流改用手工方式，或明确要求提交反馈。此时向用户建议提交反馈，发送前必须经用户确认。不触发：用户业务代码的问题、与 HelixHarness 无关的报错、一般使用咨询、模型已自行修复的故障。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "git",
+          "python3"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/didi/helixharness.git",
+        "copy": "cp -r helixharness/skills/feedback ~/.claude/skills/feedback-2",
+        "raw": "https://raw.githubusercontent.com/didi/helixharness/5bde4b3865cc30f678d0ca939c0b6ccd1e069557/helixharness/skills/feedback/SKILL.md",
+        "saveAs": "~/.claude/skills/feedback-2/SKILL.md",
+        "marketplace": "/plugin marketplace add didi/helixharness"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:d851f49543581242c68b948c2c8f3225912c8f0b7a62d041df537ef08dcd26f2",
+      "bytes": 13706,
+      "wordCount": 564,
+      "repoLicense": "Apache-2.0",
+      "commit": "5bde4b3865cc30f678d0ca939c0b6ccd1e069557",
+      "branch": "main",
+      "body": "---\nname: feedback\ndescription: \"HelixHarness 使用问题反馈通道。当用户在 /helix:* 命令与工作流中遇到问题并表现出困扰时主动使用：命令反复失败或报错无法推进、生成的文档/字段/结构与用户预期不符、流程在某一步卡住不动、用户对 HelixHarness 表达不满困惑或抱怨、放弃工作流改用手工方式，或明确要求提交反馈。此时向用户建议提交反馈，发送前必须经用户确认。不触发：用户业务代码的问题、与 HelixHarness 无关的报错、一般使用咨询、模型已自行修复的故障。\"\n---\n\n# HelixHarness feedback\n\n> 反馈边界（本 skill 的硬约束，来源 `reference/feedback-protocol.md`）：反馈是用户显式提交的实时上报，与 usage telemetry 完全解耦——不读取对话之外的任何数据、不创建 eval entry、不消费 telemetry consent（已配置反馈目的地时，telemetry 关闭不影响反馈；默认没有平台地址，未配置时仅保留入口，不能发送。未注册宿主以 `host=unknown` 上报）。用户明确要求附带时，会话上下文（对话文本 + 工具调用轨迹）随反馈一并发送，发送前经过裁剪（不含工具原始输出、thinking、宿主注入内容）、脱敏（密钥/手机号/邮箱/内网地址替换）与本地标识剥离；绝不写入用户仓库，绝不自动外发任何未经确认的内容。\n\n> Runtime 硬门禁：在任何 `python3` 调用前，必须读取并执行 `{plugin_root}/reference/runtime-preflight.md`（本文所有 `reference/` 相对路径均指 plugin 根下的 `reference/`，**不是**本 skill 所在目录旁的 reference/）。runtime preflight 返回 `runtime_unavailable` 时按其 fallback 规则处理，不得静默跳过运行时检查。\n\n> 参数宽容规则：解析 `$ARGUMENTS` 时先按 shell token 分词；每个 token 仅去除尾部常见中英文句读（`, . ; : ! ? ，。；：！？、` 及右侧闭合括号）后，再对 flag 做精确匹配。不得使用任意子串匹配，例如 `--category-bug` 不能视为 `--category`。\n\n## 使用前提\n\n接收地址默认由发布方在 `scripts/reporting_config.py` 的 `DEFAULT_FEEDBACK_ENDPOINT` 统一配置，当前默认值为空，后续需要时再填写。用户可以创建或修改 `~/.helixharness/feedback/config.json`，用非空 `endpoint` 覆盖发布默认值：\n\n```json\n{\n  \"endpoint\": \"http://127.0.0.1:7860/feedback/report\"\n}\n```\n\n发布脚本与用户配置文件是仅有的两种地址来源，不读取地址环境变量。`HELIXHARNESS_FEEDBACK_HOME` 仍可覆盖配置、草稿和队列目录。缺少文件、字段或值为空时使用发布默认值；文件损坏、字段类型错误或非空地址无效时停止准备，不回退到其他接收方。\n\n接收端必须是实际运行的 helixharness-platform；本机可运行 `helixharness-server --port 7860`，远程平台替换为可访问的完整地址，`127.0.0.1` 指插件所在机器。发布地址已有效时无需用户再配置。不猜测接收方，不复用统计的 `/report` 地址；两种来源均为空时停止发送准备并说明配置方法，不声称“已上报”。\n\n## 触发形态与同意语义\n\n本 skill 支持三种触发形态。**终确认必须覆盖准备好的实际接收地址和完整脱敏内容，不跟着触发形态走**：\n\n- **图形选择定型（AskUserQuestion）**：收集用户原文、分类与 feature 后进入 Step 3 准备草稿；完整内容和接收地址已明确确认时直接发送，不重复确认。\n- **文本口头定型（降级路径）**：口头回答可能有映射歧义，进入 Step 3 后连同实际地址和脱敏内容一并回显确认。\n\n| 触发形态 | 同意规则 |\n|---|---|\n| 用户调用 feedback Skill 且带反馈正文 | 用户显式发起、正文即用户原话，跳过描述收集；分类与 feature 按 Step 2 收集，按上表定型方式决定是否复述 |\n| 用户调用 Skill 但未带正文（收集式提交） | 按下方流程收集，按定型方式决定是否复述 |\n| 模型自动触发（识别到用户遇到 HelixHarness 问题） | 同意提交后走 Step 2 收集，按定型方式决定是否复述；文本路径下须复述完整内容（正文 / 分类 / feature）经确认后才发送 |\n\n**自动触发的引导规则**（识别到用户受挫信号后，何时开口、怎么开口）：\n\n- **时机**：先完成自救（重试/修复）。若已恢复且用户全程无感，不开口；若仍失败、需要向用户交代失败时，在交代失败的同一句话里顺带引导，不单独成段、不重复追问\n- **开口话术三要素**：说明检测到了什么（哪个环节出的问题）、问一句是否提交反馈、说明\"后续会先跟你确认分类和关联 feature\"\n- **两段式确认（硬约束）**：用户同意提交 ≠ 完成收集。同意后必须继续走 Step 2 的分类与 feature 收集，不得在用户说\"好/可以\"的那一刻跳过收集直接发送；收集完成后按 Step 3 准备草稿并确认实际接收地址与内容\n- **节制**：同一问题一个会话只引导一次；用户拒绝 → 本会话不再就同一问题二次引导（同会话节流）；自救成功且用户无感 → 不引导\n- 非交互 / loop（autopilot）上下文禁止自动上报：该场景下本 skill 直接以错误终止并说明原因，不收集、不发送\n\n## User Input\n\n```text\n$ARGUMENTS\n```\n\n## 参数说明\n\n| 参数 | 说明 | 示例 |\n|------|------|------|\n| `<反馈内容>` | 位置参数，反馈正文（1..4000 字符）。与 `--category` 可组合 | `propose 阶段生成的 spec 字段要求不清楚` |\n| `--category <分类>` | 可选，`bug` / `docs_unclear` / `process_stuck` / `suggestion`，缺省 `uncategorized` | `--category docs_unclear` |\n| `--feature <name>` | 可选，关联的 active feature 名；缺省时按交互确认 | `--feature early-repayment` |\n\n## 执行流程\n\n> 本 skill 是轻量反馈工具，**不做插件版本快速检查**（不同于业务工作流命令）：用户带着问题来，升级提示会打断反馈，且上报内容对插件版本零耦合。runtime preflight 硬门禁（python3 可用性）仍然保留。\n\n### Step 1: 读取反馈协议\n\n读取 `{plugin_root}/reference/feedback-protocol.md`（字段语义、transcript 裁剪与脱敏边界、服务端消费契约的唯一权威定义）；读取失败时停止准备和发送，并说明反馈组件不完整。\n\n### Step 2: 输入收集（描述先行）\n\n**`$ARGUMENTS` 带反馈内容时**：解析出正文与可选 `--category` / `--feature`，进入本步收集，随后按 Step 3 准备。正文以用户原话为准，不得改写、总结或补充。`--category` / `--feature` 缺哪项就只按本步规则补哪项。\n\n**`$ARGUMENTS` 为空或模型自动触发时**：先问一句开放问题（如\"说说遇到的问题吧\"），拿到描述后再收集分类与 feature——描述是分类推断和 feature 定位的依据，必须先行。\n\n**分类推断**：从用户描述推断分类并映射到枚举 `bug` / `docs_unclear` / `process_stuck` / `suggestion`，映射不上即 `uncategorized`。推断结果只作为推荐项呈现，由用户最终确认。\n\n**分类与 feature 的收集——按宿主能力分派**。判定规则是确定性的，不得自行裁量：**当前会话工具列表里有 `AskUserQuestion` 就必须走首选路径**，没有才走降级路径；禁止在有该工具时降级为纯文本提问。\n\n- **首选路径（会话工具列表含 `AskUserQuestion`，如 Claude Code）——必须使用**：一次调用同时问两问——\n  - \"反馈分类\"：4 个选项（bug / docs_unclear / process_stuck / suggestion，label 用枚举值、description 一句话释义），推断项放第一位并在 label 标\"（推荐）\"；用户经 Other 自由输入时映射枚举，映射不上按 `uncategorized`\n  - \"关联 feature\"：选项 = `不关联` + `docs/specs/active/` 下的 feature（最多再列 3 个，推断项或最近活跃优先并标\"（推荐）\"）；active 超出 3 个时经 Other 输入，**输入值必须校验存在于 active 列表**，不存在则提示重选；`docs/specs/active/` 不存在或为空时该问整体跳过（`feature=null`）\n  - 选择完成后进入 Step 3 准备草稿；收集选项本身不替代对实际地址和完整脱敏内容的确认。\n- **降级路径（仅当会话无 `AskUserQuestion`，如 Codex）**：对话式收集（下为摘要格式示例，实际值以本轮收集结果为准；在 Step 3 连同实际地址和完整脱敏内容确认后才发送）——\n\n  ```\n  当前收集的反馈信息（可直接说要改哪项）：\n  - 分类：流程卡住\n  - 描述：propose 到 P2 卡在确认项清理（你的原话）\n  - 关联 feature：early-repayment\n  ```\n\n  无推断依据时相应项写\"未分类\"/\"不关联\"；用户口头改 feature 名同样必须校验在 active 列表内，不在则提示可选项。\n\n**红线不变**：feature 值只允许来自 `docs/specs/active/` 实际列表 + 用户确认，任何情况下不得猜测或编造；用户显式传 `--feature` 时使用该值；\"不关联\"是有效答案，不二次确认、不暗示次优；非交互/loop（autopilot）上下文不收集、不自动上报；用户所选 feature 没有 eval-log 时 `related_entry_ids=[]`，合法。\n\n### Step 3: 准备、确认并发送\n\n`{plugin_root}` 必须来自当前 plugin skill resource（Claude 可用 `${CLAUDE_PLUGIN_ROOT}`，Codex 使用当前 plugin resource root），不得搜索安装目录。`{current_platform}` 必须使用 canonical host ID：Claude Code 固定为 `claude-code`，Codex 固定为 `codex`。\n\n先准备草稿，不发送。参数必须安全转义：\n\n```bash\n{helix_python} \"{plugin_root}/scripts/feedback_submit.py\" prepare --repo-root \"{repo_root}\" --platform \"{current_platform}\" --text \"{反馈正文}\" --category \"{分类}\"\n```\n\n按用户选择追加 `--feature \"{feature}\"`。默认不附带会话；只有用户明确要求附带当前会话时追加 `--include-transcript`，不搜索历史会话替代。\n\n展示返回的实际 `endpoint`、完整 `item.document` 和附带的 `item.transcript_md`（如有），取得对地址和内容的明确发送确认。已有对同一完整内容及地址的明确授权时不重复确认；内容修改后重新准备。\n\n```bash\n{helix_python} \"{plugin_root}/scripts/feedback_submit.py\" send --draft \"{draft_path}\" --digest \"{digest}\" --confirmed\n```\n\n`--confirmed` 必须由真实用户授权支持。脚本失败（exit 1）时向用户原样展示 stderr 中的错误 JSON 并终止，不得重试改写内容。非交互/loop（autopilot）上下文不得自动上报。\n\n### Step 4: 回执输出（逐字使用 prepare/send 返回值，禁止手工编造字段）\n\n**实时送达（send 的 `status: \"delivered\"`）**：编号与状态取 send 回执，document 和 transcript_stats 取同一已确认的 prepare 草稿 `item`，未附带会话时如实说明。\n\n```\n## HelixHarness feedback 已发送\n\n- 反馈编号: {feedback_id}\n- 状态: 已实时送达配置的平台看板（{endpoint}）\n- 会话上下文: user {transcript_stats.user_messages} / assistant {transcript_stats.assistant_messages}，\n  工具调用 {transcript_stats.tool_calls} 次，脱敏 {transcript_stats.redactions} 处\n  （transcript_stats.supported 为 false 时，改为如实说明原因，如 codex 会话暂不支持采集）\n\n### 本次发送的完整字段\n{逐项列出 document 中的全部字段与值；这是透明披露，不得省略}\n```\n\n**进入本地队列（`status: \"queued\"`）**：如实说明看板暂不可达（`delivery` 字段），报告已进入本地待发队列（`queue_path`），下次提交反馈时自动补投，最长保留 30 天，只向原接收地址补投；如本次顺带补投了历史队列消息（`queue_flushed.flushed`），一并说明。\n\n**平台拒绝（`status: \"rejected\"`）**：尚未送达，保留草稿并报告原因，不改写内容重发。用户要求重试时可执行 `feedback_submit.py retry --confirmed`，仅补投已确认且与当前配置地址一致的待发记录。\n\n## 双宿主说明\n\n- Claude Code 与 Codex 使用同一 CLI（`feedback_submit.py`），反馈流程本身无 hook 参与、无 consent 流程\n- 会话上下文采集当前仅支持 claude-code 会话；Codex 宿主仍可上报反馈元数据（`transcript_stats.supported=false`），不是错误\n- 未注册宿主（`{current_platform}` 无法给出 canonical ID 时）：`--platform unknown` 仍可上报，文档中 `host` 记为 `unknown`\n\n## 注意事项\n\n- **过程静默** — 内部动作（读取协议/preflight 文件、列出 feature 目录、校验路径与枚举值）不向用户逐条汇报；用户视角只出现业务话术（提问、选项、复述、回执）。读取必需协议失败时停止发送并说明反馈组件不完整\n- **正文即用户原话** — 只做 shell 转义，不改写、不翻译、不截断；超 4000 字符时提示用户精简后重试\n- **不读会话之外的数据** — 会话上下文仅取当前会话的对话文本与工具调用轨迹；工具原始输出、thinking、宿主注入内容一律排除\n- **幂等** — 同一 `feedback_id` 与相同内容重复上报由服务端去重；相同 ID 的不同内容被拒绝，skill 侧不改写 ID 绕过\n- **失败即止** — 校验失败（超长、非法分类、非法 feature 名）原样展示错误，不降级发送\n- **不写仓库** — 反馈与上下文不落盘到业务仓库，不执行任何 git 操作\n",
+      "bodyMd": "# HelixHarness feedback\n\n> 反馈边界（本 skill 的硬约束，来源 `reference/feedback-protocol.md`）：反馈是用户显式提交的实时上报，与 usage telemetry 完全解耦——不读取对话之外的任何数据、不创建 eval entry、不消费 telemetry consent（已配置反馈目的地时，telemetry 关闭不影响反馈；默认没有平台地址，未配置时仅保留入口，不能发送。未注册宿主以 `host=unknown` 上报）。用户明确要求附带时，会话上下文（对话文本 + 工具调用轨迹）随反馈一并发送，发送前经过裁剪（不含工具原始输出、thinking、宿主注入内容）、脱敏（密钥/手机号/邮箱/内网地址替换）与本地标识剥离；绝不写入用户仓库，绝不自动外发任何未经确认的内容。\n\n> Runtime 硬门禁：在任何 `python3` 调用前，必须读取并执行 `{plugin_root}/reference/runtime-preflight.md`（本文所有 `reference/` 相对路径均指 plugin 根下的 `reference/`，**不是**本 skill 所在目录旁的 reference/）。runtime preflight 返回 `runtime_unavailable` 时按其 fallback 规则处理，不得静默跳过运行时检查。\n\n> 参数宽容规则：解析 `$ARGUMENTS` 时先按 shell token 分词；每个 token 仅去除尾部常见中英文句读（`, . ; : ! ? ，。；：！？、` 及右侧闭合括号）后，再对 flag 做精确匹配。不得使用任意子串匹配，例如 `--category-bug` 不能视为 `--category`。\n\n## 使用前提\n\n接收地址默认由发布方在 `scripts/reporting_config.py` 的 `DEFAULT_FEEDBACK_ENDPOINT` 统一配置，当前默认值为空，后续需要时再填写。用户可以创建或修改 `~/.helixharness/feedback/config.json`，用非空 `endpoint` 覆盖发布默认值：\n\n```json\n{\n  \"endpoint\": \"http://127.0.0.1:7860/feedback/report\"\n}\n```\n\n发布脚本与用户配置文件是仅有的两种地址来源，不读取地址环境变量。`HELIXHARNESS_FEEDBACK_HOME` 仍可覆盖配置、草稿和队列目录。缺少文件、字段或值为空时使用发布默认值；文件损坏、字段类型错误或非空地址无效时停止准备，不回退到其他接收方。\n\n接收端必须是实际运行的 helixharness-platform；本机可运行 `helixharness-server --port 7860`，远程平台替换为可访问的完整地址，`127.0.0.1` 指插件所在机器。发布地址已有效时无需用户再配置。不猜测接收方，不复用统计的 `/report` 地址；两种来源均为空时停止发送准备并说明配置方法，不声称“已上报”。\n\n## 触发形态与同意语义\n\n本 skill 支持三种触发形态。**终确认必须覆盖准备好的实际接收地址和完整脱敏内容，不跟着触发形态走**：\n\n- **图形选择定型（AskUserQuestion）**：收集用户原文、分类与 feature 后进入 Step 3 准备草稿；完整内容和接收地址已明确确认时直接发送，不重复确认。\n- **文本口头定型（降级路径）**：口头回答可能有映射歧义，进入 Step 3 后连同实际地址和脱敏内容一并回显确认。\n\n| 触发形态 | 同意规则 |\n|---|---|\n| 用户调用 feedback Skill 且带反馈正文 | 用户显式发起、正文即用户原话，跳过描述收集；分类与 feature 按 Step 2 收集，按上表定型方式决定是否复述 |\n| 用户调用 Skill 但未带正文（收集式提交） | 按下方流程收集，按定型方式决定是否复述 |\n| 模型自动触发（识别到用户遇到 HelixHarness 问题） | 同意提交后走 Step 2 收集，按定型方式决定是否复述；文本路径下须复述完整内容（正文 / 分类 / feature）经确认后才发送 |\n\n**自动触发的引导规则**（识别到用户受挫信号后，何时开口、怎么开口）：\n\n- **时机**：先完成自救（重试/修复）。若已恢复且用户全程无感，不开口；若仍失败、需要向用户交代失败时，在交代失败的同一句话里顺带引导，不单独成段、不重复追问\n- **开口话术三要素**：说明检测到了什么（哪个环节出的问题）、问一句是否提交反馈、说明\"后续会先跟你确认分类和关联 feature\"\n- **两段式确认（硬约束）**：用户同意提交 ≠ 完成收集。同意后必须继续走 Step 2 的分类与 feature 收集，不得在用户说\"好/可以\"的那一刻跳过收集直接发送；收集完成后按 Step 3 准备草稿并确认实际接收地址与内容\n- **节制**：同一问题一个会话只引导一次；用户拒绝 → 本会话不再就同一问题二次引导（同会话节流）；自救成功且用户无感 → 不引导\n- 非交互 / loop（autopilot）上下文禁止自动上报：该场景下本 skill 直接以错误终止并说明原因，不收集、不发送\n\n## User Input\n\n```text\n$ARGUMENTS\n```\n\n## 参数说明\n\n| 参数 | 说明 | 示例 |\n|------|------|------|\n| `<反馈内容>` | 位置参数，反馈正文（1..4000 字符）。与 `--category` 可组合 | `propose 阶段生成的 spec 字段要求不清楚` |\n| `--category <分类>` | 可选，`bug` / `docs_unclear` / `process_stuck` / `suggestion`，缺省 `uncategorized` | `--category docs_unclear` |\n| `--feature <name>` | 可选，关联的 active feature 名；缺省时按交互确认 | `--feature early-repayment` |\n\n## 执行流程\n\n> 本 skill 是轻量反馈工具，**不做插件版本快速检查**（不同于业务工作流命令）：用户带着问题来，升级提示会打断反馈，且上报内容对插件版本零耦合。runtime preflight 硬门禁（python3 可用性）仍然保留。\n\n### Step 1: 读取反馈协议\n\n读取 `{plugin_root}/reference/feedback-protocol.md`（字段语义、transcript 裁剪与脱敏边界、服务端消费契约的唯一权威定义）；读取失败时停止准备和发送，并说明反馈组件不完整。\n\n### Step 2: 输入收集（描述先行）\n\n**`$ARGUMENTS` 带反馈内容时**：解析出正文与可选 `--category` / `--feature`，进入本步收集，随后按 Step 3 准备。正文以用户原话为准，不得改写、总结或补充。`--category` / `--feature` 缺哪项就只按本步规则补哪项。\n\n**`$ARGUMENTS` 为空或模型自动触发时**：先问一句开放问题（如\"说说遇到的问题吧\"），拿到描述后再收集分类与 feature——描述是分类推断和 feature 定位的依据，必须先行。\n\n**分类推断**：从用户描述推断分类并映射到枚举 `bug` / `docs_unclear` / `process_stuck` / `suggestion`，映射不上即 `uncategorized`。推断结果只作为推荐项呈现，由用户最终确认。\n\n**分类与 feature 的收集——按宿主能力分派**。判定规则是确定性的，不得自行裁量：**当前会话工具列表里有 `AskUserQuestion` 就必须走首选路径**，没有才走降级路径；禁止在有该工具时降级为纯文本提问。\n\n- **首选路径（会话工具列表含 `AskUserQuestion`，如 Claude Code）——必须使用**：一次调用同时问两问——\n  - \"反馈分类\"：4 个选项（bug / docs_unclear / process_stuck / suggestion，label 用枚举值、description 一句话释义），推断项放第一位并在 label 标\"（推荐）\"；用户经 Other 自由输入时映射枚举，映射不上按 `uncategorized`\n  - \"关联 feature\"：选项 = `不关联` + `docs/specs/active/` 下的 feature（最多再列 3 个，推断项或最近活跃优先并标\"（推荐）\"）；active 超出 3 个时经 Other 输入，**输入值必须校验存在于 active 列表**，不存在则提示重选；`docs/specs/active/` 不存在或为空时该问整体跳过（`feature=null`）\n  - 选择完成后进入 Step 3 准备草稿；收集选项本身不替代对实际地址和完整脱敏内容的确认。\n- **降级路径（仅当会话无 `AskUserQuestion`，如 Codex）**：对话式收集（下为摘要格式示例，实际值以本轮收集结果为准；在 Step 3 连同实际地址和完整脱敏内容确认后才发送）——\n\n  ```\n  当前收集的反馈信息（可直接说要改哪项）：\n  - 分类：流程卡住\n  - 描述：propose 到 P2 卡在确认项清理（你的原话）\n  - 关联 feature：early-repayment\n  ```\n\n  无推断依据时相应项写\"未分类\"/\"不关联\"；用户口头改 feature 名同样必须校验在 active 列表内，不在则提示可选项。\n\n**红线不变**：feature 值只允许来自 `docs/specs/active/` 实际列表 + 用户确认，任何情况下不得猜测或编造；用户显式传 `--feature` 时使用该值；\"不关联\"是有效答案，不二次确认、不暗示次优；非交互/loop（autopilot）上下文不收集、不自动上报；用户所选 feature 没有 eval-log 时 `related_entry_ids=[]`，合法。\n\n### Step 3: 准备、确认并发送\n\n`{plugin_root}` 必须来自当前 plugin skill resource（Claude 可用 `${CLAUDE_PLUGIN_ROOT}`，Codex 使用当前 plugin resource root），不得搜索安装目录。`{current_platform}` 必须使用 canonical host ID：Claude Code 固定为 `claude-code`，Codex 固定为 `codex`。\n\n先准备草稿，不发送。参数必须安全转义：\n\n```bash\n{helix_python} \"{plugin_root}/scripts/feedback_submit.py\" prepare --repo-root \"{repo_root}\" --platform \"{current_platform}\" --text \"{反馈正文}\" --category \"{分类}\"\n```\n\n按用户选择追加 `--feature \"{feature}\"`。默认不附带会话；只有用户明确要求附带当前会话时追加 `--include-transcript`，不搜索历史会话替代。\n\n展示返回的实际 `endpoint`、完整 `item.document` 和附带的 `item.transcript_md`（如有），取得对地址和内容的明确发送确认。已有对同一完整内容及地址的明确授权时不重复确认；内容修改后重新准备。\n\n```bash\n{helix_python} \"{plugin_root}/scripts/feedback_submit.py\" send --draft \"{draft_path}\" --digest \"{digest}\" --confirmed\n```\n\n`--confirmed` 必须由真实用户授权支持。脚本失败（exit 1）时向用户原样展示 stderr 中的错误 JSON 并终止，不得重试改写内容。非交互/loop（autopilot）上下文不得自动上报。\n\n### Step 4: 回执输出（逐字使用 prepare/send 返回值，禁止手工编造字段）\n\n**实时送达（send 的 `status: \"delivered\"`）**：编号与状态取 send 回执，document 和 transcript_stats 取同一已确认的 prepare 草稿 `item`，未附带会话时如实说明。\n\n```\n## HelixHarness feedback 已发送\n\n- 反馈编号: {feedback_id}\n- 状态: 已实时送达配置的平台看板（{endpoint}）\n- 会话上下文: user {transcript_stats.user_messages} / assistant {transcript_stats.assistant_messages}，\n  工具调用 {transcript_stats.tool_calls} 次，脱敏 {transcript_stats.redactions} 处\n  （transcript_stats.supported 为 false 时，改为如实说明原因，如 codex 会话暂不支持采集）\n\n### 本次发送的完整字段\n{逐项列出 document 中的全部字段与值；这是透明披露，不得省略}\n```\n\n**进入本地队列（`status: \"queued\"`）**：如实说明看板暂不可达（`delivery` 字段），报告已进入本地待发队列（`queue_path`），下次提交反馈时自动补投，最长保留 30 天，只向原接收地址补投；如本次顺带补投了历史队列消息（`queue_flushed.flushed`），一并说明。\n\n**平台拒绝（`status: \"rejected\"`）**：尚未送达，保留草稿并报告原因，不改写内容重发。用户要求重试时可执行 `feedback_submit.py retry --confirmed`，仅补投已确认且与当前配置地址一致的待发记录。\n\n## 双宿主说明\n\n- Claude Code 与 Codex 使用同一 CLI（`feedback_submit.py`），反馈流程本身无 hook 参与、无 consent 流程\n- 会话上下文采集当前仅支持 claude-code 会话；Codex 宿主仍可上报反馈元数据（`transcript_stats.supported=false`），不是错误\n- 未注册宿主（`{current_platform}` 无法给出 canonical ID 时）：`--platform unknown` 仍可上报，文档中 `host` 记为 `unknown`\n\n## 注意事项\n\n- **过程静默** — 内部动作（读取协议/preflight 文件、列出 feature 目录、校验路径与枚举值）不向用户逐条汇报；用户视角只出现业务话术（提问、选项、复述、回执）。读取必需协议失败时停止发送并说明反馈组件不完整\n- **正文即用户原话** — 只做 shell 转义，不改写、不翻译、不截断；超 4000 字符时提示用户精简后重试\n- **不读会话之外的数据** — 会话上下文仅取当前会话的对话文本与工具调用轨迹；工具原始输出、thinking、宿主注入内容一律排除\n- **幂等** — 同一 `feedback_id` 与相同内容重复上报由服务端去重；相同 ID 的不同内容被拒绝，skill 侧不改写 ID 绕过\n- **失败即止** — 校验失败（超长、非法分类、非法 feature 名）原样展示错误，不降级发送\n- **不写仓库** — 反馈与上下文不落盘到业务仓库，不执行任何 git 操作\n"
+    },
+    {
+      "slug": "git-diff-impact-2",
+      "name": "git-diff-impact",
+      "dir": "helixharness/skills/git-diff-impact",
+      "path": "helixharness/skills/git-diff-impact/SKILL.md",
+      "desc": "分析指定 Git 改动的调用链、业务影响和兼容性风险，生成影响报告。用户主动要求影响分析时单独使用，无需 HelixHarness feature。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/didi/helixharness.git",
+        "copy": "cp -r helixharness/skills/git-diff-impact ~/.claude/skills/git-diff-impact-2",
+        "raw": "https://raw.githubusercontent.com/didi/helixharness/5bde4b3865cc30f678d0ca939c0b6ccd1e069557/helixharness/skills/git-diff-impact/SKILL.md",
+        "saveAs": "~/.claude/skills/git-diff-impact-2/SKILL.md",
+        "marketplace": "/plugin marketplace add didi/helixharness"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:e63a5c61ef4f0908a60b68be8a8388b189992dde529601e38ed10bd91f0af4d7",
+      "bytes": 6400,
+      "wordCount": 229,
+      "repoLicense": "Apache-2.0",
+      "commit": "5bde4b3865cc30f678d0ca939c0b6ccd1e069557",
+      "branch": "main",
+      "body": "---\nname: git-diff-impact\ndescription: 分析指定 Git 改动的调用链、业务影响和兼容性风险，生成影响报告。用户主动要求影响分析时单独使用，无需 HelixHarness feature。\ndisable-model-invocation: true\n---\n\n# Git 改动影响分析\n\n这是按需调用的独立方法 Skill。普通 Apply、Bug Fix 和 Code Review 不自动调用它；分析不创建 feature、启动统计、修改业务代码或改变 HelixHarness 评审状态。无需先执行 Init，也不依赖 Spec/Tasks 或 helixharness-platform。\n\n## 输入与范围\n\n用户可以用自然语言指定范围，或提供以下参数：\n\n| 参数 | 含义 |\n| --- | --- |\n| 不提供 Git 引用 | 分析当前未提交改动 |\n| 一个 Git 引用 | 对比该引用与当前 HEAD 的提交快照，不混入工作区改动 |\n| 两个 Git 引用 | 对比第一个与第二个提交快照，不混入工作区改动 |\n| `--req <path>` / `--design <path>` | 可选的需求 / 设计文档 |\n| `--out <path>` | 报告文件或目录；默认当前工作目录的 `diff-impact-reports/` |\n| `--no-save` | 只在对话输出；优先于 `--out` |\n\n例如：“使用 HelixHarness git-diff-impact，对比 main 和 feature/search，结合 --req docs/search.md 分析影响，--no-save。”引用和路径按独立参数处理，保留含空格路径，不把用户文本拼接为可执行 shell 代码。\n\n### 未提交模式\n\n先读 `git status --short`，再用 `git diff --no-ext-diff --no-textconv HEAD --` 取得已跟踪文件的暂存及未暂存改动。用 `git ls-files --others --exclude-standard` 单独列出未跟踪文件；Git diff 不包含它们。仅读取明确属于请求范围的新增源码、配置或文档，不读取凭据、忽略目录或无关生成物。范围混杂且无法确定归属时，先列出候选路径，请用户明确范围；不把整个工作区当作某个 feature 的改动。\n\n无 HEAD 的新仓库按未出生分支处理：以空树为基准，单独检查暂存、未暂存及相关未跟踪文件，并在报告注明没有基准提交。没有范围内改动时结束，不生成“通过”结论。\n\n### 提交对比模式\n\n用 `git rev-parse --verify --end-of-options '<ref>^{commit}'` 将每个引用解析为完整 SHA。之后仅用解析后的 SHA 获取 `git diff --no-ext-diff --no-textconv <base-sha> <target-sha> --` 及变更清单。这是两个提交快照的直接比较；只有用户要求“分支引入的改动”时才以 merge-base 为基准，并明确记录实际基准。\n\n调用链和行号必须来自目标 SHA 的代码；删除项使用基准 SHA 并标注。用 `git show <sha>:<path>`、`git grep <pattern> <sha> --` 等只读命令检查对应版本，不能用当前工作区替代历史代码，也不切换或重置用户分支。无效引用、非 Git 仓库或未解决的冲突应说明并停止相关分析。\n\n记录完整比较 SHA、范围内文件及排除项。未提交模式先保留本轮差异快照，结束前核对范围内内容是否变化；变化则刷新分析，不能把旧结果当成最新结果。\n\n## 分析方法\n\n1. **建立上下文。** 读取适用的 AGENTS.md 和相关模块文档，再读取用户提供的需求 / 设计。没有需求时仍可分析代码，但不声称已验证需求覆盖；文档冲突时列明两边依据，不擅自选择。只读取与当前改动相关的上下文。\n2. **定位语义变化。** 从 diff 定位修改的函数、接口、类型、配置、数据结构和状态，比较输入输出、错误行为、副作用及默认值。新增代码也检查注册、导出和状态写入；不因“仅新增”就自动判低风险。\n3. **追踪影响。** 用当前目标版本的 LSP 引用或文本搜索至少检查一层直接调用方，高风险项再追踪间接消费者。关注事件、回调、反射、依赖注入和共享缓存；未找到引用不等于不存在调用。记录具体路径、行号、触发条件及受影响业务场景。业务意图对齐仅依据用户提供的需求或设计。\n4. **检查兼容性。** 涉及公共契约、构建配置或相关语言时读取 [compatibility.md](references/compatibility.md) 的对应部分。先从仓库确认支持环境，再核对候选风险。环境范围未知时列出假设及待验证项，不臆造支持版本。需要核实 API 版本事实时使用官方文档，不把记忆当证据。\n5. **分级和去重。** 高风险是有证据的契约破坏、核心行为回归、数据一致性问题或支持环境中的硬失败；中风险是有具体机制、影响有限或仍需验证的行为变化；低风险是有依据的局部影响。把风险等级与证据确定性分开标注，已有效覆盖的守卫、polyfill、转译或降级分支应计入判断。不能仅因某个新 API 或公共接口有变化就判定缺陷。\n\n通常由当前 Agent 按模块分析，不固定增加子 Agent。改动过大时先列出覆盖计划和优先级；未深入检查的文件及调用链明确标为未覆盖，不以低风险或“无问题”代替。只做静态分析时明确说明，不能声称测试已执行或兼容性已经实测通过。\n\n## 输出\n\n对话先给出主要发现，再给出报告路径。报告包含：\n\n- 分析范围：模式、基准 / 目标 SHA 或工作区快照、已读上下文、排除项；\n- 改动概览：涉及模块和行为变化；\n- 影响清单：改动位置、直接 / 间接调用方、触发条件、业务影响、风险等级、证据和待验证项；\n- 兼容性：已确认的支持环境、有效缓解及受影响环境；不适用时简述原因；\n- 建议：需验证的行为及测试方向；不自动执行修复或生成测试；\n- 覆盖边界：未覆盖文件、动态调用盲区、未运行测试和仍不确定的结论。\n\n未指定 `--no-save` 时，保存 UTF-8 Markdown：提交对比用 `diff_impact_<base-short-sha>_<target-short-sha>.md`，未提交模式用 `diff_impact_uncommitted_<YYYYMMDD>.md`。`--out` 以 `.md` 结尾时视为文件，否则视为目录。同名文件追加 `_2`、`_3` 等后缀，避免覆盖。保存失败时仍在对话交付结果，并说明真实错误。\n\n报告是影响分析建议，不是 HelixHarness 的 APPROVE、MUST_FIX、正式 Evidence 或 Archive 收据。用户后续要求修复或接入评审时，由相应流程处理。\n",
+      "bodyMd": "# Git 改动影响分析\n\n这是按需调用的独立方法 Skill。普通 Apply、Bug Fix 和 Code Review 不自动调用它；分析不创建 feature、启动统计、修改业务代码或改变 HelixHarness 评审状态。无需先执行 Init，也不依赖 Spec/Tasks 或 helixharness-platform。\n\n## 输入与范围\n\n用户可以用自然语言指定范围，或提供以下参数：\n\n| 参数 | 含义 |\n| --- | --- |\n| 不提供 Git 引用 | 分析当前未提交改动 |\n| 一个 Git 引用 | 对比该引用与当前 HEAD 的提交快照，不混入工作区改动 |\n| 两个 Git 引用 | 对比第一个与第二个提交快照，不混入工作区改动 |\n| `--req <path>` / `--design <path>` | 可选的需求 / 设计文档 |\n| `--out <path>` | 报告文件或目录；默认当前工作目录的 `diff-impact-reports/` |\n| `--no-save` | 只在对话输出；优先于 `--out` |\n\n例如：“使用 HelixHarness git-diff-impact，对比 main 和 feature/search，结合 --req docs/search.md 分析影响，--no-save。”引用和路径按独立参数处理，保留含空格路径，不把用户文本拼接为可执行 shell 代码。\n\n### 未提交模式\n\n先读 `git status --short`，再用 `git diff --no-ext-diff --no-textconv HEAD --` 取得已跟踪文件的暂存及未暂存改动。用 `git ls-files --others --exclude-standard` 单独列出未跟踪文件；Git diff 不包含它们。仅读取明确属于请求范围的新增源码、配置或文档，不读取凭据、忽略目录或无关生成物。范围混杂且无法确定归属时，先列出候选路径，请用户明确范围；不把整个工作区当作某个 feature 的改动。\n\n无 HEAD 的新仓库按未出生分支处理：以空树为基准，单独检查暂存、未暂存及相关未跟踪文件，并在报告注明没有基准提交。没有范围内改动时结束，不生成“通过”结论。\n\n### 提交对比模式\n\n用 `git rev-parse --verify --end-of-options '<ref>^{commit}'` 将每个引用解析为完整 SHA。之后仅用解析后的 SHA 获取 `git diff --no-ext-diff --no-textconv <base-sha> <target-sha> --` 及变更清单。这是两个提交快照的直接比较；只有用户要求“分支引入的改动”时才以 merge-base 为基准，并明确记录实际基准。\n\n调用链和行号必须来自目标 SHA 的代码；删除项使用基准 SHA 并标注。用 `git show <sha>:<path>`、`git grep <pattern> <sha> --` 等只读命令检查对应版本，不能用当前工作区替代历史代码，也不切换或重置用户分支。无效引用、非 Git 仓库或未解决的冲突应说明并停止相关分析。\n\n记录完整比较 SHA、范围内文件及排除项。未提交模式先保留本轮差异快照，结束前核对范围内内容是否变化；变化则刷新分析，不能把旧结果当成最新结果。\n\n## 分析方法\n\n1. **建立上下文。** 读取适用的 AGENTS.md 和相关模块文档，再读取用户提供的需求 / 设计。没有需求时仍可分析代码，但不声称已验证需求覆盖；文档冲突时列明两边依据，不擅自选择。只读取与当前改动相关的上下文。\n2. **定位语义变化。** 从 diff 定位修改的函数、接口、类型、配置、数据结构和状态，比较输入输出、错误行为、副作用及默认值。新增代码也检查注册、导出和状态写入；不因“仅新增”就自动判低风险。\n3. **追踪影响。** 用当前目标版本的 LSP 引用或文本搜索至少检查一层直接调用方，高风险项再追踪间接消费者。关注事件、回调、反射、依赖注入和共享缓存；未找到引用不等于不存在调用。记录具体路径、行号、触发条件及受影响业务场景。业务意图对齐仅依据用户提供的需求或设计。\n4. **检查兼容性。** 涉及公共契约、构建配置或相关语言时读取 [compatibility.md](references/compatibility.md) 的对应部分。先从仓库确认支持环境，再核对候选风险。环境范围未知时列出假设及待验证项，不臆造支持版本。需要核实 API 版本事实时使用官方文档，不把记忆当证据。\n5. **分级和去重。** 高风险是有证据的契约破坏、核心行为回归、数据一致性问题或支持环境中的硬失败；中风险是有具体机制、影响有限或仍需验证的行为变化；低风险是有依据的局部影响。把风险等级与证据确定性分开标注，已有效覆盖的守卫、polyfill、转译或降级分支应计入判断。不能仅因某个新 API 或公共接口有变化就判定缺陷。\n\n通常由当前 Agent 按模块分析，不固定增加子 Agent。改动过大时先列出覆盖计划和优先级；未深入检查的文件及调用链明确标为未覆盖，不以低风险或“无问题”代替。只做静态分析时明确说明，不能声称测试已执行或兼容性已经实测通过。\n\n## 输出\n\n对话先给出主要发现，再给出报告路径。报告包含：\n\n- 分析范围：模式、基准 / 目标 SHA 或工作区快照、已读上下文、排除项；\n- 改动概览：涉及模块和行为变化；\n- 影响清单：改动位置、直接 / 间接调用方、触发条件、业务影响、风险等级、证据和待验证项；\n- 兼容性：已确认的支持环境、有效缓解及受影响环境；不适用时简述原因；\n- 建议：需验证的行为及测试方向；不自动执行修复或生成测试；\n- 覆盖边界：未覆盖文件、动态调用盲区、未运行测试和仍不确定的结论。\n\n未指定 `--no-save` 时，保存 UTF-8 Markdown：提交对比用 `diff_impact_<base-short-sha>_<target-short-sha>.md`，未提交模式用 `diff_impact_uncommitted_<YYYYMMDD>.md`。`--out` 以 `.md` 结尾时视为文件，否则视为目录。同名文件追加 `_2`、`_3` 等后缀，避免覆盖。保存失败时仍在对话交付结果，并说明真实错误。\n\n报告是影响分析建议，不是 HelixHarness 的 APPROVE、MUST_FIX、正式 Evidence 或 Archive 收据。用户后续要求修复或接入评审时，由相应流程处理。\n"
+    },
+    {
+      "slug": "systematic-debugging-2",
+      "name": "systematic-debugging",
+      "dir": "helixharness/skills/systematic-debugging",
+      "path": "helixharness/skills/systematic-debugging/SKILL.md",
+      "desc": "用户独立调用的调试工具。复现异常、缩小范围、验证假设并定位根因，按用户授权修复和验证，不由研发命令自动触发。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/didi/helixharness.git",
+        "copy": "cp -r helixharness/skills/systematic-debugging ~/.claude/skills/systematic-debugging-2",
+        "raw": "https://raw.githubusercontent.com/didi/helixharness/5bde4b3865cc30f678d0ca939c0b6ccd1e069557/helixharness/skills/systematic-debugging/SKILL.md",
+        "saveAs": "~/.claude/skills/systematic-debugging-2/SKILL.md",
+        "marketplace": "/plugin marketplace add didi/helixharness"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:dca1f063cb0d2c4a8d7a100476bf766120579f900bdc23ddc2f846a105a1cccb",
+      "bytes": 2466,
+      "wordCount": 150,
+      "repoLicense": "Apache-2.0",
+      "commit": "5bde4b3865cc30f678d0ca939c0b6ccd1e069557",
+      "branch": "main",
+      "body": "---\nname: systematic-debugging\ndescription: 用户独立调用的调试工具。复现异常、缩小范围、验证假设并定位根因，按用户授权修复和验证，不由研发命令自动触发。\ndisable-model-invocation: true\n---\n\n# 系统化调试\n\n用户明确要求使用本 Skill，且真实不一致已经出现时，独立开展调试：\n\n- expected behavior != actual behavior\n- test fails\n- compile/runtime error appears\n- observed behavior regresses or contradicts an agreed requirement\n\n不要把这个 skill 用于模糊的设计讨论。那属于 planning，不属于 debugging。\n\n## 目标\n\n基于证据找到根因，再用回归检查确认修复真实有效。\n\n## 工作流\n\n1. 明确不一致是什么。\n   写清楚：\n   - expected behavior\n   - actual behavior\n   - where it was observed\n\n2. 稳定复现。\n   优先用一个确定性的命令、请求或测试来复现。\n   如果复现不稳定，要明确记录。\n\n3. 缩小范围。\n   检查：\n   - input data\n   - call path\n   - changed files\n   - environment/config assumptions\n\n4. 提出假设。\n   假设必须具体且可证伪。\n   好的例子：\n   - \"null value enters mapper X and breaks branch Y\"\n   不好的例子：\n   - \"something is wrong with the service\"\n\n5. 执行有区分度的检查。\n   选择能排除某个假设的下一条命令或检查。\n\n6. 确认根因。\n   区分清楚：\n   - symptom\n   - trigger\n   - root cause\n\n7. 做最小且合理的修复。\n   仅在用户已授权修复时执行；只要求诊断时，交付根因、证据和修复建议，不修改代码。\n   除非根因要求，否则不要顺手做大范围重构。\n\n8. 重新执行复现和回归检查。\n   不重新验证，修复就不算完成。\n\n## 独立使用边界\n\n- 由用户独立调用，不作为研发命令或代码评审的内部步骤\n- 无需先执行 Init、创建需求、开启统计或启动平台\n- 不创建 feature、Spec/Tasks 或 eval-log，不启动或推进研发命令\n- 交付诊断与验证结果，由用户决定后续处理；未执行修复或验证时如实标明\n\n## 输出格式\n\n用五行摘要输出调试结果：\n\n- Expected:\n- Actual:\n- Reproduction:\n- Root cause:\n- Verified fix:\n\n## 约束\n\n- 在重新跑过失败场景前，不能说“已经修复”\n- 在没找到根因前，不要做大范围改写\n- 没有证据时，不要把环境问题和代码问题混为一谈\n- 如果无法复现，要明确写出来\n",
+      "bodyMd": "# 系统化调试\n\n用户明确要求使用本 Skill，且真实不一致已经出现时，独立开展调试：\n\n- expected behavior != actual behavior\n- test fails\n- compile/runtime error appears\n- observed behavior regresses or contradicts an agreed requirement\n\n不要把这个 skill 用于模糊的设计讨论。那属于 planning，不属于 debugging。\n\n## 目标\n\n基于证据找到根因，再用回归检查确认修复真实有效。\n\n## 工作流\n\n1. 明确不一致是什么。\n   写清楚：\n   - expected behavior\n   - actual behavior\n   - where it was observed\n\n2. 稳定复现。\n   优先用一个确定性的命令、请求或测试来复现。\n   如果复现不稳定，要明确记录。\n\n3. 缩小范围。\n   检查：\n   - input data\n   - call path\n   - changed files\n   - environment/config assumptions\n\n4. 提出假设。\n   假设必须具体且可证伪。\n   好的例子：\n   - \"null value enters mapper X and breaks branch Y\"\n   不好的例子：\n   - \"something is wrong with the service\"\n\n5. 执行有区分度的检查。\n   选择能排除某个假设的下一条命令或检查。\n\n6. 确认根因。\n   区分清楚：\n   - symptom\n   - trigger\n   - root cause\n\n7. 做最小且合理的修复。\n   仅在用户已授权修复时执行；只要求诊断时，交付根因、证据和修复建议，不修改代码。\n   除非根因要求，否则不要顺手做大范围重构。\n\n8. 重新执行复现和回归检查。\n   不重新验证，修复就不算完成。\n\n## 独立使用边界\n\n- 由用户独立调用，不作为研发命令或代码评审的内部步骤\n- 无需先执行 Init、创建需求、开启统计或启动平台\n- 不创建 feature、Spec/Tasks 或 eval-log，不启动或推进研发命令\n- 交付诊断与验证结果，由用户决定后续处理；未执行修复或验证时如实标明\n\n## 输出格式\n\n用五行摘要输出调试结果：\n\n- Expected:\n- Actual:\n- Reproduction:\n- Root cause:\n- Verified fix:\n\n## 约束\n\n- 在重新跑过失败场景前，不能说“已经修复”\n- 在没找到根因前，不要做大范围改写\n- 没有证据时，不要把环境问题和代码问题混为一谈\n- 如果无法复现，要明确写出来\n"
+    },
+    {
+      "slug": "tdd-2",
+      "name": "tdd",
+      "dir": "helixharness/skills/tdd",
+      "path": "helixharness/skills/tdd/SKILL.md",
+      "desc": "为 HelixHarness feature 或 Bug Fix 的可观察行为改动执行测试驱动开发；在 Spec 已确认的公共测试 seam 上按红灯 → 绿灯的垂直切片实现，并生成可长期保留、对重构稳定的测试。",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/didi/helixharness.git",
+        "copy": "cp -r helixharness/skills/tdd ~/.claude/skills/tdd-2",
+        "raw": "https://raw.githubusercontent.com/didi/helixharness/5bde4b3865cc30f678d0ca939c0b6ccd1e069557/helixharness/skills/tdd/SKILL.md",
+        "saveAs": "~/.claude/skills/tdd-2/SKILL.md",
+        "marketplace": "/plugin marketplace add didi/helixharness"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:d75779e532f03a10d60e5094a48a6eadf05cfef3181472d71cff2c277b7438ff",
+      "bytes": 4843,
+      "wordCount": 184,
+      "repoLicense": "Apache-2.0",
+      "commit": "5bde4b3865cc30f678d0ca939c0b6ccd1e069557",
+      "branch": "main",
+      "body": "---\nuser-invocable: false\nname: tdd\ndescription: 为 HelixHarness feature 或 Bug Fix 的可观察行为改动执行测试驱动开发；在 Spec 已确认的公共测试 seam 上按红灯 → 绿灯的垂直切片实现，并生成可长期保留、对重构稳定的测试。\n---\n\n# HelixHarness 测试驱动开发\n\nTDD 是红灯 → 绿灯循环。本 Skill 规定如何让这个循环产出值得长期保留的测试：什么是好测试、测试应写在哪个边界、应避免哪些反模式，以及循环必须遵守什么规则。每轮循环开始前和执行中都遵循全部规则，不要等结束后再补做。\n\n## HelixHarness 集成\n\n### 入口门禁（任何测试或业务写入前执行）\n\nTDD 只能继承已经建立的 HelixHarness 工作流上下文，以下二者必须满足其一：\n\n1. Apply 已加载 `docs/specs/active/<feature>/spec.md` 与对应 `tasks.md`，且 Spec 的 Testing Decisions 已确认当前公共测试 seam；\n2. Bug Fix 已记录可重复的失败场景，并已确认要观察的公共 seam。\n\n聊天中的实现请求、仓库中的普通需求文件或临时测试说明，都不能替代上述 active Spec / Bug Fix 上下文。门禁不满足时，立即返回 `BLOCKED: helixharness_tdd_context_missing`，不得创建或修改测试、业务代码、TDD 证据或 HelixHarness 工件，并引导用户先进入 Propose 或 Bug Fix。\n\n从当前 `spec.md`、`tasks.md` 或已复现的 Bug 场景中选择一个行为切片。测试 seam 必须已经在 Spec 的 Testing Decisions 中确认；seam 缺失或公共接口仍有争议时，返回 HelixHarness Propose 确认，不要在实现阶段自行创建测试入口。\n\n复用 HelixHarness Apply 已通过 `reference/loading-protocol.md` 加载的项目入口、`docs/harness/` 约束、`docs/knowledge/` 知识、Spec 和当前 Task。只有任务边界变化时才按该协议重新评估索引叶子。测试名称和接口词汇使用这些已加载事实以及当前代码、配置和测试中的项目语言。\n\n## 什么是好测试\n\n通过公共接口验证行为，不验证实现细节。代码可以完全重写，但测试不应因此改变。好测试读起来像一条规格说明，例如“有效购物车可以完成结算”明确描述了系统能力；它不依赖内部结构，因此能够经受重构。\n\n具体示例见 [tests.md](tests.md)，Mock 指引见 [mocking.md](mocking.md)。\n\n## Seam：测试写在哪里\n\n**Seam** 是被测试的公共边界：通过这个接口观察行为，而不进入实现内部。只在 seam 上测试，不测试内部结构。\n\n**只测试预先确认的 seam。** 在 HelixHarness 中，Spec 的 Testing Decisions 就是这份约定。已确认的 seam 不重复询问，未确认的 seam 不写测试。接口形态本身仍有争议时返回 HelixHarness Propose，不要在 Apply 中自行选择或创建接口。\n\n## 反模式\n\n- **与实现耦合**：Mock 内部协作者、测试私有方法，或绕过公共接口从侧面验证，例如直接查询数据库。识别信号是：行为没有变化，仅内部重构就导致测试失败。\n- **同义反复**：断言用与实现相同的方式重新计算期望值，例如 `expect(add(a, b)).toBe(a + b)`、按实现逻辑手工生成快照，或断言常量等于自身。这类测试天然不会与实现产生分歧。期望值必须来自独立事实，例如已知字面量、推导完成的样例或 Spec。\n- **水平切片**：先写完全部测试，再集中实现。批量测试验证的是想象中的行为，容易只测试结构，并在理解实现前过早锁定测试形态。改用垂直切片：一个测试 → 一个实现 → 再进入下一轮；让每个测试都成为根据上一轮结果继续前进的 tracer bullet。\n\n## 循环规则\n\n- **先红后绿**：先写失败测试，再只写足够让它通过的代码。不要预判后续测试或添加推测性功能。\n- **一次一个切片**：每轮只处理一个 seam、一个测试和一个最小实现。\n- **重构不属于本循环**：重构放在 HelixHarness Apply 的 Code Review 阶段，不放进红灯 → 绿灯实现循环。任何 Review 修复完成后，都要重跑覆盖该行为的测试。\n\n每个实际执行的 RED-GREEN 切片保留以下最小事实，供 Apply 整体 APPROVE 后一次性汇总到最终 `verify-report.md`：\n\n- Task ID 与关联 AC ID；\n- test file 与 failing test name；\n- failing output summary；\n- passing output summary。\n\n摘要只保留能证明先红后绿的关键信息，不复制完整测试输出。不得在 TDD 循环中创建或更新 `verify-report.md`；Apply 在最终测试和双轴 Review 均通过后统一写入正式报告。文档、格式或无法表达为行为测试的配置变更只记录对应的确定性检查，不伪造 RED/GREEN 证据。\n",
+      "bodyMd": "# HelixHarness 测试驱动开发\n\nTDD 是红灯 → 绿灯循环。本 Skill 规定如何让这个循环产出值得长期保留的测试：什么是好测试、测试应写在哪个边界、应避免哪些反模式，以及循环必须遵守什么规则。每轮循环开始前和执行中都遵循全部规则，不要等结束后再补做。\n\n## HelixHarness 集成\n\n### 入口门禁（任何测试或业务写入前执行）\n\nTDD 只能继承已经建立的 HelixHarness 工作流上下文，以下二者必须满足其一：\n\n1. Apply 已加载 `docs/specs/active/<feature>/spec.md` 与对应 `tasks.md`，且 Spec 的 Testing Decisions 已确认当前公共测试 seam；\n2. Bug Fix 已记录可重复的失败场景，并已确认要观察的公共 seam。\n\n聊天中的实现请求、仓库中的普通需求文件或临时测试说明，都不能替代上述 active Spec / Bug Fix 上下文。门禁不满足时，立即返回 `BLOCKED: helixharness_tdd_context_missing`，不得创建或修改测试、业务代码、TDD 证据或 HelixHarness 工件，并引导用户先进入 Propose 或 Bug Fix。\n\n从当前 `spec.md`、`tasks.md` 或已复现的 Bug 场景中选择一个行为切片。测试 seam 必须已经在 Spec 的 Testing Decisions 中确认；seam 缺失或公共接口仍有争议时，返回 HelixHarness Propose 确认，不要在实现阶段自行创建测试入口。\n\n复用 HelixHarness Apply 已通过 `reference/loading-protocol.md` 加载的项目入口、`docs/harness/` 约束、`docs/knowledge/` 知识、Spec 和当前 Task。只有任务边界变化时才按该协议重新评估索引叶子。测试名称和接口词汇使用这些已加载事实以及当前代码、配置和测试中的项目语言。\n\n## 什么是好测试\n\n通过公共接口验证行为，不验证实现细节。代码可以完全重写，但测试不应因此改变。好测试读起来像一条规格说明，例如“有效购物车可以完成结算”明确描述了系统能力；它不依赖内部结构，因此能够经受重构。\n\n具体示例见 [tests.md](tests.md)，Mock 指引见 [mocking.md](mocking.md)。\n\n## Seam：测试写在哪里\n\n**Seam** 是被测试的公共边界：通过这个接口观察行为，而不进入实现内部。只在 seam 上测试，不测试内部结构。\n\n**只测试预先确认的 seam。** 在 HelixHarness 中，Spec 的 Testing Decisions 就是这份约定。已确认的 seam 不重复询问，未确认的 seam 不写测试。接口形态本身仍有争议时返回 HelixHarness Propose，不要在 Apply 中自行选择或创建接口。\n\n## 反模式\n\n- **与实现耦合**：Mock 内部协作者、测试私有方法，或绕过公共接口从侧面验证，例如直接查询数据库。识别信号是：行为没有变化，仅内部重构就导致测试失败。\n- **同义反复**：断言用与实现相同的方式重新计算期望值，例如 `expect(add(a, b)).toBe(a + b)`、按实现逻辑手工生成快照，或断言常量等于自身。这类测试天然不会与实现产生分歧。期望值必须来自独立事实，例如已知字面量、推导完成的样例或 Spec。\n- **水平切片**：先写完全部测试，再集中实现。批量测试验证的是想象中的行为，容易只测试结构，并在理解实现前过早锁定测试形态。改用垂直切片：一个测试 → 一个实现 → 再进入下一轮；让每个测试都成为根据上一轮结果继续前进的 tracer bullet。\n\n## 循环规则\n\n- **先红后绿**：先写失败测试，再只写足够让它通过的代码。不要预判后续测试或添加推测性功能。\n- **一次一个切片**：每轮只处理一个 seam、一个测试和一个最小实现。\n- **重构不属于本循环**：重构放在 HelixHarness Apply 的 Code Review 阶段，不放进红灯 → 绿灯实现循环。任何 Review 修复完成后，都要重跑覆盖该行为的测试。\n\n每个实际执行的 RED-GREEN 切片保留以下最小事实，供 Apply 整体 APPROVE 后一次性汇总到最终 `verify-report.md`：\n\n- Task ID 与关联 AC ID；\n- test file 与 failing test name；\n- failing output summary；\n- passing output summary。\n\n摘要只保留能证明先红后绿的关键信息，不复制完整测试输出。不得在 TDD 循环中创建或更新 `verify-report.md`；Apply 在最终测试和双轴 Review 均通过后统一写入正式报告。文档、格式或无法表达为行为测试的配置变更只记录对应的确定性检查，不伪造 RED/GREEN 证据。\n"
+    }
+  ]
+}

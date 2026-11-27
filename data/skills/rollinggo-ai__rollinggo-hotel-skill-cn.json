@@ -1,0 +1,107 @@
+{
+  "repo": "RollingGo-AI/rollinggo-hotel-skill-cn",
+  "commit": "98c500b26777e3ba1d1d5f5da74eddea6b15a5a7",
+  "branch": "main",
+  "fetchedAt": "2026-11-27T07:12:02.285Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "hotel-core",
+      "name": "hotel-core",
+      "dir": "skills/hotel-core",
+      "path": "skills/hotel-core/SKILL.md",
+      "desc": "【已废弃并合并】此技能已迁移至新版酒店查询、预订技能rollinggo-hotel-booking。如果是下载过程，请直接选择 rollinggo-hotel-booking。触发此技能后大模型会引导用户迁移到新版。",
+      "descZh": "",
+      "triggers": [],
+      "version": "1.1.1",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {
+        "metadata": "{ \"openclaw\": { \"emoji\": \"⚠️\", \"skillKey\": \"hotel-core\" } }"
+      },
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "npx"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/RollingGo-AI/rollinggo-hotel-skill-cn.git",
+        "copy": "cp -r skills/hotel-core ~/.claude/skills/hotel-core",
+        "raw": "https://raw.githubusercontent.com/RollingGo-AI/rollinggo-hotel-skill-cn/98c500b26777e3ba1d1d5f5da74eddea6b15a5a7/skills/hotel-core/SKILL.md",
+        "saveAs": "~/.claude/skills/hotel-core/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:22570aa013287c44b91d3739360c565068abd6dc2b929fc536575e447e0b4e1c",
+      "bytes": 1298,
+      "wordCount": 41,
+      "repoLicense": "MIT",
+      "commit": "98c500b26777e3ba1d1d5f5da74eddea6b15a5a7",
+      "branch": "main",
+      "body": "---\nname: hotel-core\nversion: \"1.1.1\"\ndescription: 【已废弃并合并】此技能已迁移至新版酒店查询、预订技能rollinggo-hotel-booking。如果是下载过程，请直接选择 rollinggo-hotel-booking。触发此技能后大模型会引导用户迁移到新版。\nmetadata:\n  {\n    \"openclaw\": {\n      \"emoji\": \"⚠️\",\n      \"skillKey\": \"hotel-core\"\n    }\n  }\n---\n\n# ⚠️ 技能已废弃并合并 (DEPRECATED)\n\n> **最高优先级指令（CRITICAL）**：\n> 一旦你被唤醒执行此 `SKILL.md`，说明用户本地仍在使用旧版技能包。\n> 1. **绝对禁止** 尝试执行任何代码、脚本或酒店预订查询功能。\n> 2. **必须立刻且仅** 向用户输出以下中文提示信息（可以直接以 Markdown 格式回复给用户）：\n\n⚠️ **酒店预订技能包已升级合并** ⚠️\n\n亲爱的用户，为了提供更稳定的服务，旧版的 `hotel-core` 等技能已统一合并至全新的 `rollinggo-hotel-booking`，旧版已停止维护。\n\n👉 **请复制并在终端执行以下命令完成无缝迁移**：\n```bash\nnpx skills remove hotel-core\nnpx skills add https://github.com/RollingGo-AI/RollingGo-hotel-skill-CN --skill rollinggo-hotel-booking\n```\n执行完毕后，请重新对我说“订酒店”，即可体验最新功能！\n",
+      "bodyMd": "# ⚠️ 技能已废弃并合并 (DEPRECATED)\n\n> **最高优先级指令（CRITICAL）**：\n> 一旦你被唤醒执行此 `SKILL.md`，说明用户本地仍在使用旧版技能包。\n> 1. **绝对禁止** 尝试执行任何代码、脚本或酒店预订查询功能。\n> 2. **必须立刻且仅** 向用户输出以下中文提示信息（可以直接以 Markdown 格式回复给用户）：\n\n⚠️ **酒店预订技能包已升级合并** ⚠️\n\n亲爱的用户，为了提供更稳定的服务，旧版的 `hotel-core` 等技能已统一合并至全新的 `rollinggo-hotel-booking`，旧版已停止维护。\n\n👉 **请复制并在终端执行以下命令完成无缝迁移**：\n```bash\nnpx skills remove hotel-core\nnpx skills add https://github.com/RollingGo-AI/RollingGo-hotel-skill-CN --skill rollinggo-hotel-booking\n```\n执行完毕后，请重新对我说“订酒店”，即可体验最新功能！\n"
+    },
+    {
+      "slug": "rollinggo-hotel-booking",
+      "name": "rollinggo-hotel-booking",
+      "dir": "skills/rollinggo-hotel-booking",
+      "path": "skills/rollinggo-hotel-booking/SKILL.md",
+      "desc": "RollingGo 酒店搜索与预订助手，通过调用 RollingGo 酒店服务接口实现酒店查询与订单全流程。支持场景：① 按城市/景点/地铁站/机场等地点搜索酒店 ② 按星级、预算、标签（泳池/含早/亲子/宠物友好等）筛选 ③ 查询指定酒店的实时房型与价格 ④ 对比多家酒店 ⑤ 引导用户完成预订 ⑥ 取消订单（预取消查询罚金与确认取消）。触发词：找酒店、订酒店、搜酒店、酒店推荐、酒店查询、附近酒店、五星酒店、民宿、度假村、查房价、看房型、入住、住哪、住宿、rollinggo、旅游住宿、出差住宿、亲子酒店、带泳池的酒店、含早餐酒店、取消订单、退订酒店、退房退款、取消预订。",
+      "descZh": "",
+      "triggers": [],
+      "version": "1.1.6",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {
+        "metadata": "{ \"openclaw\": { \"emoji\": \"🏨\", \"skillKey\": \"rollinggo-hotel-booking\", \"requires\": { \"anyBins\": [\"rgh\", \"npx\", \"node\", \"python\", \"python3\", \"curl\", \"wget\"] }, \"install\": [ { \"id\": \"node\", \"kind\": \"node\", \"package\": \"@rollinggo/hotel@latest\", \"bins\": [\"rgh\"], \"label\": \"Install @rollinggo/hotel (npm)\" }, { \"id\": \"python\", \"kind\": \"exec\", \"command\": \"python scripts/install.py\", \"label\": \"Install rgh standalone binary (python)\" } ] } }"
+      },
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "node",
+          "npm",
+          "python",
+          "python3",
+          "curl",
+          "wget",
+          "npx"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/RollingGo-AI/rollinggo-hotel-skill-cn.git",
+        "copy": "cp -r skills/rollinggo-hotel-booking ~/.claude/skills/rollinggo-hotel-booking",
+        "raw": "https://raw.githubusercontent.com/RollingGo-AI/rollinggo-hotel-skill-cn/98c500b26777e3ba1d1d5f5da74eddea6b15a5a7/skills/rollinggo-hotel-booking/SKILL.md",
+        "saveAs": "~/.claude/skills/rollinggo-hotel-booking/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:da533e75785fb8daaa4162058187e014d2f95e232322a3ac6ae0410c6394dacc",
+      "bytes": 13009,
+      "wordCount": 495,
+      "repoLicense": "MIT",
+      "commit": "98c500b26777e3ba1d1d5f5da74eddea6b15a5a7",
+      "branch": "main",
+      "body": "---\nname: rollinggo-hotel-booking\nversion: \"1.1.6\"\nrepository: \"https://github.com/RollingGo-AI/rollinggo-hotel-skill-CN\"\ndescription: RollingGo 酒店搜索与预订助手，通过调用 RollingGo 酒店服务接口实现酒店查询与订单全流程。支持场景：① 按城市/景点/地铁站/机场等地点搜索酒店 ② 按星级、预算、标签（泳池/含早/亲子/宠物友好等）筛选 ③ 查询指定酒店的实时房型与价格 ④ 对比多家酒店 ⑤ 引导用户完成预订 ⑥ 取消订单（预取消查询罚金与确认取消）。触发词：找酒店、订酒店、搜酒店、酒店推荐、酒店查询、附近酒店、五星酒店、民宿、度假村、查房价、看房型、入住、住哪、住宿、rollinggo、旅游住宿、出差住宿、亲子酒店、带泳池的酒店、含早餐酒店、取消订单、退订酒店、退房退款、取消预订。\nmetadata:\n  {\n    \"openclaw\": {\n      \"emoji\": \"🏨\",\n      \"skillKey\": \"rollinggo-hotel-booking\",\n      \"requires\": {\n        \"anyBins\": [\"rgh\", \"npx\", \"node\", \"python\", \"python3\", \"curl\", \"wget\"]\n      },\n      \"install\": [\n        {\n          \"id\": \"node\",\n          \"kind\": \"node\",\n          \"package\": \"@rollinggo/hotel@latest\",\n          \"bins\": [\"rgh\"],\n          \"label\": \"Install @rollinggo/hotel (npm)\"\n        },\n        {\n          \"id\": \"python\",\n          \"kind\": \"exec\",\n          \"command\": \"python scripts/install.py\",\n          \"label\": \"Install rgh standalone binary (python)\"\n        }\n      ]\n    }\n  }\n---\n\n# RollingGo 酒店搜索与预订 Skill\n\n## 安装\n\n如果本地环境未安装 `rgh` 命令，可以通过以下三种方式之一进行安装：\n\n**方式一：通过 npm 安装（推荐）**\n如果环境中有 Node.js 和 npm，请执行：\n```bash\nnpm install -g @rollinggo/hotel@latest\n```\n\n**方式二：通过 Python 自动脚本安装（免 Node.js 环境）**\n如果环境中有 Python，可以直接在 Skill 目录下运行我们提供的自动化安装脚本，它将自动检测您的操作系统并下载最新版的 `rgh` 独立二进制程序到本地 `bin` 文件夹：\n```bash\npython scripts/install.py\n```\n\n**方式三：手动下载独立可执行文件（免 Node/Python 环境）**\n如果环境中既没有 npm 也没有 Python，请从以下 Release 页面下载对应的单文件程序（Windows: `rgh-win.exe` / `rgh-windows.exe`, Mac: `rgh-macos`, Linux: `rgh-linux`）：\n`https://github.com/RollingGo-AI/oauth-hotel-cli/releases/latest`\n\n下载后将其重命名为 `rgh`（Windows下为 `rgh.exe`），赋予执行权限，并放入系统环境变量 PATH 或技能目录的 `bin` 文件夹中。\n\n**⚠️ 自动升级拦截原则：**\nCLI 工具内置了版本检测。当你在执行任何 `rgh` 命令时，如果控制台输出中出现 `📦 有新版本可用！` 或 `运行以下命令更新` 的提示，**你必须立即暂停当前操作，先使用上述三种方式之一将工具升级到最新版，升级成功后再重新执行刚才中断的命令。** 这样可避免由于服务端接口过期而导致的预订失败。\n\n---\n\n> ⚠️ **输出规范**：\n> 1. **严禁向用户展示任何技术细节**，包括但不限于：工具名（如 `search-hotels`、`hotel-detail`）、JSON 字段名（如 `hotelId`、`ratePlanId`、`referenceNo`）、命令行内容、技术参数。\n> 2. **只展示用户关心的信息**：酒店名称、星级、价格、距离、核心设施、标签、预订链接。\n> 3. **结果必须格式化展示**，每家酒店独占一个卡片，关键信息换行分隔，禁止堆砌在一行。\n> 4. **价格说明**：搜索结果中的价格为参考展示价，实际下单价以价格确认为准，展示时注明\"参考价\"。\n> 5. **登录授权**：用户通过 Agent 对话时看不到终端输出，执行 `rgh login` 后必须从输出中提取授权链接并回复给用户，不要展示二维码文本。\n\n## When to Use\n\n用户涉及酒店住宿相关的任何意图时均应触发本 Skill，包括但不限于以下场景：\n\n**搜索与发现**：\n- 按地点找酒店：\"帮我找北京三里屯附近酒店\"、\"三亚有什么好酒店\"、\"西湖旁边住宿推荐\"\n- 按条件筛选：\"五星酒店\"、\"带泳池的酒店\"、\"含早餐的住宿\"、\"亲子酒店\"、\"宠物友好酒店\"\n- 按预算筛选：\"500块以内的酒店\"、\"经济实惠的住宿\"、\"豪华酒店推荐\"\n- 按品牌筛选：\"希尔顿\"、\"万豪\"、\"亚朵\"、\"全季\"\n\n**查询与对比**：\n- 查房价：\"杭州酒店多少钱一晚\"、\"这个酒店什么价格\"\n- 看房型：\"有什么房型\"、\"大床房有没有\"、\"家庭房推荐\"\n- 比较住宿：\"帮我对比一下这两家酒店\"、\"哪个更划算\"\n- 了解设施：\"有没有泳池\"、\"离地铁站多远\"、\"停车方便吗\"\n\n**预订与订单**：\n- 预订酒店：\"帮我订这家酒店\"、\"我要下单\"、\"预订一间房\"\n- 查询订单：\"我的订单\"、\"之前订的酒店\"、\"订单状态\"\n- 取消与退订：\"帮我取消这个订单\"、\"不想住了退订\"、\"退房退款\"、\"查一下取消要扣多少钱\"\n\n**触发词覆盖**：\n找酒店、订酒店、搜酒店、酒店推荐、酒店查询、附近酒店、五星酒店、民宿、度假村、查房价、看房型、入住、住哪、住宿、出差住宿、旅游住宿、亲子酒店、带泳池的酒店、含早餐酒店、商务酒店、情侣酒店、温泉酒店、海景房、江景房、取消订单、退订酒店、退房退款、取消预订。\n\n## When NOT to Use\n\n- 用户询问机票、火车票、租车、景点门票等非住宿类旅行需求\n- 用户只是闲聊旅游目的地，没有明确住宿意图\n- 用户已明确表示\"不用订\"、\"只是问问\"\n\n---\n\n## 安全门控\n\n> ⚠️ 酒店预订与退订属于**真实资金与消费操作**：\n> 1. **两步确认**：展示房型和价格后，须等用户明确选择方可锁价与下单。\n> 2. **信息完整性**：下单前须确认入住人姓名拼音与邮箱。\n> 3. **锁价时效**：锁定的价格凭证（`referenceNo`）有效期约 15-30 分钟，超时须重新锁价。\n> 4. **订单取消高危安全门控（两步确认）**：取消订单属于不可逆操作，绝对禁止未经二次确认直接取消！必须先执行 `pre-cancel` 查询取消手续费/违约金与凭证（`confirmId` 凭证 10 分钟有效），向用户明确汇报扣费金额与预计退款，取得用户明确肯定答复后，方可调用 `confirm-cancel`。\n\n---\n\n## 工作流程与动态 CLI 探知\n\n> 💡 **动态命令与参数自探知法则 (Self-Discovery Rule)**：\n> 1. **命令调用**：直接调用原生 CLI 命令：`rgh <子命令>`（如 `rgh status`、`rgh search-hotels`）。\n> 2. **渠道定制 (CLIENT_ID)**：支持零代码渠道定制。若需使用特定渠道身份，可在技能目录放置 `client_id.txt`，或在初次登录时传入 `rgh login --client-id <id>`（如 `rgh login --client-id didaskill`），CLI 会自动记住并持久化配置。默认值为 `rollinggoskill`。\n> 3. **动态参数探知**：执行任何子命令前，**先运行 `rgh <子命令> --help` 获取实时命令行参数帮助**，并按最新的 `--help` 动态拼装命令参数！\n\n---\n\n### 业务步骤指南\n\n#### Step 0：登录授权检查\n- 执行 `rgh status`（也可使用 `whoami`）检查登录状态。\n- 若未登录，执行 `rgh login`（需要定制渠道时可加 `--client-id <id>`，⚠️ **必须以异步/后台模式运行**，如 `WaitMsBeforeAsync=2000`）。从输出提取授权链接（`https://api.rollinggo.store/s/xxx`），回复给用户完成授权。\n\n#### Step 1：信息收集\n- 确认目的地（必须）、入住日期（默认明天）、入住晚数（默认 1 晚）、人数（默认 2 人）。\n\n#### Step 2：获取标签字典（按需）\n- 遇特色需求（如泳池、早餐、亲子、宠物等），先执行 `rgh hotel-tags` 精确匹配标签名称。\n\n#### Step 3：搜索酒店\n- 先运行 `rgh search-hotels --help` 查看最新筛选参数，根据用户需求拼装命令。\n- **placeType 选择规则**（必须精确匹配）：`城市`、`机场`、`景点`、`火车站`、`地铁站`、`酒店`、`区/县`、`详细地址`。\n\n**搜索结果展示模板**（每家酒店一个卡片）：\n*(【极其重要】：你必须使用标准的 Markdown 图片语法 `![alt](url)` 来渲染 imageUrl，且必须将图片展示在模板末尾。若 imageUrl 中包含未编码的空格，需手动将空格替换为 `%20`，或使用尖括号将其包裹如 `![alt](<url>)`，否则会导致宿主平台无法渲染图片！绝对禁止使用 HTML `<img>` 标签，绝对禁止使用纯文本 URL！)*\n\n```markdown\n🏨 {酒店名称}\n⭐ {星级}星  *(仅当返回了 distanceInMeters 字段时展示：📍 距{搜索地点}{距离}米)*\n💰 参考价 ¥{最低价}/晚\n🏷️ {标签1} · {标签2} · {标签3}\n![{酒店名称}]({imageUrl})\n```\n\n返回 3-5 家酒店后，询问用户：\"想了解哪家的详细房型和价格？\"\n\n#### Step 4：查询房型与实时价格\n- 先运行 `rgh hotel-detail --help` 查看参数，传入选中的 `hotelId` 查询实时房态报价。\n\n**房型展示模板**（每个房型一条）：\n\n```\n🛏️ {房型中文名}（{床型描述}）\n💰 总价 ¥{totalPrice}（¥{均价}/晚）\n📋 取消政策：{取消政策描述}\n```\n\n展示 3-5 个推荐房型后，引导用户回复：“请告诉我您选择的房型名称，我来为您锁定价格并办理下单。”\n\n#### Step 5：价格确认与下单（安全门控）\n1. 运行 `rgh price-confirm --help` 查看参数，锁定价格并获取凭证 `referenceNo`。\n2. 确认联系人拼音姓名与邮箱后，运行 `rgh book --help` 查看参数，提交订单并提取支付链接。\n\n**待支付订单展示模板**：\n*(【极其重要】：绝不能臆造或编造支付方式（如“自动识别环境，支持支付宝或微信”）。必须严格按照以下模板输出，绝不允许自行添加任何关于支付环境或支付方式的说明！)*\n\n```\n📝 订单已生成，等待支付！\n确认号：**{orderNo}**\n酒店：{酒店名}\n房型：{房型名}\n入住：{入住日期} | 离店：{离店日期}\n总价：¥{价格}\n📋 取消政策：{取消政策描述}\n💳 请在30分钟内完成支付：{支付链接}\n```\n\n#### Step 6：查询订单与详情\n- 运行 `rgh orders --help` 或 `rgh order-detail --help` 查询用户历史订单或单条订单详情。\n\n#### Step 7：取消订单（高危两步确认）\n> ⚠️ **高危安全门控**：取消订单属于**不可逆操作**，取消后不可撤销！必须严格执行两步确认：\n> 1. 先调用 `pre-cancel` 预取消查询取消手续费/违约金与确认凭证（`confirmId` 凭证 10 分钟有效）。\n> 2. 向用户如实汇报违约金金额与预计退款，**必须等用户明确肯定答复后**，方可运行 `confirm-cancel` 提交取消。\n\n1. **预取消查询违约金**：\n   - 先运行 `rgh pre-cancel --help` 查看参数。\n   - 若用户未提供订单号，先通过 `rgh orders` 定位订单号。\n   - 执行 `rgh pre-cancel --order-no <orderNo>`。\n   - 提取 `canCancel`、`penaltyAmount`、`confirmId`、`bookingId`。若 `canCancel` 为 false，告知用户原因或客服指引。\n\n2. **向用户核实违约金与取消意愿**：\n```\n⚠️ 订单取消确认：\n订单号：**{orderNo}**\n酒店：{酒店名}\n取消手续费/违约金：¥{penaltyAmount}\n预计退款：¥{预计退款金额}\n\n⚠️ 订单取消后无法恢复，请确认是否继续取消？\n```\n\n3. **用户明确确认后，执行确认取消**：\n   - 先运行 `rgh confirm-cancel --help` 查看参数。\n   - 执行 `rgh confirm-cancel --order-no <orderNo> --booking-id <bookingId> --confirm-id <confirmId>`。\n   - 向用户清晰展示取消成功结果。\n\n**取消成功展示模板**：\n```\n✅ 订单已成功取消！\n确认号：**{orderNo}**\n退款处理中，款项将按原支付路径原路退回，预计 1-3 个工作日内到账。\n```\n\n---\n\n## 搜索结果不理想时的语义化降级策略\n\n若搜索 0 结果，按以下顺序静默放宽条件重试：\n1. 移除星级范围限制\n2. 扩大搜索半径/距离参数\n3. 将硬约束标签（Required Tag）降级为软偏好标签（Preferred Tag）\n4. 增大返回数量（Size）\n5. 仅保留目的地与入住日期\n\n---\n\n## 关键交互规则\n\n- **屏蔽技术细节**：严禁向用户暴露 `hotelId`、`ratePlanId`、`referenceNo`、JSON 响应或命令行。\n- **真实价格说明**：搜索展示价注明“参考价”，最终金额以价格确认锁价为准。\n- **支付链接真实可用**：生成的订单支付链接可直接提供给用户点击完成支付。\n- **多家对比**：用户要对比时，可同时展示多家的卡片，突出差异点（价格/距离/设施）。\n\n---\n\n## 详细参考文档\n\n- [references/cli-params.md](references/cli-params.md) — CLI 命令完整参数规范\n",
+      "bodyMd": "# RollingGo 酒店搜索与预订 Skill\n\n## 安装\n\n如果本地环境未安装 `rgh` 命令，可以通过以下三种方式之一进行安装：\n\n**方式一：通过 npm 安装（推荐）**\n如果环境中有 Node.js 和 npm，请执行：\n```bash\nnpm install -g @rollinggo/hotel@latest\n```\n\n**方式二：通过 Python 自动脚本安装（免 Node.js 环境）**\n如果环境中有 Python，可以直接在 Skill 目录下运行我们提供的自动化安装脚本，它将自动检测您的操作系统并下载最新版的 `rgh` 独立二进制程序到本地 `bin` 文件夹：\n```bash\npython scripts/install.py\n```\n\n**方式三：手动下载独立可执行文件（免 Node/Python 环境）**\n如果环境中既没有 npm 也没有 Python，请从以下 Release 页面下载对应的单文件程序（Windows: `rgh-win.exe` / `rgh-windows.exe`, Mac: `rgh-macos`, Linux: `rgh-linux`）：\n`https://github.com/RollingGo-AI/oauth-hotel-cli/releases/latest`\n\n下载后将其重命名为 `rgh`（Windows下为 `rgh.exe`），赋予执行权限，并放入系统环境变量 PATH 或技能目录的 `bin` 文件夹中。\n\n**⚠️ 自动升级拦截原则：**\nCLI 工具内置了版本检测。当你在执行任何 `rgh` 命令时，如果控制台输出中出现 `📦 有新版本可用！` 或 `运行以下命令更新` 的提示，**你必须立即暂停当前操作，先使用上述三种方式之一将工具升级到最新版，升级成功后再重新执行刚才中断的命令。** 这样可避免由于服务端接口过期而导致的预订失败。\n\n---\n\n> ⚠️ **输出规范**：\n> 1. **严禁向用户展示任何技术细节**，包括但不限于：工具名（如 `search-hotels`、`hotel-detail`）、JSON 字段名（如 `hotelId`、`ratePlanId`、`referenceNo`）、命令行内容、技术参数。\n> 2. **只展示用户关心的信息**：酒店名称、星级、价格、距离、核心设施、标签、预订链接。\n> 3. **结果必须格式化展示**，每家酒店独占一个卡片，关键信息换行分隔，禁止堆砌在一行。\n> 4. **价格说明**：搜索结果中的价格为参考展示价，实际下单价以价格确认为准，展示时注明\"参考价\"。\n> 5. **登录授权**：用户通过 Agent 对话时看不到终端输出，执行 `rgh login` 后必须从输出中提取授权链接并回复给用户，不要展示二维码文本。\n\n## When to Use\n\n用户涉及酒店住宿相关的任何意图时均应触发本 Skill，包括但不限于以下场景：\n\n**搜索与发现**：\n- 按地点找酒店：\"帮我找北京三里屯附近酒店\"、\"三亚有什么好酒店\"、\"西湖旁边住宿推荐\"\n- 按条件筛选：\"五星酒店\"、\"带泳池的酒店\"、\"含早餐的住宿\"、\"亲子酒店\"、\"宠物友好酒店\"\n- 按预算筛选：\"500块以内的酒店\"、\"经济实惠的住宿\"、\"豪华酒店推荐\"\n- 按品牌筛选：\"希尔顿\"、\"万豪\"、\"亚朵\"、\"全季\"\n\n**查询与对比**：\n- 查房价：\"杭州酒店多少钱一晚\"、\"这个酒店什么价格\"\n- 看房型：\"有什么房型\"、\"大床房有没有\"、\"家庭房推荐\"\n- 比较住宿：\"帮我对比一下这两家酒店\"、\"哪个更划算\"\n- 了解设施：\"有没有泳池\"、\"离地铁站多远\"、\"停车方便吗\"\n\n**预订与订单**：\n- 预订酒店：\"帮我订这家酒店\"、\"我要下单\"、\"预订一间房\"\n- 查询订单：\"我的订单\"、\"之前订的酒店\"、\"订单状态\"\n- 取消与退订：\"帮我取消这个订单\"、\"不想住了退订\"、\"退房退款\"、\"查一下取消要扣多少钱\"\n\n**触发词覆盖**：\n找酒店、订酒店、搜酒店、酒店推荐、酒店查询、附近酒店、五星酒店、民宿、度假村、查房价、看房型、入住、住哪、住宿、出差住宿、旅游住宿、亲子酒店、带泳池的酒店、含早餐酒店、商务酒店、情侣酒店、温泉酒店、海景房、江景房、取消订单、退订酒店、退房退款、取消预订。\n\n## When NOT to Use\n\n- 用户询问机票、火车票、租车、景点门票等非住宿类旅行需求\n- 用户只是闲聊旅游目的地，没有明确住宿意图\n- 用户已明确表示\"不用订\"、\"只是问问\"\n\n---\n\n## 安全门控\n\n> ⚠️ 酒店预订与退订属于**真实资金与消费操作**：\n> 1. **两步确认**：展示房型和价格后，须等用户明确选择方可锁价与下单。\n> 2. **信息完整性**：下单前须确认入住人姓名拼音与邮箱。\n> 3. **锁价时效**：锁定的价格凭证（`referenceNo`）有效期约 15-30 分钟，超时须重新锁价。\n> 4. **订单取消高危安全门控（两步确认）**：取消订单属于不可逆操作，绝对禁止未经二次确认直接取消！必须先执行 `pre-cancel` 查询取消手续费/违约金与凭证（`confirmId` 凭证 10 分钟有效），向用户明确汇报扣费金额与预计退款，取得用户明确肯定答复后，方可调用 `confirm-cancel`。\n\n---\n\n## 工作流程与动态 CLI 探知\n\n> 💡 **动态命令与参数自探知法则 (Self-Discovery Rule)**：\n> 1. **命令调用**：直接调用原生 CLI 命令：`rgh <子命令>`（如 `rgh status`、`rgh search-hotels`）。\n> 2. **渠道定制 (CLIENT_ID)**：支持零代码渠道定制。若需使用特定渠道身份，可在技能目录放置 `client_id.txt`，或在初次登录时传入 `rgh login --client-id <id>`（如 `rgh login --client-id didaskill`），CLI 会自动记住并持久化配置。默认值为 `rollinggoskill`。\n> 3. **动态参数探知**：执行任何子命令前，**先运行 `rgh <子命令> --help` 获取实时命令行参数帮助**，并按最新的 `--help` 动态拼装命令参数！\n\n---\n\n### 业务步骤指南\n\n#### Step 0：登录授权检查\n- 执行 `rgh status`（也可使用 `whoami`）检查登录状态。\n- 若未登录，执行 `rgh login`（需要定制渠道时可加 `--client-id <id>`，⚠️ **必须以异步/后台模式运行**，如 `WaitMsBeforeAsync=2000`）。从输出提取授权链接（`https://api.rollinggo.store/s/xxx`），回复给用户完成授权。\n\n#### Step 1：信息收集\n- 确认目的地（必须）、入住日期（默认明天）、入住晚数（默认 1 晚）、人数（默认 2 人）。\n\n#### Step 2：获取标签字典（按需）\n- 遇特色需求（如泳池、早餐、亲子、宠物等），先执行 `rgh hotel-tags` 精确匹配标签名称。\n\n#### Step 3：搜索酒店\n- 先运行 `rgh search-hotels --help` 查看最新筛选参数，根据用户需求拼装命令。\n- **placeType 选择规则**（必须精确匹配）：`城市`、`机场`、`景点`、`火车站`、`地铁站`、`酒店`、`区/县`、`详细地址`。\n\n**搜索结果展示模板**（每家酒店一个卡片）：\n*(【极其重要】：你必须使用标准的 Markdown 图片语法 `![alt](url)` 来渲染 imageUrl，且必须将图片展示在模板末尾。若 imageUrl 中包含未编码的空格，需手动将空格替换为 `%20`，或使用尖括号将其包裹如 `![alt](<url>)`，否则会导致宿主平台无法渲染图片！绝对禁止使用 HTML `<img>` 标签，绝对禁止使用纯文本 URL！)*\n\n```markdown\n🏨 {酒店名称}\n⭐ {星级}星  *(仅当返回了 distanceInMeters 字段时展示：📍 距{搜索地点}{距离}米)*\n💰 参考价 ¥{最低价}/晚\n🏷️ {标签1} · {标签2} · {标签3}\n![{酒店名称}]({imageUrl})\n```\n\n返回 3-5 家酒店后，询问用户：\"想了解哪家的详细房型和价格？\"\n\n#### Step 4：查询房型与实时价格\n- 先运行 `rgh hotel-detail --help` 查看参数，传入选中的 `hotelId` 查询实时房态报价。\n\n**房型展示模板**（每个房型一条）：\n\n```\n🛏️ {房型中文名}（{床型描述}）\n💰 总价 ¥{totalPrice}（¥{均价}/晚）\n📋 取消政策：{取消政策描述}\n```\n\n展示 3-5 个推荐房型后，引导用户回复：“请告诉我您选择的房型名称，我来为您锁定价格并办理下单。”\n\n#### Step 5：价格确认与下单（安全门控）\n1. 运行 `rgh price-confirm --help` 查看参数，锁定价格并获取凭证 `referenceNo`。\n2. 确认联系人拼音姓名与邮箱后，运行 `rgh book --help` 查看参数，提交订单并提取支付链接。\n\n**待支付订单展示模板**：\n*(【极其重要】：绝不能臆造或编造支付方式（如“自动识别环境，支持支付宝或微信”）。必须严格按照以下模板输出，绝不允许自行添加任何关于支付环境或支付方式的说明！)*\n\n```\n📝 订单已生成，等待支付！\n确认号：**{orderNo}**\n酒店：{酒店名}\n房型：{房型名}\n入住：{入住日期} | 离店：{离店日期}\n总价：¥{价格}\n📋 取消政策：{取消政策描述}\n💳 请在30分钟内完成支付：{支付链接}\n```\n\n#### Step 6：查询订单与详情\n- 运行 `rgh orders --help` 或 `rgh order-detail --help` 查询用户历史订单或单条订单详情。\n\n#### Step 7：取消订单（高危两步确认）\n> ⚠️ **高危安全门控**：取消订单属于**不可逆操作**，取消后不可撤销！必须严格执行两步确认：\n> 1. 先调用 `pre-cancel` 预取消查询取消手续费/违约金与确认凭证（`confirmId` 凭证 10 分钟有效）。\n> 2. 向用户如实汇报违约金金额与预计退款，**必须等用户明确肯定答复后**，方可运行 `confirm-cancel` 提交取消。\n\n1. **预取消查询违约金**：\n   - 先运行 `rgh pre-cancel --help` 查看参数。\n   - 若用户未提供订单号，先通过 `rgh orders` 定位订单号。\n   - 执行 `rgh pre-cancel --order-no <orderNo>`。\n   - 提取 `canCancel`、`penaltyAmount`、`confirmId`、`bookingId`。若 `canCancel` 为 false，告知用户原因或客服指引。\n\n2. **向用户核实违约金与取消意愿**：\n```\n⚠️ 订单取消确认：\n订单号：**{orderNo}**\n酒店：{酒店名}\n取消手续费/违约金：¥{penaltyAmount}\n预计退款：¥{预计退款金额}\n\n⚠️ 订单取消后无法恢复，请确认是否继续取消？\n```\n\n3. **用户明确确认后，执行确认取消**：\n   - 先运行 `rgh confirm-cancel --help` 查看参数。\n   - 执行 `rgh confirm-cancel --order-no <orderNo> --booking-id <bookingId> --confirm-id <confirmId>`。\n   - 向用户清晰展示取消成功结果。\n\n**取消成功展示模板**：\n```\n✅ 订单已成功取消！\n确认号：**{orderNo}**\n退款处理中，款项将按原支付路径原路退回，预计 1-3 个工作日内到账。\n```\n\n---\n\n## 搜索结果不理想时的语义化降级策略\n\n若搜索 0 结果，按以下顺序静默放宽条件重试：\n1. 移除星级范围限制\n2. 扩大搜索半径/距离参数\n3. 将硬约束标签（Required Tag）降级为软偏好标签（Preferred Tag）\n4. 增大返回数量（Size）\n5. 仅保留目的地与入住日期\n\n---\n\n## 关键交互规则\n\n- **屏蔽技术细节**：严禁向用户暴露 `hotelId`、`ratePlanId`、`referenceNo`、JSON 响应或命令行。\n- **真实价格说明**：搜索展示价注明“参考价”，最终金额以价格确认锁价为准。\n- **支付链接真实可用**：生成的订单支付链接可直接提供给用户点击完成支付。\n- **多家对比**：用户要对比时，可同时展示多家的卡片，突出差异点（价格/距离/设施）。\n\n---\n\n## 详细参考文档\n\n- [references/cli-params.md](references/cli-params.md) — CLI 命令完整参数规范\n"
+    }
+  ]
+}

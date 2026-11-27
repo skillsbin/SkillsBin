@@ -1,0 +1,143 @@
+{
+  "repo": "phil65/agentpool",
+  "commit": "af99da0da6004347eb79535cf5724d7192c8c09e",
+  "branch": "main",
+  "fetchedAt": "2026-11-27T07:11:55.621Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "sync-acp-spec",
+      "name": "sync-acp-spec",
+      "dir": ".agents/skills/sync-acp-spec",
+      "path": ".agents/skills/sync-acp-spec/SKILL.md",
+      "desc": "Sync the ACP (Agent Client Protocol) schema implementation with the official reference repo by comparing Rust source types against our Python Pydantic models.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "git",
+          "python",
+          "convert"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/phil65/agentpool.git",
+        "copy": "cp -r .agents/skills/sync-acp-spec ~/.claude/skills/sync-acp-spec",
+        "raw": "https://raw.githubusercontent.com/phil65/agentpool/af99da0da6004347eb79535cf5724d7192c8c09e/.agents/skills/sync-acp-spec/SKILL.md",
+        "saveAs": "~/.claude/skills/sync-acp-spec/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:20409408c350764f7dd64201ebe7cb1df281cffd7cdfb7764e48ff8afe89b065",
+      "bytes": 5697,
+      "wordCount": 676,
+      "repoLicense": "MIT",
+      "commit": "af99da0da6004347eb79535cf5724d7192c8c09e",
+      "branch": "main",
+      "body": "---\nname: sync-acp-spec\ndescription: Sync the ACP (Agent Client Protocol) schema implementation with the official reference repo by comparing Rust source types against our Python Pydantic models.\n---\n\n# Sync ACP Spec\n\nKeep `src/acp/schema/` aligned with the official Agent Client Protocol reference implementation.\n\n## Steps\n\n1. **Clone the reference repo** into a temporary directory:\n   ```bash\n   tmp=$(mktemp -d)\n   git clone --depth 1 https://github.com/agentclientprotocol/agent-client-protocol \"$tmp/acp\"\n   ```\n\n2. **Identify new commits** since last sync:\n   ```bash\n   git -C \"$tmp/acp\" log --oneline <SPEC_SYNCED_COMMIT>..HEAD\n   ```\n   The synced commit hash is stored as `SPEC_SYNCED_COMMIT` in `src/acp/__init__.py`.\n\n3. **Read the upstream Rust source** (the authoritative types):\n   - `$tmp/acp/src/agent.rs` — agent-side types: capabilities, auth methods, session state, config options, slash commands, content blocks, session updates, MCP servers\n   - `$tmp/acp/src/client.rs` — client-side types: client capabilities, requests, responses\n   - `$tmp/acp/src/error.rs` — error codes and `Error` struct\n   - `$tmp/acp/src/content.rs` — content block types\n   - `$tmp/acp/src/tool_call.rs` — tool call types\n   - `$tmp/acp/src/plan.rs` — plan entry types\n   - `$tmp/acp/src/rpc.rs` — JSON-RPC message types, method strings\n   - `$tmp/acp/src/ext.rs` — extension notifications\n   - `$tmp/acp/src/version.rs` — protocol version constant\n   - `$tmp/acp/schema/schema.json` and `schema.unstable.json` — JSON Schema (useful for cross-checking)\n\n4. **Compare with our Python implementation** (mapping table):\n\n   | Upstream Rust file | Our Python module |\n   |---|---|\n   | `agent.rs` (capabilities) | `schema/capabilities.py` |\n   | `agent.rs` (auth, common types) | `schema/common.py` |\n   | `agent.rs` (session updates) | `schema/session_updates.py` |\n   | `agent.rs` (session state) | `schema/session_state.py` |\n   | `agent.rs` (slash commands) | `schema/slash_commands.py` |\n   | `agent.rs` (MCP servers) | `schema/mcp.py` |\n   | `agent.rs` (responses) | `schema/agent_responses.py` |\n   | `agent.rs` (requests to client) | `schema/agent_requests.py` |\n   | `client.rs` (requests) | `schema/client_requests.py` |\n   | `client.rs` (responses) | `schema/client_responses.py` |\n   | `client.rs` (capabilities) | `schema/capabilities.py` |\n   | `content.rs` | `schema/content_blocks.py` |\n   | `tool_call.rs` | `schema/tool_call.py` |\n   | `plan.rs` | `schema/agent_plan.py` |\n   | `rpc.rs` | `schema/messages.py` |\n   | `ext.rs` | `schema/notifications.py` |\n   | `error.rs` | `schema/common.py` (`Error`), `exceptions.py` (`RequestError`) |\n   | `version.rs` | `schema/__init__.py` (`PROTOCOL_VERSION`) |\n\n5. **Apply updates** to our code:\n   - Add new Pydantic model fields matching new Rust struct fields\n   - Map `#[cfg(feature = \"unstable_*\")]` fields to `field: Type | None = None`\n   - Add new types / enums / discriminated unions\n   - Update `Literal` types for new method strings in `schema/messages.py`\n   - Update `__init__.py` exports in both `schema/__init__.py` and `acp/__init__.py`\n   - Preserve our `camelCase` alias convention (`alias_generator=to_camel` in base)\n   - Do NOT modify protocol logic outside `schema/` (connection handlers, bridge, transports) — only update those if they need to handle new schema types\n\n6. **Wire up new schema types** in the protocol layer (if needed):\n   - `agent/connection.py` — add dispatch cases for new agent methods\n   - `client/connection.py` — add client-side methods for new requests\n   - `bridge/bridge.py` — add bridge handler cases\n   - `agent/protocol.py` — add methods to the `Agent` protocol\n   - `agent/implementations/testing.py` — add stubs to `TestAgent`\n   - `agent/implementations/debug_server/mock_agent.py` — add stubs to `MockAgent`\n\n7. **Wire up in the ACP server** (if needed):\n   - `src/agentpool_server/acp_server/acp_agent.py` — implement new methods, advertise new capabilities\n   - `src/agentpool_server/acp_server/event_converter.py` — emit new session update types\n   - `src/agentpool_server/acp_server/session.py` — store new state\n\n8. **Update the synced commit hash** in `src/acp/__init__.py`:\n   ```bash\n   git -C \"$tmp/acp\" rev-parse HEAD\n   ```\n   Update the `SPEC_SYNCED_COMMIT` constant to the new hash.\n\n9. **Clean up**:\n   ```bash\n   rm -rf \"$tmp\"\n   ```\n\n## Key conventions\n\n- Rust `#[serde(rename_all = \"camelCase\")]` → handled by our `alias_generator=to_camel` in `Schema` base\n- Rust `#[serde(rename = \"_meta\")]` → handled by our `convert()` function (`field_meta` → `_meta`)\n- Rust `Option<T>` → `T | None = None`\n- Rust `#[serde(default)]` booleans → `bool = False` or `bool | None = False`\n- Rust `#[serde(tag = \"type\")]` enums → Pydantic discriminated unions with `Discriminator()`\n- Rust `#[serde(untagged)]` variants → `Field(exclude=True)` on the `type` discriminator field\n- Rust `Vec<T>` → `Sequence[T]` (for inputs) or `list[T]`\n- Rust `HashMap<K, V>` → `dict[K, V]`\n- Unstable features (`#[cfg(feature = \"unstable_*\")]`) → always included, marked with `**UNSTABLE**` docstrings\n\n## What NOT to change\n\n- `connection.py` (base JSON-RPC connection) — only if the wire protocol itself changes\n- `transports.py` — transport layer is our own\n- `stdio.py` — our process management layer\n- `client/` implementations (`DefaultACPClient`, `HeadlessACPClient`, `NoOpClient`) — agentpool-specific\n- `registry/` — our agent registry, not part of ACP spec\n- `task/` — our task abstraction\n- `tool_call_reporter.py`, `tool_call_state.py` — our extensions\n- `filesystem.py` — our filesystem handler implementation\n",
+      "bodyMd": "# Sync ACP Spec\n\nKeep `src/acp/schema/` aligned with the official Agent Client Protocol reference implementation.\n\n## Steps\n\n1. **Clone the reference repo** into a temporary directory:\n   ```bash\n   tmp=$(mktemp -d)\n   git clone --depth 1 https://github.com/agentclientprotocol/agent-client-protocol \"$tmp/acp\"\n   ```\n\n2. **Identify new commits** since last sync:\n   ```bash\n   git -C \"$tmp/acp\" log --oneline <SPEC_SYNCED_COMMIT>..HEAD\n   ```\n   The synced commit hash is stored as `SPEC_SYNCED_COMMIT` in `src/acp/__init__.py`.\n\n3. **Read the upstream Rust source** (the authoritative types):\n   - `$tmp/acp/src/agent.rs` — agent-side types: capabilities, auth methods, session state, config options, slash commands, content blocks, session updates, MCP servers\n   - `$tmp/acp/src/client.rs` — client-side types: client capabilities, requests, responses\n   - `$tmp/acp/src/error.rs` — error codes and `Error` struct\n   - `$tmp/acp/src/content.rs` — content block types\n   - `$tmp/acp/src/tool_call.rs` — tool call types\n   - `$tmp/acp/src/plan.rs` — plan entry types\n   - `$tmp/acp/src/rpc.rs` — JSON-RPC message types, method strings\n   - `$tmp/acp/src/ext.rs` — extension notifications\n   - `$tmp/acp/src/version.rs` — protocol version constant\n   - `$tmp/acp/schema/schema.json` and `schema.unstable.json` — JSON Schema (useful for cross-checking)\n\n4. **Compare with our Python implementation** (mapping table):\n\n   | Upstream Rust file | Our Python module |\n   |---|---|\n   | `agent.rs` (capabilities) | `schema/capabilities.py` |\n   | `agent.rs` (auth, common types) | `schema/common.py` |\n   | `agent.rs` (session updates) | `schema/session_updates.py` |\n   | `agent.rs` (session state) | `schema/session_state.py` |\n   | `agent.rs` (slash commands) | `schema/slash_commands.py` |\n   | `agent.rs` (MCP servers) | `schema/mcp.py` |\n   | `agent.rs` (responses) | `schema/agent_responses.py` |\n   | `agent.rs` (requests to client) | `schema/agent_requests.py` |\n   | `client.rs` (requests) | `schema/client_requests.py` |\n   | `client.rs` (responses) | `schema/client_responses.py` |\n   | `client.rs` (capabilities) | `schema/capabilities.py` |\n   | `content.rs` | `schema/content_blocks.py` |\n   | `tool_call.rs` | `schema/tool_call.py` |\n   | `plan.rs` | `schema/agent_plan.py` |\n   | `rpc.rs` | `schema/messages.py` |\n   | `ext.rs` | `schema/notifications.py` |\n   | `error.rs` | `schema/common.py` (`Error`), `exceptions.py` (`RequestError`) |\n   | `version.rs` | `schema/__init__.py` (`PROTOCOL_VERSION`) |\n\n5. **Apply updates** to our code:\n   - Add new Pydantic model fields matching new Rust struct fields\n   - Map `#[cfg(feature = \"unstable_*\")]` fields to `field: Type | None = None`\n   - Add new types / enums / discriminated unions\n   - Update `Literal` types for new method strings in `schema/messages.py`\n   - Update `__init__.py` exports in both `schema/__init__.py` and `acp/__init__.py`\n   - Preserve our `camelCase` alias convention (`alias_generator=to_camel` in base)\n   - Do NOT modify protocol logic outside `schema/` (connection handlers, bridge, transports) — only update those if they need to handle new schema types\n\n6. **Wire up new schema types** in the protocol layer (if needed):\n   - `agent/connection.py` — add dispatch cases for new agent methods\n   - `client/connection.py` — add client-side methods for new requests\n   - `bridge/bridge.py` — add bridge handler cases\n   - `agent/protocol.py` — add methods to the `Agent` protocol\n   - `agent/implementations/testing.py` — add stubs to `TestAgent`\n   - `agent/implementations/debug_server/mock_agent.py` — add stubs to `MockAgent`\n\n7. **Wire up in the ACP server** (if needed):\n   - `src/agentpool_server/acp_server/acp_agent.py` — implement new methods, advertise new capabilities\n   - `src/agentpool_server/acp_server/event_converter.py` — emit new session update types\n   - `src/agentpool_server/acp_server/session.py` — store new state\n\n8. **Update the synced commit hash** in `src/acp/__init__.py`:\n   ```bash\n   git -C \"$tmp/acp\" rev-parse HEAD\n   ```\n   Update the `SPEC_SYNCED_COMMIT` constant to the new hash.\n\n9. **Clean up**:\n   ```bash\n   rm -rf \"$tmp\"\n   ```\n\n## Key conventions\n\n- Rust `#[serde(rename_all = \"camelCase\")]` → handled by our `alias_generator=to_camel` in `Schema` base\n- Rust `#[serde(rename = \"_meta\")]` → handled by our `convert()` function (`field_meta` → `_meta`)\n- Rust `Option<T>` → `T | None = None`\n- Rust `#[serde(default)]` booleans → `bool = False` or `bool | None = False`\n- Rust `#[serde(tag = \"type\")]` enums → Pydantic discriminated unions with `Discriminator()`\n- Rust `#[serde(untagged)]` variants → `Field(exclude=True)` on the `type` discriminator field\n- Rust `Vec<T>` → `Sequence[T]` (for inputs) or `list[T]`\n- Rust `HashMap<K, V>` → `dict[K, V]`\n- Unstable features (`#[cfg(feature = \"unstable_*\")]`) → always included, marked with `**UNSTABLE**` docstrings\n\n## What NOT to change\n\n- `connection.py` (base JSON-RPC connection) — only if the wire protocol itself changes\n- `transports.py` — transport layer is our own\n- `stdio.py` — our process management layer\n- `client/` implementations (`DefaultACPClient`, `HeadlessACPClient`, `NoOpClient`) — agentpool-specific\n- `registry/` — our agent registry, not part of ACP spec\n- `task/` — our task abstraction\n- `tool_call_reporter.py`, `tool_call_state.py` — our extensions\n- `filesystem.py` — our filesystem handler implementation\n"
+    },
+    {
+      "slug": "sync-skills-spec",
+      "name": "sync-skills-spec",
+      "dir": ".agents/skills/sync-skills-spec",
+      "path": ".agents/skills/sync-skills-spec/SKILL.md",
+      "desc": "Sync the agentpool skills implementation with the official Agent Skills Spec by comparing against the reference repository.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "git",
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/phil65/agentpool.git",
+        "copy": "cp -r .agents/skills/sync-skills-spec ~/.claude/skills/sync-skills-spec",
+        "raw": "https://raw.githubusercontent.com/phil65/agentpool/af99da0da6004347eb79535cf5724d7192c8c09e/.agents/skills/sync-skills-spec/SKILL.md",
+        "saveAs": "~/.claude/skills/sync-skills-spec/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:051e59f1b43ef5f23d2924c5169434ab8b635965f233781be0c70ea760969bd5",
+      "bytes": 2257,
+      "wordCount": 262,
+      "repoLicense": "MIT",
+      "commit": "af99da0da6004347eb79535cf5724d7192c8c09e",
+      "branch": "main",
+      "body": "---\nname: sync-skills-spec\ndescription: Sync the agentpool skills implementation with the official Agent Skills Spec by comparing against the reference repository.\n---\n\n# Sync Skills Spec\n\nKeep `src/agentpool/skills/` aligned with the official Agent Skills Spec.\n\n## Steps\n\n1. **Clone the reference repo** into a temporary directory:\n   ```bash\n   tmp=$(mktemp -d)\n   git clone --depth 1 https://github.com/agentskills/agentskills \"$tmp/agentskills\"\n   ```\n\n2. **Read the spec and reference implementation**:\n   - `$tmp/agentskills/spec/` — the formal specification documents\n   - `$tmp/agentskills/implementations/` — reference implementations (especially Python)\n   - Focus on the `SkillProperties` model, frontmatter fields, validation rules, and prompt generation\n\n3. **Compare with our implementation**:\n   - `src/agentpool/skills/skill.py` — our `Skill` Pydantic model, validators, `parse_frontmatter()`, `to_prompt()`\n   - `src/agentpool/skills/registry.py` — discovery and registration (our extension, not part of the spec)\n   - `src/agentpool/skills/manager.py` — pool-wide management (our extension)\n   - Check for missing fields, changed validation rules, new spec requirements\n\n4. **Apply updates** to our code:\n   - Add any new frontmatter fields to the `Skill` model\n   - Update validators to match spec changes (name format, length limits, allowed fields)\n   - Update `to_prompt()` if the recommended XML format changed\n   - Do NOT replace our registry/manager — those are agentpool-specific extensions\n\n5. **Update the synced commit hash** in `src/agentpool/skills/skill.py`:\n   - Get the current HEAD of the cloned repo: `git -C \"$tmp/agentskills\" rev-parse HEAD`\n   - Update the `SPEC_SYNCED_COMMIT` constant to the new hash\n   - This tracks which version of the spec we last synced against\n\n6. **Clean up**:\n   ```bash\n   rm -rf \"$tmp\"\n   ```\n\n## Key differences from upstream\n\nOur implementation extends the spec with:\n- **Async discovery** via fsspec/UPath (supports GitHub, S3, etc.)\n- **Registry pattern** (`SkillsRegistry` extending `BaseRegistry`)\n- **Pool-wide management** (`SkillsManager` with async context manager)\n- **YAML parsing** via `yamling` (not `strictyaml`)\n\nThese are intentional and should be preserved.\n",
+      "bodyMd": "# Sync Skills Spec\n\nKeep `src/agentpool/skills/` aligned with the official Agent Skills Spec.\n\n## Steps\n\n1. **Clone the reference repo** into a temporary directory:\n   ```bash\n   tmp=$(mktemp -d)\n   git clone --depth 1 https://github.com/agentskills/agentskills \"$tmp/agentskills\"\n   ```\n\n2. **Read the spec and reference implementation**:\n   - `$tmp/agentskills/spec/` — the formal specification documents\n   - `$tmp/agentskills/implementations/` — reference implementations (especially Python)\n   - Focus on the `SkillProperties` model, frontmatter fields, validation rules, and prompt generation\n\n3. **Compare with our implementation**:\n   - `src/agentpool/skills/skill.py` — our `Skill` Pydantic model, validators, `parse_frontmatter()`, `to_prompt()`\n   - `src/agentpool/skills/registry.py` — discovery and registration (our extension, not part of the spec)\n   - `src/agentpool/skills/manager.py` — pool-wide management (our extension)\n   - Check for missing fields, changed validation rules, new spec requirements\n\n4. **Apply updates** to our code:\n   - Add any new frontmatter fields to the `Skill` model\n   - Update validators to match spec changes (name format, length limits, allowed fields)\n   - Update `to_prompt()` if the recommended XML format changed\n   - Do NOT replace our registry/manager — those are agentpool-specific extensions\n\n5. **Update the synced commit hash** in `src/agentpool/skills/skill.py`:\n   - Get the current HEAD of the cloned repo: `git -C \"$tmp/agentskills\" rev-parse HEAD`\n   - Update the `SPEC_SYNCED_COMMIT` constant to the new hash\n   - This tracks which version of the spec we last synced against\n\n6. **Clean up**:\n   ```bash\n   rm -rf \"$tmp\"\n   ```\n\n## Key differences from upstream\n\nOur implementation extends the spec with:\n- **Async discovery** via fsspec/UPath (supports GitHub, S3, etc.)\n- **Registry pattern** (`SkillsRegistry` extending `BaseRegistry`)\n- **Pool-wide management** (`SkillsManager` with async context manager)\n- **YAML parsing** via `yamling` (not `strictyaml`)\n\nThese are intentional and should be preserved.\n"
+    },
+    {
+      "slug": "example-skill",
+      "name": "Example Skill",
+      "dir": ".claude/skills/example-skill",
+      "path": ".claude/skills/example-skill/SKILL.md",
+      "desc": "A simple example skill that demonstrates the basic structure and functionality. Use when you need to show how skills work or test skill loading.",
+      "descZh": "",
+      "triggers": [
+        "test skill loading"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/phil65/agentpool.git",
+        "copy": "cp -r .claude/skills/example-skill ~/.claude/skills/example-skill",
+        "raw": "https://raw.githubusercontent.com/phil65/agentpool/af99da0da6004347eb79535cf5724d7192c8c09e/.claude/skills/example-skill/SKILL.md",
+        "saveAs": "~/.claude/skills/example-skill/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:ddbecc93d0315e1b119817c6f5abb5c92a7b42e1aaa0be011679ed1232cc21cb",
+      "bytes": 1247,
+      "wordCount": 154,
+      "repoLicense": "MIT",
+      "commit": "af99da0da6004347eb79535cf5724d7192c8c09e",
+      "branch": "main",
+      "body": "---\nname: Example Skill\ndescription: A simple example skill that demonstrates the basic structure and functionality. Use when you need to show how skills work or test skill loading.\n---\n\n# Example Skill\n\n## Overview\n\nThis is an example skill that demonstrates the basic structure of a Claude Code Skill. It shows how to organize instructions, provide examples, and reference additional resources.\n\n## Quick Start\n\nWhen using this skill, follow these steps:\n\n1. **Identify the task**: Determine what specific functionality is needed\n2. **Check resources**: Look for additional files in the skill directory\n3. **Follow patterns**: Use the examples provided as templates\n\n## Examples\n\n### Basic Usage\n```python\n# Example of how this skill might be used\ndef example_function():\n    print(\"This is an example from the skill\")\n    return \"skill_result\"\n```\n\n### Advanced Usage\n```bash\n# Command line example\necho \"Running skill example\"\n```\n\n## Additional Resources\n\nThis skill may contain additional files:\n- `helpers.py`: Utility functions\n- `templates/`: Example templates\n- `docs/`: Extended documentation\n\n## Best Practices\n\n- Always validate inputs\n- Provide clear error messages  \n- Document any assumptions\n- Test functionality before deployment",
+      "bodyMd": "# Example Skill\n\n## Overview\n\nThis is an example skill that demonstrates the basic structure of a Claude Code Skill. It shows how to organize instructions, provide examples, and reference additional resources.\n\n## Quick Start\n\nWhen using this skill, follow these steps:\n\n1. **Identify the task**: Determine what specific functionality is needed\n2. **Check resources**: Look for additional files in the skill directory\n3. **Follow patterns**: Use the examples provided as templates\n\n## Examples\n\n### Basic Usage\n```python\n# Example of how this skill might be used\ndef example_function():\n    print(\"This is an example from the skill\")\n    return \"skill_result\"\n```\n\n### Advanced Usage\n```bash\n# Command line example\necho \"Running skill example\"\n```\n\n## Additional Resources\n\nThis skill may contain additional files:\n- `helpers.py`: Utility functions\n- `templates/`: Example templates\n- `docs/`: Extended documentation\n\n## Best Practices\n\n- Always validate inputs\n- Provide clear error messages  \n- Document any assumptions\n- Test functionality before deployment"
+    }
+  ]
+}

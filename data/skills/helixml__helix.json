@@ -1,0 +1,149 @@
+{
+  "repo": "helixml/helix",
+  "commit": "ed8d1783b9733749a77f15d1feb9cfc4d40d758e",
+  "branch": "main",
+  "fetchedAt": "2026-11-27T07:09:48.418Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "browser-lookup",
+      "name": "browser-lookup",
+      "dir": "evals/browser-support/skills/browser-lookup",
+      "path": "evals/browser-support/skills/browser-lookup/SKILL.md",
+      "desc": "Fast, reliable technique for answering a question by logging into a web application with the chrome-devtools browser tools and reading a value off the page. Use for every support lookup in CRM, billing, ticketing or any other internal web system.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "curl",
+          "wget",
+          "go",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/helixml/helix.git",
+        "copy": "cp -r evals/browser-support/skills/browser-lookup ~/.claude/skills/browser-lookup",
+        "raw": "https://raw.githubusercontent.com/helixml/helix/ed8d1783b9733749a77f15d1feb9cfc4d40d758e/evals/browser-support/skills/browser-lookup/SKILL.md",
+        "saveAs": "~/.claude/skills/browser-lookup/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:dca32e4131098e3b1287937952689d9e58b41bfcde8e4dd30f17a62f77858840",
+      "bytes": 3744,
+      "wordCount": 558,
+      "repoLicense": "",
+      "commit": "ed8d1783b9733749a77f15d1feb9cfc4d40d758e",
+      "branch": "main",
+      "body": "---\nname: browser-lookup\ndescription: Fast, reliable technique for answering a question by logging into a web application with the chrome-devtools browser tools and reading a value off the page. Use for every support lookup in CRM, billing, ticketing or any other internal web system.\n---\n\n# Browser lookup\n\nYou answer questions by reading internal web systems through the `chrome-devtools` MCP tools. Each tool call costs time and tokens: aim for the fewest calls that give a verified answer.\n\n## Procedure\n\n1. **Go straight to the record.** If the system playbook (`support-systems` skill) gives a URL pattern, `navigate_page` to it directly. Do not click through menus you do not need.\n2. **Read with `take_snapshot`, not screenshots.** The snapshot is the page's text tree and has every value you need. Only use `take_screenshot` if the snapshot is missing content (for example, canvas charts).\n3. **If you land on a login page, log in with one `fill_form` call** that fills every field at once, including dropdowns (pass the option text, e.g. `CORP`). Then click the submit button. Check the next snapshot for an error message before continuing.\n4. **Values that load late:** if a field shows a placeholder such as `calculating…` or `Loading`, call `wait_for` with text that will appear (for example `USD`), then take one more snapshot.\n5. **iframes:** snapshot content inside an iframe may be missing. Navigate to the iframe's `src` URL directly and snapshot that page.\n6. **Stop as soon as you have the value.** Do not re-verify by visiting the same page again.\n\n## Many records at once\n\nWhen a question needs a field from many records (every customer of a manager, every account in a list), do not open the records one by one. Log in through the UI first, then make **one** `evaluate_script` call that fetches the record pages from the logged-in tab and extracts only the fields you need:\n\n```js\nasync () => {\n  const ids = [1001, 1002 /* … from the list page */];\n  const out = [];\n  for (const id of ids) {\n    const html = await (await fetch(`{{BASE}}/crm/customer?id=${id}`)).text();\n    const doc = new DOMParser().parseFromString(html, \"text/html\");\n    const cell = (label) => [...doc.querySelectorAll(\"tr\")]\n      .find((tr) => tr.querySelector(\"th\")?.textContent.trim() === label)\n      ?.querySelector(\"td\")?.textContent.trim();\n    out.push({ id, name: doc.querySelector(\"h3\")?.textContent, owner: cell(\"Relationship Owner\"), level: cell(\"Service Level\") });\n  }\n  return out;\n}\n```\n\n`fetch` from the page reuses the browser's login session. Keep the returned JSON small: only the fields the question needs. Get the list of ids from the list or search pages first (they are paginated; read every page).\n\n## Names that do not match\n\nIf no record matches the name exactly, say that no such customer/account was found, and mention close matches you saw. Never answer with a different record's data.\n\n## Rules\n\n- Use the browser tools, not `curl`, `wget` or scripts, to read the web systems.\n- Never guess or compute a value the system displays. If the page shows a total, report that total.\n- If a search returns nothing, try a shorter query (one distinctive word of the name) before giving up.\n- If a session expired and you are redirected to login, log in again and retry the same URL.\n- If two browser calls in a row time out or error, the page is hung: open a fresh tab with `new_page`, retry once, and if it still fails, stop and report which system is unreachable. Do not write your own browser automation scripts or kill Chrome.\n\n## Answer format\n\nReply in one or two sentences with the exact values as displayed (names, dates, amounts with currency, statuses), and name the system each value came from. No preamble.\n",
+      "bodyMd": "# Browser lookup\n\nYou answer questions by reading internal web systems through the `chrome-devtools` MCP tools. Each tool call costs time and tokens: aim for the fewest calls that give a verified answer.\n\n## Procedure\n\n1. **Go straight to the record.** If the system playbook (`support-systems` skill) gives a URL pattern, `navigate_page` to it directly. Do not click through menus you do not need.\n2. **Read with `take_snapshot`, not screenshots.** The snapshot is the page's text tree and has every value you need. Only use `take_screenshot` if the snapshot is missing content (for example, canvas charts).\n3. **If you land on a login page, log in with one `fill_form` call** that fills every field at once, including dropdowns (pass the option text, e.g. `CORP`). Then click the submit button. Check the next snapshot for an error message before continuing.\n4. **Values that load late:** if a field shows a placeholder such as `calculating…` or `Loading`, call `wait_for` with text that will appear (for example `USD`), then take one more snapshot.\n5. **iframes:** snapshot content inside an iframe may be missing. Navigate to the iframe's `src` URL directly and snapshot that page.\n6. **Stop as soon as you have the value.** Do not re-verify by visiting the same page again.\n\n## Many records at once\n\nWhen a question needs a field from many records (every customer of a manager, every account in a list), do not open the records one by one. Log in through the UI first, then make **one** `evaluate_script` call that fetches the record pages from the logged-in tab and extracts only the fields you need:\n\n```js\nasync () => {\n  const ids = [1001, 1002 /* … from the list page */];\n  const out = [];\n  for (const id of ids) {\n    const html = await (await fetch(`{{BASE}}/crm/customer?id=${id}`)).text();\n    const doc = new DOMParser().parseFromString(html, \"text/html\");\n    const cell = (label) => [...doc.querySelectorAll(\"tr\")]\n      .find((tr) => tr.querySelector(\"th\")?.textContent.trim() === label)\n      ?.querySelector(\"td\")?.textContent.trim();\n    out.push({ id, name: doc.querySelector(\"h3\")?.textContent, owner: cell(\"Relationship Owner\"), level: cell(\"Service Level\") });\n  }\n  return out;\n}\n```\n\n`fetch` from the page reuses the browser's login session. Keep the returned JSON small: only the fields the question needs. Get the list of ids from the list or search pages first (they are paginated; read every page).\n\n## Names that do not match\n\nIf no record matches the name exactly, say that no such customer/account was found, and mention close matches you saw. Never answer with a different record's data.\n\n## Rules\n\n- Use the browser tools, not `curl`, `wget` or scripts, to read the web systems.\n- Never guess or compute a value the system displays. If the page shows a total, report that total.\n- If a search returns nothing, try a shorter query (one distinctive word of the name) before giving up.\n- If a session expired and you are redirected to login, log in again and retry the same URL.\n- If two browser calls in a row time out or error, the page is hung: open a fresh tab with `new_page`, retry once, and if it still fails, stop and report which system is unreachable. Do not write your own browser automation scripts or kill Chrome.\n\n## Answer format\n\nReply in one or two sentences with the exact values as displayed (names, dates, amounts with currency, statuses), and name the system each value came from. No preamble.\n"
+    },
+    {
+      "slug": "support-systems",
+      "name": "support-systems",
+      "dir": "evals/browser-support/skills/support-systems",
+      "path": "evals/browser-support/skills/support-systems/SKILL.md",
+      "desc": "Site map, login steps, URL patterns and field-name glossary for the company's internal systems (Acme CRM, BillPro Enterprise billing, HelpDesk Classic tickets, Swag Labs store). Use whenever a support question mentions a customer, account, invoice, balance, ticket or product.",
+      "descZh": "",
+      "triggers": [
+        "account",
+        "invoice",
+        "balance",
+        "ticket",
+        "product"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/helixml/helix.git",
+        "copy": "cp -r evals/browser-support/skills/support-systems ~/.claude/skills/support-systems",
+        "raw": "https://raw.githubusercontent.com/helixml/helix/ed8d1783b9733749a77f15d1feb9cfc4d40d758e/evals/browser-support/skills/support-systems/SKILL.md",
+        "saveAs": "~/.claude/skills/support-systems/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:fb687e9c6e4059916078aeaf5e2fcf660d75c16498c9bc4854d9b5e8b4278dea",
+      "bytes": 3802,
+      "wordCount": 519,
+      "repoLicense": "",
+      "commit": "ed8d1783b9733749a77f15d1feb9cfc4d40d758e",
+      "branch": "main",
+      "body": "---\nname: support-systems\ndescription: Site map, login steps, URL patterns and field-name glossary for the company's internal systems (Acme CRM, BillPro Enterprise billing, HelpDesk Classic tickets, Swag Labs store). Use whenever a support question mentions a customer, account, invoice, balance, ticket or product.\n---\n\n# Support systems playbook\n\n`{{BASE}}` is the intranet base URL from your instructions. Credentials are in your instructions.\n\n## Which system has what\n\n| Question is about | System | Key |\n|---|---|---|\n| Account manager, tier / service level, contract end / renewal, seats, phone, billing account number | Acme CRM | customer name or CRM account # |\n| Balance owed, invoices, overdue / open / paid | BillPro | billing account `BA-#####` |\n| Tickets, priority, ticket status, who changed it | HelpDesk | ticket `#5xxx` or customer name |\n| Products and prices | Swag Labs store | product name |\n\nCross-system questions: a **customer name** leads to the CRM, whose record shows the **Billing Ref** (`BA-#####`) for BillPro. A **ticket** shows the customer name and CRM account # (`CRM 10xx`), which opens the CRM record directly.\n\n## Acme CRM — `{{BASE}}/crm/`\n\n- Login page `{{BASE}}/crm/login`: fields **User ID**, **Passcode**, button **Sign On**. The form has a hidden token; always submit via the page, never by crafting a request.\n- Search: `navigate_page` to `{{BASE}}/crm/customers?q=<one distinctive word of the name>`. Results link to the record.\n- Record: `{{BASE}}/crm/customer?id=<CRM account #>`.\n- The customer list (`{{BASE}}/crm/customers?page=N`, 12 per page, 6 pages) shows only Acct #, name and phone. Tier, owner, contract end and billing ref are **only on the record page** — for questions across many customers use the \"Many records at once\" technique from `browser-lookup`.\n- CRM account numbers run from 1001 upwards in list order.\n- Field glossary (the UI uses its own terms):\n  - account manager / owner → **Relationship Owner**\n  - tier / plan / level → **Service Level**\n  - contract end / renewal date → **Contract End**\n  - billing account → **Billing Ref**\n\n## BillPro Enterprise — `{{BASE}}/billing/`\n\nLogin is three screens, in this order:\n1. `{{BASE}}/billing/login` — **Operator ID**, click **Next >**.\n2. Verify page — **Password** and **Security question** (city of birth), click **Log In**.\n3. System Notice — tick **I have read this notice**, click **Continue**.\n\nThen:\n- Account page: `navigate_page` to `{{BASE}}/billing/account/<BA-#####>` directly. There is no account list.\n- **Outstanding balance** loads a moment after the page: it first shows `calculating…`. Call `wait_for` with text `USD`, then snapshot. Report that figure; do not add up invoices yourself.\n- The invoice table's **State** column is `Paid`, `Open` or `Overdue`. For \"overdue\" questions count only `Overdue` rows and sum their **Amount (USD)**.\n\n## HelpDesk Classic — `{{BASE}}/helpdesk/`\n\n- Login `{{BASE}}/helpdesk/login`: **Login**, **Password**, and the **Domain** dropdown must be set to `CORP` (the default `LOCAL` fails).\n- Ticket: `{{BASE}}/helpdesk/ticket?id=<ticket number without #>`. **Urgency** = priority, **State** = current status. The **Customer** row shows the CRM account #.\n- Status history (\"who closed it\", \"status before X\") is in an iframe. Open `{{BASE}}/helpdesk/ticket/history?id=<ticket number>` directly: rows are Date, Status and Changed by, oldest first.\n- Tickets for a customer: `{{BASE}}/helpdesk/tickets?customer=<word from name>`.\n\n## Swag Labs store — `https://www.saucedemo.com`\n\n- Login fields **Username** and **Password**, button **Login**. The inventory page lists every product with its price.\n- Cheapest or most expensive: read all prices from the one inventory snapshot. Sorting is not needed.\n",
+      "bodyMd": "# Support systems playbook\n\n`{{BASE}}` is the intranet base URL from your instructions. Credentials are in your instructions.\n\n## Which system has what\n\n| Question is about | System | Key |\n|---|---|---|\n| Account manager, tier / service level, contract end / renewal, seats, phone, billing account number | Acme CRM | customer name or CRM account # |\n| Balance owed, invoices, overdue / open / paid | BillPro | billing account `BA-#####` |\n| Tickets, priority, ticket status, who changed it | HelpDesk | ticket `#5xxx` or customer name |\n| Products and prices | Swag Labs store | product name |\n\nCross-system questions: a **customer name** leads to the CRM, whose record shows the **Billing Ref** (`BA-#####`) for BillPro. A **ticket** shows the customer name and CRM account # (`CRM 10xx`), which opens the CRM record directly.\n\n## Acme CRM — `{{BASE}}/crm/`\n\n- Login page `{{BASE}}/crm/login`: fields **User ID**, **Passcode**, button **Sign On**. The form has a hidden token; always submit via the page, never by crafting a request.\n- Search: `navigate_page` to `{{BASE}}/crm/customers?q=<one distinctive word of the name>`. Results link to the record.\n- Record: `{{BASE}}/crm/customer?id=<CRM account #>`.\n- The customer list (`{{BASE}}/crm/customers?page=N`, 12 per page, 6 pages) shows only Acct #, name and phone. Tier, owner, contract end and billing ref are **only on the record page** — for questions across many customers use the \"Many records at once\" technique from `browser-lookup`.\n- CRM account numbers run from 1001 upwards in list order.\n- Field glossary (the UI uses its own terms):\n  - account manager / owner → **Relationship Owner**\n  - tier / plan / level → **Service Level**\n  - contract end / renewal date → **Contract End**\n  - billing account → **Billing Ref**\n\n## BillPro Enterprise — `{{BASE}}/billing/`\n\nLogin is three screens, in this order:\n1. `{{BASE}}/billing/login` — **Operator ID**, click **Next >**.\n2. Verify page — **Password** and **Security question** (city of birth), click **Log In**.\n3. System Notice — tick **I have read this notice**, click **Continue**.\n\nThen:\n- Account page: `navigate_page` to `{{BASE}}/billing/account/<BA-#####>` directly. There is no account list.\n- **Outstanding balance** loads a moment after the page: it first shows `calculating…`. Call `wait_for` with text `USD`, then snapshot. Report that figure; do not add up invoices yourself.\n- The invoice table's **State** column is `Paid`, `Open` or `Overdue`. For \"overdue\" questions count only `Overdue` rows and sum their **Amount (USD)**.\n\n## HelpDesk Classic — `{{BASE}}/helpdesk/`\n\n- Login `{{BASE}}/helpdesk/login`: **Login**, **Password**, and the **Domain** dropdown must be set to `CORP` (the default `LOCAL` fails).\n- Ticket: `{{BASE}}/helpdesk/ticket?id=<ticket number without #>`. **Urgency** = priority, **State** = current status. The **Customer** row shows the CRM account #.\n- Status history (\"who closed it\", \"status before X\") is in an iframe. Open `{{BASE}}/helpdesk/ticket/history?id=<ticket number>` directly: rows are Date, Status and Changed by, oldest first.\n- Tickets for a customer: `{{BASE}}/helpdesk/tickets?customer=<word from name>`.\n\n## Swag Labs store — `https://www.saucedemo.com`\n\n- Login fields **Username** and **Password**, button **Login**. The inventory page lists every product with its price.\n- Cheapest or most expensive: read all prices from the one inventory snapshot. Sorting is not needed.\n"
+    },
+    {
+      "slug": "helix-org-cli",
+      "name": "helix-org-cli",
+      "dir": "skills/helix-org-cli",
+      "path": "skills/helix-org-cli/SKILL.md",
+      "desc": "Use the Helix CLI to operate helix-org (bots, topics, processors, chat) and raw REST via helix api. Use when listing/managing org bots, chatting with chief-of-staff or other bots, or calling any authenticated Helix API path.",
+      "descZh": "",
+      "triggers": [
+        "other bots",
+        "calling any auth"
+      ],
+      "version": "",
+      "license": "",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": true,
+        "network": true,
+        "bins": [
+          "gh",
+          "go"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/helixml/helix.git",
+        "copy": "cp -r skills/helix-org-cli ~/.claude/skills/helix-org-cli",
+        "raw": "https://raw.githubusercontent.com/helixml/helix/ed8d1783b9733749a77f15d1feb9cfc4d40d758e/skills/helix-org-cli/SKILL.md",
+        "saveAs": "~/.claude/skills/helix-org-cli/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": false,
+      "excerpt": "",
+      "contentHash": "sha256:7516b6dbe75d8e9ae313776ff5fc9be34444b091ee1db7b3ab755cb866935db6",
+      "bytes": 2812,
+      "wordCount": 365,
+      "repoLicense": "",
+      "commit": "ed8d1783b9733749a77f15d1feb9cfc4d40d758e",
+      "branch": "main",
+      "body": "---\nname: helix-org-cli\ndescription: Use the Helix CLI to operate helix-org (bots, topics, processors, chat) and raw REST via helix api. Use when listing/managing org bots, chatting with chief-of-staff or other bots, or calling any authenticated Helix API path.\n---\n\n# Helix-org CLI\n\nAuth (required):\n\n```bash\nexport HELIX_URL=http://localhost:8080   # or your control plane\nexport HELIX_API_KEY=hl-…                # user API key (never the runner token)\nexport HELIX_ORG=unmanned-org            # optional default org (name or id)\n```\n\nBuild (from repo root):\n\n```bash\ncd api && CGO_ENABLED=0 go build -o /tmp/helix-bin .\n```\n\n## Org graph commands\n\n```bash\n# Bots\nhelix org bots list [--org NAME]\nhelix org bots get <bot-id> [--org NAME]\nhelix org bots start|stop|restart <bot-id> [--org NAME]\nhelix org bots reset <bot-id> --scope session|session_and_home --confirm <bot-id> [--org NAME]\nhelix org bots chat <bot-id> \"message…\" [--org NAME] [--timeout 300] [--no-start] [--session ses_…]\n\n# Topics / processors\nhelix org topics list [--org NAME]\nhelix org processors list [--org NAME]\n```\n\n`bots restart` is non-destructive: it recreates the bot's runtime on the same\nsession and keeps its home (`/home/retro/work`, browser profiles and logins),\nconversation and queued work. `bots stop` purges queued work; don't use it as\nrecovery. `bots reset` is the destructive operation: it purges queued work and\nstarts a fresh session, and with `--scope session_and_home` also retires the\nbot home. It prints exactly what was erased and kept, and is audited.\n\n`bots chat` resolves the bot’s project exploratory session (starts the agent if needed), sends the message to `/sessions/{id}/chat`, and prints the assistant reply.\n\n## Escape hatch — `helix api` (like `gh api`)\n\n```bash\nhelix api /orgs/unmanned-org/bots\nhelix api -X POST /orgs/unmanned-org/bots/chief-of-staff/activate\nhelix api -X POST /orgs/unmanned-org/bots/b-mason/stop\nhelix api --input '{\"…\":…}' -X POST /sessions/chat\necho '{\"message\":\"hi\"}' | helix api -X POST /sessions/ses_…/chat --input -\n```\n\nPath may be `/orgs/…`, `/api/v1/orgs/…`, or a full URL. Always authenticated with `HELIX_API_KEY`.\n\n## Typical agent workflow\n\n1. `helix org bots list --org unmanned-org` — see who is running.\n2. `helix org bots chat chief-of-staff --org unmanned-org \"…\"` — talk to CoS.\n3. If a first-class command is missing: `helix api GET /orgs/unmanned-org/…`.\n\n## Notes\n\n- Prefer org **name** (`unmanned-org`) or full id (`org_…`); both resolve.\n- Do **not** use `oh-hallo-insecure-token` (runner token).\n- CoS tools (`list_bot_repositories`, etc.) are MCP tools the bot calls inside its session; the CLI chats with the bot session, it does not expose those MCP tools as CLI verbs (use `helix api` or chat the bot to invoke them).\n",
+      "bodyMd": "# Helix-org CLI\n\nAuth (required):\n\n```bash\nexport HELIX_URL=http://localhost:8080   # or your control plane\nexport HELIX_API_KEY=hl-…                # user API key (never the runner token)\nexport HELIX_ORG=unmanned-org            # optional default org (name or id)\n```\n\nBuild (from repo root):\n\n```bash\ncd api && CGO_ENABLED=0 go build -o /tmp/helix-bin .\n```\n\n## Org graph commands\n\n```bash\n# Bots\nhelix org bots list [--org NAME]\nhelix org bots get <bot-id> [--org NAME]\nhelix org bots start|stop|restart <bot-id> [--org NAME]\nhelix org bots reset <bot-id> --scope session|session_and_home --confirm <bot-id> [--org NAME]\nhelix org bots chat <bot-id> \"message…\" [--org NAME] [--timeout 300] [--no-start] [--session ses_…]\n\n# Topics / processors\nhelix org topics list [--org NAME]\nhelix org processors list [--org NAME]\n```\n\n`bots restart` is non-destructive: it recreates the bot's runtime on the same\nsession and keeps its home (`/home/retro/work`, browser profiles and logins),\nconversation and queued work. `bots stop` purges queued work; don't use it as\nrecovery. `bots reset` is the destructive operation: it purges queued work and\nstarts a fresh session, and with `--scope session_and_home` also retires the\nbot home. It prints exactly what was erased and kept, and is audited.\n\n`bots chat` resolves the bot’s project exploratory session (starts the agent if needed), sends the message to `/sessions/{id}/chat`, and prints the assistant reply.\n\n## Escape hatch — `helix api` (like `gh api`)\n\n```bash\nhelix api /orgs/unmanned-org/bots\nhelix api -X POST /orgs/unmanned-org/bots/chief-of-staff/activate\nhelix api -X POST /orgs/unmanned-org/bots/b-mason/stop\nhelix api --input '{\"…\":…}' -X POST /sessions/chat\necho '{\"message\":\"hi\"}' | helix api -X POST /sessions/ses_…/chat --input -\n```\n\nPath may be `/orgs/…`, `/api/v1/orgs/…`, or a full URL. Always authenticated with `HELIX_API_KEY`.\n\n## Typical agent workflow\n\n1. `helix org bots list --org unmanned-org` — see who is running.\n2. `helix org bots chat chief-of-staff --org unmanned-org \"…\"` — talk to CoS.\n3. If a first-class command is missing: `helix api GET /orgs/unmanned-org/…`.\n\n## Notes\n\n- Prefer org **name** (`unmanned-org`) or full id (`org_…`); both resolve.\n- Do **not** use `oh-hallo-insecure-token` (runner token).\n- CoS tools (`list_bot_repositories`, etc.) are MCP tools the bot calls inside its session; the CLI chats with the bot session, it does not expose those MCP tools as CLI verbs (use `helix api` or chat the bot to invoke them).\n"
+    }
+  ]
+}

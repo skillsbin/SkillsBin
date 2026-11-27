@@ -1,0 +1,49 @@
+{
+  "repo": "morganlinton/Albatross",
+  "commit": "e458e4277f463a4688f127ea6ea61f5a344b64b8",
+  "branch": "main",
+  "fetchedAt": "2026-11-27T07:11:42.236Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "review",
+      "name": "review",
+      "dir": "examples/package/skills/review",
+      "path": "examples/package/skills/review/SKILL.md",
+      "desc": "Review a change for correctness, security, and missing tests.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/morganlinton/Albatross.git",
+        "copy": "cp -r examples/package/skills/review ~/.claude/skills/review",
+        "raw": "https://raw.githubusercontent.com/morganlinton/Albatross/e458e4277f463a4688f127ea6ea61f5a344b64b8/examples/package/skills/review/SKILL.md",
+        "saveAs": "~/.claude/skills/review/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:185ccf67874098c61377bbaf10402a59217be04949a38bd074a35454e0bb890c",
+      "bytes": 330,
+      "wordCount": 34,
+      "repoLicense": "MIT",
+      "commit": "e458e4277f463a4688f127ea6ea61f5a344b64b8",
+      "branch": "main",
+      "body": "---\nname: review\ndescription: Review a change for correctness, security, and missing tests.\n---\n\n# Review changes\n\nInspect the relevant diff and call out correctness bugs before style concerns.\nCheck boundary conditions, trust boundaries, error paths, and whether tests\nprove the behavior. Give concrete file and line references.\n",
+      "bodyMd": "# Review changes\n\nInspect the relevant diff and call out correctness bugs before style concerns.\nCheck boundary conditions, trust boundaries, error paths, and whether tests\nprove the behavior. Give concrete file and line references.\n"
+    }
+  ]
+}

@@ -1,0 +1,893 @@
+{
+  "repo": "expectedparrot/edsl",
+  "commit": "d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0",
+  "branch": "main",
+  "fetchedAt": "2026-11-27T07:10:21.978Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "edsl-agent-lists",
+      "name": "edsl-agent-lists",
+      "dir": "edsl/skills/edsl-agent-lists",
+      "path": "edsl/skills/edsl-agent-lists/SKILL.md",
+      "desc": "Build, import, validate, and save EDSL AgentLists from Python data or tabular files.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git",
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/expectedparrot/edsl.git",
+        "copy": "cp -r edsl/skills/edsl-agent-lists ~/.claude/skills/edsl-agent-lists",
+        "raw": "https://raw.githubusercontent.com/expectedparrot/edsl/d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0/edsl/skills/edsl-agent-lists/SKILL.md",
+        "saveAs": "~/.claude/skills/edsl-agent-lists/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:68ed9a61f1816e76586c5b59ee80a095a8ba96dc746e1b0b77b01a78b7bf9bbc",
+      "bytes": 959,
+      "wordCount": 105,
+      "repoLicense": "MIT",
+      "commit": "d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0",
+      "branch": "main",
+      "body": "---\nname: edsl-agent-lists\ndescription: Build, import, validate, and save EDSL AgentLists from Python data or tabular files.\ntags: [edsl, reference]\n---\n\n# EDSL AgentList\n\nUse `AgentList` to represent respondent personas or other agents in EDSL. Construct from `Agent` instances or use `ep agents create` for CSV and Excel inputs. Keep shared instructions on the list or agents as supported by the current API; represent per-agent differences as traits. See the [construction guide](references/construction.md).\n\n`name` is reserved by `Agent`: pass it as `Agent(name=..., traits={...})`, not inside `traits`. For tabular data, use the `--name-field` option when a column supplies names. Save durable objects with `agent_list.git.save('agents.ep')` and load with `AgentList.git.load(...)`.\n\nUse `ep agents create --help` and `ep agents transform --help` for the installed CLI options. Related EDSL bundles: `edsl:edsl-scenario-lists`, `edsl:edsl-study-files`.\n",
+      "bodyMd": "# EDSL AgentList\n\nUse `AgentList` to represent respondent personas or other agents in EDSL. Construct from `Agent` instances or use `ep agents create` for CSV and Excel inputs. Keep shared instructions on the list or agents as supported by the current API; represent per-agent differences as traits. See the [construction guide](references/construction.md).\n\n`name` is reserved by `Agent`: pass it as `Agent(name=..., traits={...})`, not inside `traits`. For tabular data, use the `--name-field` option when a column supplies names. Save durable objects with `agent_list.git.save('agents.ep')` and load with `AgentList.git.load(...)`.\n\nUse `ep agents create --help` and `ep agents transform --help` for the installed CLI options. Related EDSL bundles: `edsl:edsl-scenario-lists`, `edsl:edsl-study-files`.\n"
+    },
+    {
+      "slug": "edsl-collections",
+      "name": "edsl-collections",
+      "dir": "edsl/skills/edsl-collections",
+      "path": "edsl/skills/edsl-collections/SKILL.md",
+      "desc": "Build, inspect, and publish EDSL Collections that group Expected Parrot objects by typed UUID reference.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/expectedparrot/edsl.git",
+        "copy": "cp -r edsl/skills/edsl-collections ~/.claude/skills/edsl-collections",
+        "raw": "https://raw.githubusercontent.com/expectedparrot/edsl/d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0/edsl/skills/edsl-collections/SKILL.md",
+        "saveAs": "~/.claude/skills/edsl-collections/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:4ff024d0598cecabb95c5701c63f4938eeab8716d29bbb3d33743632830f9e08",
+      "bytes": 2497,
+      "wordCount": 326,
+      "repoLicense": "MIT",
+      "commit": "d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0",
+      "branch": "main",
+      "body": "---\nname: edsl-collections\ndescription: Build, inspect, and publish EDSL Collections that group Expected Parrot objects by typed UUID reference.\ntags: [edsl, collections, expected-parrot]\n---\n\n# EDSL Collections\n\nUse this skill when someone wants to group, retrieve, or organize EDSL objects with a `Collection`.\n\nA Collection is an ordered, metadata-only list of typed UUID references to objects stored on Expected Parrot. It does not contain member content, freeze a member version, or change member visibility or sharing permissions. Use `ep collections metadata` to resolve current metadata for members the authenticated account can access.\n\n## Create and edit a local collection\n\nUse the installed command help if a CLI option differs by version:\n\n```bash\nep collections create --name \"Study materials\" --purpose \"Survey and prompt for the study.\" --output study-materials.ep\nep collections add study-materials.ep \"$SURVEY_UUID\" --type survey\nep collections add study-materials.ep \"$PROMPT_UUID\" --type prompt\nep collections show study-materials.ep\nep collections metadata study-materials.ep\n```\n\nSet `SURVEY_UUID` and `PROMPT_UUID` to UUIDs returned by `ep push`, `ep clone`, or `ep metadata`. Supply each member's type with `--type`. The collection command records references only; it does not fetch member content.\n\nTo remove a reference, use `ep collections remove <collection.ep> <uuid> --type <type>`. To build a collection from search, use `ep collections from-search --help`; it creates a collection from one result page. Check pagination data and warnings. Use `ep search` and `ep collections add` to add results from other pages to that collection.\n\n## Publish and retrieve\n\nCollections are `.ep` packages and use the standard object commands:\n\n```bash\nep push study-materials.ep --alias study-materials --description \"Survey and prompt references for the study.\" --visibility private\nep clone \"$COLLECTION_UUID\" --path study-materials-copy.ep\nep pull study-materials-copy.ep\n```\n\nSet `COLLECTION_UUID` to the UUID returned by `ep push`. Collections can also be cloned by owner and alias or by URL.\n\nVisibility applies to the collection object only. A public collection can contain a reference to a private object, but that reference does not grant access to the private object's contents. For visibility, alias, description, and sharing guidance, see `edsl:edsl-object-publishing`.\n\nFor the full CLI workflow and search example, see the Collections page in the EDSL documentation.\n",
+      "bodyMd": "# EDSL Collections\n\nUse this skill when someone wants to group, retrieve, or organize EDSL objects with a `Collection`.\n\nA Collection is an ordered, metadata-only list of typed UUID references to objects stored on Expected Parrot. It does not contain member content, freeze a member version, or change member visibility or sharing permissions. Use `ep collections metadata` to resolve current metadata for members the authenticated account can access.\n\n## Create and edit a local collection\n\nUse the installed command help if a CLI option differs by version:\n\n```bash\nep collections create --name \"Study materials\" --purpose \"Survey and prompt for the study.\" --output study-materials.ep\nep collections add study-materials.ep \"$SURVEY_UUID\" --type survey\nep collections add study-materials.ep \"$PROMPT_UUID\" --type prompt\nep collections show study-materials.ep\nep collections metadata study-materials.ep\n```\n\nSet `SURVEY_UUID` and `PROMPT_UUID` to UUIDs returned by `ep push`, `ep clone`, or `ep metadata`. Supply each member's type with `--type`. The collection command records references only; it does not fetch member content.\n\nTo remove a reference, use `ep collections remove <collection.ep> <uuid> --type <type>`. To build a collection from search, use `ep collections from-search --help`; it creates a collection from one result page. Check pagination data and warnings. Use `ep search` and `ep collections add` to add results from other pages to that collection.\n\n## Publish and retrieve\n\nCollections are `.ep` packages and use the standard object commands:\n\n```bash\nep push study-materials.ep --alias study-materials --description \"Survey and prompt references for the study.\" --visibility private\nep clone \"$COLLECTION_UUID\" --path study-materials-copy.ep\nep pull study-materials-copy.ep\n```\n\nSet `COLLECTION_UUID` to the UUID returned by `ep push`. Collections can also be cloned by owner and alias or by URL.\n\nVisibility applies to the collection object only. A public collection can contain a reference to a private object, but that reference does not grant access to the private object's contents. For visibility, alias, description, and sharing guidance, see `edsl:edsl-object-publishing`.\n\nFor the full CLI workflow and search example, see the Collections page in the EDSL documentation.\n"
+    },
+    {
+      "slug": "edsl-file-store",
+      "name": "edsl-file-store",
+      "dir": "edsl/skills/edsl-file-store",
+      "path": "edsl/skills/edsl-file-store/SKILL.md",
+      "desc": "Use EDSL FileStore and FileStoreList objects for files in scenarios and survey answers.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/expectedparrot/edsl.git",
+        "copy": "cp -r edsl/skills/edsl-file-store ~/.claude/skills/edsl-file-store",
+        "raw": "https://raw.githubusercontent.com/expectedparrot/edsl/d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0/edsl/skills/edsl-file-store/SKILL.md",
+        "saveAs": "~/.claude/skills/edsl-file-store/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:75cacd295a75d431c37d5d176b5ea580d289ea4af52d18a70231559257ff6a0d",
+      "bytes": 897,
+      "wordCount": 90,
+      "repoLicense": "MIT",
+      "commit": "d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0",
+      "branch": "main",
+      "body": "---\nname: edsl-file-store\ndescription: Use EDSL FileStore and FileStoreList objects for files in scenarios and survey answers.\ntags: [edsl, reference]\n---\n\n# EDSL FileStore\n\n`FileStore(path=...)` wraps a local image, document, data file, or other supported file for use as an EDSL value. Place it in a `Scenario`, then reference the scenario field in question text, for example `{{ scenario.file_path }}`. EDSL resolves the stored content when constructing the model input.\n\n`FileStore` also provides helpers such as `extract_text()`, `mime_type`, `is_image()`, and `to_scenario_list()` for supported formats. File upload answers can be converted with `FileStore.from_file_upload_answer`; generated image answers can be passed to later image-generation questions. See the [detailed FileStore guide](references/detailed-guide.md).\n\nRelated bundles: `edsl:edsl-scenario-lists`, `edsl:edsl-surveys`.\n",
+      "bodyMd": "# EDSL FileStore\n\n`FileStore(path=...)` wraps a local image, document, data file, or other supported file for use as an EDSL value. Place it in a `Scenario`, then reference the scenario field in question text, for example `{{ scenario.file_path }}`. EDSL resolves the stored content when constructing the model input.\n\n`FileStore` also provides helpers such as `extract_text()`, `mime_type`, `is_image()`, and `to_scenario_list()` for supported formats. File upload answers can be converted with `FileStore.from_file_upload_answer`; generated image answers can be passed to later image-generation questions. See the [detailed FileStore guide](references/detailed-guide.md).\n\nRelated bundles: `edsl:edsl-scenario-lists`, `edsl:edsl-surveys`.\n"
+    },
+    {
+      "slug": "edsl-human-survey-agent-access",
+      "name": "edsl-human-survey-agent-access",
+      "dir": "edsl/skills/edsl-human-survey-agent-access",
+      "path": "edsl/skills/edsl-human-survey-agent-access/SKILL.md",
+      "desc": "Configure EDSL human survey access for AI agents, including participation modes and question guidance.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/expectedparrot/edsl.git",
+        "copy": "cp -r edsl/skills/edsl-human-survey-agent-access ~/.claude/skills/edsl-human-survey-agent-access",
+        "raw": "https://raw.githubusercontent.com/expectedparrot/edsl/d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0/edsl/skills/edsl-human-survey-agent-access/SKILL.md",
+        "saveAs": "~/.claude/skills/edsl-human-survey-agent-access/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:4ca5ebae20ec55ff7be7782a73a37358a7ef674928c39e659d223814785d429b",
+      "bytes": 860,
+      "wordCount": 85,
+      "repoLicense": "MIT",
+      "commit": "d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0",
+      "branch": "main",
+      "body": "---\nname: edsl-human-survey-agent-access\ndescription: Configure EDSL human survey access for AI agents, including participation modes and question guidance.\ntags: [edsl, reference]\n---\n\n# EDSL human survey agent access\n\nEDSL humanized surveys can expose an agent participation route. Use `ep humanize agent-access get <survey_uuid>` to inspect the configuration and `patch` to update participation mode, general instructions, or question-specific instructions. Consult `ep humanize agent-access --help` for all supported options.\n\nThis configuration controls agent access to a human survey. It is distinct from browser respondent links and from the AI chat assistant feature. See the [detailed agent-access guide](references/detailed-guide.md) for modes, config fields, answer limitations, and result representation.\n\nRelated bundle: `edsl:edsl-human-survey`.\n",
+      "bodyMd": "# EDSL human survey agent access\n\nEDSL humanized surveys can expose an agent participation route. Use `ep humanize agent-access get <survey_uuid>` to inspect the configuration and `patch` to update participation mode, general instructions, or question-specific instructions. Consult `ep humanize agent-access --help` for all supported options.\n\nThis configuration controls agent access to a human survey. It is distinct from browser respondent links and from the AI chat assistant feature. See the [detailed agent-access guide](references/detailed-guide.md) for modes, config fields, answer limitations, and result representation.\n\nRelated bundle: `edsl:edsl-human-survey`.\n"
+    },
+    {
+      "slug": "edsl-human-survey-assistant",
+      "name": "edsl-human-survey-assistant",
+      "dir": "edsl/skills/edsl-human-survey-assistant",
+      "path": "edsl/skills/edsl-human-survey-assistant/SKILL.md",
+      "desc": "Configure an AI chat assistant attached to an EDSL human survey and inspect its interaction data.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/expectedparrot/edsl.git",
+        "copy": "cp -r edsl/skills/edsl-human-survey-assistant ~/.claude/skills/edsl-human-survey-assistant",
+        "raw": "https://raw.githubusercontent.com/expectedparrot/edsl/d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0/edsl/skills/edsl-human-survey-assistant/SKILL.md",
+        "saveAs": "~/.claude/skills/edsl-human-survey-assistant/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:af3831e9d017e2352c8b8913665080232964d7188fc434b9d9401675b64a5b05",
+      "bytes": 625,
+      "wordCount": 55,
+      "repoLicense": "MIT",
+      "commit": "d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0",
+      "branch": "main",
+      "body": "---\nname: edsl-human-survey-assistant\ndescription: Configure an AI chat assistant attached to an EDSL human survey and inspect its interaction data.\ntags: [edsl, reference]\n---\n\n# EDSL human survey assistant\n\nEDSL can attach an AI chat assistant to a humanized survey, configure which questions it can assist with, and retrieve assistant interaction data. Use the humanize assistant CLI commands and schema fields documented by the installed version; see [configuration](references/config.md) and [data](references/data.md).\n\nThe assistant is separate from agent participation access (`edsl:edsl-human-survey-agent-access`).\n",
+      "bodyMd": "# EDSL human survey assistant\n\nEDSL can attach an AI chat assistant to a humanized survey, configure which questions it can assist with, and retrieve assistant interaction data. Use the humanize assistant CLI commands and schema fields documented by the installed version; see [configuration](references/config.md) and [data](references/data.md).\n\nThe assistant is separate from agent participation access (`edsl:edsl-human-survey-agent-access`).\n"
+    },
+    {
+      "slug": "edsl-human-survey-css",
+      "name": "edsl-human-survey-css",
+      "dir": "edsl/skills/edsl-human-survey-css",
+      "path": "edsl/skills/edsl-human-survey-css/SKILL.md",
+      "desc": "Style EDSL humanized surveys with custom CSS and SurveyCSS.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/expectedparrot/edsl.git",
+        "copy": "cp -r edsl/skills/edsl-human-survey-css ~/.claude/skills/edsl-human-survey-css",
+        "raw": "https://raw.githubusercontent.com/expectedparrot/edsl/d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0/edsl/skills/edsl-human-survey-css/SKILL.md",
+        "saveAs": "~/.claude/skills/edsl-human-survey-css/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:a5704815f2e7dbd6a1b7c19464b05be1d41a153426679863d78ab2f80c990eca",
+      "bytes": 681,
+      "wordCount": 70,
+      "repoLicense": "MIT",
+      "commit": "d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0",
+      "branch": "main",
+      "body": "---\nname: edsl-human-survey-css\ndescription: Style EDSL humanized surveys with custom CSS and SurveyCSS.\ntags: [edsl, reference]\n---\n\n# EDSL human survey CSS\n\nCustom CSS for a humanized survey is stored in `humanize_schema['survey']['custom_css']`. EDSL exposes `edsl-*` classes for survey and question elements. Use the documented question-specific classes and verify selectors against the rendered survey.\n\n`SurveyCSS` provides a programmatic interface. For a deployed survey, use the supported `ep humanize css` commands. See the [detailed CSS guide](references/detailed-guide.md) for class names, banner/logo selectors, progress steps, file upload controls, and example rules.\n",
+      "bodyMd": "# EDSL human survey CSS\n\nCustom CSS for a humanized survey is stored in `humanize_schema['survey']['custom_css']`. EDSL exposes `edsl-*` classes for survey and question elements. Use the documented question-specific classes and verify selectors against the rendered survey.\n\n`SurveyCSS` provides a programmatic interface. For a deployed survey, use the supported `ep humanize css` commands. See the [detailed CSS guide](references/detailed-guide.md) for class names, banner/logo selectors, progress steps, file upload controls, and example rules.\n"
+    },
+    {
+      "slug": "edsl-human-survey-javascript",
+      "name": "edsl-human-survey-javascript",
+      "dir": "edsl/skills/edsl-human-survey-javascript",
+      "path": "edsl/skills/edsl-human-survey-javascript/SKILL.md",
+      "desc": "Add browser-side JavaScript hooks to EDSL humanized survey questions and retrieve logged events.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/expectedparrot/edsl.git",
+        "copy": "cp -r edsl/skills/edsl-human-survey-javascript ~/.claude/skills/edsl-human-survey-javascript",
+        "raw": "https://raw.githubusercontent.com/expectedparrot/edsl/d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0/edsl/skills/edsl-human-survey-javascript/SKILL.md",
+        "saveAs": "~/.claude/skills/edsl-human-survey-javascript/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:93c4ba9d53728e7a88adeb962b1e2f28b309068d7bacd33f0460f8d6d24ccb71",
+      "bytes": 726,
+      "wordCount": 68,
+      "repoLicense": "MIT",
+      "commit": "d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0",
+      "branch": "main",
+      "body": "---\nname: edsl-human-survey-javascript\ndescription: Add browser-side JavaScript hooks to EDSL humanized survey questions and retrieve logged events.\ntags: [edsl, reference]\n---\n\n# EDSL human survey JavaScript\n\nEDSL humanized survey questions can include browser-side scripts for interactive behavior and event logging. Use the documented question script fields and hooks; scripts can record events with `ep.log`. Check the [detailed JavaScript guide](references/detailed-guide.md) and [event reference](references/events.md), then use installed `ep humanize` help for configuration and retrieval commands.\n\nThis bundle documents EDSL's integration surface. Browser code must follow the documented sandbox and event contracts.\n",
+      "bodyMd": "# EDSL human survey JavaScript\n\nEDSL humanized survey questions can include browser-side scripts for interactive behavior and event logging. Use the documented question script fields and hooks; scripts can record events with `ep.log`. Check the [detailed JavaScript guide](references/detailed-guide.md) and [event reference](references/events.md), then use installed `ep humanize` help for configuration and retrieval commands.\n\nThis bundle documents EDSL's integration surface. Browser code must follow the documented sandbox and event contracts.\n"
+    },
+    {
+      "slug": "edsl-human-survey-notifications",
+      "name": "edsl-human-survey-notifications",
+      "dir": "edsl/skills/edsl-human-survey-notifications",
+      "path": "edsl/skills/edsl-human-survey-notifications/SKILL.md",
+      "desc": "Use EDSL human survey notification handlers, deliveries, schedules, callbacks, and delivery status APIs.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/expectedparrot/edsl.git",
+        "copy": "cp -r edsl/skills/edsl-human-survey-notifications ~/.claude/skills/edsl-human-survey-notifications",
+        "raw": "https://raw.githubusercontent.com/expectedparrot/edsl/d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0/edsl/skills/edsl-human-survey-notifications/SKILL.md",
+        "saveAs": "~/.claude/skills/edsl-human-survey-notifications/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:a47c405416a7ff8df414a7dcf96eab22d21b1de129a804915171c072380c6944",
+      "bytes": 814,
+      "wordCount": 74,
+      "repoLicense": "MIT",
+      "commit": "d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0",
+      "branch": "main",
+      "body": "---\nname: edsl-human-survey-notifications\ndescription: Use EDSL human survey notification handlers, deliveries, schedules, callbacks, and delivery status APIs.\ntags: [edsl, reference]\n---\n\n# EDSL human survey notifications\n\nEDSL exposes notification functionality for deployed human surveys, including immediate deliveries, scheduled deliveries, event callbacks, respondent filters, templates, and delivery status. Use `ep humanize deliveries`, `schedules`, and `callbacks` commands or the corresponding EDSL notification APIs. Run `ep humanize --help` to discover installed options.\n\nSee the [detailed notification guide](references/detailed-guide.md) for configuration and status fields. This skill describes EDSL integration mechanics; recruitment design and messaging strategy are EP Agent research workflows.\n",
+      "bodyMd": "# EDSL human survey notifications\n\nEDSL exposes notification functionality for deployed human surveys, including immediate deliveries, scheduled deliveries, event callbacks, respondent filters, templates, and delivery status. Use `ep humanize deliveries`, `schedules`, and `callbacks` commands or the corresponding EDSL notification APIs. Run `ep humanize --help` to discover installed options.\n\nSee the [detailed notification guide](references/detailed-guide.md) for configuration and status fields. This skill describes EDSL integration mechanics; recruitment design and messaging strategy are EP Agent research workflows.\n"
+    },
+    {
+      "slug": "edsl-human-survey-preview",
+      "name": "edsl-human-survey-preview",
+      "dir": "edsl/skills/edsl-human-survey-preview",
+      "path": "edsl/skills/edsl-human-survey-preview/SKILL.md",
+      "desc": "Render an EDSL humanized survey locally with the optional Runway preview tool.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/expectedparrot/edsl.git",
+        "copy": "cp -r edsl/skills/edsl-human-survey-preview ~/.claude/skills/edsl-human-survey-preview",
+        "raw": "https://raw.githubusercontent.com/expectedparrot/edsl/d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0/edsl/skills/edsl-human-survey-preview/SKILL.md",
+        "saveAs": "~/.claude/skills/edsl-human-survey-preview/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:624c820fbe2fda02de6d06cf8dce756a0d4d435407a665c7ff962fc3e498eef0",
+      "bytes": 743,
+      "wordCount": 86,
+      "repoLicense": "MIT",
+      "commit": "d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0",
+      "branch": "main",
+      "body": "---\nname: edsl-human-survey-preview\ndescription: Render an EDSL humanized survey locally with the optional Runway preview tool.\ntags: [edsl, reference]\n---\n\n# EDSL human survey preview\n\nThe optional `runway` tool renders a saved EDSL survey and humanize schema as local HTML without deploying it. It can render question groups, scenarios, images, and custom CSS. Use `runway --help` for installed options and validate the survey/schema with EDSL before rendering.\n\nA local preview shows layout and static content; it does not execute server-side dynamic behavior. See the [detailed preview guide](references/detailed-guide.md) for input files, commands, and limitations. Runway is an external preview utility, not part of the EDSL Python API.\n",
+      "bodyMd": "# EDSL human survey preview\n\nThe optional `runway` tool renders a saved EDSL survey and humanize schema as local HTML without deploying it. It can render question groups, scenarios, images, and custom CSS. Use `runway --help` for installed options and validate the survey/schema with EDSL before rendering.\n\nA local preview shows layout and static content; it does not execute server-side dynamic behavior. See the [detailed preview guide](references/detailed-guide.md) for input files, commands, and limitations. Runway is an external preview utility, not part of the EDSL Python API.\n"
+    },
+    {
+      "slug": "edsl-human-survey",
+      "name": "edsl-human-survey",
+      "dir": "edsl/skills/edsl-human-survey",
+      "path": "edsl/skills/edsl-human-survey/SKILL.md",
+      "desc": "Create, configure, inspect, and retrieve EDSL humanized surveys.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/expectedparrot/edsl.git",
+        "copy": "cp -r edsl/skills/edsl-human-survey ~/.claude/skills/edsl-human-survey",
+        "raw": "https://raw.githubusercontent.com/expectedparrot/edsl/d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0/edsl/skills/edsl-human-survey/SKILL.md",
+        "saveAs": "~/.claude/skills/edsl-human-survey/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:2b7e5b6a8d7b27b1e52d3ad1d5feebed32136987f225b916eeb28b7fe0f09cb1",
+      "bytes": 1339,
+      "wordCount": 98,
+      "repoLicense": "MIT",
+      "commit": "d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0",
+      "branch": "main",
+      "body": "---\nname: edsl-human-survey\ndescription: Create, configure, inspect, and retrieve EDSL humanized surveys.\ntags: [edsl, reference]\n---\n\n# EDSL humanized surveys\n\n`Survey.humanize()` configures an EDSL survey for browser-based respondents. EDSL's `ep humanize` commands create and manage deployed surveys, previews, schemas, responses, respondents, schedules, deliveries, and callbacks, and pause or resume response collection. Discover exact flags with `ep humanize --help` and the relevant subcommand help.\n\nMemory modes for simulated `.run()` jobs do not apply to humanized surveys. Pipe earlier answers into later question text with `{{ question_name.answer }}`. For API details, consult [schema](references/humanize-schema.md), [grouped pages](references/grouped-pages-and-messages.md), [background questions](references/background-questions.md), [interviews](references/question-interview.md), [in-progress responses](references/in-progress-responses.md), [live editing](references/editing-live-surveys.md), and [interview languages](references/interview-languages.md).\n\nRelated EDSL bundles: `edsl:edsl-human-survey-agent-access`, `edsl:edsl-human-survey-assistant`, `edsl:edsl-human-survey-css`, `edsl:edsl-human-survey-javascript`, `edsl:edsl-human-survey-notifications`, `edsl:edsl-human-survey-preview`, and `edsl:edsl-prolific`.\n",
+      "bodyMd": "# EDSL humanized surveys\n\n`Survey.humanize()` configures an EDSL survey for browser-based respondents. EDSL's `ep humanize` commands create and manage deployed surveys, previews, schemas, responses, respondents, schedules, deliveries, and callbacks, and pause or resume response collection. Discover exact flags with `ep humanize --help` and the relevant subcommand help.\n\nMemory modes for simulated `.run()` jobs do not apply to humanized surveys. Pipe earlier answers into later question text with `{{ question_name.answer }}`. For API details, consult [schema](references/humanize-schema.md), [grouped pages](references/grouped-pages-and-messages.md), [background questions](references/background-questions.md), [interviews](references/question-interview.md), [in-progress responses](references/in-progress-responses.md), [live editing](references/editing-live-surveys.md), and [interview languages](references/interview-languages.md).\n\nRelated EDSL bundles: `edsl:edsl-human-survey-agent-access`, `edsl:edsl-human-survey-assistant`, `edsl:edsl-human-survey-css`, `edsl:edsl-human-survey-javascript`, `edsl:edsl-human-survey-notifications`, `edsl:edsl-human-survey-preview`, and `edsl:edsl-prolific`.\n"
+    },
+    {
+      "slug": "edsl-judgment-evaluations",
+      "name": "edsl-judgment-evaluations",
+      "dir": "edsl/skills/edsl-judgment-evaluations",
+      "path": "edsl/skills/edsl-judgment-evaluations/SKILL.md",
+      "desc": "Design and run EDSL Evaluation workloads for batched, typed model judgments over supplied contexts, then inspect their Results.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex"
+      ],
+      "requires": {
+        "apiKey": true,
+        "network": false,
+        "bins": [
+          "python",
+          "go"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/expectedparrot/edsl.git",
+        "copy": "cp -r edsl/skills/edsl-judgment-evaluations ~/.claude/skills/edsl-judgment-evaluations",
+        "raw": "https://raw.githubusercontent.com/expectedparrot/edsl/d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0/edsl/skills/edsl-judgment-evaluations/SKILL.md",
+        "saveAs": "~/.claude/skills/edsl-judgment-evaluations/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:d81be236e50608622957657542d227c73cf73afb740cb03877f2648cfb00de4f",
+      "bytes": 3917,
+      "wordCount": 472,
+      "repoLicense": "MIT",
+      "commit": "d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0",
+      "branch": "main",
+      "body": "---\nname: edsl-judgment-evaluations\ndescription: Design and run EDSL Evaluation workloads for batched, typed model judgments over supplied contexts, then inspect their Results.\ntags: [edsl, evaluation, typed-judgments]\n---\n\n# EDSL judgment evaluations\n\nUse this skill when a task needs a model to classify, choose among explicit\noptions, assign a binary probability, or score a labeled scale for many\ncontexts. `Evaluation` batches compatible questions that share a context and\nreturns the results in EDSL's standard `Results` container. Use regular EDSL\n`Jobs` when the task needs generated text, interview execution, branching, or\nother normal survey-runner behavior.\n\n## Define and validate the workload\n\nCreate a `Survey` with supported typed questions, bind scenarios and an\nexplicit `JudgmentModel`, then compile before running. Compilation validates\nthe workload and snapshots it without making inference calls.\n\n```python\nfrom edsl import (\n    JudgmentModel,\n    QuestionMultipleChoice,\n    ScenarioList,\n    Survey,\n)\n\nsurvey = Survey([\n    QuestionMultipleChoice(\n        question_name=\"sentiment\",\n        question_text=\"What sentiment does {{ text }} express?\",\n        question_options=[\"positive\", \"neutral\", \"negative\"],\n    ),\n])\nscenarios = ScenarioList.from_list(\n    \"text\", [\"The product is excellent.\", \"My delivery arrived late.\"]\n)\nevaluation = (\n    survey.to_evaluation()\n    .by(scenarios)\n    .by(JudgmentModel(\"jev-1.13.0\", service_name=\"typesafe\"))\n)\nplan = evaluation.compile()  # No model calls\nresults = plan.run()         # Requires TYPESAFE_API_KEY\n```\n\nUse `await evaluation.run_async()` inside an existing event loop. Bind agents\nonly when their traits or instructions are part of the judgment context.\n\nBefore execution, confirm that the intended behavior fits the supported\nsemantics:\n\n- Supported questions are multiple choice, yes/no, and linear scale. Linear\n  scales need a descriptive label for every level.\n- Free-text questions, answer piping, skip/stop rules, survey memory, option\n  randomization/pinning, custom question templates, and dynamic or direct-answer\n  agents are rejected during compilation. Do not silently approximate these\n  features; use a regular EDSL job when they are required.\n- Model bindings are explicit. Scenarios and agents combine with models as a\n  cross-product; multiple models each evaluate the workload.\n- Only visible agent traits are included in the judgment state. Scenario fields\n  are sent as context, so avoid putting secrets in scenarios.\n\nThe built-in TypeSafe provider reads `TYPESAFE_API_KEY` from the process\nenvironment at execution time. Keep credentials out of evaluation definitions\nand serialized packages.\n\n## Run, inspect, and recover\n\nUse the normal `Results` analysis methods for answers and metadata. The default\nanswer is the modal option; `distribution.*` contains the probability vector in\nthe rendered option order. `resolution_*` fields record any configured\nprobabilistic resolution. Provider output, model version, and batch membership\nare retained in `raw_model_response`.\n\n```python\nresults = evaluation.run(max_concurrency=8, max_questions_per_request=20)\nanswers = results.select(\"answer.*\", \"distribution.*\")\n```\n\nIf a run raises `EvaluationRunError`, inspect `error.partial_results`. It\ncontains completed rows and the cache entries for validated batches. Re-run\nwith that cache to retry incomplete work. Save the cache separately when it\nmust be reused across processes; a Results package does not retain the\nexecution cache or per-run cache-used flags.\n\nSave an evaluation definition with `evaluation.save(\"evaluation.ep\")` and\nrestore it with `Evaluation.load(...)`. Results also support their regular EDSL\nserialization. Evaluation definitions can be serialized, but this feature\ndoes not submit work to Coopr: calls go directly from the executing Python\nprocess to the configured judgment provider.\n",
+      "bodyMd": "# EDSL judgment evaluations\n\nUse this skill when a task needs a model to classify, choose among explicit\noptions, assign a binary probability, or score a labeled scale for many\ncontexts. `Evaluation` batches compatible questions that share a context and\nreturns the results in EDSL's standard `Results` container. Use regular EDSL\n`Jobs` when the task needs generated text, interview execution, branching, or\nother normal survey-runner behavior.\n\n## Define and validate the workload\n\nCreate a `Survey` with supported typed questions, bind scenarios and an\nexplicit `JudgmentModel`, then compile before running. Compilation validates\nthe workload and snapshots it without making inference calls.\n\n```python\nfrom edsl import (\n    JudgmentModel,\n    QuestionMultipleChoice,\n    ScenarioList,\n    Survey,\n)\n\nsurvey = Survey([\n    QuestionMultipleChoice(\n        question_name=\"sentiment\",\n        question_text=\"What sentiment does {{ text }} express?\",\n        question_options=[\"positive\", \"neutral\", \"negative\"],\n    ),\n])\nscenarios = ScenarioList.from_list(\n    \"text\", [\"The product is excellent.\", \"My delivery arrived late.\"]\n)\nevaluation = (\n    survey.to_evaluation()\n    .by(scenarios)\n    .by(JudgmentModel(\"jev-1.13.0\", service_name=\"typesafe\"))\n)\nplan = evaluation.compile()  # No model calls\nresults = plan.run()         # Requires TYPESAFE_API_KEY\n```\n\nUse `await evaluation.run_async()` inside an existing event loop. Bind agents\nonly when their traits or instructions are part of the judgment context.\n\nBefore execution, confirm that the intended behavior fits the supported\nsemantics:\n\n- Supported questions are multiple choice, yes/no, and linear scale. Linear\n  scales need a descriptive label for every level.\n- Free-text questions, answer piping, skip/stop rules, survey memory, option\n  randomization/pinning, custom question templates, and dynamic or direct-answer\n  agents are rejected during compilation. Do not silently approximate these\n  features; use a regular EDSL job when they are required.\n- Model bindings are explicit. Scenarios and agents combine with models as a\n  cross-product; multiple models each evaluate the workload.\n- Only visible agent traits are included in the judgment state. Scenario fields\n  are sent as context, so avoid putting secrets in scenarios.\n\nThe built-in TypeSafe provider reads `TYPESAFE_API_KEY` from the process\nenvironment at execution time. Keep credentials out of evaluation definitions\nand serialized packages.\n\n## Run, inspect, and recover\n\nUse the normal `Results` analysis methods for answers and metadata. The default\nanswer is the modal option; `distribution.*` contains the probability vector in\nthe rendered option order. `resolution_*` fields record any configured\nprobabilistic resolution. Provider output, model version, and batch membership\nare retained in `raw_model_response`.\n\n```python\nresults = evaluation.run(max_concurrency=8, max_questions_per_request=20)\nanswers = results.select(\"answer.*\", \"distribution.*\")\n```\n\nIf a run raises `EvaluationRunError`, inspect `error.partial_results`. It\ncontains completed rows and the cache entries for validated batches. Re-run\nwith that cache to retry incomplete work. Save the cache separately when it\nmust be reused across processes; a Results package does not retain the\nexecution cache or per-run cache-used flags.\n\nSave an evaluation definition with `evaluation.save(\"evaluation.ep\")` and\nrestore it with `Evaluation.load(...)`. Results also support their regular EDSL\nserialization. Evaluation definitions can be serialized, but this feature\ndoes not submit work to Coopr: calls go directly from the executing Python\nprocess to the configured judgment provider.\n"
+    },
+    {
+      "slug": "edsl-object-publishing",
+      "name": "edsl-object-publishing",
+      "dir": "edsl/skills/edsl-object-publishing",
+      "path": "edsl/skills/edsl-object-publishing/SKILL.md",
+      "desc": "Persist EDSL objects and use the EDSL CLI to push, inspect, share, update, and pull remote objects.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/expectedparrot/edsl.git",
+        "copy": "cp -r edsl/skills/edsl-object-publishing ~/.claude/skills/edsl-object-publishing",
+        "raw": "https://raw.githubusercontent.com/expectedparrot/edsl/d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0/edsl/skills/edsl-object-publishing/SKILL.md",
+        "saveAs": "~/.claude/skills/edsl-object-publishing/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:5410f9c784402ae2c69cd77dddf66df25402582d7c4d36158f1b901fadb558b4",
+      "bytes": 1058,
+      "wordCount": 121,
+      "repoLicense": "MIT",
+      "commit": "d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0",
+      "branch": "main",
+      "body": "---\nname: edsl-object-publishing\ndescription: Persist EDSL objects and use the EDSL CLI to push, inspect, share, update, and pull remote objects.\ntags: [edsl, reference]\n---\n\n# EDSL object publishing and sharing\n\nEDSL objects persist locally through their `.git.save(...)` interface. The CLI manages remote object lifecycle: `ep push` uploads an object, `ep metadata` inspects it, `ep update-metadata` changes metadata, `ep share` and `ep unshare` manage user access, and `ep pull` retrieves updates. Use `ep <command> --help` for exact flags and `ep auth status` to inspect authentication state.\n\n`ep push` accepts an alias, description, and visibility. Visibility values are `private`, `unlisted`, and `public`; their effects are returned in command metadata. Pushing is a remote write. See [remote object commands](references/remote-object-commands.md) for common operations. This bundle documents the EDSL interface and object model; approval procedures and publishing decisions are EP Agent workflow policy.\n\nUse installed CLI help for command details.\n",
+      "bodyMd": "# EDSL object publishing and sharing\n\nEDSL objects persist locally through their `.git.save(...)` interface. The CLI manages remote object lifecycle: `ep push` uploads an object, `ep metadata` inspects it, `ep update-metadata` changes metadata, `ep share` and `ep unshare` manage user access, and `ep pull` retrieves updates. Use `ep <command> --help` for exact flags and `ep auth status` to inspect authentication state.\n\n`ep push` accepts an alias, description, and visibility. Visibility values are `private`, `unlisted`, and `public`; their effects are returned in command metadata. Pushing is a remote write. See [remote object commands](references/remote-object-commands.md) for common operations. This bundle documents the EDSL interface and object model; approval procedures and publishing decisions are EP Agent workflow policy.\n\nUse installed CLI help for command details.\n"
+    },
+    {
+      "slug": "edsl-object-search",
+      "name": "edsl-object-search",
+      "dir": "edsl/skills/edsl-object-search",
+      "path": "edsl/skills/edsl-object-search/SKILL.md",
+      "desc": "Search, inspect, clone, and pull shared EDSL objects through the EDSL CLI.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/expectedparrot/edsl.git",
+        "copy": "cp -r edsl/skills/edsl-object-search ~/.claude/skills/edsl-object-search",
+        "raw": "https://raw.githubusercontent.com/expectedparrot/edsl/d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0/edsl/skills/edsl-object-search/SKILL.md",
+        "saveAs": "~/.claude/skills/edsl-object-search/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:2ac3bb5bf54db779ef067bd08cb22bafe2854c6e5131f85d7f74ce89518489e8",
+      "bytes": 567,
+      "wordCount": 63,
+      "repoLicense": "MIT",
+      "commit": "d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0",
+      "branch": "main",
+      "body": "---\nname: edsl-object-search\ndescription: Search, inspect, clone, and pull shared EDSL objects through the EDSL CLI.\ntags: [edsl, reference]\n---\n\n# EDSL remote object search\n\nUse `ep search --query <text> --page 1 --page_size 50` to search available objects. Inspect metadata and object type, then use `ep clone <owner>/<alias> --path object.ep` or `ep pull object.ep` as appropriate. `ep inspect` and `ep metadata` expose local package details. Set explicit pagination and use installed CLI help for current filters.\n\nSearch and retrieval are EDSL CLI capabilities.\n",
+      "bodyMd": "# EDSL remote object search\n\nUse `ep search --query <text> --page 1 --page_size 50` to search available objects. Inspect metadata and object type, then use `ep clone <owner>/<alias> --path object.ep` or `ep pull object.ep` as appropriate. `ep inspect` and `ep metadata` expose local package details. Set explicit pagination and use installed CLI help for current filters.\n\nSearch and retrieval are EDSL CLI capabilities.\n"
+    },
+    {
+      "slug": "edsl-orchestration",
+      "name": "edsl-orchestration",
+      "dir": "edsl/skills/edsl-orchestration",
+      "path": "edsl/skills/edsl-orchestration/SKILL.md",
+      "desc": "Design, validate, run, and recover durable EDSL respondent workflows spanning human and AI participants. Use for multi-step assignment, branching, fan-in, repeated work, and Humanize delivery.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/expectedparrot/edsl.git",
+        "copy": "cp -r edsl/skills/edsl-orchestration ~/.claude/skills/edsl-orchestration",
+        "raw": "https://raw.githubusercontent.com/expectedparrot/edsl/d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0/edsl/skills/edsl-orchestration/SKILL.md",
+        "saveAs": "~/.claude/skills/edsl-orchestration/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:110aa82922f78a3b66d989a8863adb742f53ac4b226593bfe7de963c288ec041",
+      "bytes": 2182,
+      "wordCount": 252,
+      "repoLicense": "MIT",
+      "commit": "d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0",
+      "branch": "main",
+      "body": "---\nname: edsl-orchestration\ndescription: Design, validate, run, and recover durable EDSL respondent workflows spanning human and AI participants. Use for multi-step assignment, branching, fan-in, repeated work, and Humanize delivery.\ntags: [edsl, orchestration, respondent-workflows]\n---\n\n# EDSL respondent orchestration\n\nUse `edsl.workflows` when a study is a durable graph of respondent work: who\ngets each step, when it becomes ready, which earlier answers it can observe,\nand how completion or retries release later work. This is the respondent\norchestration API; `ep workflow` is a separate CLI for research-task evidence\ngates.\n\nStart with `Workflow` to author steps and dependencies. Use conditions, quorum\ncompletion, derived values, and bounded repeats only when the protocol requires\nthem. Route participants with an `ExecutionPlan` to `human`, `llm`, or\n`scripted` executors. Use shared state when transitions need durable common\nstate across interviews; see `edsl-shared-state` for its Machine and scope\ncontracts.\n\nFor portable bundles, use `WorkflowExperiment` to combine the compiled workflow,\nstate maps, participants, and executor plan. Validate and inspect the serialized\nbundle before execution. Choose `ep orchestration run` for scripted/LLM runs or\nanswer replay. Choose `start`/`sync`/`status` for Humanize delivery. Read\n[CLI lifecycle details](references/cli-lifecycle.md) before starting a run,\nespecially when model calls or participant invitations are involved.\n\nThe API and serialized format are experimental and versioned. Preserve the\nexperiment definition, output directory, and instance ID when resuming. Use the\nsame replay answer file on every replay-driven resume. Read\n[workflow authoring and execution](references/authoring-and-execution.md) for\nthe object model and durable-run invariants.\n\nFetch complete, version-matched workflow examples through the CLI with\n`ep skills show edsl-orchestration --example <path>`. Use\n`ep skills list --routing` to find available examples, or see the\n[example guide](references/examples.md). The Humanize delivery example requires\ntwo explicit email addresses before it can create a run or send invitations.\n",
+      "bodyMd": "# EDSL respondent orchestration\n\nUse `edsl.workflows` when a study is a durable graph of respondent work: who\ngets each step, when it becomes ready, which earlier answers it can observe,\nand how completion or retries release later work. This is the respondent\norchestration API; `ep workflow` is a separate CLI for research-task evidence\ngates.\n\nStart with `Workflow` to author steps and dependencies. Use conditions, quorum\ncompletion, derived values, and bounded repeats only when the protocol requires\nthem. Route participants with an `ExecutionPlan` to `human`, `llm`, or\n`scripted` executors. Use shared state when transitions need durable common\nstate across interviews; see `edsl-shared-state` for its Machine and scope\ncontracts.\n\nFor portable bundles, use `WorkflowExperiment` to combine the compiled workflow,\nstate maps, participants, and executor plan. Validate and inspect the serialized\nbundle before execution. Choose `ep orchestration run` for scripted/LLM runs or\nanswer replay. Choose `start`/`sync`/`status` for Humanize delivery. Read\n[CLI lifecycle details](references/cli-lifecycle.md) before starting a run,\nespecially when model calls or participant invitations are involved.\n\nThe API and serialized format are experimental and versioned. Preserve the\nexperiment definition, output directory, and instance ID when resuming. Use the\nsame replay answer file on every replay-driven resume. Read\n[workflow authoring and execution](references/authoring-and-execution.md) for\nthe object model and durable-run invariants.\n\nFetch complete, version-matched workflow examples through the CLI with\n`ep skills show edsl-orchestration --example <path>`. Use\n`ep skills list --routing` to find available examples, or see the\n[example guide](references/examples.md). The Humanize delivery example requires\ntwo explicit email addresses before it can create a run or send invitations.\n"
+    },
+    {
+      "slug": "edsl-prolific",
+      "name": "edsl-prolific",
+      "dir": "edsl/skills/edsl-prolific",
+      "path": "edsl/skills/edsl-prolific/SKILL.md",
+      "desc": "EDSL API and CLI integration for associating Prolific studies with humanized surveys.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/expectedparrot/edsl.git",
+        "copy": "cp -r edsl/skills/edsl-prolific ~/.claude/skills/edsl-prolific",
+        "raw": "https://raw.githubusercontent.com/expectedparrot/edsl/d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0/edsl/skills/edsl-prolific/SKILL.md",
+        "saveAs": "~/.claude/skills/edsl-prolific/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:1983327ea7321c30deb10f3161c482f31e8cc439a367d10dd6da0923ca89cb68",
+      "bytes": 848,
+      "wordCount": 86,
+      "repoLicense": "MIT",
+      "commit": "d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0",
+      "branch": "main",
+      "body": "---\nname: edsl-prolific\ndescription: EDSL API and CLI integration for associating Prolific studies with humanized surveys.\ntags: [edsl, humanize, integration]\n---\n\n# EDSL Prolific integration\n\nEDSL links Prolific studies to humanized surveys. The CLI supports filter discovery, cost estimates, account settings, draft creation, read-only preflight, publication, and response export through `ep humanize prolific`. The `Coop` API also supports updating and managing study state.\n\nUse `ep humanize prolific --help` and the [API and CLI reference](references/api-and-cli.md) for supported operations, input fields, response objects, and constraints. This bundle covers EDSL integration behavior; recruitment design, sample-size and payment decisions, and Prolific study operations policy remain in EP Agent.\n\nRelated bundle: `edsl:edsl-human-survey`.\n",
+      "bodyMd": "# EDSL Prolific integration\n\nEDSL links Prolific studies to humanized surveys. The CLI supports filter discovery, cost estimates, account settings, draft creation, read-only preflight, publication, and response export through `ep humanize prolific`. The `Coop` API also supports updating and managing study state.\n\nUse `ep humanize prolific --help` and the [API and CLI reference](references/api-and-cli.md) for supported operations, input fields, response objects, and constraints. This bundle covers EDSL integration behavior; recruitment design, sample-size and payment decisions, and Prolific study operations policy remain in EP Agent.\n\nRelated bundle: `edsl:edsl-human-survey`.\n"
+    },
+    {
+      "slug": "edsl-quirks",
+      "name": "edsl-quirks",
+      "dir": "edsl/skills/edsl-quirks",
+      "path": "edsl/skills/edsl-quirks/SKILL.md",
+      "desc": "Diagnose EDSL compatibility failures and known API edge cases using the version-matched reference.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "rg"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/expectedparrot/edsl.git",
+        "copy": "cp -r edsl/skills/edsl-quirks ~/.claude/skills/edsl-quirks",
+        "raw": "https://raw.githubusercontent.com/expectedparrot/edsl/d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0/edsl/skills/edsl-quirks/SKILL.md",
+        "saveAs": "~/.claude/skills/edsl-quirks/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:1d084b77951c88163d6f61d2eddf793da9a30559f4ce2f47870eb118c15ba0b2",
+      "bytes": 808,
+      "wordCount": 84,
+      "repoLicense": "MIT",
+      "commit": "d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0",
+      "branch": "main",
+      "body": "---\nname: edsl-quirks\ndescription: Diagnose EDSL compatibility failures and known API edge cases using the version-matched reference.\ntags: [edsl, compatibility]\n---\n\n# Diagnose an EDSL compatibility issue\n\nUse this skill when an EDSL command or script fails, or when implementing an advanced feature known to be fragile. Start from the exact error or feature and search the local reference:\n\n```bash\nrg -n \"<error-fragment|feature-name>\" references/full-reference.md\n```\n\nApply the smallest fix supported by the installed EDSL version. Prefer documented CLI and API behavior over assumptions. This bundle describes EDSL behavior; workflow policy and research-method choices are outside its scope.\n\nSee [the compatibility reference](references/full-reference.md). Related EDSL guidance: `edsl:edsl-surveys`.\n",
+      "bodyMd": "# Diagnose an EDSL compatibility issue\n\nUse this skill when an EDSL command or script fails, or when implementing an advanced feature known to be fragile. Start from the exact error or feature and search the local reference:\n\n```bash\nrg -n \"<error-fragment|feature-name>\" references/full-reference.md\n```\n\nApply the smallest fix supported by the installed EDSL version. Prefer documented CLI and API behavior over assumptions. This bundle describes EDSL behavior; workflow policy and research-method choices are outside its scope.\n\nSee [the compatibility reference](references/full-reference.md). Related EDSL guidance: `edsl:edsl-surveys`.\n"
+    },
+    {
+      "slug": "edsl-results-validation",
+      "name": "edsl-results-validation",
+      "dir": "edsl/skills/edsl-results-validation",
+      "path": "edsl/skills/edsl-results-validation/SKILL.md",
+      "desc": "Compare simulated EDSL survey results with human responses. Check survey compatibility, choose population or record-level comparisons, and create a reproducible study-specific analysis script with clear uncertainty and limitations.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/expectedparrot/edsl.git",
+        "copy": "cp -r edsl/skills/edsl-results-validation ~/.claude/skills/edsl-results-validation",
+        "raw": "https://raw.githubusercontent.com/expectedparrot/edsl/d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0/edsl/skills/edsl-results-validation/SKILL.md",
+        "saveAs": "~/.claude/skills/edsl-results-validation/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:d72e2439d66aa4d8ceff77cc0d67b2bcce6a97f03cd7a179dc6222aec5674513",
+      "bytes": 7990,
+      "wordCount": 1094,
+      "repoLicense": "MIT",
+      "commit": "d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0",
+      "branch": "main",
+      "body": "---\nname: edsl-results-validation\ndescription: Compare simulated EDSL survey results with human responses. Check survey compatibility, choose population or record-level comparisons, and create a reproducible study-specific analysis script with clear uncertainty and limitations.\ntags: [edsl, results, human-data, validation, analysis]\n---\n\n# Compare simulated results with human responses\n\nUse this skill when a user wants to understand whether simulated respondents\nanswer like real respondents, or wants to compare model-generated answers with\nhuman judgments. The first task is to identify what kind of comparison their\nstudy supports. Do not assume every human-versus-simulation comparison is the\nsame problem.\n\n## Choose the estimand before writing code\n\nThere are two distinct goals:\n\n- **Population-level response patterns:** compare answer distributions between\n  the simulated sample and human sample. This is appropriate when there is no\n  one-to-one correct human answer for each simulated respondent. Use marginal\n  distributions overall or within comparable subgroups.\n- **Record-level agreement:** compare predictions and human labels for the same\n  underlying records, cases, or vignettes. This requires a stable shared record\n  identifier and a defensible human reference label. Do not describe a marginal\n  distribution comparison as record-level accuracy.\n\nAsk one concise question if the user's goal or the shared unit is unclear. If\nthere are multiple human judgments per record, preserve them for an inter-rater\nanalysis or document how adjudicated labels were made; do not silently select\nthe first response or treat an unresolved majority as ground truth.\n\n## Inspect inputs and check comparability\n\nRead the project files and inspect both `Results` objects before choosing\ncolumns or metrics. Use `ep inspect <file.ep>` for local packages and the\navailable `Results` APIs for loaded objects. Humanize results can be retrieved\nwith `Coop().get_human_survey_responses(uuid)` when the user supplies or has\nalready authorized use of the survey UUID. Do not publish data, submit a job,\nor contact respondents as part of this analysis.\n\nBefore calculating a comparison, make a compact compatibility table for every\nquestion being considered:\n\n| Check | What to verify |\n|---|---|\n| Identity | Both datasets contain the same intended item; matching names alone are not proof. |\n| Type and scale | Question types, option labels, value coding, and scale direction agree. |\n| Wording and conditions | Question wording, instructions, question order, and relevant scenario text are equivalent. |\n| Routing and missingness | Skips, nonresponse, failed answers, and partial submissions have the same inclusion meaning. |\n| Sampling unit | Identify a human respondent, simulated agent, scenario/record, model, and iteration; determine which rows are independent. |\n| Subgroups and weights | Verify variables have the same definitions and coding on both sides; inspect missing and invalid weights. |\n\nStop or narrow the analysis when a material mismatch remains. Explain the\nmismatch and either harmonize it with a documented rule, compare only the\ncompatible questions, or ask the user how to proceed. Never silently equate\ndifferent labels or reverse-coded scales.\n\n## Build a study-specific analysis\n\nThis capability is an analysis workflow, not a built-in `ResultsFidelity`\nmethod. Create a small, readable Python script in the study's existing analysis\ndirectory (or ask where to save it if there is no clear location). The script\nshould load the user's existing result artifacts, perform the checks above,\ncalculate the selected comparison, and save machine-readable tables plus a\nshort interpretation. Do not rerun model jobs or collect human responses to\ncomplete the comparison unless the user asks.\n\nPrefer the smallest set of methods that answer the research question:\n\n- **Nominal, single-choice answers:** show option shares side by side and a\n  per-option difference. Total variation distance (TVD) is a useful compact\n  summary: half the sum of absolute share differences, bounded from 0 (same\n  shares) to 1 (no overlap). Jensen-Shannon distance is another bounded summary\n  when a symmetric information-based measure is useful. Include the option\n  table so the summary is interpretable.\n- **Ordinal scales:** report the full category distribution and an ordinal\n  summary such as mean/median or cumulative-share differences. Treating ordered\n  categories as nominal may discard useful information; explain the metric if\n  using TVD or Jensen-Shannon distance.\n- **Numeric responses:** inspect range, units, and shape; compare meaningful\n  summaries or distributions. Bin only with substantively justified cut points\n  and report them.\n- **Checkbox / multi-select answers:** compare selection rates separately for\n  each option. These are not a single-choice distribution and their shares need\n  not sum to one.\n- **Free text:** use a documented coding rubric or a separate evaluation\n  instrument. Do not compare raw string equality as if it measured semantic\n  agreement.\n- **Same records with reference labels:** join by the stable record identifier,\n  validate join cardinality, report unmatched rows, then use a task-appropriate\n  agreement measure. Keep human disagreement visible when there is no adjudicated\n  reference.\n\nSubgroup comparisons are useful only when the subgroup has the same meaning on\nboth sides and enough observations to interpret. Always report unweighted row\ncounts for each side and group. If using survey weights, validate finite,\nnon-negative values, explain the weighting target, and distinguish respondent\ncounts from weighted shares. Report effective sample size when weights vary\nsubstantially.\n\n## Uncertainty and dependence\n\nUse uncertainty estimates only after identifying the sampling unit and design.\nFor independent respondent samples, a respondent-level bootstrap can show how\nsample variation affects the distance. For repeated observations of the same\nperson, multiple iterations of an agent, clustered scenario assignment, or\nrepeated model runs, resample at the independent cluster (or use a suitable\ndesign-based method); row-wise resampling would understate uncertainty.\n\nA nonnegative distance has finite-sample upward bias, so a percentile bootstrap\ninterval can remain above zero even when samples come from the same population.\nDo not interpret “interval excludes zero” as a test that the distributions\ndiffer. If useful, compute a human split-half reference by repeatedly dividing\nthe human respondents into two groups and comparing their distributions. Label\nit as a descriptive sampling-noise reference, not a significance threshold or\nformal pass/fail criterion. State that half-samples are smaller than the full\nhuman sample and therefore generally have more sampling variation.\n\nReport methodological choices alongside results: included questions, exclusions,\nmissing-answer rule, weight variable, subgroup definitions, resampling unit,\nmetric, random seed, and number of resamples. Do not claim representativeness or\npopulation validity from a convenience sample or a distance score alone.\n\n## Deliverables\n\nCreate a reproducible analysis script and save outputs beside it, typically:\n\n- a question compatibility table;\n- a per-question (and per-model/subgroup, when relevant) summary table;\n- option-level shares and differences;\n- optional uncertainty estimates with the sampling unit stated;\n- a concise Markdown interpretation noting limitations and unresolved mismatches.\n\nKeep outputs traceable to source result files and avoid overwriting existing\nreports. Before finishing, summarize which comparison was performed, what was\nexcluded, where the script and outputs were saved, and what the results can and\ncannot establish.\n\n## Related EDSL workflows\n\nUse `edsl:edsl-human-survey` for deploying and retrieving human surveys, and\n`edsl:edsl-prolific` when the user wants a paid, screened sample.\n",
+      "bodyMd": "# Compare simulated results with human responses\n\nUse this skill when a user wants to understand whether simulated respondents\nanswer like real respondents, or wants to compare model-generated answers with\nhuman judgments. The first task is to identify what kind of comparison their\nstudy supports. Do not assume every human-versus-simulation comparison is the\nsame problem.\n\n## Choose the estimand before writing code\n\nThere are two distinct goals:\n\n- **Population-level response patterns:** compare answer distributions between\n  the simulated sample and human sample. This is appropriate when there is no\n  one-to-one correct human answer for each simulated respondent. Use marginal\n  distributions overall or within comparable subgroups.\n- **Record-level agreement:** compare predictions and human labels for the same\n  underlying records, cases, or vignettes. This requires a stable shared record\n  identifier and a defensible human reference label. Do not describe a marginal\n  distribution comparison as record-level accuracy.\n\nAsk one concise question if the user's goal or the shared unit is unclear. If\nthere are multiple human judgments per record, preserve them for an inter-rater\nanalysis or document how adjudicated labels were made; do not silently select\nthe first response or treat an unresolved majority as ground truth.\n\n## Inspect inputs and check comparability\n\nRead the project files and inspect both `Results` objects before choosing\ncolumns or metrics. Use `ep inspect <file.ep>` for local packages and the\navailable `Results` APIs for loaded objects. Humanize results can be retrieved\nwith `Coop().get_human_survey_responses(uuid)` when the user supplies or has\nalready authorized use of the survey UUID. Do not publish data, submit a job,\nor contact respondents as part of this analysis.\n\nBefore calculating a comparison, make a compact compatibility table for every\nquestion being considered:\n\n| Check | What to verify |\n|---|---|\n| Identity | Both datasets contain the same intended item; matching names alone are not proof. |\n| Type and scale | Question types, option labels, value coding, and scale direction agree. |\n| Wording and conditions | Question wording, instructions, question order, and relevant scenario text are equivalent. |\n| Routing and missingness | Skips, nonresponse, failed answers, and partial submissions have the same inclusion meaning. |\n| Sampling unit | Identify a human respondent, simulated agent, scenario/record, model, and iteration; determine which rows are independent. |\n| Subgroups and weights | Verify variables have the same definitions and coding on both sides; inspect missing and invalid weights. |\n\nStop or narrow the analysis when a material mismatch remains. Explain the\nmismatch and either harmonize it with a documented rule, compare only the\ncompatible questions, or ask the user how to proceed. Never silently equate\ndifferent labels or reverse-coded scales.\n\n## Build a study-specific analysis\n\nThis capability is an analysis workflow, not a built-in `ResultsFidelity`\nmethod. Create a small, readable Python script in the study's existing analysis\ndirectory (or ask where to save it if there is no clear location). The script\nshould load the user's existing result artifacts, perform the checks above,\ncalculate the selected comparison, and save machine-readable tables plus a\nshort interpretation. Do not rerun model jobs or collect human responses to\ncomplete the comparison unless the user asks.\n\nPrefer the smallest set of methods that answer the research question:\n\n- **Nominal, single-choice answers:** show option shares side by side and a\n  per-option difference. Total variation distance (TVD) is a useful compact\n  summary: half the sum of absolute share differences, bounded from 0 (same\n  shares) to 1 (no overlap). Jensen-Shannon distance is another bounded summary\n  when a symmetric information-based measure is useful. Include the option\n  table so the summary is interpretable.\n- **Ordinal scales:** report the full category distribution and an ordinal\n  summary such as mean/median or cumulative-share differences. Treating ordered\n  categories as nominal may discard useful information; explain the metric if\n  using TVD or Jensen-Shannon distance.\n- **Numeric responses:** inspect range, units, and shape; compare meaningful\n  summaries or distributions. Bin only with substantively justified cut points\n  and report them.\n- **Checkbox / multi-select answers:** compare selection rates separately for\n  each option. These are not a single-choice distribution and their shares need\n  not sum to one.\n- **Free text:** use a documented coding rubric or a separate evaluation\n  instrument. Do not compare raw string equality as if it measured semantic\n  agreement.\n- **Same records with reference labels:** join by the stable record identifier,\n  validate join cardinality, report unmatched rows, then use a task-appropriate\n  agreement measure. Keep human disagreement visible when there is no adjudicated\n  reference.\n\nSubgroup comparisons are useful only when the subgroup has the same meaning on\nboth sides and enough observations to interpret. Always report unweighted row\ncounts for each side and group. If using survey weights, validate finite,\nnon-negative values, explain the weighting target, and distinguish respondent\ncounts from weighted shares. Report effective sample size when weights vary\nsubstantially.\n\n## Uncertainty and dependence\n\nUse uncertainty estimates only after identifying the sampling unit and design.\nFor independent respondent samples, a respondent-level bootstrap can show how\nsample variation affects the distance. For repeated observations of the same\nperson, multiple iterations of an agent, clustered scenario assignment, or\nrepeated model runs, resample at the independent cluster (or use a suitable\ndesign-based method); row-wise resampling would understate uncertainty.\n\nA nonnegative distance has finite-sample upward bias, so a percentile bootstrap\ninterval can remain above zero even when samples come from the same population.\nDo not interpret “interval excludes zero” as a test that the distributions\ndiffer. If useful, compute a human split-half reference by repeatedly dividing\nthe human respondents into two groups and comparing their distributions. Label\nit as a descriptive sampling-noise reference, not a significance threshold or\nformal pass/fail criterion. State that half-samples are smaller than the full\nhuman sample and therefore generally have more sampling variation.\n\nReport methodological choices alongside results: included questions, exclusions,\nmissing-answer rule, weight variable, subgroup definitions, resampling unit,\nmetric, random seed, and number of resamples. Do not claim representativeness or\npopulation validity from a convenience sample or a distance score alone.\n\n## Deliverables\n\nCreate a reproducible analysis script and save outputs beside it, typically:\n\n- a question compatibility table;\n- a per-question (and per-model/subgroup, when relevant) summary table;\n- option-level shares and differences;\n- optional uncertainty estimates with the sampling unit stated;\n- a concise Markdown interpretation noting limitations and unresolved mismatches.\n\nKeep outputs traceable to source result files and avoid overwriting existing\nreports. Before finishing, summarize which comparison was performed, what was\nexcluded, where the script and outputs were saved, and what the results can and\ncannot establish.\n\n## Related EDSL workflows\n\nUse `edsl:edsl-human-survey` for deploying and retrieving human surveys, and\n`edsl:edsl-prolific` when the user wants a paid, screened sample.\n"
+    },
+    {
+      "slug": "edsl-scenario-lists",
+      "name": "edsl-scenario-lists",
+      "dir": "edsl/skills/edsl-scenario-lists",
+      "path": "edsl/skills/edsl-scenario-lists/SKILL.md",
+      "desc": "Construct EDSL ScenarioLists from Python data, files, combinations, images, or other supported sources.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git",
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/expectedparrot/edsl.git",
+        "copy": "cp -r edsl/skills/edsl-scenario-lists ~/.claude/skills/edsl-scenario-lists",
+        "raw": "https://raw.githubusercontent.com/expectedparrot/edsl/d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0/edsl/skills/edsl-scenario-lists/SKILL.md",
+        "saveAs": "~/.claude/skills/edsl-scenario-lists/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:ae27f2c0ae3348dd9252f59a3d45f5fe11d5a0043637cd76d60a2a994274fd39",
+      "bytes": 855,
+      "wordCount": 77,
+      "repoLicense": "MIT",
+      "commit": "d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0",
+      "branch": "main",
+      "body": "---\nname: edsl-scenario-lists\ndescription: Construct EDSL ScenarioLists from Python data, files, combinations, images, or other supported sources.\ntags: [edsl, reference]\n---\n\n# EDSL ScenarioList\n\nUse `ScenarioList` to represent scenario variations for surveys and jobs. Construct from `Scenario` instances, dictionaries, supported CSV/Excel inputs, or combinations. For image scenarios, use `Scenario.from_image(...)` and reference the image field in every question that needs the image.\n\nA scenario value must be used in question text where required by EDSL jobs compatibility checks. `ScenarioList` supports normal mutable-sequence operations, including `.append()`. Save durable artifacts with `.git.save(...)`.\n\nSee the [detailed construction patterns](references/detailed-guide.md). Related bundles: `edsl:edsl-file-store`, `edsl:edsl-study-files`.\n",
+      "bodyMd": "# EDSL ScenarioList\n\nUse `ScenarioList` to represent scenario variations for surveys and jobs. Construct from `Scenario` instances, dictionaries, supported CSV/Excel inputs, or combinations. For image scenarios, use `Scenario.from_image(...)` and reference the image field in every question that needs the image.\n\nA scenario value must be used in question text where required by EDSL jobs compatibility checks. `ScenarioList` supports normal mutable-sequence operations, including `.append()`. Save durable artifacts with `.git.save(...)`.\n\nSee the [detailed construction patterns](references/detailed-guide.md). Related bundles: `edsl:edsl-file-store`, `edsl:edsl-study-files`.\n"
+    },
+    {
+      "slug": "edsl-shared-state",
+      "name": "edsl-shared-state",
+      "dir": "edsl/skills/edsl-shared-state",
+      "path": "edsl/skills/edsl-shared-state/SKILL.md",
+      "desc": "Design, validate, run, and inspect EDSL shared-state machines for durable state shared across interviews. Use when responses update common state, adaptive mechanisms, quotas, or scoped group state are required.",
+      "descZh": "",
+      "triggers": [
+        "adaptive mechanisms",
+        "quotas"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/expectedparrot/edsl.git",
+        "copy": "cp -r edsl/skills/edsl-shared-state ~/.claude/skills/edsl-shared-state",
+        "raw": "https://raw.githubusercontent.com/expectedparrot/edsl/d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0/edsl/skills/edsl-shared-state/SKILL.md",
+        "saveAs": "~/.claude/skills/edsl-shared-state/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:0ab85736217a2cdfd895628718deb45b5f715379a5d7e6b3f612ce0f69a11780",
+      "bytes": 2383,
+      "wordCount": 286,
+      "repoLicense": "MIT",
+      "commit": "d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0",
+      "branch": "main",
+      "body": "---\nname: edsl-shared-state\ndescription: Design, validate, run, and inspect EDSL shared-state machines for durable state shared across interviews. Use when responses update common state, adaptive mechanisms, quotas, or scoped group state are required.\ntags: [edsl, shared-state, state-machine]\n---\n\n# EDSL shared state\n\nUse shared state when multiple interviews need to read or update durable, typed\nstate through explicit transitions. Keep the machine definition, its scope, and\nits storage backend conceptually separate:\n\n- `Machine` defines fields, commands, requirements, views, and completion rules.\n- `SharedState` groups named machines into one state space.\n- `SharedStateMap` selects a separate state space for each scope key.\n- A runner or workflow backend persists state as the work executes.\n\nStart from the invariant the mechanism needs to enforce, then express it in a\nmachine. Machine definitions are serializable data; do not put Python callbacks\nor model calls inside a machine. Validate definitions and capability requirements\nbefore executing them. See [machine design and scopes](references/machines-and-scopes.md).\n\nFor survey integration, attach state reads, questions, and writes in execution\norder. Use typed answer references such as `question.answer`, not strings that\nlook like Python expressions. Pick a stable scope key for the participants who\nshare state, and reuse the same serialized state map when resuming a run. See\n[survey execution and state provenance](references/survey-execution.md).\n\nFetch complete, version-matched source examples through the CLI with\n`ep skills show edsl-shared-state --example <path>`. Use\n`ep skills list --routing` to find example paths, or see the\n[example guide](references/examples.md).\n\nThe `ep` CLI can validate, inspect, and locally simulate serialized Machine JSON,\nthen inspect shared-state bindings in saved Results. It does not author a full\nMachine interactively or persist the `state simulate` dry run. See\n[shared-state CLI commands](references/cli.md).\n\nThis feature is experimental and versioned. Prefer the installed EDSL package's\nschemas, CLI help, and matching references over examples from another release.\nFor multi-step assignment, branching, Humanize delivery, or respondent-level\nworkflow recovery, use `edsl-orchestration`; a workflow may use shared state as\none of its coordination mechanisms.\n",
+      "bodyMd": "# EDSL shared state\n\nUse shared state when multiple interviews need to read or update durable, typed\nstate through explicit transitions. Keep the machine definition, its scope, and\nits storage backend conceptually separate:\n\n- `Machine` defines fields, commands, requirements, views, and completion rules.\n- `SharedState` groups named machines into one state space.\n- `SharedStateMap` selects a separate state space for each scope key.\n- A runner or workflow backend persists state as the work executes.\n\nStart from the invariant the mechanism needs to enforce, then express it in a\nmachine. Machine definitions are serializable data; do not put Python callbacks\nor model calls inside a machine. Validate definitions and capability requirements\nbefore executing them. See [machine design and scopes](references/machines-and-scopes.md).\n\nFor survey integration, attach state reads, questions, and writes in execution\norder. Use typed answer references such as `question.answer`, not strings that\nlook like Python expressions. Pick a stable scope key for the participants who\nshare state, and reuse the same serialized state map when resuming a run. See\n[survey execution and state provenance](references/survey-execution.md).\n\nFetch complete, version-matched source examples through the CLI with\n`ep skills show edsl-shared-state --example <path>`. Use\n`ep skills list --routing` to find example paths, or see the\n[example guide](references/examples.md).\n\nThe `ep` CLI can validate, inspect, and locally simulate serialized Machine JSON,\nthen inspect shared-state bindings in saved Results. It does not author a full\nMachine interactively or persist the `state simulate` dry run. See\n[shared-state CLI commands](references/cli.md).\n\nThis feature is experimental and versioned. Prefer the installed EDSL package's\nschemas, CLI help, and matching references over examples from another release.\nFor multi-step assignment, branching, Humanize delivery, or respondent-level\nworkflow recovery, use `edsl-orchestration`; a workflow may use shared state as\none of its coordination mechanisms.\n"
+    },
+    {
+      "slug": "edsl-study-files",
+      "name": "edsl-study-files",
+      "dir": "edsl/skills/edsl-study-files",
+      "path": "edsl/skills/edsl-study-files/SKILL.md",
+      "desc": "EDSL object source files and reproducible construction of Survey, ScenarioList, AgentList, ModelList, Jobs, and Results.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git",
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/expectedparrot/edsl.git",
+        "copy": "cp -r edsl/skills/edsl-study-files ~/.claude/skills/edsl-study-files",
+        "raw": "https://raw.githubusercontent.com/expectedparrot/edsl/d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0/edsl/skills/edsl-study-files/SKILL.md",
+        "saveAs": "~/.claude/skills/edsl-study-files/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:dc84bf11b7d930ddd6349db4ecc23687eda4b604cbbb0feb6b1b9f8c4daec313",
+      "bytes": 1581,
+      "wordCount": 190,
+      "repoLicense": "MIT",
+      "commit": "d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0",
+      "branch": "main",
+      "body": "---\nname: edsl-study-files\ndescription: EDSL object source files and reproducible construction of Survey, ScenarioList, AgentList, ModelList, Jobs, and Results.\ntags: [edsl, files, jobs]\n---\n\n# EDSL study files\n\nKeep object construction in readable source files, export named EDSL objects, and save durable objects with their supported `.git.save(...)` interface. Build `Jobs` from the saved component objects with `ep jobs build`; run it with `ep run ... --output results.ep`. Do not run inference as an import-time side effect of a Python source file.\n\nUse `ep inspect agents.ep --markdown --page 1 --page-size 5` to present a page of agents with stacked traits and instructions. The same command previews saved scenarios, models, jobs, results, surveys, collections, and prompts. Check the exit code before presenting the Markdown.\n\nCommon files include `study_survey.py`, `study_scenario_list.py`, `study_agent_list.py`, and optionally `study_model_list.py`. Use `ep models create` for ordinary model selections when it covers the needed configuration.\n\nUse the installed CLI help and `edsl:edsl-surveys` for current APIs. A scenario field must be consumed by the survey where required by the installed EDSL validation rules. `Agent.name` is a distinct constructor field, not a trait.\n\nThis skill covers EDSL file and object conventions only. Study design choices, cost approval, remote execution policies, reporting workflows, and EP Agent scaffolds belong to the separately managed EP Agent environment (`ep-agent:workflow-file-layout`, `ep-agent:workflow-model-selection`).\n",
+      "bodyMd": "# EDSL study files\n\nKeep object construction in readable source files, export named EDSL objects, and save durable objects with their supported `.git.save(...)` interface. Build `Jobs` from the saved component objects with `ep jobs build`; run it with `ep run ... --output results.ep`. Do not run inference as an import-time side effect of a Python source file.\n\nUse `ep inspect agents.ep --markdown --page 1 --page-size 5` to present a page of agents with stacked traits and instructions. The same command previews saved scenarios, models, jobs, results, surveys, collections, and prompts. Check the exit code before presenting the Markdown.\n\nCommon files include `study_survey.py`, `study_scenario_list.py`, `study_agent_list.py`, and optionally `study_model_list.py`. Use `ep models create` for ordinary model selections when it covers the needed configuration.\n\nUse the installed CLI help and `edsl:edsl-surveys` for current APIs. A scenario field must be consumed by the survey where required by the installed EDSL validation rules. `Agent.name` is a distinct constructor field, not a trait.\n\nThis skill covers EDSL file and object conventions only. Study design choices, cost approval, remote execution policies, reporting workflows, and EP Agent scaffolds belong to the separately managed EP Agent environment (`ep-agent:workflow-file-layout`, `ep-agent:workflow-model-selection`).\n"
+    },
+    {
+      "slug": "edsl-surveys-cost",
+      "name": "edsl-surveys-cost",
+      "dir": "edsl/skills/edsl-surveys-cost",
+      "path": "edsl/skills/edsl-surveys-cost/SKILL.md",
+      "desc": "Estimate EDSL job costs and manage EDSL low-balance email settings.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/expectedparrot/edsl.git",
+        "copy": "cp -r edsl/skills/edsl-surveys-cost ~/.claude/skills/edsl-surveys-cost",
+        "raw": "https://raw.githubusercontent.com/expectedparrot/edsl/d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0/edsl/skills/edsl-surveys-cost/SKILL.md",
+        "saveAs": "~/.claude/skills/edsl-surveys-cost/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:4c125709245f1b90f0d5c1a0d879a6ecb8d3e1418f9b896076fa42279662f5b0",
+      "bytes": 771,
+      "wordCount": 84,
+      "repoLicense": "MIT",
+      "commit": "d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0",
+      "branch": "main",
+      "body": "---\nname: edsl-surveys-cost\ndescription: Estimate EDSL job costs and manage EDSL low-balance email settings.\ntags: [edsl, reference]\n---\n\n# EDSL cost tools\n\nUse `ep jobs cost jobs.ep` to estimate a saved job and `ep results cost results.ep` to inspect actual costs. Estimates depend on model pricing, prompt size, iteration counts, token overrides, and skip logic; consult [estimation details](references/estimation-details.md) and [calibration and branching](references/calibration-and-branching.md) for calculation details.\n\nUse `ep balance` to inspect the configured account balance and `ep balance alert` to manage low-balance notifications. Cost estimates and alerts are EDSL features; study budget approval and whether to run a job are separate workflow decisions.\n",
+      "bodyMd": "# EDSL cost tools\n\nUse `ep jobs cost jobs.ep` to estimate a saved job and `ep results cost results.ep` to inspect actual costs. Estimates depend on model pricing, prompt size, iteration counts, token overrides, and skip logic; consult [estimation details](references/estimation-details.md) and [calibration and branching](references/calibration-and-branching.md) for calculation details.\n\nUse `ep balance` to inspect the configured account balance and `ep balance alert` to manage low-balance notifications. Cost estimates and alerts are EDSL features; study budget approval and whether to run a job are separate workflow decisions.\n"
+    },
+    {
+      "slug": "edsl-surveys",
+      "name": "edsl-surveys",
+      "dir": "edsl/skills/edsl-surveys",
+      "path": "edsl/skills/edsl-surveys/SKILL.md",
+      "desc": "EDSL question types, survey composition, answer piping, memory, and implementation patterns.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/expectedparrot/edsl.git",
+        "copy": "cp -r edsl/skills/edsl-surveys ~/.claude/skills/edsl-surveys",
+        "raw": "https://raw.githubusercontent.com/expectedparrot/edsl/d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0/edsl/skills/edsl-surveys/SKILL.md",
+        "saveAs": "~/.claude/skills/edsl-surveys/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:97d41035a4e7128b5e8a51eaed9a3e06d018867bb5d69979aeb19746cb540985",
+      "bytes": 1442,
+      "wordCount": 162,
+      "repoLicense": "MIT",
+      "commit": "d8e1bfe4346e8f3d48b5c4c7a4c1e88bf33956f0",
+      "branch": "main",
+      "body": "---\nname: edsl-surveys\ndescription: EDSL question types, survey composition, answer piping, memory, and implementation patterns.\ntags: [edsl, surveys]\n---\n\n# Build an EDSL survey\n\nUse this skill for EDSL API questions about survey construction and for implementing survey objects. Check installed-version help and schemas when CLI details may differ.\n\nEDSL questions are stateless by default. When a later question depends on an earlier choice, pipe each relevant answer into its question text with `{{ question_name.answer }}` or use an appropriate memory mode. Do not add unrelated prior answers.\n\nTo present a saved survey in a terminal, run `ep surveys show survey.ep --markdown`. Add `--with-question-names` or `--with-question-types` to label the headings. Add `--expand-options` to list every dropdown choice. On success, stdout is Markdown you can include directly in your reply. Use `ep surveys show survey.ep` for the JSON summary.\n\nFor detailed API behavior, use [survey reference](references/survey-reference.md), [full reference](references/full-reference.md), [composition contracts](references/composition-contracts.md), and [probabilistic responses](references/probabilistic-responses.md).\n\nRelated EDSL guidance: `edsl:edsl-quirks` and `edsl:edsl-study-files`.\n\nOptional EP Agent cross-references may appear as `ep-agent:<skill-name>`. They describe research workflows or platform processes and are not part of the EDSL API.\n",
+      "bodyMd": "# Build an EDSL survey\n\nUse this skill for EDSL API questions about survey construction and for implementing survey objects. Check installed-version help and schemas when CLI details may differ.\n\nEDSL questions are stateless by default. When a later question depends on an earlier choice, pipe each relevant answer into its question text with `{{ question_name.answer }}` or use an appropriate memory mode. Do not add unrelated prior answers.\n\nTo present a saved survey in a terminal, run `ep surveys show survey.ep --markdown`. Add `--with-question-names` or `--with-question-types` to label the headings. Add `--expand-options` to list every dropdown choice. On success, stdout is Markdown you can include directly in your reply. Use `ep surveys show survey.ep` for the JSON summary.\n\nFor detailed API behavior, use [survey reference](references/survey-reference.md), [full reference](references/full-reference.md), [composition contracts](references/composition-contracts.md), and [probabilistic responses](references/probabilistic-responses.md).\n\nRelated EDSL guidance: `edsl:edsl-quirks` and `edsl:edsl-study-files`.\n\nOptional EP Agent cross-references may appear as `ep-agent:<skill-name>`. They describe research workflows or platform processes and are not part of the EDSL API.\n"
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "repo": "devallibus/shiplog",
+  "commit": "fa97a949bd3634033a21fdc55153aa29388cd13b",
+  "branch": "master",
+  "fetchedAt": "2026-11-27T07:13:05.335Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "shiplog",
+      "name": "shiplog",
+      "dir": "skills/shiplog",
+      "path": "skills/shiplog/SKILL.md",
+      "desc": "Preserve project discussion, decisions, and work context in GitHub. Use when the user requests durable tracking, recalls past discussion, or continues tracked work across sessions.",
+      "descZh": "",
+      "triggers": [
+        "recalls past discussion"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/devallibus/shiplog.git",
+        "copy": "cp -r skills/shiplog ~/.claude/skills/shiplog",
+        "raw": "https://raw.githubusercontent.com/devallibus/shiplog/fa97a949bd3634033a21fdc55153aa29388cd13b/skills/shiplog/SKILL.md",
+        "saveAs": "~/.claude/skills/shiplog/SKILL.md",
+        "marketplace": "/plugin marketplace add devallibus/shiplog"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:89e8eca293f93d6bfccec4791e31409011f85a8b4daf5cd6d948713358c380d2",
+      "bytes": 4964,
+      "wordCount": 672,
+      "repoLicense": "MIT",
+      "commit": "fa97a949bd3634033a21fdc55153aa29388cd13b",
+      "branch": "master",
+      "body": "---\nname: shiplog\ndescription: Preserve project discussion, decisions, and work context in GitHub. Use when the user requests durable tracking, recalls past discussion, or continues tracked work across sessions.\n---\n\n# Shiplog\n\nKeep the original discussion available for human recollection. Give the next agent a small, current account of the work. Use GitHub issues, PRs, and links; no separate memory service is required.\n\n## When to use it\n\nUse **shiplog** for requested project logging, planning with durable records, history lookup, and work on an existing tracked issue or PR. An idea can remain a discussion without a branch or delivery commitment. Ordinary small edits do not require a new issue. Follow the user's existing authorization and chosen location for published records.\n\n## Three records\n\n**Original discussion:** Preserve available human project messages verbatim and in order. Include enough assistant dialogue to understand references and answers. Keep rejected ideas, doubts, and preferences even when they do not affect implementation. Identify the original speaker separately from the account or agent that records the text. Never present an agent inference as a human decision.\n\nSave discussion in batches at useful checkpoints and before a handoff or context reduction when the runtime exposes that event. Use source message IDs or a recorded message range to avoid duplicate capture. A link alone does not preserve the text. Do not invent unavailable history or promise complete capture when there are gaps. Add later corrections as linked entries; leave earlier wording intact.\n\n**Current summary:** Keep one editable summary on the tracking issue: goal, constraints, current decisions, open questions, checks, and next action. Link important decisions to their source entries. Update this summary when facts change. Preserve source sections already present in older issue bodies. A PR describes the final change and links back to the discussion.\n\n**Retrieval index:** Keep a small envelope on new records. Extract its fields before returning tool output to the model. Read selected original records when the question needs them. Use platform IDs, dates, and links instead of copying them into metadata. Compute task counts from the task section. Search original text when a summary does not answer a recollection question.\n\nRead [references/records.md](references/records.md) when capturing or updating records. Read [references/artifact-envelopes.md](references/artifact-envelopes.md) when retrieving them. These files own their formats.\n\n## Work with the record\n\nBefore starting or resuming, read the current summary and inspect the actual branch, changes, and linked PR. Resolve differences before claiming the summary is current. Follow project branch and commit conventions. Link commits and PRs to the issue where useful. A routine start, resume, or commit does not require another comment.\n\nRecord new decisions, useful failed approaches, blockers, checks, and remaining work at the next checkpoint. Record human discussion regardless of its coding value. Verify the real product path with the checks the project requires. Report checks that were not run. Close only the scope supported by evidence; partial delivery leaves remaining tasks open.\n\n## Commands and natural-language requests\n\nAll procedures live inside this skill directory, so a skill-only install is complete. Resolve links relative to this file. Plugin slash commands are optional entry points to the same procedures.\n\n| Request | Read |\n|---|---|\n| Plan or save an idea | [brainstorm.md](brainstorm.md) |\n| Start tracked work | [branch.md](branch.md) |\n| Capture discussion or a handoff | [timeline.md](timeline.md) |\n| Handle a discovery | [discovery.md](discovery.md) |\n| Commit | [commit.md](commit.md) |\n| Open a PR | [pr.md](pr.md) |\n| Find past discussion | [lookup.md](lookup.md) |\n| Find next work | [hunt.md](hunt.md) |\n| Resume | [resume.md](resume.md) |\n| Review | [review.md](review.md) |\n| Configure routing | [models.md](models.md) |\n\n## Optional policy\n\nRouting is off when unset. Preserve explicit settings; load [references/model-routing.md](references/model-routing.md) only for enabled routing or a requested change. Off means no routing prompts or mode changes.\n\nFollow project review requirements using [references/closure-and-review.md](references/closure-and-review.md). Native GitHub reviews, configured Codex review, and attributed comments can provide evidence. Cross-model review is an explicit option. Model identity alone proves neither independence nor approval. Required checks and user authorization still govern merge.\n\nLoad [verification profiles](references/verification-profiles.md) only when configured and [quiet logging](references/quiet-logging.md) only when requested. Do not rewrite historical records during adoption. Read older formats as needed. Optional features must not add setup steps to the default workflow.\n",
+      "bodyMd": "# Shiplog\n\nKeep the original discussion available for human recollection. Give the next agent a small, current account of the work. Use GitHub issues, PRs, and links; no separate memory service is required.\n\n## When to use it\n\nUse **shiplog** for requested project logging, planning with durable records, history lookup, and work on an existing tracked issue or PR. An idea can remain a discussion without a branch or delivery commitment. Ordinary small edits do not require a new issue. Follow the user's existing authorization and chosen location for published records.\n\n## Three records\n\n**Original discussion:** Preserve available human project messages verbatim and in order. Include enough assistant dialogue to understand references and answers. Keep rejected ideas, doubts, and preferences even when they do not affect implementation. Identify the original speaker separately from the account or agent that records the text. Never present an agent inference as a human decision.\n\nSave discussion in batches at useful checkpoints and before a handoff or context reduction when the runtime exposes that event. Use source message IDs or a recorded message range to avoid duplicate capture. A link alone does not preserve the text. Do not invent unavailable history or promise complete capture when there are gaps. Add later corrections as linked entries; leave earlier wording intact.\n\n**Current summary:** Keep one editable summary on the tracking issue: goal, constraints, current decisions, open questions, checks, and next action. Link important decisions to their source entries. Update this summary when facts change. Preserve source sections already present in older issue bodies. A PR describes the final change and links back to the discussion.\n\n**Retrieval index:** Keep a small envelope on new records. Extract its fields before returning tool output to the model. Read selected original records when the question needs them. Use platform IDs, dates, and links instead of copying them into metadata. Compute task counts from the task section. Search original text when a summary does not answer a recollection question.\n\nRead [references/records.md](references/records.md) when capturing or updating records. Read [references/artifact-envelopes.md](references/artifact-envelopes.md) when retrieving them. These files own their formats.\n\n## Work with the record\n\nBefore starting or resuming, read the current summary and inspect the actual branch, changes, and linked PR. Resolve differences before claiming the summary is current. Follow project branch and commit conventions. Link commits and PRs to the issue where useful. A routine start, resume, or commit does not require another comment.\n\nRecord new decisions, useful failed approaches, blockers, checks, and remaining work at the next checkpoint. Record human discussion regardless of its coding value. Verify the real product path with the checks the project requires. Report checks that were not run. Close only the scope supported by evidence; partial delivery leaves remaining tasks open.\n\n## Commands and natural-language requests\n\nAll procedures live inside this skill directory, so a skill-only install is complete. Resolve links relative to this file. Plugin slash commands are optional entry points to the same procedures.\n\n| Request | Read |\n|---|---|\n| Plan or save an idea | [brainstorm.md](brainstorm.md) |\n| Start tracked work | [branch.md](branch.md) |\n| Capture discussion or a handoff | [timeline.md](timeline.md) |\n| Handle a discovery | [discovery.md](discovery.md) |\n| Commit | [commit.md](commit.md) |\n| Open a PR | [pr.md](pr.md) |\n| Find past discussion | [lookup.md](lookup.md) |\n| Find next work | [hunt.md](hunt.md) |\n| Resume | [resume.md](resume.md) |\n| Review | [review.md](review.md) |\n| Configure routing | [models.md](models.md) |\n\n## Optional policy\n\nRouting is off when unset. Preserve explicit settings; load [references/model-routing.md](references/model-routing.md) only for enabled routing or a requested change. Off means no routing prompts or mode changes.\n\nFollow project review requirements using [references/closure-and-review.md](references/closure-and-review.md). Native GitHub reviews, configured Codex review, and attributed comments can provide evidence. Cross-model review is an explicit option. Model identity alone proves neither independence nor approval. Required checks and user authorization still govern merge.\n\nLoad [verification profiles](references/verification-profiles.md) only when configured and [quiet logging](references/quiet-logging.md) only when requested. Do not rewrite historical records during adoption. Read older formats as needed. Optional features must not add setup steps to the default workflow.\n"
+    },
+    {
+      "slug": "shiplog-2",
+      "name": "fixture",
+      "dir": "tests/docs/fixtures/broken/skills/shiplog",
+      "path": "tests/docs/fixtures/broken/skills/shiplog/SKILL.md",
+      "desc": "Deliberately broken tree for the docs lint self-test.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/devallibus/shiplog.git",
+        "copy": "cp -r tests/docs/fixtures/broken/skills/shiplog ~/.claude/skills/shiplog-2",
+        "raw": "https://raw.githubusercontent.com/devallibus/shiplog/fa97a949bd3634033a21fdc55153aa29388cd13b/tests/docs/fixtures/broken/skills/shiplog/SKILL.md",
+        "saveAs": "~/.claude/skills/shiplog-2/SKILL.md",
+        "marketplace": "/plugin marketplace add devallibus/shiplog"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:6abf28fee2159917c95c124eebca5397cd4e975c89d7bf1719fb78a890a4faa1",
+      "bytes": 372,
+      "wordCount": 23,
+      "repoLicense": "MIT",
+      "commit": "fa97a949bd3634033a21fdc55153aa29388cd13b",
+      "branch": "master",
+      "body": "---\nname: fixture\ndescription: Deliberately broken tree for the docs lint self-test.\n---\n\nRead [good](good.md), [missing](missing.md), and [escape](../../outside.md).\nExternal links are ignored: [web](https://example.com) and [anchor](#top).\nInline code is ignored: `[code](code-missing.md)`.\n\n```markdown\n[fenced](fenced-missing.md) and [fenced page](fenced-only.md)\n```\n",
+      "bodyMd": "Read [good](good.md), [missing](missing.md), and [escape](../../outside.md).\nExternal links are ignored: [web](https://example.com) and [anchor](#top).\nInline code is ignored: `[code](code-missing.md)`.\n\n```markdown\n[fenced](fenced-missing.md) and [fenced page](fenced-only.md)\n```\n"
+    },
+    {
+      "slug": "shiplog-3",
+      "name": "fixture",
+      "dir": "tests/docs/fixtures/clean/skills/shiplog",
+      "path": "tests/docs/fixtures/clean/skills/shiplog/SKILL.md",
+      "desc": "Minimal valid tree for the docs lint self-test.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/devallibus/shiplog.git",
+        "copy": "cp -r tests/docs/fixtures/clean/skills/shiplog ~/.claude/skills/shiplog-3",
+        "raw": "https://raw.githubusercontent.com/devallibus/shiplog/fa97a949bd3634033a21fdc55153aa29388cd13b/tests/docs/fixtures/clean/skills/shiplog/SKILL.md",
+        "saveAs": "~/.claude/skills/shiplog-3/SKILL.md",
+        "marketplace": "/plugin marketplace add devallibus/shiplog"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:23e61ca57e68c68b57392b4f4fd11b4c630dcb5276f4ce469b7318b7edb8df25",
+      "bytes": 113,
+      "wordCount": 3,
+      "repoLicense": "MIT",
+      "commit": "fa97a949bd3634033a21fdc55153aa29388cd13b",
+      "branch": "master",
+      "body": "---\nname: fixture\ndescription: Minimal valid tree for the docs lint self-test.\n---\n\nRead [a page](a.md#section).\n",
+      "bodyMd": "Read [a page](a.md#section).\n"
+    }
+  ]
+}

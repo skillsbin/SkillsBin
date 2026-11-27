@@ -1,0 +1,405 @@
+{
+  "repo": "justxor/claude-code-pro-course",
+  "commit": "685e438e33bf64760448e796a5fe6bc8dcf465fd",
+  "branch": "main",
+  "fetchedAt": "2026-11-27T07:11:04.435Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "review",
+      "name": "review",
+      "dir": "plugin-example/skills/review",
+      "path": "plugin-example/skills/review/SKILL.md",
+      "desc": "Ревью изменений с фокусом на безопасность по стандартам команды. Используй перед мерджем или по просьбе проверить безопасность.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Bash(git diff:*), Read, Grep, Glob"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/justxor/claude-code-pro-course.git",
+        "copy": "cp -r plugin-example/skills/review ~/.claude/skills/review",
+        "raw": "https://raw.githubusercontent.com/justxor/claude-code-pro-course/685e438e33bf64760448e796a5fe6bc8dcf465fd/plugin-example/skills/review/SKILL.md",
+        "saveAs": "~/.claude/skills/review/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:64ab46cf5307e9a501c21357346e9011db289386a74b0b3be1a79fbde04f66ce",
+      "bytes": 849,
+      "wordCount": 40,
+      "repoLicense": "MIT",
+      "commit": "685e438e33bf64760448e796a5fe6bc8dcf465fd",
+      "branch": "main",
+      "body": "---\nname: review\ndescription: Ревью изменений с фокусом на безопасность по стандартам команды. Используй перед мерджем или по просьбе проверить безопасность.\nallowed-tools: Bash(git diff:*), Read, Grep, Glob\n---\n\n# Security review\n\n1. `git diff main...HEAD`\n2. Проверь по OWASP Top 10: инъекции, аутентификация, чувствительные данные, контроль доступа, небезопасная десериализация, SSRF.\n3. Ищи секреты: ключи, токены, пароли в коде и конфигурации.\n4. Отчёт: уровень риска (высокий/средний/низкий), `файл:строка`, описание, исправление.\n",
+      "bodyMd": "# Security review\n\n1. `git diff main...HEAD`\n2. Проверь по OWASP Top 10: инъекции, аутентификация, чувствительные данные, контроль доступа, небезопасная десериализация, SSRF.\n3. Ищи секреты: ключи, токены, пароли в коде и конфигурации.\n4. Отчёт: уровень риска (высокий/средний/низкий), `файл:строка`, описание, исправление.\n"
+    },
+    {
+      "slug": "code-review",
+      "name": "code-review",
+      "dir": "starter-kit/.claude/skills/code-review",
+      "path": "starter-kit/.claude/skills/code-review/SKILL.md",
+      "desc": "Ревью изменений в текущей ветке относительно main. Используй, когда просят проверить код, сделать ревью, найти проблемы перед PR или коммитом.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Bash(git diff:*), Bash(git log:*), Bash(git status), Read, Grep, Glob"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/justxor/claude-code-pro-course.git",
+        "copy": "cp -r starter-kit/.claude/skills/code-review ~/.claude/skills/code-review",
+        "raw": "https://raw.githubusercontent.com/justxor/claude-code-pro-course/685e438e33bf64760448e796a5fe6bc8dcf465fd/starter-kit/.claude/skills/code-review/SKILL.md",
+        "saveAs": "~/.claude/skills/code-review/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:9d0e10be71e08cd9b33794d23e153f2d1169f89feb8b64afdbbfccb4fda7a42f",
+      "bytes": 1842,
+      "wordCount": 134,
+      "repoLicense": "MIT",
+      "commit": "685e438e33bf64760448e796a5fe6bc8dcf465fd",
+      "branch": "main",
+      "body": "---\nname: code-review\ndescription: Ревью изменений в текущей ветке относительно main. Используй, когда просят проверить код, сделать ревью, найти проблемы перед PR или коммитом.\nallowed-tools: Bash(git diff:*), Bash(git log:*), Bash(git status), Read, Grep, Glob\n---\n\n# Code review\n\n## Шаги\n1. Определи базу: `git diff main...HEAD --stat` (если main нет — `master`). Если изменений в ветке нет — используй `git diff` и `git diff --staged`.\n2. Прочитай полный дифф и, где нужно, окружающий код изменённых файлов.\n3. Проверь каждый файл по чек-листу:\n   - **Корректность:** логика, граничные случаи (null, пусто, большие значения), обработка ошибок\n   - **Безопасность:** инъекции, секреты в коде, проверка прав, валидация ввода\n   - **Тесты:** покрыто ли новое поведение; не ослаблены ли существующие тесты\n   - **Производительность:** N+1, лишние циклы, утечки\n   - **Читаемость:** имена, дублирование, соответствие стилю из CLAUDE.md\n4. Не придумывай проблем ради количества. Нет замечаний — так и скажи.\n\n## Формат отчёта\n```\n## Итог: <одно предложение>\n\n### 🔴 Критично\n- `файл:строка` — проблема → предложение\n\n### 🟡 Стоит исправить\n- ...\n\n### 🟢 Мелочи\n- ...\n```\n",
+      "bodyMd": "# Code review\n\n## Шаги\n1. Определи базу: `git diff main...HEAD --stat` (если main нет — `master`). Если изменений в ветке нет — используй `git diff` и `git diff --staged`.\n2. Прочитай полный дифф и, где нужно, окружающий код изменённых файлов.\n3. Проверь каждый файл по чек-листу:\n   - **Корректность:** логика, граничные случаи (null, пусто, большие значения), обработка ошибок\n   - **Безопасность:** инъекции, секреты в коде, проверка прав, валидация ввода\n   - **Тесты:** покрыто ли новое поведение; не ослаблены ли существующие тесты\n   - **Производительность:** N+1, лишние циклы, утечки\n   - **Читаемость:** имена, дублирование, соответствие стилю из CLAUDE.md\n4. Не придумывай проблем ради количества. Нет замечаний — так и скажи.\n\n## Формат отчёта\n```\n## Итог: <одно предложение>\n\n### 🔴 Критично\n- `файл:строка` — проблема → предложение\n\n### 🟡 Стоит исправить\n- ...\n\n### 🟢 Мелочи\n- ...\n```\n"
+    },
+    {
+      "slug": "commit",
+      "name": "commit",
+      "dir": "starter-kit/.claude/skills/commit",
+      "path": "starter-kit/.claude/skills/commit/SKILL.md",
+      "desc": "Создаёт git-коммит в формате Conventional Commits по текущим изменениям. Используй, когда просят закоммитить или сделать коммит.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Bash(git status), Bash(git diff:*), Bash(git add:*), Bash(git commit:*), Bash(git log:*)"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/justxor/claude-code-pro-course.git",
+        "copy": "cp -r starter-kit/.claude/skills/commit ~/.claude/skills/commit",
+        "raw": "https://raw.githubusercontent.com/justxor/claude-code-pro-course/685e438e33bf64760448e796a5fe6bc8dcf465fd/starter-kit/.claude/skills/commit/SKILL.md",
+        "saveAs": "~/.claude/skills/commit/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:9d104ba7eec0d5baa4ae72077a4baa4c32674a3a5b6bbcd65a9d03b2a8219a65",
+      "bytes": 1330,
+      "wordCount": 94,
+      "repoLicense": "MIT",
+      "commit": "685e438e33bf64760448e796a5fe6bc8dcf465fd",
+      "branch": "main",
+      "body": "---\nname: commit\ndescription: Создаёт git-коммит в формате Conventional Commits по текущим изменениям. Используй, когда просят закоммитить или сделать коммит.\nallowed-tools: Bash(git status), Bash(git diff:*), Bash(git add:*), Bash(git commit:*), Bash(git log:*)\nargument-hint: \"[необязательное пояснение]\"\n---\n\n# Commit\n\nКонтекст от пользователя: $ARGUMENTS\n\n1. `git status` и `git diff` (+ `git diff --staged`) — пойми, что изменилось.\n2. `git log --oneline -10` — посмотри стиль сообщений в репозитории.\n3. Если изменения логически разные — предложи разбить на несколько коммитов.\n4. Не добавляй в коммит `.env`, секреты, временные и сгенерированные файлы.\n5. Сообщение:\n   ```\n   <type>(<scope>): <кратко, повелительное наклонение, до 72 символов>\n\n   <зачем сделано изменение, если неочевидно>\n   ```\n   type: feat | fix | refactor | test | docs | chore | perf | ci\n6. Сделай коммит и покажи `git log --oneline -1`.\n",
+      "bodyMd": "# Commit\n\nКонтекст от пользователя: $ARGUMENTS\n\n1. `git status` и `git diff` (+ `git diff --staged`) — пойми, что изменилось.\n2. `git log --oneline -10` — посмотри стиль сообщений в репозитории.\n3. Если изменения логически разные — предложи разбить на несколько коммитов.\n4. Не добавляй в коммит `.env`, секреты, временные и сгенерированные файлы.\n5. Сообщение:\n   ```\n   <type>(<scope>): <кратко, повелительное наклонение, до 72 символов>\n\n   <зачем сделано изменение, если неочевидно>\n   ```\n   type: feat | fix | refactor | test | docs | chore | perf | ci\n6. Сделай коммит и покажи `git log --oneline -1`.\n"
+    },
+    {
+      "slug": "fix-issue",
+      "name": "fix-issue",
+      "dir": "starter-kit/.claude/skills/fix-issue",
+      "path": "starter-kit/.claude/skills/fix-issue/SKILL.md",
+      "desc": "Полный цикл исправления GitHub issue по номеру - анализ, тест, исправление, коммит.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "gh"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/justxor/claude-code-pro-course.git",
+        "copy": "cp -r starter-kit/.claude/skills/fix-issue ~/.claude/skills/fix-issue",
+        "raw": "https://raw.githubusercontent.com/justxor/claude-code-pro-course/685e438e33bf64760448e796a5fe6bc8dcf465fd/starter-kit/.claude/skills/fix-issue/SKILL.md",
+        "saveAs": "~/.claude/skills/fix-issue/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:d67d19a7c557a32744e2ba3f4dfa250a6ab48ecfd1101cb4e0abbfce2a2b705b",
+      "bytes": 965,
+      "wordCount": 65,
+      "repoLicense": "MIT",
+      "commit": "685e438e33bf64760448e796a5fe6bc8dcf465fd",
+      "branch": "main",
+      "body": "---\nname: fix-issue\ndescription: Полный цикл исправления GitHub issue по номеру - анализ, тест, исправление, коммит.\nargument-hint: <номер issue>\ndisable-model-invocation: true\n---\n\n# Fix issue #$ARGUMENTS\n\n1. `gh issue view $ARGUMENTS` — прочитай issue и комментарии.\n2. Найди релевантный код. Кратко опиши первопричину.\n3. Создай ветку `fix/$ARGUMENTS-<кратко>`.\n4. Напиши тест, который воспроизводит проблему, убедись, что он падает.\n5. Исправь минимально необходимым изменением. Запусти тест и соседние тесты.\n6. Прогони линтер и проверку типов.\n7. Коммит: `fix: <описание> (closes #$ARGUMENTS)`.\n8. Спроси, открывать ли PR (`gh pr create`).\n",
+      "bodyMd": "# Fix issue #$ARGUMENTS\n\n1. `gh issue view $ARGUMENTS` — прочитай issue и комментарии.\n2. Найди релевантный код. Кратко опиши первопричину.\n3. Создай ветку `fix/$ARGUMENTS-<кратко>`.\n4. Напиши тест, который воспроизводит проблему, убедись, что он падает.\n5. Исправь минимально необходимым изменением. Запусти тест и соседние тесты.\n6. Прогони линтер и проверку типов.\n7. Коммит: `fix: <описание> (closes #$ARGUMENTS)`.\n8. Спроси, открывать ли PR (`gh pr create`).\n"
+    },
+    {
+      "slug": "onboard",
+      "name": "onboard",
+      "dir": "starter-kit/.claude/skills/onboard",
+      "path": "starter-kit/.claude/skills/onboard/SKILL.md",
+      "desc": "Проводит онбординг нового разработчика в проект - обзор архитектуры, запуск, ключевые потоки и первая задача. Используй, когда просят объяснить проект, ввести в курс дела или помочь новичку.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Read, Grep, Glob, Bash(git log:*), Bash(ls:*)"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/justxor/claude-code-pro-course.git",
+        "copy": "cp -r starter-kit/.claude/skills/onboard ~/.claude/skills/onboard",
+        "raw": "https://raw.githubusercontent.com/justxor/claude-code-pro-course/685e438e33bf64760448e796a5fe6bc8dcf465fd/starter-kit/.claude/skills/onboard/SKILL.md",
+        "saveAs": "~/.claude/skills/onboard/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:8100ce8e6e7727be0fccc8abecf1fdd6e5faab90b8cf645cb52f968c0ecf40ad",
+      "bytes": 1738,
+      "wordCount": 115,
+      "repoLicense": "MIT",
+      "commit": "685e438e33bf64760448e796a5fe6bc8dcf465fd",
+      "branch": "main",
+      "body": "---\nname: onboard\ndescription: Проводит онбординг нового разработчика в проект - обзор архитектуры, запуск, ключевые потоки и первая задача. Используй, когда просят объяснить проект, ввести в курс дела или помочь новичку.\nallowed-tools: Read, Grep, Glob, Bash(git log:*), Bash(ls:*)\n---\n\n# Onboarding\n\nЦель — за 10 минут дать человеку рабочую ментальную модель проекта.\n\n1. **Одним абзацем:** что это за продукт и для кого.\n2. **Карта:** дерево ключевых директорий (до 15 строк) с пояснением каждой.\n3. **Запуск:** установка, dev, тесты, один тест — проверь по CLAUDE.md/package.json/Makefile.\n4. **Главные потоки:** 2–3 ключевых сценария (например, «запрос → ответ», «фоновая задача») — путь по файлам.\n5. **Грабли:** неочевидные места, соглашения, то, что легко сломать.\n6. **Кто что знает:** по `git log` — самые активные авторы по областям (только имена из истории).\n7. **Первая задача:** предложи 3 небольшие задачи для знакомства (good first issue), от простой к сложной.\n\nПиши кратко, со ссылками `файл:строка`. В конце спроси, какую часть разобрать подробнее.\n",
+      "bodyMd": "# Onboarding\n\nЦель — за 10 минут дать человеку рабочую ментальную модель проекта.\n\n1. **Одним абзацем:** что это за продукт и для кого.\n2. **Карта:** дерево ключевых директорий (до 15 строк) с пояснением каждой.\n3. **Запуск:** установка, dev, тесты, один тест — проверь по CLAUDE.md/package.json/Makefile.\n4. **Главные потоки:** 2–3 ключевых сценария (например, «запрос → ответ», «фоновая задача») — путь по файлам.\n5. **Грабли:** неочевидные места, соглашения, то, что легко сломать.\n6. **Кто что знает:** по `git log` — самые активные авторы по областям (только имена из истории).\n7. **Первая задача:** предложи 3 небольшие задачи для знакомства (good first issue), от простой к сложной.\n\nПиши кратко, со ссылками `файл:строка`. В конце спроси, какую часть разобрать подробнее.\n"
+    },
+    {
+      "slug": "pr-description",
+      "name": "pr-description",
+      "dir": "starter-kit/.claude/skills/pr-description",
+      "path": "starter-kit/.claude/skills/pr-description/SKILL.md",
+      "desc": "Готовит заголовок и описание pull request по изменениям в ветке. Используй, когда просят описать PR, подготовить pull request или написать описание изменений.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Bash(git diff:*), Bash(git log:*), Bash(git status), Bash(git branch:*), Read, Grep"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git",
+          "gh"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/justxor/claude-code-pro-course.git",
+        "copy": "cp -r starter-kit/.claude/skills/pr-description ~/.claude/skills/pr-description",
+        "raw": "https://raw.githubusercontent.com/justxor/claude-code-pro-course/685e438e33bf64760448e796a5fe6bc8dcf465fd/starter-kit/.claude/skills/pr-description/SKILL.md",
+        "saveAs": "~/.claude/skills/pr-description/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:13dc711fc548df4fbac7aaa38e6077732dc4df47bb7ab4e2d93ab824f63a7ec9",
+      "bytes": 1152,
+      "wordCount": 75,
+      "repoLicense": "MIT",
+      "commit": "685e438e33bf64760448e796a5fe6bc8dcf465fd",
+      "branch": "main",
+      "body": "---\nname: pr-description\ndescription: Готовит заголовок и описание pull request по изменениям в ветке. Используй, когда просят описать PR, подготовить pull request или написать описание изменений.\nallowed-tools: Bash(git diff:*), Bash(git log:*), Bash(git status), Bash(git branch:*), Read, Grep\n---\n\n# PR description\n\n## Контекст\n- Ветка: !`git branch --show-current`\n- Коммиты: !`git log --oneline main..HEAD 2>/dev/null | head -30`\n\n## Шаги\n1. Изучи `git diff main...HEAD` и коммиты.\n2. Сформируй описание по шаблону [template.md](template.md).\n3. Пиши для ревьюера: что и **зачем**, на что смотреть внимательно, как проверить.\n4. Не выдумывай: если не знаешь, как тестировали, — оставь пункт для автора.\n5. Выведи результат. Создавать PR (`gh pr create`) — только если пользователь явно попросил.\n",
+      "bodyMd": "# PR description\n\n## Контекст\n- Ветка: !`git branch --show-current`\n- Коммиты: !`git log --oneline main..HEAD 2>/dev/null | head -30`\n\n## Шаги\n1. Изучи `git diff main...HEAD` и коммиты.\n2. Сформируй описание по шаблону [template.md](template.md).\n3. Пиши для ревьюера: что и **зачем**, на что смотреть внимательно, как проверить.\n4. Не выдумывай: если не знаешь, как тестировали, — оставь пункт для автора.\n5. Выведи результат. Создавать PR (`gh pr create`) — только если пользователь явно попросил.\n"
+    },
+    {
+      "slug": "refactor",
+      "name": "refactor",
+      "dir": "starter-kit/.claude/skills/refactor",
+      "path": "starter-kit/.claude/skills/refactor/SKILL.md",
+      "desc": "Безопасный рефакторинг маленькими шагами без изменения поведения. Используй, когда просят отрефакторить, упростить, разделить модуль, убрать дублирование или почистить код.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/justxor/claude-code-pro-course.git",
+        "copy": "cp -r starter-kit/.claude/skills/refactor ~/.claude/skills/refactor",
+        "raw": "https://raw.githubusercontent.com/justxor/claude-code-pro-course/685e438e33bf64760448e796a5fe6bc8dcf465fd/starter-kit/.claude/skills/refactor/SKILL.md",
+        "saveAs": "~/.claude/skills/refactor/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:a6a9a51a840906853b83164b3c34561c3bb3bbf8d611aa0b8afcb43e50a1e165",
+      "bytes": 1604,
+      "wordCount": 102,
+      "repoLicense": "MIT",
+      "commit": "685e438e33bf64760448e796a5fe6bc8dcf465fd",
+      "branch": "main",
+      "body": "---\nname: refactor\ndescription: Безопасный рефакторинг маленькими шагами без изменения поведения. Используй, когда просят отрефакторить, упростить, разделить модуль, убрать дублирование или почистить код.\nargument-hint: <файл или модуль> [цель]\n---\n\n# Refactor: $ARGUMENTS\n\nПравило №1: **поведение не меняется.**\n\n1. Убедись, что тесты для затрагиваемого кода есть и зелёные. Если тестов нет — сначала напиши характеризационные тесты на текущее поведение и закоммить их.\n2. Опиши план: список маленьких шагов (переименование, выделение функции, перенос и т.д.). Каждый шаг оставляет проект рабочим.\n3. Выполняй шаги по одному. После каждого:\n   - запусти тесты и проверку типов;\n   - если красное — откати шаг и попробуй иначе.\n4. Не смешивай рефакторинг с новыми фичами и исправлениями багов. Найденные баги — запиши в отчёт.\n5. Итог: что изменилось, метрики (строк/функций до и после), найденные баги, что стоит сделать дальше.\n",
+      "bodyMd": "# Refactor: $ARGUMENTS\n\nПравило №1: **поведение не меняется.**\n\n1. Убедись, что тесты для затрагиваемого кода есть и зелёные. Если тестов нет — сначала напиши характеризационные тесты на текущее поведение и закоммить их.\n2. Опиши план: список маленьких шагов (переименование, выделение функции, перенос и т.д.). Каждый шаг оставляет проект рабочим.\n3. Выполняй шаги по одному. После каждого:\n   - запусти тесты и проверку типов;\n   - если красное — откати шаг и попробуй иначе.\n4. Не смешивай рефакторинг с новыми фичами и исправлениями багов. Найденные баги — запиши в отчёт.\n5. Итог: что изменилось, метрики (строк/функций до и после), найденные баги, что стоит сделать дальше.\n"
+    },
+    {
+      "slug": "release-notes",
+      "name": "release-notes",
+      "dir": "starter-kit/.claude/skills/release-notes",
+      "path": "starter-kit/.claude/skills/release-notes/SKILL.md",
+      "desc": "Генерирует release notes / CHANGELOG между двумя тегами или от последнего тега. Используй, когда просят release notes, changelog или список изменений релиза.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [
+        "Bash(git log:*), Bash(git tag:*), Bash(git describe:*), Read, Edit"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/justxor/claude-code-pro-course.git",
+        "copy": "cp -r starter-kit/.claude/skills/release-notes ~/.claude/skills/release-notes",
+        "raw": "https://raw.githubusercontent.com/justxor/claude-code-pro-course/685e438e33bf64760448e796a5fe6bc8dcf465fd/starter-kit/.claude/skills/release-notes/SKILL.md",
+        "saveAs": "~/.claude/skills/release-notes/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:2cbde36f2ad755c877e299b57320429d6b49cdbdac16ffafde05c87b59febc94",
+      "bytes": 1353,
+      "wordCount": 92,
+      "repoLicense": "MIT",
+      "commit": "685e438e33bf64760448e796a5fe6bc8dcf465fd",
+      "branch": "main",
+      "body": "---\nname: release-notes\ndescription: Генерирует release notes / CHANGELOG между двумя тегами или от последнего тега. Используй, когда просят release notes, changelog или список изменений релиза.\nallowed-tools: Bash(git log:*), Bash(git tag:*), Bash(git describe:*), Read, Edit\nargument-hint: \"[от-тега] [до-тега]\"\n---\n\n# Release notes\n\nДиапазон: `$ARGUMENTS` (если пусто — от последнего тега `git describe --tags --abbrev=0` до HEAD).\n\n1. `git log <от>..<до> --pretty=format:'%h %s (%an)' --no-merges`\n2. Сгруппируй по типам Conventional Commits:\n   - ✨ Новое (`feat`)\n   - 🐛 Исправления (`fix`)\n   - ⚡ Производительность (`perf`)\n   - ♻️ Рефакторинг и прочее (`refactor`, `chore`, `docs`, `ci`) — кратко, одной строкой\n   - 💥 **Breaking changes** (`!` или `BREAKING CHANGE`) — всегда первым блоком\n3. Переписывай технические сообщения на язык пользователя: что изменилось для него.\n4. Если есть `CHANGELOG.md` — предложи добавить секцию сверху (формат Keep a Changelog).\n",
+      "bodyMd": "# Release notes\n\nДиапазон: `$ARGUMENTS` (если пусто — от последнего тега `git describe --tags --abbrev=0` до HEAD).\n\n1. `git log <от>..<до> --pretty=format:'%h %s (%an)' --no-merges`\n2. Сгруппируй по типам Conventional Commits:\n   - ✨ Новое (`feat`)\n   - 🐛 Исправления (`fix`)\n   - ⚡ Производительность (`perf`)\n   - ♻️ Рефакторинг и прочее (`refactor`, `chore`, `docs`, `ci`) — кратко, одной строкой\n   - 💥 **Breaking changes** (`!` или `BREAKING CHANGE`) — всегда первым блоком\n3. Переписывай технические сообщения на язык пользователя: что изменилось для него.\n4. Если есть `CHANGELOG.md` — предложи добавить секцию сверху (формат Keep a Changelog).\n"
+    },
+    {
+      "slug": "write-tests",
+      "name": "write-tests",
+      "dir": "starter-kit/.claude/skills/write-tests",
+      "path": "starter-kit/.claude/skills/write-tests/SKILL.md",
+      "desc": "Пишет unit-тесты для указанного файла или функции в стиле существующих тестов проекта. Используй, когда просят добавить тесты, покрыть код тестами или проверить граничные случаи.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/justxor/claude-code-pro-course.git",
+        "copy": "cp -r starter-kit/.claude/skills/write-tests ~/.claude/skills/write-tests",
+        "raw": "https://raw.githubusercontent.com/justxor/claude-code-pro-course/685e438e33bf64760448e796a5fe6bc8dcf465fd/starter-kit/.claude/skills/write-tests/SKILL.md",
+        "saveAs": "~/.claude/skills/write-tests/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:3c471736029d6547b902426f8e7b888d293da39a5997873a289c12fb50f2f6cf",
+      "bytes": 1493,
+      "wordCount": 94,
+      "repoLicense": "MIT",
+      "commit": "685e438e33bf64760448e796a5fe6bc8dcf465fd",
+      "branch": "main",
+      "body": "---\nname: write-tests\ndescription: Пишет unit-тесты для указанного файла или функции в стиле существующих тестов проекта. Используй, когда просят добавить тесты, покрыть код тестами или проверить граничные случаи.\nargument-hint: <путь к файлу или имя функции>\n---\n\n# Write tests\n\nЦель: $ARGUMENTS\n\n1. Найди тестовый фреймворк и 1–2 существующих теста рядом — повторяй их стиль, структуру и расположение.\n2. Прочитай тестируемый код. Составь список сценариев:\n   - основной (happy path)\n   - граничные значения (пусто, 0, отрицательные, очень большие, unicode)\n   - ошибки и исключения\n   - взаимодействие с зависимостями (моки — только для внешних систем)\n3. Покажи список сценариев одной строкой каждый, затем напиши тесты.\n4. Запусти только новые тесты. Если тест падает из-за бага в коде — НЕ подгоняй тест, а сообщи о баге.\n5. Итог: сколько тестов, что покрыто, какие баги найдены.\n",
+      "bodyMd": "# Write tests\n\nЦель: $ARGUMENTS\n\n1. Найди тестовый фреймворк и 1–2 существующих теста рядом — повторяй их стиль, структуру и расположение.\n2. Прочитай тестируемый код. Составь список сценариев:\n   - основной (happy path)\n   - граничные значения (пусто, 0, отрицательные, очень большие, unicode)\n   - ошибки и исключения\n   - взаимодействие с зависимостями (моки — только для внешних систем)\n3. Покажи список сценариев одной строкой каждый, затем напиши тесты.\n4. Запусти только новые тесты. Если тест падает из-за бага в коде — НЕ подгоняй тест, а сообщи о баге.\n5. Итог: сколько тестов, что покрыто, какие баги найдены.\n"
+    }
+  ]
+}

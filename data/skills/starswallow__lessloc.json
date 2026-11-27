@@ -1,0 +1,54 @@
+{
+  "repo": "starswallow/lessloc",
+  "commit": "fc9567933d0c522fc33208ad629182e0cb9b8aa4",
+  "branch": "main",
+  "fetchedAt": "2026-11-27T07:13:06.514Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "lessloc",
+      "name": "lessloc",
+      "dir": "skills/lessloc",
+      "path": "skills/lessloc/SKILL.md",
+      "desc": "Find, review or remove code a codebase does not need (duplicates, copies under other names, dead code, needless abstractions, files, folders, comments, dependencies) without changing behavior. Use for \"audit\", \"find bloat\", \"consolidate\", \"slim this\", \"reduce LOC\", \"what can I delete\", \"review this change\", \"does this already exist\", /lessloc.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "cursor"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "git",
+          "node"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/starswallow/lessloc.git",
+        "copy": "cp -r skills/lessloc ~/.claude/skills/lessloc",
+        "raw": "https://raw.githubusercontent.com/starswallow/lessloc/fc9567933d0c522fc33208ad629182e0cb9b8aa4/skills/lessloc/SKILL.md",
+        "saveAs": "~/.claude/skills/lessloc/SKILL.md",
+        "marketplace": "/plugin marketplace add starswallow/lessloc"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:cbcc1b660cbafa93808efa1dfa16010f9527ca6a0042cc8b882ea6f3f1e392c1",
+      "bytes": 3239,
+      "wordCount": 430,
+      "repoLicense": "Apache-2.0",
+      "commit": "fc9567933d0c522fc33208ad629182e0cb9b8aa4",
+      "branch": "main",
+      "body": "---\nname: lessloc\ndescription: Find, review or remove code a codebase does not need (duplicates, copies under other names, dead code, needless abstractions, files, folders, comments, dependencies) without changing behavior. Use for \"audit\", \"find bloat\", \"consolidate\", \"slim this\", \"reduce LOC\", \"what can I delete\", \"review this change\", \"does this already exist\", /lessloc.\nargument-hint: \"[setup | audit [path] | review [git ref] | consolidate | find <words>]\"\ndisable-model-invocation: true\n---\n\nThe CLI is `node \"${CLAUDE_PLUGIN_ROOT}/lessloc.mjs\"`. Its numbers are facts; do not recount by hand.\n\n- **setup** (\"set up lessloc for this project\"): run `init`. It writes nothing into the repository, only git hooks for this clone. Show the user the test command it found: a passing run of it is what marks an agent's final state verified. Offer `init --rules` (rules in AGENTS.md for other AI tools) only if the user uses tools without lessloc's hooks, and say that the file is shared with everyone who works on the project. Finish with `doctor`, in plain words. `remove` undoes `init`; the snapshots of the working tree stay in `.git/objects`, never pushed, until `git gc` prunes them.\n- **find**: `find <what it does>` lists existing definitions that may already do it, by name; then search for code named differently too.\n- **audit**: `audit <path> --json --tools` (`--tools` adds knip, vulture, cargo-machete, deadcode and installed vulnerability scanners). Then find what the tool cannot see: code the standard library or an installed dependency already provides, defensive code for cases that cannot happen, responsibilities split across folders that always change together, made-up APIs and unpinned versions, over-mocked tests, answers hard-coded to fixtures, data shapes duplicated with renamed fields, and dead code kept behind a guard or flag. Similar-looking code is a duplicate only if it serves the same responsibility.\n- **review**: `check --base <ref> --json` (no ref: the uncommitted work), then the same semantic pass on the changed code and its callers.\n- **consolidate**: the deletion pass agents never do on their own. Run `audit --json`, take the biggest safe cuts (duplicate blocks, definitions with the same body, unreferenced definitions after checking dynamic use, if-chains a table replaces, swallowed errors, comment blocks whose decisions belong in DECISIONS.md), in small steps with `test` after each, then rerun the audit. Shrink without removing tests, logging or error handling. Stop when the next cut needs a tradeoff or cannot be verified; \"nothing further justified\" is a valid result. Finish with `baseline` so the ratchet locks the gain in.\n\nEvery finding names a location, the concrete cut, the lines saved, and why behavior stays the same. Never cut what RULES.md says never to cut: correctness, security, tests or anything the user asked for (see \"What lessloc never pushes an agent toward\" in PATTERNS.md). No style taste. Report numbered findings, biggest safe saving first, one line each: `N. path:lines: cut → −X lines (risk)`, ending with `Total: −X lines, −Y files, −Z dependencies` and what you did not check. For audit and review, change nothing until the user picks numbers.\n",
+      "bodyMd": "The CLI is `node \"${CLAUDE_PLUGIN_ROOT}/lessloc.mjs\"`. Its numbers are facts; do not recount by hand.\n\n- **setup** (\"set up lessloc for this project\"): run `init`. It writes nothing into the repository, only git hooks for this clone. Show the user the test command it found: a passing run of it is what marks an agent's final state verified. Offer `init --rules` (rules in AGENTS.md for other AI tools) only if the user uses tools without lessloc's hooks, and say that the file is shared with everyone who works on the project. Finish with `doctor`, in plain words. `remove` undoes `init`; the snapshots of the working tree stay in `.git/objects`, never pushed, until `git gc` prunes them.\n- **find**: `find <what it does>` lists existing definitions that may already do it, by name; then search for code named differently too.\n- **audit**: `audit <path> --json --tools` (`--tools` adds knip, vulture, cargo-machete, deadcode and installed vulnerability scanners). Then find what the tool cannot see: code the standard library or an installed dependency already provides, defensive code for cases that cannot happen, responsibilities split across folders that always change together, made-up APIs and unpinned versions, over-mocked tests, answers hard-coded to fixtures, data shapes duplicated with renamed fields, and dead code kept behind a guard or flag. Similar-looking code is a duplicate only if it serves the same responsibility.\n- **review**: `check --base <ref> --json` (no ref: the uncommitted work), then the same semantic pass on the changed code and its callers.\n- **consolidate**: the deletion pass agents never do on their own. Run `audit --json`, take the biggest safe cuts (duplicate blocks, definitions with the same body, unreferenced definitions after checking dynamic use, if-chains a table replaces, swallowed errors, comment blocks whose decisions belong in DECISIONS.md), in small steps with `test` after each, then rerun the audit. Shrink without removing tests, logging or error handling. Stop when the next cut needs a tradeoff or cannot be verified; \"nothing further justified\" is a valid result. Finish with `baseline` so the ratchet locks the gain in.\n\nEvery finding names a location, the concrete cut, the lines saved, and why behavior stays the same. Never cut what RULES.md says never to cut: correctness, security, tests or anything the user asked for (see \"What lessloc never pushes an agent toward\" in PATTERNS.md). No style taste. Report numbered findings, biggest safe saving first, one line each: `N. path:lines: cut → −X lines (risk)`, ending with `Total: −X lines, −Y files, −Z dependencies` and what you did not check. For audit and review, change nothing until the user picks numbers.\n"
+    }
+  ]
+}

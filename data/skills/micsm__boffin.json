@@ -1,0 +1,101 @@
+{
+  "repo": "MicSm/boffin",
+  "commit": "e29fc3866797d17c1b17dd4a070f571b1f2c6aed",
+  "branch": "main",
+  "fetchedAt": "2026-11-27T07:13:22.012Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "boffin-review",
+      "name": "boffin-review",
+      "dir": "skills/boffin-review",
+      "path": "skills/boffin-review/SKILL.md",
+      "desc": "Reviews code, diffs, cleanup proposals, and refactors against Boffin's staged architectural guardrails. Use when the user requests a Boffin review, architecture audit, compliance review, cleanup review, or open-ended refactor assessment.",
+      "descZh": "",
+      "triggers": [
+        "architecture audit",
+        "compliance review",
+        "cleanup review"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "cursor",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/MicSm/boffin.git",
+        "copy": "cp -r skills/boffin-review ~/.claude/skills/boffin-review",
+        "raw": "https://raw.githubusercontent.com/MicSm/boffin/e29fc3866797d17c1b17dd4a070f571b1f2c6aed/skills/boffin-review/SKILL.md",
+        "saveAs": "~/.claude/skills/boffin-review/SKILL.md",
+        "marketplace": "/plugin marketplace add MicSm/boffin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:4d8e14f8a8f143471cbcfeac7e193a3371541fc4e9ad5f57920481ea7d52e80d",
+      "bytes": 1182,
+      "wordCount": 138,
+      "repoLicense": "MIT",
+      "commit": "e29fc3866797d17c1b17dd4a070f571b1f2c6aed",
+      "branch": "main",
+      "body": "---\r\nname: boffin-review\r\ndescription: Reviews code, diffs, cleanup proposals, and refactors against Boffin's staged architectural guardrails. Use when the user requests a Boffin review, architecture audit, compliance review, cleanup review, or open-ended refactor assessment.\r\nlicense: MIT\r\n---\r\n\r\n# Boffin Review\r\n\r\nRead `AGENTS.md` at the installed plugin root, two directories above this file. It is authoritative; this skill only activates its review path.\r\n\r\nPreserve the user's request mode: a review or audit does not authorize edits. Scope the review to the requested files or changes, route through the relevant pack leaves (the `packs/` tree ships beside that `AGENTS.md` at the plugin root), and walk stages S00-S06 in order with EXCLUDES first.\r\n\r\nFor open-ended review, cleanup, or refactoring work, complete the contract's read-only first pass and findings ledger before proposing or applying fixes. If the user also requests implementation, drain that ledger one finding at a time with the narrowest proving check.\r\n\r\nUse the active `lite`, `full`, or `max` profile only to vary ambition and cleanup pressure. Never use it to lower the correctness or safety floor.\r\n",
+      "bodyMd": "# Boffin Review\r\n\r\nRead `AGENTS.md` at the installed plugin root, two directories above this file. It is authoritative; this skill only activates its review path.\r\n\r\nPreserve the user's request mode: a review or audit does not authorize edits. Scope the review to the requested files or changes, route through the relevant pack leaves (the `packs/` tree ships beside that `AGENTS.md` at the plugin root), and walk stages S00-S06 in order with EXCLUDES first.\r\n\r\nFor open-ended review, cleanup, or refactoring work, complete the contract's read-only first pass and findings ledger before proposing or applying fixes. If the user also requests implementation, drain that ledger one finding at a time with the narrowest proving check.\r\n\r\nUse the active `lite`, `full`, or `max` profile only to vary ambition and cleanup pressure. Never use it to lower the correctness or safety floor.\r\n"
+    },
+    {
+      "slug": "boffin",
+      "name": "boffin",
+      "dir": "skills/boffin",
+      "path": "skills/boffin/SKILL.md",
+      "desc": "Activates Boffin's routed architectural guardrails for coding, debugging, refactoring, and design work. Use when the user invokes Boffin or asks to apply ParselFire Core guidance to a software task.",
+      "descZh": "",
+      "triggers": [
+        "the user invokes Boffin"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "cursor",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/MicSm/boffin.git",
+        "copy": "cp -r skills/boffin ~/.claude/skills/boffin",
+        "raw": "https://raw.githubusercontent.com/MicSm/boffin/e29fc3866797d17c1b17dd4a070f571b1f2c6aed/skills/boffin/SKILL.md",
+        "saveAs": "~/.claude/skills/boffin/SKILL.md",
+        "marketplace": "/plugin marketplace add MicSm/boffin"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:14223150618cde7ef4ef6124159e37fbb39393f8c07edfa084188c550e2f6fe8",
+      "bytes": 1166,
+      "wordCount": 131,
+      "repoLicense": "MIT",
+      "commit": "e29fc3866797d17c1b17dd4a070f571b1f2c6aed",
+      "branch": "main",
+      "body": "---\r\nname: boffin\r\ndescription: Activates Boffin's routed architectural guardrails for coding, debugging, refactoring, and design work. Use when the user invokes Boffin or asks to apply ParselFire Core guidance to a software task.\r\nargument-hint: \"[lite|full|max]\"\r\nlicense: MIT\r\n---\r\n\r\n# Boffin\r\n\r\nTreat Boffin as active for the coding task.\r\n\r\n1. Read `AGENTS.md` at the installed plugin root, two directories above this file. It is the complete, authoritative behavior contract; do not reconstruct it from this skill.\r\n2. Load the pack indexes and leaves that contract routes for the task's actual mechanics. The `packs/` tree ships beside that `AGENTS.md`, so resolve the contract's `packs/...` paths against the plugin root, not the working directory.\r\n3. Follow its focused-change or review/refactor workflow, including external checks and the post-change review.\r\n\r\nThe active profile is `lite`, `full`, or `max`, with `full` as the default. It changes implementation ambition and cleanup pressure only; it never weakens the canonical contract. An exact `/boffin lite|full|max` command changes the profile, and `/boffin` reports it. There is no off profile.\r\n",
+      "bodyMd": "# Boffin\r\n\r\nTreat Boffin as active for the coding task.\r\n\r\n1. Read `AGENTS.md` at the installed plugin root, two directories above this file. It is the complete, authoritative behavior contract; do not reconstruct it from this skill.\r\n2. Load the pack indexes and leaves that contract routes for the task's actual mechanics. The `packs/` tree ships beside that `AGENTS.md`, so resolve the contract's `packs/...` paths against the plugin root, not the working directory.\r\n3. Follow its focused-change or review/refactor workflow, including external checks and the post-change review.\r\n\r\nThe active profile is `lite`, `full`, or `max`, with `full` as the default. It changes implementation ambition and cleanup pressure only; it never weakens the canonical contract. An exact `/boffin lite|full|max` command changes the profile, and `/boffin` reports it. There is no off profile.\r\n"
+    }
+  ]
+}

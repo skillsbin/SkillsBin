@@ -1,0 +1,58 @@
+{
+  "repo": "LukasNiessen/terrashark",
+  "commit": "21f2c18b912818b6a8e2b7bdbf25a275ecb894b1",
+  "branch": "main",
+  "fetchedAt": "2026-11-27T07:10:19.176Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "terrashark",
+      "name": "terrashark",
+      "dir": "",
+      "path": "SKILL.md",
+      "desc": "Prevent Terraform/OpenTofu hallucinations by diagnosing and fixing failure modes: identity churn, secret exposure, blast-radius mistakes, CI drift, and compliance gate gaps. Use when generating, reviewing, refactoring, or migrating IaC and when building delivery/testing pipelines.",
+      "descZh": "",
+      "triggers": [
+        "generating",
+        "reviewing",
+        "refactoring"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "go",
+          "aws",
+          "terraform"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/LukasNiessen/terrashark.git",
+        "copy": "",
+        "raw": "https://raw.githubusercontent.com/LukasNiessen/terrashark/21f2c18b912818b6a8e2b7bdbf25a275ecb894b1/SKILL.md",
+        "saveAs": "~/.claude/skills/terrashark/SKILL.md",
+        "marketplace": "/plugin marketplace add LukasNiessen/terrashark"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:bc4bcf686d013ea27a28cebbfd3c117dc1a66a64106a5303ccb247a1363fbe63",
+      "bytes": 3371,
+      "wordCount": 369,
+      "repoLicense": "MIT",
+      "commit": "21f2c18b912818b6a8e2b7bdbf25a275ecb894b1",
+      "branch": "main",
+      "body": "---\nname: terrashark\ndescription: \"Prevent Terraform/OpenTofu hallucinations by diagnosing and fixing failure modes: identity churn, secret exposure, blast-radius mistakes, CI drift, and compliance gate gaps. Use when generating, reviewing, refactoring, or migrating IaC and when building delivery/testing pipelines.\"\n---\n\n# Terrashark: Failure-Mode Workflow for Terraform/OpenTofu\n\nRun this workflow top to bottom.\n\n## 1) Capture execution context\n\nRecord before writing code:\n- runtime (`terraform` or `tofu`) and exact version\n- provider(s), target platform, and state backend\n- execution path (local CLI, CI, HCP Terraform/TFE, Atlantis)\n- environment criticality (dev/shared/prod)\n\nIf unknown, state assumptions explicitly.\n\n## 2) Diagnose likely failure mode(s)\n\nSelect one or more based on user intent and risk:\n- identity churn: resource addressing instability, refactor breakage\n- secret exposure: secrets in state, logs, defaults, artifacts\n- blast radius: oversized stacks, weak boundaries, unsafe applies\n- CI drift: version mismatch, unreviewed applies, missing artifacts\n- compliance gate gaps: missing policies/approvals/audit controls\n\n## 3) Load only the relevant reference file(s)\n\nPrimary references:\n- `references/identity-churn.md`\n- `references/secret-exposure.md`\n- `references/blast-radius.md`\n- `references/ci-drift.md`\n- `references/compliance-gates.md`\n\nSupplemental references (only when needed):\n- `references/testing-matrix.md`\n- `references/quick-ops.md`\n- `references/examples-good.md`\n- `references/examples-bad.md`\n- `references/examples-neutral.md`\n- `references/coding-standards.md`\n- `references/module-architecture.md`\n- `references/ci-delivery-patterns.md`\n- `references/security-and-governance.md`\n- `references/do-dont-patterns.md`\n- `references/mcp-integration.md`\n\nConditional references (CRR; load only on detected signals):\n- `references/conditional/backend-state-safety.md` (backend is `s3`, `azurerm`, `gcs`, `remote`, `cloud`, `pg`, `consul`, or `local`, or task mentions backend migration, locking, state backup, or restore)\n- `references/conditional/trusted-modules.md` (provider is `aws`, `azurerm`, `google`, `oci`, or `ibm`)\n\nDo not load multiple conditional references unless the task spans multiple detected backends, providers, or tools.\n\n## 4) Propose fix path with explicit risk controls\n\nFor each fix, include:\n- why this addresses the failure mode\n- what could still go wrong\n- guardrails (tests, approvals, rollback)\n\n## 5) Generate implementation artifacts\n\nWhen applicable, output:\n- HCL changes (typed vars, stable keys, bounded versions)\n- migration blocks (`moved`, import strategy)\n- CI pipeline updates (plan/apply separation, artifacts, policy checks)\n- compliance controls (approvals, policy rules, evidence paths)\n\nWhen a trusted registry module covers the requested resource and the user has not asked for raw HCL, default to that module with an exact `version` pin (see `references/conditional/trusted-modules.md`).\n\n## 6) Validate before finalize\n\nAlways provide command sequence tailored to runtime and risk tier.\nNever recommend direct production apply without reviewed plan and approval.\n\n## 7) Output contract\n\nReturn:\n- assumptions and version floor\n- selected failure mode(s)\n- chosen remediation and tradeoffs\n- validation/test plan\n- rollback/recovery notes for destructive-impact changes\n",
+      "bodyMd": "# Terrashark: Failure-Mode Workflow for Terraform/OpenTofu\n\nRun this workflow top to bottom.\n\n## 1) Capture execution context\n\nRecord before writing code:\n- runtime (`terraform` or `tofu`) and exact version\n- provider(s), target platform, and state backend\n- execution path (local CLI, CI, HCP Terraform/TFE, Atlantis)\n- environment criticality (dev/shared/prod)\n\nIf unknown, state assumptions explicitly.\n\n## 2) Diagnose likely failure mode(s)\n\nSelect one or more based on user intent and risk:\n- identity churn: resource addressing instability, refactor breakage\n- secret exposure: secrets in state, logs, defaults, artifacts\n- blast radius: oversized stacks, weak boundaries, unsafe applies\n- CI drift: version mismatch, unreviewed applies, missing artifacts\n- compliance gate gaps: missing policies/approvals/audit controls\n\n## 3) Load only the relevant reference file(s)\n\nPrimary references:\n- `references/identity-churn.md`\n- `references/secret-exposure.md`\n- `references/blast-radius.md`\n- `references/ci-drift.md`\n- `references/compliance-gates.md`\n\nSupplemental references (only when needed):\n- `references/testing-matrix.md`\n- `references/quick-ops.md`\n- `references/examples-good.md`\n- `references/examples-bad.md`\n- `references/examples-neutral.md`\n- `references/coding-standards.md`\n- `references/module-architecture.md`\n- `references/ci-delivery-patterns.md`\n- `references/security-and-governance.md`\n- `references/do-dont-patterns.md`\n- `references/mcp-integration.md`\n\nConditional references (CRR; load only on detected signals):\n- `references/conditional/backend-state-safety.md` (backend is `s3`, `azurerm`, `gcs`, `remote`, `cloud`, `pg`, `consul`, or `local`, or task mentions backend migration, locking, state backup, or restore)\n- `references/conditional/trusted-modules.md` (provider is `aws`, `azurerm`, `google`, `oci`, or `ibm`)\n\nDo not load multiple conditional references unless the task spans multiple detected backends, providers, or tools.\n\n## 4) Propose fix path with explicit risk controls\n\nFor each fix, include:\n- why this addresses the failure mode\n- what could still go wrong\n- guardrails (tests, approvals, rollback)\n\n## 5) Generate implementation artifacts\n\nWhen applicable, output:\n- HCL changes (typed vars, stable keys, bounded versions)\n- migration blocks (`moved`, import strategy)\n- CI pipeline updates (plan/apply separation, artifacts, policy checks)\n- compliance controls (approvals, policy rules, evidence paths)\n\nWhen a trusted registry module covers the requested resource and the user has not asked for raw HCL, default to that module with an exact `version` pin (see `references/conditional/trusted-modules.md`).\n\n## 6) Validate before finalize\n\nAlways provide command sequence tailored to runtime and risk tier.\nNever recommend direct production apply without reviewed plan and approval.\n\n## 7) Output contract\n\nReturn:\n- assumptions and version floor\n- selected failure mode(s)\n- chosen remediation and tradeoffs\n- validation/test plan\n- rollback/recovery notes for destructive-impact changes\n"
+    }
+  ]
+}

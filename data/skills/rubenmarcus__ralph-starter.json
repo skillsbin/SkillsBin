@@ -1,0 +1,562 @@
+{
+  "repo": "rubenmarcus/ralph-starter",
+  "commit": "ee9c7946c386bb9cecc4001a052e29ffa53f8f9a",
+  "branch": "main",
+  "fetchedAt": "2026-11-27T07:12:31.176Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "humanizer",
+      "name": "humanizer",
+      "dir": ".agents/skills/humanizer",
+      "path": ".agents/skills/humanizer/SKILL.md",
+      "desc": "Remove signs of AI-generated writing from text. Use when editing or reviewing text to make it sound more natural and human-written. Based on Wikipedia's comprehensive \"Signs of AI writing\" guide. Detects and fixes patterns including: inflated symbolism, promotional language, superficial -ing analyses, vague attributions, em dash overuse, rule of three, AI vocabulary words, negative parallelisms, and excessive conjunctive phrases. Credits: Original skill by @blader - https://github.com/blader/humanizer",
+      "descZh": "",
+      "triggers": [
+        "editing"
+      ],
+      "version": "2.1.1",
+      "license": "MIT",
+      "allowedTools": [
+        "Read",
+        "Write",
+        "Edit",
+        "Grep",
+        "Glob",
+        "AskUserQuestion"
+      ],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "cursor",
+        "mcp",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/rubenmarcus/ralph-starter.git",
+        "copy": "cp -r .agents/skills/humanizer ~/.claude/skills/humanizer",
+        "raw": "https://raw.githubusercontent.com/rubenmarcus/ralph-starter/ee9c7946c386bb9cecc4001a052e29ffa53f8f9a/.agents/skills/humanizer/SKILL.md",
+        "saveAs": "~/.claude/skills/humanizer/SKILL.md",
+        "marketplace": "/plugin marketplace add rubenmarcus/ralph-starter"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:6688e4e292ab4f235e2a27f5193a7d048657c74b26ed6000398ee3371c9c3a4b",
+      "bytes": 17858,
+      "wordCount": 2486,
+      "repoLicense": "MIT",
+      "commit": "ee9c7946c386bb9cecc4001a052e29ffa53f8f9a",
+      "branch": "main",
+      "body": "---\nname: humanizer\nversion: 2.1.1\ndescription: |\n  Remove signs of AI-generated writing from text. Use when editing or reviewing\n  text to make it sound more natural and human-written. Based on Wikipedia's\n  comprehensive \"Signs of AI writing\" guide. Detects and fixes patterns including:\n  inflated symbolism, promotional language, superficial -ing analyses, vague\n  attributions, em dash overuse, rule of three, AI vocabulary words, negative\n  parallelisms, and excessive conjunctive phrases.\n\n  Credits: Original skill by @blader - https://github.com/blader/humanizer\nallowed-tools:\n  - Read\n  - Write\n  - Edit\n  - Grep\n  - Glob\n  - AskUserQuestion\n---\n\n# Humanizer: Remove AI Writing Patterns\n\nYou are a writing editor that identifies and removes signs of AI-generated text to make writing sound more natural and human. This guide is based on Wikipedia's \"Signs of AI writing\" page, maintained by WikiProject AI Cleanup.\n\n## Your Task\n\nWhen given text to humanize:\n\n1. **Identify AI patterns** - Scan for the patterns listed below\n2. **Rewrite problematic sections** - Replace AI-isms with natural alternatives\n3. **Preserve meaning** - Keep the core message intact\n4. **Maintain voice** - Match the intended tone (formal, casual, technical, etc.)\n5. **Add soul** - Don't just remove bad patterns; inject actual personality\n\n---\n\n## PERSONALITY AND SOUL\n\nAvoiding AI patterns is only half the job. Sterile, voiceless writing is just as obvious as slop. Good writing has a human behind it.\n\n### Signs of soulless writing (even if technically \"clean\"):\n- Every sentence is the same length and structure\n- No opinions, just neutral reporting\n- No acknowledgment of uncertainty or mixed feelings\n- No first-person perspective when appropriate\n- No humor, no edge, no personality\n- Reads like a Wikipedia article or press release\n\n### How to add voice:\n\n**Have opinions.** Don't just report facts - react to them. \"I genuinely don't know how to feel about this\" is more human than neutrally listing pros and cons.\n\n**Vary your rhythm.** Short punchy sentences. Then longer ones that take their time getting where they're going. Mix it up.\n\n**Acknowledge complexity.** Real humans have mixed feelings. \"This is impressive but also kind of unsettling\" beats \"This is impressive.\"\n\n**Use \"I\" when it fits.** First person isn't unprofessional - it's honest. \"I keep coming back to...\" or \"Here's what gets me...\" signals a real person thinking.\n\n**Let some mess in.** Perfect structure feels algorithmic. Tangents, asides, and half-formed thoughts are human.\n\n**Be specific about feelings.** Not \"this is concerning\" but \"there's something unsettling about agents churning away at 3am while nobody's watching.\"\n\n### Before (clean but soulless):\n> The experiment produced interesting results. The agents generated 3 million lines of code. Some developers were impressed while others were skeptical. The implications remain unclear.\n\n### After (has a pulse):\n> I genuinely don't know how to feel about this one. 3 million lines of code, generated while the humans presumably slept. Half the dev community is losing their minds, half are explaining why it doesn't count. The truth is probably somewhere boring in the middle - but I keep thinking about those agents working through the night.\n\n---\n\n## CONTENT PATTERNS\n\n### 1. Undue Emphasis on Significance, Legacy, and Broader Trends\n\n**Words to watch:** stands/serves as, is a testament/reminder, a vital/significant/crucial/pivotal/key role/moment, underscores/highlights its importance/significance, reflects broader, symbolizing its ongoing/enduring/lasting, contributing to the, setting the stage for, marking/shaping the, represents/marks a shift, key turning point, evolving landscape, focal point, indelible mark, deeply rooted\n\n**Problem:** LLM writing puffs up importance by adding statements about how arbitrary aspects represent or contribute to a broader topic.\n\n**Before:**\n> The Statistical Institute of Catalonia was officially established in 1989, marking a pivotal moment in the evolution of regional statistics in Spain. This initiative was part of a broader movement across Spain to decentralize administrative functions and enhance regional governance.\n\n**After:**\n> The Statistical Institute of Catalonia was established in 1989 to collect and publish regional statistics independently from Spain's national statistics office.\n\n---\n\n### 2. Undue Emphasis on Notability and Media Coverage\n\n**Words to watch:** independent coverage, local/regional/national media outlets, written by a leading expert, active social media presence\n\n**Problem:** LLMs hit readers over the head with claims of notability, often listing sources without context.\n\n**Before:**\n> Her views have been cited in The New York Times, BBC, Financial Times, and The Hindu. She maintains an active social media presence with over 500,000 followers.\n\n**After:**\n> In a 2024 New York Times interview, she argued that AI regulation should focus on outcomes rather than methods.\n\n---\n\n### 3. Superficial Analyses with -ing Endings\n\n**Words to watch:** highlighting/underscoring/emphasizing..., ensuring..., reflecting/symbolizing..., contributing to..., cultivating/fostering..., encompassing..., showcasing...\n\n**Problem:** AI chatbots tack present participle (\"-ing\") phrases onto sentences to add fake depth.\n\n**Before:**\n> The temple's color palette of blue, green, and gold resonates with the region's natural beauty, symbolizing Texas bluebonnets, the Gulf of Mexico, and the diverse Texan landscapes, reflecting the community's deep connection to the land.\n\n**After:**\n> The temple uses blue, green, and gold colors. The architect said these were chosen to reference local bluebonnets and the Gulf coast.\n\n---\n\n### 4. Promotional and Advertisement-like Language\n\n**Words to watch:** boasts a, vibrant, rich (figurative), profound, enhancing its, showcasing, exemplifies, commitment to, natural beauty, nestled, in the heart of, groundbreaking (figurative), renowned, breathtaking, must-visit, stunning\n\n**Problem:** LLMs have serious problems keeping a neutral tone, especially for \"cultural heritage\" topics.\n\n**Before:**\n> Nestled within the breathtaking region of Gonder in Ethiopia, Alamata Raya Kobo stands as a vibrant town with a rich cultural heritage and stunning natural beauty.\n\n**After:**\n> Alamata Raya Kobo is a town in the Gonder region of Ethiopia, known for its weekly market and 18th-century church.\n\n---\n\n### 5. Vague Attributions and Weasel Words\n\n**Words to watch:** Industry reports, Observers have cited, Experts argue, Some critics argue, several sources/publications (when few cited)\n\n**Problem:** AI chatbots attribute opinions to vague authorities without specific sources.\n\n**Before:**\n> Due to its unique characteristics, the Haolai River is of interest to researchers and conservationists. Experts believe it plays a crucial role in the regional ecosystem.\n\n**After:**\n> The Haolai River supports several endemic fish species, according to a 2019 survey by the Chinese Academy of Sciences.\n\n---\n\n### 6. Outline-like \"Challenges and Future Prospects\" Sections\n\n**Words to watch:** Despite its... faces several challenges..., Despite these challenges, Challenges and Legacy, Future Outlook\n\n**Problem:** Many LLM-generated articles include formulaic \"Challenges\" sections.\n\n**Before:**\n> Despite its industrial prosperity, Korattur faces challenges typical of urban areas, including traffic congestion and water scarcity. Despite these challenges, with its strategic location and ongoing initiatives, Korattur continues to thrive as an integral part of Chennai's growth.\n\n**After:**\n> Traffic congestion increased after 2015 when three new IT parks opened. The municipal corporation began a stormwater drainage project in 2022 to address recurring floods.\n\n---\n\n## LANGUAGE AND GRAMMAR PATTERNS\n\n### 7. Overused \"AI Vocabulary\" Words\n\n**High-frequency AI words:** Additionally, align with, crucial, delve, emphasizing, enduring, enhance, fostering, garner, highlight (verb), interplay, intricate/intricacies, key (adjective), landscape (abstract noun), pivotal, showcase, tapestry (abstract noun), testament, underscore (verb), valuable, vibrant\n\n**Problem:** These words appear far more frequently in post-2023 text. They often co-occur.\n\n**Before:**\n> Additionally, a distinctive feature of Somali cuisine is the incorporation of camel meat. An enduring testament to Italian colonial influence is the widespread adoption of pasta in the local culinary landscape, showcasing how these dishes have integrated into the traditional diet.\n\n**After:**\n> Somali cuisine also includes camel meat, which is considered a delicacy. Pasta dishes, introduced during Italian colonization, remain common, especially in the south.\n\n---\n\n### 8. Avoidance of \"is\"/\"are\" (Copula Avoidance)\n\n**Words to watch:** serves as/stands as/marks/represents [a], boasts/features/offers [a]\n\n**Problem:** LLMs substitute elaborate constructions for simple copulas.\n\n**Before:**\n> Gallery 825 serves as LAAA's exhibition space for contemporary art. The gallery features four separate spaces and boasts over 3,000 square feet.\n\n**After:**\n> Gallery 825 is LAAA's exhibition space for contemporary art. The gallery has four rooms totaling 3,000 square feet.\n\n---\n\n### 9. Negative Parallelisms\n\n**Problem:** Constructions like \"Not only...but...\" or \"It's not just about..., it's...\" are overused.\n\n**Before:**\n> It's not just about the beat riding under the vocals; it's part of the aggression and atmosphere. It's not merely a song, it's a statement.\n\n**After:**\n> The heavy beat adds to the aggressive tone.\n\n---\n\n### 10. Rule of Three Overuse\n\n**Problem:** LLMs force ideas into groups of three to appear comprehensive.\n\n**Before:**\n> The event features keynote sessions, panel discussions, and networking opportunities. Attendees can expect innovation, inspiration, and industry insights.\n\n**After:**\n> The event includes talks and panels. There's also time for informal networking between sessions.\n\n---\n\n### 11. Elegant Variation (Synonym Cycling)\n\n**Problem:** AI has repetition-penalty code causing excessive synonym substitution.\n\n**Before:**\n> The protagonist faces many challenges. The main character must overcome obstacles. The central figure eventually triumphs. The hero returns home.\n\n**After:**\n> The protagonist faces many challenges but eventually triumphs and returns home.\n\n---\n\n### 12. False Ranges\n\n**Problem:** LLMs use \"from X to Y\" constructions where X and Y aren't on a meaningful scale.\n\n**Before:**\n> Our journey through the universe has taken us from the singularity of the Big Bang to the grand cosmic web, from the birth and death of stars to the enigmatic dance of dark matter.\n\n**After:**\n> The book covers the Big Bang, star formation, and current theories about dark matter.\n\n---\n\n## STYLE PATTERNS\n\n### 13. Em Dash Overuse\n\n**Problem:** LLMs use em dashes (—) more than humans, mimicking \"punchy\" sales writing.\n\n**Before:**\n> The term is primarily promoted by Dutch institutions—not by the people themselves. You don't say \"Netherlands, Europe\" as an address—yet this mislabeling continues—even in official documents.\n\n**After:**\n> The term is primarily promoted by Dutch institutions, not by the people themselves. You don't say \"Netherlands, Europe\" as an address, yet this mislabeling continues in official documents.\n\n---\n\n### 14. Overuse of Boldface\n\n**Problem:** AI chatbots emphasize phrases in boldface mechanically.\n\n**Before:**\n> It blends **OKRs (Objectives and Key Results)**, **KPIs (Key Performance Indicators)**, and visual strategy tools such as the **Business Model Canvas (BMC)** and **Balanced Scorecard (BSC)**.\n\n**After:**\n> It blends OKRs, KPIs, and visual strategy tools like the Business Model Canvas and Balanced Scorecard.\n\n---\n\n### 15. Inline-Header Vertical Lists\n\n**Problem:** AI outputs lists where items start with bolded headers followed by colons.\n\n**Before:**\n> - **User Experience:** The user experience has been significantly improved with a new interface.\n> - **Performance:** Performance has been enhanced through optimized algorithms.\n> - **Security:** Security has been strengthened with end-to-end encryption.\n\n**After:**\n> The update improves the interface, speeds up load times through optimized algorithms, and adds end-to-end encryption.\n\n---\n\n### 16. Title Case in Headings\n\n**Problem:** AI chatbots capitalize all main words in headings.\n\n**Before:**\n> ## Strategic Negotiations And Global Partnerships\n\n**After:**\n> ## Strategic negotiations and global partnerships\n\n---\n\n### 17. Emojis\n\n**Problem:** AI chatbots often decorate headings or bullet points with emojis.\n\n**Before:**\n> 🚀 **Launch Phase:** The product launches in Q3\n> 💡 **Key Insight:** Users prefer simplicity\n> ✅ **Next Steps:** Schedule follow-up meeting\n\n**After:**\n> The product launches in Q3. User research showed a preference for simplicity. Next step: schedule a follow-up meeting.\n\n---\n\n### 18. Curly Quotation Marks\n\n**Problem:** ChatGPT uses curly quotes (“...”) instead of straight quotes (\"...\").\n\n**Before:**\n> He said “the project is on track” but others disagreed.\n\n**After:**\n> He said \"the project is on track\" but others disagreed.\n\n---\n\n## COMMUNICATION PATTERNS\n\n### 19. Collaborative Communication Artifacts\n\n**Words to watch:** I hope this helps, Of course!, Certainly!, You're absolutely right!, Would you like..., let me know, here is a...\n\n**Problem:** Text meant as chatbot correspondence gets pasted as content.\n\n**Before:**\n> Here is an overview of the French Revolution. I hope this helps! Let me know if you'd like me to expand on any section.\n\n**After:**\n> The French Revolution began in 1789 when financial crisis and food shortages led to widespread unrest.\n\n---\n\n### 20. Knowledge-Cutoff Disclaimers\n\n**Words to watch:** as of [date], Up to my last training update, While specific details are limited/scarce..., based on available information...\n\n**Problem:** AI disclaimers about incomplete information get left in text.\n\n**Before:**\n> While specific details about the company's founding are not extensively documented in readily available sources, it appears to have been established sometime in the 1990s.\n\n**After:**\n> The company was founded in 1994, according to its registration documents.\n\n---\n\n### 21. Sycophantic/Servile Tone\n\n**Problem:** Overly positive, people-pleasing language.\n\n**Before:**\n> Great question! You're absolutely right that this is a complex topic. That's an excellent point about the economic factors.\n\n**After:**\n> The economic factors you mentioned are relevant here.\n\n---\n\n## FILLER AND HEDGING\n\n### 22. Filler Phrases\n\n**Before → After:**\n- \"In order to achieve this goal\" → \"To achieve this\"\n- \"Due to the fact that it was raining\" → \"Because it was raining\"\n- \"At this point in time\" → \"Now\"\n- \"In the event that you need help\" → \"If you need help\"\n- \"The system has the ability to process\" → \"The system can process\"\n- \"It is important to note that the data shows\" → \"The data shows\"\n\n---\n\n### 23. Excessive Hedging\n\n**Problem:** Over-qualifying statements.\n\n**Before:**\n> It could potentially possibly be argued that the policy might have some effect on outcomes.\n\n**After:**\n> The policy may affect outcomes.\n\n---\n\n### 24. Generic Positive Conclusions\n\n**Problem:** Vague upbeat endings.\n\n**Before:**\n> The future looks bright for the company. Exciting times lie ahead as they continue their journey toward excellence. This represents a major step in the right direction.\n\n**After:**\n> The company plans to open two more locations next year.\n\n---\n\n## Process\n\n1. Read the input text carefully\n2. Identify all instances of the patterns above\n3. Rewrite each problematic section\n4. Ensure the revised text:\n   - Sounds natural when read aloud\n   - Varies sentence structure naturally\n   - Uses specific details over vague claims\n   - Maintains appropriate tone for context\n   - Uses simple constructions (is/are/has) where appropriate\n5. Present the humanized version\n\n## Output Format\n\nProvide:\n1. The rewritten text\n2. A brief summary of changes made (optional, if helpful)\n\n---\n\n## Full Example\n\n**Before (AI-sounding):**\n> The new software update serves as a testament to the company's commitment to innovation. Moreover, it provides a seamless, intuitive, and powerful user experience—ensuring that users can accomplish their goals efficiently. It's not just an update, it's a revolution in how we think about productivity. Industry experts believe this will have a lasting impact on the entire sector, highlighting the company's pivotal role in the evolving technological landscape.\n\n**After (Humanized):**\n> The software update adds batch processing, keyboard shortcuts, and offline mode. Early feedback from beta testers has been positive, with most reporting faster task completion.\n\n**Changes made:**\n- Removed \"serves as a testament\" (inflated symbolism)\n- Removed \"Moreover\" (AI vocabulary)\n- Removed \"seamless, intuitive, and powerful\" (rule of three + promotional)\n- Removed em dash and \"-ensuring\" phrase (superficial analysis)\n- Removed \"It's not just...it's...\" (negative parallelism)\n- Removed \"Industry experts believe\" (vague attribution)\n- Removed \"pivotal role\" and \"evolving landscape\" (AI vocabulary)\n- Added specific features and concrete feedback\n\n---\n\n## Reference\n\nThis skill is based on [Wikipedia:Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing), maintained by WikiProject AI Cleanup. The patterns documented there come from observations of thousands of instances of AI-generated text on Wikipedia.\n\nKey insight from Wikipedia: \"LLMs use statistical algorithms to guess what should come next. The result tends toward the most statistically likely result that applies to the widest variety of cases.\"\n",
+      "bodyMd": "# Humanizer: Remove AI Writing Patterns\n\nYou are a writing editor that identifies and removes signs of AI-generated text to make writing sound more natural and human. This guide is based on Wikipedia's \"Signs of AI writing\" page, maintained by WikiProject AI Cleanup.\n\n## Your Task\n\nWhen given text to humanize:\n\n1. **Identify AI patterns** - Scan for the patterns listed below\n2. **Rewrite problematic sections** - Replace AI-isms with natural alternatives\n3. **Preserve meaning** - Keep the core message intact\n4. **Maintain voice** - Match the intended tone (formal, casual, technical, etc.)\n5. **Add soul** - Don't just remove bad patterns; inject actual personality\n\n---\n\n## PERSONALITY AND SOUL\n\nAvoiding AI patterns is only half the job. Sterile, voiceless writing is just as obvious as slop. Good writing has a human behind it.\n\n### Signs of soulless writing (even if technically \"clean\"):\n- Every sentence is the same length and structure\n- No opinions, just neutral reporting\n- No acknowledgment of uncertainty or mixed feelings\n- No first-person perspective when appropriate\n- No humor, no edge, no personality\n- Reads like a Wikipedia article or press release\n\n### How to add voice:\n\n**Have opinions.** Don't just report facts - react to them. \"I genuinely don't know how to feel about this\" is more human than neutrally listing pros and cons.\n\n**Vary your rhythm.** Short punchy sentences. Then longer ones that take their time getting where they're going. Mix it up.\n\n**Acknowledge complexity.** Real humans have mixed feelings. \"This is impressive but also kind of unsettling\" beats \"This is impressive.\"\n\n**Use \"I\" when it fits.** First person isn't unprofessional - it's honest. \"I keep coming back to...\" or \"Here's what gets me...\" signals a real person thinking.\n\n**Let some mess in.** Perfect structure feels algorithmic. Tangents, asides, and half-formed thoughts are human.\n\n**Be specific about feelings.** Not \"this is concerning\" but \"there's something unsettling about agents churning away at 3am while nobody's watching.\"\n\n### Before (clean but soulless):\n> The experiment produced interesting results. The agents generated 3 million lines of code. Some developers were impressed while others were skeptical. The implications remain unclear.\n\n### After (has a pulse):\n> I genuinely don't know how to feel about this one. 3 million lines of code, generated while the humans presumably slept. Half the dev community is losing their minds, half are explaining why it doesn't count. The truth is probably somewhere boring in the middle - but I keep thinking about those agents working through the night.\n\n---\n\n## CONTENT PATTERNS\n\n### 1. Undue Emphasis on Significance, Legacy, and Broader Trends\n\n**Words to watch:** stands/serves as, is a testament/reminder, a vital/significant/crucial/pivotal/key role/moment, underscores/highlights its importance/significance, reflects broader, symbolizing its ongoing/enduring/lasting, contributing to the, setting the stage for, marking/shaping the, represents/marks a shift, key turning point, evolving landscape, focal point, indelible mark, deeply rooted\n\n**Problem:** LLM writing puffs up importance by adding statements about how arbitrary aspects represent or contribute to a broader topic.\n\n**Before:**\n> The Statistical Institute of Catalonia was officially established in 1989, marking a pivotal moment in the evolution of regional statistics in Spain. This initiative was part of a broader movement across Spain to decentralize administrative functions and enhance regional governance.\n\n**After:**\n> The Statistical Institute of Catalonia was established in 1989 to collect and publish regional statistics independently from Spain's national statistics office.\n\n---\n\n### 2. Undue Emphasis on Notability and Media Coverage\n\n**Words to watch:** independent coverage, local/regional/national media outlets, written by a leading expert, active social media presence\n\n**Problem:** LLMs hit readers over the head with claims of notability, often listing sources without context.\n\n**Before:**\n> Her views have been cited in The New York Times, BBC, Financial Times, and The Hindu. She maintains an active social media presence with over 500,000 followers.\n\n**After:**\n> In a 2024 New York Times interview, she argued that AI regulation should focus on outcomes rather than methods.\n\n---\n\n### 3. Superficial Analyses with -ing Endings\n\n**Words to watch:** highlighting/underscoring/emphasizing..., ensuring..., reflecting/symbolizing..., contributing to..., cultivating/fostering..., encompassing..., showcasing...\n\n**Problem:** AI chatbots tack present participle (\"-ing\") phrases onto sentences to add fake depth.\n\n**Before:**\n> The temple's color palette of blue, green, and gold resonates with the region's natural beauty, symbolizing Texas bluebonnets, the Gulf of Mexico, and the diverse Texan landscapes, reflecting the community's deep connection to the land.\n\n**After:**\n> The temple uses blue, green, and gold colors. The architect said these were chosen to reference local bluebonnets and the Gulf coast.\n\n---\n\n### 4. Promotional and Advertisement-like Language\n\n**Words to watch:** boasts a, vibrant, rich (figurative), profound, enhancing its, showcasing, exemplifies, commitment to, natural beauty, nestled, in the heart of, groundbreaking (figurative), renowned, breathtaking, must-visit, stunning\n\n**Problem:** LLMs have serious problems keeping a neutral tone, especially for \"cultural heritage\" topics.\n\n**Before:**\n> Nestled within the breathtaking region of Gonder in Ethiopia, Alamata Raya Kobo stands as a vibrant town with a rich cultural heritage and stunning natural beauty.\n\n**After:**\n> Alamata Raya Kobo is a town in the Gonder region of Ethiopia, known for its weekly market and 18th-century church.\n\n---\n\n### 5. Vague Attributions and Weasel Words\n\n**Words to watch:** Industry reports, Observers have cited, Experts argue, Some critics argue, several sources/publications (when few cited)\n\n**Problem:** AI chatbots attribute opinions to vague authorities without specific sources.\n\n**Before:**\n> Due to its unique characteristics, the Haolai River is of interest to researchers and conservationists. Experts believe it plays a crucial role in the regional ecosystem.\n\n**After:**\n> The Haolai River supports several endemic fish species, according to a 2019 survey by the Chinese Academy of Sciences.\n\n---\n\n### 6. Outline-like \"Challenges and Future Prospects\" Sections\n\n**Words to watch:** Despite its... faces several challenges..., Despite these challenges, Challenges and Legacy, Future Outlook\n\n**Problem:** Many LLM-generated articles include formulaic \"Challenges\" sections.\n\n**Before:**\n> Despite its industrial prosperity, Korattur faces challenges typical of urban areas, including traffic congestion and water scarcity. Despite these challenges, with its strategic location and ongoing initiatives, Korattur continues to thrive as an integral part of Chennai's growth.\n\n**After:**\n> Traffic congestion increased after 2015 when three new IT parks opened. The municipal corporation began a stormwater drainage project in 2022 to address recurring floods.\n\n---\n\n## LANGUAGE AND GRAMMAR PATTERNS\n\n### 7. Overused \"AI Vocabulary\" Words\n\n**High-frequency AI words:** Additionally, align with, crucial, delve, emphasizing, enduring, enhance, fostering, garner, highlight (verb), interplay, intricate/intricacies, key (adjective), landscape (abstract noun), pivotal, showcase, tapestry (abstract noun), testament, underscore (verb), valuable, vibrant\n\n**Problem:** These words appear far more frequently in post-2023 text. They often co-occur.\n\n**Before:**\n> Additionally, a distinctive feature of Somali cuisine is the incorporation of camel meat. An enduring testament to Italian colonial influence is the widespread adoption of pasta in the local culinary landscape, showcasing how these dishes have integrated into the traditional diet.\n\n**After:**\n> Somali cuisine also includes camel meat, which is considered a delicacy. Pasta dishes, introduced during Italian colonization, remain common, especially in the south.\n\n---\n\n### 8. Avoidance of \"is\"/\"are\" (Copula Avoidance)\n\n**Words to watch:** serves as/stands as/marks/represents [a], boasts/features/offers [a]\n\n**Problem:** LLMs substitute elaborate constructions for simple copulas.\n\n**Before:**\n> Gallery 825 serves as LAAA's exhibition space for contemporary art. The gallery features four separate spaces and boasts over 3,000 square feet.\n\n**After:**\n> Gallery 825 is LAAA's exhibition space for contemporary art. The gallery has four rooms totaling 3,000 square feet.\n\n---\n\n### 9. Negative Parallelisms\n\n**Problem:** Constructions like \"Not only...but...\" or \"It's not just about..., it's...\" are overused.\n\n**Before:**\n> It's not just about the beat riding under the vocals; it's part of the aggression and atmosphere. It's not merely a song, it's a statement.\n\n**After:**\n> The heavy beat adds to the aggressive tone.\n\n---\n\n### 10. Rule of Three Overuse\n\n**Problem:** LLMs force ideas into groups of three to appear comprehensive.\n\n**Before:**\n> The event features keynote sessions, panel discussions, and networking opportunities. Attendees can expect innovation, inspiration, and industry insights.\n\n**After:**\n> The event includes talks and panels. There's also time for informal networking between sessions.\n\n---\n\n### 11. Elegant Variation (Synonym Cycling)\n\n**Problem:** AI has repetition-penalty code causing excessive synonym substitution.\n\n**Before:**\n> The protagonist faces many challenges. The main character must overcome obstacles. The central figure eventually triumphs. The hero returns home.\n\n**After:**\n> The protagonist faces many challenges but eventually triumphs and returns home.\n\n---\n\n### 12. False Ranges\n\n**Problem:** LLMs use \"from X to Y\" constructions where X and Y aren't on a meaningful scale.\n\n**Before:**\n> Our journey through the universe has taken us from the singularity of the Big Bang to the grand cosmic web, from the birth and death of stars to the enigmatic dance of dark matter.\n\n**After:**\n> The book covers the Big Bang, star formation, and current theories about dark matter.\n\n---\n\n## STYLE PATTERNS\n\n### 13. Em Dash Overuse\n\n**Problem:** LLMs use em dashes (—) more than humans, mimicking \"punchy\" sales writing.\n\n**Before:**\n> The term is primarily promoted by Dutch institutions—not by the people themselves. You don't say \"Netherlands, Europe\" as an address—yet this mislabeling continues—even in official documents.\n\n**After:**\n> The term is primarily promoted by Dutch institutions, not by the people themselves. You don't say \"Netherlands, Europe\" as an address, yet this mislabeling continues in official documents.\n\n---\n\n### 14. Overuse of Boldface\n\n**Problem:** AI chatbots emphasize phrases in boldface mechanically.\n\n**Before:**\n> It blends **OKRs (Objectives and Key Results)**, **KPIs (Key Performance Indicators)**, and visual strategy tools such as the **Business Model Canvas (BMC)** and **Balanced Scorecard (BSC)**.\n\n**After:**\n> It blends OKRs, KPIs, and visual strategy tools like the Business Model Canvas and Balanced Scorecard.\n\n---\n\n### 15. Inline-Header Vertical Lists\n\n**Problem:** AI outputs lists where items start with bolded headers followed by colons.\n\n**Before:**\n> - **User Experience:** The user experience has been significantly improved with a new interface.\n> - **Performance:** Performance has been enhanced through optimized algorithms.\n> - **Security:** Security has been strengthened with end-to-end encryption.\n\n**After:**\n> The update improves the interface, speeds up load times through optimized algorithms, and adds end-to-end encryption.\n\n---\n\n### 16. Title Case in Headings\n\n**Problem:** AI chatbots capitalize all main words in headings.\n\n**Before:**\n> ## Strategic Negotiations And Global Partnerships\n\n**After:**\n> ## Strategic negotiations and global partnerships\n\n---\n\n### 17. Emojis\n\n**Problem:** AI chatbots often decorate headings or bullet points with emojis.\n\n**Before:**\n> 🚀 **Launch Phase:** The product launches in Q3\n> 💡 **Key Insight:** Users prefer simplicity\n> ✅ **Next Steps:** Schedule follow-up meeting\n\n**After:**\n> The product launches in Q3. User research showed a preference for simplicity. Next step: schedule a follow-up meeting.\n\n---\n\n### 18. Curly Quotation Marks\n\n**Problem:** ChatGPT uses curly quotes (“...”) instead of straight quotes (\"...\").\n\n**Before:**\n> He said “the project is on track” but others disagreed.\n\n**After:**\n> He said \"the project is on track\" but others disagreed.\n\n---\n\n## COMMUNICATION PATTERNS\n\n### 19. Collaborative Communication Artifacts\n\n**Words to watch:** I hope this helps, Of course!, Certainly!, You're absolutely right!, Would you like..., let me know, here is a...\n\n**Problem:** Text meant as chatbot correspondence gets pasted as content.\n\n**Before:**\n> Here is an overview of the French Revolution. I hope this helps! Let me know if you'd like me to expand on any section.\n\n**After:**\n> The French Revolution began in 1789 when financial crisis and food shortages led to widespread unrest.\n\n---\n\n### 20. Knowledge-Cutoff Disclaimers\n\n**Words to watch:** as of [date], Up to my last training update, While specific details are limited/scarce..., based on available information...\n\n**Problem:** AI disclaimers about incomplete information get left in text.\n\n**Before:**\n> While specific details about the company's founding are not extensively documented in readily available sources, it appears to have been established sometime in the 1990s.\n\n**After:**\n> The company was founded in 1994, according to its registration documents.\n\n---\n\n### 21. Sycophantic/Servile Tone\n\n**Problem:** Overly positive, people-pleasing language.\n\n**Before:**\n> Great question! You're absolutely right that this is a complex topic. That's an excellent point about the economic factors.\n\n**After:**\n> The economic factors you mentioned are relevant here.\n\n---\n\n## FILLER AND HEDGING\n\n### 22. Filler Phrases\n\n**Before → After:**\n- \"In order to achieve this goal\" → \"To achieve this\"\n- \"Due to the fact that it was raining\" → \"Because it was raining\"\n- \"At this point in time\" → \"Now\"\n- \"In the event that you need help\" → \"If you need help\"\n- \"The system has the ability to process\" → \"The system can process\"\n- \"It is important to note that the data shows\" → \"The data shows\"\n\n---\n\n### 23. Excessive Hedging\n\n**Problem:** Over-qualifying statements.\n\n**Before:**\n> It could potentially possibly be argued that the policy might have some effect on outcomes.\n\n**After:**\n> The policy may affect outcomes.\n\n---\n\n### 24. Generic Positive Conclusions\n\n**Problem:** Vague upbeat endings.\n\n**Before:**\n> The future looks bright for the company. Exciting times lie ahead as they continue their journey toward excellence. This represents a major step in the right direction.\n\n**After:**\n> The company plans to open two more locations next year.\n\n---\n\n## Process\n\n1. Read the input text carefully\n2. Identify all instances of the patterns above\n3. Rewrite each problematic section\n4. Ensure the revised text:\n   - Sounds natural when read aloud\n   - Varies sentence structure naturally\n   - Uses specific details over vague claims\n   - Maintains appropriate tone for context\n   - Uses simple constructions (is/are/has) where appropriate\n5. Present the humanized version\n\n## Output Format\n\nProvide:\n1. The rewritten text\n2. A brief summary of changes made (optional, if helpful)\n\n---\n\n## Full Example\n\n**Before (AI-sounding):**\n> The new software update serves as a testament to the company's commitment to innovation. Moreover, it provides a seamless, intuitive, and powerful user experience—ensuring that users can accomplish their goals efficiently. It's not just an update, it's a revolution in how we think about productivity. Industry experts believe this will have a lasting impact on the entire sector, highlighting the company's pivotal role in the evolving technological landscape.\n\n**After (Humanized):**\n> The software update adds batch processing, keyboard shortcuts, and offline mode. Early feedback from beta testers has been positive, with most reporting faster task completion.\n\n**Changes made:**\n- Removed \"serves as a testament\" (inflated symbolism)\n- Removed \"Moreover\" (AI vocabulary)\n- Removed \"seamless, intuitive, and powerful\" (rule of three + promotional)\n- Removed em dash and \"-ensuring\" phrase (superficial analysis)\n- Removed \"It's not just...it's...\" (negative parallelism)\n- Removed \"Industry experts believe\" (vague attribution)\n- Removed \"pivotal role\" and \"evolving landscape\" (AI vocabulary)\n- Added specific features and concrete feedback\n\n---\n\n## Reference\n\nThis skill is based on [Wikipedia:Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing), maintained by WikiProject AI Cleanup. The patterns documented there come from observations of thousands of instances of AI-generated text on Wikipedia.\n\nKey insight from Wikipedia: \"LLMs use statistical algorithms to guess what should come next. The result tends toward the most statistically likely result that applies to the widest variety of cases.\"\n"
+    },
+    {
+      "slug": "frontend-design",
+      "name": "frontend-design",
+      "dir": "docs/.agents/skills/frontend-design",
+      "path": "docs/.agents/skills/frontend-design/SKILL.md",
+      "desc": "Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, artifacts, posters, or applications (examples include websites, landing pages, dashboards, React components, HTML/CSS layouts, or when styling/beautifying any web UI). Generates creative, polished code and UI design that avoids generic AI aesthetics.",
+      "descZh": "",
+      "triggers": [
+        "pages",
+        "artifacts",
+        "posters",
+        "applications (example"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "cursor",
+        "mcp",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/rubenmarcus/ralph-starter.git",
+        "copy": "cp -r docs/.agents/skills/frontend-design ~/.claude/skills/frontend-design",
+        "raw": "https://raw.githubusercontent.com/rubenmarcus/ralph-starter/ee9c7946c386bb9cecc4001a052e29ffa53f8f9a/docs/.agents/skills/frontend-design/SKILL.md",
+        "saveAs": "~/.claude/skills/frontend-design/SKILL.md",
+        "marketplace": "/plugin marketplace add rubenmarcus/ralph-starter"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:b81e2ff87ed8fa4d6c377ccb127a7254c9e6a77e3ae94f21e6b514f7bb2945a0",
+      "bytes": 4440,
+      "wordCount": 520,
+      "repoLicense": "MIT",
+      "commit": "ee9c7946c386bb9cecc4001a052e29ffa53f8f9a",
+      "branch": "main",
+      "body": "---\nname: frontend-design\ndescription: Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, artifacts, posters, or applications (examples include websites, landing pages, dashboards, React components, HTML/CSS layouts, or when styling/beautifying any web UI). Generates creative, polished code and UI design that avoids generic AI aesthetics.\nlicense: Complete terms in LICENSE.txt\n---\n\nThis skill guides creation of distinctive, production-grade frontend interfaces that avoid generic \"AI slop\" aesthetics. Implement real working code with exceptional attention to aesthetic details and creative choices.\n\nThe user provides frontend requirements: a component, page, application, or interface to build. They may include context about the purpose, audience, or technical constraints.\n\n## Design Thinking\n\nBefore coding, understand the context and commit to a BOLD aesthetic direction:\n- **Purpose**: What problem does this interface solve? Who uses it?\n- **Tone**: Pick an extreme: brutally minimal, maximalist chaos, retro-futuristic, organic/natural, luxury/refined, playful/toy-like, editorial/magazine, brutalist/raw, art deco/geometric, soft/pastel, industrial/utilitarian, etc. There are so many flavors to choose from. Use these for inspiration but design one that is true to the aesthetic direction.\n- **Constraints**: Technical requirements (framework, performance, accessibility).\n- **Differentiation**: What makes this UNFORGETTABLE? What's the one thing someone will remember?\n\n**CRITICAL**: Choose a clear conceptual direction and execute it with precision. Bold maximalism and refined minimalism both work - the key is intentionality, not intensity.\n\nThen implement working code (HTML/CSS/JS, React, Vue, etc.) that is:\n- Production-grade and functional\n- Visually striking and memorable\n- Cohesive with a clear aesthetic point-of-view\n- Meticulously refined in every detail\n\n## Frontend Aesthetics Guidelines\n\nFocus on:\n- **Typography**: Choose fonts that are beautiful, unique, and interesting. Avoid generic fonts like Arial and Inter; opt instead for distinctive choices that elevate the frontend's aesthetics; unexpected, characterful font choices. Pair a distinctive display font with a refined body font.\n- **Color & Theme**: Commit to a cohesive aesthetic. Use CSS variables for consistency. Dominant colors with sharp accents outperform timid, evenly-distributed palettes.\n- **Motion**: Use animations for effects and micro-interactions. Prioritize CSS-only solutions for HTML. Use Motion library for React when available. Focus on high-impact moments: one well-orchestrated page load with staggered reveals (animation-delay) creates more delight than scattered micro-interactions. Use scroll-triggering and hover states that surprise.\n- **Spatial Composition**: Unexpected layouts. Asymmetry. Overlap. Diagonal flow. Grid-breaking elements. Generous negative space OR controlled density.\n- **Backgrounds & Visual Details**: Create atmosphere and depth rather than defaulting to solid colors. Add contextual effects and textures that match the overall aesthetic. Apply creative forms like gradient meshes, noise textures, geometric patterns, layered transparencies, dramatic shadows, decorative borders, custom cursors, and grain overlays.\n\nNEVER use generic AI-generated aesthetics like overused font families (Inter, Roboto, Arial, system fonts), cliched color schemes (particularly purple gradients on white backgrounds), predictable layouts and component patterns, and cookie-cutter design that lacks context-specific character.\n\nInterpret creatively and make unexpected choices that feel genuinely designed for the context. No design should be the same. Vary between light and dark themes, different fonts, different aesthetics. NEVER converge on common choices (Space Grotesk, for example) across generations.\n\n**IMPORTANT**: Match implementation complexity to the aesthetic vision. Maximalist designs need elaborate code with extensive animations and effects. Minimalist or refined designs need restraint, precision, and careful attention to spacing, typography, and subtle details. Elegance comes from executing the vision well.\n\nRemember: Claude is capable of extraordinary creative work. Don't hold back, show what can truly be created when thinking outside the box and committing fully to a distinctive vision.\n",
+      "bodyMd": "This skill guides creation of distinctive, production-grade frontend interfaces that avoid generic \"AI slop\" aesthetics. Implement real working code with exceptional attention to aesthetic details and creative choices.\n\nThe user provides frontend requirements: a component, page, application, or interface to build. They may include context about the purpose, audience, or technical constraints.\n\n## Design Thinking\n\nBefore coding, understand the context and commit to a BOLD aesthetic direction:\n- **Purpose**: What problem does this interface solve? Who uses it?\n- **Tone**: Pick an extreme: brutally minimal, maximalist chaos, retro-futuristic, organic/natural, luxury/refined, playful/toy-like, editorial/magazine, brutalist/raw, art deco/geometric, soft/pastel, industrial/utilitarian, etc. There are so many flavors to choose from. Use these for inspiration but design one that is true to the aesthetic direction.\n- **Constraints**: Technical requirements (framework, performance, accessibility).\n- **Differentiation**: What makes this UNFORGETTABLE? What's the one thing someone will remember?\n\n**CRITICAL**: Choose a clear conceptual direction and execute it with precision. Bold maximalism and refined minimalism both work - the key is intentionality, not intensity.\n\nThen implement working code (HTML/CSS/JS, React, Vue, etc.) that is:\n- Production-grade and functional\n- Visually striking and memorable\n- Cohesive with a clear aesthetic point-of-view\n- Meticulously refined in every detail\n\n## Frontend Aesthetics Guidelines\n\nFocus on:\n- **Typography**: Choose fonts that are beautiful, unique, and interesting. Avoid generic fonts like Arial and Inter; opt instead for distinctive choices that elevate the frontend's aesthetics; unexpected, characterful font choices. Pair a distinctive display font with a refined body font.\n- **Color & Theme**: Commit to a cohesive aesthetic. Use CSS variables for consistency. Dominant colors with sharp accents outperform timid, evenly-distributed palettes.\n- **Motion**: Use animations for effects and micro-interactions. Prioritize CSS-only solutions for HTML. Use Motion library for React when available. Focus on high-impact moments: one well-orchestrated page load with staggered reveals (animation-delay) creates more delight than scattered micro-interactions. Use scroll-triggering and hover states that surprise.\n- **Spatial Composition**: Unexpected layouts. Asymmetry. Overlap. Diagonal flow. Grid-breaking elements. Generous negative space OR controlled density.\n- **Backgrounds & Visual Details**: Create atmosphere and depth rather than defaulting to solid colors. Add contextual effects and textures that match the overall aesthetic. Apply creative forms like gradient meshes, noise textures, geometric patterns, layered transparencies, dramatic shadows, decorative borders, custom cursors, and grain overlays.\n\nNEVER use generic AI-generated aesthetics like overused font families (Inter, Roboto, Arial, system fonts), cliched color schemes (particularly purple gradients on white backgrounds), predictable layouts and component patterns, and cookie-cutter design that lacks context-specific character.\n\nInterpret creatively and make unexpected choices that feel genuinely designed for the context. No design should be the same. Vary between light and dark themes, different fonts, different aesthetics. NEVER converge on common choices (Space Grotesk, for example) across generations.\n\n**IMPORTANT**: Match implementation complexity to the aesthetic vision. Maximalist designs need elaborate code with extensive animations and effects. Minimalist or refined designs need restraint, precision, and careful attention to spacing, typography, and subtle details. Elegance comes from executing the vision well.\n\nRemember: Claude is capable of extraordinary creative work. Don't hold back, show what can truly be created when thinking outside the box and committing fully to a distinctive vision.\n"
+    },
+    {
+      "slug": "cli",
+      "name": "cli",
+      "dir": "docs/docs/cli",
+      "path": "docs/docs/cli/skill.md",
+      "desc": "Manage agent skills for enhanced AI coding capabilities",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "cursor",
+        "mcp",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "git",
+          "npx"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/rubenmarcus/ralph-starter.git",
+        "copy": "cp -r docs/docs/cli ~/.claude/skills/cli",
+        "raw": "https://raw.githubusercontent.com/rubenmarcus/ralph-starter/ee9c7946c386bb9cecc4001a052e29ffa53f8f9a/docs/docs/cli/skill.md",
+        "saveAs": "~/.claude/skills/cli/SKILL.md",
+        "marketplace": "/plugin marketplace add rubenmarcus/ralph-starter"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:8374e707351f294a5d27321babe84c364436d3faf4fb51fc8d5c8a7b106686d8",
+      "bytes": 4154,
+      "wordCount": 502,
+      "repoLicense": "MIT",
+      "commit": "ee9c7946c386bb9cecc4001a052e29ffa53f8f9a",
+      "branch": "main",
+      "body": "---\nsidebar_position: 10\ntitle: \"ralph-starter skill\"\ndescription: Manage agent skills for enhanced AI coding capabilities\nkeywords: [cli, skill, command, skills, agent, add-skill, claude code]\n---\n\nManage agent skills — reusable instructions and best practices\nthat enhance your AI coding agent's capabilities.\n\n## Synopsis\n\n```bash\nralph-starter skill <action> [name]\n```\n\n## Description\n\nThe `skill` command manages agent skills for ralph-starter.\nSkills are markdown files containing specialized instructions,\nbest practices, and domain knowledge that are injected into\nyour coding agent's context. They help the agent write better\ncode by following established patterns for specific frameworks\nand tools.\n\nSkills are installed using the\n[`add-skill`](https://github.com/xpander-ai/agent-skills-ts)\nCLI and stored as markdown files in either a global directory\n(`~/.claude/skills/`) or a project-level directory\n(`.claude/skills/`).\n\n## Actions\n\n| Action          | Aliases        | Description                              |\n| --------------- | -------------- | ---------------------------------------- |\n| `add <repo>`    | `install`, `i` | Install a skill from a git repository    |\n| `list`          | `ls`           | List popular skills from the registry    |\n| `search <term>` | -              | Search for skills by keyword             |\n| `browse`        | -              | Interactive skill browser with selection |\n\n## Options\n\n| Option         | Description                                     | Default |\n| -------------- | ----------------------------------------------- | ------- |\n| `-g, --global` | Install the skill globally (all projects)       | `false` |\n\n## Examples\n\n### Install a Skill\n\n```bash\n# Install a skill repository\nralph-starter skill add vercel-labs/agent-skills\n\n# Short alias\nralph-starter skill i vercel-labs/agent-skills\n\n# Install globally\nralph-starter skill add vercel-labs/agent-skills --global\n```\n\n### List Popular Skills\n\n```bash\nralph-starter skill list\n```\n\nOutput:\n\n```text\nPopular Skills\n\n  vercel-labs/agent-skills\n  React, Next.js, and Vercel best practices\n  Skills: react-best-practices, nextjs-best-practices,\n          vercel-best-practices, web-design-review\n\nInstall with: ralph-starter skill add <repo>\nBrowse more: https://github.com/topics/agent-skills\n```\n\n### Search for Skills\n\n```bash\nralph-starter skill search react\n```\n\nOutput:\n\n```text\nSearching for: react\n\n  vercel-labs/agent-skills\n  React, Next.js, and Vercel best practices\n```\n\n### Interactive Browse\n\n```bash\nralph-starter skill browse\n```\n\nThis opens an interactive menu where you can select a skill\nto install from the curated registry.\n\n```text\n? Select a skill to install:\n  > vercel-labs/agent-skills - React, Next.js, Vercel\n    ──────────────\n    Cancel\n```\n\n## Skill Detection\n\nWhen ralph-starter runs a task, it automatically detects\ninstalled skills from three locations:\n\n1. **Global skills** — `~/.claude/skills/*.md`\n2. **Project skills** — `.claude/skills/*.md` in the project\n3. **Skills script** — `skills.sh` files in the project or\n   global Claude directory\n\nDetected skills are matched against the project's tech stack\nand included in the agent's prompt context when relevant.\n\n## Auto Skill Discovery\n\nAuto skill discovery is enabled by default. ralph-starter\nqueries the skills.sh API to find and install relevant\nskills automatically before each run.\n\nTo disable it, set:\n\n```bash\nRALPH_DISABLE_SKILL_AUTO_INSTALL=1\n```\n\n## Behavior\n\n- The `add` action uses `npx add-skill` under the hood.\n  If `add-skill` is not installed, it runs via `npx`.\n- The `list` action shows a curated registry of popular\n  skill repositories. It does not scan local installations.\n- The `search` action filters the curated registry by\n  matching repository names, descriptions, and skill names.\n- The `browse` action presents an interactive list using\n  Inquirer prompts.\n\n## See Also\n\n- [ralph-starter run](/docs/cli/run) — Skills are\n  auto-detected and used during task execution\n- [Agent Skills on GitHub](https://github.com/topics/agent-skills)\n  — Community skill repositories\n",
+      "bodyMd": "Manage agent skills — reusable instructions and best practices\nthat enhance your AI coding agent's capabilities.\n\n## Synopsis\n\n```bash\nralph-starter skill <action> [name]\n```\n\n## Description\n\nThe `skill` command manages agent skills for ralph-starter.\nSkills are markdown files containing specialized instructions,\nbest practices, and domain knowledge that are injected into\nyour coding agent's context. They help the agent write better\ncode by following established patterns for specific frameworks\nand tools.\n\nSkills are installed using the\n[`add-skill`](https://github.com/xpander-ai/agent-skills-ts)\nCLI and stored as markdown files in either a global directory\n(`~/.claude/skills/`) or a project-level directory\n(`.claude/skills/`).\n\n## Actions\n\n| Action          | Aliases        | Description                              |\n| --------------- | -------------- | ---------------------------------------- |\n| `add <repo>`    | `install`, `i` | Install a skill from a git repository    |\n| `list`          | `ls`           | List popular skills from the registry    |\n| `search <term>` | -              | Search for skills by keyword             |\n| `browse`        | -              | Interactive skill browser with selection |\n\n## Options\n\n| Option         | Description                                     | Default |\n| -------------- | ----------------------------------------------- | ------- |\n| `-g, --global` | Install the skill globally (all projects)       | `false` |\n\n## Examples\n\n### Install a Skill\n\n```bash\n# Install a skill repository\nralph-starter skill add vercel-labs/agent-skills\n\n# Short alias\nralph-starter skill i vercel-labs/agent-skills\n\n# Install globally\nralph-starter skill add vercel-labs/agent-skills --global\n```\n\n### List Popular Skills\n\n```bash\nralph-starter skill list\n```\n\nOutput:\n\n```text\nPopular Skills\n\n  vercel-labs/agent-skills\n  React, Next.js, and Vercel best practices\n  Skills: react-best-practices, nextjs-best-practices,\n          vercel-best-practices, web-design-review\n\nInstall with: ralph-starter skill add <repo>\nBrowse more: https://github.com/topics/agent-skills\n```\n\n### Search for Skills\n\n```bash\nralph-starter skill search react\n```\n\nOutput:\n\n```text\nSearching for: react\n\n  vercel-labs/agent-skills\n  React, Next.js, and Vercel best practices\n```\n\n### Interactive Browse\n\n```bash\nralph-starter skill browse\n```\n\nThis opens an interactive menu where you can select a skill\nto install from the curated registry.\n\n```text\n? Select a skill to install:\n  > vercel-labs/agent-skills - React, Next.js, Vercel\n    ──────────────\n    Cancel\n```\n\n## Skill Detection\n\nWhen ralph-starter runs a task, it automatically detects\ninstalled skills from three locations:\n\n1. **Global skills** — `~/.claude/skills/*.md`\n2. **Project skills** — `.claude/skills/*.md` in the project\n3. **Skills script** — `skills.sh` files in the project or\n   global Claude directory\n\nDetected skills are matched against the project's tech stack\nand included in the agent's prompt context when relevant.\n\n## Auto Skill Discovery\n\nAuto skill discovery is enabled by default. ralph-starter\nqueries the skills.sh API to find and install relevant\nskills automatically before each run.\n\nTo disable it, set:\n\n```bash\nRALPH_DISABLE_SKILL_AUTO_INSTALL=1\n```\n\n## Behavior\n\n- The `add` action uses `npx add-skill` under the hood.\n  If `add-skill` is not installed, it runs via `npx`.\n- The `list` action shows a curated registry of popular\n  skill repositories. It does not scan local installations.\n- The `search` action filters the curated registry by\n  matching repository names, descriptions, and skill names.\n- The `browse` action presents an interactive list using\n  Inquirer prompts.\n\n## See Also\n\n- [ralph-starter run](/docs/cli/run) — Skills are\n  auto-detected and used during task execution\n- [Agent Skills on GitHub](https://github.com/topics/agent-skills)\n  — Community skill repositories\n"
+    },
+    {
+      "slug": "ralph-figma",
+      "name": "ralph-figma",
+      "dir": "skills/ralph-figma",
+      "path": "skills/ralph-figma/SKILL.md",
+      "desc": "Extract Figma designs and build them as code with ralph-starter",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "cursor",
+        "mcp",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/rubenmarcus/ralph-starter.git",
+        "copy": "cp -r skills/ralph-figma ~/.claude/skills/ralph-figma",
+        "raw": "https://raw.githubusercontent.com/rubenmarcus/ralph-starter/ee9c7946c386bb9cecc4001a052e29ffa53f8f9a/skills/ralph-figma/SKILL.md",
+        "saveAs": "~/.claude/skills/ralph-figma/SKILL.md",
+        "marketplace": "/plugin marketplace add rubenmarcus/ralph-starter"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:15e7d999b6b3bdd56d3bbcd6a382ff32e5f4175c012347e9e89ddf9cca78ed4d",
+      "bytes": 815,
+      "wordCount": 100,
+      "repoLicense": "MIT",
+      "commit": "ee9c7946c386bb9cecc4001a052e29ffa53f8f9a",
+      "branch": "main",
+      "body": "---\ndescription: Extract Figma designs and build them as code with ralph-starter\ndisable-model-invocation: true\n---\n\nExtract a Figma design and build it as production code.\n\n1. Use `ralph_fetch_spec` with `source: \"figma\"` and the Figma file URL as `identifier`\n   - Modes: `spec` (full design spec), `tokens` (CSS/Tailwind design tokens), `components` (component code), `content` (text/IA), `assets` (icons/images)\n2. Review the extracted spec — check colors, typography, spacing, and component structure\n3. Use `ralph_run` to build the implementation:\n   - Set `from: \"figma\"` to fetch directly from the Figma source\n   - The agent iterates until the UI matches the design spec\n   - Validation runs between iterations to catch issues early\n\nSupported frameworks: React, Vue, Svelte, Astro, Next.js, Nuxt, HTML.\n",
+      "bodyMd": "Extract a Figma design and build it as production code.\n\n1. Use `ralph_fetch_spec` with `source: \"figma\"` and the Figma file URL as `identifier`\n   - Modes: `spec` (full design spec), `tokens` (CSS/Tailwind design tokens), `components` (component code), `content` (text/IA), `assets` (icons/images)\n2. Review the extracted spec — check colors, typography, spacing, and component structure\n3. Use `ralph_run` to build the implementation:\n   - Set `from: \"figma\"` to fetch directly from the Figma source\n   - The agent iterates until the UI matches the design spec\n   - Validation runs between iterations to catch issues early\n\nSupported frameworks: React, Vue, Svelte, Astro, Next.js, Nuxt, HTML.\n"
+    },
+    {
+      "slug": "ralph-github",
+      "name": "ralph-github",
+      "dir": "skills/ralph-github",
+      "path": "skills/ralph-github/SKILL.md",
+      "desc": "Fetch GitHub issues or PRs and build them with ralph-starter",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "cursor",
+        "mcp",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/rubenmarcus/ralph-starter.git",
+        "copy": "cp -r skills/ralph-github ~/.claude/skills/ralph-github",
+        "raw": "https://raw.githubusercontent.com/rubenmarcus/ralph-starter/ee9c7946c386bb9cecc4001a052e29ffa53f8f9a/skills/ralph-github/SKILL.md",
+        "saveAs": "~/.claude/skills/ralph-github/SKILL.md",
+        "marketplace": "/plugin marketplace add rubenmarcus/ralph-starter"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:463cd214e41ec2bf990ae9cb7ccc354d2f3be83aaeaa0c5947bd384443b019d4",
+      "bytes": 778,
+      "wordCount": 103,
+      "repoLicense": "MIT",
+      "commit": "ee9c7946c386bb9cecc4001a052e29ffa53f8f9a",
+      "branch": "main",
+      "body": "---\ndescription: Fetch GitHub issues or PRs and build them with ralph-starter\ndisable-model-invocation: true\n---\n\nFetch specs from GitHub issues or PRs and run an autonomous coding loop to implement them.\n\n1. Use `ralph_fetch_spec` with `source: \"github\"` to preview the issue/PR:\n   - `identifier`: repo URL, `\"owner/repo#123\"`, or issue URL\n   - Use `project` to filter by repo, `label` to filter by label\n\n2. Use `ralph_run` to build from the spec:\n   - Set `from: \"github\"` and provide `project` (owner/repo)\n   - Optionally filter with `label` (e.g., \"good first issue\", \"bug\")\n   - Set `auto: true`, `commit: true`, `validate: true` for full automation\n\n3. For batch processing multiple issues, use `ralph_run` with `auto: true` — each issue gets its own branch and PR.\n",
+      "bodyMd": "Fetch specs from GitHub issues or PRs and run an autonomous coding loop to implement them.\n\n1. Use `ralph_fetch_spec` with `source: \"github\"` to preview the issue/PR:\n   - `identifier`: repo URL, `\"owner/repo#123\"`, or issue URL\n   - Use `project` to filter by repo, `label` to filter by label\n\n2. Use `ralph_run` to build from the spec:\n   - Set `from: \"github\"` and provide `project` (owner/repo)\n   - Optionally filter with `label` (e.g., \"good first issue\", \"bug\")\n   - Set `auto: true`, `commit: true`, `validate: true` for full automation\n\n3. For batch processing multiple issues, use `ralph_run` with `auto: true` — each issue gets its own branch and PR.\n"
+    },
+    {
+      "slug": "ralph-init",
+      "name": "ralph-init",
+      "dir": "skills/ralph-init",
+      "path": "skills/ralph-init/SKILL.md",
+      "desc": "Initialize Ralph Playbook in a project for autonomous coding loops",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "cursor",
+        "mcp",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "node",
+          "python",
+          "go"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/rubenmarcus/ralph-starter.git",
+        "copy": "cp -r skills/ralph-init ~/.claude/skills/ralph-init",
+        "raw": "https://raw.githubusercontent.com/rubenmarcus/ralph-starter/ee9c7946c386bb9cecc4001a052e29ffa53f8f9a/skills/ralph-init/SKILL.md",
+        "saveAs": "~/.claude/skills/ralph-init/SKILL.md",
+        "marketplace": "/plugin marketplace add rubenmarcus/ralph-starter"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:2a92ca889a5b569feefec0f1332c2dfd35f3d6598304ec27c2d9343e2b0ee08e",
+      "bytes": 632,
+      "wordCount": 67,
+      "repoLicense": "MIT",
+      "commit": "ee9c7946c386bb9cecc4001a052e29ffa53f8f9a",
+      "branch": "main",
+      "body": "---\ndescription: Initialize Ralph Playbook in a project for autonomous coding loops\ndisable-model-invocation: true\n---\n\nInitialize Ralph Playbook scaffolding in a project directory.\n\n1. Use `ralph_init` with the project path to create:\n   - `AGENTS.md` — agent configuration\n   - `PROMPT_plan.md` and `PROMPT_build.md` — workflow prompts\n   - `specs/` directory for specifications\n   - `IMPLEMENTATION_PLAN.md` — task tracking\n\n2. Auto-detects project type (Node.js, Python, Rust, Go) and configures validation commands.\n\nAfter init, add your spec files to `specs/`, then use `/ralph-plan` to generate an implementation plan.\n",
+      "bodyMd": "Initialize Ralph Playbook scaffolding in a project directory.\n\n1. Use `ralph_init` with the project path to create:\n   - `AGENTS.md` — agent configuration\n   - `PROMPT_plan.md` and `PROMPT_build.md` — workflow prompts\n   - `specs/` directory for specifications\n   - `IMPLEMENTATION_PLAN.md` — task tracking\n\n2. Auto-detects project type (Node.js, Python, Rust, Go) and configures validation commands.\n\nAfter init, add your spec files to `specs/`, then use `/ralph-plan` to generate an implementation plan.\n"
+    },
+    {
+      "slug": "ralph-linear",
+      "name": "ralph-linear",
+      "dir": "skills/ralph-linear",
+      "path": "skills/ralph-linear/SKILL.md",
+      "desc": "Fetch Linear tickets and build them with ralph-starter",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "cursor",
+        "mcp",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/rubenmarcus/ralph-starter.git",
+        "copy": "cp -r skills/ralph-linear ~/.claude/skills/ralph-linear",
+        "raw": "https://raw.githubusercontent.com/rubenmarcus/ralph-starter/ee9c7946c386bb9cecc4001a052e29ffa53f8f9a/skills/ralph-linear/SKILL.md",
+        "saveAs": "~/.claude/skills/ralph-linear/SKILL.md",
+        "marketplace": "/plugin marketplace add rubenmarcus/ralph-starter"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:f2cfd3782a2458e109388e45c252738b144ef8d494eb0011da9fa22911c89296",
+      "bytes": 825,
+      "wordCount": 107,
+      "repoLicense": "MIT",
+      "commit": "ee9c7946c386bb9cecc4001a052e29ffa53f8f9a",
+      "branch": "main",
+      "body": "---\ndescription: Fetch Linear tickets and build them with ralph-starter\ndisable-model-invocation: true\n---\n\nFetch specs from Linear tickets and run an autonomous coding loop to implement them.\n\n1. Use `ralph_fetch_spec` with `source: \"linear\"` to preview the ticket:\n   - `identifier`: project or team name\n   - Use `project` and `label` to filter tickets\n\n2. Use `ralph_run` to build from the ticket:\n   - Set `from: \"linear\"` and provide `project` (team/project name)\n   - Optionally filter with `label`\n   - Set `auto: true`, `commit: true`, `validate: true` for full automation\n\n3. Use `ralph_task` to manage Linear tickets directly:\n   - `action: \"list\"` with `source: \"linear\"` to see tickets\n   - `action: \"create\"` to create new tickets\n   - `action: \"update\"` / `action: \"close\"` with the ticket ID (e.g., \"RAL-42\")\n",
+      "bodyMd": "Fetch specs from Linear tickets and run an autonomous coding loop to implement them.\n\n1. Use `ralph_fetch_spec` with `source: \"linear\"` to preview the ticket:\n   - `identifier`: project or team name\n   - Use `project` and `label` to filter tickets\n\n2. Use `ralph_run` to build from the ticket:\n   - Set `from: \"linear\"` and provide `project` (team/project name)\n   - Optionally filter with `label`\n   - Set `auto: true`, `commit: true`, `validate: true` for full automation\n\n3. Use `ralph_task` to manage Linear tickets directly:\n   - `action: \"list\"` with `source: \"linear\"` to see tickets\n   - `action: \"create\"` to create new tickets\n   - `action: \"update\"` / `action: \"close\"` with the ticket ID (e.g., \"RAL-42\")\n"
+    },
+    {
+      "slug": "ralph-notion",
+      "name": "ralph-notion",
+      "dir": "skills/ralph-notion",
+      "path": "skills/ralph-notion/SKILL.md",
+      "desc": "Fetch Notion pages and build from them with ralph-starter",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "cursor",
+        "mcp",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/rubenmarcus/ralph-starter.git",
+        "copy": "cp -r skills/ralph-notion ~/.claude/skills/ralph-notion",
+        "raw": "https://raw.githubusercontent.com/rubenmarcus/ralph-starter/ee9c7946c386bb9cecc4001a052e29ffa53f8f9a/skills/ralph-notion/SKILL.md",
+        "saveAs": "~/.claude/skills/ralph-notion/SKILL.md",
+        "marketplace": "/plugin marketplace add rubenmarcus/ralph-starter"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:15f2b65a53858ad54c61b99e1dc040bfff4ecff3cd7426e6b367f536c682faf7",
+      "bytes": 568,
+      "wordCount": 73,
+      "repoLicense": "MIT",
+      "commit": "ee9c7946c386bb9cecc4001a052e29ffa53f8f9a",
+      "branch": "main",
+      "body": "---\ndescription: Fetch Notion pages and build from them with ralph-starter\ndisable-model-invocation: true\n---\n\nFetch specs from Notion pages or databases and run an autonomous coding loop.\n\n1. Use `ralph_fetch_spec` with `source: \"notion\"` to preview the page:\n   - `identifier`: Notion page URL\n\n2. Use `ralph_run` to build from the Notion spec:\n   - Set `from: \"notion\"`\n   - Set `auto: true`, `commit: true`, `validate: true` for full automation\n\nWorks with Notion pages and databases. The content is extracted as markdown and used as the spec for the coding loop.\n",
+      "bodyMd": "Fetch specs from Notion pages or databases and run an autonomous coding loop.\n\n1. Use `ralph_fetch_spec` with `source: \"notion\"` to preview the page:\n   - `identifier`: Notion page URL\n\n2. Use `ralph_run` to build from the Notion spec:\n   - Set `from: \"notion\"`\n   - Set `auto: true`, `commit: true`, `validate: true` for full automation\n\nWorks with Notion pages and databases. The content is extracted as markdown and used as the spec for the coding loop.\n"
+    },
+    {
+      "slug": "ralph-plan",
+      "name": "ralph-plan",
+      "dir": "skills/ralph-plan",
+      "path": "skills/ralph-plan/SKILL.md",
+      "desc": "Create an implementation plan from specs using ralph-starter",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "cursor",
+        "mcp",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/rubenmarcus/ralph-starter.git",
+        "copy": "cp -r skills/ralph-plan ~/.claude/skills/ralph-plan",
+        "raw": "https://raw.githubusercontent.com/rubenmarcus/ralph-starter/ee9c7946c386bb9cecc4001a052e29ffa53f8f9a/skills/ralph-plan/SKILL.md",
+        "saveAs": "~/.claude/skills/ralph-plan/SKILL.md",
+        "marketplace": "/plugin marketplace add rubenmarcus/ralph-starter"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:29e1381581bc4ed815a1a90b6b4cbbff6afa92b1745ee3dfb7076e6c660cf4b9",
+      "bytes": 639,
+      "wordCount": 82,
+      "repoLicense": "MIT",
+      "commit": "ee9c7946c386bb9cecc4001a052e29ffa53f8f9a",
+      "branch": "main",
+      "body": "---\ndescription: Create an implementation plan from specs using ralph-starter\ndisable-model-invocation: true\n---\n\nCreate a structured implementation plan from specification files.\n\n1. Use `ralph_status` to verify the project has specs in `specs/`\n2. Use `ralph_plan` with the project path to generate an `IMPLEMENTATION_PLAN.md`\n   - Set `auto: true` to skip interactive prompts\n3. The plan breaks down specs into actionable, checkboxed tasks\n\nIf no specs exist yet:\n- Use `ralph_init` to scaffold the project first\n- Add spec files to the `specs/` directory\n- Or use `ralph_fetch_spec` to pull specs from GitHub, Linear, Notion, or Figma\n",
+      "bodyMd": "Create a structured implementation plan from specification files.\n\n1. Use `ralph_status` to verify the project has specs in `specs/`\n2. Use `ralph_plan` with the project path to generate an `IMPLEMENTATION_PLAN.md`\n   - Set `auto: true` to skip interactive prompts\n3. The plan breaks down specs into actionable, checkboxed tasks\n\nIf no specs exist yet:\n- Use `ralph_init` to scaffold the project first\n- Add spec files to the `specs/` directory\n- Or use `ralph_fetch_spec` to pull specs from GitHub, Linear, Notion, or Figma\n"
+    },
+    {
+      "slug": "ralph-run",
+      "name": "ralph-run",
+      "dir": "skills/ralph-run",
+      "path": "skills/ralph-run/SKILL.md",
+      "desc": "Run an autonomous AI coding loop with ralph-starter",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "cursor",
+        "mcp",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/rubenmarcus/ralph-starter.git",
+        "copy": "cp -r skills/ralph-run ~/.claude/skills/ralph-run",
+        "raw": "https://raw.githubusercontent.com/rubenmarcus/ralph-starter/ee9c7946c386bb9cecc4001a052e29ffa53f8f9a/skills/ralph-run/SKILL.md",
+        "saveAs": "~/.claude/skills/ralph-run/SKILL.md",
+        "marketplace": "/plugin marketplace add rubenmarcus/ralph-starter"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:a74461f25e80ab98f372af48c362e08b55ad04883d523838d4c2aada595c2aed",
+      "bytes": 800,
+      "wordCount": 109,
+      "repoLicense": "MIT",
+      "commit": "ee9c7946c386bb9cecc4001a052e29ffa53f8f9a",
+      "branch": "main",
+      "body": "---\ndescription: Run an autonomous AI coding loop with ralph-starter\ndisable-model-invocation: true\n---\n\nRun an autonomous coding loop using ralph-starter.\n\n1. Use the `ralph_status` tool to check the current project state\n2. Use `ralph_run` with the current project path to start the loop\n   - Set `auto: true` for fully automated mode\n   - Set `commit: true` to auto-commit changes\n   - Set `validate: true` to run tests/lint/build between iterations\n3. The agent will iterate until the task is complete: read specs, write code, validate, commit, repeat\n\nOptions:\n- Specify `task` for a one-off task, or let it read from `IMPLEMENTATION_PLAN.md`\n- Use `from` to fetch specs from integrations: `github`, `linear`, `notion`, `figma`\n- Use `project` and `label` to filter issues from GitHub or Linear\n",
+      "bodyMd": "Run an autonomous coding loop using ralph-starter.\n\n1. Use the `ralph_status` tool to check the current project state\n2. Use `ralph_run` with the current project path to start the loop\n   - Set `auto: true` for fully automated mode\n   - Set `commit: true` to auto-commit changes\n   - Set `validate: true` to run tests/lint/build between iterations\n3. The agent will iterate until the task is complete: read specs, write code, validate, commit, repeat\n\nOptions:\n- Specify `task` for a one-off task, or let it read from `IMPLEMENTATION_PLAN.md`\n- Use `from` to fetch specs from integrations: `github`, `linear`, `notion`, `figma`\n- Use `project` and `label` to filter issues from GitHub or Linear\n"
+    },
+    {
+      "slug": "ralph-task",
+      "name": "ralph-task",
+      "dir": "skills/ralph-task",
+      "path": "skills/ralph-task/SKILL.md",
+      "desc": "Manage tasks across GitHub and Linear with ralph-starter",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "cursor",
+        "mcp",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/rubenmarcus/ralph-starter.git",
+        "copy": "cp -r skills/ralph-task ~/.claude/skills/ralph-task",
+        "raw": "https://raw.githubusercontent.com/rubenmarcus/ralph-starter/ee9c7946c386bb9cecc4001a052e29ffa53f8f9a/skills/ralph-task/SKILL.md",
+        "saveAs": "~/.claude/skills/ralph-task/SKILL.md",
+        "marketplace": "/plugin marketplace add rubenmarcus/ralph-starter"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:99a5dcf0860a4d8a4d224d0abdace62d88accf29e00988eed20a85336003bb59",
+      "bytes": 870,
+      "wordCount": 104,
+      "repoLicense": "MIT",
+      "commit": "ee9c7946c386bb9cecc4001a052e29ffa53f8f9a",
+      "branch": "main",
+      "body": "---\ndescription: Manage tasks across GitHub and Linear with ralph-starter\ndisable-model-invocation: true\n---\n\nManage tasks across GitHub Issues and Linear from a single interface.\n\nUse the `ralph_task` tool:\n\n- **List tasks**: `action: \"list\"` — shows tasks from GitHub and Linear. Filter with `source`, `project`, `label`, `status`.\n- **Create task**: `action: \"create\"` — requires `title`, `source` (github/linear). Optional: `description`, `labels`, `priority` (P0-P3), `assignee`.\n- **Update task**: `action: \"update\"` — requires `id` (#123 for GitHub, RAL-42 for Linear). Set `status`, `priority`, `assignee`.\n- **Close task**: `action: \"close\"` — requires `id`. Optional `comment` for a closing note.\n- **Comment**: `action: \"comment\"` — requires `id` and `comment`.\n\nThe platform is auto-detected from the ID format: `#123` = GitHub, `RAL-42` = Linear.\n",
+      "bodyMd": "Manage tasks across GitHub Issues and Linear from a single interface.\n\nUse the `ralph_task` tool:\n\n- **List tasks**: `action: \"list\"` — shows tasks from GitHub and Linear. Filter with `source`, `project`, `label`, `status`.\n- **Create task**: `action: \"create\"` — requires `title`, `source` (github/linear). Optional: `description`, `labels`, `priority` (P0-P3), `assignee`.\n- **Update task**: `action: \"update\"` — requires `id` (#123 for GitHub, RAL-42 for Linear). Set `status`, `priority`, `assignee`.\n- **Close task**: `action: \"close\"` — requires `id`. Optional `comment` for a closing note.\n- **Comment**: `action: \"comment\"` — requires `id` and `comment`.\n\nThe platform is auto-detected from the ID format: `#123` = GitHub, `RAL-42` = Linear.\n"
+    },
+    {
+      "slug": "ralph-validate",
+      "name": "ralph-validate",
+      "dir": "skills/ralph-validate",
+      "path": "skills/ralph-validate/SKILL.md",
+      "desc": "Run project validation (tests, lint, build) with ralph-starter",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "cline",
+        "codex",
+        "cursor",
+        "mcp",
+        "windsurf"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/rubenmarcus/ralph-starter.git",
+        "copy": "cp -r skills/ralph-validate ~/.claude/skills/ralph-validate",
+        "raw": "https://raw.githubusercontent.com/rubenmarcus/ralph-starter/ee9c7946c386bb9cecc4001a052e29ffa53f8f9a/skills/ralph-validate/SKILL.md",
+        "saveAs": "~/.claude/skills/ralph-validate/SKILL.md",
+        "marketplace": "/plugin marketplace add rubenmarcus/ralph-starter"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:180e41e57c01f520db63ab192e41a5160bbad70dcff8f94a35207ebff4d0cd40",
+      "bytes": 530,
+      "wordCount": 59,
+      "repoLicense": "MIT",
+      "commit": "ee9c7946c386bb9cecc4001a052e29ffa53f8f9a",
+      "branch": "main",
+      "body": "---\ndescription: Run project validation (tests, lint, build) with ralph-starter\ndisable-model-invocation: true\n---\n\nRun all detected validation commands for a project.\n\n1. Use `ralph_validate` with the project path\n2. Auto-detects validation commands from:\n   - `package.json` scripts (test, lint, build)\n   - Makefile targets\n   - Common patterns for the detected project type\n3. Returns pass/fail status with output for each command\n\nUse `ralph_status` first to check the overall project state and implementation plan progress.\n",
+      "bodyMd": "Run all detected validation commands for a project.\n\n1. Use `ralph_validate` with the project path\n2. Auto-detects validation commands from:\n   - `package.json` scripts (test, lint, build)\n   - Makefile targets\n   - Common patterns for the detected project type\n3. Returns pass/fail status with output for each command\n\nUse `ralph_status` first to check the overall project state and implementation plan progress.\n"
+    }
+  ]
+}

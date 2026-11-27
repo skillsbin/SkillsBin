@@ -1,0 +1,102 @@
+{
+  "repo": "MnemeHQ/mneme",
+  "commit": "39ab6a59ecd015f0dfa4c79eae9634770511f4bf",
+  "branch": "main",
+  "fetchedAt": "2026-11-27T07:13:25.437Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "mneme",
+      "name": "mneme",
+      "dir": "integrations/claude-code-plugin/skills/mneme",
+      "path": "integrations/claude-code-plugin/skills/mneme/SKILL.md",
+      "desc": "Architectural governance for this project. Use this skill when the user asks about project decisions, ADRs, architectural constraints, or wants to review, record, or enforce decisions. Also use before non-trivial edits when the project has a `.mneme/` directory so the relevant architectural context is visible before implementation.",
+      "descZh": "",
+      "triggers": [
+        "ADRs",
+        "wants to review"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/MnemeHQ/mneme.git",
+        "copy": "cp -r integrations/claude-code-plugin/skills/mneme ~/.claude/skills/mneme",
+        "raw": "https://raw.githubusercontent.com/MnemeHQ/mneme/39ab6a59ecd015f0dfa4c79eae9634770511f4bf/integrations/claude-code-plugin/skills/mneme/SKILL.md",
+        "saveAs": "~/.claude/skills/mneme/SKILL.md",
+        "marketplace": "/plugin marketplace add MnemeHQ/mneme"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:7fd1130ce827d379c9cc607616f1378954f94e1e0da3f963e72a5e86290e35c5",
+      "bytes": 5648,
+      "wordCount": 739,
+      "repoLicense": "MIT",
+      "commit": "39ab6a59ecd015f0dfa4c79eae9634770511f4bf",
+      "branch": "main",
+      "body": "---\nname: mneme\ndescription: |\n  Architectural governance for this project. Use this skill when the user\n  asks about project decisions, ADRs, architectural constraints, or wants to\n  review, record, or enforce decisions. Also use before non-trivial edits when\n  the project has a `.mneme/` directory so the relevant architectural context\n  is visible before implementation.\n---\n\n# Mneme — project memory & architectural governance\n\nThis project uses Mneme to keep AI-assisted changes aligned with recorded\narchitectural decisions.\n\nThe **Skill is the workflow interface**: it helps Claude retrieve decisions,\nrecord them, check proposed content, and review pending changes. The Skill does\nnot implement a second policy engine. Deterministic verdicts come from the\nexisting `mneme check` engine and the Claude Code hook.\n\nWhen the plugin is enabled, Mneme uses a prevent → catch → verify model:\n\n- `PreToolUse` evaluates reconstructable file mutations before they land.\n- `Stop` audits session-introduced changes that could not be safely preflighted.\n- CI remains the final verification boundary.\n\n## When this skill activates\n\n- User mentions \"ADR\", \"decision\", \"constraint\", \"anti-pattern\", \"architecture\", or architectural review.\n- A `.mneme/project_memory.json` file exists in the repo.\n- About to make a non-trivial edit in an area that may be governed by recorded decisions.\n- Reviewing a proposed or completed change for architectural compliance.\n\n## How to use it\n\n1. **Before non-trivial edits** — run `/mneme:context` with a descriptive task\n   phrase such as \"storage layer changes\" or \"auth middleware refactor\".\n   Domain language is more useful than a generic file name for retrieval-based\n   guidance.\n\n2. **To gate a draft** — run `/mneme:check` against the proposed content with\n   the real target path when available. Treat the command's verdict as the\n   authority; do not infer PASS from the Skill's own reasoning.\n\n3. **To record a new decision** — run `/mneme:record`. Choose clear scope and\n   applicability so future retrieval and enforcement can identify where the\n   decision belongs.\n\n4. **To review pending changes** — run `/mneme:review`. Use the output as the\n   evidence layer for an architectural review: which decisions apply, which\n   changes comply, which are denied or warned, and which surfaces were not\n   mechanically evaluated.\n\n## Retrieval is not enforcement\n\nMneme deliberately separates architectural context from deterministic policy\nchecks.\n\n- `/mneme:context` retrieves relevant decisions for guidance.\n- Legacy text constraints may still depend on retrieval semantics.\n- Typed rules such as `FORBID_LITERAL` are enforced independently of retrieval\n  ranking across the decision corpus, subject to explicit path applicability.\n- `mneme check --target-path` is the authority for path-scoped evaluation.\n- An `UNKNOWN` / incomplete applicability state is not a PASS.\n\nDo not assume that a decision was unenforced merely because it was absent from\nthe top retrieved context.\n\n## Hook enforcement\n\nThe plugin's `PreToolUse` hook covers direct `Edit`, `Write`, and compatible\n`MultiEdit` mutations by reconstructing the proposed post-edit content and\ncalling the existing Mneme checker.\n\nFor shell mutations, Mneme only preflight-blocks forms whose resulting path and\ncontent can be proven from the command itself, such as supported simple quoted\nheredoc writes. Pipelines, substitutions, interpreters, generators, and other\nopaque shell forms are allowed to run and are evaluated at the `Stop` boundary\nfrom the session delta where possible.\n\nThe `Stop` audit is a catch boundary, not proof that every external or remote\nmutation surface is governed. If evaluation is unavailable or incomplete,\nMneme must surface that state rather than silently calling it PASS.\n\nIn strict mode, a trusted violating verdict can block the mutation or completion\nboundary and surfaces the violated decision id so Claude can correct course.\nAnything the adapter cannot evaluate reliably fails open visibly.\n\n## Architectural review workflow\n\nFor a substantive review, use this order:\n\n1. State the implementation intent and affected paths.\n2. Retrieve the relevant project decisions with `/mneme:context`.\n3. Inspect the proposed or pending change.\n4. Use `/mneme:check` or `/mneme:review` for deterministic evidence.\n5. Separate the result into:\n   - mechanically enforced violations or passes;\n   - guidance-only architectural concerns;\n   - unevaluated / unsupported mutation surfaces.\n6. Recommend the smallest compliant correction rather than inventing new\n   architectural requirements.\n\nThis is the foundation for a richer Architecture Review Skill surface on the\nroadmap; today it is an executable review workflow over existing Mneme commands,\nnot a new enforcement subsystem.\n\n## Requirements & configuration\n\n- **Mneme must be installed** and `mneme-hook` must be on `PATH`. Use the\n  version documented by the plugin README; the runtime and plugin are separate\n  artifacts.\n- **Enforcement mode** is set by the plugin's `mode` configuration option and\n  reaches the hook as `CLAUDE_PLUGIN_OPTION_MODE`. Precedence:\n  `MNEME_HOOK_MODE` > `CLAUDE_PLUGIN_OPTION_MODE` > `strict`; unknown values\n  fall back to `strict`.\n- Use `warn` while iterating on decisions if blocking would create unnecessary\n  friction, but do not represent WARN as PASS.\n\n## Related\n\n- Project memory: `.mneme/project_memory.json`\n- CLI reference: `mneme --help`\n- Plugin README: `integrations/claude-code-plugin/README.md`\n- Canonical support matrix: `docs/integrations/README.md`\n- Current roadmap: `docs/roadmap/README.md`\n",
+      "bodyMd": "# Mneme — project memory & architectural governance\n\nThis project uses Mneme to keep AI-assisted changes aligned with recorded\narchitectural decisions.\n\nThe **Skill is the workflow interface**: it helps Claude retrieve decisions,\nrecord them, check proposed content, and review pending changes. The Skill does\nnot implement a second policy engine. Deterministic verdicts come from the\nexisting `mneme check` engine and the Claude Code hook.\n\nWhen the plugin is enabled, Mneme uses a prevent → catch → verify model:\n\n- `PreToolUse` evaluates reconstructable file mutations before they land.\n- `Stop` audits session-introduced changes that could not be safely preflighted.\n- CI remains the final verification boundary.\n\n## When this skill activates\n\n- User mentions \"ADR\", \"decision\", \"constraint\", \"anti-pattern\", \"architecture\", or architectural review.\n- A `.mneme/project_memory.json` file exists in the repo.\n- About to make a non-trivial edit in an area that may be governed by recorded decisions.\n- Reviewing a proposed or completed change for architectural compliance.\n\n## How to use it\n\n1. **Before non-trivial edits** — run `/mneme:context` with a descriptive task\n   phrase such as \"storage layer changes\" or \"auth middleware refactor\".\n   Domain language is more useful than a generic file name for retrieval-based\n   guidance.\n\n2. **To gate a draft** — run `/mneme:check` against the proposed content with\n   the real target path when available. Treat the command's verdict as the\n   authority; do not infer PASS from the Skill's own reasoning.\n\n3. **To record a new decision** — run `/mneme:record`. Choose clear scope and\n   applicability so future retrieval and enforcement can identify where the\n   decision belongs.\n\n4. **To review pending changes** — run `/mneme:review`. Use the output as the\n   evidence layer for an architectural review: which decisions apply, which\n   changes comply, which are denied or warned, and which surfaces were not\n   mechanically evaluated.\n\n## Retrieval is not enforcement\n\nMneme deliberately separates architectural context from deterministic policy\nchecks.\n\n- `/mneme:context` retrieves relevant decisions for guidance.\n- Legacy text constraints may still depend on retrieval semantics.\n- Typed rules such as `FORBID_LITERAL` are enforced independently of retrieval\n  ranking across the decision corpus, subject to explicit path applicability.\n- `mneme check --target-path` is the authority for path-scoped evaluation.\n- An `UNKNOWN` / incomplete applicability state is not a PASS.\n\nDo not assume that a decision was unenforced merely because it was absent from\nthe top retrieved context.\n\n## Hook enforcement\n\nThe plugin's `PreToolUse` hook covers direct `Edit`, `Write`, and compatible\n`MultiEdit` mutations by reconstructing the proposed post-edit content and\ncalling the existing Mneme checker.\n\nFor shell mutations, Mneme only preflight-blocks forms whose resulting path and\ncontent can be proven from the command itself, such as supported simple quoted\nheredoc writes. Pipelines, substitutions, interpreters, generators, and other\nopaque shell forms are allowed to run and are evaluated at the `Stop` boundary\nfrom the session delta where possible.\n\nThe `Stop` audit is a catch boundary, not proof that every external or remote\nmutation surface is governed. If evaluation is unavailable or incomplete,\nMneme must surface that state rather than silently calling it PASS.\n\nIn strict mode, a trusted violating verdict can block the mutation or completion\nboundary and surfaces the violated decision id so Claude can correct course.\nAnything the adapter cannot evaluate reliably fails open visibly.\n\n## Architectural review workflow\n\nFor a substantive review, use this order:\n\n1. State the implementation intent and affected paths.\n2. Retrieve the relevant project decisions with `/mneme:context`.\n3. Inspect the proposed or pending change.\n4. Use `/mneme:check` or `/mneme:review` for deterministic evidence.\n5. Separate the result into:\n   - mechanically enforced violations or passes;\n   - guidance-only architectural concerns;\n   - unevaluated / unsupported mutation surfaces.\n6. Recommend the smallest compliant correction rather than inventing new\n   architectural requirements.\n\nThis is the foundation for a richer Architecture Review Skill surface on the\nroadmap; today it is an executable review workflow over existing Mneme commands,\nnot a new enforcement subsystem.\n\n## Requirements & configuration\n\n- **Mneme must be installed** and `mneme-hook` must be on `PATH`. Use the\n  version documented by the plugin README; the runtime and plugin are separate\n  artifacts.\n- **Enforcement mode** is set by the plugin's `mode` configuration option and\n  reaches the hook as `CLAUDE_PLUGIN_OPTION_MODE`. Precedence:\n  `MNEME_HOOK_MODE` > `CLAUDE_PLUGIN_OPTION_MODE` > `strict`; unknown values\n  fall back to `strict`.\n- Use `warn` while iterating on decisions if blocking would create unnecessary\n  friction, but do not represent WARN as PASS.\n\n## Related\n\n- Project memory: `.mneme/project_memory.json`\n- CLI reference: `mneme --help`\n- Plugin README: `integrations/claude-code-plugin/README.md`\n- Canonical support matrix: `docs/integrations/README.md`\n- Current roadmap: `docs/roadmap/README.md`\n"
+    },
+    {
+      "slug": "mneme-2",
+      "name": "mneme",
+      "dir": "integrations/claude-code/skills/mneme",
+      "path": "integrations/claude-code/skills/mneme/SKILL.md",
+      "desc": "Architectural governance for this project. Use this skill when the user asks about project decisions, architectural constraints, or wants to enforce / record / review decisions. Also use whenever Claude Code is about to make a non-trivial edit and the project has a `.mneme/` directory — check relevant decisions first.",
+      "descZh": "",
+      "triggers": [
+        "wants to enforce / re"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/MnemeHQ/mneme.git",
+        "copy": "cp -r integrations/claude-code/skills/mneme ~/.claude/skills/mneme-2",
+        "raw": "https://raw.githubusercontent.com/MnemeHQ/mneme/39ab6a59ecd015f0dfa4c79eae9634770511f4bf/integrations/claude-code/skills/mneme/SKILL.md",
+        "saveAs": "~/.claude/skills/mneme-2/SKILL.md",
+        "marketplace": "/plugin marketplace add MnemeHQ/mneme"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:1bf48b5ac3d03443a4497589a3e23024644e7e1a6fcaf7b5c2e96f7f4aff080e",
+      "bytes": 2635,
+      "wordCount": 332,
+      "repoLicense": "MIT",
+      "commit": "39ab6a59ecd015f0dfa4c79eae9634770511f4bf",
+      "branch": "main",
+      "body": "---\nname: mneme\ndescription: |\n  Architectural governance for this project. Use this skill when the user\n  asks about project decisions, architectural constraints, or wants to\n  enforce / record / review decisions. Also use whenever Claude Code is\n  about to make a non-trivial edit and the project has a `.mneme/`\n  directory — check relevant decisions first.\n---\n\n# Mneme — project memory & governance\n\nThis project uses Mneme to enforce architectural decisions.\n\n## When this skill activates\n\n- User mentions \"ADR\", \"decision\", \"constraint\", \"anti-pattern\", \"architecture\".\n- A `.mneme/project_memory.json` file exists in the repo.\n- About to make a non-trivial edit in an area that may be governed by recorded decisions.\n\n## How to use it\n\n1. **Before non-trivial edits** — run `/mneme-context` with a descriptive task\n   phrase (e.g. \"storage layer changes\", \"auth middleware refactor\"). Use domain\n   language, not just the file name — retrieval is keyword-based and the query\n   must overlap with decision scope fields to surface relevant decisions.\n\n2. **To gate a draft** — run `/mneme-check` against the proposed content, again\n   with a descriptive `--query`.\n\n3. **To record a new decision** — run `/mneme-record`. When choosing `scope`\n   keywords, pick terms that will appear in file names or task descriptions\n   where this decision applies, so the hook can retrieve it automatically.\n\n4. **To audit pending changes** — run `/mneme-review`.\n\n## Hook enforcement\n\nA `PreToolUse` hook (`mneme-hook`) runs automatically on Edit / Write / MultiEdit.\nIt reconstructs the full post-edit file content, then calls `mneme check` with the\nquery `\"edit to <file_path>\"`. Decisions whose scope or text share tokens with the\nfile name are retrieved and checked.\n\nShell calls (`Bash`) are checked before execution only when they are simple\nquoted-delimiter heredoc writes (`cat > path << 'EOF' ... EOF`); anything else is\naudited by a `Stop` boundary that evaluates what this session introduced before\nthe turn completes (ADR-021).\n\n**Retrieval caveat:** The automatic hook query is derived from the file path, so\ndecisions with scope keywords that don't appear in file names may not be retrieved\nautomatically. Use `/mneme-context` before large edits to confirm coverage.\n\nIf the proposed change violates a decision in strict mode, Claude Code is blocked\nand the violated decision id is surfaced in the error.\n\nTo switch to warn-only mode: `export MNEME_HOOK_MODE=warn`\n\n## Related\n\n- Project memory: `.mneme/project_memory.json`\n- CLI reference: `mneme --help`\n- Integration docs: `integrations/claude-code/README.md`\n",
+      "bodyMd": "# Mneme — project memory & governance\n\nThis project uses Mneme to enforce architectural decisions.\n\n## When this skill activates\n\n- User mentions \"ADR\", \"decision\", \"constraint\", \"anti-pattern\", \"architecture\".\n- A `.mneme/project_memory.json` file exists in the repo.\n- About to make a non-trivial edit in an area that may be governed by recorded decisions.\n\n## How to use it\n\n1. **Before non-trivial edits** — run `/mneme-context` with a descriptive task\n   phrase (e.g. \"storage layer changes\", \"auth middleware refactor\"). Use domain\n   language, not just the file name — retrieval is keyword-based and the query\n   must overlap with decision scope fields to surface relevant decisions.\n\n2. **To gate a draft** — run `/mneme-check` against the proposed content, again\n   with a descriptive `--query`.\n\n3. **To record a new decision** — run `/mneme-record`. When choosing `scope`\n   keywords, pick terms that will appear in file names or task descriptions\n   where this decision applies, so the hook can retrieve it automatically.\n\n4. **To audit pending changes** — run `/mneme-review`.\n\n## Hook enforcement\n\nA `PreToolUse` hook (`mneme-hook`) runs automatically on Edit / Write / MultiEdit.\nIt reconstructs the full post-edit file content, then calls `mneme check` with the\nquery `\"edit to <file_path>\"`. Decisions whose scope or text share tokens with the\nfile name are retrieved and checked.\n\nShell calls (`Bash`) are checked before execution only when they are simple\nquoted-delimiter heredoc writes (`cat > path << 'EOF' ... EOF`); anything else is\naudited by a `Stop` boundary that evaluates what this session introduced before\nthe turn completes (ADR-021).\n\n**Retrieval caveat:** The automatic hook query is derived from the file path, so\ndecisions with scope keywords that don't appear in file names may not be retrieved\nautomatically. Use `/mneme-context` before large edits to confirm coverage.\n\nIf the proposed change violates a decision in strict mode, Claude Code is blocked\nand the violated decision id is surfaced in the error.\n\nTo switch to warn-only mode: `export MNEME_HOOK_MODE=warn`\n\n## Related\n\n- Project memory: `.mneme/project_memory.json`\n- CLI reference: `mneme --help`\n- Integration docs: `integrations/claude-code/README.md`\n"
+    }
+  ]
+}

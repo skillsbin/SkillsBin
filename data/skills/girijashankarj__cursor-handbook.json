@@ -1,0 +1,940 @@
+{
+  "repo": "girijashankarj/cursor-handbook",
+  "commit": "80bb51a2b967fbc27593cd016a401fe755f882d7",
+  "branch": "main",
+  "fetchedAt": "2026-11-27T07:13:32.083Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "code-review",
+      "name": "code-review",
+      "dir": ".cursor/skills/backend/code-review",
+      "path": ".cursor/skills/backend/code-review/SKILL.md",
+      "desc": "Structured workflow for conducting thorough code reviews. Use when the user asks to review code, a PR, or specific files.",
+      "descZh": "",
+      "triggers": [
+        "a PR",
+        "specific files"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/girijashankarj/cursor-handbook.git",
+        "copy": "cp -r .cursor/skills/backend/code-review ~/.claude/skills/code-review",
+        "raw": "https://raw.githubusercontent.com/girijashankarj/cursor-handbook/80bb51a2b967fbc27593cd016a401fe755f882d7/.cursor/skills/backend/code-review/SKILL.md",
+        "saveAs": "~/.claude/skills/code-review/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:8bc254bc76ac3293528ae2380b2199dd2ceb08315068a0fac6e42c21fe32f062",
+      "bytes": 1921,
+      "wordCount": 324,
+      "repoLicense": "MIT",
+      "commit": "80bb51a2b967fbc27593cd016a401fe755f882d7",
+      "branch": "main",
+      "body": "---\nname: code-review\ndescription: Structured workflow for conducting thorough code reviews. Use when the user asks to review code, a PR, or specific files.\n---\n\n# Skill: Code Review Workflow\n\n## Trigger\nWhen the user asks to review code, a PR, or specific files.\n\n## Steps\n\n### Step 1: Understand Context\n- [ ] Read the PR description or user's explanation\n- [ ] Identify the type of change (feature, bug fix, refactor, test)\n- [ ] Check which files are modified\n\n### Step 2: High-Level Review\n- [ ] Does the change accomplish its stated goal?\n- [ ] Is the approach appropriate for the problem?\n- [ ] Are there simpler alternatives?\n- [ ] Does it follow project architecture patterns?\n\n### Step 3: Security Review\n- [ ] No hardcoded secrets or credentials\n- [ ] No PII in logs or error messages\n- [ ] Input validation on all external inputs\n- [ ] Parameterized database queries\n- [ ] Proper authentication/authorization checks\n- [ ] No sensitive data in URLs or headers\n\n### Step 4: Code Quality Review\n- [ ] Functions are single-responsibility and < 30 lines\n- [ ] Naming is clear and consistent\n- [ ] No code duplication\n- [ ] Error handling is comprehensive\n- [ ] Logging includes correlationId\n- [ ] Import order follows conventions\n\n### Step 5: Testing Review\n- [ ] Tests exist for new/changed code\n- [ ] Success and error paths tested\n- [ ] Edge cases covered\n- [ ] Mocks are appropriate (not over-mocking)\n- [ ] Test names are descriptive\n\n### Step 6: Performance Review\n- [ ] No N+1 database queries\n- [ ] Appropriate use of indexes\n- [ ] No unnecessary data loading\n- [ ] Caching where appropriate\n- [ ] No memory leaks\n\n### Step 7: Provide Feedback\nUse this format:\n- 🔴 **Critical**: Must fix before merge\n- 🟡 **Suggestion**: Should improve\n- 🟢 **Nitpick**: Optional improvement\n- 👍 **Positive**: Things done well\n\n## Completion\nReview is complete with actionable feedback categorized by priority.\n",
+      "bodyMd": "# Skill: Code Review Workflow\n\n## Trigger\nWhen the user asks to review code, a PR, or specific files.\n\n## Steps\n\n### Step 1: Understand Context\n- [ ] Read the PR description or user's explanation\n- [ ] Identify the type of change (feature, bug fix, refactor, test)\n- [ ] Check which files are modified\n\n### Step 2: High-Level Review\n- [ ] Does the change accomplish its stated goal?\n- [ ] Is the approach appropriate for the problem?\n- [ ] Are there simpler alternatives?\n- [ ] Does it follow project architecture patterns?\n\n### Step 3: Security Review\n- [ ] No hardcoded secrets or credentials\n- [ ] No PII in logs or error messages\n- [ ] Input validation on all external inputs\n- [ ] Parameterized database queries\n- [ ] Proper authentication/authorization checks\n- [ ] No sensitive data in URLs or headers\n\n### Step 4: Code Quality Review\n- [ ] Functions are single-responsibility and < 30 lines\n- [ ] Naming is clear and consistent\n- [ ] No code duplication\n- [ ] Error handling is comprehensive\n- [ ] Logging includes correlationId\n- [ ] Import order follows conventions\n\n### Step 5: Testing Review\n- [ ] Tests exist for new/changed code\n- [ ] Success and error paths tested\n- [ ] Edge cases covered\n- [ ] Mocks are appropriate (not over-mocking)\n- [ ] Test names are descriptive\n\n### Step 6: Performance Review\n- [ ] No N+1 database queries\n- [ ] Appropriate use of indexes\n- [ ] No unnecessary data loading\n- [ ] Caching where appropriate\n- [ ] No memory leaks\n\n### Step 7: Provide Feedback\nUse this format:\n- 🔴 **Critical**: Must fix before merge\n- 🟡 **Suggestion**: Should improve\n- 🟢 **Nitpick**: Optional improvement\n- 👍 **Positive**: Things done well\n\n## Completion\nReview is complete with actionable feedback categorized by priority.\n"
+    },
+    {
+      "slug": "create-handler",
+      "name": "create-handler",
+      "dir": ".cursor/skills/backend/create-handler",
+      "path": ".cursor/skills/backend/create-handler/SKILL.md",
+      "desc": "Create a new API handler following the handler pattern. Use when the user asks to create an endpoint, handler, or route.",
+      "descZh": "",
+      "triggers": [
+        "handler",
+        "route"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/girijashankarj/cursor-handbook.git",
+        "copy": "cp -r .cursor/skills/backend/create-handler ~/.claude/skills/create-handler",
+        "raw": "https://raw.githubusercontent.com/girijashankarj/cursor-handbook/80bb51a2b967fbc27593cd016a401fe755f882d7/.cursor/skills/backend/create-handler/SKILL.md",
+        "saveAs": "~/.claude/skills/create-handler/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:02ef6dd4599c6dcff5fcd33d05242c4c6b52f6a41c313832b7ffe3ec28c2ab13",
+      "bytes": 4209,
+      "wordCount": 565,
+      "repoLicense": "MIT",
+      "commit": "80bb51a2b967fbc27593cd016a401fe755f882d7",
+      "branch": "main",
+      "body": "---\nname: create-handler\ndescription: Create a new API handler following the handler pattern. Use when the user asks to create an endpoint, handler, or route.\n---\n\n# Skill: Create API Handler\n\nStep-by-step workflow for creating a new API handler following the {{CONFIG.patterns.handlerFlowSteps}}-step handler pattern.\n\n## Scripts (Cursor skills scripts/ support)\n\nThis skill includes a `scripts/` folder. The agent can run these scripts as part of the workflow:\n\n- **scripts/scaffold-handler-dirs.sh** — Creates the handler directory structure. Usage: `./scripts/scaffold-handler-dirs.sh <entity> <operation>` (e.g. `order create`).\n\n## Trigger\nWhen the user asks to create a new API endpoint, handler, or route.\n\n## Prerequisites\n- Project configuration loaded (`{{CONFIG.paths.handlerBasePath}}` exists)\n- Understanding of the entity and operation\n\n## Steps\n\n### Step 1: Gather Requirements\n- [ ] Identify the entity (e.g., Order, Product, User)\n- [ ] Identify the operation (e.g., create, read, update, list, delete)\n- [ ] Determine HTTP method and URL path\n- [ ] Identify request parameters and body schema\n- [ ] Identify response format\n\n### Step 2: Create Directory Structure\n```bash\nmkdir -p {{CONFIG.paths.handlerBasePath}}/{entity}/{operation}/logic\nmkdir -p {{CONFIG.paths.handlerBasePath}}/{entity}/{operation}/schemas\n```\n\nExpected structure:\n```\n{{CONFIG.paths.handlerBasePath}}/{entity}/{operation}/\n├── {{CONFIG.fileNames.handlerEntry}}\n├── logic/\n│   ├── validate-request.ts\n│   ├── validate-business.ts\n│   ├── pre-processing.ts\n│   ├── operation.ts\n│   ├── post-operation.ts\n│   └── response.ts\n└── schemas/\n    ├── {{CONFIG.fileNames.requestSchema}}\n    └── {{CONFIG.fileNames.responseSchema}}\n```\n\n### Step 3: Create Request Schema\n- [ ] Define JSON Schema in `schemas/{{CONFIG.fileNames.requestSchema}}`\n- [ ] Include all required and optional fields\n- [ ] Add type validation and constraints\n- [ ] Add description for each field\n\n### Step 4: Create Response Schema\n- [ ] Define JSON Schema in `schemas/{{CONFIG.fileNames.responseSchema}}`\n- [ ] Follow response envelope pattern: `{ data, meta }`\n- [ ] Include all response fields with types\n\n### Step 5: Implement Logic Steps\nFor each file in `logic/`:\n- [ ] `validate-request.ts` — Validate request against schema\n- [ ] `validate-business.ts` — Check business rules and entity state\n- [ ] `pre-processing.ts` — Transform and enrich data\n- [ ] `operation.ts` — Execute core business logic\n- [ ] `post-operation.ts` — Trigger side effects (events, notifications)\n- [ ] `response.ts` — Format response with envelope\n\n### Step 6: Create Handler Entry Point\n- [ ] Import all logic steps\n- [ ] Wire up the {{CONFIG.patterns.handlerFlowSteps}}-step flow\n- [ ] Add error handling with try/catch\n- [ ] Add structured logging with correlationId\n- [ ] Export handler function\n\n### Step 7: Register Route\n- [ ] Add route in the appropriate router file\n- [ ] Apply authentication middleware\n- [ ] Apply rate limiting if needed\n\n### Step 8: Add Tests\n- [ ] Create test file: `{entity}/{operation}/__tests__/handler.test.ts`\n- [ ] Test each logic step independently\n- [ ] Test handler integration (success path)\n- [ ] Test error cases (validation, business, not found)\n- [ ] Verify {{CONFIG.testing.coverageMinimum}}% coverage\n\n### Step 9: Validate\n- [ ] Run type check: `{{CONFIG.testing.typeCheckCommand}}`\n- [ ] Run tests for the new handler only\n- [ ] Verify schemas match implementation\n\n## Completion\nHandler is created, tested, and type-checked. Ready for code review.\n\n## If a step fails\n\n- **Step 2 (directory):** Ensure `{{CONFIG.paths.handlerBasePath}}` exists. Run `mkdir -p` from project root.\n- **Step 3–4 (schemas):** If schema validation fails, check JSON Schema syntax. Use a minimal schema first.\n- **Step 5 (logic):** If imports fail, verify paths match `{{CONFIG.paths.commonPath}}` and handler structure.\n- **Step 8 (tests):** If tests fail, run `{{CONFIG.testing.typeCheckCommand}}` first. Fix type errors before test logic.\n- **Step 9 (validate):** If type-check fails, fix reported errors before proceeding. Do not skip validation.\n",
+      "bodyMd": "# Skill: Create API Handler\n\nStep-by-step workflow for creating a new API handler following the {{CONFIG.patterns.handlerFlowSteps}}-step handler pattern.\n\n## Scripts (Cursor skills scripts/ support)\n\nThis skill includes a `scripts/` folder. The agent can run these scripts as part of the workflow:\n\n- **scripts/scaffold-handler-dirs.sh** — Creates the handler directory structure. Usage: `./scripts/scaffold-handler-dirs.sh <entity> <operation>` (e.g. `order create`).\n\n## Trigger\nWhen the user asks to create a new API endpoint, handler, or route.\n\n## Prerequisites\n- Project configuration loaded (`{{CONFIG.paths.handlerBasePath}}` exists)\n- Understanding of the entity and operation\n\n## Steps\n\n### Step 1: Gather Requirements\n- [ ] Identify the entity (e.g., Order, Product, User)\n- [ ] Identify the operation (e.g., create, read, update, list, delete)\n- [ ] Determine HTTP method and URL path\n- [ ] Identify request parameters and body schema\n- [ ] Identify response format\n\n### Step 2: Create Directory Structure\n```bash\nmkdir -p {{CONFIG.paths.handlerBasePath}}/{entity}/{operation}/logic\nmkdir -p {{CONFIG.paths.handlerBasePath}}/{entity}/{operation}/schemas\n```\n\nExpected structure:\n```\n{{CONFIG.paths.handlerBasePath}}/{entity}/{operation}/\n├── {{CONFIG.fileNames.handlerEntry}}\n├── logic/\n│   ├── validate-request.ts\n│   ├── validate-business.ts\n│   ├── pre-processing.ts\n│   ├── operation.ts\n│   ├── post-operation.ts\n│   └── response.ts\n└── schemas/\n    ├── {{CONFIG.fileNames.requestSchema}}\n    └── {{CONFIG.fileNames.responseSchema}}\n```\n\n### Step 3: Create Request Schema\n- [ ] Define JSON Schema in `schemas/{{CONFIG.fileNames.requestSchema}}`\n- [ ] Include all required and optional fields\n- [ ] Add type validation and constraints\n- [ ] Add description for each field\n\n### Step 4: Create Response Schema\n- [ ] Define JSON Schema in `schemas/{{CONFIG.fileNames.responseSchema}}`\n- [ ] Follow response envelope pattern: `{ data, meta }`\n- [ ] Include all response fields with types\n\n### Step 5: Implement Logic Steps\nFor each file in `logic/`:\n- [ ] `validate-request.ts` — Validate request against schema\n- [ ] `validate-business.ts` — Check business rules and entity state\n- [ ] `pre-processing.ts` — Transform and enrich data\n- [ ] `operation.ts` — Execute core business logic\n- [ ] `post-operation.ts` — Trigger side effects (events, notifications)\n- [ ] `response.ts` — Format response with envelope\n\n### Step 6: Create Handler Entry Point\n- [ ] Import all logic steps\n- [ ] Wire up the {{CONFIG.patterns.handlerFlowSteps}}-step flow\n- [ ] Add error handling with try/catch\n- [ ] Add structured logging with correlationId\n- [ ] Export handler function\n\n### Step 7: Register Route\n- [ ] Add route in the appropriate router file\n- [ ] Apply authentication middleware\n- [ ] Apply rate limiting if needed\n\n### Step 8: Add Tests\n- [ ] Create test file: `{entity}/{operation}/__tests__/handler.test.ts`\n- [ ] Test each logic step independently\n- [ ] Test handler integration (success path)\n- [ ] Test error cases (validation, business, not found)\n- [ ] Verify {{CONFIG.testing.coverageMinimum}}% coverage\n\n### Step 9: Validate\n- [ ] Run type check: `{{CONFIG.testing.typeCheckCommand}}`\n- [ ] Run tests for the new handler only\n- [ ] Verify schemas match implementation\n\n## Completion\nHandler is created, tested, and type-checked. Ready for code review.\n\n## If a step fails\n\n- **Step 2 (directory):** Ensure `{{CONFIG.paths.handlerBasePath}}` exists. Run `mkdir -p` from project root.\n- **Step 3–4 (schemas):** If schema validation fails, check JSON Schema syntax. Use a minimal schema first.\n- **Step 5 (logic):** If imports fail, verify paths match `{{CONFIG.paths.commonPath}}` and handler structure.\n- **Step 8 (tests):** If tests fail, run `{{CONFIG.testing.typeCheckCommand}}` first. Fix type errors before test logic.\n- **Step 9 (validate):** If type-check fails, fix reported errors before proceeding. Do not skip validation.\n"
+    },
+    {
+      "slug": "debug-issue",
+      "name": "debug-issue",
+      "dir": ".cursor/skills/backend/debug-issue",
+      "path": ".cursor/skills/backend/debug-issue/SKILL.md",
+      "desc": "Structured workflow for debugging a reported or reproduced issue. Use when the user asks to debug a bug, find root cause, or fix a failing scenario.",
+      "descZh": "",
+      "triggers": [
+        "find root cause",
+        "fix a failing scenario"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/girijashankarj/cursor-handbook.git",
+        "copy": "cp -r .cursor/skills/backend/debug-issue ~/.claude/skills/debug-issue",
+        "raw": "https://raw.githubusercontent.com/girijashankarj/cursor-handbook/80bb51a2b967fbc27593cd016a401fe755f882d7/.cursor/skills/backend/debug-issue/SKILL.md",
+        "saveAs": "~/.claude/skills/debug-issue/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:60ddea92eeaeae198617d5189538c0153e397c51fbf5e43be39fa9174e7bfaec",
+      "bytes": 921,
+      "wordCount": 126,
+      "repoLicense": "MIT",
+      "commit": "80bb51a2b967fbc27593cd016a401fe755f882d7",
+      "branch": "main",
+      "body": "---\nname: debug-issue\ndescription: Structured workflow for debugging a reported or reproduced issue. Use when the user asks to debug a bug, find root cause, or fix a failing scenario.\n---\n\n# Skill: Debug issue\n\n## Trigger\nWhen the user asks to debug a bug, find the root cause, or fix a failing scenario.\n\n## Steps\n\n1. **Reproduce** — Run or describe steps to reproduce; capture error message and stack if any.\n2. **Isolate** — Narrow to the smallest repro (single request, single file, single branch).\n3. **Hypothesize** — List 2–3 likely causes (e.g. null input, wrong config, race).\n4. **Verify** — Add a log, assertion, or minimal test to confirm one cause.\n5. **Fix** — Apply minimal code change; add or update a test to prevent regression.\n6. **Confirm** — Run type-check and relevant tests.\n\n## Rules\n- Do not change unrelated code.\n- Prefer adding a test that fails before the fix and passes after.\n",
+      "bodyMd": "# Skill: Debug issue\n\n## Trigger\nWhen the user asks to debug a bug, find the root cause, or fix a failing scenario.\n\n## Steps\n\n1. **Reproduce** — Run or describe steps to reproduce; capture error message and stack if any.\n2. **Isolate** — Narrow to the smallest repro (single request, single file, single branch).\n3. **Hypothesize** — List 2–3 likely causes (e.g. null input, wrong config, race).\n4. **Verify** — Add a log, assertion, or minimal test to confirm one cause.\n5. **Fix** — Apply minimal code change; add or update a test to prevent regression.\n6. **Confirm** — Run type-check and relevant tests.\n\n## Rules\n- Do not change unrelated code.\n- Prefer adding a test that fails before the fix and passes after.\n"
+    },
+    {
+      "slug": "optimize-performance",
+      "name": "optimize-performance",
+      "dir": ".cursor/skills/backend/optimize-performance",
+      "path": ".cursor/skills/backend/optimize-performance/SKILL.md",
+      "desc": "Workflow for identifying and applying backend performance improvements. Use when the user asks to optimize, speed up, or reduce latency.",
+      "descZh": "",
+      "triggers": [
+        "speed up",
+        "reduce latency"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/girijashankarj/cursor-handbook.git",
+        "copy": "cp -r .cursor/skills/backend/optimize-performance ~/.claude/skills/optimize-performance",
+        "raw": "https://raw.githubusercontent.com/girijashankarj/cursor-handbook/80bb51a2b967fbc27593cd016a401fe755f882d7/.cursor/skills/backend/optimize-performance/SKILL.md",
+        "saveAs": "~/.claude/skills/optimize-performance/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:6a158b0ea950ae0a62dd5fd3cf643e73004f4e78c51358bde44b04b57e226fc4",
+      "bytes": 983,
+      "wordCount": 120,
+      "repoLicense": "MIT",
+      "commit": "80bb51a2b967fbc27593cd016a401fe755f882d7",
+      "branch": "main",
+      "body": "---\nname: optimize-performance\ndescription: Workflow for identifying and applying backend performance improvements. Use when the user asks to optimize, speed up, or reduce latency.\n---\n\n# Skill: Optimize performance\n\n## Trigger\nWhen the user asks to optimize, speed up, or reduce latency of an endpoint or function.\n\n## Steps\n\n1. **Measure** — Identify the slow path (endpoint, query, or function); use existing metrics or add a quick timing log.\n2. **Profile** — Pinpoint bottleneck (DB query, N+1, CPU, I/O); avoid guessing.\n3. **Design** — Propose 1–2 concrete changes (index, batch, cache, algorithm); prefer smallest change first.\n4. **Implement** — Apply the change; keep the same behavior.\n5. **Verify** — Re-run the scenario and confirm improvement; run existing tests.\n\n## Rules\n- Do not optimize without measuring first.\n- Prefer indexing and query changes over application-level hacks.\n- Follow project query patterns (parameterized, soft delete, pagination).\n",
+      "bodyMd": "# Skill: Optimize performance\n\n## Trigger\nWhen the user asks to optimize, speed up, or reduce latency of an endpoint or function.\n\n## Steps\n\n1. **Measure** — Identify the slow path (endpoint, query, or function); use existing metrics or add a quick timing log.\n2. **Profile** — Pinpoint bottleneck (DB query, N+1, CPU, I/O); avoid guessing.\n3. **Design** — Propose 1–2 concrete changes (index, batch, cache, algorithm); prefer smallest change first.\n4. **Implement** — Apply the change; keep the same behavior.\n5. **Verify** — Re-run the scenario and confirm improvement; run existing tests.\n\n## Rules\n- Do not optimize without measuring first.\n- Prefer indexing and query changes over application-level hacks.\n- Follow project query patterns (parameterized, soft delete, pagination).\n"
+    },
+    {
+      "slug": "aws-cost-estimator",
+      "name": "aws-cost-estimator",
+      "dir": ".cursor/skills/cloud/aws-cost-estimator",
+      "path": ".cursor/skills/cloud/aws-cost-estimator/SKILL.md",
+      "desc": "Estimate or review cost for proposed AWS resources (compute, storage, data transfer). Use when the user asks for cost estimate or cost optimization.",
+      "descZh": "",
+      "triggers": [
+        "cost optimization"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "aws"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/girijashankarj/cursor-handbook.git",
+        "copy": "cp -r .cursor/skills/cloud/aws-cost-estimator ~/.claude/skills/aws-cost-estimator",
+        "raw": "https://raw.githubusercontent.com/girijashankarj/cursor-handbook/80bb51a2b967fbc27593cd016a401fe755f882d7/.cursor/skills/cloud/aws-cost-estimator/SKILL.md",
+        "saveAs": "~/.claude/skills/aws-cost-estimator/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:4cb6d7ecd474f5a7779512265d083216b6033a6a8710684a84eb8c4eb12aa1f2",
+      "bytes": 940,
+      "wordCount": 107,
+      "repoLicense": "MIT",
+      "commit": "80bb51a2b967fbc27593cd016a401fe755f882d7",
+      "branch": "main",
+      "body": "---\nname: aws-cost-estimator\ndescription: Estimate or review cost for proposed AWS resources (compute, storage, data transfer). Use when the user asks for cost estimate or cost optimization.\n---\n\n# Skill: AWS cost estimator\n\n## Trigger\nWhen the user asks for cost estimate, cost optimization, or \"how much will this architecture cost.\"\n\n## Steps\n\n1. **Gather** — List resources (e.g. Lambda, RDS, S3, API Gateway) and expected usage (requests/month, GB, duration).\n2. **Estimate** — Use AWS Pricing Calculator assumptions or public pricing; state assumptions clearly.\n3. **Summarize** — Break down by service and total monthly/yearly; highlight high-cost items.\n4. **Suggest** — Offer 1–2 optimizations (reserved capacity, right-sizing, storage class) if relevant.\n\n## Rules\n- Use placeholder regions and account references; never real account IDs.\n- Clearly label estimates as approximate and state pricing date/region if known.\n",
+      "bodyMd": "# Skill: AWS cost estimator\n\n## Trigger\nWhen the user asks for cost estimate, cost optimization, or \"how much will this architecture cost.\"\n\n## Steps\n\n1. **Gather** — List resources (e.g. Lambda, RDS, S3, API Gateway) and expected usage (requests/month, GB, duration).\n2. **Estimate** — Use AWS Pricing Calculator assumptions or public pricing; state assumptions clearly.\n3. **Summarize** — Break down by service and total monthly/yearly; highlight high-cost items.\n4. **Suggest** — Offer 1–2 optimizations (reserved capacity, right-sizing, storage class) if relevant.\n\n## Rules\n- Use placeholder regions and account references; never real account IDs.\n- Clearly label estimates as approximate and state pricing date/region if known.\n"
+    },
+    {
+      "slug": "infrastructure",
+      "name": "infrastructure",
+      "dir": ".cursor/skills/cloud/infrastructure",
+      "path": ".cursor/skills/cloud/infrastructure/SKILL.md",
+      "desc": "Workflow for provisioning cloud infrastructure using IaC. Use when the user needs to create or modify cloud resources.",
+      "descZh": "",
+      "triggers": [
+        "the user needs to create",
+        "modify cloud resources"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "terraform"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/girijashankarj/cursor-handbook.git",
+        "copy": "cp -r .cursor/skills/cloud/infrastructure ~/.claude/skills/infrastructure",
+        "raw": "https://raw.githubusercontent.com/girijashankarj/cursor-handbook/80bb51a2b967fbc27593cd016a401fe755f882d7/.cursor/skills/cloud/infrastructure/SKILL.md",
+        "saveAs": "~/.claude/skills/infrastructure/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:57414f14dbe54126b68ee439c6f630347d23853cfcf1937ee745e9d44e4ba936",
+      "bytes": 2247,
+      "wordCount": 364,
+      "repoLicense": "MIT",
+      "commit": "80bb51a2b967fbc27593cd016a401fe755f882d7",
+      "branch": "main",
+      "body": "---\nname: infrastructure\ndescription: Workflow for provisioning cloud infrastructure using IaC. Use when the user needs to create or modify cloud resources.\n---\n\n# Skill: Set Up Cloud Infrastructure\n\n## Trigger\nWhen the user needs to create or modify cloud resources.\n\n## Steps\n\n### Step 1: Define Requirements\n- [ ] What resources are needed?\n- [ ] Which environment? (dev, staging, production)\n- [ ] Performance requirements?\n- [ ] Budget constraints?\n- [ ] Security requirements?\n\n### Step 2: Design Architecture\n- [ ] Draw architecture diagram (Mermaid)\n- [ ] Define networking (VPC, subnets, security groups)\n- [ ] Plan compute resources (size, scaling)\n- [ ] Plan storage (database, file storage, cache)\n- [ ] Plan monitoring and alerting\n\n### Step 3: Write IaC\n- [ ] Create Terraform/CDK/CloudFormation templates\n- [ ] Use modules for reusable components\n- [ ] Parameterize environment-specific values\n- [ ] Follow naming conventions: `{project}-{env}-{resource}`\n- [ ] Tag all resources\n\n### Step 4: Security\n- [ ] Enable encryption at rest\n- [ ] Enable encryption in transit\n- [ ] Configure IAM with least privilege\n- [ ] Set up VPC and security groups\n- [ ] Enable audit logging\n\n### Step 5: Deploy\n- [ ] Plan: Review changes before applying\n- [ ] Apply to dev first\n- [ ] Verify in dev\n- [ ] Promote to staging\n- [ ] Verify in staging\n- [ ] Promote to production\n\n### Step 6: Monitor\n- [ ] Set up health checks\n- [ ] Configure alert rules\n- [ ] Create dashboards\n- [ ] Set up cost alerts\n\n## If a step fails\n\n| Step | Failure | Recovery |\n|------|---------|----------|\n| Step 5 | Deploy to dev/staging fails | Run `terraform destroy` or equivalent; fix IaC; re-apply; never proceed to prod until dev/staging succeeds |\n| Step 5 | Deploy to production fails | Rollback via IaC (revert and apply previous state); investigate; fix in dev; re-test full pipeline |\n| Step 5 | Partial apply (some resources created) | Document what was created; run destroy/rollback for failed resources; fix and retry |\n\n**Never** apply infrastructure changes to production without explicit user confirmation. Require confirmation before `terraform apply` or equivalent on prod.\n\n## Completion\nInfrastructure provisioned, secured, monitored, and documented.\n",
+      "bodyMd": "# Skill: Set Up Cloud Infrastructure\n\n## Trigger\nWhen the user needs to create or modify cloud resources.\n\n## Steps\n\n### Step 1: Define Requirements\n- [ ] What resources are needed?\n- [ ] Which environment? (dev, staging, production)\n- [ ] Performance requirements?\n- [ ] Budget constraints?\n- [ ] Security requirements?\n\n### Step 2: Design Architecture\n- [ ] Draw architecture diagram (Mermaid)\n- [ ] Define networking (VPC, subnets, security groups)\n- [ ] Plan compute resources (size, scaling)\n- [ ] Plan storage (database, file storage, cache)\n- [ ] Plan monitoring and alerting\n\n### Step 3: Write IaC\n- [ ] Create Terraform/CDK/CloudFormation templates\n- [ ] Use modules for reusable components\n- [ ] Parameterize environment-specific values\n- [ ] Follow naming conventions: `{project}-{env}-{resource}`\n- [ ] Tag all resources\n\n### Step 4: Security\n- [ ] Enable encryption at rest\n- [ ] Enable encryption in transit\n- [ ] Configure IAM with least privilege\n- [ ] Set up VPC and security groups\n- [ ] Enable audit logging\n\n### Step 5: Deploy\n- [ ] Plan: Review changes before applying\n- [ ] Apply to dev first\n- [ ] Verify in dev\n- [ ] Promote to staging\n- [ ] Verify in staging\n- [ ] Promote to production\n\n### Step 6: Monitor\n- [ ] Set up health checks\n- [ ] Configure alert rules\n- [ ] Create dashboards\n- [ ] Set up cost alerts\n\n## If a step fails\n\n| Step | Failure | Recovery |\n|------|---------|----------|\n| Step 5 | Deploy to dev/staging fails | Run `terraform destroy` or equivalent; fix IaC; re-apply; never proceed to prod until dev/staging succeeds |\n| Step 5 | Deploy to production fails | Rollback via IaC (revert and apply previous state); investigate; fix in dev; re-test full pipeline |\n| Step 5 | Partial apply (some resources created) | Document what was created; run destroy/rollback for failed resources; fix and retry |\n\n**Never** apply infrastructure changes to production without explicit user confirmation. Require confirmation before `terraform apply` or equivalent on prod.\n\n## Completion\nInfrastructure provisioned, secured, monitored, and documented.\n"
+    },
+    {
+      "slug": "opensearch",
+      "name": "opensearch",
+      "dir": ".cursor/skills/cloud/opensearch",
+      "path": ".cursor/skills/cloud/opensearch/SKILL.md",
+      "desc": "Workflow for OpenSearch (or Elasticsearch) usage: indexing, search, mappings, and tuning. Use when the user asks about OpenSearch/Elasticsearch.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/girijashankarj/cursor-handbook.git",
+        "copy": "cp -r .cursor/skills/cloud/opensearch ~/.claude/skills/opensearch",
+        "raw": "https://raw.githubusercontent.com/girijashankarj/cursor-handbook/80bb51a2b967fbc27593cd016a401fe755f882d7/.cursor/skills/cloud/opensearch/SKILL.md",
+        "saveAs": "~/.claude/skills/opensearch/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:73c053ec974991ab1f5ffa829a386ae361aa33a0eb82b66c379bae1db49f3240",
+      "bytes": 847,
+      "wordCount": 98,
+      "repoLicense": "MIT",
+      "commit": "80bb51a2b967fbc27593cd016a401fe755f882d7",
+      "branch": "main",
+      "body": "---\nname: opensearch\ndescription: Workflow for OpenSearch (or Elasticsearch) usage: indexing, search, mappings, and tuning. Use when the user asks about OpenSearch/Elasticsearch.\n---\n\n# Skill: OpenSearch\n\n## Trigger\nWhen the user asks about OpenSearch/Elasticsearch indexing, search queries, or mapping design.\n\n## Steps\n\n1. **Clarify** — Identify use case (full-text search, filters, aggregations, logging).\n2. **Mapping** — Propose or review index mapping (keyword vs text, date, nested) per use case.\n3. **Query** — Write or adjust query (query DSL or simple term/match); prefer parameterized inputs.\n4. **Operational** — Mention index lifecycle, refresh, and sizing if relevant.\n\n## Rules\n- Do not expose real cluster URLs or credentials; use placeholders.\n- Follow project security rules (no secrets in code, env vars for endpoints).\n",
+      "bodyMd": "# Skill: OpenSearch\n\n## Trigger\nWhen the user asks about OpenSearch/Elasticsearch indexing, search queries, or mapping design.\n\n## Steps\n\n1. **Clarify** — Identify use case (full-text search, filters, aggregations, logging).\n2. **Mapping** — Propose or review index mapping (keyword vs text, date, nested) per use case.\n3. **Query** — Write or adjust query (query DSL or simple term/match); prefer parameterized inputs.\n4. **Operational** — Mention index lifecycle, refresh, and sizing if relevant.\n\n## Rules\n- Do not expose real cluster URLs or credentials; use placeholders.\n- Follow project security rules (no secrets in code, env vars for endpoints).\n"
+    },
+    {
+      "slug": "create-migration",
+      "name": "create-migration",
+      "dir": ".cursor/skills/database/create-migration",
+      "path": ".cursor/skills/database/create-migration/SKILL.md",
+      "desc": "Create a new database migration following project naming and safety rules. Use when the user asks to add a migration or create a migration for a schema change.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/girijashankarj/cursor-handbook.git",
+        "copy": "cp -r .cursor/skills/database/create-migration ~/.claude/skills/create-migration",
+        "raw": "https://raw.githubusercontent.com/girijashankarj/cursor-handbook/80bb51a2b967fbc27593cd016a401fe755f882d7/.cursor/skills/database/create-migration/SKILL.md",
+        "saveAs": "~/.claude/skills/create-migration/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:004b44491ddf4f3c3a30c6da99f1902dc20bb5b25d0853668176cf4e3e7a5eda",
+      "bytes": 1401,
+      "wordCount": 185,
+      "repoLicense": "MIT",
+      "commit": "80bb51a2b967fbc27593cd016a401fe755f882d7",
+      "branch": "main",
+      "body": "---\nname: create-migration\ndescription: Create a new database migration following project naming and safety rules. Use when the user asks to add a migration or create a migration for a schema change.\n---\n\n# Skill: Create migration\n\n## Trigger\nWhen the user asks to add a migration, create a migration for a schema change, or \"migrate the DB.\"\n\n## Steps\n\n1. **Clarify** — Confirm the change (new table, new column, index, constraint); ensure backward compatible where possible.\n2. **Naming** — Use format `YYYYMMDDHHMMSS_descriptive_action.sql` (or project equivalent).\n3. **UP** — Write the forward migration (ADD COLUMN with default, CREATE INDEX CONCURRENTLY where supported).\n4. **DOWN** — Write the rollback; test that DOWN reverts UP cleanly.\n5. **Review** — No raw DELETE; use soft delete if needed; parameterized only; add index for new FK/filters.\n\n## If a step fails\n\n| Step | Failure | Recovery |\n|------|---------|----------|\n| Step 4 | DOWN does not revert UP cleanly | Fix DOWN to match UP; test both directions; document manual steps if schema change is irreversible |\n| Step 5 | Review finds unsafe patterns | Rewrite migration; no raw DELETE; use soft delete; add defaults for new columns |\n\n## Rules\n- Follow `.cursor/rules/database/migration-rules.mdc` and schema-design rules.\n- Every table must have id, created_at, updated_at, and soft-delete column per project config.\n",
+      "bodyMd": "# Skill: Create migration\n\n## Trigger\nWhen the user asks to add a migration, create a migration for a schema change, or \"migrate the DB.\"\n\n## Steps\n\n1. **Clarify** — Confirm the change (new table, new column, index, constraint); ensure backward compatible where possible.\n2. **Naming** — Use format `YYYYMMDDHHMMSS_descriptive_action.sql` (or project equivalent).\n3. **UP** — Write the forward migration (ADD COLUMN with default, CREATE INDEX CONCURRENTLY where supported).\n4. **DOWN** — Write the rollback; test that DOWN reverts UP cleanly.\n5. **Review** — No raw DELETE; use soft delete if needed; parameterized only; add index for new FK/filters.\n\n## If a step fails\n\n| Step | Failure | Recovery |\n|------|---------|----------|\n| Step 4 | DOWN does not revert UP cleanly | Fix DOWN to match UP; test both directions; document manual steps if schema change is irreversible |\n| Step 5 | Review finds unsafe patterns | Rewrite migration; no raw DELETE; use soft delete; add defaults for new columns |\n\n## Rules\n- Follow `.cursor/rules/database/migration-rules.mdc` and schema-design rules.\n- Every table must have id, created_at, updated_at, and soft-delete column per project config.\n"
+    },
+    {
+      "slug": "migration",
+      "name": "migration",
+      "dir": ".cursor/skills/database/migration",
+      "path": ".cursor/skills/database/migration/SKILL.md",
+      "desc": "Safe workflow for creating and applying database schema changes. Use when the user needs to modify the database schema.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/girijashankarj/cursor-handbook.git",
+        "copy": "cp -r .cursor/skills/database/migration ~/.claude/skills/migration",
+        "raw": "https://raw.githubusercontent.com/girijashankarj/cursor-handbook/80bb51a2b967fbc27593cd016a401fe755f882d7/.cursor/skills/database/migration/SKILL.md",
+        "saveAs": "~/.claude/skills/migration/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:f6417ccc501c64362d32d17b534a4f71de2bab7c4b9ed7913c98f72cb2d4d45f",
+      "bytes": 2298,
+      "wordCount": 371,
+      "repoLicense": "MIT",
+      "commit": "80bb51a2b967fbc27593cd016a401fe755f882d7",
+      "branch": "main",
+      "body": "---\nname: migration\ndescription: Safe workflow for creating and applying database schema changes. Use when the user needs to modify the database schema.\n---\n\n# Skill: Create Database Migration\n\n## Trigger\nWhen the user needs to modify the database schema.\n\n## Steps\n\n### Step 1: Plan the Change\n- [ ] Define what's changing and why\n- [ ] Check for backward compatibility\n- [ ] Identify affected queries and code\n- [ ] Determine if data migration is needed\n\n### Step 2: Create Migration File\n- [ ] Name: `YYYYMMDDHHMMSS_descriptive_name.sql`\n- [ ] Write UP migration (apply change)\n- [ ] Write DOWN migration (rollback)\n- [ ] Include required columns: `{{CONFIG.database.timestampFields.created}}`, `{{CONFIG.database.timestampFields.updated}}`, `{{CONFIG.database.softDeleteField}}`\n\n### Step 3: Safety Checks\n- [ ] No `DELETE FROM` statements (soft delete only)\n- [ ] New columns have defaults or are nullable\n- [ ] Indexes created with `CONCURRENTLY` for large tables\n- [ ] No column renames (add new → migrate → drop old)\n- [ ] Foreign keys have appropriate cascade rules\n\n### Step 4: Data Migration\nIf needed:\n- [ ] Write data migration script\n- [ ] Use batch processing (1000-5000 rows per batch)\n- [ ] Make it idempotent (safe to re-run)\n- [ ] Include progress logging\n\n### Step 5: Test Migration\n- [ ] Apply to development database\n- [ ] Verify data integrity\n- [ ] Test rollback\n- [ ] Test with production-like data volume\n- [ ] Verify affected queries still work\n\n### Step 6: Update Code\n- [ ] Update models/types to match new schema\n- [ ] Update affected queries\n- [ ] Run type check: `{{CONFIG.testing.typeCheckCommand}}`\n- [ ] Run affected tests\n\n## If a step fails\n\n| Step | Failure | Recovery |\n|------|---------|----------|\n| Step 2 | Syntax error in migration | Fix SQL; re-run |\n| Step 4 | Data migration fails mid-run | Script should be idempotent; fix and re-run; if partial data, document manual cleanup |\n| Step 5 | Test migration fails | Run DOWN migration to revert; fix UP migration; retest |\n| Step 5 | Rollback test fails | Fix DOWN migration; ensure DOWN fully reverts UP before retrying |\n\nNever apply migrations to production without testing UP and DOWN in a non-prod environment first.\n\n## Completion\nMigration created, tested, and code updated. Ready for review.\n",
+      "bodyMd": "# Skill: Create Database Migration\n\n## Trigger\nWhen the user needs to modify the database schema.\n\n## Steps\n\n### Step 1: Plan the Change\n- [ ] Define what's changing and why\n- [ ] Check for backward compatibility\n- [ ] Identify affected queries and code\n- [ ] Determine if data migration is needed\n\n### Step 2: Create Migration File\n- [ ] Name: `YYYYMMDDHHMMSS_descriptive_name.sql`\n- [ ] Write UP migration (apply change)\n- [ ] Write DOWN migration (rollback)\n- [ ] Include required columns: `{{CONFIG.database.timestampFields.created}}`, `{{CONFIG.database.timestampFields.updated}}`, `{{CONFIG.database.softDeleteField}}`\n\n### Step 3: Safety Checks\n- [ ] No `DELETE FROM` statements (soft delete only)\n- [ ] New columns have defaults or are nullable\n- [ ] Indexes created with `CONCURRENTLY` for large tables\n- [ ] No column renames (add new → migrate → drop old)\n- [ ] Foreign keys have appropriate cascade rules\n\n### Step 4: Data Migration\nIf needed:\n- [ ] Write data migration script\n- [ ] Use batch processing (1000-5000 rows per batch)\n- [ ] Make it idempotent (safe to re-run)\n- [ ] Include progress logging\n\n### Step 5: Test Migration\n- [ ] Apply to development database\n- [ ] Verify data integrity\n- [ ] Test rollback\n- [ ] Test with production-like data volume\n- [ ] Verify affected queries still work\n\n### Step 6: Update Code\n- [ ] Update models/types to match new schema\n- [ ] Update affected queries\n- [ ] Run type check: `{{CONFIG.testing.typeCheckCommand}}`\n- [ ] Run affected tests\n\n## If a step fails\n\n| Step | Failure | Recovery |\n|------|---------|----------|\n| Step 2 | Syntax error in migration | Fix SQL; re-run |\n| Step 4 | Data migration fails mid-run | Script should be idempotent; fix and re-run; if partial data, document manual cleanup |\n| Step 5 | Test migration fails | Run DOWN migration to revert; fix UP migration; retest |\n| Step 5 | Rollback test fails | Fix DOWN migration; ensure DOWN fully reverts UP before retrying |\n\nNever apply migrations to production without testing UP and DOWN in a non-prod environment first.\n\n## Completion\nMigration created, tested, and code updated. Ready for review.\n"
+    },
+    {
+      "slug": "query-optimization",
+      "name": "query-optimization",
+      "dir": ".cursor/skills/database/query-optimization",
+      "path": ".cursor/skills/database/query-optimization/SKILL.md",
+      "desc": "Workflow for identifying and fixing slow database queries. Use when a query is slow or the user asks to optimize database performance.",
+      "descZh": "",
+      "triggers": [
+        "a query is slow"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/girijashankarj/cursor-handbook.git",
+        "copy": "cp -r .cursor/skills/database/query-optimization ~/.claude/skills/query-optimization",
+        "raw": "https://raw.githubusercontent.com/girijashankarj/cursor-handbook/80bb51a2b967fbc27593cd016a401fe755f882d7/.cursor/skills/database/query-optimization/SKILL.md",
+        "saveAs": "~/.claude/skills/query-optimization/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:653b844863a0bc3dbbe8a3180474b7e53b4a927d543efe37f79d259de4991cd1",
+      "bytes": 1422,
+      "wordCount": 235,
+      "repoLicense": "MIT",
+      "commit": "80bb51a2b967fbc27593cd016a401fe755f882d7",
+      "branch": "main",
+      "body": "---\nname: query-optimization\ndescription: Workflow for identifying and fixing slow database queries. Use when a query is slow or the user asks to optimize database performance.\n---\n\n# Skill: Optimize Database Query\n\n## Trigger\nWhen a query is slow or user asks to optimize database performance.\n\n## Steps\n\n### Step 1: Identify Slow Query\n- [ ] Get the query text\n- [ ] Measure current execution time\n- [ ] Check query frequency (how often it runs)\n\n### Step 2: Analyze Query Plan\n- [ ] Run EXPLAIN ANALYZE on the query\n- [ ] Identify sequential scans on large tables\n- [ ] Check for missing indexes\n- [ ] Look for unnecessary joins or subqueries\n- [ ] Check sort operations (external sorts)\n\n### Step 3: Optimize\nCommon optimizations:\n- [ ] Add missing indexes\n- [ ] Rewrite subqueries as JOINs\n- [ ] Add WHERE clause filters to reduce data\n- [ ] Use cursor-based pagination instead of OFFSET\n- [ ] Add partial indexes for filtered queries\n- [ ] Denormalize if read performance is critical\n\n### Step 4: Benchmark\n- [ ] Run optimized query with EXPLAIN ANALYZE\n- [ ] Compare before/after execution times\n- [ ] Test with production-like data volume\n- [ ] Verify results are identical\n\n### Step 5: Implement\n- [ ] Update query in code\n- [ ] Create migration for new indexes\n- [ ] Add monitoring for the query\n- [ ] Update any affected tests\n\n## Completion\nQuery optimized with measurable improvement and monitoring in place.\n",
+      "bodyMd": "# Skill: Optimize Database Query\n\n## Trigger\nWhen a query is slow or user asks to optimize database performance.\n\n## Steps\n\n### Step 1: Identify Slow Query\n- [ ] Get the query text\n- [ ] Measure current execution time\n- [ ] Check query frequency (how often it runs)\n\n### Step 2: Analyze Query Plan\n- [ ] Run EXPLAIN ANALYZE on the query\n- [ ] Identify sequential scans on large tables\n- [ ] Check for missing indexes\n- [ ] Look for unnecessary joins or subqueries\n- [ ] Check sort operations (external sorts)\n\n### Step 3: Optimize\nCommon optimizations:\n- [ ] Add missing indexes\n- [ ] Rewrite subqueries as JOINs\n- [ ] Add WHERE clause filters to reduce data\n- [ ] Use cursor-based pagination instead of OFFSET\n- [ ] Add partial indexes for filtered queries\n- [ ] Denormalize if read performance is critical\n\n### Step 4: Benchmark\n- [ ] Run optimized query with EXPLAIN ANALYZE\n- [ ] Compare before/after execution times\n- [ ] Test with production-like data volume\n- [ ] Verify results are identical\n\n### Step 5: Implement\n- [ ] Update query in code\n- [ ] Create migration for new indexes\n- [ ] Add monitoring for the query\n- [ ] Update any affected tests\n\n## Completion\nQuery optimized with measurable improvement and monitoring in place.\n"
+    },
+    {
+      "slug": "ci-cd",
+      "name": "ci-cd",
+      "dir": ".cursor/skills/devops/ci-cd",
+      "path": ".cursor/skills/devops/ci-cd/SKILL.md",
+      "desc": "Workflow for creating a complete CI/CD pipeline. Use when the user needs to set up or modify CI/CD pipelines.",
+      "descZh": "",
+      "triggers": [
+        "modify CI/CD pipelines"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/girijashankarj/cursor-handbook.git",
+        "copy": "cp -r .cursor/skills/devops/ci-cd ~/.claude/skills/ci-cd",
+        "raw": "https://raw.githubusercontent.com/girijashankarj/cursor-handbook/80bb51a2b967fbc27593cd016a401fe755f882d7/.cursor/skills/devops/ci-cd/SKILL.md",
+        "saveAs": "~/.claude/skills/ci-cd/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:16edbb4d1c89d491b956c04a3f5fa29088204b62e22d11c62c6be0d5d7e263d9",
+      "bytes": 2135,
+      "wordCount": 356,
+      "repoLicense": "MIT",
+      "commit": "80bb51a2b967fbc27593cd016a401fe755f882d7",
+      "branch": "main",
+      "body": "---\nname: ci-cd\ndescription: Workflow for creating a complete CI/CD pipeline. Use when the user needs to set up or modify CI/CD pipelines.\n---\n\n# Skill: Set Up CI/CD Pipeline\n\n## Trigger\nWhen the user needs to set up or modify CI/CD pipelines.\n\n## Steps\n\n### Step 1: Define Pipeline Stages\n- [ ] Lint and format check\n- [ ] Type check: `{{CONFIG.testing.typeCheckCommand}}`\n- [ ] Unit tests: `{{CONFIG.testing.testCommand}}`\n- [ ] Build\n- [ ] Integration tests\n- [ ] Security scan\n- [ ] Deploy\n\n### Step 2: Create Pipeline Configuration\n- [ ] Create workflow file (`.github/workflows/ci.yml` for GitHub Actions)\n- [ ] Define trigger events (push, PR, schedule)\n- [ ] Configure job runners and environments\n- [ ] Set up caching for dependencies\n\n### Step 3: Configure Secrets\n- [ ] List required secrets\n- [ ] Add to CI/CD secrets store (never in code)\n- [ ] Document required secrets in README\n\n### Step 4: Add Quality Gates\n- [ ] Tests must pass (0 failures)\n- [ ] Coverage ≥ {{CONFIG.testing.coverageMinimum}}%\n- [ ] No type errors\n- [ ] No critical security vulnerabilities\n- [ ] Build succeeds\n\n### Step 5: Set Up Deployment\n- [ ] Configure environment promotion (dev → staging → prod)\n- [ ] Add manual approval for production\n- [ ] Configure rollback triggers\n- [ ] Set up smoke tests post-deployment\n\n### Step 6: Test Pipeline\n- [ ] Trigger on a test branch\n- [ ] Verify all stages complete\n- [ ] Verify failure handling (intentionally break a stage)\n- [ ] Verify notifications work\n\n## If a step fails\n\n| Step | Failure | Recovery |\n|------|---------|----------|\n| Step 4 | Quality gate blocks pipeline | Fix failing tests, coverage, or type errors locally; do not lower thresholds to pass |\n| Step 5 | Deploy stage fails | Check secrets and env vars; verify target environment is reachable; rollback if prod deploy partially applied |\n| Step 6 | Pipeline fails on test trigger | Fix the broken stage; verify failure handling works (pipeline should fail fast, not deploy on failure) |\n\nNever remove manual approval for production. Never deploy on failure.\n\n## Completion\nCI/CD pipeline is running, tested, and documented.\n",
+      "bodyMd": "# Skill: Set Up CI/CD Pipeline\n\n## Trigger\nWhen the user needs to set up or modify CI/CD pipelines.\n\n## Steps\n\n### Step 1: Define Pipeline Stages\n- [ ] Lint and format check\n- [ ] Type check: `{{CONFIG.testing.typeCheckCommand}}`\n- [ ] Unit tests: `{{CONFIG.testing.testCommand}}`\n- [ ] Build\n- [ ] Integration tests\n- [ ] Security scan\n- [ ] Deploy\n\n### Step 2: Create Pipeline Configuration\n- [ ] Create workflow file (`.github/workflows/ci.yml` for GitHub Actions)\n- [ ] Define trigger events (push, PR, schedule)\n- [ ] Configure job runners and environments\n- [ ] Set up caching for dependencies\n\n### Step 3: Configure Secrets\n- [ ] List required secrets\n- [ ] Add to CI/CD secrets store (never in code)\n- [ ] Document required secrets in README\n\n### Step 4: Add Quality Gates\n- [ ] Tests must pass (0 failures)\n- [ ] Coverage ≥ {{CONFIG.testing.coverageMinimum}}%\n- [ ] No type errors\n- [ ] No critical security vulnerabilities\n- [ ] Build succeeds\n\n### Step 5: Set Up Deployment\n- [ ] Configure environment promotion (dev → staging → prod)\n- [ ] Add manual approval for production\n- [ ] Configure rollback triggers\n- [ ] Set up smoke tests post-deployment\n\n### Step 6: Test Pipeline\n- [ ] Trigger on a test branch\n- [ ] Verify all stages complete\n- [ ] Verify failure handling (intentionally break a stage)\n- [ ] Verify notifications work\n\n## If a step fails\n\n| Step | Failure | Recovery |\n|------|---------|----------|\n| Step 4 | Quality gate blocks pipeline | Fix failing tests, coverage, or type errors locally; do not lower thresholds to pass |\n| Step 5 | Deploy stage fails | Check secrets and env vars; verify target environment is reachable; rollback if prod deploy partially applied |\n| Step 6 | Pipeline fails on test trigger | Fix the broken stage; verify failure handling works (pipeline should fail fast, not deploy on failure) |\n\nNever remove manual approval for production. Never deploy on failure.\n\n## Completion\nCI/CD pipeline is running, tested, and documented.\n"
+    },
+    {
+      "slug": "monitoring",
+      "name": "monitoring",
+      "dir": ".cursor/skills/devops/monitoring",
+      "path": ".cursor/skills/devops/monitoring/SKILL.md",
+      "desc": "Workflow for implementing comprehensive monitoring and alerting. Use when the user needs to set up or improve service monitoring.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/girijashankarj/cursor-handbook.git",
+        "copy": "cp -r .cursor/skills/devops/monitoring ~/.claude/skills/monitoring",
+        "raw": "https://raw.githubusercontent.com/girijashankarj/cursor-handbook/80bb51a2b967fbc27593cd016a401fe755f882d7/.cursor/skills/devops/monitoring/SKILL.md",
+        "saveAs": "~/.claude/skills/monitoring/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:05768cb163c2d5b4616ac5c0a267812b6b28bcc8cf4889b39067e07ccf9fa0ca",
+      "bytes": 1508,
+      "wordCount": 263,
+      "repoLicense": "MIT",
+      "commit": "80bb51a2b967fbc27593cd016a401fe755f882d7",
+      "branch": "main",
+      "body": "---\nname: monitoring\ndescription: Workflow for implementing comprehensive monitoring and alerting. Use when the user needs to set up or improve service monitoring.\n---\n\n# Skill: Set Up Monitoring\n\n## Trigger\nWhen the user needs to set up or improve service monitoring.\n\n## Steps\n\n### Step 1: Define Metrics\n- [ ] Request rate (throughput)\n- [ ] Error rate (4xx, 5xx)\n- [ ] Latency (p50, p95, p99)\n- [ ] Resource utilization (CPU, memory, disk)\n- [ ] Business metrics (domain-specific)\n\n### Step 2: Implement Structured Logging\n- [ ] JSON format for all logs\n- [ ] Required fields: timestamp, level, correlationId, service\n- [ ] No PII in logs\n- [ ] Appropriate log levels (error, warn, info, debug)\n\n### Step 3: Set Up Tracing\n- [ ] Add OpenTelemetry or provider-specific SDK\n- [ ] Instrument HTTP requests\n- [ ] Instrument database queries\n- [ ] Instrument external service calls\n- [ ] Configure sampling rate\n\n### Step 4: Create Dashboards\n- [ ] Service health overview\n- [ ] Request rate and error rate\n- [ ] Latency percentiles\n- [ ] Resource utilization\n- [ ] Business KPIs\n\n### Step 5: Configure Alerts\n- [ ] Error rate > 1% → P3\n- [ ] Error rate > 5% → P1\n- [ ] p99 latency > 2s → P3\n- [ ] CPU > 80% → P3\n- [ ] Health check failure → P1\n- [ ] Set notification channels\n\n### Step 6: Create Runbooks\n- [ ] For each alert, write a runbook:\n  - What the alert means\n  - Investigation steps\n  - Resolution steps\n  - Escalation path\n\n## Completion\nMonitoring, alerting, and runbooks are in place.\n",
+      "bodyMd": "# Skill: Set Up Monitoring\n\n## Trigger\nWhen the user needs to set up or improve service monitoring.\n\n## Steps\n\n### Step 1: Define Metrics\n- [ ] Request rate (throughput)\n- [ ] Error rate (4xx, 5xx)\n- [ ] Latency (p50, p95, p99)\n- [ ] Resource utilization (CPU, memory, disk)\n- [ ] Business metrics (domain-specific)\n\n### Step 2: Implement Structured Logging\n- [ ] JSON format for all logs\n- [ ] Required fields: timestamp, level, correlationId, service\n- [ ] No PII in logs\n- [ ] Appropriate log levels (error, warn, info, debug)\n\n### Step 3: Set Up Tracing\n- [ ] Add OpenTelemetry or provider-specific SDK\n- [ ] Instrument HTTP requests\n- [ ] Instrument database queries\n- [ ] Instrument external service calls\n- [ ] Configure sampling rate\n\n### Step 4: Create Dashboards\n- [ ] Service health overview\n- [ ] Request rate and error rate\n- [ ] Latency percentiles\n- [ ] Resource utilization\n- [ ] Business KPIs\n\n### Step 5: Configure Alerts\n- [ ] Error rate > 1% → P3\n- [ ] Error rate > 5% → P1\n- [ ] p99 latency > 2s → P3\n- [ ] CPU > 80% → P3\n- [ ] Health check failure → P1\n- [ ] Set notification channels\n\n### Step 6: Create Runbooks\n- [ ] For each alert, write a runbook:\n  - What the alert means\n  - Investigation steps\n  - Resolution steps\n  - Escalation path\n\n## Completion\nMonitoring, alerting, and runbooks are in place.\n"
+    },
+    {
+      "slug": "setup-monitoring",
+      "name": "setup-monitoring",
+      "dir": ".cursor/skills/devops/setup-monitoring",
+      "path": ".cursor/skills/devops/setup-monitoring/SKILL.md",
+      "desc": "Guide for setting up or extending monitoring (metrics, logs, alerts) for a service. Use when the user asks to set up monitoring or add alerts.",
+      "descZh": "",
+      "triggers": [
+        "add alerts"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/girijashankarj/cursor-handbook.git",
+        "copy": "cp -r .cursor/skills/devops/setup-monitoring ~/.claude/skills/setup-monitoring",
+        "raw": "https://raw.githubusercontent.com/girijashankarj/cursor-handbook/80bb51a2b967fbc27593cd016a401fe755f882d7/.cursor/skills/devops/setup-monitoring/SKILL.md",
+        "saveAs": "~/.claude/skills/setup-monitoring/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:df9b83193c620ec6cbf5b44c01f98426b8982c597e2a6edcec6b7a16f2aa051e",
+      "bytes": 957,
+      "wordCount": 115,
+      "repoLicense": "MIT",
+      "commit": "80bb51a2b967fbc27593cd016a401fe755f882d7",
+      "branch": "main",
+      "body": "---\nname: setup-monitoring\ndescription: Guide for setting up or extending monitoring (metrics, logs, alerts) for a service. Use when the user asks to set up monitoring or add alerts.\n---\n\n# Skill: Setup monitoring\n\n## Trigger\nWhen the user asks to set up monitoring, add alerts, or configure dashboards.\n\n## Steps\n\n1. **Scope** — Identify what to monitor (API latency, errors, DB, queue depth) and where (cloud provider, vendor).\n2. **Metrics** — Define 3–5 key metrics (e.g. request rate, error rate, p99 latency); use structured logging with correlationId.\n3. **Alerts** — Propose thresholds (e.g. error rate > 1%, p99 > 2s) and severity; document in runbook.\n4. **Dashboard** — List panels to add (time series, status); use placeholders for dashboard URLs.\n5. **Logs** — Remind: no PII or secrets; JSON format; include correlationId per project rules.\n\n## Rules\n- Follow `.cursor/rules/devops/monitoring.mdc`. Use placeholder resource names.\n",
+      "bodyMd": "# Skill: Setup monitoring\n\n## Trigger\nWhen the user asks to set up monitoring, add alerts, or configure dashboards.\n\n## Steps\n\n1. **Scope** — Identify what to monitor (API latency, errors, DB, queue depth) and where (cloud provider, vendor).\n2. **Metrics** — Define 3–5 key metrics (e.g. request rate, error rate, p99 latency); use structured logging with correlationId.\n3. **Alerts** — Propose thresholds (e.g. error rate > 1%, p99 > 2s) and severity; document in runbook.\n4. **Dashboard** — List panels to add (time series, status); use placeholders for dashboard URLs.\n5. **Logs** — Remind: no PII or secrets; JSON format; include correlationId per project rules.\n\n## Rules\n- Follow `.cursor/rules/devops/monitoring.mdc`. Use placeholder resource names.\n"
+    },
+    {
+      "slug": "task-master",
+      "name": "task-master",
+      "dir": ".cursor/skills/devops/task-master",
+      "path": ".cursor/skills/devops/task-master/SKILL.md",
+      "desc": "Break a high-level request into ordered, actionable tasks. Use when the user asks to break down into tasks, create a plan, or list steps.",
+      "descZh": "",
+      "triggers": [
+        "create a plan",
+        "list steps"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/girijashankarj/cursor-handbook.git",
+        "copy": "cp -r .cursor/skills/devops/task-master ~/.claude/skills/task-master",
+        "raw": "https://raw.githubusercontent.com/girijashankarj/cursor-handbook/80bb51a2b967fbc27593cd016a401fe755f882d7/.cursor/skills/devops/task-master/SKILL.md",
+        "saveAs": "~/.claude/skills/task-master/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:22ffda11d9b4733f4215de5e8693406266c89145636d42e67e38d47d7ee253eb",
+      "bytes": 829,
+      "wordCount": 106,
+      "repoLicense": "MIT",
+      "commit": "80bb51a2b967fbc27593cd016a401fe755f882d7",
+      "branch": "main",
+      "body": "---\nname: task-master\ndescription: Break a high-level request into ordered, actionable tasks. Use when the user asks to break down into tasks, create a plan, or list steps.\n---\n\n# Skill: Task master\n\n## Trigger\nWhen the user asks to \"break this down into tasks,\" \"create a plan,\" or \"what are the steps.\"\n\n## Steps\n\n1. **Scope** — Restate the goal in one sentence.\n2. **List tasks** — Output 5–15 ordered tasks (each actionable in 1–2 hours); dependencies first.\n3. **Optional** — For each task: owner placeholder, acceptance criteria, or link to doc.\n4. **Summary** — One-line summary and suggested order (sequential vs parallel where possible).\n\n## Rules\n- Tasks should be concrete (e.g. \"Add validation in create-order handler\" not \"Improve API\").\n- Do not execute the tasks unless the user asks to implement one.\n",
+      "bodyMd": "# Skill: Task master\n\n## Trigger\nWhen the user asks to \"break this down into tasks,\" \"create a plan,\" or \"what are the steps.\"\n\n## Steps\n\n1. **Scope** — Restate the goal in one sentence.\n2. **List tasks** — Output 5–15 ordered tasks (each actionable in 1–2 hours); dependencies first.\n3. **Optional** — For each task: owner placeholder, acceptance criteria, or link to doc.\n4. **Summary** — One-line summary and suggested order (sequential vs parallel where possible).\n\n## Rules\n- Tasks should be concrete (e.g. \"Add validation in create-order handler\" not \"Improve API\").\n- Do not execute the tasks unless the user asks to implement one.\n"
+    },
+    {
+      "slug": "api-docs",
+      "name": "api-docs",
+      "dir": ".cursor/skills/documentation/api-docs",
+      "path": ".cursor/skills/documentation/api-docs/SKILL.md",
+      "desc": "Workflow for creating comprehensive API documentation. Use when the user needs to document API endpoints.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/girijashankarj/cursor-handbook.git",
+        "copy": "cp -r .cursor/skills/documentation/api-docs ~/.claude/skills/api-docs",
+        "raw": "https://raw.githubusercontent.com/girijashankarj/cursor-handbook/80bb51a2b967fbc27593cd016a401fe755f882d7/.cursor/skills/documentation/api-docs/SKILL.md",
+        "saveAs": "~/.claude/skills/api-docs/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:6899e764e5f76c50e9178a095e1f22e2c973243ff397fe1f4d05c7824cbffcb8",
+      "bytes": 2211,
+      "wordCount": 363,
+      "repoLicense": "MIT",
+      "commit": "80bb51a2b967fbc27593cd016a401fe755f882d7",
+      "branch": "main",
+      "body": "---\nname: api-docs\ndescription: Workflow for creating comprehensive API documentation. Use when the user needs to document API endpoints.\n---\n\n# Skill: Create API Documentation\n\n## Trigger\nWhen the user needs to document API endpoints.\n\n## Prerequisites\n- [ ] API endpoints exist or are designed\n- [ ] OpenAPI/Swagger tooling available (optional)\n- [ ] Access to route definitions or handler files\n\n## Steps\n\n### Step 1: Inventory Endpoints\n- [ ] List all API endpoints\n- [ ] Group by resource/entity\n- [ ] Note HTTP method and path for each\n\n### Step 2: Document Each Endpoint\nFor each endpoint:\n- [ ] HTTP method and URL\n- [ ] Description and purpose\n- [ ] Authentication requirements\n- [ ] Request parameters (path, query, header)\n- [ ] Request body schema\n- [ ] Response schemas (success + errors)\n- [ ] Example request and response\n- [ ] Rate limiting details\n\n### Step 3: Create OpenAPI Spec\n- [ ] Define info, servers, security schemes\n- [ ] Create component schemas (reusable)\n- [ ] Define paths with all operations\n- [ ] Add examples for all schemas\n- [ ] Validate spec\n\n### Step 4: Generate Documentation\n- [ ] Use Swagger UI or Redoc for interactive docs\n- [ ] Host at `/api/docs` or similar\n- [ ] Include in CI/CD for auto-updates\n\n### Step 5: Review\n- [ ] All endpoints documented\n- [ ] Examples are accurate and working\n- [ ] Error responses documented\n- [ ] Authentication flow documented\n\n## Completion Checklist\n- [ ] All endpoints have method, URL, params, body, response\n- [ ] Error responses (4xx, 5xx) documented\n- [ ] Examples validated against live API or schema\n- [ ] OpenAPI spec validates (if used)\n\n## If Step Fails\n- **Step 1 (inventory)**: Search for route definitions: `**/*.route*.ts`, `**/routes/**`, `app.get|post|put|delete`\n- **Step 3 (OpenAPI)**: Use minimal spec first; add complexity incrementally. Validate with `swagger-cli validate`\n- **Step 4 (generate)**: Swagger UI needs valid spec; Redoc is more forgiving. Check CORS if hosted separately\n\n## Example\nStep 2 for `POST /api/v1/orders`: Method POST, URL `/api/v1/orders`, Body `{ customerId, items: [{ productId, quantity }] }`, Response 201 `{ data: { id, status } }`, Errors 400 validation, 404 customer not found.\n",
+      "bodyMd": "# Skill: Create API Documentation\n\n## Trigger\nWhen the user needs to document API endpoints.\n\n## Prerequisites\n- [ ] API endpoints exist or are designed\n- [ ] OpenAPI/Swagger tooling available (optional)\n- [ ] Access to route definitions or handler files\n\n## Steps\n\n### Step 1: Inventory Endpoints\n- [ ] List all API endpoints\n- [ ] Group by resource/entity\n- [ ] Note HTTP method and path for each\n\n### Step 2: Document Each Endpoint\nFor each endpoint:\n- [ ] HTTP method and URL\n- [ ] Description and purpose\n- [ ] Authentication requirements\n- [ ] Request parameters (path, query, header)\n- [ ] Request body schema\n- [ ] Response schemas (success + errors)\n- [ ] Example request and response\n- [ ] Rate limiting details\n\n### Step 3: Create OpenAPI Spec\n- [ ] Define info, servers, security schemes\n- [ ] Create component schemas (reusable)\n- [ ] Define paths with all operations\n- [ ] Add examples for all schemas\n- [ ] Validate spec\n\n### Step 4: Generate Documentation\n- [ ] Use Swagger UI or Redoc for interactive docs\n- [ ] Host at `/api/docs` or similar\n- [ ] Include in CI/CD for auto-updates\n\n### Step 5: Review\n- [ ] All endpoints documented\n- [ ] Examples are accurate and working\n- [ ] Error responses documented\n- [ ] Authentication flow documented\n\n## Completion Checklist\n- [ ] All endpoints have method, URL, params, body, response\n- [ ] Error responses (4xx, 5xx) documented\n- [ ] Examples validated against live API or schema\n- [ ] OpenAPI spec validates (if used)\n\n## If Step Fails\n- **Step 1 (inventory)**: Search for route definitions: `**/*.route*.ts`, `**/routes/**`, `app.get|post|put|delete`\n- **Step 3 (OpenAPI)**: Use minimal spec first; add complexity incrementally. Validate with `swagger-cli validate`\n- **Step 4 (generate)**: Swagger UI needs valid spec; Redoc is more forgiving. Check CORS if hosted separately\n\n## Example\nStep 2 for `POST /api/v1/orders`: Method POST, URL `/api/v1/orders`, Body `{ customerId, items: [{ productId, quantity }] }`, Response 201 `{ data: { id, status } }`, Errors 400 validation, 404 customer not found.\n"
+    },
+    {
+      "slug": "architecture-docs",
+      "name": "architecture-docs",
+      "dir": ".cursor/skills/documentation/architecture-docs",
+      "path": ".cursor/skills/documentation/architecture-docs/SKILL.md",
+      "desc": "Workflow for creating and maintaining architecture documentation. Use when the user needs to document system architecture or make ADRs.",
+      "descZh": "",
+      "triggers": [
+        "make ADRs"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "node",
+          "make"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/girijashankarj/cursor-handbook.git",
+        "copy": "cp -r .cursor/skills/documentation/architecture-docs ~/.claude/skills/architecture-docs",
+        "raw": "https://raw.githubusercontent.com/girijashankarj/cursor-handbook/80bb51a2b967fbc27593cd016a401fe755f882d7/.cursor/skills/documentation/architecture-docs/SKILL.md",
+        "saveAs": "~/.claude/skills/architecture-docs/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:05fad8a8c4e4006799a3ec60ddcfc3caa967b09062d709eadf43fb4457de38c4",
+      "bytes": 2693,
+      "wordCount": 420,
+      "repoLicense": "MIT",
+      "commit": "80bb51a2b967fbc27593cd016a401fe755f882d7",
+      "branch": "main",
+      "body": "---\nname: architecture-docs\ndescription: Workflow for creating and maintaining architecture documentation. Use when the user needs to document system architecture or make ADRs.\n---\n\n# Skill: Create Architecture Documentation\n\n## Trigger\nWhen the user needs to document system architecture or make Architecture Decision Records (ADRs).\n\n## Prerequisites\n- [ ] Codebase or design available to analyze\n- [ ] docs/ or docs/architecture/ directory exists (or create it)\n- [ ] Mermaid support in docs (GitHub, MkDocs, etc.)\n\n## Steps\n\n### Step 1: System Overview\n- [ ] High-level architecture diagram (Mermaid)\n- [ ] List all services/components\n- [ ] Document communication patterns\n- [ ] Document data flow\n\n### Step 2: Component Documentation\nFor each service/component:\n- [ ] Purpose and responsibilities\n- [ ] Technology stack\n- [ ] API contracts (if applicable)\n- [ ] Data stores\n- [ ] Dependencies\n- [ ] Scaling characteristics\n\n### Step 3: Architecture Decision Records (ADRs)\nFor significant decisions:\n- [ ] Title: Short descriptive title\n- [ ] Status: Proposed / Accepted / Deprecated / Superseded\n- [ ] Context: Why this decision is needed\n- [ ] Decision: What was decided\n- [ ] Consequences: Trade-offs and implications\n\nADR template:\n```markdown\n# ADR-{number}: {title}\n\n## Status\n{Proposed | Accepted | Deprecated | Superseded by ADR-{n}}\n\n## Context\n{What is the issue that we're seeing that is motivating this decision?}\n\n## Decision\n{What is the change that we're proposing and/or doing?}\n\n## Consequences\n{What becomes easier or harder because of this change?}\n```\n\n### Step 4: Data Flow Diagrams\n- [ ] Request flow through the system\n- [ ] Event/message flow\n- [ ] Data pipeline flow\n- [ ] Authentication flow\n\n### Step 5: Operational Documentation\n- [ ] Deployment architecture\n- [ ] Monitoring and alerting overview\n- [ ] Disaster recovery plan\n- [ ] Scaling procedures\n\n## Completion Checklist\n- [ ] At least one diagram (Mermaid) for system or data flow\n- [ ] ADRs for significant decisions (format, status, context, decision, consequences)\n- [ ] Component list with purpose and tech stack\n- [ ] Operational section (deploy, monitor, scale)\n\n## If Step Fails\n- **Step 1 (overview)**: Start with 3–5 boxes; add detail later. Use `flowchart LR` or `flowchart TB` for simple flows\n- **Step 3 (ADRs)**: Number format `ADR-001`; keep each ADR to one decision\n- **Step 4 (diagrams)**: Mermaid syntax: no spaces in node IDs; use `A[Label]` not `A[Label with spaces]`\n\n## Example\nStep 1: `flowchart LR` with Client -> API -> DB, API -> Cache. Step 3: ADR-001 Use PostgreSQL — Status Accepted, Context: need relational, Decision: PostgreSQL, Consequences: SQL expertise required.\n",
+      "bodyMd": "# Skill: Create Architecture Documentation\n\n## Trigger\nWhen the user needs to document system architecture or make Architecture Decision Records (ADRs).\n\n## Prerequisites\n- [ ] Codebase or design available to analyze\n- [ ] docs/ or docs/architecture/ directory exists (or create it)\n- [ ] Mermaid support in docs (GitHub, MkDocs, etc.)\n\n## Steps\n\n### Step 1: System Overview\n- [ ] High-level architecture diagram (Mermaid)\n- [ ] List all services/components\n- [ ] Document communication patterns\n- [ ] Document data flow\n\n### Step 2: Component Documentation\nFor each service/component:\n- [ ] Purpose and responsibilities\n- [ ] Technology stack\n- [ ] API contracts (if applicable)\n- [ ] Data stores\n- [ ] Dependencies\n- [ ] Scaling characteristics\n\n### Step 3: Architecture Decision Records (ADRs)\nFor significant decisions:\n- [ ] Title: Short descriptive title\n- [ ] Status: Proposed / Accepted / Deprecated / Superseded\n- [ ] Context: Why this decision is needed\n- [ ] Decision: What was decided\n- [ ] Consequences: Trade-offs and implications\n\nADR template:\n```markdown\n# ADR-{number}: {title}\n\n## Status\n{Proposed | Accepted | Deprecated | Superseded by ADR-{n}}\n\n## Context\n{What is the issue that we're seeing that is motivating this decision?}\n\n## Decision\n{What is the change that we're proposing and/or doing?}\n\n## Consequences\n{What becomes easier or harder because of this change?}\n```\n\n### Step 4: Data Flow Diagrams\n- [ ] Request flow through the system\n- [ ] Event/message flow\n- [ ] Data pipeline flow\n- [ ] Authentication flow\n\n### Step 5: Operational Documentation\n- [ ] Deployment architecture\n- [ ] Monitoring and alerting overview\n- [ ] Disaster recovery plan\n- [ ] Scaling procedures\n\n## Completion Checklist\n- [ ] At least one diagram (Mermaid) for system or data flow\n- [ ] ADRs for significant decisions (format, status, context, decision, consequences)\n- [ ] Component list with purpose and tech stack\n- [ ] Operational section (deploy, monitor, scale)\n\n## If Step Fails\n- **Step 1 (overview)**: Start with 3–5 boxes; add detail later. Use `flowchart LR` or `flowchart TB` for simple flows\n- **Step 3 (ADRs)**: Number format `ADR-001`; keep each ADR to one decision\n- **Step 4 (diagrams)**: Mermaid syntax: no spaces in node IDs; use `A[Label]` not `A[Label with spaces]`\n\n## Example\nStep 1: `flowchart LR` with Client -> API -> DB, API -> Cache. Step 3: ADR-001 Use PostgreSQL — Status Accepted, Context: need relational, Decision: PostgreSQL, Consequences: SQL expertise required.\n"
+    },
+    {
+      "slug": "websearch",
+      "name": "websearch",
+      "dir": ".cursor/skills/documentation/websearch",
+      "path": ".cursor/skills/documentation/websearch/SKILL.md",
+      "desc": "Use web search to find current documentation, best practices, or version-specific information. Use when the user asks about library versions or recent API changes.",
+      "descZh": "",
+      "triggers": [
+        "recent API changes"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "node"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/girijashankarj/cursor-handbook.git",
+        "copy": "cp -r .cursor/skills/documentation/websearch ~/.claude/skills/websearch",
+        "raw": "https://raw.githubusercontent.com/girijashankarj/cursor-handbook/80bb51a2b967fbc27593cd016a401fe755f882d7/.cursor/skills/documentation/websearch/SKILL.md",
+        "saveAs": "~/.claude/skills/websearch/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:37839a78c0cff6838a81762760b0becdfa8339d2c8f222dfa8cfbd84c9983687",
+      "bytes": 1562,
+      "wordCount": 227,
+      "repoLicense": "MIT",
+      "commit": "80bb51a2b967fbc27593cd016a401fe755f882d7",
+      "branch": "main",
+      "body": "---\nname: websearch\ndescription: Use web search to find current documentation, best practices, or version-specific information. Use when the user asks about library versions or recent API changes.\n---\n\n# Skill: Web search\n\n## Trigger\nWhen the user asks about a library version, recent API change, or \"latest way to do X\" and the answer may have changed.\n\n## Steps\n\n1. **Query** — Form a short search query (library name, version, and topic).\n2. **Search** — Use the web search tool to fetch 1–2 authoritative results (official docs, release notes).\n3. **Synthesize** — Summarize the finding and cite the source; apply to the user’s codebase if relevant.\n4. **Caveat** — Note if the result is version-specific or may vary by environment.\n\n## Rules\n- Prefer official docs and release notes over random blog posts.\n- Do not paste long copied text; summarize and link.\n\n## Prerequisites\n- [ ] Web search tool available\n- [ ] User question is version- or time-sensitive (e.g. \"latest\", \"React 19\", \"Node 22\")\n\n## Completion Checklist\n- [ ] Query used and source cited\n- [ ] Summary in 2–4 sentences\n- [ ] Version or date caveat if applicable\n\n## If Step Fails\n- **No results**: Broaden query (e.g. \"React useEffect\" instead of \"React 19 useEffect\")\n- **Outdated result**: Add \"as of [date]\" or \"check latest docs\"\n- **Conflicting info**: Prefer official docs; note disagreement\n\n## Example\nQuery: \"Express 5 migration guide\". Result: Express 5 release notes, breaking changes. Summary: async handlers, req.query changes. Caveat: Express 5.x as of 2025.\n",
+      "bodyMd": "# Skill: Web search\n\n## Trigger\nWhen the user asks about a library version, recent API change, or \"latest way to do X\" and the answer may have changed.\n\n## Steps\n\n1. **Query** — Form a short search query (library name, version, and topic).\n2. **Search** — Use the web search tool to fetch 1–2 authoritative results (official docs, release notes).\n3. **Synthesize** — Summarize the finding and cite the source; apply to the user’s codebase if relevant.\n4. **Caveat** — Note if the result is version-specific or may vary by environment.\n\n## Rules\n- Prefer official docs and release notes over random blog posts.\n- Do not paste long copied text; summarize and link.\n\n## Prerequisites\n- [ ] Web search tool available\n- [ ] User question is version- or time-sensitive (e.g. \"latest\", \"React 19\", \"Node 22\")\n\n## Completion Checklist\n- [ ] Query used and source cited\n- [ ] Summary in 2–4 sentences\n- [ ] Version or date caveat if applicable\n\n## If Step Fails\n- **No results**: Broaden query (e.g. \"React useEffect\" instead of \"React 19 useEffect\")\n- **Outdated result**: Add \"as of [date]\" or \"check latest docs\"\n- **Conflicting info**: Prefer official docs; note disagreement\n\n## Example\nQuery: \"Express 5 migration guide\". Result: Express 5 release notes, breaking changes. Summary: async handlers, req.query changes. Caveat: Express 5.x as of 2025.\n"
+    },
+    {
+      "slug": "component-creation",
+      "name": "component-creation",
+      "dir": ".cursor/skills/frontend/component-creation",
+      "path": ".cursor/skills/frontend/component-creation/SKILL.md",
+      "desc": "Step-by-step workflow for creating accessible, tested UI components. Use when the user asks to create a new UI component.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "npm"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/girijashankarj/cursor-handbook.git",
+        "copy": "cp -r .cursor/skills/frontend/component-creation ~/.claude/skills/component-creation",
+        "raw": "https://raw.githubusercontent.com/girijashankarj/cursor-handbook/80bb51a2b967fbc27593cd016a401fe755f882d7/.cursor/skills/frontend/component-creation/SKILL.md",
+        "saveAs": "~/.claude/skills/component-creation/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:b673ca0654db2923b6fd4c20140e48b155965f5d5c9c6abe4935ee23773ad9eb",
+      "bytes": 2963,
+      "wordCount": 465,
+      "repoLicense": "MIT",
+      "commit": "80bb51a2b967fbc27593cd016a401fe755f882d7",
+      "branch": "main",
+      "body": "---\nname: component-creation\ndescription: Step-by-step workflow for creating accessible, tested UI components. Use when the user asks to create a new UI component.\n---\n\n# Skill: Create UI Component\n\n## Trigger\nWhen the user asks to create a new UI component.\n\n## Prerequisites\n- [ ] Project uses React (or Vue; adjust steps)\n- [ ] `src/components/` or equivalent exists\n- [ ] Testing framework configured (Jest, Vitest, etc.)\n- [ ] Styling approach known (Tailwind, CSS Modules, etc.)\n\n## Steps\n\n### Step 1: Define Component\n- [ ] Name the component (PascalCase)\n- [ ] Define its purpose and responsibilities\n- [ ] Identify parent and child components\n- [ ] List props and their types\n- [ ] Identify state requirements\n\n### Step 2: Create Component Directory\n```\nsrc/components/{category}/{ComponentName}/\n├── {ComponentName}.tsx       # Component implementation\n├── {ComponentName}.test.tsx  # Unit tests\n├── {ComponentName}.stories.tsx # Storybook story (optional)\n└── index.ts                  # Public export\n```\n\n### Step 3: Define Props Interface\n- [ ] Create TypeScript interface for props\n- [ ] Add JSDoc documentation for complex props\n- [ ] Set default values where appropriate\n- [ ] Mark optional props with `?`\n\n### Step 4: Implement Component\n- [ ] Use functional component with hooks\n- [ ] Destructure props in function signature\n- [ ] Implement rendering logic\n- [ ] Add error boundary if needed\n- [ ] Handle loading, error, and empty states\n\n### Step 5: Add Accessibility\n- [ ] Semantic HTML elements used\n- [ ] ARIA attributes where needed\n- [ ] Keyboard navigation works\n- [ ] Focus management for modals/popups\n- [ ] Color contrast meets WCAG 2.1 AA\n\n### Step 6: Add Styling\n- [ ] Follow project styling approach\n- [ ] Responsive across breakpoints\n- [ ] Dark mode support\n- [ ] Design token usage (no magic numbers)\n- [ ] No inline styles (except dynamic values)\n\n### Step 7: Write Tests\n- [ ] Renders correctly with default props\n- [ ] Renders correctly with all prop combinations\n- [ ] User interactions work (click, type, etc.)\n- [ ] Accessibility tests pass\n- [ ] Error states handled\n\n### Step 8: Create Export\n- [ ] Export component from index.ts\n- [ ] Export props interface\n\n## Completion Checklist\n- [ ] Component renders with default props\n- [ ] Props interface exported\n- [ ] Tests pass\n- [ ] Accessibility: keyboard nav, ARIA, contrast\n- [ ] No lint/type errors\n\n## If Step Fails\n- **Step 2 (directory)**: Match existing structure in `src/components/` (ui/, features/, layout/)\n- **Step 5 (a11y)**: Use `aria-label` on icon buttons; `role` only when semantic HTML insufficient\n- **Step 7 (tests)**: Run single file: `npm test -- ComponentName.test.tsx`. Fix type errors first with `{{CONFIG.testing.typeCheckCommand}}`\n\n## Example\nStep 1: `OrderSummary` — displays order total and item count. Props: `items`, `taxRate`. Step 4: Functional component, `useMemo` for total calculation, loading/empty states.\n",
+      "bodyMd": "# Skill: Create UI Component\n\n## Trigger\nWhen the user asks to create a new UI component.\n\n## Prerequisites\n- [ ] Project uses React (or Vue; adjust steps)\n- [ ] `src/components/` or equivalent exists\n- [ ] Testing framework configured (Jest, Vitest, etc.)\n- [ ] Styling approach known (Tailwind, CSS Modules, etc.)\n\n## Steps\n\n### Step 1: Define Component\n- [ ] Name the component (PascalCase)\n- [ ] Define its purpose and responsibilities\n- [ ] Identify parent and child components\n- [ ] List props and their types\n- [ ] Identify state requirements\n\n### Step 2: Create Component Directory\n```\nsrc/components/{category}/{ComponentName}/\n├── {ComponentName}.tsx       # Component implementation\n├── {ComponentName}.test.tsx  # Unit tests\n├── {ComponentName}.stories.tsx # Storybook story (optional)\n└── index.ts                  # Public export\n```\n\n### Step 3: Define Props Interface\n- [ ] Create TypeScript interface for props\n- [ ] Add JSDoc documentation for complex props\n- [ ] Set default values where appropriate\n- [ ] Mark optional props with `?`\n\n### Step 4: Implement Component\n- [ ] Use functional component with hooks\n- [ ] Destructure props in function signature\n- [ ] Implement rendering logic\n- [ ] Add error boundary if needed\n- [ ] Handle loading, error, and empty states\n\n### Step 5: Add Accessibility\n- [ ] Semantic HTML elements used\n- [ ] ARIA attributes where needed\n- [ ] Keyboard navigation works\n- [ ] Focus management for modals/popups\n- [ ] Color contrast meets WCAG 2.1 AA\n\n### Step 6: Add Styling\n- [ ] Follow project styling approach\n- [ ] Responsive across breakpoints\n- [ ] Dark mode support\n- [ ] Design token usage (no magic numbers)\n- [ ] No inline styles (except dynamic values)\n\n### Step 7: Write Tests\n- [ ] Renders correctly with default props\n- [ ] Renders correctly with all prop combinations\n- [ ] User interactions work (click, type, etc.)\n- [ ] Accessibility tests pass\n- [ ] Error states handled\n\n### Step 8: Create Export\n- [ ] Export component from index.ts\n- [ ] Export props interface\n\n## Completion Checklist\n- [ ] Component renders with default props\n- [ ] Props interface exported\n- [ ] Tests pass\n- [ ] Accessibility: keyboard nav, ARIA, contrast\n- [ ] No lint/type errors\n\n## If Step Fails\n- **Step 2 (directory)**: Match existing structure in `src/components/` (ui/, features/, layout/)\n- **Step 5 (a11y)**: Use `aria-label` on icon buttons; `role` only when semantic HTML insufficient\n- **Step 7 (tests)**: Run single file: `npm test -- ComponentName.test.tsx`. Fix type errors first with `{{CONFIG.testing.typeCheckCommand}}`\n\n## Example\nStep 1: `OrderSummary` — displays order total and item count. Props: `items`, `taxRate`. Step 4: Functional component, `useMemo` for total calculation, loading/empty states.\n"
+    },
+    {
+      "slug": "state-management",
+      "name": "state-management",
+      "dir": ".cursor/skills/frontend/state-management",
+      "path": ".cursor/skills/frontend/state-management/SKILL.md",
+      "desc": "Workflow for choosing and implementing the right state management approach. Use when the user needs to manage state for a new feature or refactor.",
+      "descZh": "",
+      "triggers": [
+        "refactor"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/girijashankarj/cursor-handbook.git",
+        "copy": "cp -r .cursor/skills/frontend/state-management ~/.claude/skills/state-management",
+        "raw": "https://raw.githubusercontent.com/girijashankarj/cursor-handbook/80bb51a2b967fbc27593cd016a401fe755f882d7/.cursor/skills/frontend/state-management/SKILL.md",
+        "saveAs": "~/.claude/skills/state-management/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:f2f509c8a184a7eafbaf83fcba42c68a39b8536e5bcd5632c1d40b016ca577c8",
+      "bytes": 1646,
+      "wordCount": 270,
+      "repoLicense": "MIT",
+      "commit": "80bb51a2b967fbc27593cd016a401fe755f882d7",
+      "branch": "main",
+      "body": "---\nname: state-management\ndescription: Workflow for choosing and implementing the right state management approach. Use when the user needs to manage state for a new feature or refactor.\n---\n\n# Skill: Set Up State Management\n\n## Trigger\nWhen the user needs to manage state for a new feature or refactor existing state.\n\n## Steps\n\n### Step 1: Analyze State Requirements\n- [ ] What data needs to be managed?\n- [ ] Is it UI state or server state?\n- [ ] How many components need access?\n- [ ] How often does it change?\n- [ ] Does it need to persist?\n\n### Step 2: Choose Approach\nUse this decision tree:\n1. **Single component** → `useState` / `useReducer`\n2. **Parent + 1-2 children** → Lift state up\n3. **Many components, UI state** → Context / Zustand\n4. **Server data** → TanStack Query\n5. **Form data** → React Hook Form\n6. **Complex workflows** → XState\n\n### Step 3: Implement Store/Hook\nBased on the chosen approach, create:\n- [ ] State types/interfaces\n- [ ] Store definition or custom hook\n- [ ] Actions/mutations\n- [ ] Selectors for derived data\n\n### Step 4: Connect Components\n- [ ] Add provider (if using Context/Redux)\n- [ ] Use hooks in components\n- [ ] Implement loading states\n- [ ] Implement error handling\n- [ ] Handle empty states\n\n### Step 5: Optimize Performance\n- [ ] Memoize selectors\n- [ ] Avoid unnecessary re-renders\n- [ ] Keep state granular\n- [ ] Use React.memo for pure components\n\n### Step 6: Test\n- [ ] Test store/hook in isolation\n- [ ] Test components with mocked state\n- [ ] Test state transitions\n- [ ] Test error handling\n\n## Completion\nState management is implemented, connected, optimized, and tested.\n",
+      "bodyMd": "# Skill: Set Up State Management\n\n## Trigger\nWhen the user needs to manage state for a new feature or refactor existing state.\n\n## Steps\n\n### Step 1: Analyze State Requirements\n- [ ] What data needs to be managed?\n- [ ] Is it UI state or server state?\n- [ ] How many components need access?\n- [ ] How often does it change?\n- [ ] Does it need to persist?\n\n### Step 2: Choose Approach\nUse this decision tree:\n1. **Single component** → `useState` / `useReducer`\n2. **Parent + 1-2 children** → Lift state up\n3. **Many components, UI state** → Context / Zustand\n4. **Server data** → TanStack Query\n5. **Form data** → React Hook Form\n6. **Complex workflows** → XState\n\n### Step 3: Implement Store/Hook\nBased on the chosen approach, create:\n- [ ] State types/interfaces\n- [ ] Store definition or custom hook\n- [ ] Actions/mutations\n- [ ] Selectors for derived data\n\n### Step 4: Connect Components\n- [ ] Add provider (if using Context/Redux)\n- [ ] Use hooks in components\n- [ ] Implement loading states\n- [ ] Implement error handling\n- [ ] Handle empty states\n\n### Step 5: Optimize Performance\n- [ ] Memoize selectors\n- [ ] Avoid unnecessary re-renders\n- [ ] Keep state granular\n- [ ] Use React.memo for pure components\n\n### Step 6: Test\n- [ ] Test store/hook in isolation\n- [ ] Test components with mocked state\n- [ ] Test state transitions\n- [ ] Test error handling\n\n## Completion\nState management is implemented, connected, optimized, and tested.\n"
+    },
+    {
+      "slug": "coverage-improvement",
+      "name": "coverage-improvement",
+      "dir": ".cursor/skills/testing/coverage-improvement",
+      "path": ".cursor/skills/testing/coverage-improvement/SKILL.md",
+      "desc": "Systematic workflow for identifying coverage gaps and writing missing tests. Use when coverage is below target or the user asks to improve coverage.",
+      "descZh": "",
+      "triggers": [
+        "coverage is below target"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/girijashankarj/cursor-handbook.git",
+        "copy": "cp -r .cursor/skills/testing/coverage-improvement ~/.claude/skills/coverage-improvement",
+        "raw": "https://raw.githubusercontent.com/girijashankarj/cursor-handbook/80bb51a2b967fbc27593cd016a401fe755f882d7/.cursor/skills/testing/coverage-improvement/SKILL.md",
+        "saveAs": "~/.claude/skills/coverage-improvement/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:7139301c806f430fd5ec01220eaa911028d8457905a4ad6b0e254a249f8cb360",
+      "bytes": 1439,
+      "wordCount": 185,
+      "repoLicense": "MIT",
+      "commit": "80bb51a2b967fbc27593cd016a401fe755f882d7",
+      "branch": "main",
+      "body": "---\nname: coverage-improvement\ndescription: Systematic workflow for identifying coverage gaps and writing missing tests. Use when coverage is below target or the user asks to improve coverage.\n---\n\n# Skill: Improve Test Coverage\n\n## Trigger\nWhen coverage is below {{CONFIG.testing.coverageMinimum}}% or user asks to improve coverage.\n\n## Steps\n\n### Step 1: Analyze Current Coverage\n- [ ] Run coverage report: `{{CONFIG.testing.coverageCommand}}`\n- [ ] Identify files below {{CONFIG.testing.coverageMinimum}}% coverage\n- [ ] Rank by: business criticality × uncovered percentage\n\n### Step 2: Identify Gaps\nFor each uncovered file:\n- [ ] List uncovered functions/methods\n- [ ] List uncovered branches (if/else, switch)\n- [ ] List uncovered error paths\n- [ ] Determine which gaps are most important\n\n### Step 3: Write Missing Tests\nPriority order:\n1. Error handling paths\n2. Business logic branches\n3. Edge cases (null, empty, boundary)\n4. Success paths (usually already covered)\n\nFor each test:\n- [ ] Follow AAA pattern (Arrange-Act-Assert)\n- [ ] Use descriptive test names\n- [ ] Mock external dependencies\n- [ ] Assert specific behaviors, not implementation\n\n### Step 4: Verify Coverage\n- [ ] Run coverage again: `{{CONFIG.testing.coverageCommand}}`\n- [ ] Confirm target met: ≥{{CONFIG.testing.coverageMinimum}}%\n- [ ] All new tests pass\n\n## Completion\nCoverage meets or exceeds {{CONFIG.testing.coverageMinimum}}% with meaningful tests.\n",
+      "bodyMd": "# Skill: Improve Test Coverage\n\n## Trigger\nWhen coverage is below {{CONFIG.testing.coverageMinimum}}% or user asks to improve coverage.\n\n## Steps\n\n### Step 1: Analyze Current Coverage\n- [ ] Run coverage report: `{{CONFIG.testing.coverageCommand}}`\n- [ ] Identify files below {{CONFIG.testing.coverageMinimum}}% coverage\n- [ ] Rank by: business criticality × uncovered percentage\n\n### Step 2: Identify Gaps\nFor each uncovered file:\n- [ ] List uncovered functions/methods\n- [ ] List uncovered branches (if/else, switch)\n- [ ] List uncovered error paths\n- [ ] Determine which gaps are most important\n\n### Step 3: Write Missing Tests\nPriority order:\n1. Error handling paths\n2. Business logic branches\n3. Edge cases (null, empty, boundary)\n4. Success paths (usually already covered)\n\nFor each test:\n- [ ] Follow AAA pattern (Arrange-Act-Assert)\n- [ ] Use descriptive test names\n- [ ] Mock external dependencies\n- [ ] Assert specific behaviors, not implementation\n\n### Step 4: Verify Coverage\n- [ ] Run coverage again: `{{CONFIG.testing.coverageCommand}}`\n- [ ] Confirm target met: ≥{{CONFIG.testing.coverageMinimum}}%\n- [ ] All new tests pass\n\n## Completion\nCoverage meets or exceeds {{CONFIG.testing.coverageMinimum}}% with meaningful tests.\n"
+    },
+    {
+      "slug": "fix-tests",
+      "name": "fix-tests",
+      "dir": ".cursor/skills/testing/fix-tests",
+      "path": ".cursor/skills/testing/fix-tests/SKILL.md",
+      "desc": "Systematic workflow for diagnosing and fixing failing tests. Use when the user reports failing tests or asks to fix test failures.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "cursor",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "npm"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/girijashankarj/cursor-handbook.git",
+        "copy": "cp -r .cursor/skills/testing/fix-tests ~/.claude/skills/fix-tests",
+        "raw": "https://raw.githubusercontent.com/girijashankarj/cursor-handbook/80bb51a2b967fbc27593cd016a401fe755f882d7/.cursor/skills/testing/fix-tests/SKILL.md",
+        "saveAs": "~/.claude/skills/fix-tests/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:9faed18bc366467babd625c02e54ce59f79f3c7f514fa2b84d843d4e0adc454b",
+      "bytes": 2715,
+      "wordCount": 417,
+      "repoLicense": "MIT",
+      "commit": "80bb51a2b967fbc27593cd016a401fe755f882d7",
+      "branch": "main",
+      "body": "---\nname: fix-tests\ndescription: Systematic workflow for diagnosing and fixing failing tests. Use when the user reports failing tests or asks to fix test failures.\n---\n\n# Skill: Fix Failing Tests\n\n## Trigger\nWhen the user reports failing tests or asks to fix test failures.\n\n## Prerequisites\n- [ ] Test command works: `{{CONFIG.testing.testCommand}}`\n- [ ] Failing test file path or error output available\n- [ ] Type check passes or run first: `{{CONFIG.testing.typeCheckCommand}}`\n\n## Steps\n\n### Step 1: Identify Failing Tests\n- [ ] Run the test suite: `{{CONFIG.testing.testCommand}}`\n- [ ] List all failing tests with error messages\n- [ ] Categorize by failure type (assertion, timeout, mock, type)\n\n### Step 2: Analyze Each Failure\nFor each failing test:\n- [ ] Read the error message carefully\n- [ ] Check if it's a test issue or a code issue\n- [ ] Look at recent changes to the tested code\n- [ ] Check if mocks are correctly set up\n\n### Step 3: Common Fix Patterns\n\n#### Mock Issues\n- Mock not returning expected value → Update mock return\n- Mock not being called → Check import path\n- Mock state leaking → Add `beforeEach` reset\n\n#### Assertion Issues\n- Expected value changed → Update test or fix code\n- Async not awaited → Add `await` or use `waitFor`\n- Wrong matcher → Use correct Jest matcher\n\n#### Type Issues\n- Interface changed → Update test data\n- New required field → Add to test factories\n- Return type changed → Update assertions\n\n### Step 4: Fix Tests\n- [ ] Fix one test at a time\n- [ ] Run just that test to verify: `{{CONFIG.testing.testCommand}} -- --testPathPattern={test-file}`\n- [ ] Ensure fix doesn't break other tests\n\n### Step 5: Verify\n- [ ] Run full affected test suite\n- [ ] Check coverage hasn't dropped below {{CONFIG.testing.coverageMinimum}}%\n- [ ] Run type check: `{{CONFIG.testing.typeCheckCommand}}`\n\n## Completion Checklist\n- [ ] All previously failing tests pass\n- [ ] No new test failures introduced\n- [ ] Coverage at or above {{CONFIG.testing.coverageMinimum}}%\n- [ ] Type check passes\n\n## If Step Fails\n- **Step 1 (identify)**: Run `{{CONFIG.testing.testCommand}}` — if it hangs, run single file with `--testPathPattern=path/to/file`\n- **Step 2 (analyze)**: Mock issues often from wrong import path; use `jest.mock('./path')` matching actual import\n- **Step 4 (fix)**: Fix one test, run `--testPathPattern` to verify, then next. Don't fix all at once\n- **Step 5 (verify)**: If coverage dropped, add test for uncovered branch. Use `@coverage-improvement` skill\n\n## Example\nFailure: \"Expected 60, received undefined\". Cause: mock for `calculateTotal` not returning. Fix: `mockCalculateTotal.mockReturnValue(60)` in test. Run: `npm test -- order.test.ts`.\n",
+      "bodyMd": "# Skill: Fix Failing Tests\n\n## Trigger\nWhen the user reports failing tests or asks to fix test failures.\n\n## Prerequisites\n- [ ] Test command works: `{{CONFIG.testing.testCommand}}`\n- [ ] Failing test file path or error output available\n- [ ] Type check passes or run first: `{{CONFIG.testing.typeCheckCommand}}`\n\n## Steps\n\n### Step 1: Identify Failing Tests\n- [ ] Run the test suite: `{{CONFIG.testing.testCommand}}`\n- [ ] List all failing tests with error messages\n- [ ] Categorize by failure type (assertion, timeout, mock, type)\n\n### Step 2: Analyze Each Failure\nFor each failing test:\n- [ ] Read the error message carefully\n- [ ] Check if it's a test issue or a code issue\n- [ ] Look at recent changes to the tested code\n- [ ] Check if mocks are correctly set up\n\n### Step 3: Common Fix Patterns\n\n#### Mock Issues\n- Mock not returning expected value → Update mock return\n- Mock not being called → Check import path\n- Mock state leaking → Add `beforeEach` reset\n\n#### Assertion Issues\n- Expected value changed → Update test or fix code\n- Async not awaited → Add `await` or use `waitFor`\n- Wrong matcher → Use correct Jest matcher\n\n#### Type Issues\n- Interface changed → Update test data\n- New required field → Add to test factories\n- Return type changed → Update assertions\n\n### Step 4: Fix Tests\n- [ ] Fix one test at a time\n- [ ] Run just that test to verify: `{{CONFIG.testing.testCommand}} -- --testPathPattern={test-file}`\n- [ ] Ensure fix doesn't break other tests\n\n### Step 5: Verify\n- [ ] Run full affected test suite\n- [ ] Check coverage hasn't dropped below {{CONFIG.testing.coverageMinimum}}%\n- [ ] Run type check: `{{CONFIG.testing.typeCheckCommand}}`\n\n## Completion Checklist\n- [ ] All previously failing tests pass\n- [ ] No new test failures introduced\n- [ ] Coverage at or above {{CONFIG.testing.coverageMinimum}}%\n- [ ] Type check passes\n\n## If Step Fails\n- **Step 1 (identify)**: Run `{{CONFIG.testing.testCommand}}` — if it hangs, run single file with `--testPathPattern=path/to/file`\n- **Step 2 (analyze)**: Mock issues often from wrong import path; use `jest.mock('./path')` matching actual import\n- **Step 4 (fix)**: Fix one test, run `--testPathPattern` to verify, then next. Don't fix all at once\n- **Step 5 (verify)**: If coverage dropped, add test for uncovered branch. Use `@coverage-improvement` skill\n\n## Example\nFailure: \"Expected 60, received undefined\". Cause: mock for `calculateTotal` not returning. Fix: `mockCalculateTotal.mockReturnValue(60)` in test. Run: `npm test -- order.test.ts`.\n"
+    }
+  ]
+}

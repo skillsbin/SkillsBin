@@ -1,0 +1,169 @@
+{
+  "repo": "acodercat/cave-agent",
+  "commit": "112bf28e317649f6cec205cd238673e61e51774e",
+  "branch": "master",
+  "fetchedAt": "2026-11-27T07:11:49.050Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "code-review",
+      "name": "code-review",
+      "dir": "examples/skills/code-review",
+      "path": "examples/skills/code-review/SKILL.md",
+      "desc": "Review Python code for bugs, security issues, and best practices",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/acodercat/cave-agent.git",
+        "copy": "cp -r examples/skills/code-review ~/.claude/skills/code-review",
+        "raw": "https://raw.githubusercontent.com/acodercat/cave-agent/112bf28e317649f6cec205cd238673e61e51774e/examples/skills/code-review/SKILL.md",
+        "saveAs": "~/.claude/skills/code-review/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:f10add87b3508294933e5394aefc051857e8219fc740bfb2060d14b1d4d96e47",
+      "bytes": 921,
+      "wordCount": 109,
+      "repoLicense": "MIT",
+      "commit": "112bf28e317649f6cec205cd238673e61e51774e",
+      "branch": "master",
+      "body": "---\nname: code-review\ndescription: Review Python code for bugs, security issues, and best practices\n---\n\n# Code Review Guidelines\n\n**Important: Do NOT execute the code. Only review and analyze it.**\n\nWhen reviewing code, follow these steps:\n\n1. **Security Check**: Look for common vulnerabilities\n   - SQL injection\n   - Command injection\n   - Hardcoded credentials\n\n2. **Error Handling**: Verify proper exception handling\n   - Are exceptions caught appropriately?\n   - Are error messages informative?\n\n3. **Code Quality**: Check for best practices\n   - Clear variable names\n   - Proper documentation\n   - No code duplication\n\n4. **Performance**: Identify potential issues\n   - Unnecessary loops\n   - Memory leaks\n   - Blocking operations\n\nProvide your review in this format:\n- **Issues Found**: List each issue with severity (High/Medium/Low)\n- **Suggestions**: Actionable improvements\n- **Summary**: Overall assessment\n",
+      "bodyMd": "# Code Review Guidelines\n\n**Important: Do NOT execute the code. Only review and analyze it.**\n\nWhen reviewing code, follow these steps:\n\n1. **Security Check**: Look for common vulnerabilities\n   - SQL injection\n   - Command injection\n   - Hardcoded credentials\n\n2. **Error Handling**: Verify proper exception handling\n   - Are exceptions caught appropriately?\n   - Are error messages informative?\n\n3. **Code Quality**: Check for best practices\n   - Clear variable names\n   - Proper documentation\n   - No code duplication\n\n4. **Performance**: Identify potential issues\n   - Unnecessary loops\n   - Memory leaks\n   - Blocking operations\n\nProvide your review in this format:\n- **Issues Found**: List each issue with severity (High/Medium/Low)\n- **Suggestions**: Actionable improvements\n- **Summary**: Overall assessment\n"
+    },
+    {
+      "slug": "data-processor",
+      "name": "data-processor",
+      "dir": "examples/skills/data-processor",
+      "path": "examples/skills/data-processor/SKILL.md",
+      "desc": "Analyze sales data with statistics, regional performance, and commission calculations",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/acodercat/cave-agent.git",
+        "copy": "cp -r examples/skills/data-processor ~/.claude/skills/data-processor",
+        "raw": "https://raw.githubusercontent.com/acodercat/cave-agent/112bf28e317649f6cec205cd238673e61e51774e/examples/skills/data-processor/SKILL.md",
+        "saveAs": "~/.claude/skills/data-processor/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:38db7e20f6d3400643f629c7669da73944ba9387143c5f5b7bd599b7b3e5a28e",
+      "bytes": 431,
+      "wordCount": 44,
+      "repoLicense": "MIT",
+      "commit": "112bf28e317649f6cec205cd238673e61e51774e",
+      "branch": "master",
+      "body": "---\nname: data-processor\ndescription: Analyze sales data with statistics, regional performance, and commission calculations\n---\n\n# Data Processor Skill\n\nUse this skill to analyze the stored sales data.\n\n## Injected Variables\n\nAfter activating this skill, you have access to:\n\n- `sales_data`: List[Dict] of sales transactions with keys: amount, category, region\n- `regional_targets`: Dict[str, float] mapping region to sales target\n",
+      "bodyMd": "# Data Processor Skill\n\nUse this skill to analyze the stored sales data.\n\n## Injected Variables\n\nAfter activating this skill, you have access to:\n\n- `sales_data`: List[Dict] of sales transactions with keys: amount, category, region\n- `regional_targets`: Dict[str, float] mapping region to sales target\n"
+    },
+    {
+      "slug": "smart-home",
+      "name": "smart-home",
+      "dir": "examples/skills/smart-home",
+      "path": "examples/skills/smart-home/SKILL.md",
+      "desc": "Control smart home devices including lights, doors, and TV",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/acodercat/cave-agent.git",
+        "copy": "cp -r examples/skills/smart-home ~/.claude/skills/smart-home",
+        "raw": "https://raw.githubusercontent.com/acodercat/cave-agent/112bf28e317649f6cec205cd238673e61e51774e/examples/skills/smart-home/SKILL.md",
+        "saveAs": "~/.claude/skills/smart-home/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:6356c0195c0984b8c6096208c559b1c19f265b16f4fe3ff38b1ec62ec486f916",
+      "bytes": 644,
+      "wordCount": 75,
+      "repoLicense": "MIT",
+      "commit": "112bf28e317649f6cec205cd238673e61e51774e",
+      "branch": "master",
+      "body": "---\nname: smart-home\ndescription: Control smart home devices including lights, doors, and TV\n---\n\n# Smart Home Skill\n\nUse this skill to check status and control smart home devices.\n\n## Injected Functions\n\n- `get_status(device_id=None)`: Get status of a device, or all devices if no ID\n- `set_light(device_id, state, brightness=100)`: Turn a light on/off with brightness (0-100)\n- `set_door(device_id, state)`: Lock or unlock a door\n- `set_tv(state, channel=None, volume=None)`: Control TV power, channel, and volume\n\n## Device IDs\n\n- Lights: `living_room_light`, `bedroom_light`, `kitchen_light`\n- Doors: `front_door`, `garage_door`\n- TV: `tv`\n",
+      "bodyMd": "# Smart Home Skill\n\nUse this skill to check status and control smart home devices.\n\n## Injected Functions\n\n- `get_status(device_id=None)`: Get status of a device, or all devices if no ID\n- `set_light(device_id, state, brightness=100)`: Turn a light on/off with brightness (0-100)\n- `set_door(device_id, state)`: Lock or unlock a door\n- `set_tv(state, channel=None, volume=None)`: Control TV power, channel, and volume\n\n## Device IDs\n\n- Lights: `living_room_light`, `bedroom_light`, `kitchen_light`\n- Doors: `front_door`, `garage_door`\n- TV: `tv`\n"
+    },
+    {
+      "slug": "data-analysis",
+      "name": "data-analysis",
+      "dir": "tests/skills/data-analysis",
+      "path": "tests/skills/data-analysis/SKILL.md",
+      "desc": "Statistical analysis, outlier detection, and data transformation utilities.",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/acodercat/cave-agent.git",
+        "copy": "cp -r tests/skills/data-analysis ~/.claude/skills/data-analysis",
+        "raw": "https://raw.githubusercontent.com/acodercat/cave-agent/112bf28e317649f6cec205cd238673e61e51774e/tests/skills/data-analysis/SKILL.md",
+        "saveAs": "~/.claude/skills/data-analysis/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:bd9bafde619127edb8fd57fc3f08969164f6a4e55535b5fb6739abd51be00750",
+      "bytes": 750,
+      "wordCount": 70,
+      "repoLicense": "MIT",
+      "commit": "112bf28e317649f6cec205cd238673e61e51774e",
+      "branch": "master",
+      "body": "---\nname: data-analysis\ndescription: Statistical analysis, outlier detection, and data transformation utilities.\nlicense: MIT\ncompatibility: Python 3.10+\nmetadata:\n  author: test-org\n  version: \"1.0.0\"\n---\n\n# Data Analysis Skill\n\nStatistical analysis, outlier detection, and data transformation.\n\n## Quick Start\n\n1. Use `calculate_stats(data)` to compute statistics\n2. Use `find_outliers(data, threshold)` to find outliers\n\n## Available Functions\n\nAfter activating this skill, you have access to:\n- `calculate_stats(data: List[float])` - Calculate mean, median, std\n- `find_outliers(data: List[float], threshold: float)` - Find outliers using IQR\n- `DATA_CONFIG` variable - Configuration dictionary\n- `DataPoint` type - Dataclass for structured data\n",
+      "bodyMd": "# Data Analysis Skill\n\nStatistical analysis, outlier detection, and data transformation.\n\n## Quick Start\n\n1. Use `calculate_stats(data)` to compute statistics\n2. Use `find_outliers(data, threshold)` to find outliers\n\n## Available Functions\n\nAfter activating this skill, you have access to:\n- `calculate_stats(data: List[float])` - Calculate mean, median, std\n- `find_outliers(data: List[float], threshold: float)` - Find outliers using IQR\n- `DATA_CONFIG` variable - Configuration dictionary\n- `DataPoint` type - Dataclass for structured data\n"
+    }
+  ]
+}

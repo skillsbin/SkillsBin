@@ -1,0 +1,57 @@
+{
+  "repo": "oss-invisible/playwright_mcp",
+  "commit": "e8dfee4080e055be220ef5fa2ab9c2578a77d38b",
+  "branch": "main",
+  "fetchedAt": "2026-11-27T07:09:49.672Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "setup",
+      "name": "setup",
+      "dir": "skills/setup",
+      "path": "skills/setup/SKILL.md",
+      "desc": "What the invisible_playwright_mcp browser server needs on this machine - the patched Firefox it drives, which the server downloads on its own the first time it runs. Use when browser_open answers that the engine is downloading or that its download failed, or right after installing the plugin.",
+      "descZh": "",
+      "triggers": [
+        "that its download failed",
+        "right"
+      ],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": true,
+        "bins": [
+          "uv",
+          "uvx",
+          "curl"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/oss-invisible/playwright_mcp.git",
+        "copy": "cp -r skills/setup ~/.claude/skills/setup",
+        "raw": "https://raw.githubusercontent.com/oss-invisible/playwright_mcp/e8dfee4080e055be220ef5fa2ab9c2578a77d38b/skills/setup/SKILL.md",
+        "saveAs": "~/.claude/skills/setup/SKILL.md",
+        "marketplace": "/plugin marketplace add oss-invisible/playwright_mcp"
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:6a232539eb2f00af1af9ec2752592e7aadb739f0807c871ed6dd94cca89fda98",
+      "bytes": 1234,
+      "wordCount": 135,
+      "repoLicense": "MIT",
+      "commit": "e8dfee4080e055be220ef5fa2ab9c2578a77d38b",
+      "branch": "main",
+      "body": "---\nname: setup\ndescription: What the invisible_playwright_mcp browser server needs on this machine - the patched Firefox it drives, which the server downloads on its own the first time it runs. Use when browser_open answers that the engine is downloading or that its download failed, or right after installing the plugin.\n---\n\nThe server runs with `uvx invisible-playwright-mcp` and needs its browser engine on this machine once, about a quarter of a gigabyte. It downloads it on its own when it starts; while that is in flight, `browser_open` answers with how far the download is instead of opening a browser, and asking again a minute later is all that is needed.\n\nTo do the download ahead of time, or again after it failed, in a terminal where the user can watch it, run the block for the user's system:\n\nWindows, in PowerShell:\n\n```powershell\npowershell -ExecutionPolicy ByPass -c \"irm https://astral.sh/uv/install.ps1 | iex\"\n$env:Path = \"$env:USERPROFILE\\.local\\bin;$env:Path\"\nuvx invisible-playwright fetch\n```\n\nLinux:\n\n```bash\ncurl -LsSf https://astral.sh/uv/install.sh | sh\nsource $HOME/.local/bin/env\nuvx invisible-playwright fetch\n```\n\nNothing else to configure: no account, no key. Over MCP the model is the client's own.\n",
+      "bodyMd": "The server runs with `uvx invisible-playwright-mcp` and needs its browser engine on this machine once, about a quarter of a gigabyte. It downloads it on its own when it starts; while that is in flight, `browser_open` answers with how far the download is instead of opening a browser, and asking again a minute later is all that is needed.\n\nTo do the download ahead of time, or again after it failed, in a terminal where the user can watch it, run the block for the user's system:\n\nWindows, in PowerShell:\n\n```powershell\npowershell -ExecutionPolicy ByPass -c \"irm https://astral.sh/uv/install.ps1 | iex\"\n$env:Path = \"$env:USERPROFILE\\.local\\bin;$env:Path\"\nuvx invisible-playwright fetch\n```\n\nLinux:\n\n```bash\ncurl -LsSf https://astral.sh/uv/install.sh | sh\nsource $HOME/.local/bin/env\nuvx invisible-playwright fetch\n```\n\nNothing else to configure: no account, no key. Over MCP the model is the client's own.\n"
+    }
+  ]
+}

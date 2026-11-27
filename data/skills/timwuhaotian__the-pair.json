@@ -1,0 +1,49 @@
+{
+  "repo": "timwuhaotian/the-pair",
+  "commit": "904b8cf032f6e72284c50c24a3b7fc79fbe866bf",
+  "branch": "main",
+  "fetchedAt": "2026-11-27T07:10:50.250Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "code-review",
+      "name": "code-review",
+      "dir": ".opencode/skills/code-review",
+      "path": ".opencode/skills/code-review/SKILL.md",
+      "desc": "Comprehensive code review with security and performance checks",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "claude-code",
+        "codex"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/timwuhaotian/the-pair.git",
+        "copy": "cp -r .opencode/skills/code-review ~/.claude/skills/code-review",
+        "raw": "https://raw.githubusercontent.com/timwuhaotian/the-pair/904b8cf032f6e72284c50c24a3b7fc79fbe866bf/.opencode/skills/code-review/SKILL.md",
+        "saveAs": "~/.claude/skills/code-review/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:28656b527c654de725d133a6dabbbd42759813c55b32d3f002470f8e8e389703",
+      "bytes": 999,
+      "wordCount": 122,
+      "repoLicense": "Apache-2.0",
+      "commit": "904b8cf032f6e72284c50c24a3b7fc79fbe866bf",
+      "branch": "main",
+      "body": "---\nname: code-review\ndescription: Comprehensive code review with security and performance checks\nlicense: MIT\ncompatibility: opencode\nmetadata:\n  audience: developers\n  workflow: review\n---\n\n## What I do\n\n- Review code changes for bugs, security issues, and performance problems\n- Check code style and best practices\n- Identify potential edge cases\n- Suggest specific improvements with code examples\n\n## Review checklist\n\n### Security\n- SQL injection vulnerabilities\n- XSS vulnerabilities\n- Authentication/authorization issues\n- Sensitive data exposure\n- Input validation\n\n### Performance\n- Inefficient algorithms\n- Unnecessary database queries\n- Missing indexes\n- Memory leaks\n- Blocking operations\n\n### Code Quality\n- Error handling\n- Edge cases\n- Code duplication\n- Naming clarity\n- Test coverage\n\n## Output format\n\nFor each issue found, provide:\n1. Severity (Critical/High/Medium/Low)\n2. Location (file:line)\n3. Description of the issue\n4. Specific code fix\n5. Explanation of why the fix works\n",
+      "bodyMd": "## What I do\n\n- Review code changes for bugs, security issues, and performance problems\n- Check code style and best practices\n- Identify potential edge cases\n- Suggest specific improvements with code examples\n\n## Review checklist\n\n### Security\n- SQL injection vulnerabilities\n- XSS vulnerabilities\n- Authentication/authorization issues\n- Sensitive data exposure\n- Input validation\n\n### Performance\n- Inefficient algorithms\n- Unnecessary database queries\n- Missing indexes\n- Memory leaks\n- Blocking operations\n\n### Code Quality\n- Error handling\n- Edge cases\n- Code duplication\n- Naming clarity\n- Test coverage\n\n## Output format\n\nFor each issue found, provide:\n1. Severity (Critical/High/Medium/Low)\n2. Location (file:line)\n3. Description of the issue\n4. Specific code fix\n5. Explanation of why the fix works\n"
+    }
+  ]
+}

@@ -1,0 +1,172 @@
+{
+  "repo": "bitcloud-ai/Bittune",
+  "commit": "15cb6fe03bc373c42357014f6713cb62c0d45a21",
+  "branch": "main",
+  "fetchedAt": "2026-11-27T07:10:45.363Z",
+  "parseFail": 4,
+  "skills": [
+    {
+      "slug": "benchmark-report",
+      "name": "benchmark-report",
+      "dir": "packages/bittune-runtime/skills/benchmark-report",
+      "path": "packages/bittune-runtime/skills/benchmark-report/SKILL.md",
+      "desc": "Core报告、Excel交付、证据包及V3已登记结果工作簿",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python",
+          "python3"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/bitcloud-ai/Bittune.git",
+        "copy": "cp -r packages/bittune-runtime/skills/benchmark-report ~/.claude/skills/benchmark-report",
+        "raw": "https://raw.githubusercontent.com/bitcloud-ai/Bittune/15cb6fe03bc373c42357014f6713cb62c0d45a21/packages/bittune-runtime/skills/benchmark-report/SKILL.md",
+        "saveAs": "~/.claude/skills/benchmark-report/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:9c168a7d0a6cd7accb6ef348ef51025226aa148a7cd8ebe39e1732908c442b72",
+      "bytes": 884,
+      "wordCount": 25,
+      "repoLicense": "MIT",
+      "commit": "15cb6fe03bc373c42357014f6713cb62c0d45a21",
+      "branch": "main",
+      "body": "---\nname: benchmark-report\ndescription: Core报告、Excel交付、证据包及V3已登记结果工作簿\n---\n\n# 结果交付\n\nBittune结果使用Core报告与导出工具，引用真实结果和Artifact；保留失败、缺失值和来源。缺失值不补零。\n\nV3已登记结果需要V3工作簿时调用：\n\n```text\npython3 ../benchmark-suite/scripts/benchmark_assets.py workbook -- --registration <registered-results.json> --output <new-report.xlsx>\n```\n\n命令路径相对本Skill目录，先解析为绝对路径。模板只读并输出新文件；复用Core的Python环境与openpyxl。V3与Core结果格式不互通，Core JSON不能直接传入。\n\n需要参考时通过同一脚本的 `reference single-node references/reporting.md` 或 `reference single-node references/result-contract.json` 读取。对外交付先核对所选内容与脱敏结果，批准后发布。\n",
+      "bodyMd": "# 结果交付\n\nBittune结果使用Core报告与导出工具，引用真实结果和Artifact；保留失败、缺失值和来源。缺失值不补零。\n\nV3已登记结果需要V3工作簿时调用：\n\n```text\npython3 ../benchmark-suite/scripts/benchmark_assets.py workbook -- --registration <registered-results.json> --output <new-report.xlsx>\n```\n\n命令路径相对本Skill目录，先解析为绝对路径。模板只读并输出新文件；复用Core的Python环境与openpyxl。V3与Core结果格式不互通，Core JSON不能直接传入。\n\n需要参考时通过同一脚本的 `reference single-node references/reporting.md` 或 `reference single-node references/result-contract.json` 读取。对外交付先核对所选内容与脱敏结果，批准后发布。\n"
+    },
+    {
+      "slug": "benchmark-single-node",
+      "name": "benchmark-single-node",
+      "dir": "packages/bittune-runtime/skills/benchmark-single-node",
+      "path": "packages/bittune-runtime/skills/benchmark-single-node/SKILL.md",
+      "desc": "单机模型服务压测、Token长度与并发扫描、时延吞吐验收",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python3"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/bitcloud-ai/Bittune.git",
+        "copy": "cp -r packages/bittune-runtime/skills/benchmark-single-node ~/.claude/skills/benchmark-single-node",
+        "raw": "https://raw.githubusercontent.com/bitcloud-ai/Bittune/15cb6fe03bc373c42357014f6713cb62c0d45a21/packages/bittune-runtime/skills/benchmark-single-node/SKILL.md",
+        "saveAs": "~/.claude/skills/benchmark-single-node/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:f663064f8607cff186fa8ec5c79726a50b1374c64520e98dd41a16fb9bec0254",
+      "bytes": 1034,
+      "wordCount": 24,
+      "repoLicense": "MIT",
+      "commit": "15cb6fe03bc373c42357014f6713cb62c0d45a21",
+      "branch": "main",
+      "body": "---\nname: benchmark-single-node\ndescription: 单机模型服务压测、Token长度与并发扫描、时延吞吐验收\n---\n\n# 单机受管测量\n\n沿用用户已选范围；未选范围由 benchmark-suite 展示目录。冻结模型、引擎、上下文、Token长度、并发、请求数、预热和SLO。\n\n- 小流量验证用 benchmark_service；并发/长度扫描用 benchmark_suite 的 performance_sweep。\n- 受管服务传服务ID；外部回环端点明确标为声明来源。V3场景编号不能直接当作Core档案传入。\n- 正确性仅在用户选择且有兼容数据包时运行，不附加默认60题或全量权重校验。\n- 缓存、P/D规划、报告分别转对应技能。\n\n需要技术参考时调用 `python3 ../benchmark-suite/scripts/benchmark_assets.py reference single-node references/single-node-benchmark.md`。命令路径相对本Skill目录，先解析为绝对路径。\n\n完成后引用Core结果和Artifact；区分失败、提前停止、不适用与未运行，保留指标精度和来源。\n",
+      "bodyMd": "# 单机受管测量\n\n沿用用户已选范围；未选范围由 benchmark-suite 展示目录。冻结模型、引擎、上下文、Token长度、并发、请求数、预热和SLO。\n\n- 小流量验证用 benchmark_service；并发/长度扫描用 benchmark_suite 的 performance_sweep。\n- 受管服务传服务ID；外部回环端点明确标为声明来源。V3场景编号不能直接当作Core档案传入。\n- 正确性仅在用户选择且有兼容数据包时运行，不附加默认60题或全量权重校验。\n- 缓存、P/D规划、报告分别转对应技能。\n\n需要技术参考时调用 `python3 ../benchmark-suite/scripts/benchmark_assets.py reference single-node references/single-node-benchmark.md`。命令路径相对本Skill目录，先解析为绝对路径。\n\n完成后引用Core结果和Artifact；区分失败、提前停止、不适用与未运行，保留指标精度和来源。\n"
+    },
+    {
+      "slug": "benchmark-suite",
+      "name": "benchmark-suite",
+      "dir": "packages/bittune-runtime/skills/benchmark-suite",
+      "path": "packages/bittune-runtime/skills/benchmark-suite/SKILL.md",
+      "desc": "压测范围选择与单机、缓存、P/D规划、报告模块路由",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": [
+          "python3"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/bitcloud-ai/Bittune.git",
+        "copy": "cp -r packages/bittune-runtime/skills/benchmark-suite ~/.claude/skills/benchmark-suite",
+        "raw": "https://raw.githubusercontent.com/bitcloud-ai/Bittune/15cb6fe03bc373c42357014f6713cb62c0d45a21/packages/bittune-runtime/skills/benchmark-suite/SKILL.md",
+        "saveAs": "~/.claude/skills/benchmark-suite/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:d005b6f44eecd521f089fb1c5e41661afc7d14b194299e963fb11f72ac514ca4",
+      "bytes": 1319,
+      "wordCount": 33,
+      "repoLicense": "MIT",
+      "commit": "15cb6fe03bc373c42357014f6713cb62c0d45a21",
+      "branch": "main",
+      "body": "---\nname: benchmark-suite\ndescription: 压测范围选择与单机、缓存、P/D规划、报告模块路由\n---\n\n# 压测任务路由\n\n沿用用户已选范围；范围未知时先展示目录并确定场景、预算和停止条件。命令路径相对本Skill目录，调用时解析为绝对路径。\n\n```text\npython3 scripts/benchmark_assets.py catalog single-node --format json\npython3 scripts/benchmark_assets.py catalog pd-cluster --json\n```\n\n- 单点验证、并发或长度扫描：读取 benchmark-single-node。\n- 文本规则质量：用benchmark_suite(intent=correctness)和本机correctness-pack-v1；明确样例/输出预算，期望答案留在本机，不称作通用模型质量。\n- 工作点费用估算：用benchmark_suite(intent=cost_planning)引用已保存Suite工作点，单价/币种/GPU张数必须用户给定，结果标estimated并附来源Artifact，不运行新负载。\n- 缓存构造、冷暖配对：读取 benchmark-cache。\n- P:D容量或集群测试目录：读取 benchmark-pd。\n- 报告、Excel、证据交付：读取 benchmark-report。\n\n只执行已授权场景。实测通过Core受管工具保存事实；离线计算与外部结果保留来源。当前没有远程多机负载适配器；遇到未支持项说明缺口，不扩展为原始runner或独立Agent执行。\n",
+      "bodyMd": "# 压测任务路由\n\n沿用用户已选范围；范围未知时先展示目录并确定场景、预算和停止条件。命令路径相对本Skill目录，调用时解析为绝对路径。\n\n```text\npython3 scripts/benchmark_assets.py catalog single-node --format json\npython3 scripts/benchmark_assets.py catalog pd-cluster --json\n```\n\n- 单点验证、并发或长度扫描：读取 benchmark-single-node。\n- 文本规则质量：用benchmark_suite(intent=correctness)和本机correctness-pack-v1；明确样例/输出预算，期望答案留在本机，不称作通用模型质量。\n- 工作点费用估算：用benchmark_suite(intent=cost_planning)引用已保存Suite工作点，单价/币种/GPU张数必须用户给定，结果标estimated并附来源Artifact，不运行新负载。\n- 缓存构造、冷暖配对：读取 benchmark-cache。\n- P:D容量或集群测试目录：读取 benchmark-pd。\n- 报告、Excel、证据交付：读取 benchmark-report。\n\n只执行已授权场景。实测通过Core受管工具保存事实；离线计算与外部结果保留来源。当前没有远程多机负载适配器；遇到未支持项说明缺口，不扩展为原始runner或独立Agent执行。\n"
+    },
+    {
+      "slug": "deployment-recommendation",
+      "name": "deployment-recommendation",
+      "dir": "packages/bittune-runtime/skills/deployment-recommendation",
+      "path": "packages/bittune-runtime/skills/deployment-recommendation/SKILL.md",
+      "desc": "CLI硬件探测、模型选型与部署参数推荐清单；也支持用户直接指定模型",
+      "descZh": "",
+      "triggers": [],
+      "version": "",
+      "license": "MIT",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "generic"
+      ],
+      "requires": {
+        "apiKey": false,
+        "network": false,
+        "bins": []
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/bitcloud-ai/Bittune.git",
+        "copy": "cp -r packages/bittune-runtime/skills/deployment-recommendation ~/.claude/skills/deployment-recommendation",
+        "raw": "https://raw.githubusercontent.com/bitcloud-ai/Bittune/15cb6fe03bc373c42357014f6713cb62c0d45a21/packages/bittune-runtime/skills/deployment-recommendation/SKILL.md",
+        "saveAs": "~/.claude/skills/deployment-recommendation/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:3c92596663ced54277c5d6598be483ebbaef8e037e2b4b294390be46d5aef52d",
+      "bytes": 2294,
+      "wordCount": 73,
+      "repoLicense": "MIT",
+      "commit": "15cb6fe03bc373c42357014f6713cb62c0d45a21",
+      "branch": "main",
+      "body": "---\nname: deployment-recommendation\ndescription: CLI硬件探测、模型选型与部署参数推荐清单；也支持用户直接指定模型\n---\n\n# 部署推荐清单\n\n新部署或选型请求先用受管环境探测取得本机硬件快照。以 GPU 型号、数量、总显存与当前空闲、CPU、RAM、驱动和运行时为依据，结合用户用途给出推荐；用户已指定的模型、目录和资源边界优先保留。\n\n由当前接入的 API 模型生成一份可编辑清单：\n\n| 项目 | 推荐值或用户指定值 | 简短解释与依据 |\n| --- | --- | --- |\n| 模型 ID *、权重目录 *、量化 * | 与模型对应；未知目录标待补充 | 位宽与预估显存关系 |\n| 引擎 *、镜像仓库 *、固定摘要 * | 已知值引用来源；未知摘要标待补充 | 引擎支持与镜像身份 |\n| 上下文 *、显存比例 *、最大序列数 | 根据硬件给出保守默认值 | 上下文为输入加输出上限；序列数与请求并发不同 |\n| 缓存对照条件 | 正式比较默认关闭引擎前缀复用：vLLM enable_prefix_caching=false；SGLang disable_radix_cache=true | 不禁用生成中的KV缓存；仍需Core核验实际启动命令证据 |\n| 输入/输出 Token、并发、请求数、候选数 | 测量时给出有界预算；仅部署可不填 | 预热与正式请求分开 |\n\n`*` 表示执行前必填。专业词在清单旁简要解释。硬件显存统一用GiB（字节除以1024³），不要混用十进制GB。未检查的权重和镜像说“尚未检查”，不说不存在。区分推荐估计与本机实测，保留显存余量，不承诺未经验证的兼容性或性能。缺少本机路径、精确镜像摘要时使用准备技能取得真实值，不编造值来创建计划。\n\n清单给出后说：“可以直接采用这份清单，也可以告诉我需要修改的项。”用户接受整份清单即可继续，不要求逐字段确认、不要求重输默认值。用户修改后仅更新相关项。接受清单不代替后续下载、计划固化或服务启停的原生动作确认。\n\n完成条件：建议与硬件快照对应、必填缺口可见，用户能直接采用或修改。用户只问推荐时在清单处结束；需要执行时继续用原受管计划、部署、测量和报告工具。\n",
+      "bodyMd": "# 部署推荐清单\n\n新部署或选型请求先用受管环境探测取得本机硬件快照。以 GPU 型号、数量、总显存与当前空闲、CPU、RAM、驱动和运行时为依据，结合用户用途给出推荐；用户已指定的模型、目录和资源边界优先保留。\n\n由当前接入的 API 模型生成一份可编辑清单：\n\n| 项目 | 推荐值或用户指定值 | 简短解释与依据 |\n| --- | --- | --- |\n| 模型 ID *、权重目录 *、量化 * | 与模型对应；未知目录标待补充 | 位宽与预估显存关系 |\n| 引擎 *、镜像仓库 *、固定摘要 * | 已知值引用来源；未知摘要标待补充 | 引擎支持与镜像身份 |\n| 上下文 *、显存比例 *、最大序列数 | 根据硬件给出保守默认值 | 上下文为输入加输出上限；序列数与请求并发不同 |\n| 缓存对照条件 | 正式比较默认关闭引擎前缀复用：vLLM enable_prefix_caching=false；SGLang disable_radix_cache=true | 不禁用生成中的KV缓存；仍需Core核验实际启动命令证据 |\n| 输入/输出 Token、并发、请求数、候选数 | 测量时给出有界预算；仅部署可不填 | 预热与正式请求分开 |\n\n`*` 表示执行前必填。专业词在清单旁简要解释。硬件显存统一用GiB（字节除以1024³），不要混用十进制GB。未检查的权重和镜像说“尚未检查”，不说不存在。区分推荐估计与本机实测，保留显存余量，不承诺未经验证的兼容性或性能。缺少本机路径、精确镜像摘要时使用准备技能取得真实值，不编造值来创建计划。\n\n清单给出后说：“可以直接采用这份清单，也可以告诉我需要修改的项。”用户接受整份清单即可继续，不要求逐字段确认、不要求重输默认值。用户修改后仅更新相关项。接受清单不代替后续下载、计划固化或服务启停的原生动作确认。\n\n完成条件：建议与硬件快照对应、必填缺口可见，用户能直接采用或修改。用户只问推荐时在清单处结束；需要执行时继续用原受管计划、部署、测量和报告工具。\n"
+    }
+  ]
+}

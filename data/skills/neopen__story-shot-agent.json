@@ -1,0 +1,60 @@
+{
+  "repo": "neopen/story-shot-agent",
+  "commit": "5218624ed44884a77fcede5937c11f1fc16d02c3",
+  "branch": "main",
+  "fetchedAt": "2026-11-27T07:11:39.865Z",
+  "parseFail": 0,
+  "skills": [
+    {
+      "slug": "penshot",
+      "name": "penshot",
+      "dir": ".agents/skills/penshot",
+      "path": ".agents/skills/penshot/SKILL.md",
+      "desc": "PenShot 项目开发 Skill。用于修改或审查 Agent、LangGraph 工作流、任务生命周期、记忆/RAG、配置、REST、MCP、CLI、测试和项目文档；先核实源码与工具配置，再按现有架构实施并验证。",
+      "descZh": "",
+      "triggers": [
+        "修改或审查 Agent",
+        "LangGraph 工作流",
+        "任务生命周期",
+        "记忆/RAG",
+        "配置",
+        "REST",
+        "MCP",
+        "CLI"
+      ],
+      "version": "",
+      "license": "Apache-2.0",
+      "allowedTools": [],
+      "author": "",
+      "metaExtra": {},
+      "hosts": [
+        "codex",
+        "mcp"
+      ],
+      "requires": {
+        "apiKey": true,
+        "network": false,
+        "bins": [
+          "python"
+        ]
+      },
+      "install": {
+        "clone": "git clone --depth 1 https://github.com/neopen/story-shot-agent.git",
+        "copy": "cp -r .agents/skills/penshot ~/.claude/skills/penshot",
+        "raw": "https://raw.githubusercontent.com/neopen/story-shot-agent/5218624ed44884a77fcede5937c11f1fc16d02c3/.agents/skills/penshot/SKILL.md",
+        "saveAs": "~/.claude/skills/penshot/SKILL.md",
+        "marketplace": ""
+      },
+      "bodyInline": true,
+      "excerpt": "",
+      "contentHash": "sha256:399e52de3f4a428f25f62c97f472b91406df363ff508080f1f36df449cc1fd89",
+      "bytes": 4296,
+      "wordCount": 172,
+      "repoLicense": "Apache-2.0",
+      "commit": "5218624ed44884a77fcede5937c11f1fc16d02c3",
+      "branch": "main",
+      "body": "---\nname: penshot\ndescription: PenShot 项目开发 Skill。用于修改或审查 Agent、LangGraph 工作流、任务生命周期、记忆/RAG、配置、REST、MCP、CLI、测试和项目文档；先核实源码与工具配置，再按现有架构实施并验证。\n---\n\n# PenShot 项目开发 Skill\n\n## 适用场景\n\n使用本 Skill 处理以下任务：\n\n- 修改 Agent、工作流节点、任务生命周期、记忆/RAG、配置、REST、MCP 或 CLI。\n- 新增或调整测试、开发文档和质量检查。\n- 排查 LangGraph 状态流转、任务恢复、外部 LLM/Redis/Chroma 集成问题。\n\n## 工作流程\n\n1. 先读取相关源码、测试和配置，再判断实现位置。\n2. 按事实来源优先级核实现状，区分已确认、设计目标和待验证内容。\n3. 复用现有模块和扩展点，保持 task、workflow、agent、knowledge 分层边界。\n4. 只修改需求所需范围，不创建重复规范、虚构配置 schema 或无依据兼容层。\n5. 按变更范围运行测试和质量检查，报告实际执行状态。\n\n## 事实来源优先级\n\n出现冲突时按以下顺序核实，不把旧文档当作实现事实：\n\n1. 当前源码与测试。\n2. `pyproject.toml`。\n3. `.pre-commit-config.yaml`。\n4. 根目录 `AGENTS.md`。\n5. 本目录 `references/` 中的按需参考资料。\n6. 其他设计文档、示例和历史报告。\n\n文档中的结论应区分：**已从当前代码确认**、**设计目标**、**待验证**。\n\n## 当前架构入口\n\n- 接入层：`src/penshot/api/`、`http_server.py`、`mcp_server.py`、`cli.py`。\n- 任务层：`src/penshot/neopen/task/`，负责提交、排队、生命周期、仓储和工作流实例注册。\n- 工作流层：`src/penshot/neopen/agent/workflow/`，负责状态、节点、条件路由、检查点和输出。\n- Agent 层：`src/penshot/neopen/agent/`，遵循现有基类、rule/llm 实现、factory 和 wrapper 结构。\n- 知识与记忆层：`src/penshot/neopen/knowledge/`，负责记忆、向量检索和模板知识。\n- 测试：`tests/`，按当前测试目录和 `pyproject.toml` 配置选择范围。\n\n需要详细模块导航时，按需读取 `references/project_understanding.md`。该文件是有时效性的参考资料，不替代当前源码、测试和项目配置。\n\n## 变更联动要求\n\n- 新增工作流阶段时，同时检查 `PipelineNode`、节点注册、边、条件决策、状态类型和对应测试。\n- 新增 Agent 时先复用现有 Agent 工厂和 wrapper，不套用与当前源码无关的通用模板。\n- 修改任务状态时检查生命周期服务、仓储、处理器、恢复逻辑和状态测试。\n- 修改配置时检查 YAML、环境变量映射、Pydantic Settings 与运行时 `ShotConfig`。\n- 修改公开接口时检查 SDK、REST、MCP、CLI 及其序列化模型的影响。\n\n## 工具链与验证\n\n- Python 版本以 `pyproject.toml` 的 `requires-python` 为准。\n- Python 检查以 `.pre-commit-config.yaml` 为准：Ruff、Ruff format、mypy；Markdown 使用 mdformat。\n- 测试使用 pytest；异步测试行为以 `pyproject.toml` 的 asyncio 配置为准。\n- 先运行受影响范围的测试，再根据变更范围运行 lint、类型检查或完整检查。\n- 报告结果时明确区分已执行通过、执行失败、未执行和因外部依赖无法验证。\n\n## 安全与边界\n\n- 不在共享文件、日志、测试输出或文档中写入 API key、token、Authorization header、真实 `.env` 内容或私有凭据。\n- 不把设计目标、历史报告、示例配置或未执行的检查写成当前能力或测试结果。\n- 涉及真实 LLM、Redis、Chroma、部署、数据清理或其他外部副作用时，先核实环境和操作范围。\n- 只修改完成需求所需的范围，不创建未经仓库支持的配置 schema、自动化 hook 或兼容性层。\n\n## 规范职责边界\n\n- 本 Skill：负责 PenShot 任务的工作流程、架构导航和验证要求。\n- 根目录 `AGENTS.md`：负责所有会话通用的项目总览、命令和协作约定。\n- `pyproject.toml`：负责 Python 版本、依赖、pytest 和工具配置。\n- `.pre-commit-config.yaml`：负责实际运行的格式化、lint、类型检查和其他 hook。\n- 当前源码与测试：负责实现和行为事实。",
+      "bodyMd": "# PenShot 项目开发 Skill\n\n## 适用场景\n\n使用本 Skill 处理以下任务：\n\n- 修改 Agent、工作流节点、任务生命周期、记忆/RAG、配置、REST、MCP 或 CLI。\n- 新增或调整测试、开发文档和质量检查。\n- 排查 LangGraph 状态流转、任务恢复、外部 LLM/Redis/Chroma 集成问题。\n\n## 工作流程\n\n1. 先读取相关源码、测试和配置，再判断实现位置。\n2. 按事实来源优先级核实现状，区分已确认、设计目标和待验证内容。\n3. 复用现有模块和扩展点，保持 task、workflow、agent、knowledge 分层边界。\n4. 只修改需求所需范围，不创建重复规范、虚构配置 schema 或无依据兼容层。\n5. 按变更范围运行测试和质量检查，报告实际执行状态。\n\n## 事实来源优先级\n\n出现冲突时按以下顺序核实，不把旧文档当作实现事实：\n\n1. 当前源码与测试。\n2. `pyproject.toml`。\n3. `.pre-commit-config.yaml`。\n4. 根目录 `AGENTS.md`。\n5. 本目录 `references/` 中的按需参考资料。\n6. 其他设计文档、示例和历史报告。\n\n文档中的结论应区分：**已从当前代码确认**、**设计目标**、**待验证**。\n\n## 当前架构入口\n\n- 接入层：`src/penshot/api/`、`http_server.py`、`mcp_server.py`、`cli.py`。\n- 任务层：`src/penshot/neopen/task/`，负责提交、排队、生命周期、仓储和工作流实例注册。\n- 工作流层：`src/penshot/neopen/agent/workflow/`，负责状态、节点、条件路由、检查点和输出。\n- Agent 层：`src/penshot/neopen/agent/`，遵循现有基类、rule/llm 实现、factory 和 wrapper 结构。\n- 知识与记忆层：`src/penshot/neopen/knowledge/`，负责记忆、向量检索和模板知识。\n- 测试：`tests/`，按当前测试目录和 `pyproject.toml` 配置选择范围。\n\n需要详细模块导航时，按需读取 `references/project_understanding.md`。该文件是有时效性的参考资料，不替代当前源码、测试和项目配置。\n\n## 变更联动要求\n\n- 新增工作流阶段时，同时检查 `PipelineNode`、节点注册、边、条件决策、状态类型和对应测试。\n- 新增 Agent 时先复用现有 Agent 工厂和 wrapper，不套用与当前源码无关的通用模板。\n- 修改任务状态时检查生命周期服务、仓储、处理器、恢复逻辑和状态测试。\n- 修改配置时检查 YAML、环境变量映射、Pydantic Settings 与运行时 `ShotConfig`。\n- 修改公开接口时检查 SDK、REST、MCP、CLI 及其序列化模型的影响。\n\n## 工具链与验证\n\n- Python 版本以 `pyproject.toml` 的 `requires-python` 为准。\n- Python 检查以 `.pre-commit-config.yaml` 为准：Ruff、Ruff format、mypy；Markdown 使用 mdformat。\n- 测试使用 pytest；异步测试行为以 `pyproject.toml` 的 asyncio 配置为准。\n- 先运行受影响范围的测试，再根据变更范围运行 lint、类型检查或完整检查。\n- 报告结果时明确区分已执行通过、执行失败、未执行和因外部依赖无法验证。\n\n## 安全与边界\n\n- 不在共享文件、日志、测试输出或文档中写入 API key、token、Authorization header、真实 `.env` 内容或私有凭据。\n- 不把设计目标、历史报告、示例配置或未执行的检查写成当前能力或测试结果。\n- 涉及真实 LLM、Redis、Chroma、部署、数据清理或其他外部副作用时，先核实环境和操作范围。\n- 只修改完成需求所需的范围，不创建未经仓库支持的配置 schema、自动化 hook 或兼容性层。\n\n## 规范职责边界\n\n- 本 Skill：负责 PenShot 任务的工作流程、架构导航和验证要求。\n- 根目录 `AGENTS.md`：负责所有会话通用的项目总览、命令和协作约定。\n- `pyproject.toml`：负责 Python 版本、依赖、pytest 和工具配置。\n- `.pre-commit-config.yaml`：负责实际运行的格式化、lint、类型检查和其他 hook。\n- 当前源码与测试：负责实现和行为事实。"
+    }
+  ]
+}
