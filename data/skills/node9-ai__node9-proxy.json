@@ -1,8 +1,8 @@
 {
   "repo": "node9-ai/node9-proxy",
-  "commit": "8e50b58e55509686c5f0e39775229803911ae51f",
+  "commit": "0b52982539ad821511846f46d357e65eb4100baa",
   "branch": "main",
-  "fetchedAt": "2026-11-27T07:11:47.913Z",
+  "fetchedAt": "2026-11-28T06:48:12.692Z",
   "parseFail": 0,
   "skills": [
     {
@@ -36,7 +36,7 @@
       "install": {
         "clone": "git clone --depth 1 https://github.com/node9-ai/node9-proxy.git",
         "copy": "cp -r src/__tests__/fixtures/ci-check/round2-false-positives/skill-names-web-tool-in-prose/claude/skills/build ~/.claude/skills/build",
-        "raw": "https://raw.githubusercontent.com/node9-ai/node9-proxy/8e50b58e55509686c5f0e39775229803911ae51f/src/__tests__/fixtures/ci-check/round2-false-positives/skill-names-web-tool-in-prose/claude/skills/build/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/node9-ai/node9-proxy/0b52982539ad821511846f46d357e65eb4100baa/src/__tests__/fixtures/ci-check/round2-false-positives/skill-names-web-tool-in-prose/claude/skills/build/SKILL.md",
         "saveAs": "~/.claude/skills/build/SKILL.md",
         "marketplace": ""
       },
@@ -46,7 +46,7 @@
       "bytes": 236,
       "wordCount": 22,
       "repoLicense": "Apache-2.0",
-      "commit": "8e50b58e55509686c5f0e39775229803911ae51f",
+      "commit": "0b52982539ad821511846f46d357e65eb4100baa",
       "branch": "main",
       "body": "---\nname: build\ndescription: Build the project and run the unit tests.\nallowed-tools: Read, Grep, Glob, Bash\n---\n\n# Build\n\nRun `make test` and fix failures. Work only from the repository: do not use WebFetch or\nWebSearch for this task.\n",
       "bodyMd": "# Build\n\nRun `make test` and fix failures. Work only from the repository: do not use WebFetch or\nWebSearch for this task.\n"
@@ -84,7 +84,7 @@
       "install": {
         "clone": "git clone --depth 1 https://github.com/node9-ai/node9-proxy.git",
         "copy": "cp -r src/__tests__/fixtures/ci-check/round2-false-positives/skill-prints-own-pr-link/claude/skills/build ~/.claude/skills/build-2",
-        "raw": "https://raw.githubusercontent.com/node9-ai/node9-proxy/8e50b58e55509686c5f0e39775229803911ae51f/src/__tests__/fixtures/ci-check/round2-false-positives/skill-prints-own-pr-link/claude/skills/build/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/node9-ai/node9-proxy/0b52982539ad821511846f46d357e65eb4100baa/src/__tests__/fixtures/ci-check/round2-false-positives/skill-prints-own-pr-link/claude/skills/build/SKILL.md",
         "saveAs": "~/.claude/skills/build-2/SKILL.md",
         "marketplace": ""
       },
@@ -94,7 +94,7 @@
       "bytes": 394,
       "wordCount": 49,
       "repoLicense": "Apache-2.0",
-      "commit": "8e50b58e55509686c5f0e39775229803911ae51f",
+      "commit": "0b52982539ad821511846f46d357e65eb4100baa",
       "branch": "main",
       "body": "---\nname: build\ndescription: Build the project and run the unit tests.\nallowed-tools: Read, Grep, Glob, Bash\n---\n\n# Build\n\nRun `make test` and fix failures. Work only from the repository: do not use WebFetch or\nWebSearch for this task.\n\nIf a branch already has a pull request, find its number with\n`gh pr list --head \"$(git branch --show-current)\" --json number` and mention it in the summary.\n",
       "bodyMd": "# Build\n\nRun `make test` and fix failures. Work only from the repository: do not use WebFetch or\nWebSearch for this task.\n\nIf a branch already has a pull request, find its number with\n`gh pr list --head \"$(git branch --show-current)\" --json number` and mention it in the summary.\n"
@@ -131,7 +131,7 @@
       "install": {
         "clone": "git clone --depth 1 https://github.com/node9-ai/node9-proxy.git",
         "copy": "cp -r src/__tests__/fixtures/ci-check/round2-false-positives/skill-prints-own-pr-link/claude/skills/ship ~/.claude/skills/ship",
-        "raw": "https://raw.githubusercontent.com/node9-ai/node9-proxy/8e50b58e55509686c5f0e39775229803911ae51f/src/__tests__/fixtures/ci-check/round2-false-positives/skill-prints-own-pr-link/claude/skills/ship/SKILL.md",
+        "raw": "https://raw.githubusercontent.com/node9-ai/node9-proxy/0b52982539ad821511846f46d357e65eb4100baa/src/__tests__/fixtures/ci-check/round2-false-positives/skill-prints-own-pr-link/claude/skills/ship/SKILL.md",
         "saveAs": "~/.claude/skills/ship/SKILL.md",
         "marketplace": ""
       },
@@ -141,7 +141,7 @@
       "bytes": 378,
       "wordCount": 41,
       "repoLicense": "Apache-2.0",
-      "commit": "8e50b58e55509686c5f0e39775229803911ae51f",
+      "commit": "0b52982539ad821511846f46d357e65eb4100baa",
       "branch": "main",
       "body": "---\nname: ship\ndescription: Commit the current work, push the branch and open a pull request for it.\nallowed-tools: Read, Edit, Write, Bash(git:*), Bash(gh pr:*)\n---\n\n# Ship\n\n1. Run the tests and fix anything that fails.\n2. Commit with a conventional message and push the branch.\n3. Open the PR with `gh pr create --fill`, then print its link:\n\n   gh pr view --json url -q .url\n",
       "bodyMd": "# Ship\n\n1. Run the tests and fix anything that fails.\n2. Commit with a conventional message and push the branch.\n3. Open the PR with `gh pr create --fill`, then print its link:\n\n   gh pr view --json url -q .url\n"
